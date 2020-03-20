@@ -1,0 +1,206 @@
+\documentclass{report}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+
+\author{Luca De Paulis}
+\title{Logica per la programmazione}
+
+\newcommand{\AND}{\wedge}
+\newcommand{\OR}{\vee}
+
+\begin{document}
+    \maketitle
+    
+    \newtheorem*{defin}{}
+    \newtheorem{obs}{Osservazione}
+    \chapter{Calcolo proposizionale}    
+    
+
+    \section{Definizione di proposizione}
+    \begin{defin}[Proposizione]
+        Una proposizione e' un enunciato dichiarativo per il quale valgono
+    il principio del terzo escluso e il principio di non contraddittorieta'.
+    \end{defin}
+
+    \begin{defin}
+        [Principio del terzo escluso]
+        Una proposizione e' vera oppure e' falsa.
+    \end{defin}
+
+    \begin{defin}
+        [Principio di non contraddittorieta']
+        Una proposizione non e' contemporaneamente vera e falsa.
+    \end{defin}
+
+    \section{Connettivi logici}
+    \begin{table}[]
+        \centering
+        \begin{tabular}{|c|c|c|}
+        \hline
+        CONNETTIVI       & SIMBOLO                         & OPERAZIONE   \\ \hline
+        not              & $\neg$                            & negazione    \\ \hline
+        and              & $\And$                          & congiunzione \\ \hline
+        or               & $\OR$                            & disgiunzione \\ \hline
+        se p allora q    & $\implies$                        & implicazione \\ \hline
+        p se e solo se q & $\equiv$                          & equivalenza  \\ \hline
+        p se q           & $\impliedby$ & conseguenza  \\ \hline
+        \end{tabular}
+    \end{table}
+
+    \section{Interpretazioni}
+    \begin{defin}
+        [Interpretazione]
+        Una funzione che associa ogni variabile proposizionale che compare in una formula
+        ad un valore compreso in ${0; 1}$ si chiama interpretazione.
+    \end{defin}
+
+    \begin{defin}
+        [Tavola di verita']
+        Si chiama tavola di verita' una tavola che raccoglie tutte le interpretazioni
+        di una formula.
+    \end{defin}
+
+    \section{Tautologie}
+    \begin{defin}
+        [Tautologia]
+        Si dice tautologia una formula che vale $T$ per ogni possibile interpretazione.
+    \end{defin}
+
+    \begin{defin}
+        [Contraddizione]
+        Si dice contraddizione una formula che vale $F$ per ogni possibile interpretazione.
+    \end{defin}
+
+    \begin{obs}
+        Se $p$ e' una tautologia allora $\neg p$ e' una contraddizione.
+    \end{obs}
+
+    \begin{defin}
+        [Implicazione tautologica]
+        Si dice che $p$ implica tautologicamente $q$ se e solo se $(p \implies q)$ e' una tautologia.
+    \end{defin}
+
+    \begin{defin}
+        [Equivalenza tautologica]
+        Si dice che $p$ equivale tautologicamente a $q$ se e solo se $(p \equiv q)$ e' una tautologia.
+    \end{defin}
+
+    \section{Leggi}
+    \subsection{Leggi per l'equivalenza}
+    \begin{alignat*}{2}
+        & p \equiv p                                                \qquad && \tag{riflessivita'} \\
+        & (p \equiv q) \equiv (q \equiv p)                          \qquad && \tag{simmetria} \\
+        & (p \equiv q) \AND (q \equiv r) \implies (p \equiv r)      \qquad && \tag{transitivita'} \\
+        & ((p \equiv q) \equiv r) \equiv (p \equiv (q \equiv r))    \qquad && \tag{associativita'} \\
+        & (p \equiv T) \equiv p                                     \qquad && \tag{unita'}
+    \end{alignat*}
+
+    \subsection{Leggi per congiunzione e disgiunzione}
+    \begin{alignat*}{2}
+        & p \OR q \equiv q \OR p                            \qquad && \tag{riflessivita'} \\
+        & p \AND q \equiv q \AND p    \\
+        & ((p \OR q) \OR r) \equiv (p \OR (q \OR r))        \qquad && \tag{associativita'} \\
+        & ((p \AND q) \AND r) \equiv (p \AND (q \AND r)) \\
+        & p \OR p \equiv p                                  \qquad && \tag{idempotenza} \\
+        & p \AND p \equiv p  \\
+        & p \OR F \equiv p                                  \qquad && \tag{unita'} \\
+        & p \AND T \equiv p  \\
+        & p \OR T \equiv T                                  \qquad && \tag{zero/dominanza} \\
+        & p \AND F \equiv F  \\
+        & p \AND (q \OR r) \equiv (p \AND q) \OR (p \AND r) \qquad && \tag{distributivita'} \\
+        & p \OR (q \AND r) \equiv (p \OR q) \AND (p \OR r) \\
+    \end{alignat*}
+
+    \subsection{Leggi per la negazione}
+    \begin{alignat*}{2}
+        & \neg(\neg p) \equiv p                     \qquad &&\tag{doppia negazione} \\
+        & p \OR \neg p \equiv T                     \qquad &&\tag{terzo escluso} \\
+        & p \AND \neg p \equiv F                    \qquad &&\tag{contraddizione} \\
+        & \neg (p \AND q) \equiv \neg p \OR \neg q  \qquad &&\tag{De Morgan} \\
+        & \neg (p \OR q) \equiv \neg p \AND \neg q \\
+    \end{alignat*}
+    
+    \subsection{Leggi di eliminazione}
+    \begin{alignat*}{2}   
+        & (p \implies q) \equiv (\neg p \OR q)                      \qquad &&\tag{elim-$\implies$} \\
+        & \neg(p \implies q) \equiv (p \AND \neg q)                 \qquad &&\tag{elim-$\neg\implies$} \\
+        & (p \equiv q) \equiv (p \implies q) \AND (q \implies p)    \qquad &&\tag{elim-$\equiv$} \\
+        & (p \equiv q) \equiv (p \AND q) \AND (\neg p \AND \neg q)  \qquad &&\tag{elim-$\equiv$-bis} \\
+        & (p \impliedby q) \equiv (q \implies p)                    \qquad &&\tag{elim-$\impliedby$}
+    \end{alignat*} 
+
+    \subsection{Transitivita' dell'implicazione}
+    \begin{alignat*}{2}
+        & ((p \implies q) \AND (q \implies r)) \implies (p \implies b)      \qquad &&\tag{transitivita'}        
+    \end{alignat*}
+
+    \subsection{Leggi di complemento e assorbimento}
+    \begin{alignat}
+        {2}
+        & p \OR (\neg p \AND q) \equiv p \OR q      \qquad &&\tag{complemento}\\
+        & p \AND (\neg p \OR q) \equiv p \AND q     \nonumber\\
+        & p \OR (p \AND q) \equiv p                 \qquad &&\tag{assorbimento}\\
+        & p \AND (p \OR q) \equiv p                 \nonumber
+    \end{alignat}
+
+    \subsection{Altre leggi utili}
+    \begin{alignat*}
+        {2}
+        & p \AND q \implies p                                           \qquad &&\tag{sempl-$\AND$}\\
+        & p \implies p \OR q                                            \qquad &&\tag{introd-$\OR$}\\
+        & p \implies q \equiv \neg q \implies p                         \qquad &&\tag{contropositiva}\\
+        & p \AND q \implies r \equiv p \AND \neg r \implies \neg q      \qquad &&\tag{scambio}\\
+        & (p \implies q) \AND p \implies q                              \qquad &&\tag{Modus Ponens}
+    \end{alignat*}
+
+    \section{Dimostrazione delle leggi}
+    \subsection{Leggi di complemento}
+    \begin{alignat*}
+        {2}
+                & p \OR (\neg p \AND q)\\
+        \equiv  &{\ref{distributivita'}}\\
+                & (p \OR \neg p) \AND (p \OR q)\\
+        \equiv  &{\ref{terzo escluso}}\\
+                & T \AND (p \OR q)\\
+        \equiv  &{\ref{unita'}}\\
+                & p \OR q
+    \end{alignat*}
+
+    \section{Inferenza corretta}
+    Il calcolo proposizionale permette di dimostrare semplici inferenze, dimostrazioni o deduzioni del linguaggio
+    naturale. Un'inferenza si dice corretta se e solo se la formula e' una tautologia.
+
+    \section{Precedenza tra operatori}
+    Per eliminare alcune delle parentesi e alleggerire la scrittura di formule si usano delle leggi
+    sulla precedenza degli operatori.
+
+    \begin{table}[]
+        \centering
+        \begin{tabular}{|c|c|}
+        \hline
+        OPERATORE                   & LIVELLO DI PRECEDENZA (crescente)     \\ \hline
+        $\neg$                      & 0                                     \\ \hline
+        $\AND$, $\OR$               & 1                                     \\ \hline
+        $\implies$, $\impliedby$    & 2                                     \\ \hline
+        $\equiv$                    & 3                                     \\ \hline
+        \end{tabular}
+    \end{table}
+
+    La tabella non descrive l'associativita' degli operatori, che quindi va descritta tramite
+    l'uso delle parentesi per non commettere errori sintattici.
+
+    \subsection{Esempi di formule sintatticamente errate}
+    \begin{alignat*}
+        {1}
+        p \AND & q \OR r \\
+        \intertext{Errata perche' nessuna legge descrive l'associativita' di $\AND$ e $\OR$,
+        dunque la formula e' ambigua.}
+        p \implies & q \implies r\\
+        \intertext{Errata perche' l'implicazione non e' associativa, dunque la formula e'
+        ambigua.}
+    \end{alignat*}
+
+
+\end{document}

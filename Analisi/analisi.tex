@@ -1,0 +1,182 @@
+\documentclass{report}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+
+\author{Luca De Paulis}
+\title{Analisi matematica}
+
+\newcommand{\AND}{\wedge}
+\newcommand{\OR}{\vee}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\extR}{\overline{\RR}}
+
+\begin{document}
+    \maketitle
+    
+    \newtheorem{defin}{Definizione}[section]
+    \newtheorem*{obs}{Osservazione}
+    \newtheorem{theorem}{Teorema}[section]
+    \newtheorem{corol}{Corollario}[theorem]
+
+    \chapter{Fondamentali}
+
+    \theoremstyle{definition}
+    \begin{defin}
+        [Intervallo di $\RR$]
+        Un sottoinsieme $I$ contenuto in $RR$ ($I \subset \RR$)
+        si dice intervallo se e solo se $\forall x, y \in I$ con $x < y$
+        e per ogni $z$ t.c. $x < y < z$, allora $z \in \RR$.
+    \end{defin}
+
+    \section{Insiemi}
+    \theoremstyle{definition}
+    \begin{defin}
+        [Massimo]
+        Sia $A \subset \RR$, $A \neq \emptyset$, allora $m \in \RR$ si dice massimo 
+        di $A$ se ${m \geq a \;\forall a \in A \AND m \in A}$. \newline
+        Il massimo di un insieme $A$ indica con $\max{A}$.
+    \end{defin}
+
+    \begin{defin}
+        [Minimo]
+        Sia $A \subset \RR$, $A \neq \emptyset$, allora $m \in \RR$ si dice minimo 
+        di $A$ se ${m \leq a \;\forall a \in A \AND m \in A}$. \newline
+        Il minimo di un insieme $A$ indica con $\min{A}$.
+    \end{defin}
+
+    \begin{defin}
+        [Maggiorante]
+        Sia $A \subset \RR$, $A \neq \emptyset$, allora $m \in \RR$ si dice maggiorante 
+        di $A$ se ${m \geq a \;\forall a \in A}$. \newline
+    \end{defin}
+
+    \begin{defin}
+        [Minorante]
+        Sia $A \subset \RR$, $A \neq \emptyset$, allora $m \in \RR$ si dice minorante 
+        di $A$ se ${m \leq a \;\forall a \in A}$. \newline
+    \end{defin}
+
+    \theoremstyle{remark}
+    \begin{obs}
+        Se esiste un maggiorante/minorante per $A$, allora ne esistono infiniti.
+        Al contrario, esistono insiemi che non ammettono maggioranti o minoranti o entrambi.
+    \end{obs}
+
+    \theoremstyle{definition}
+    \begin{defin}
+        [Insieme limitato superiormente]
+        Un insieme si dice limitato superiormente se l'insieme dei suoi maggioranti
+        non e' vuoto.
+    \end{defin}
+    
+    \begin{defin}
+        [Insieme limitato inferiormente]
+        Un insieme si dice limitato inferiormente se l'insieme dei suoi minoranti
+        non e' vuoto.
+    \end{defin}
+
+    \begin{defin}
+        [Insieme limitato]
+        Un insieme si dice limitato se e' limitato sia superiormente che inferiormente.
+    \end{defin}
+
+    \theoremstyle{remark}
+    \begin{obs}
+        $A \subset \RR$, $A \neq \emptyset$ si dice limitato se e solo se 
+        $\exists \;n, k \in \RR \text{ t.c. } n \leq a \leq k \;\forall a \in A$.
+    \end{obs}
+
+    \theoremstyle{plain}
+    \begin{theorem}[Esistenza dell'estremo]
+        Se $A \subset \RR$, $A \neq \emptyset$ e' superiormente limitato, allora
+        l'insieme dei maggioranti di $A$ ha minimo. Tale minimo si chiama estremo
+        superiore di $A$ e si indica con $\sup{A}$. \newline
+        Allo stesso modo, se $A \subset \RR$, $A \neq \emptyset$ e' inferiormente 
+        limitato, allora 
+        l'insieme dei minoranti di $A$ ha massimo. Tale massimo si chiama estremo
+        inferiore di $A$ e si indica con $\inf{A}$.
+    \end{theorem}  
+
+    \theoremstyle{remark}
+    \begin{obs}
+        Se $\sup{A} \in A$, allora $\sup{A} = \max{A}$. \newline
+        Se $\inf{A} \in A$, allora $\inf{A} = \min{A}$. 
+    \end{obs}
+
+    \theoremstyle{definition}
+    \begin{defin}
+        Se $A$ non e' superiormente limitato, allora per definizione $\sup{A} = +\infty$. \newline
+        Se $A$ non e' inferiormente limitato, allora per definizione $\inf{A} = -\infty$.
+    \end{defin}
+
+    \theoremstyle{remark}
+    \begin{obs}
+        Sia $A \subset \RR$, $A \neq \emptyset$ e $A$ superiormente limitato. Allora $\sup{A} = m$
+        se e solo se
+        \begin{alignat}
+            {1}
+            &m \geq a \qquad \forall a \in A\\
+            &\forall \varepsilon > 0\;\exists a_0 \text{ t.c. } a_0 > m - \varepsilon
+        \end{alignat}
+    \end{obs}
+
+    \section{Retta reale estesa}
+    \theoremstyle{definition}
+    \begin{defin}
+        [Retta reale estesa]
+        Si definisce retta reale estesa l'insieme $\extR = \RR \cup \{+\infty\} \cup \{-\infty\}$
+        in modo che valgano le seguenti condizioni:
+        \begin{alignat}
+            {2}
+            &-\infty \leq x \leq +\infty    \qquad &&\forall x \in \extR\\
+            &-\infty < x < +\infty          \qquad &&\forall x \in \RR
+        \end{alignat} 
+    \end{defin}
+
+    \theoremstyle{remark}
+    \begin{obs}
+        Per definizione, $\max{\extR} = +\infty$ e $\min{\extR} = -\infty$.
+    \end{obs}
+
+    \begin{obs}
+        Sia $A \subset \RR$, $A \neq \emptyset$. Se $\sup{A} < +\infty$, allora $A$ e'
+        superiormente limitato. Se $\inf{A} > -\infty$, allora $A$ e'
+        inferiormente limitato.
+    \end{obs}
+
+    \theoremstyle{definition}
+    \begin{defin}
+        [Operazioni in $\extR$]
+        In $\extR$ valgono tutte le operazioni che valgono in $\RR$, piu' alcune:
+        \begin{alignat}
+            {2}
+            &x + (-\infty) = -\infty                                            \qquad &&\forall x \neq +\infty\\
+            &x + (+\infty) = +\infty                                            \qquad &&\forall x \neq -\infty\\
+            &x \cdot (+\infty) = +\infty \text{, } x \cdot (-\infty) = -\infty  \qquad &&\forall x > 0\\
+            &x \cdot (+\infty) = -\infty \text{, } x \cdot (+\infty) = +\infty  \qquad &&\forall x < 0 \\
+        \end{alignat}
+    \end{defin}
+
+    \section{Funzioni particolari}
+    \theoremstyle{remark}
+    \begin{obs}
+        Se $A \subset \ZZ$, $A \neq \emptyset$, allora 
+        \begin{itemize}
+            \item se $A$ e' superiormente limitato $A$ ammette massimo;
+            \item se $A$ e' inferiormente limitato $A$ ammette minimo.
+        \end{itemize}
+    \end{obs}
+
+    \theoremstyle{definition}
+    \begin{defin}
+        [Parte intera]
+        Dato $x \in \RR$ si dice parte intera di $x$ il numero
+        \[[x] = \max{\{m \in \ZZ \text{, } m \leq x\}}\]
+    \end{defin}
+
+\end{document}
