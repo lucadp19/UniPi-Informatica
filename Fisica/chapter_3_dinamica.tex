@@ -1,0 +1,155 @@
+\chapter{Dinamica}
+
+La dinamica e' la branca della fisica che si occupa di studiare le cause delle variazioni del moto. Ci occuperemo inizialmente della dinamica del punto materiale, cioe' il moto del corpo e le forze che agiscono su di esso sono riferiti ad un punto $(x, y, z)$ dello spazio; passeremo poi a studiare la dinamica di sistemi con piu' gradi di liberta'.
+
+\begin{definition}
+    Si dice massa inerziale di un corpo la resistenza che il corpo oppone al cambiamento di velocita' risultante dall'azione di una forza.    
+\end{definition}
+La massa e' una grandezza scalare e additiva, la cui unita' di misura e' il chilogrammo.
+
+\begin{definition}
+    La forza e' una quantita' vettoriale che descrive le interazioni fra corpi.
+\end{definition}
+La forza e' rappresentata da un vettore applicato, cioe' viene descritta da intensita', direzione, verso e punto di applicazione. Da un punto di vista pratico, per misurare una forza si sfrutta la proprieta' che esa ha di deformare gli oggetti.
+
+Vi sono due tipi di forze, distinte dal loro raggio di azione.
+\begin{enumerate}
+    \item Le forze a distanza (o forze a lungo raggio) non richiedono che i corpi su cui agiscono siano a contatto tra loro. Gli esempi piu' comuni sono le 4 iterazioni fondamentali:
+        \begin{itemize}
+            \item iterazione gravitazionale (mediata dal gravitone (forse));
+            \item iterazione elettromagnetica (mediata dai fotoni);
+            \item iterazione nucleare debole (mediata dai bosoni W e Z);
+            \item iterazione nucleare forte (mediata dai gluoni);
+        \end{itemize}
+    \item Le forze a contatto (o forze a corto raggio) sono forze che agiscono a contatto tra i corpi macroscopici, e derivano dalle interazioni elettromagnetiche fra atomi e molecole che costituiscono la materia. Alcuni esempi sono:
+        \begin{itemize}
+            \item forze esplicate dai vincoli (tensione di fili; forza normale associata ad una superficie che si oppone alla deformazione);
+            \item forze di attrito (dinamico e statico);
+            \item forze elastiche (interazioni elettromagnetiche che si oppongono alle deformazioni dei corpi).
+        \end{itemize}
+\end{enumerate}
+
+\section{Principi della dinamica}
+
+\begin{principle}[Primo principio della dinamica]
+    Sia $\bvv{R}$ la risultante delle forze che agiscono su un punto materiale. Allora se $\bvv{R} = \bvv{0}$ allora il corpo permane nel suo stato di quiete o moto rettilineo uniforme.
+\end{principle}
+
+\begin{definition}
+    Si dice che un sistema di riferimento e' inerziale se dato un corpo e appurato che la risultante delle forze che agiscono su quel corpo e' nulla, allora il corpo e' in quiete o si muove di moto rettilineo uniforme rispetto al sistema.
+\end{definition}
+
+Segue dalla definizione che un sistema in moto rettilineo uniforme rispetto a un sistema inerziale e' anch'esso inerziale.
+
+\begin{principle}[Secondo principio della dinamica]
+    Sia $\bvv{R}$ la risultante delle forze che agiscono su un punto materiale. Allora se $\bvv{R} \neq \bvv{0}$ allora il corpo subisce un'accelerazione che e' direttamente proporzionale alla risultante delle forze. La costante di proporzionalita' e' la massa inerziale, secondo la formula:
+    \begin{equation} \label{second_principle}
+        \bvv{R} = m\bvv{a}
+    \end{equation}
+\end{principle}
+
+Facciamo ora delle considerazioni sui primi due principi.
+I primi due principi della dinamica sono validi soltanto in sistemi di riferimento inerziali. Essi ci danno un modo per studiare il moto di un corpo a partire dalle forze che agiscono su di esso. Studiando il diagramma di corpo libero, cioe' il diagramma delle forze che agiscono su un corpo possiamo calcolarne la risultante e stabilire, a seconda del risultato, se il corpo ha un'accelerazione nulla o meno.
+
+\begin{principle}[Terzo principio della dinamica]
+    Siano $A$, $B$ due corpi puntiformi di massa $m_A, m_B$. Allora se il corpo $A$ esercita sul corpo $B$ una forza $\bvv{F}_{B,A}$, allora il corpo $B$ esercitera' necessariamente una forza $\bvv{F}_{A, B}$ sul corpo $A$, tale che
+    \begin{equation} \label{third_principle}
+        \bvv{F}_{B, A} = -\bvv{F}_{A, B}   
+    \end{equation}
+\end{principle}
+
+Non bisogna confondere il terzo principio della dinamica con le forze vincolari: le forze vincolari sono applicate allo stesso corpo che esercita la forza, mentre il secondo principio coinvolge due corpi.
+
+\section{Iterazione gravitazionale}
+L'iterazione gravitazionale e' l'iterazione fondamentale che spiega la caduta dei gravi e il moto dei pianeti.
+
+\begin{definition}
+    Siano $A$, $B$, due corpi di massa $m_A$, $m_B$. Allora i due corpi si attraggono con forze che sono:
+    \begin{itemize}
+        \item dirette lungo la congiungente dei centri di massa;
+        \item attrattive;
+        \item di intensita' uguali, proporzionali al prodotto delle masse e inversamente proporzionali al quadrato della distanza dei centri di massa, secondo la formula
+        \begin{equation} \label{forza_grav}
+            \abs{\bvv{F}_{A, B}} = \abs{\bvv{F}_{B, A}} = G\frac{m_Am_b}{r^2}
+        \end{equation}
+        dove $G = 6,64 \times 10^{-11} \text{Nm}^2\text{/kg}$ e' la costante di gravitazione universale.
+    \end{itemize}
+\end{definition}
+
+Dato che il valore di $G$ e' molto piccolo la forza gravitazionale ha un effetto trascurabile a meno che la massa dei corpi in esame sia grande (almeno $10^{10}$ kg) ed essi sono relativamente vicini.
+
+In teoria la massa inerziale e la massa gravitazionale, cioe' la grandezza scalare proporzionale alla forza di gravita', rappresentano due concetti distinti di massa.
+
+Se consideriamo un corpo sulla superficie terrestre oppure ad un'altezza trascurabile, la forza peso e' costante in modulo e in direzione (radiale, diretta verso il centro di massa della Terra). Dunque possiamo approssimarla con:
+\begin{equation}
+    \vmag{P} = G\frac{m_Tm_A}{(R_T + h)^2} \approx m_AG\frac{m_T}{R^2_T} = m_Ag
+\end{equation}
+dove $g = 9,81$ N/kg e' l'accelerazione di gravita' terrestre.
+
+Dagli esperimenti e' stato poi dimostrato che la massa gravitazionale e' equivalente alla massa inerziale: dunque tutti i corpi in caduta libera hanno la stessa accelerazione quando si trovano sullo stesso pianeta e ad altitudini comparabili, sotto l'azione della sola forza gravitazionale.
+L'accelerazione di un corpo in caduta libera e' dunque
+\begin{equation}
+    \bvv{a} = \frac{\bvv{P}}{m_A} = \bvv{g} = -g\bh{j}
+\end{equation}
+
+\section{Forze di contatto}
+Quando due corpi macroscopici sono a contatto tra di loro agiscono delle forze che derivano dalle interazioni elettromagnetiche della materia. Il primo tipo che studieremo sono le forze legate ai vincoli
+Possono essere legate a vincoli di due tipi:
+\begin{itemize}
+    \item vincoli di superfici (come forze di attrito, forze normali);
+    \item vincoli unidimensionali (tensioni di corde, funi, fili).
+\end{itemize}
+
+\subsection{Forze legate a vincoli di superfici}
+Le forze legate ai vincoli di superfici possono essere
+\begin{enumerate}
+    \item forze di attrito statico o dinamico: esse sono parallele alla superficie di contatto e opposte al moto relativo dei due corpi;
+    \item forze normali: esse sono perpendicolari alla superficie di contatto e impediscono ai corpi di compenetrarsi.
+\end{enumerate}
+Se la superficie di contatto e' piana allora le forze normali bilanciano il peso del corpo sulla superficie, dunque 
+\begin{equation}
+    \left(\sum_i \bvv{F}_i \right)_{\perp} = \bvv{0} \implies \bvv{a}_{\perp} = \bvv{0}.
+\end{equation}
+Se la superficie di contatto non e' piana allora le forze normali non bilanciano il peso del corpo sulla superficie, dunque 
+\begin{equation}
+    \left(\sum_i \bvv{F}_i \right)_{\perp} \neq \bvv{0} \implies \bvv{a}_{\perp} \neq \bvv{0}.
+\end{equation}
+
+\begin{example}[Piano inclinato liscio]
+    Supponiamo di avere un piano inclinato con angolo alla base $\theta$. Per descrivere il moto del corpo sul piano inclinato, scegliamo come sistema di riferimento un sistema $XY$ dove l'asse $X$ e' parallelo al piano inclinato, l'asse $Y$ perpendicolare ad esso, e l'origine degli assi sia nel punto dove si trova il corpo al tempo $t_0 = 0$s.
+
+    Se disegnamo il diagramma del corpo libero notiamo che le forze in gioco sono il peso $\bvv{P}$ e la reazione vincolare del piano $\bvv{N}$.
+    Sia $\bvv{R}$ la forza risultante; allora
+    \begin{equation}
+        \bvv{R} = \begin{cases}
+            R_x = mg\sin\theta \\
+            R_y = N - mg\cos\theta
+        \end{cases}
+    \end{equation}
+    Per il secondo principio della dinamica vale allora
+    \begin{align}
+        \begin{cases}
+            R_x = mg\sin\theta = ma_x \\
+            R_y = N - mg\cos\theta = ma_y = 0 
+        \end{cases}
+        &\implies
+        \begin{cases}
+            a_x = g\sin\theta \\
+            N = mg\cos\theta
+        \end{cases}
+    \end{align}
+
+    Supponendo che la rampa sia lunga $L$ e che il corpo si muova inizialmente con una velocita' $v_0 = 0$ possiamo calcolare la velocita' con cui il corpo giunge alla fine e il tempo che impiega per percorrerla $t_f$. Dalla legge oraria del moto uniformemente accelerato otteniamo
+    \begin{alignat*}{1}
+        L &= \frac{1}{2}g\sin\theta t_f^2 \\
+        \intertext{da cui possiamo ricavare $t_f$}
+        \implies t_f &= \sqrt{\frac{2L}{g\sin\theta}} \\
+        \intertext{Sostituendo $h = L\sin\theta$}
+              &= \sqrt{\frac{2h}{g\sin^2\theta}} \\
+              &= \frac{1}{\sin\theta}\sqrt{\frac{2h}{g}}
+        \intertext{Sostituendo $t_f$ nella formula per la velocita' otteniamo infine}
+        \implies v_f &= a_xt_f\\
+              &= g\sin\theta t_f\\
+              &= \sqrt{2gh}
+    \end{alignat*}
+\end{example}

@@ -1,0 +1,69 @@
+\chapter{Matrici e sistemi lineari}
+
+\section{Matrici}
+
+\begin{definition}
+    Si dice matrice $m \times n$ una tabella di $m$ righe e $n$ colonne i cui elementi appartengono ad un campo $\K$ fissato, della forma
+    \begin{equation}
+        A = \begin{pmatrix}
+            a_{11}  &   a_{12}  & \dots     & a_{1n} \\
+            a_{21}  &   a_{22}  & \dots     & a_{2n} \\
+            \vdots  &   \vdots  & \vdots    & \vdots \\
+            a_{m1}  &   a_{m2}  & \dots     & a_{mn} \\
+        \end{pmatrix}
+        = [A_{ij}]_{i\leq m, j \leq n}
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    Si dice vettore colonna una matrice $n \times 1$ del tipo
+    \begin{equation}
+        \bm{v} = \begin{pmatrix}
+            a_{1} \\
+            a_{2} \\
+            \vdots \\
+            a_n
+        \end{pmatrix}
+    \end{equation}
+    Si dice vettore riga una matrice $1 \times n$ del tipo
+    \begin{equation}
+        \bm{w} = \begin{pmatrix}
+            a_{1} & a_2 & \dots & a_n
+        \end{pmatrix}
+    \end{equation}
+    L'insieme dei vettori colonna di $n$ elementi appartenenti ad un campo $\K$ si indica con $\K^n$, mentre l'insieme dei vettori riga di $n$ elementiappartenenti ad un campo $\K$ si indica con $\K^{\times n}$.
+\end{definition}
+
+E' evidente che se i due vettori $\bm{v}$ e $\bm{w}$ hanno la stessa dimensione e contengono gli stessi elementi allora rappresentano la stessa informazione, ma sotto forme diverse. Verificheremo piu' avanti infatti che $\K^n$ e $\K^{\times n}$ sono isomorfi, cioe' contengono gli stessi elementi in due forme diverse.
+
+\subsection{Operazioni sulle matrici}
+
+Consideriamo le operazioni fondamentali che coinvolgono matrici.
+
+\subsubsection{Somma di matrici}
+
+Siano $A, B$ due matrici $m \times n$ a coefficienti reali. Allora possiamo definire un'operazione di somma $+ : \M_{m \times n}(\R) \times \M_{m \times n}(\R) \to \M_{m \times n}(\R)$ tale che \begin{equation}
+    A + B = [A_{ij} + B_{ij}]_{ij}.
+\end{equation}
+Cioe' se \begin{gather*}
+    A = \begin{pmatrix}
+        a_{11}  & \dots     & a_{1n} \\
+        a_{21}  & \dots     & a_{2n} \\
+        \vdots  & \vdots    & \vdots \\
+        a_{m1}  & \dots     & a_{mn} \\
+    \end{pmatrix},\quad
+    B = \begin{pmatrix}
+        b_{11}  & \dots     & b_{1n} \\
+        b_{21}  & \dots     & b_{2n} \\
+        \vdots  & \vdots    & \vdots \\
+        b_{m1}  & \dots     & b_{mn} \\
+    \end{pmatrix} \\
+    \\
+    \implies
+    A + B = \begin{pmatrix}
+        a_{11} + b_{11}  & \dots     & a_{1n} + b_{1n} \\
+        a_{21} + b_{21}  & \dots     & a_{2n} + b_{2n} \\
+        \vdots           & \vdots    & \vdots          \\
+        a_{m1} + b_{m1}  & \dots     & a_{mn} + b_{mn} \\
+    \end{pmatrix}   
+\end{gather*}

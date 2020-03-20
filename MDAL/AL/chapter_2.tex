@@ -1,0 +1,211 @@
+\chapter{Spazi vettoriali}
+
+\section{Spazi vettoriali e prime proprieta'}
+
+\begin{definition}
+    Si dice \textbf{spazio vettoriale su un campo $\K$} un insieme $V$ di elementi, detti \textbf{vettori}, insieme con due operazioni $+ : V \times V \to V$ e $\cdot : \K \times V \to V$ e un elemento $\bm{0_V} \in V$ che soddisfano i seguenti assiomi:
+    \[\forall \bm{v}, \bm{w}, \bm{u} \in V, \quad\forall h, k \in \K \]
+    \begin{align}
+        &\text{1.} &&(\bm{v} + \bm{w}) \in V                                        &\text{(chiusura di V rispetto a $+$)} \\      
+        &\text{2.} &&\bm{v} + \bm{w} = \bm{w} + \bm{v}                              &\text{(commutativita' di $+$)} \\
+        &\text{3.} &&(\bm{v} + \bm{w}) + \bm{u} = \bm{w} + (\bm{v} + \bm{u})        &\text{(associativita' di $+$)} \\
+        &\text{4.} &&\bm{0_V} + \bm{v} = \bm{v} + \bm{0_V} = \bm{v}                 &\text{($\bm{0_V}$ el. neutro di $+$)} \\
+        &\text{5.} &&\exists (-\bm{v}) \in V. \quad\bm{v} + (\bm{-v}) = \bm{0_V}    &\text{(opposto per $+$)} \\
+        &\text{6.} &&k\bm{v} \in V                                                  &\text{(chiusura di V rispetto a $\cdot$)} \\
+        &\text{7.} &&k(\bm{v} + \bm{w}) = k\bm{v} + k\bm{w}                         &\text{(distributivita' 1)} \\
+        &\text{8.} &&(k + h)\bm{v}= k\bm{v} + h\bm{v}                               &\text{(distributivita' 2)} \\
+        &\text{9.} &&(kh)\bm{v}= k(h\bm{v})                                         &\text{(associativita' di $\cdot$)} \\
+        &\text{10.}&&1\bm{v}= \bm{v}                                                &\text{(1 el. neutro di $\cdot$)}
+    \end{align}
+\end{definition}
+ 
+Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo dei numeri reali $\R$ o il campo dei numeri complessi $\C$. Supporremo che gli spazi vettoriali siano definiti su $\R$ a meno di diverse indicazioni. Le definizioni valgono comunque in generale anche su campi $\K$ diversi da $\R$ o $\C$.
+
+\begin{example}
+    Possiamo fare diversi esempi di spazi vettoriali. Ad esempio sono spazi vettoriali:
+    \begin{enumerate}
+        \item i vettori geometrici dove:
+        \begin{itemize}
+            \item l'elemento neutro e' il vettore nullo;
+            \item la somma e' definita tramite la regola del parallelogramma;
+            \item il prodotto per scalare e' definito nel modo usuale;
+        \end{itemize}
+        \item i vettori colonna $n \times 1$ o i vettori riga $1 \times n$ dove:
+        \begin{itemize}
+            \item l'elemento neutro e' il vettore composto da $n$ elementi $0$;
+            \item la somma e' definita come somma tra componenti;
+            \item il prodotto per scalare e' definito come prodotto tra lo scalare e ciascuna componente;
+        \end{itemize}
+        \item le matrici $n \times m$, indicate con $\M_{n \times m}(\K)$;
+        \item i polinomi di grado minore o uguale a $n$, indicati con $\K[x]^{\leq n}$;
+        \item tutti i polinomi, indicati con $\K[x]$.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n} \in V$. Allora il vettore $\bm{v} \in V$ si dice combinazione lineare di $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n}$ se 
+    \begin{equation}
+        \bm{v}= a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} 
+    \end{equation}
+    per qualche $a_1, a_2, \dots, a_n \in \R$.
+\end{definition}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \dots, \bm{v_n} \in V$. Si indica con $\Span{\bm{v_1}, \dots, \bm{v_n}}$ l'insieme dei vettori che si possono ottenere come combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}$:
+    \begin{equation}
+        \Span{\bm{v_1}, \dots, \bm{v_n}} = \left\{a_1\bm{v_1} + \dots + a_n\bm{v_n} \mid a_1, \dots, a_n \in \R\right\}
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale, $A \subset V$. Allora si dice che $A$ e' un sottospazio vettoriale di $V$ (o semplicemente sottospazio) se
+    \begin{align}
+        &\bm{0_V} \in A \\
+        &(\bm{v} + \bm{w}) \in A    &&\forall \bm{v}, \bm{w} \in A \\
+        &(k\bm{v}) \in A            &&\forall k \in \R, \bm{v} \in A
+    \end{align}
+\end{definition}
+
+\begin{proposition}
+    Le soluzioni di un sistema omogeneo $A\bm{x} = \bm{0}$ con $n$ variabili formano un sottospazio di $\R^n$.
+\end{proposition}
+\begin{proof}
+    Chiamiamo $S$ l'insieme delle soluzioni. Dato che le soluzioni sono vettori colonna di $n$ elementi, $S \subset \R^n$. Verifichiamo ora le condizioni per cui $S$ e' un sottospazio di $\R^n$:
+    \begin{enumerate}
+        \item $\bm{0}$ appartiene a $S$, poiche' $A\bm{0} = \bm{0}$;
+        \item Se $\bm{x}, \bm{y}$ appartengono ad $S$, allora $A(\bm{x} + \bm{y}) = A\bm{x} + A\bm{y} = \bm{0} + \bm{0} = \bm{0} \in S$;
+        \item Se $\bm{x}$ appartiene ad $S$, allora $A(k\bm{x}) = kA\bm{x} = k\bm{0} = \bm{0} \in S$.
+    \end{enumerate}
+    Dunque $S$ e' un sottospazio di $\R^n$.
+\end{proof}
+
+\begin{proposition}
+    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora $A = \Span{v_1, \dots, v_n} \subset V$ e' un sottospazio di $V$.
+\end{proposition}
+\begin{proof}
+    Dimostriamo che valgono le tre condizioni per cui $A$ e' un sottospazio di $V$:
+    \begin{enumerate}
+        \item $\bm{0_V}$ appartiene ad $A$, in quanto basta scegliere $a_1 = \dots = a_n = 0$;
+        \item Siano $\bm{v}, \bm{w} \in A$. Allora per qualche $a_1, \dots, a_n, b_1, \dots, b_n \in \R$ vale che \begin{alignat*}{1}
+            \bm{v} + \bm{w} &= (a_1\bm{v_1} + \dots + a_n\bm{v_n}) + (b_1\bm{v_1} + \dots + b_n\bm{v_n}) \\
+            &= (a_1 + b_1)\bm{v_1} + \dots + (a_n + b_n)\bm{v_n} \in A\\
+        \end{alignat*}
+        \item Siano $\bm{v} \in A, k \in \R$. Allora per qualche $a_1, \dots, a_n \in \R$ vale che \begin{alignat*}{1}
+            k\bm{v} &= k(a_1\bm{v_1} + \dots + a_n\bm{v_n})  \\
+            &= (ka_1)\bm{v_1} + \dots + (ka_n)\bm{v_n} \in A
+        \end{alignat*}
+    \end{enumerate}
+    cioe' $A$ e' un sottospazio di $V$.
+\end{proof}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora l'insieme $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ si dice insieme di vettori linearmente indipendenti se
+    \begin{equation}
+        a_1\bm{v_1} + \dots + a_n\bm{v_n} = \bm{0_V} \iff a_1 = \dots = a_n = 0
+    \end{equation}
+    cioe' se l'unica combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}$ che da' come risultato il vettore nullo e' quella con $a_1 = \dots = a_n = 0$.
+\end{definition}
+
+Possiamo usare una definizione alternativa di dipendenza lineare, equivalente alla precedente, tramite questa proposizione:
+\begin{proposition}
+    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora l'insieme dei vettori $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ e' linearmente dipendente se e solo se almeno uno di essi e' esprimibile come combinazione lineare degli altri. 
+\end{proposition}
+\begin{proof}
+    Dimostriamo entrambi i versi dell'implicazione.
+    \begin{itemize}
+        \item Supponiamo che $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ sia linearemente dipendente, cioe' che esistano $a_1, \dots, a_n$ non tutti nulli tali che \[
+            a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} = \bm{0_V}   
+        .\]
+        Supponiamo senza perdita di generalita' $a_1 \neq 0$, allora segue che \[
+            \bm{v_1} = -\frac{a_2}{a_1}\bm{v_1} - \dots - \frac{a_n}{a_1}\bm{v_n}
+        \]
+        dunque $\bm{v_1}$ puo' essere espresso come combinazione lineare degli altri vettori.
+        \item Supponiamo che il vettore $\bm{v_1}$ sia esprimibile come combinazione lineare degli altri (senza perdita di generalita'), cioe' che esistano $k_2, \dots, k_n \in \R$ tali che \[
+            \bm{v_1} = k_2\bm{v_2} + \dots + k_n\bm{v_n}
+        .\]
+        Consideriamo una generica combinazione lineare di $v_1, v_2, \dots, v_n$:
+        \begin{alignat*}
+            {1}
+            & a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} \\
+            = & a_1(k_2\bm{v_2} + \dots + k_n\bm{v_n}) + a_2\bm{v_2} + \dots + a_n\bm{v_n} \\
+            = & (a_1k_2 + a_2)\bm{v_2} + \dots + (a_1k_n + a_n)\bm{v_n}
+        \end{alignat*}
+        Se scegliamo $a_1 \in \R$ libero, $a_i = -a_1k_i$ per ogni $2 \leq i \leq n$, otterremo
+        \begin{alignat*}{1}
+            & (a_1k_2 + a_2)\bm{v_2} + \dots + (a_1k_n + a_n)\bm{v_n} \\
+            = & (a_1k_2 - a_1k_2)\bm{v_2} + \dots + (a_1k_n - a_1k_n)\bm{v_n} \\
+            = & 0\bm{v_2} + \dots + 0\bm{v_n} \\
+            = & \bm{0_V}
+        \end{alignat*}
+        dunque esiste una scelta dei coefficienti $a_1, a_2, \dots, a_n$ diversa da $a_1 = \dots = a_n = 0$ per cui la combinazione lineare da' come risultato il vettore nullo, cioe' l'insieme dei vettori non e' linearmente indipendente.
+    \end{itemize}
+    
+\end{proof}
+
+Inoltre per comodita' spesso si dice che i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono indipendenti, invece di dire che l'insieme formato da quei vettori e' un insieme linearmente indipendente.
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora si dice che $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ se
+    \begin{itemize}
+        \item $\Span{\bm{v_1}, \dots, \bm{v_n}} = V$;
+        \item i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale, $\bm{v} \in V$ e $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_n}}$ una base di $V$. Allora si dice vettore delle coordinate di $\bm{v}$ rispetto a $\mathcal{B}$ il vettore colonna
+    \begin{equation}
+        [\bm{v}]_{\mathcal{B}} = \begin{bmatrix}
+                                    a_1 \\
+                                    a_2 \\
+                                    \vdots \\
+                                    a_n
+                                 \end{bmatrix} \in \R^n
+    \end{equation}
+    tale che \begin{equation}
+        \bm{v} = a_1\bm{v_1} + \dots + a_n\bm{v_n}
+    \end{equation}
+\end{definition}
+
+\begin{proposition}
+    Sia $V$ uno spazio vettoriale, $\bm{v} \in V$ e $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_n}}$ una base di $V$. Allora le coordinate di $\bm{v}$ rispetto a $\mathcal{B}$ sono uniche.
+\end{proposition}
+\begin{proof}
+    Supponiamo per assurdo che esistano due vettori colonna distinti $\bm{a}$, $\bm{b}$ che rappresentino le coordinate di $\bm{v}$ rispetto a $\mathcal{B}$. Allora
+    \begin{alignat*}
+        {1}
+        \bm{0_V}  &= \bm{v} - \bm{v} \\
+                &= (a_1\bm{v_1} + \dots + a_n\bm{v_n}) - (b_1\bm{v_1} + \dots + b_n\bm{v_n}) \\
+                &= (a_1 - b_1)\bm{v_1} + \dots + (a_n - b_n)\bm{v_n}
+    \end{alignat*}
+    Ma per definizione di base $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti, dunque l'unica combinazione lineare che da' come risultato il vettore $\bm{0_V}$ e' quella in cui tutti i coefficienti sono $0$. Da cio' segue che
+    \begin{gather*}
+        a_1 - b_1 = a_2 - b_2 = \dots = a_n - b_n = 0 \\
+        \implies \bm{a} = \begin{bmatrix}
+            a_1 \\
+            a_2 \\
+            \vdots \\
+            a_n
+        \end{bmatrix}
+        = 
+        \begin{bmatrix}
+            b_1 \\
+            b_2 \\
+            \vdots \\
+            b_n
+        \end{bmatrix} = \bm{b}
+    \end{gather*}
+    cioe' i due vettori sono uguali. Ma cio' e' assurdo poiche' abbiamo supposto $\bm{a} \neq \bm{b}$, dunque le coordinate di $\bm{v}$ rispetto a $\mathcal{B}$ devono essere uniche.
+\end{proof}
+
+\section{Applicazioni lineari}
+
+\begin{definition}
+    Siano $V, W$ spazi vettoriali. Allora un'applicazione $f : V \to W$ si dice lineare
+    se
+    \begin{align}
+        &f(\bm{0_V}) = \bm{0_W} \\
+        &f(\bm{v} + \bm{w}) = f(\bm{v}) + f(\bm{w}) &&\forall v, w \in V \\
+        &f(k\bm{v}) = kf(\bm{v})                    &&\forall v\in V, k \in \R 
+    \end{align}
+\end{definition}

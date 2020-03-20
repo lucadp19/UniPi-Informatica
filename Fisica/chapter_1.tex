@@ -1,0 +1,88 @@
+\chapter{Fondamentali}
+
+\section{Sistemi di riferimento}
+Consideriamo un piano ortogonale $XY$, dove $O$ e' l'intersezione tra gli assi. 
+Allora la posizione di un punto $P$ del piano e' data dalle coordinate delle sue proiezioni sugli assi:
+\[coord(P) = (P_x, P_y)\]
+Possiamo anche rappresentare un punto tramite coordinate polari: la sua posizione e' data dalla sua distanza dall'origine $r = \bar{OP}$ e 
+dall'angolo $\theta$ formato dal segmento $OP$:
+\[coord(P) = (r, \theta)\]
+\subsection{Dalle cartesiane alle polari}
+Per passare dalle coordinate cartesiane alle coordinate polari e' sufficiente calcolare $r$ e $\theta$:
+\begin{alignat*}{1}   
+    &r = \sqrt{P_x^2 + P_y^2} \\
+    &\theta =   \begin{cases}
+                    \arctan{\frac{y}{x}}            &\text{se } x > 0 \\
+                    \arctan{\frac{y}{x}} + \pi      &\text{se } x < 0 \\
+                    \frac{\pi}{2}                   &\text{se } x = 0 \text{, } y > 0\\
+                    \frac{3\pi}{2}                  &\text{se } x = 0 \text{, } y < 0
+                \end{cases}
+\end{alignat*}  
+\subsection{Dalle polari alle cartesiane}
+Per passare dalle coordinate polari alle coordinate cartesiane e' sufficiente calcolare $P_x$ e $P_y$:
+\begin{alignat*}{1}   
+    &P_x = r\cos{\theta} \\
+    &P_y = r\sin{\theta}
+\end{alignat*}  
+
+\section{Vettori}
+Si dice vettore nello spazio tridimensionale un oggetto $\bvv{u}$ che rappresenta una terna di numeri:
+\[\bvv{u} = (u_x, u_y, u_z)\]
+Esso puo' essere pensato come una freccia che parte dall'origine e punta verso il punto $U$ di coordinate $(u_x, u_y, u_z)$.
+Si definisce quindi l'intensita' di $\bvv{u}$ come la sua lunghezza, la sua direzione come la retta dello spazio a cui appartiene e il 
+suo verso come la sua orientazione sulla retta. \newline
+Due vettori sono uguali se hanno uguali intensita', direzione e verso, o equivalentemente se le loro componenti sono uguali.
+\[\bvv{a} = \bvv{b} \iff a_x = b_x, a_y = b_y, a_z = b_z\]
+
+\theoremstyle{definition}
+\begin{definition}
+    Si dice modulo di $\bvv{v}$ la grandezza \[\vmag{v} \equiv v = \sqrt{v_x^2 + v_y^2 + v_z^2}\]
+\end{definition}
+Suppongo io sappia fare la somma tra vettori e il prodotto per uno scalare.
+
+\begin{definition}
+    Un versore e' un vettore di modulo unitario. I versori 
+    \begin{alignat*}{1}
+        &\bh{i} = (1, 0, 0) \\
+        &\bh{j} = (0, 1, 0) \\
+        &\bh{k} = (0, 0, 1)
+    \end{alignat*}
+     sono la base di
+    $\mathbb{R}^3$.
+\end{definition}
+
+Ogni vettore $\bvv{v}$ puo' essere scritto come somma tra i suoi vettori componenti:
+\[ \bvv{v} = \bvv{v_x} + \bvv{v_y} + \bvv{v_z} = v_x\bh{i} + v_y\bh{j} + v_z\bh{k} \]
+
+E' definita la somma tra vettori come somma tra componenti:
+\begin{alignat*}
+    {1}
+    \bvv{v} + \bvv{w} &= (v_x\bh{i} + v_y\bh{j} + v_z\bh{k}) + (w_x\bh{i} + w_y\bh{j} + w_z\bh{k}) \\
+                      &= (v_x + w_x)\bh{i} + (v_y + w_y)\bh{j} + (v_z + w_z)\bh{k}
+\end{alignat*}
+
+Inoltre e' definito un prodotto tra vettori, detto prodotto scalare, in questo modo:
+\begin{definition}
+    Siano $\bvv{v}$, $\bvv{w}$ due vettori. Allora si dice prodotto scalare tra $v$ e $w$ il prodotto
+    \begin{alignat*}
+        {1}
+        \bvv{v} \cdot \bvv{w} &= \vmag{v}\vmag{w}\cos{\theta}\\
+                              &= v_xw_x + v_yw_y + v_zw_z
+    \end{alignat*}
+    
+\end{definition}
+Il prodotto scalare gode delle proprieta':
+\begin{alignat*}
+    {2}
+    &\text{1. Commutativa: } \qquad&&\bvv{v} \cdot \bvv{w} = \bvv{w} \cdot \bvv{v} \\
+    &\text{2. Distributiva:} \qquad&&\bvv{v} \cdot (\bvv{v} + \bvv{w}) = \bvv{u} \cdot \bvv{v} + \bvv{u} \cdot \bvv{w}
+\end{alignat*}
+Inoltre dato che $\cos{\theta} = 1$ se $\theta = 0$, avremo che
+\[\bh{i} \cdot \bh{i} = \bh{j} \cdot \bh{j} = \bh{k} \cdot \bh{k} = 1\]
+e dato che $\cos{\theta} = 0$ se $\theta = \frac{\pi}{2}$
+\[\bh{i} \cdot \bh{j} = \bh{i} \cdot \bh{k} = \bh{j} \cdot \bh{k} = 0\]
+
+Infine, la derivata di un vettore e' definita come la somma della derivata delle sue componenti, in quanto la derivata
+e' un operatore lineare:
+\[ \bvv{\dot{V}}(t) = \dot{V_x}(t)\bh{i} + \dot{V_y}(t)\bh{j} + \dot{V_z}(t)\bh{k} \]
+

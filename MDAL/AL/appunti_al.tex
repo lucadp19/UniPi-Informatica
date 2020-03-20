@@ -1,0 +1,53 @@
+\documentclass[a4paper]{report}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp, microtype}
+    \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm}
+    \usepackage{float}
+
+    \usepackage{hyperref} % ultimo package da caricare!
+
+\restylefloat{table}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}[theorem]{Corollario}
+\newtheorem{proposition}[theorem]{Proposizione}
+
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Esempio}
+\newtheorem{definition}[theorem]{Definizione}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Osservazione}
+
+\DeclareMathOperator{\tc}{\text{ tale che }}
+
+\newcommand{\divides}{\mid}
+\newcommand{\Mod}[1]{\ \left(#1\right)}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\mcm}[2]{\operatorname{mcm}\left(#1, #2\right)}
+\newcommand{\mcd}[2]{\operatorname{mcd}\left(#1, #2\right)}
+\newcommand{\Span}[1]{\operatorname{span}\left\{#1\right\}}
+\newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\M}{\mathbb{M}}
+
+\begin{document}
+
+% \author{Luca De Paulis}
+\title{Algebra Lineare}
+\maketitle
+
+\tableofcontents
+
+\include{chapter_1}
+\include{chapter_2}
+
+\end{document}

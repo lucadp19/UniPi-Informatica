@@ -1,0 +1,308 @@
+\chapter{Divisori e MCD}
+
+\section{Divisori di un numero}
+
+\subsection{Definizioni e prime conseguenze}
+
+\begin{definition}
+    Siano $a, b \in \Z$; allora si dice che $a$ divide $b$ se
+    $\exists k \in \Z$ tale che $ak = b$, e si scrive $a \divides b$.
+\end{definition}
+
+\begin{definition}
+    Siano $a, b \in \Z$. Allora si dice che $b$ e' multiplo di $a$ se $\exists k \in \Z$ tale che $b = ak$.
+\end{definition}
+\begin{remark}
+    La definizione di multiplo e' speculare a quella di divisore: se $a$ e' divisore di $b$ allora $b$ e' multiplo di $a$.
+\end{remark}
+
+\begin{proposition} \label{divides_sum_subtr_mult}
+    Siano $a, b, n \in \Z$ tali che $n \divides a$ e $n \divides b$. Allora
+    \begin{alignat}{2}
+        &n \divides a + b \label{divides_sum}\\
+        &n \divides a - b \label{divides_subtr} \\
+        &n \divides ax \qquad&\forall x \in \Z \label{divides_mult}
+    \end{alignat} 
+\end{proposition}
+\begin{proof}  
+    Per ipotesi, dato che $n \divides a$ e $n \divides b$, allora $\exists h, k \in \Z$ tali che
+    $nh = a$ e $nk = b$. Dunque:
+    \begin{alignat*}{2}
+        a + b = nh + nk = n(h + k) &\iff n \divides a + b \\
+        a - b = nh - nk = n(h - k) &\iff n \divides a - b \\
+        ax = nhx = n(hx) &\iff n \divides ax
+    \end{alignat*}
+    che e' la tesi.
+\end{proof}
+
+\begin{definition}
+    Siano $a, b \in \Z$; allora si dice $\mcd{a}{b}$ il piu' grande intero positivo
+    tale che $\mcd{a}{b} \divides a$ e $\mcd{a}{b} \divides b$.
+\end{definition}
+
+\begin{definition}
+    Siano $a, b \in \Z$. Allora si dice minimo comune multiplo di $a$ e $b$ il numero $d = \mcm{a}{b}$ tale che $d$ e' il piu' piccolo multiplo positivo sia di $a$ che di $b$.
+\end{definition}
+
+\begin{definition}
+    Siano $a, b \in \Z$. Se $\mcd{a}{b} = 1$ allora $a$ e $b$ si dicono coprimi.
+\end{definition}
+
+\begin{remark}
+    Siano $a, b \in \Z$. Allora valgono le seguenti proprieta' per $\mcd{a}{b}$:
+    \begin{align*}
+        \mcd{a}{b} &= \mcd{\pm a}{\pm b} \\
+        \mcd{a}{1} &= \mcd{1}{a} = 1 \\
+        \mcd{a}{0} &= \mcd{0}{a} = 0 \\
+        \nexists \mcd{0}{0}
+    \end{align*}
+\end{remark}
+
+\begin{theorem}[Esistenza e unicita' del resto] \label{esistenza_resto}
+    Siano $a, b \in \Z$, con $b \neq 0$. Allora esistono e sono unici $q, r \in \Z$ tali che
+    \begin{align}
+        a = bq + r, \qquad0 \leq r < \abs{b}
+    \end{align}
+    Tale $r$ si dice resto della divisione di $a$ per $b$, e si indica anche con $r = a\bmod b$.
+\end{theorem}
+\begin{proof}
+    Notiamo inoltre che i numeri della forma $a - bq$ formano una progressione aritmetica di passo $b$ al variare di $q \in \Z$. 
+    Il resto $r$ definito in questo modo e' l'unico elemento di questa progressione compreso tra $0$ e $b - 1$.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b, c \in \Z$. Allora \begin{equation}
+        \mcm{a}{b} \divides c \iff a \divides c \land b \divides c
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo separatamente i due versi dell'implicazione.
+
+    Dato che $\mcm{a}{b}$ e' un multiplo di $a$ e di $b$ e per ipotesi $c$ e' un multiplo di $\mcm{a}{b}$, allora per transitivita' segue che $c$ e' un multiplo di $a$ e di $b$.
+
+    Supponiamo che $c$ sia un multiplo di $a$ e di $b$. Allora per il teorema \ref{esistenza_resto} esistono $q, r \in \Z$ tali che \[
+        c = \mcm{a}{b}q + r
+    \]
+    con $0 \leq r < \mcm{a}{b}$.
+    Dato che $a$, $b$ dividono sia $c$ (per ipotesi) che $\mcm{a}{b}$ (per definizione di mcm), allora segue che essi dividono anche $r$. Ma $0 \leq r < \mcm{a}{b}$, dunque necessariamente $r = 0$, cioe' $c = \mcm{a}{b}q$ e quindi $\mcm{a}{b} \divides c$.
+\end{proof}
+
+
+\subsection{Algoritmo di Euclide e Teorema di Bezout}
+
+\begin{theorem} \label{mcd_a_a-b}
+    Siano $a, b \in \Z$. Allora
+    \begin{equation}
+        \mcd{a}{b} = \mcd{a}{b - a} = \mcd{a - b}{b}.
+    \end{equation} 
+\end{theorem}
+\begin{proof}  
+    Ovviamente $\mcd{a}{b} = \mcd{b}{a}$, dunque se vale la prima uguaglianza varra' anche la seconda,
+    in quanto 
+    \[
+       \mcd{a}{b} = \mcd{b}{a} = \mcd{b}{a - b} = \mcd{a - b}{b}.
+    \] 
+    Dunque e' sufficiente
+    dimostrare che $\mcd{a}{b} = \mcd{a}{b - a}$.
+    Sia $\mathbb{D}_{x, y}$ l'insieme dei divisori comuni a $x$ e $y$, cioe'
+    \[
+        \mathbb{D}_{x, y} = \left\{d \tc d \divides x \land d \divides y \right\}  
+    \]
+    Allora per dimostrare la tesi e' sufficiente dimostrare che $\mathbb{D}_{a, b} = \mathbb{D}_{a, b - a}$, in quanto
+    se i due insiemi sono uguali necessariamente anche i loro massimi saranno uguali.
+
+    Dimostriamo che $\mathbb{D}_{a, b} \subseteq \mathbb{D}_{a, b - a}$. Sia $d \in \mathbb{D}_{a, b}$, 
+    cioe' $d \divides a$ e $d \divides b$. Allora per la proposizione \ref{divides_sum_subtr_mult} segue che
+    $d \divides b - a$, cioe' $d \in \mathbb{D}_{a, b - a}$, 
+    cioe' $\mathbb{D}_{a, b} \subseteq \mathbb{D}_{a, b - a}$.
+
+    Dimostriamo ora che $\mathbb{D}_{a, b - a} \subseteq \mathbb{D}_{a, b}$. 
+    Sia $d \in \mathbb{D}_{a, b - a}$, 
+    cioe' $d \divides a$ e $d \divides b - a$. Allora per la proposizione \ref{divides_sum_subtr_mult} segue che
+    $d \divides a + (b - a)$, cioe' $d \divides b$, cioe' $d \in \mathbb{D}_{a, b}$, 
+    cioe' $\mathbb{D}_{a, b - a} \subseteq \mathbb{D}_{a, b}$.
+
+    Dunque dato che valgono sia $\mathbb{D}_{a, b} \subseteq \mathbb{D}_{a, b - a}$ e 
+    $\mathbb{D}_{a, b - a} \subseteq \mathbb{D}_{a, b}$, allora vale
+     $\mathbb{D}_{a, b} = \mathbb{D}_{a, b - a}$. In particolare il massimo di questi due insiemi
+     dovra' essere lo stesso, quindi $\mcd{a}{b} = \mcd{a}{b - a}$, che e' la tesi.
+\end{proof}
+
+Dunque per calcolare il massimo comun divisore si puo' sfruttare il seguente algoritmo, detto \textbf{algoritmo di Euclide}, che si basa sul teorema \ref{mcd_a_a-b}:
+\begin{enumerate}
+    \item Se $a = 1$ oppure $b = 1$ allora $\mcd{a}{b} = 1$.
+    \item Se $a = 0$ e $b \neq 0$ allora $\mcd{a}{b} = b$.
+    \item Se $a \neq 0$ e $b = 0$ allora $\mcd{a}{b} = a$.
+    \item Se $a \neq 0$ e $b \neq 0$, allora
+        \begin{itemize}
+            \item se $a \leq b$ segue che $\mcd{a}{b} = \mcd{a - b}{b}$;
+            \item se $a > b$ segue che $\mcd{a}{b} = \mcd{a}{b - a}$
+        \end{itemize}
+        dove i valori di $\mcd{a - b}{b}$ o $\mcd{a}{b - a}$ vengono calcolati riapplicando l'algoritmo.
+\end{enumerate}
+
+\begin{theorem}
+    [di Bezout] \label{bezout}
+    Siano $a, b \in \Z$. Allora esistono $x, y \in \Z$ tali che
+    \begin{equation}
+        ax + by = \mcd{a}{b} 
+    \end{equation}
+\end{theorem}
+
+\subsection{Conseguenze del teorema di Bezout}
+
+Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle proprieta' dei divisori e sul loro rapporto con il massimo comun divisore di due numeri.
+
+\begin{proposition} \label{n_divides_product}
+    Siano $a, b, n \in \Z$. Se $n \divides ab$ e $\mcd{a}{n} = 1$, allora $n \divides b$.
+\end{proposition}
+\begin{proof}
+    Per il teorema di Bezout (\ref{bezout}) esistono $x, y \in \Z$ tali che 
+    \begin{align*}
+        ax + ny &= \mcd{a}{n} = 1 \\
+        \intertext{Moltiplicando per $b$ otteniamo}
+        abx + nby &= b 
+    \end{align*}
+    Ma $n \divides abx$ (poiche $n \divides ab$) e $n \divides nby$, dunque $n \divides abx + nby$, 
+    cioe' $n \divides b$.
+\end{proof}
+
+\begin{proposition} \label{greatest_common_divisor}
+    Siano $a, b, t \in \Z$ tali che $t \divides a$, $t \divides b$. Allora $t \leq \mcd{a}{b}$.
+\end{proposition}
+\begin{proof}
+    La proposizione deriva direttamente dalla definizione di massimo comun divisore: se $t$ e' un divisore comune ad $a$ e $b$, allora $t$ sara' minore o uguale al massimo dei divisori comuni di $a$ e $b$, cioe' $t \leq \mcd{a}{b}$.
+\end{proof}
+
+\begin{proposition} \label{divisori_dividono_mcd}
+    Siano $a, b, t \in \Z$ tali che $t \divides a$, $t \divides b$.  Allora $t \divides \mcd{a}{b}$.
+\end{proposition}
+\begin{proof}
+    Per la proposizione \ref{divides_sum_subtr_mult}, se $t \divides a$ e $t \divides b$ allora $t \divides ax+by$ per ogni $x, y \in \Z$.
+    Per il teorema di Bezout (\ref{bezout}) esistono $\bar{x}, \bar{y} \in \Z$ tali che $a\bar{x}+b\bar{y} = \mcd{a}{b}$. Ma quest'espressione e' della forma $ax + by$, con $x = \bar{x}$, $y = \bar{y}$, dunque 
+    $t \divides a\bar{x} + b\bar{y}$, cioe' $t \divides \mcd{a}{b}$.
+\end{proof}
+
+\begin{proposition} \label{t_divides_gcd_lincomb}
+    Siano $a, b, t \in \Z$. Allora 
+    \begin{equation}
+        t \divides \mcd{a}{b} \iff (\forall x, y \in \Z. \quad t \divides ax + by).
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo entrambi i versi dell'implicazione.
+    \begin{itemize}
+        \item Se $t \divides \mcd{a}{b}$, allora $t \divides a$ e $t \divides b$, dunque per la proposizione \ref{divides_sum_subtr_mult} segue che $t$ dovra' dividere una qualsiasi combinazione lineare di $a$ e $b$, cioe' $t \divides ax+by \forall x, y \in \Z$.
+        \item Viceversa supponiamo che $t \divides ax+by$ per ogni $x, y \in \Z$. Siano per il teorema di Bezout (\ref{bezout}) $\bar{x}, \bar{y}$ i numeri tali che $a\bar{x} + b\bar{y} = \mcd{a}{b}$. Allora $t$ dovra' dividere anche $a\bar{x} + b\bar{y}$, cioe' $t \divides \mcd{a}{b}$.
+    \end{itemize}
+\end{proof}
+
+\begin{proposition} \label{mcd_of_multiples_of_n}
+    Siano $a, b, n \in \Z$. Allora \begin{equation}
+        \mcd{an}{bn} = n\mcd{a}{b}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Osserviamo che se due numeri hanno gli stessi divisori allora sono uguali, a meno del segno.
+    Sia $t \in \Z$ tale che $t \divides an$ e $t \divides nb$. Per la proposizione \ref{t_divides_gcd_lincomb} allora 
+    \begin{alignat*}
+        {2}
+        &t \divides \mcd{an}{bn}\\
+        \iff &t \divides nax + nby      \qquad& \forall x, y \in \Z \\
+        \iff &t \divides n(ax + by)     \qquad& \forall x, y \in \Z \\
+        \intertext{dunque scegliendo $x, y$ tali che $ax+by = \mcd{a}{b}$ per Bezout (\ref{bezout})}
+        \iff &t \divides n\mcd{a}{b}.
+    \end{alignat*}
+\end{proof}
+
+\begin{corollary} \label{mcd_diviso_mcd}
+    Siano $a, b \in \Z$ e sia $d = \mcd{a}{b}$. Allora $\mcd{\frac{a}{d}}{\frac{b}{d}} = 1$.
+\end{corollary}
+\begin{proof}
+    Siano $a', b'$ tali che $a = a'd, b = b'd$. Allora per la proposizione \ref{mcd_of_multiples_of_n}
+    \begin{alignat*}{1}
+        \mcd{a}{b} &= \mcd{a'd}{b'd} \\
+                   &= d\mcd{a'}{b'} \\
+                   &= \mcd{a}{b} \mcd{a'}{b'}.
+        \end{alignat*} 
+    Dividendo entrambi i membri per $\mcd{a}{b}$ otteniamo \[
+        \mcd{a'}{b'} = 1 
+    \]
+    che, per definizione di $a', b'$ e' equivalente a \[
+        \mcd{\frac{a}{d}}{\frac{b}{d}} = 1
+    \]
+    che e' la tesi.
+\end{proof}
+
+\section{Numeri primi}
+
+\begin{definition}
+    Sia $p \in \Z$. Si dice che $p$ e' primo se se gli unici interi che dividono $p$ sono
+    $\pm 1$ e $\pm p$.
+\end{definition}
+
+\begin{proposition}
+    Se $p$ e' primo e $p \divides ab$, allora $p \divides a$ oppure $p \divides b$.
+\end{proposition}
+\begin{proof}
+    Supponiamo $p \nmid a$. Dato che $p$ e' primo, $\mcd{a}{p} = 1$ oppure $p$.
+    Tuttavia se $\mcd{a}{p} = p$ allora $p \divides a$, che va contro l'ipotesi, dunque 
+    $\mcd{a}{p} = 1$. Per la proposizione \ref{n_divides_product} allora $p \divides b$, che e' la tesi.
+\end{proof}
+
+\begin{proposition} \label{prodotto_numeri_coprimi}
+    Siano $a, b \in \Z, c \in \Z$ tali che $\mcd{a}{b} = 1$. Se $a \divides c$ e $b \divides c$ allora anche $ab \divides c$.
+\end{proposition}
+\begin{proof}
+    Per il teorema di Bezout (\ref{bezout}) esistono $x, y \in \Z$ tali che $\mcd{a}{b} = 1 = ax+by$, da cui segue $n = nax + nby$. 
+    Dato che $a \divides n$, $b \divides n$, allora $ab \divides na$ e $ab \divides nb$ per la proposizione \ref{divides_sum_subtr_mult}, quindi per la stessa proposizione $ab$ dividera' una loro qualunque combinazione lineare $nak + nbh$, inclusa quella con $k = x, h = y$.
+    Dunque $ab \divides nax + nby$ che e' equivalente a dire che $ab \divides n$, cioe' la tesi.
+\end{proof}
+
+
+\begin{proposition} \label{prodotto_coprimo_2}
+    Siano $a, b \in \Z, c \in \Z$ tali che $\mcd{a}{c} = \mcd{b}{c} = 1$. Allora anche il loro prodotto $ab$ e' coprimo con $c$.
+\end{proposition}
+\begin{corollary} \label{prodotto_coprimo_n}
+    Siano $a_1, a_2, \dots, a_n \in \Z, c \in \Z$ tali che $a_1, \dots, a_n$ siano coprimi con $c$. Allora anche il loro prodotto $\prod_{i = 1}^{n} a_i$ e' coprimo con $c$.
+\end{corollary}
+
+\begin{proposition}
+    Siano $a_1, a_2, \dots, a_n \in \Z, c \in \Z$ tali che $a_1, \dots, a_n$ siano coprimi tra loro e che per ogni $i<n$ vale che $a_i \divides c$.
+    Allora \begin{equation}
+        a_1a_2\dots a_n = \left( \prod_{i = 1}^n a_i \right) \divides c.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo la proposizione per induzione su $n$.
+    \begin{itemize}
+        \item \textbf{Caso base.}
+
+        Sia $n = 0$, cioe' $a_1\dots a_n = 1$. Allora banalmente $1 \divides c$.
+        \item \textbf{Passo induttivo.}
+        
+        Supponiamo che la tesi sia vera per $n-1$ e dimostriamola per $n$. Dunque per ipotesi $ \left(\prod_{i = 1}^{n - 1} a_i\right) \divides c$.
+        Ma per il corollario \ref{prodotto_coprimo_n} $a_n$ e' coprimo con $\prod_{i = 1}^{n - 1} a_i$, dunque per la proposizione \ref{prodotto_numeri_coprimi} segue che
+        \begin{equation*}
+            a_n \left(\prod_{i = 1}^{n - 1} a_i\right) = \left( \prod_{i = 1}^{n} a_i \right) \divides c
+        \end{equation*}
+        che e' la tesi per $n$.
+    \end{itemize}
+    Dunque la proposizione vale per ogni $n \in N$.
+\end{proof}
+
+\subsection{Divisori primi}
+\begin{proposition}
+    Siano $a, b, k \in \Z$, $p \in \Z$ primo. Allora
+    \begin{alignat}{1}
+        p^k \divides \mcd{a}{b} &\iff p^k \divides a \land p^k \divides b \\ 
+        p^k \divides \mcm{a}{b} &\iff p^k \divides a \lor p^k \divides b.
+    \end{alignat}
+\end{proposition}
+
+\begin{proposition}
+    Siano $a, b \in \Z$. Allora se $\mcd{a}{b} = 1$ segue che $\mcm{a}{b} = \abs{ab}$.
+\end{proposition}
+\begin{proof}
+    
+\end{proof}

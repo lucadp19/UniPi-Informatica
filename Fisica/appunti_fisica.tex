@@ -1,0 +1,40 @@
+\documentclass[a4paper]{report}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp, microtype}
+    \usepackage{amsmath, amsthm, amssymb, longtable, physics, mathtools, esvect, cases}
+
+    \usepackage{hyperref} % ultimo package da caricare!
+
+
+\theoremstyle{plain}
+\newtheorem{principle}{Principio}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Osservazione}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+
+\newcommand{\vmag}[1]{\abs{\bvv{#1}}}
+\newcommand{\ang}[1]{\left\langle#1\right\rangle}
+\newcommand{\bvv}[1]{\vv{\mathbf{#1}}}
+\newcommand{\bh}[1]{\hat{\mathbf{#1}}}
+
+\begin{document}
+
+% \author{Luca De Paulis}
+\title{Fisica}
+\maketitle
+
+\tableofcontents
+
+\include{chapter_1}
+\include{chapter_2}
+\include{chapter_3_dinamica}
+
+\end{document}

@@ -1,0 +1,347 @@
+\section{Equazioni diofantee}
+
+\begin{definition}
+    Siano $a, b, c \in \Z$ noti, $x, y \in \Z$ incognite. Allora un'equazione
+    lineare della forma $ax + by = c$ si dice equazione diofantea.
+\end{definition}
+
+\begin{theorem}
+    Siano $a, b, c \in \Z$. Allora l'equazione diofantea $ax + by = c$ ammette soluzioni
+    se e solo se $\mcd{a}{b} \divides c$.
+\end{theorem}
+\begin{proof}
+    Supponiamo che $c = k\mcd{a}{b}$ per qualche $k \in \Z$. Allora per il teorema di Bezout
+    \ref{bezout} esistono $x', y' \in \Z$ tali che $ax' + by' = \mcd{a}{b}$. Moltiplicando
+    entrambi i membri per $k$ otteniamo
+    \begin{alignat*}{2} 
+        k\mcd{a}{b} &= k(ax' + by')
+                    &= akx' + bky'
+                    &= a(kx') + b(ky')
+    \end{alignat*}
+    dunque $x = kx'$ e $y = ky'$ risolvono l'equazione diofantea.
+
+    Supponiamo ora che $c$ non sia un multiplo di $\mcd{a}{b}$ e supponiamo per assurdo che l'equazione
+    abbia soluzione, cioe' che esistano $x, y \in \Z$ tali che $ax + by = c$. Sia $d = \mcd{a}{b}.$
+    Per definizione di $\mcd{a}{b}$ e per la proposizione \ref{divides_sum_subtr_mult},
+    dato che $d \divides a$ e $d \divides b$ segue che $d \divides ax$, $d \divides by$ e dunque
+    $d \divides ax + by$. Ma $ax + by = c$, quindi $d = \mcd{a}{b} \divides c$, che va contro le ipotesi.
+    Dunque l'equazione diofantea non ha soluzione, cioe' la tesi.
+\end{proof}
+
+\begin{theorem} \label{sol_diofantea_omogenea_coprimi}
+    Siano $a, b \in \Z$ coprimi. Allora le soluzioni dell'equazione diofantea omogenea $ax + by = 0$ 
+    sono tutte e solo della forma $x = -kb, y = ka$ al variare di $k \in \Z$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo innanzitutto che $x = -kb, y = ka$ e' una soluzione.
+    \begin{alignat*}{1}
+        ax + by &= a(-kb) + b(ka)\\
+                &= -kab + kab\\
+                &= 0
+    \end{alignat*}
+
+    Mostriamo ora che non vi possono essere altre soluzioni. Dato che $ax + by = 0$, allora $ax = -by$.
+    Dato che $a \divides ax$ allora $a \divides -by$; inoltre per ipotesi $\mcd{a}{-b} = \mcd{a}{b} = 1$.
+    Dunque per il teorema \ref{n_divides_product} segue che $a \divides y$, cioe' $y = ak$ per
+    qualche $k \in \Z$. Sostituendo ottengo $x = -b\frac{y}{a} = -bk$, che e' la tesi.
+\end{proof}
+
+\begin{corollary} \label{sol_diofantea_omogenea}
+    Se $a, b$ non sono coprimi, allora tutte le soluzioni dell'equazione $ax + by = 0$ saranno della forma
+    $x = -kb', y = ka'$ dove $a' = \frac{a}{\mcd{a}{b}}$ e $b' = \frac{b'}{\mcd{a}{b}}.$
+\end{corollary}
+\begin{proof}
+    Dato che $a, b$ non sono coprimi, allora possiamo dividere entrambi i membri di $ax + by = 0$
+    per $\mcd{a}{b}$ ottenendo l'equazione diofantea equivalente $a'x + b'y = 0$. Ma per il teorema
+    \ref{mcd_diviso_mcd} $\mcd{a'}{b'} = 1$, dunque per il teorema \ref{sol_diofantea_omogenea_coprimi}
+    le sue soluzioni saranno tutte e solo della forma $x = -kb', y = ka'$. Ma questa equazione
+    e' equivalente all'originale, dunque anche le soluzioni di $ax + by = 0$ saranno tutte e solo
+    della forma $x = -kb', y = ka'$.
+\end{proof}
+
+\begin{theorem} \label{sol_diofantea_non_omog}
+    Siano $a, b \in \Z$. Allora le soluzioni dell'equazione diofantea $ax + by = c$ 
+    si ottengono sommando ad una soluzione particolare (se esiste) una soluzione qualsiasi dell'equazione
+    omogenea associata $ax + by = 0$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo innanzitutto che se $(x, y)$ e' una soluzione della diofantea non omogenea e $(x_0, y_0)$
+    e' una soluzione dell'omogenea, allora $(x+x_0, y+y_0)$ e' ancora soluzione della non omogenea.
+    \begin{alignat*}{1}
+        a(x + x_0) + b(y + y_0) &= ax + ax_0 + by + by_0 \\
+                                &= (ax + by) + (ax_0 + by_0) \\
+                                &= c + 0\\
+                                &= c
+    \end{alignat*}
+
+    Dimostriamo ora che tutte le soluzioni sono di questa forma. Sia $(\bar{x}, \bar{y})$ una
+    soluzione particolare della diofantea non omogenea e $(x, y)$ un'altra soluzione qualsiasi,
+    e mostriamo che la loro differenza e' una soluzione dell'omogenea associata.
+    \begin{alignat*}
+        {1}
+        a(x - \bar{x}) + b(y - \bar{y}) &= ax - a\bar{x} + by - b\bar{y} \\
+                                        &= (ax + by) - (a\bar{x} + b\bar{y}) \\
+                                        &= c - c\\
+                                        &= 0
+    \end{alignat*}
+    che e' la tesi.
+\end{proof}
+
+
+\section{Congruenze}
+
+\begin{definition} \label{def_congr}
+    Siano $a, b, m \in \Z$, $m > 0$. Allora si dice che $a$ e' congruo a $b$ modulo $m$ se e solo se $a - b$ e' un multiplo di $m$, e si scrive
+    \begin{align*}
+        &a \equiv b \pmod m
+    \end{align*}
+\end{definition}
+
+\begin{theorem}
+    Siano $a, b, m \in \Z$, $m > 0$. Allora la relazione di congruenza $\equiv \pmod(m)$ e' una relazione di equivalenza, e dunque soddisfa le proprieta':
+    \begin{align}
+        &\text{Riflessiva: } &&a \equiv a \Mod{m} \label{congr_rifl}\\
+        &\text{Simmetrica: } &&a \equiv b \Mod{m} \implies b \equiv a \Mod{m} \label{congr_simm}\\
+        &\text{Riflessiva: } &&a \equiv b \Mod{m} \land b \equiv c \Mod{m} \implies a \equiv c \Mod{m}  \label{congr_trans}
+    \end{align}
+\end{theorem}
+\begin{proof} Dimostriamo le tre proprieta' della congruenza come relazione di equivalenza.
+    \begin{enumerate}
+        \item $a - a = 0 = 0m$, dunque $a \equiv a \Mod{m}$.
+        \item Se $a - b = km$ allora $b - a = -(a - b) = -km = (-k)m$, cioe' $b \equiv a \Mod{m}$.
+        \item Se $a - b = km$ e $b - c = hm$ allora $a - c = (a - b) + (b - c) = km + hm = (k + h)m$, 
+            cioe' $a \equiv c \Mod{m}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem} \label{equiv_congr_resto}
+    Siano $a, b, m \in \Z$, $m > 0$. Allora
+    \begin{equation}
+        a \equiv b \Mod{m} \iff a \bmod m = b \bmod m
+    \end{equation}
+    cioe' $a$ e' congruo a $b$ se e solo se $a$ e $b$ hanno lo stesso resto quando divisi per $m$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo l'implicazione nei due versi.
+
+    Siano $r = a \bmod m$, $r' = b \bmod m$ i resti di $a$ e $b$ modulo $m$, 
+    cioe' $a = cq + r$ e $b = cq' + r'$ per qualche $q, q' \in \Z$. Supponiamo 
+    che $r = a \bmod m = b \bmod m = b$. Allora
+    \begin{alignat*}
+        {1}
+        a - b &= cq + r - cq' - r' \\
+              &= c(q - q')
+    \end{alignat*}
+    cioe' $a \equiv b \Mod{m}$.
+
+    Ora supponiamo che $a \equiv b \Mod{m}$ e dimostriamo che i resti di $a$ e $b$ modulo $m$ siano uguali.
+    Per la proposizione \ref{esistenza_resto} esistono $q, r \in \Z$ tale che $b = mq + r$ e $0 \leq r < m$.
+    Allora per definizione di congruenza per qualche $k \in \Z$ avremo
+    \begin{alignat*}
+        {1}
+        a &= b + mk \\
+          &= mq + r + mk \\
+          &= m(q + k) + r
+    \end{alignat*}
+    cioe' $r$ e' il resto di $a$ modulo $m$.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b, a', b', m \in \Z$, $m > 0$. Allora valgono le seguenti
+    \begin{align}
+        &a \equiv b \Mod{m}\land a' \equiv b' \Mod{m}\implies a+a' \equiv b+b'\Mod{m} \label{somma_congrui}\\
+        &a \equiv b \Mod{m}\land a' \equiv b' \Mod{m}\implies a-a' \equiv b-b'\Mod{m} \label{differenza_congrui}\\
+        &a \equiv b \Mod{m}\land a' \equiv b' \Mod{m}\implies aa' \equiv bb'\Mod{m} \label{prodotto_congrui}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item Per definizione di congruenza $m \divides a - b$ e $m \divides a' - b'$. Per la proposizione \ref{divides_sum_subtr_mult} segue che $m \divides (a - b) + (a' - b')$, cioe' $m \divides (a + a') - (b + b')$, che e' equivalente a $a+a' \equiv b+b'\Mod{m}$.
+        \item Per definizione di congruenza $m \divides a - b$ e $m \divides a' - b'$. Per la proposizione \ref{divides_sum_subtr_mult} segue che $m \divides (a - b) - (a' - b')$, cioe' $m \divides (a - a') - (b - b')$, che e' equivalente a $a-a' \equiv b-b'\Mod{m}$.
+        \item Per definizione di congruenza, scriviamo $a - b = km$ e $a' - b' = hm$, che e' equivalente a $b = a - km$ e $b' = a' - hm$. Dunque
+        \begin{alignat*}
+            {1}
+            bb' &= (a - km)(a' - hm) \\
+                &= aa' - ahm - a'km + khm \\
+                &= aa' - (ah + a'k - kh)m \\
+        \end{alignat*}    
+        che e' equivalente a
+        \begin{alignat*} {1}
+            aa' - bb' &= (ah + a'k - kh)m \\
+            \iff aa' &\equiv bb' \Mod{m}.
+        \end{alignat*}
+        
+    \end{enumerate}
+    
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b, c \in \Z$; sia $ax + by = c$ un'equazione diofantea. Allora tutte le soluzioni della diofantea sono soluzioni delle equazioni $ax \equiv c \Mod{b}$ e $by \equiv c \Mod{a}$.
+\end{proposition}
+\begin{proof}
+    Dimostriamo entrambi i versi dell'implicazione.
+    \begin{enumerate}
+        \item Siano $x, y \in \Z$ tali che $ax + by = c$. Dato che $ax + by$ e' uguale a $c$ segue che $ax + by \equiv c \Mod{b}$. Ma $b \equiv 0 \Mod{b}$, dunque $x$ sara' anche soluzione di $ax \equiv c \Mod{b}$. Analogo ragionamento considerando $ax + by \equiv c \Mod{a}$.
+        \item Sia $x \in Z$ tale che $ax \equiv c \Mod{b}$. Allora per definizione di congruenza esiste $k \in \Z$ per cui $ax - c = bk$. Sia $y = -k$; l'equazione e' quindi equivalente a $ax + by = c$, cioe' la coppia $(x, y)$ e' una soluzione dell'equazione diofantea. Analogo ragionamento se partiamo da $by \equiv c \Mod{a}$.
+    \end{enumerate}
+\end{proof}
+
+Tramite questa proposizione possiamo risolvere ogni equazione contenente congruenze risolvendo l'equazione diofantea associata, o viceversa.
+
+
+\subsection{Risolvere singole congruenze}
+
+\begin{definition}
+    Siano $a \in \Z$; allora si dice che $a$ e' invertibile modulo $m$ se esiste  $x \in \Z$ tale che \[
+        ax \equiv 1 \Mod{m}
+    .\]
+    In particolare tra tutti gli $x$ che soddisfano la relazione precedente, il numero $x$ tale che $0 \leq x < m$ si dice inverso di $a$ modulo $m$.
+\end{definition}
+Per calcolare gli inversi modulo $m$ basta fare una tabella $m \times m$ in cui le righe e le colonne contengono i numeri tra $0$ e $m-1$, e nella casella $ij$ c'e' il prodotto tra i numeri $i$ e $j$ modulo $m$.
+
+Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
+
+\begin{theorem}
+    Siano $a, m \in \Z$. Allora $a$ e' invertibile modulo $m$ se e solo se $\mcd{a}{m} = 1$. 
+\end{theorem}
+\begin{proof}
+    Supponiamo $\mcd{a}{m} = 1$. Allora per il teorema di Bezout \ref{bezout} $\exists x, y \in \Z$ tali che
+    \begin{alignat*}{1}
+        &ax + my = 1 \\
+        \iff &ax - 1 = m(-y) \\
+        \iff &ax \equiv 1 \Mod{m}
+    \end{alignat*}
+    dunque $x$ e' l'inverso di $a$ modulo $m$.
+
+    Supponiamo che $a$ sia invertibile modulo $m$, cioe' che $\exists x \in \Z$ tale che $ax \equiv= 1 \Mod{m}$. Ma sappiamo che $ax + my$ e' un multiplo di $\mcd{a}{m}$, quindi anche $1$ dovra' essere un multiplo di $\mcd{a}{m}$, cioe' $\mcd{a}{m} = 1$, che e' la tesi.
+\end{proof}
+\begin{corollary}
+    Se $p$ e' primo e $a \not\equiv 0 \Mod{p}$, allora $a$ e' invertibile modulo $p$.
+\end{corollary}
+\begin{proof}
+    Se $p$ e' primo, allora necessariamente $p$ e' coprimo con tutti i numeri che non sono suoi multipli, cioe' con tutti gli $a$ tali che $a \equiv_p 0$. Dunque se $a \equiv_p 0$ allora $\mcd{a}{p} = 1$, cioe' per il teorema precedente $a$ e' invertibile modulo $p$.
+\end{proof}
+
+\begin{proposition} \label{se_invertibile_allora_soluzione}
+    Siano $a, b, m \in \Z$; allora se $a$ e' invertibile modulo $m$ segue che $\exists x \in \Z$ tale che $ax \equiv b \Mod{m}$.
+\end{proposition}
+\begin{proof}
+    Dato che $a$ e' invertibile modulo $m$ esistera' $x' \in \Z$ tale che $ax' \equiv 1 \Mod{m}$. Moltiplicando entrambi i membri per $b$ otteniamo $ax'b \equiv b \Mod{m}$, dunque la $x \equiv x'b \Mod{b}$ soddisfa $ax \equiv b \Mod{m}$, cioe' la tesi.
+\end{proof}
+
+\begin{proposition} \label{cong_ha_soluzione_sse_mcd_div_b}
+    Siano $a, b, m, x \in \Z$; allora l'equazione $ax \equiv b \Mod{m}$ ha soluzione se e solo se $\mcd{a}{m} \divides b$.
+\end{proposition}
+\begin{proof}
+    Dimostriamo l'implicazione nei due versi.
+    \begin{itemize}
+        \item Supponiamo che $ax \equiv b \Mod{m}$ ammetta soluzione. Allora esiste $y \in \Z$ tale che $ax - my = b$. Dato che $a$ e $m$ sono multipli di $\mcd{a}{m}$, allora lo sara' anche la combinazione lineare $ax - my$ che e' uguale a $b$, cioe' $\mcd{a}{m} \divides b$.
+        \item Supponiamo che $d = \mcd{a}{m}$ divida $b$. Allora $d\divides a$, $d \divides b$, $d \divides m$. Siano $a' = \frac{a}{d}, b' = \frac{b}{d}, m' = \frac{m}{d}$. Allora 
+        \begin{align*}
+            &ax \equiv b \Mod{m}\\
+            \iff{} &ax - b = mk   &\text{per qualche $k \in \Z$} \\
+            \iff{} &a'dx - b'd = m'dk &\text{per qualche $k \in \Z$} \\
+            \iff{} &a'x - b' = m'k &\text{per qualche $k \in \Z$} \\
+            \iff{} &a'x \equiv b'\Mod{m'}.
+        \end{align*}
+        Ma per il corollario \ref{mcd_diviso_mcd} $\mcd{a'}{m'} = 1$, dunque $a'$ e' invertibile modulo $m'$, dunque per la proposizione \ref{se_invertibile_allora_soluzione} segue che $a'x \equiv b' \Mod{m'}$ ha soluzione. Tuttavia $a'x \equiv b' \Mod{m'}$ e' equivalente a $ax \equiv b \Mod{m}$, dunque anche $ax \equiv b \Mod{m}$ ha soluzione e in particolare ha le stesse soluzioni di $a'x \equiv b' \Mod{m'}$.
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    Se vogliamo semplificare una congruenza possiamo sfruttare le seguenti regole:
+    \begin{alignat}{3}
+        A &\equiv B \Mod{m} \quad &\iff      \quad &A + c \equiv B + c \Mod{m} \\
+        A &\equiv B \Mod{m} \quad &\implies  \quad &cA \equiv cB \Mod{m} \\
+        A &\equiv B \Mod{m} \quad &\iff      \quad &(A \bmod m) \equiv (B \bmod m) \Mod{m} \\
+        Ad &\equiv Bd \Mod{m} \quad &\implies\quad &A \equiv B \Mod{m} \qquad \text{se }\mcd{d}{m} = 1\\
+        Ad &\equiv Bd \Mod{md} \quad &\iff   \quad &A \equiv B \Mod{m}
+    \end{alignat}
+\end{proposition}
+\begin{proof}
+    Dimostriamo le 5 proposizioni.
+    \begin{enumerate}
+        \item Dato che $c \equiv c \Mod{m}$, si tratta di un caso particolare della \ref{somma_congrui}. Inoltre l'implicazione inversa si ricava dalla \ref{differenza_congrui}, dunque si tratta di un'equivalenza.
+        \item Dato che $c \equiv c \Mod{m}$, si tratta di un caso particolare della \ref{prodotto_congrui}.
+        \item Dato che $A \equiv (A \bmod m) \Mod{m}$ e $B \equiv (B \bmod m) \Mod{m}$, per transitivita' otteniamo che $A \equiv B \Mod{m}$ e' equivalente a $(A \bmod m) \equiv (B \bmod m) \Mod{m}$.
+        \item Se $\mcd{d}{m} = 1$ allora esiste l'inverso di $d$ modulo $m$. Chiamiamo $x$ questo inverso e moltiplichiamo entrambi i membri della congruenza per $x$, ottenendo
+        \begin{alignat*}
+            {1}
+            Ad &\equiv Bd \Mod{m}  \\
+            \iff Adx &\equiv Bdx \Mod{m} \\
+            \iff A \cdot 1 &\equiv B \cdot 1 \Mod{m} \\
+            \iff A &\equiv B \Mod{m}.
+        \end{alignat*}
+        \item Per definizione di congruenza esiste $y \in \Z$ tale che
+        \begin{alignat*}
+            {1}
+            Ad &= Bd + mdy \\
+            \iff A &= B + my \\
+            \iff A &\equiv B \Mod{m}.
+        \end{alignat*}
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b, m \in \Z$ noti, $x \in \Z$ non noto. Allora per risolvere l'equazione $ax \equiv b \Mod{m}$ possiamo ricondurci ad uno dei seguenti tre casi:
+    \begin{enumerate}
+        \item se $\mcd{a}{m} = 1$, allora l'equazione ha soluzione $x \equiv by \Mod{m}$, dove $y$ e' l'inverso di $a$ modulo $m$;
+        \item se $\mcd{a}{m} \neq 1$, $d = \mcd{a}{m} \divides b$, allora l'equazione e' equivalente all'equazione $a'x \equiv b' \Mod{m'}$, con $a' = \frac{a}{d}$, $b' = \frac{b}{d}$, $m' = \frac{m}{d}$, che ha soluzione;
+        \item se $\mcd{a}{m} \neq 1$, $\mcd{a}{m} \nmid b$, allora l'equazione non ha soluzione.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    I tre casi sono conseguenza diretta della proposizione \ref{cong_ha_soluzione_sse_mcd_div_b}. Infatti
+    \begin{enumerate}
+        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione ha soluzione. Se $y$ e' l'inverso di $a$, moltiplicando entrambi i membri per $y$ otteniamo la soluzione $x \equiv by \Mod{m}$.
+        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione ha soluzione. 
+        Sia $d = \mcd{a}{m}$. Allora la congruenza e' equivalente a $ax - b = mk$ per qualche $k \in \Z$. Dato che $a, b, m$ sono divisibili per $d$, dividendo per $d$ otteniamo l'equazione equivalente
+        \begin{alignat*}
+            {1}
+            &\frac{a}{d}x - \frac{b}{d} = \frac{m}{d}k \\
+            \iff &\frac{a}{d}x \equiv \frac{b}{d} \Mod{\frac{m}{d}}
+        \end{alignat*}
+        Ma per il corollario \ref{mcd_diviso_mcd} $\mcd{\frac{a}{d}}{\frac{m}{d}} = 1$, dunque possiamo trovare la soluzione sfruttando il primo caso.
+        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione non ha soluzione. 
+        % Scriviamo l'equazione nella forma equivalente $ax - mk = b$ per qualche $k \in \Z$. Dato che $\mcd{a}{m}$ divide sia $ax$ che $mk$, allora dovra' dividere anche $b$, ma per ipotesi $\mcd{a}{m} \nmid b$, dunque l'equazione non puo' avere soluzione.
+    \end{enumerate}
+\end{proof}
+
+\subsection{Sistemi di congruenze}
+
+\begin{theorem}
+    [Teorema Cinese del Resto]
+    Dato un sistema di congruenze in forma normale 
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            x&\equiv a_1 \Mod{m_1}\\
+            x&\equiv a_2 \Mod{m_2}\\
+            &\vdotswithin{\equiv} \\
+            x&\equiv a_n \Mod{m_n}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    se i moduli $m_1, m_2, \dots, m_n$ sono a due a due coprimi (cioe' se per ogni $i \neq j$ vale che $\mcd{m_i}{m_j} = 1$) allora il sistema ha soluzione, ed e' equivalente ad una singola congruenza del tipo
+    \begin{equation}
+        x \equiv x_0 \pmod{m_1 m_2 \dots m_n}.
+    \end{equation} 
+\end{theorem}
+
+\begin{proposition}
+    Dato un sistema di congruenze 
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            a_1x &\equiv b_1 \Mod{m_1}\\
+            a_2x &\equiv b_2 \Mod{m_2}\\
+            &\vdotswithin{\equiv} \\
+            a_nx &\equiv b_n \Mod{m_n}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    se $x_0$ e' una soluzione particolare, allora tutte le soluzioni del sistema si ottengono sommando a $x_0$ un multiplo di $\operatorname{mcm}(m_1, m_2, \dots, m_n)$; o equivalentemente la soluzione del sistema e' una singola congruenza della forma
+    \begin{equation}
+        x \equiv x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}
+    \end{equation}
+\end{proposition}

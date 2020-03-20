@@ -1,0 +1,288 @@
+\chapter{Cinematica del punto materiale}
+
+\section{Definizioni fondamentali}
+\begin{definition}
+    Si dice raggio vettore o \textbf{vettore posizione} il vettore $\bvv{r}$ che descrive la posizione del punto materiale rispetto ai tre assi al variare del tempo.
+    \[\bvv{r}(t) = x(t)\bh{i} + y(t)\bh{j} + z(t)\bh{k}\]
+\end{definition}
+
+\begin{definition}
+    Si dice \textbf{vettore spostamento} il vettore $\bvv{s}$ che descrive lo spostamento del punto materiale tra due istanti di tempo.
+    \[\bvv{s} = \Delta\bvv{r} = \bvv{r_f} - \bvv{r_i} = \bvv{r}(t_f) - \bvv{r}(t_i)\]
+\end{definition}
+
+\begin{definition}
+    Si dice \textbf{velocita' media} il vettore $\ang{\bvv{v}}$ che descrive la velocita' media del punto materiale tra due istanti di tempo.
+        \begin{equation} \label{def_vel_media}
+            \ang{\bvv{v}} = \bvv{v_m}(t_1, t_2) = \frac{\Delta\bvv{r}}{\Delta t} = \frac{\bvv{r}(t_2) - \bvv{r}(t_1)}{t_2-t_1}
+        \end{equation}
+    Si dice invece \textbf{velocita' istantanea} il vettore $\bvv{v}$ che descrive la velocita' del punto materiale in ogni istante di tempo.
+    La velocita' istantanea e' definita come il limite della velocita' media quando $t_2 \to t_1$, o equivalentemente se supponiamo
+    $t_2 = t_1 + \Delta t$ la velocita' istantanea e' il limite della velocita' media quando $\Delta t \to 0$.
+    \[\bvv{v} = \lim_{t_2 \to t_1} \frac{\bvv{r}(t_2) - \bvv{r}(t_1)}{t_2-t_1} = \lim_{\Delta t \to 0} \frac{\bvv{r}(t_1 + \Delta t) - \bvv{r}(t_1)}{\Delta t} = \dot{\bvv{r}}(t)\]
+\end{definition}
+
+Notiamo che la velocita' istantanea e' un vettore parallelo allo spostamento infinitesimo, e quindi e' in particolare tangente alla traiettoria
+del punto materiale. Scrivendola come derivata delle componenti otteniamo:
+\[\bvv{v} = \dot{x}(t)\bh{i} + \dot{y}(t)\bh{j} + \dot{z}(t)\bh{k} = v_x\bh{i} + v_y\bh{j} + v_z\bh{k}\]
+
+\begin{definition}
+    Si dice \textbf{accelerazione media} il vettore $\ang{\bvv{a}}$ che descrive il cambiamento medio della velocita' del punto materiale tra due istanti di tempo.
+    \[\ang{\bvv{a}} = \bvv{a_m}(t_1, t_2) = \frac{\Delta\bvv{v}}{\Delta t} = \frac{\bvv{v}(t_2) - \bvv{v}(t_1)}{t_2-t_1}\] 
+    Si dice invece \textbf{accelerazione istantanea} il vettore $\bvv{a}$ che descrive l'accelerazione del punto materiale in ogni istante di tempo.
+    \[\bvv{a} = \lim_{t_2 \to t_1} \frac{\bvv{v}(t_2) - \bvv{v}(t_1)}{t_2-t_1} = \lim_{\Delta t \to 0} \frac{\bvv{v}(t_1 + \Delta t) - \bvv{v}(t_1)}{\Delta t} = \dot{\bvv{v}}(t) = \ddot{\bvv{r}}(t)\]
+\end{definition}
+
+\theoremstyle{plain}
+\begin{remark}
+    L'accelerazione e' diversa da 0 se la velocita' cambia in modulo, ma anche se cambia in direzione!
+\end{remark}
+
+\section{Moto ad una dimensione}
+\theoremstyle{definition}
+\begin{definition}
+    Si dice \textbf{legge oraria del moto} la legge che associa ad ogni istante di tempo la posizione del corpo
+    sull'asse di riferimento:
+    \[x(t) = f(t)\]
+\end{definition}
+
+Dalla legge oraria possiamo ricavare la velocita' e l'accelerazione del corpo tramite la derivata:
+\[x(t) = f(t) \implies v(t) = \dot{x}(t) \implies a(t) = \dot{v}(t) = \ddot{x}(t)\]
+
+\subsection{Stato di quiete}
+Si dice che un punto materiale e' in stato di quiete se vale che $x(t) = x_0$ costante $\forall t > 0$.
+Da questa relazione si ricavano la velocita' e l'accelerazione:
+\begin{subequations}
+\begin{align}
+    &x(t) = x_0 \\
+    &v(t) = \dot{x}(t) = 0 \\
+    &a(t) = \dot{v}(t) = 0 
+\end{align}
+\end{subequations}
+
+\subsection{Moto a velocita' costante}
+Si dice che un punto materiale si muove di moto rettilineo uniforme se vale che $v(t) = v_0$ costante $\forall t > 0$.
+Da questa relazione si ricavano la posizione e l'accelerazione:
+\begin{subequations}
+\begin{align}
+    &x(t) = \int_{0}^t v(t) dt = x_0 + v_0t \\
+    &v(t) = v_0 \\
+    &a(t) = \dot{v}(t) = 0 
+\end{align}    
+\end{subequations}
+dove $x_0 = x(0)$.
+Se consideriamo il vettore posizione e il vettore velocita', otteniamo che
+\[\bvv{v}(t) = \ang{\bvv{v}} = \frac{\Delta \bvv{r}}{\Delta t} = \frac{\bvv{r}(t) - \bvv{r_0}}{\Delta t}\]
+da cui segue
+\[\bvv{r}(t) = \bvv{r_0} + \ang{\bvv{v}}(t - t_0)\]
+dove $\ang{\bvv{v}}$ e' il vettore velocita' media (che e' sempre uguale alla velocita' 
+istantanea nel caso di moto a velocita' costante). 
+Da questo segue il fatto che il moto sia lungo una traiettoria rettilinea.
+
+\subsection{Moto ad accelerazione costante}
+Si dice che un punto materiale si muove di moto rettilineo uniformemente accelerato
+se vale che $a(t) = a_0$ costante $\forall t > 0$.
+Da questa relazione si ricavano la posizione e la velocita':
+\begin{subequations}
+\begin{align}
+&a(t) = a_0 \\
+&v(t) = \int_{0}^t a(t) dt = v_0 + a_0t \\
+&x(t) = \int_{0}^t v(t) dt = x_0 + v_0t + \frac{a_0}{2}t^2
+\end{align}
+\end{subequations}
+
+dove $x_0 = x(0)$ e $v_0 = v(0)$.
+Dalla seconda possiamo ricavare
+\begin{numcases}{v(t) = v_0 + a_0t \implies}
+    t = \frac{v(t) - v_0}{a_0} \label{time} \\
+    a_0 = \frac{v(t) - v_0}{t} \label{accel}
+\end{numcases}
+Sostituendo la \ref{time} nell'espressione per $x(t)$ e riordinando otteniamo
+\begin{equation}
+    v^2(t) = v_0^2 + 2a_0(x-x_0) \label{MUA_senza_t}
+\end{equation}
+Sostituendo invece la \ref{accel} nell'espressione per $x(t)$ e riordinando otteniamo
+\begin{equation}
+    x(t) = x_0 + \frac{1}{2}(v(t)+v_0)t \label{MUA_senza_a}
+\end{equation}
+
+Se consideriamo il vettore velocita' e il vettore accelerazione, otteniamo che
+\[\bvv{a}(t) = \ang{\bvv{a}} = \frac{\Delta \bvv{v}}{\Delta t} = \frac{\bvv{v}(t) - \bvv{v_0}}{\Delta t}\]
+da cui segue
+\[\bvv{v}(t) = \bvv{v_0} + \ang{\bvv{a}}(t - t_0)\]
+dove $\ang{\bvv{a}}$ e' il vettore accelerazione media (che e' sempre uguale all'accelerazione 
+istantanea nel caso di moto ad accelerazione costante).
+Da questo segue il fatto che il moto sia lungo una traiettoria rettilinea.
+
+
+\subsection{Moto a caduta libera}
+E' un caso particolare di un moto uniformemente accelerato. Consideriamo un sistema ortogonale $XY$ e un corpo
+che si trova inizialmente nel punto $(x_0, y_0) = (0, y_0)$ e che si muove verso il basso con una velocita' di modulo iniziale $v_0$. 
+I vettori che rappresentano lo stato del corpo saranno quindi:
+\begin{subequations}
+\begin{align}
+    &\bvv{r}(0) = y_0\bh{j}\\
+    &\bvv{v}(0) = v_0\bh{j}\\
+    &\bvv{a}(0) = -g\bh{j}
+\end{align}    
+\end{subequations}
+dove $g$ e' l'accelerazione di gravita' terrestre.
+Notiamo quindi che il moto si svolge unicamente nella direzione dell'asse $Y$.
+
+\subsubsection{Caduta da un'altezza}
+Supponiamo che il corpo cada da un'altezza $h$ da fermo (cioe' $v_0 = 0$).
+Avremo:
+\begin{subequations}
+\begin{align}
+    &y(t) = h - \frac{1}{2}gt^2 \\
+    &v(t) = -gt \label{v_caduta_libera}\\
+    &a(t) = -g
+\end{align}    
+\end{subequations}
+
+Da queste equazioni possiamo ricavare il tempo di caduta e la velocita' di impatto del corpo con il suolo.
+Infatti quando il corpo tocca il suolo all'istante $t_f$, avremo che
+\begin{alignat}{2}
+          y(t_f) &= h - \frac{1}{2}gt_f^2 = 0    \nonumber\\
+    \implies t_f &= \sqrt{\frac{2h}{g}}             &\rlap{\text{(Tempo di caduta)}}\\
+    \intertext{dunque sostituendo $t_f$ nell'equazione della velocita' \ref{v_caduta_libera}:}
+          v(t_f) &= -\sqrt{2gh}                  &\rlap{\text{(Velocita' finale)}}
+\end{alignat}    
+
+
+\subsubsection{Lancio verso l'alto}
+Supponiamo ora che il corpo venga lanciato verso l'alto con una velocita' iniziale $v_0 \neq 0$.
+Avremo:
+\begin{subequations}
+\begin{align}
+    &y(t) = y_0 + v_0t - \frac{1}{2}gt^2 \label{y_lancio}\\
+    &v(t) = v_0 - gt \\
+    &a(t) = -g
+\end{align}    
+\end{subequations}
+
+Possiamo calcolare il punto di altezza massima $y_M$ e il tempo necessario per raggiungerlo $t_M$ da queste equazioni.
+Infatti al punto di altezza massima la velocita' sara' nulla, dunque avremo che    
+\begin{alignat}
+    {2}
+          v(t_M) &= v_0 - gt_M = 0       \nonumber \\
+    \implies t_M &= \frac{v_0}{g}               \\
+    \intertext{dunque sostituendo $t_M$ nell'equazione della posizione \ref{y_lancio}}
+    y_M     &= y_0 + v_0t_M - \frac{1}{2}gt_M^2 \nonumber \\
+            &= y_0 + \frac{v_0^2}{2g}               
+\end{alignat}
+
+\section{Moto in due dimensioni}
+Consideriamo ora moti che avvengono in due dimensioni.
+Siano $\bvv{r}$, $\bvv{v}$ e $\bvv{a}$ i vettori che descrivono la posizione, la velocita' e l'accelerazione del corpo nel tempo.
+Allora il moto e' rettilineo se $\bvv{a} \parallel \bvv{v}$ oppure se $\bvv{a} = \bvv{0}$, altrimenti il moto e' bidimensionale.
+Le leggi del moto sono le stesse del caso unidimensionale
+\begin{subequations}
+\begin{align}
+    &\bvv{a}(t) = \bvv{a_0} \\
+    &\bvv{v}(t) = \bvv{v_0} + \bvv{a_0}t \\
+    &\bvv{r}(t) = \bvv{r_0} + \bvv{v_0}t + \frac{\bvv{a_0}}{2}t^2
+\end{align}
+\end{subequations}
+ma possono essere separate in due equazioni che si riferiscono al moto sui due assi
+\begin{subequations}
+    \begin{align}
+        &\bvv{r}\text{:}
+        \begin{cases}{}
+            x(t) = x_0 + (v_0\cos{\theta})t + \frac{1}{2}(a_0\cos{\psi})t^2 \\
+            y(t) = y_0 + (v_0\sin{\theta})t + \frac{1}{2}(a_0\sin{\psi})t^2
+        \end{cases} \\
+        &\bvv{v}\text{:}
+        \begin{cases}{}
+            v_x(t) = v_0\cos{\theta} + (a_0\cos{\psi})t \\
+            v_y(t) = v_0\sin{\theta} + (a_0\sin{\psi})t
+        \end{cases} \\
+        &\bvv{a}\text{:}
+        \begin{cases}{}
+            a_x(t) = a_0\cos{\psi} \\
+            a_y(t) = a_0\sin{\psi}
+        \end{cases}
+    \end{align}
+\end{subequations}
+dove $v_0$ e' il modulo del vettore $\bvv{v_0}$, $\theta$ e' l'angolo formato da $\bvv{v_0}$ con l'asse $X$, 
+$a_0$ e' il modulo del vettore $\bvv{a_0}$ e $\psi$ e' l'angolo formato da $\bvv{a_0}$ con l'asse $X$.
+
+\subsection{Moto del proiettile}
+Consideriamo un caso particolare del moto accelerato bidimensionale in cui $\bvv{a} = -g\bh{j}$.
+Se sostituiamo nelle equazioni precedenti otteniamo
+\begin{subequations}
+    \begin{align}
+        &\bvv{r}\text{:}
+        \begin{cases}{}
+            x(t) = x_0 + (v_0\cos{\theta})t\\
+            y(t) = y_0 + (v_0\sin{\theta})t - \frac{1}{2}gt^2
+        \end{cases} \label{proj_pos}\\
+        &\bvv{v}\text{:}
+        \begin{cases}{}
+            v_x(t) = v_0\cos{\theta} \\
+            v_y(t) = v_0\sin{\theta} - gt
+        \end{cases} \\
+        &\bvv{a}\text{:}
+        \begin{cases}{}
+            a_x(t) = 0 \\
+            a_y(t) = -g
+        \end{cases}
+    \end{align}
+\end{subequations}
+Possiamo notare che, considerando i moti sui due assi separatamente, il moto del punto sull'asse $X$ e' rettilineo uniforme, 
+mentre quello sull'asse $Y$ e' uniformemente accelerato.
+
+\subsubsection{Traiettoria del proiettile}
+Se ricaviamo $t$ dalla formula di $x(t)$ da \ref{proj_pos} (ottenendo $t = \frac{x-x_0}{v_0\cos{\theta}}$)
+e lo sostituiamo nella formula di $y(t)$ otteniamo la traiettoria tracciata dal proiettile, 
+cioe' una curva di secondo grado del tipo
+\begin{equation}
+    y(x) = y_0 + \tan{\theta}(x-x_0) - \frac{g}{2(v\cos{\theta})^2}(x-x_0)^2 \label{proj_traj}
+\end{equation}
+che rappresenta la traiettoria del proiettile al variare della $x$.
+
+\subsubsection{Punto di altezza massima}
+Come nel caso del corpo lanciato verticalmente, il punto di altezza massima viene raggiunto nell'istante
+di tempo $t_h$ tale che $v_y(t_h) = 0$.
+Sostituendo nelle equazioni otteniamo:   
+\begin{alignat}
+    {2}
+        v_y(t_h) &= v_0\sin{\theta} - gt_h = 0             \nonumber \\       
+    \implies t_h &= \frac{v_0\sin{\theta}}{g}                   \\
+    \intertext{dunque sostituendo $t_h$ nell'equazione della posizione \ref{proj_pos}}
+    y(t_h)   &= y_0 + (v_0\sin{\theta})t_h - \frac{1}{2}gt_h^2  \nonumber \\
+             &= y_0 + \frac{(v_0\sin{\theta})^2}{g} - \frac{(v_0\sin{\theta})^2}{2g} \nonumber \\
+             &= y_0 + \frac{(v_0\sin{\theta})^2}{2g}            \label{h_max_proj_theta}
+\end{alignat}
+che e' massimo quando $\theta = \frac{\pi}{2}$, ed e' dunque uguale a
+\begin{equation}
+    y_M = \frac{v_0^2}{2g} \label{h_map_proj}
+\end{equation}
+
+\subsubsection{Gittata}
+Per calcolare la gittata del proiettile ci bastera' capire in che punto esso raggiunge 
+l'altezza che aveva all'inizio del lancio;
+bastera' cioe' trovare $\Delta x = x(t_g)-x_0$, dove $t_g > 0$ e' tale che $y(t_g) = y_0$.
+\begin{alignat}
+    {2}
+             y(t_g) &= y_0 + (v_0\sin{\theta})t_g - \frac{1}{2}gt_g^2 = y_0 \nonumber \\
+    \implies t_g &= \frac{2v_0\sin{\theta}}{g}                   \\
+    \intertext{dunque sostituendo $t_g$ nell'equazione della posizione \ref{proj_pos}}
+    \Delta x &= (v_0\sin{\theta})t_g  \nonumber \\
+             &= \frac{v_0^2\sin{2\theta}}{g}            \label{gittata_proj_theta}
+\end{alignat}
+che e' massimo quando $\theta = \frac{\pi}{4}$ ed e' dunque uguale a
+\begin{equation}
+    x_{g_M} = \frac{x_0^2}{g}   \label{gittata_proj}
+\end{equation}
+
+\subsubsection{Impatto col suolo}
+Invece per calcolare la distanza percorsa per impattare il suolo e' sufficiente trovare l'intersezione con l'asse $X$;
+cioe' bastera' trovare $\Delta x = x(t_s)-x_0$, dove $t_s > 0$ e' tale che $y(t_s) = 0$.
+\begin{alignat}
+    {2}
+             y(t_s) &= y_0 + (v_0\sin{\theta})t_s - \frac{1}{2}gt_s^2 = 0               \nonumber \\
+    \implies t_s &= \frac{1}{g}\left(v_0\sin{\theta} + \sqrt{(v_0\sin{\theta})^2 + 2gy_0}\right)   \\
+    \intertext{dunque sostituendo $t_s$ nell'equazione della posizione \ref{proj_pos}}
+    \Delta x &= (v_0\sin{\theta})t_s   \label{impatto_proj_theta}
+\end{alignat}
