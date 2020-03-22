@@ -70,7 +70,7 @@
     Il resto $r$ definito in questo modo e' l'unico elemento di questa progressione compreso tra $0$ e $b - 1$.
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{mcm|c_iff_a,b|c}
     Siano $a, b, c \in \Z$. Allora \begin{equation}
         \mcm{a}{b} \divides c \iff a \divides c \land b \divides c
     \end{equation}
@@ -154,8 +154,13 @@ Dunque per calcolare il massimo comun divisore si puo' sfruttare il seguente alg
 Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle proprieta' dei divisori e sul loro rapporto con il massimo comun divisore di due numeri.
 
 \begin{proposition} \label{n_divides_product}
-    Siano $a, b, n \in \Z$. Se $n \divides ab$ e $\mcd{a}{n} = 1$, allora $n \divides b$.
+    Siano $a, b, n \in \Z$. Allora \begin{equation}
+        n \divides ab \land \mcd{a}{n} = 1 \implies n \divides b.
+    \end{equation}
 \end{proposition}
+\begin{intuition}
+    Se $n$ divide $ab$, allora tutti i fattori primi che dividono $n$ dovranno essere contenuti in $ab$. Dato che $\mcd{n}{a} = 1$, questi fattori non possono essere contenuti in $a$, dunque dovranno essere tutti contenuti in $b$.
+\end{intuition}
 \begin{proof}
     Per il teorema di Bezout (\ref{bezout}) esistono $x, y \in \Z$ tali che 
     \begin{align*}
@@ -192,7 +197,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
     \begin{itemize}
-        \item Se $t \divides \mcd{a}{b}$, allora $t \divides a$ e $t \divides b$, dunque per la proposizione \ref{divides_sum_subtr_mult} segue che $t$ dovra' dividere una qualsiasi combinazione lineare di $a$ e $b$, cioe' $t \divides ax+by \forall x, y \in \Z$.
+        \item Se $t \divides \mcd{a}{b}$, allora $t \divides a$ e $t \divides b$, dunque per la proposizione \ref{divides_sum_subtr_mult} segue che $t$ dovra' dividere una qualsiasi combinazione lineare di $a$ e $b$, cioe' $t \divides ax+by$ per ogni $x, y \in \Z$.
         \item Viceversa supponiamo che $t \divides ax+by$ per ogni $x, y \in \Z$. Siano per il teorema di Bezout (\ref{bezout}) $\bar{x}, \bar{y}$ i numeri tali che $a\bar{x} + b\bar{y} = \mcd{a}{b}$. Allora $t$ dovra' dividere anche $a\bar{x} + b\bar{y}$, cioe' $t \divides \mcd{a}{b}$.
     \end{itemize}
 \end{proof}
@@ -202,6 +207,9 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
         \mcd{an}{bn} = n\mcd{a}{b}
     \end{equation}
 \end{proposition}
+\begin{intuition}
+    Se due numeri hanno $n$ come fattore comune, ovviamente il massimo comun divisore dovra' contenere $n$ e quindi dovra' essere un multiplo di $n$.
+\end{intuition}
 \begin{proof}
     Osserviamo che se due numeri hanno gli stessi divisori allora sono uguali, a meno del segno.
     Sia $t \in \Z$ tale che $t \divides an$ e $t \divides nb$. Per la proposizione \ref{t_divides_gcd_lincomb} allora 
@@ -215,9 +223,13 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     \end{alignat*}
 \end{proof}
 
+
 \begin{corollary} \label{mcd_diviso_mcd}
     Siano $a, b \in \Z$ e sia $d = \mcd{a}{b}$. Allora $\mcd{\frac{a}{d}}{\frac{b}{d}} = 1$.
 \end{corollary}
+\begin{intuition}
+    Se dividiamo due numeri per il loro mcd stiamo eliminando dalla loro fattorizzazione tutti i primi comuni ad entrambi, quindi i due numeri risultanti dall'operazione non potranno avere primi in comune e quindi saranno coprimi.
+\end{intuition}
 \begin{proof}
     Siano $a', b'$ tali che $a = a'd, b = b'd$. Allora per la proposizione \ref{mcd_of_multiples_of_n}
     \begin{alignat*}{1}
@@ -233,6 +245,9 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     \]
     che e' la tesi.
 \end{proof}
+
+
+
 
 \section{Numeri primi}
 
@@ -251,7 +266,10 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \end{proof}
 
 \begin{proposition} \label{prodotto_numeri_coprimi}
-    Siano $a, b \in \Z, c \in \Z$ tali che $\mcd{a}{b} = 1$. Se $a \divides c$ e $b \divides c$ allora anche $ab \divides c$.
+    Siano $a, b \in \Z, c \in \Z$ tali che $\mcd{a}{b} = 1$. Allora
+    \begin{equation}
+        a \divides c \land b \divides c \iff ab \divides c
+    \end{equation}
 \end{proposition}
 \begin{proof}
     Per il teorema di Bezout (\ref{bezout}) esistono $x, y \in \Z$ tali che $\mcd{a}{b} = 1 = ax+by$, da cui segue $n = nax + nby$. 
@@ -261,11 +279,23 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 
 
 \begin{proposition} \label{prodotto_coprimo_2}
-    Siano $a, b \in \Z, c \in \Z$ tali che $\mcd{a}{c} = \mcd{b}{c} = 1$. Allora anche il loro prodotto $ab$ e' coprimo con $c$.
+    Siano $a, b, c \in \Z$. Allora
+    \begin{equation}
+        \mcd{ab}{c} = 1 \iff \mcd{a}{c} = \mcd{b}{c} = 1
+    \end{equation}
 \end{proposition}
+\begin{intuition}
+    Dimostrazione intuitiva: se $a$ e $b$ sono coprimi con $c$ significa che $a$ non ha nessun fattore in comune con $c$, e stessa cosa per $b$. Ma il loro prodotto $ab$ viene diviso dagli stessi primi che dividono $a$ e $b$ separatamente, quindi deve essere anch'esso coprimo con $c$.
+
+    Al contrario, se $ab$ non ha fattori primi in comune con $c$, allora naturalmente $a, b$ (essendo divisori di $ab$) non avranno fattori in comune con $c$.
+\end{intuition}
+
 \begin{corollary} \label{prodotto_coprimo_n}
     Siano $a_1, a_2, \dots, a_n \in \Z, c \in \Z$ tali che $a_1, \dots, a_n$ siano coprimi con $c$. Allora anche il loro prodotto $\prod_{i = 1}^{n} a_i$ e' coprimo con $c$.
 \end{corollary}
+\begin{intuition}
+    Stessa idea della dimostrazione della proposizione \ref{prodotto_coprimo_2} ma estesa a $n$ numeri.
+\end{intuition}
 
 \begin{proposition}
     Siano $a_1, a_2, \dots, a_n \in \Z, c \in \Z$ tali che $a_1, \dots, a_n$ siano coprimi tra loro e che per ogni $i<n$ vale che $a_i \divides c$.
@@ -273,6 +303,9 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
         a_1a_2\dots a_n = \left( \prod_{i = 1}^n a_i \right) \divides c.
     \end{equation}
 \end{proposition}
+\begin{intuition}
+    Quest'ultima proposizione ci dice che se $a_1, \dots, a_n$ non hanno fattori primi in comune e ognuno di loro divide $c$, allora anche il loro prodotto dovra' dividere $c$, perche' il loro prodotto e' formato esattamente dai fattori primi che dividono $c$.
+\end{intuition}
 \begin{proof}
     Dimostriamo la proposizione per induzione su $n$.
     \begin{itemize}
@@ -291,18 +324,116 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     Dunque la proposizione vale per ogni $n \in N$.
 \end{proof}
 
+
+
+
 \subsection{Divisori primi}
-\begin{proposition}
+\begin{proposition}\label{mcd_mcm_in_termini_di_divisori_primi}
     Siano $a, b, k \in \Z$, $p \in \Z$ primo. Allora
     \begin{alignat}{1}
         p^k \divides \mcd{a}{b} &\iff p^k \divides a \land p^k \divides b \\ 
         p^k \divides \mcm{a}{b} &\iff p^k \divides a \lor p^k \divides b.
     \end{alignat}
 \end{proposition}
+\begin{intuition}
+    Il massimo comun divisore di due numeri e' un divisore comune ad entrambi, quindi se $p^k$ lo divide deve dividere entrambi i numeri.
 
-\begin{proposition}
+    Il minimo comune multiplo invece e' formato da tutti i fattori primi comuni e non comuni col massimo esponente, quindi se $p^k$ divide il minimo comune multiplo dovra' dividere almeno uno dei due numeri di partenza.
+\end{intuition}
+
+\begin{proposition}\label{mcm_equals_product}
     Siano $a, b \in \Z$. Allora se $\mcd{a}{b} = 1$ segue che $\mcm{a}{b} = \abs{ab}$.
 \end{proposition}
+\begin{intuition}
+    Se i due numeri sono coprimi, allora non hanno fattori primi in comune, dunque il loro massimo comune multiplo sara' formato precisamente da tutti i fattori di entrambi i numeri, cioe' dal loro prodotto.
+\end{intuition}
 \begin{proof}
-    
+    Sappiamo per definizione di mcm che $a \divides \mcm{a}{b}$ e $b \divides \mcm{a}{b}$. Dato che $\mcd{a}{b} = 1$ per la proposizione \ref{prodotto_numeri_coprimi} segue che $ab \divides \mcm{a}{b}$, cioe' $\abs{ab} \leq \mcm{a}{b}$. Ma $ab$ e' un multiplo di $a$ e di $b$, quindi dovra' valere che $\abs{ab} \geq \mcm{a}{b}$ in quanto $\mcm{a}{b}$ e' il minimo multiplo comune ad $a$ e $b$. Da cio' segue che $\mcm{a}{b} = \abs{ab}$, cioe' la tesi.
+\end{proof}
+
+\begin{proposition} \label{mcd_togliere_fattori_non_comuni}
+    Siano $a, x, y \in \Z$. Allora 
+    \begin{equation}
+        \mcd{a}{x} = 1 \implies \mcd{a}{xy} = \mcd{a}{y}
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Se stiamo calcolando $\mcd{a}{b}$ dove $b = xy$ e sappiamo che il fattore $x$ non e' comune tra $b$ ed $a$, allora possiamo escluderlo dal massimo comun divisore.
+\end{intuition}
+\begin{proof}
+    Dato che $\mcd{a}{x} = 1$, allora se un primo $p$ divide $a$ sicuramente $p$ non divide $x$. Per la proposizione \ref{mcd_mcm_in_termini_di_divisori_primi} allora vale
+    \begin{alignat*}
+        {1}
+        &p^k \divides \mcd{a}{xy} \\ 
+        \iff &p^k \divides a \land p^k \divides xy\\
+        \intertext{ma $p^k \nmid x$ dunque per la \ref{n_divides_product}}
+        \iff &p^k \divides a \land p^k \divides y \\
+        \iff &p^k \divides \mcd{a}{y}.
+    \end{alignat*}
+    Dato che $\mcd{a}{xy}$ e $\mcd{a}{y}$ vengono divisi dagli stessi primi, per il teorema fondamentale devono essere uguali.
+\end{proof}
+
+\begin{proposition} \label{distributivita_mcd_su_mcm}
+    Siano $a, x, y \in \Z$. Allora 
+    \begin{equation}
+        \mcd{a}{\mcm{x}{y}} = \mcm{\mcd{a}{x}}{\mcd{a}{y}}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per la proposizione \ref{mcd_mcm_in_termini_di_divisori_primi} allora vale
+    \begin{alignat*}
+        {1}
+        &p^k \divides \mcd{a}{\mcm{x}{y}}\\ 
+        \iff &p^k \divides a \land (p^k \divides x \lor p^k \divides y)\\
+        \iff &(p^k \divides a \land p^k \divides x) \lor (p^k \divides a \land p^k \divides y) \\
+        \iff &p^k \divides \mcm{\mcd{a}{x}}{\mcd{a}{y}}.
+    \end{alignat*}
+    Dato che $\mcd{a}{\mcm{x}{y}}$ e $\mcm{\mcd{a}{x}}{\mcd{a}{y}}$ vengono divisi dagli stessi primi, per il teorema fondamentale devono essere uguali.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, x, y \in \Z$. Allora 
+    \begin{equation}
+        \mcd{x}{y} = 1 \implies \mcd{a}{xy} = \mcd{a}{x}\mcd{a}{y}
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Se $x$ e $y$ non hanno fattori in comune, i fattori che $a$ ha in comune con il loro prodotto sono o in $x$ o in $y$, quindi per ottenerli tutti possiamo dividere l'mcd in due e moltiplicare i due risultati.
+\end{intuition}
+\begin{proof}
+    Dato che $\mcd{x}{y} = 1$ allora per la proposizione \ref{mcm_equals_product} vale che $\mcm{x}{y} = \abs{xy}$.
+    Dunque $\mcd{a}{xy} = \mcd{a}{\abs{xy}} = \mcd{a}{\mcm{x}{y}} = \mcm{\mcd{a}{x}}{\mcd{a}{y}}$ per la proposizione \ref{distributivita_mcd_su_mcm}.
+
+    Verifichiamo ora che $\mcd{a}{x}$ e $\mcd{a}{y}$ sono coprimi. Per ipotesi sappiamo che $x, y$ sono coprimi; ma dato che $\mcd{a}{x}$ e $\mcd{a}{y}$ sono divisori di $x$ e $y$ rispettivamente, allora dovranno essere anche loro coprimi.
+
+    Dunque per la proposizione \ref{mcm_equals_product} segue che \[
+        \mcd{a}{xy} = \mcm{\mcd{a}{x}}{\mcd{a}{y}} = \mcd{a}{x}\mcd{a}{y}
+    \] che e' la tesi.
+\end{proof}
+
+\begin{proposition}\label{a,b|c_iff_(ab/mcd)|c}
+    Siano $a, b, c \in \Z$. Allora \begin{equation}
+        a \divides c \land b \divides c \iff \frac{ab}{\mcd{a}{b}} \divides c
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo l'implicazione in entrambi i versi.
+    \begin{itemize}
+        \item Supponiamo che $a \divides c$ e $b \divides c$. Sia $d = \mcd{a}{b}$. Allora dato che $d \divides a$, $d \divides b$ per transitivita' $d \divides c$, dunque $\frac{a}{d} \divides \frac{c}{d}$ e $\frac{b}{d} \divides \frac{c}{d}$. Ma dato che per il corollario \ref{mcd_diviso_mcd} sappiamo che $\mcd{\frac{a}{d}}{\frac{b}{d}} = 1$, dunque per la \ref{prodotto_numeri_coprimi} segue che il loro prodotto $\frac{ab}{d^2}$ dovra' dividere $\frac{c}{d}$, che e' equivalente a dire che $\frac{ab}{d} \divides c$.
+        \item NON SO FARE QUEST'ALTRA DIMOSTRAZIONE
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    \label{mcm*mcd=ab}
+    Siano $a, b \in \Z$. Allora
+    \begin{equation}
+        \mcd{a}{b}\mcm{a}{b} = \abs{ab}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Sia $c \in \Z$ tale che $a \divides c$, $b \divides c$. Allora per la proposizione \ref{a,b|c_iff_(ab/mcd)|c} segue che $\frac{ab}{\mcd{a}{b}} \divides c$. Inoltre per la proposizione \ref{mcm|c_iff_a,b|c} segue che $\mcm{a}{b} \divides c$.
+    Dunque i due numeri $\frac{ab}{\mcd{a}{b}}$ e $\mcm{a}{b}$ hanno gli stessi divisori, dunque devono essere uguali a meno del segno, da cui segue \[
+        \mcd{a}{b}\mcm{a}{b} = \abs{ab}. 
+    \]
 \end{proof}
