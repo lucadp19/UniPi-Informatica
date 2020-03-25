@@ -359,7 +359,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     Per la proposizione \ref{esistenza_scomposizione_primi} sappiamo che esistono $p_1, \dots, p_n$. Per la proposizione \ref{prodotto_coprimo_n} segue che \[
         p_1^{e_1}p_2^{e_2} \dots p_k^{e_k} \divides n    
     \]
-    in quanto $p_1^{e_1}, p_2^{e_2}, \dots, p_k$ sono coprimi tra loro.
+    in quanto $p_1^{e_1}, p_2^{e_2}, \dots, p_k^{e_k}$ sono coprimi tra loro.
 
     Dunque $n = m \cdot p_1^{e_1}p_2^{e_2} \dots p_k^{e_k}$ per qualche $m \in \Z$.
     Supponiamo per assurdo che $m \neq 1$. Allora per la proposizione \ref{esistenza_scomposizione_primi} $m$ e' scomponibile in numeri primi; ma dato che $m$ e' un divisore di $n$ segue che i primi che dividono $m$ devono dividere anche $n$, dunque i primi che dividono $m$ devono essere tra $p_1, \dots, p_k$. 
@@ -389,7 +389,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     Siano $a, b \in \Z$. Allora se $\mcd{a}{b} = 1$ segue che $\mcm{a}{b} = \abs{ab}$.
 \end{proposition}
 \begin{intuition}
-    Se i due numeri sono coprimi, allora non hanno fattori primi in comune, dunque il loro massimo comune multiplo sara' formato precisamente da tutti i fattori di entrambi i numeri, cioe' dal loro prodotto.
+    Se i due numeri sono coprimi, allora non hanno fattori primi in comune, dunque il loro minimo comune multiplo sara' formato precisamente da tutti i fattori di entrambi i numeri, cioe' dal loro prodotto.
 \end{intuition}
 \begin{proof}
     Sappiamo per definizione di mcm che $a \divides \mcm{a}{b}$ e $b \divides \mcm{a}{b}$. Dato che $\mcd{a}{b} = 1$ per la proposizione \ref{prodotto_numeri_coprimi} segue che $ab \divides \mcm{a}{b}$, cioe' $\abs{ab} \leq \mcm{a}{b}$. Ma $ab$ e' un multiplo di $a$ e di $b$, quindi dovra' valere che $\abs{ab} \geq \mcm{a}{b}$ in quanto $\mcm{a}{b}$ e' il minimo multiplo comune ad $a$ e $b$. Da cio' segue che $\mcm{a}{b} = \abs{ab}$, cioe' la tesi.
