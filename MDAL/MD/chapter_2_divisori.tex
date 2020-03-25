@@ -240,7 +240,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     Dividendo entrambi i membri per $\mcd{a}{b}$ otteniamo \[
         \mcd{a'}{b'} = 1 
     \]
-    che, per definizione di $a', b'$ e' equivalente a \[
+    che, per definizione di $a', b'$, e' equivalente a \[
         \mcd{\frac{a}{d}}{\frac{b}{d}} = 1
     \]
     che e' la tesi.
@@ -328,6 +328,50 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 
 
 \subsection{Divisori primi}
+\begin{proposition} 
+    [Esistenza della scomposizione in primi]
+    \label{esistenza_scomposizione_primi}
+    Sia $n \in \Z, n > 1$. Allora $n$ puo' essere espresso come prodotto di potenze di numeri primi.
+\end{proposition}
+\begin{proof}
+    Per induzione forte su $n$.
+    \begin{itemize}
+        \item \textbf{Caso base.}
+
+        Sia $n = 2$. Dato che $2$ e' primo, allora e' esprimibile come prodotto di numeri primi (in particolare e' il prodotto di un solo termine, se stesso).
+        \item \textbf{Passo induttivo.}
+        
+        Supponiamo che la tesi sia vera per $2, 3, \dots, n-1$ (induzione forte) e dimostriamola per $n$.
+        Abbiamo due casi:
+        \begin{itemize}
+            \item se $n$ e' primo, allora e' un prodotto di primi e quindi la tesi vale;
+            \item se $n$ non e' primo allora dovranno esistere due numeri $1 < a, b < n$ tali che $n = ab$ (infatti se non esistessero $n$ sarebbe primo). Ma per l'ipotesi induttiva forte sappiamo che tutti i numeri compresi tra $2$ e $n-1$ inclusi sono scomponibili in fattori primi, dunque anche $n = ab$ dovra' esserlo.
+        \end{itemize}
+    \end{itemize}
+    Dunque dal caso base e dal passo induttivo segue che la tesi vale per ogni $n \geq 2$.
+\end{proof}
+
+\begin{theorem}
+    [Teorema fondamentale dell'aritmetica]
+    Sia $n \in Z$ e siano $p_1, p_2, \dots, p_k$ i primi che dividono $n$. Inoltre siano $e_1, e_2, \dots, e_k$ i massimi esponenti per cui vale che $p_i^{e_i} \divides n$ per ogni $1 \leq i \leq k$. Allora $n = p_1^{e_1}p_2^{e_2} \dots p_k^{e_k}$.
+\end{theorem}
+\begin{proof}
+    Per la proposizione \ref{esistenza_scomposizione_primi} sappiamo che esistono $p_1, \dots, p_n$. Per la proposizione \ref{prodotto_coprimo_n} segue che \[
+        p_1^{e_1}p_2^{e_2} \dots p_k^{e_k} \divides n    
+    \]
+    in quanto $p_1^{e_1}, p_2^{e_2}, \dots, p_k$ sono coprimi tra loro.
+
+    Dunque $n = m \cdot p_1^{e_1}p_2^{e_2} \dots p_k^{e_k}$ per qualche $m \in \Z$.
+    Supponiamo per assurdo che $m \neq 1$. Allora per la proposizione \ref{esistenza_scomposizione_primi} $m$ e' scomponibile in numeri primi; ma dato che $m$ e' un divisore di $n$ segue che i primi che dividono $m$ devono dividere anche $n$, dunque i primi che dividono $m$ devono essere tra $p_1, \dots, p_k$. 
+
+    Supponiamo senza perdita di generalita' che $p_i$ divida $m$. Allora dato che $m \cdot p_1^{e_1}p_2^{e_2} \dots p_k^{e_k} = n$ deve essere $p_i \cdot p_i^{e_i} = p_i^{e_i+1} \divides n$, che e' assurdo in quanto abbiamo supposto che $e_i$ fosse il massimo esponente per cui $p_i^{e_i} \divides n$. 
+    
+    Dunque deve essere $m = 1$, cioe' \[
+        n = p_1^{e_1}p_2^{e_2} \dots p_k^{e_k}
+    \]
+    come volevasi dimostrare.
+\end{proof}
+
 \begin{proposition}\label{mcd_mcm_in_termini_di_divisori_primi}
     Siano $a, b, k \in \Z$, $p \in \Z$ primo. Allora
     \begin{alignat}{1}
