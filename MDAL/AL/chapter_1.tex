@@ -31,10 +31,56 @@
             a_{1} & a_2 & \dots & a_n
         \end{pmatrix}
     \end{equation}
-    L'insieme dei vettori colonna di $n$ elementi appartenenti ad un campo $\K$ si indica con $\K^n$, mentre l'insieme dei vettori riga di $n$ elementiappartenenti ad un campo $\K$ si indica con $\K^{\times n}$.
+    L'insieme dei vettori colonna di $n$ elementi appartenenti ad un campo $\K$ si indica con $\K^n$, mentre l'insieme dei vettori riga di $n$ elementi appartenenti ad un campo $\K$ si indica con $\K^{\times n}$.
 \end{definition}
 
 E' evidente che se i due vettori $\bm{v}$ e $\bm{w}$ hanno la stessa dimensione e contengono gli stessi elementi allora rappresentano la stessa informazione, ma sotto forme diverse. Verificheremo piu' avanti infatti che $\K^n$ e $\K^{\times n}$ sono isomorfi, cioe' contengono gli stessi elementi in due forme diverse.
+
+\subsection{Matrici particolari}
+
+\begin{definition}
+    Si dice \textbf{matrice quadrata} una matrice il cui numero di righe e' uguale al numero di colonne.
+\end{definition}
+
+\begin{definition}
+    Si dice \textbf{matrice diagonale} una matrice quadrata tale che tutti gli elementi che non appartengono alla diagonale principale siano $0$, cioe'
+    \begin{equation}
+        A \in \M_{n \times n}(\R) \text{ e' diagonale se e solo se } \forall i \neq j. \, (a_{ij}) = 0.
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    Si dice \textbf{matrice identita'} $n \times n$ una matrice diagonale per cui la diagonale principale contiene solo $1$, cioe'
+    \begin{equation}
+        I \in \M_{n \times n}(\R) \text{ e' la matrice identita' se e solo se } (a_{ij}) = \begin{cases}
+            0   &\text{se } i \neq j \\
+            1   &\text{se } i = j \\
+        \end{cases}.
+    \end{equation}
+\end{definition}
+
+Ecco un esempio di una matrice quadrata $4 \times 4$, una matrice diagonale $4 \times 4$ e la matrice identita' $4 \times 4$.
+
+\[
+    A = \begin{pmatrix}
+        1   &5   &4  &5\\
+        2   &7   &10 &1\\
+        0   &34  &3  &-2\\
+        6   &-2  &2  &12\\
+    \end{pmatrix}, \quad
+    B = \begin{pmatrix}
+        1   &0              &0  &0\\
+        0   &-\frac{1}{3}   &0 &0\\
+        0   &0              &-3  &0\\
+        0   &0              &0  &7\\
+    \end{pmatrix}, \quad
+    I_{4} = \begin{pmatrix}
+        1   &0  &0  &0\\
+        0   &1  &0 &0\\
+        0   &0  &1  &0\\
+        0   &0  &0  &1\\
+    \end{pmatrix}
+\]
 
 \subsection{Operazioni sulle matrici}
 
@@ -45,7 +91,7 @@ Consideriamo le operazioni fondamentali che coinvolgono matrici.
 Siano $A, B$ due matrici $m \times n$ a coefficienti reali. Allora possiamo definire un'operazione di somma $+ : \M_{m \times n}(\R) \times \M_{m \times n}(\R) \to \M_{m \times n}(\R)$ tale che \begin{equation}
     A + B = [A_{ij} + B_{ij}]_{ij}.
 \end{equation}
-Cioe' se \begin{gather*}
+Cioe' \begin{gather*}
     A = \begin{pmatrix}
         a_{11}  & \dots     & a_{1n} \\
         a_{21}  & \dots     & a_{2n} \\
@@ -67,3 +113,371 @@ Cioe' se \begin{gather*}
         a_{m1} + b_{m1}  & \dots     & a_{mn} + b_{mn} \\
     \end{pmatrix}   
 \end{gather*}
+
+\subsubsection{Prodotto per uno scalare}
+
+Sia $A$ due matrici $m \times n$ a coefficienti reali e $k \in \R$. Allora possiamo definire un'operazione di prodotto per scalare $\cdot : \R \times \M_{m \times n}(\R) \to \M_{m \times n}(\R)$ tale che \begin{equation}
+    kA = [kA_{ij}]_{ij}.
+\end{equation}
+Cioe' \begin{gather*}
+    A = \begin{pmatrix}
+        a_{11}  & \dots     & a_{1n} \\
+        a_{21}  & \dots     & a_{2n} \\
+        \vdots  & \vdots    & \vdots \\
+        a_{m1}  & \dots     & a_{mn} \\
+    \end{pmatrix}
+    \implies
+    kA = \begin{pmatrix}
+        ka_{11}  & \dots     & ka_{1n} \\
+        ka_{21}  & \dots     & ka_{2n} \\
+        \vdots   & \vdots    & \vdots \\
+        ka_{m1}  & \dots     & ka_{mn} \\
+    \end{pmatrix}  
+\end{gather*}
+
+\subsubsection{Prodotto riga per colonna}
+
+Consideriamo un vettore riga $\bm{v} \in \R^{\times n}$ e un vettore colonna $\bm{w} \in \R^n$. Allora definiamo il prodotto riga per colonna $\cdot : \R^{\times n} \times \R^n \to \R$ tale che:
+\begin{equation}
+    \bm v \cdot \bm w = \begin{pmatrix}
+        v_1 & \dots & v_n 
+    \end{pmatrix} \cdot \begin{pmatrix}
+        w_1 \\ \vdots \\ w_n
+    \end{pmatrix} = v_1w_1 + \dots v_nw_n = \sum_{i = 1}^n v_iw_i
+\end{equation}
+
+\subsubsection{Prodotto tra matrici}
+
+Possiamo estendere il prodotto riga per colonna a due matrici generiche, a patto che il numero di colonne della prima matrice sia uguale al numero di colonne della seconda.
+Quindi se $A \in \M_{n \times m}(\R), B \in \M_{m \times k}(\R)$ esistera' anche $C = A \cdot B \in \M_{n \times k}(\R)$ tale che l'elemento in posizione $i, j$ di $C$ sara' dato dal prodotto dell'$i$-esima riga di $A$ e della $j$-esima colonna di $B$.
+\begin{equation}
+    (c_{ij}) = \begin{pmatrix}
+        a_{i1} & \dots & a_{im} 
+    \end{pmatrix} \cdot \begin{pmatrix}
+        b_{1j} \\ \vdots \\ b_{mj}
+    \end{pmatrix} = a_{i1}b_{1j} + \dots a_{im}b_{mj} = \sum_{t = 1}^m a_{it}b_{tj}
+\end{equation} 
+
+Il prodotto tra matrici rispetta le proprieta':
+\begin{align*}
+    &\text{1. associativa: }    && (AB)C = A(BC) \\
+    &\text{2. distributiva: }   && (A + B)C = AC + BC \\
+    &                           && A(B + C) = AB + AC
+\end{align*}
+ma non la proprieta' commutativa: infatti in generale $AB \neq BA$ anche nel caso in cui entrambi i prodotti sono definiti (come nel caso delle matrici quadrate). 
+
+\begin{example}
+    Calcoliamo il prodotto tra $\begin{psmallmatrix} a & b \\ c & d \end{psmallmatrix}$ e $\begin{psmallmatrix} x & y\\ z & t \end{psmallmatrix}$.
+\end{example}
+\begin{solution}
+    \begin{equation*}
+        \begin{pmatrix} a & b \\ c & d \end{pmatrix} \cdot \begin{pmatrix} x & y\\ z & t \end{pmatrix} = \begin{pmatrix}
+            ax + bz & ay + bt \\ cx + dz & cy + dt
+        \end{pmatrix}
+    \end{equation*}
+\end{solution}
+
+\begin{proposition} \label{j-esima_colonna}
+    Sia $A$ una matrice $m \times n$ e $\bm v \in \R^n$ tale che \[(b_i) = \begin{cases}
+        0 &\text{se } i \neq j \\
+        1 &\text{se } i = j 
+    \end{cases}
+    \] per qualche $j \leq n$. Allora $A\bm v$ e' la $j$-esima colonna di $A$.
+\end{proposition}
+\begin{proof}
+    Consideriamo il prodotto tra $A$ e $\bm v$: \begin{gather*}
+        A\bm v = \begin{pmatrix}
+            a_{11}  & \dots   & a_{1j} & \dots  & a_{1n} \\
+            a_{21}  & \dots   & a_{2j} & \dots  & a_{2n} \\
+            \vdots  & \vdots  & \vdots & \vdots & \vdots \\
+            a_{m1}  & \dots   & a_{mj} & \dots  & a_{mn} \\
+        \end{pmatrix} \cdot   \begin{pmatrix}
+            0 \\ \vdots \\ 1 \\ \vdots \\ 0 
+        \end{pmatrix} \\
+        = \begin{pmatrix}
+            0a_{11}  + \dots   + 1a_{1j} + \dots  + 0a_{1n} \\
+            0a_{21}  + \dots   + 1a_{2j} + \dots  + 0a_{2n} \\
+            \vdots \\
+            0a_{m1}  + \dots   + 1a_{mj} + \dots  + 0a_{mn} \\
+        \end{pmatrix} = \begin{pmatrix}
+            a_{1j}\\
+            a_{2j}\\
+            \vdots \\
+            a_{mj} \\
+        \end{pmatrix}
+    \end{gather*}
+    che e' esattamente la $j$-esima colonna di $A$.
+\end{proof}
+
+\subsubsection{Trasposizione}
+
+Sia $A$ una matrice $m \times n$. Allora si dice \textbf{trasposta di $A$} la matrice $A^T$ di dimensione $n \times m$ tale che se $A = (a_{ij})$ allora $A^T = (b_{ij})$ dove $b_{ij} = a_{ji}$. 
+
+Piu' semplicemente, la trasposta di una matrice si ottiene trasformando le sue righe in colonne. Ad esempio
+\[
+    \begin{pmatrix}
+        a & b & c \\ d & e & f 
+    \end{pmatrix}^T = \begin{pmatrix}
+        a & d \\ b & e \\ c & f
+    \end{pmatrix}
+\]
+
+Notiamo che:
+\begin{itemize}
+    \item la trasposta di un vettore colonna e' un vettore riga e viceversa: \begin{alignat*}{1}
+        \begin{pmatrix} a \\ b \\ c \end{pmatrix}^T = \begin{pmatrix}
+            a & b & c
+        \end{pmatrix}, \quad&
+        \begin{pmatrix} a & b & c \end{pmatrix}^T = \begin{pmatrix}
+            a \\ b \\ c
+        \end{pmatrix}
+    \end{alignat*}
+    \item la trasposta della trasposta di $A$ e' $A$: \[(A^T)^T = A\]
+\end{itemize}
+
+\section{Matrici a scalini}
+
+\begin{definition}
+    Una matrice $A$ di dimensione $m \times n$ si dice a scalini se:
+    \begin{itemize}
+        \item eventuali righe vuote sono in fondo alla matrice;
+        \item il primo elemento non nullo di ogni riga e' in una colonna piu' a destra del primo elemento non nullo della riga precedente.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    Sia $A$ una matrice ridotta a scalini. Allora il primo elemento non nullo di una riga viene detto \textbf{pivot} della riga.
+\end{definition}
+
+Ad esempio la matrice \[
+    A = \begin{pmatrix}
+        1   &2  &7  &5\\
+        0   &0  &10 &1\\
+        0   &0  &0  &-2\\
+        0   &0  &0  &0\\
+    \end{pmatrix}
+\] e' a scalini ed ha come pivot gli elementi $(a_{11}) = 1, (a_{23}) = 10, (a_{34}) = -2$.
+
+Prendiamo una generica matrice $A$ di dimensione $m \times n$. Possiamo trasformare ogni $A$ in una matrice a scalini $\bar{A}$ applicando le seguenti mosse, chiamate \textbf{mosse di Gauss per riga}:
+\begin{itemize}
+    \item scambio la riga $i$ con la riga $j$;
+    \item sostituisco la riga $i$ con la somma di se stessa e di un multiplo della riga $j$;
+    \item moltiplico la riga $i$ per un numero reale.
+\end{itemize}
+
+In particolare possiamo sfruttare il seguente \textbf{algoritmo di Gauss} per ridurre una matrice a scalini:
+\begin{itemize}
+    \item se la matrice contiene una sola riga, oppure tutte le righe contengono solo zeri, allora la matrice e' a scalini;
+    \item altrimenti scelgo la riga $R$ con pivot piu' a sinistra possibile, chiamo $c$ la colonna su cui si trova il pivot di $R$ e applico il seguente procedimento: \begin{enumerate}
+        \item scelgo una riga $R'$ con pivot sulla colonna $c$;
+        \item sottraggo a $R'$ un multiplo di $R$ in modo che l'elemento nella riga $R'$ e nella colonna $c$ diventi $0$;
+        \item ripeto questo procedimento fino a quando solo $R$ ha un pivot nella colonna $c$; 
+    \end{enumerate}
+    \item a questo punto $R$ e' l'unica riga con pivot sulla colonna $c$, dunque escludiamola dalla matrice e ripetiamo il procedimento sulle altre righe.
+\end{itemize}
+
+\begin{definition}
+    Sia $A$ una matrice e sia $\bar{A}$ la matrice a scalini ottenuta tramite le mosse di Gauss per riga su $A$. Il numero di pivot della matrice $\bar{A}$ si dice \textbf{rango riga} di $A$ e si indica con $\rk{A}$.
+\end{definition}
+
+Ad esempio la matrice di prima \[
+    A = \begin{pmatrix}
+        1   &2  &7  &5\\
+        0   &0  &10 &1\\
+        0   &0  &0  &-2\\
+        0   &0  &0  &0\\
+    \end{pmatrix}
+\]  ha 3 pivot, dunque $\rk{A} = 3$.
+
+\section{Sistemi di equazioni lineari}
+
+\begin{definition}
+    Si dice \textbf{equazione lineare} nelle incognite $x_1, x_2, \dots, x_n \in \R$ un'equazione del tipo
+    \begin{equation} \label{equazione_generica}
+        a_1x_1 + a_2x_2 + \dots + a_nx_n = b
+    \end{equation}
+    con $a_1, a_2, \dots, a_n, b \in \R$ noti.
+    Una \textbf{soluzione} di un'equazione lineare e' una $n$-upla $(x_1, \dots, x_n)$ per cui l'uguaglianza \ref{equazione_generica} vale.
+    Due equazioni si dicono \textbf{equivalenti} se hanno le stesse soluzioni.
+\end{definition}
+
+\begin{definition}
+    Si dice \textbf{sistema di equazioni lineari} un'insieme di $k$ equazioni lineari a $n$ incognite della forma
+    \begin{equation}
+        \left\{
+        \begin{array}{ rororor }
+        a_{11}x_1 & + & \dots & + & a_{1n}x_n & = & b_1 \\
+        a_{21}x_1 & + & \dots & + & a_{2n}x_n & = & b_2 \\
+        &&\vdots\\
+        a_{k1}x_1 & + & \dots & + & a_{kn}x_n & = & b_k \\
+        \end{array}
+        \right.
+    \end{equation}
+    Una \textbf{soluzione} del sistema e' una $n$-upla $(x_1, \dots, x_n)$ che e' soluzione di tutte le $k$ equazioni del sistema.
+    Due sistemi si dicono \textbf{equivalenti} se hanno le stesse soluzioni.
+    Se $b_1 = b_2 = \dots = b_n = 0$ allora il sistema si dice \textbf{omogeneo}.
+\end{definition}
+
+Possiamo trasformare un sistema di equazioni in un'equazione tra vettori: infatti sappiamo che due vettori sono uguali se e solo se tutti i loro elementi nella stessa posizione sono uguali. Un sistema di $k$ equazioni a $n$ incognite diventa quindi:
+\begin{equation*}
+    \begin{pmatrix}
+        a_{11}x_1 & + & \dots & + & a_{1n}x_n \\
+        a_{21}x_1 & + & \dots & + & a_{2n}x_n \\
+        \vdots    &   & \vdots &  & \vdots\\
+        a_{k1}x_1 & + & \dots & + & a_{kn}x_n \\
+    \end{pmatrix} = \begin{pmatrix}
+        b_1 \\ b_2 \\ \vdots \\ b_k
+    \end{pmatrix}
+\end{equation*}
+Notiamo inoltre che 
+\begin{equation*}
+    \begin{pmatrix}
+        a_{11}x_1 & + & \dots & + & a_{1n}x_n \\
+        a_{21}x_1 & + & \dots & + & a_{2n}x_n \\
+        \vdots    &   & \vdots &  & \vdots\\
+        a_{k1}x_1 & + & \dots & + & a_{kn}x_n \\
+    \end{pmatrix} = \begin{pmatrix}
+        a_{11} & \dots & a_{1n} \\
+        a_{21} & \dots & a_{2n} \\
+        \vdots & \vdots& \vdots \\
+        a_{k1} & \dots & a_{kn} \\
+    \end{pmatrix} \cdot \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}
+    = A\bm{x}
+\end{equation*}
+
+Dunque arriviamo al seguente fatto:
+\begin{proposition}
+    Ogni sistema di $k$ equazioni in $n$ incognite puo' essere scritto nella forma di una singola equazione matriciale della forma $A\bm{x} = \bm{b}$, dove:
+    \begin{itemize}
+        \item $A$ e' la matrice dei coefficienti, tale che $a_{ij}$ e' il coefficiente del termine $x_j$ nell'equazione nella riga $i$;
+        \item $\bm{x} \in \R^n$ e' il vettore colonna delle incognite;
+        \item $\bm{b} \in \R^k$ e' il vettore colonna dei termini noti.
+    \end{itemize}
+\end{proposition}
+    
+\begin{definition}
+    Consideriamo un'equazione matriciale della forma $A\bm{x} = \bm b$. Allora la matrice $(A|\bm b)$ ottenuta aggiungendo alla matrice $A$ una colonna contenente il vettore colonna $\bm b$ si dice \textbf{matrice completa} associata al sistema lineare.
+    \begin{equation}
+        (A|\bm b) = \begin{pmatrix}[ccc|c]
+            a_{11} & \dots & a_{1n} & b_1\\
+            a_{21} & \dots & a_{2n} & b_2\\
+            \vdots & \vdots& \vdots & \vdots\\
+            a_{k1} & \dots & a_{kn} & b_k\\
+        \end{pmatrix}.
+    \end{equation}
+    Se il sistema e' omogeneo si puo' omettere la colonna dei termini noti.
+\end{definition}
+
+
+Il metodo piu' veloce per risolvere un sistema lineare consiste nel ridurre la matrice completa $(A|\bm b)$ a scalini tramite le mosse di Gauss: a quel punto possono esserci due situazioni:
+\begin{itemize}
+    \item se ci sono righe con solo zeri prima della barra verticale, ma con un coefficiente diverso da zero dopo, allora quell'equazione non ha soluzione in quanto e' della forma $0x_1 + \dots 0x_n = b_i \neq 0$, dunque il sistema e' impossibile;
+    \item altrimenti il sistema ha almeno una soluzione.
+\end{itemize}
+Per stabilire le soluzioni del sistema si procede in questo modo:
+\begin{itemize}
+    \item si scelgono libere tutte le variabili che sono su colonne che non contengono pivot;
+    \item si ricavano le altre variabili passando al sistema associato alla matrice a scalini ottenuta alla fine.
+\end{itemize}
+
+\begin{proposition}
+    Le mosse di Gauss per riga applicate ad una matrice completa $(A|\bm b)$ trasformano la matrice in una nuova matrice il cui sistema associato e' equivalente all'originale.
+\end{proposition}
+\begin{proof} Dimostriamo che le tre mosse trasformano il sistema in un sistema equivalente.
+    \begin{itemize}
+        \item La prima mossa consente lo scambio di due righe, che non modifica il sistema.
+        \item Consideriamo due righe della matrice \[
+            \begin{pmatrix}[ccc|c]
+                a_{i1} & \dots & a_{in} & b_i\\
+                a_{j1} & \dots & a_{jn} & b_j\\
+            \end{pmatrix} 
+            \text{ che corrispondono a }
+            \left\{
+                \begin{array}{rororor }
+                a_{i1}x_1 & + & \dots & + & a_{in}x_n & = & b_i \\
+                a_{j1}x_1 & + & \dots & + & a_{jn}x_n & = & b_j
+                \end{array}
+                \right.
+        \]
+        Dato che aggiungendo quantita' uguali ad entrambi i membri di un'equazione otteniamo un'equazione equivalente a quella data, possiamo aggiungere al primo membro della prima equazione $k(a_{j1}x_1 + \dots + a_{jn}x_n) = ka_{j1}x_1 + \dots + ka_{jn}x_n$ e al secondo membro $kb_j$, ottenendo: \[
+            \left\{
+                \begin{array}{rororor }
+                (a_{i1} + ka_{j1})x_1 & + & \dots & + & (a_{in} + ka_{jn})x_n & = & b_i + kb_j \\
+                a_{j1}x_1 & + & \dots & + & a_{jn}x_n & = & b_j
+                \end{array}
+                \right.
+        \] che equivale a \[
+        \begin{pmatrix}[ccc|c]
+            a_{i1} + ka_{j1}    & \dots & a_{in} + ka_{jn}  & b_i + kb_j\\
+            a_{j1}              & \dots & a_{jn}            & b_j\\
+        \end{pmatrix} 
+        \]
+        \item Dato che una riga della matrice indica un'equazione, allora possiamo moltiplicare entrambi i membri dell'equazione per uno stesso numero reale e ottenere un'equazione equivalente a quella data.
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}[di Rouché-Capelli] \label{rouche_capelli}
+    Sia $A\bm{x} = \bm b$ un'equazione matriciale. Allora essa ha soluzione se e solo se $\rk{A|\bm b} = \rk{A}$.
+\end{theorem}
+\begin{intuition}
+    Infatti se il rango delle due matrici e' diverso significa che una riga nulla nella matrice $A$ ha un pivot nella matrice $(A|\bm b)$, cioe' che c'e' un'equazione del tipo $0x_1 + \dots 0x_n = b_i \neq 0$ che e' impossibile.
+\end{intuition}
+
+\begin{proposition}
+    Un sistema omogeneo $A\bm{x} = \bm 0$ ammette sempre almeno una soluzione.
+\end{proposition}
+\begin{proof}
+    Infatti viene sempre che $\rk{A|\bm b} = \rk{A|\bm 0} = \rk{A}$, dunque per Rouché-Capelli (\ref{rouche_capelli}) il sistema ha soluzione.
+\end{proof}
+
+\begin{proposition}
+    Le soluzioni di un sistema lineare $A\bm x = \bm b$ sono tutte e solo della forma $\bm{x_0} + \bm{\bar{x}}$, dove $\bm{x_0}$ e' una qualunque soluzione del sistema omogeneo associato $A\bm x = \bm 0$ e $\bm{\bar{x}}$ e' una soluzione particolare di $A\bm x = \bm b$.
+\end{proposition}
+\begin{proof}
+    Dimostriamo innanzitutto che $\bm{x_0} + \bm{\bar{x}}$ e' soluzione.
+    \[A(\bm{x_0} + \bm{\bar{x}}) = A\bm{x_0} + A\bm{\bar{x}} = \bm 0 + \bm b = \bm b\]
+
+    Dimostriamo poi che se $\bm x$ e' una soluzione di $A\bm x = \bm b$, allora $\bm x - \bm{\bar x}$ e' soluzione del sistema omogeneo.
+    \[A(\bm{x} - \bm{\bar{x}}) = A\bm{x} - A\bm{\bar{x}} = \bm b - \bm b = \bm 0\]
+\end{proof}
+
+\section{Matrici come applicazioni lineari}
+
+Abbiamo visto che moltiplicando una matrice per un vettore colonna con la giusta dimensione otteniamo un nuovo vettore colonna. Possiamo quindi interpretare una matrice come una funzione che manda vettori in vettori:
+\begin{definition}
+    Sia $A \in \M_{n \times m}(\R)$. Allora si dice \textbf{applicazione lineare associata alla matrice} la funzione $L_A : \R^m \to \R^n$ tale che \begin{equation}
+        \forall \bm x \in \R^m. \quad L_A(\bm x) = A \bm x
+    \end{equation}
+\end{definition}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times m}(\R)$ una matrice, $L_A : \R^m \to \R^n$ la sua applicazione lineare associata. Allora valgono le seguenti:
+    \begin{align}
+        &L_A(\bm 0) = \bm 0 \\
+        &L_A(\bm v + \bm w) = L_A(\bm v) + L_A(\bm w) &\forall \bm v, \bm w \in \R^m \\
+        &L_A(k\bm v) = kL_A(\bm v) &\forall \bm v \in \R^m, k \in \R. 
+    \end{align}
+\end{proposition}
+\begin{proof}
+    Per definizione di applicazione lineare:
+    \begin{itemize}
+        \item $L_A(\bm 0) = A\bm 0 = \bm 0$;
+        \item $L_A(\bm v + \bm w) = A(\bm v + \bm w) = A\bm v + A\bm w = L_A(\bm v) + L_A(\bm w)$;
+        \item $L_A(k\bm v) = A(k\bm v) = kA\bm v = kL_A(\bm v)$
+    \end{itemize}
+    che e' la tesi.
+\end{proof}
+
+\begin{definition}
+    Sia $A \in \M_{n \times m}(\R)$ una matrice, $L_A : \R^m \to \R^n$ la sua applicazione lineare associata. Allora si dice \textbf{immagine} dell'applicazione $L_A$ (o della matrice $A$) l'insieme:
+    \begin{equation}
+        \Imm{L_A} = \{L_A(\bm x) \mid \bm x \in \R^m\}
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    Sia $A \in \M_{n \times m}(\R)$ una matrice, $L_A : \R^m \to \R^n$ la sua applicazione lineare associata. Allora si dice \textbf{kernel} dell'applicazione $L_A$ (o della matrice $A$) l'insieme:
+    \begin{equation}
+        \ker{L_A} = \{\bm x \mid L_A(\bm x) = \bm 0\}
+    \end{equation}
+\end{definition}

@@ -4,6 +4,7 @@
     \usepackage[T1]{fontenc}
     \usepackage{textcomp, microtype}
     \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm}
+    \usepackage{array}
     \usepackage{float}
 
     \usepackage{hyperref} % ultimo package da caricare!
@@ -21,8 +22,21 @@
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Osservazione}
+\newtheorem*{solution}{Soluzione}
+\newtheorem*{intuition}{Intuizione}
 
-\DeclareMathOperator{\tc}{\text{ tale che }}
+\DeclareMathOperator{\tc}{\ tale che\ }
+
+\newcolumntype{z}{r<{{}}}
+\newcolumntype{o}{@{}>{{}}c<{{}}@{}}
+
+% matrix with lines
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
 
 \newcommand{\divides}{\mid}
 \newcommand{\Mod}[1]{\ \left(#1\right)}
@@ -31,6 +45,8 @@
 \newcommand{\mcd}[2]{\operatorname{mcd}\left(#1, #2\right)}
 \newcommand{\Span}[1]{\operatorname{span}\left\{#1\right\}}
 \newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+\newcommand{\rk}[1]{\operatorname{rango}\left( #1 \right)}
+\newcommand{\Imm}[1]{\operatorname{Im}#1}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}

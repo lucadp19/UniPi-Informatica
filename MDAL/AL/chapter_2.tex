@@ -2,6 +2,7 @@
 
 \section{Spazi vettoriali e prime proprieta'}
 
+\subsection{Spazi vettoriali}
 \begin{definition}
     Si dice \textbf{spazio vettoriale su un campo $\K$} un insieme $V$ di elementi, detti \textbf{vettori}, insieme con due operazioni $+ : V \times V \to V$ e $\cdot : \K \times V \to V$ e un elemento $\bm{0_V} \in V$ che soddisfano i seguenti assiomi:
     \[\forall \bm{v}, \bm{w}, \bm{u} \in V, \quad\forall h, k \in \K \]
@@ -43,21 +44,6 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
 \end{example}
 
 \begin{definition}
-    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n} \in V$. Allora il vettore $\bm{v} \in V$ si dice combinazione lineare di $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n}$ se 
-    \begin{equation}
-        \bm{v}= a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} 
-    \end{equation}
-    per qualche $a_1, a_2, \dots, a_n \in \R$.
-\end{definition}
-
-\begin{definition}
-    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \dots, \bm{v_n} \in V$. Si indica con $\Span{\bm{v_1}, \dots, \bm{v_n}}$ l'insieme dei vettori che si possono ottenere come combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}$:
-    \begin{equation}
-        \Span{\bm{v_1}, \dots, \bm{v_n}} = \left\{a_1\bm{v_1} + \dots + a_n\bm{v_n} \mid a_1, \dots, a_n \in \R\right\}
-    \end{equation}
-\end{definition}
-
-\begin{definition}
     Sia $V$ uno spazio vettoriale, $A \subset V$. Allora si dice che $A$ e' un sottospazio vettoriale di $V$ (o semplicemente sottospazio) se
     \begin{align}
         &\bm{0_V} \in A \\
@@ -73,10 +59,46 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
     Chiamiamo $S$ l'insieme delle soluzioni. Dato che le soluzioni sono vettori colonna di $n$ elementi, $S \subset \R^n$. Verifichiamo ora le condizioni per cui $S$ e' un sottospazio di $\R^n$:
     \begin{enumerate}
         \item $\bm{0}$ appartiene a $S$, poiche' $A\bm{0} = \bm{0}$;
-        \item Se $\bm{x}, \bm{y}$ appartengono ad $S$, allora $A(\bm{x} + \bm{y}) = A\bm{x} + A\bm{y} = \bm{0} + \bm{0} = \bm{0} \in S$;
-        \item Se $\bm{x}$ appartiene ad $S$, allora $A(k\bm{x}) = kA\bm{x} = k\bm{0} = \bm{0} \in S$.
+        \item Se $\bm{x}, \bm{y}$ appartengono ad $S$, allora $A(\bm{x} + \bm{y}) = A\bm{x} + A\bm{y} = \bm{0} + \bm{0} = \bm{0}$, dunque $\bm{x} + \bm{y} \in S$;
+        \item Se $\bm{x}$ appartiene ad $S$, allora $A(k\bm{x}) = kA\bm{x} = k\bm{0} = \bm{0}$, dunque $k\bm{x} \in S$.
     \end{enumerate}
     Dunque $S$ e' un sottospazio di $\R^n$.
+\end{proof}
+
+\subsection{Combinazioni lineari e span}
+\begin{definition}
+    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n} \in V$. Allora il vettore $\bm{v} \in V$ si dice combinazione lineare di $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n}$ se 
+    \begin{equation}
+        \bm{v}= a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} 
+    \end{equation}
+    per qualche $a_1, a_2, \dots, a_n \in \R$.
+\end{definition}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \dots, \bm{v_n} \in V$. Si indica con $\Span{\bm{v_1}, \dots, \bm{v_n}}$ l'insieme dei vettori che si possono ottenere come combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}$:
+    \begin{equation}
+        \Span{\bm{v_1}, \dots, \bm{v_n}} = \left\{a_1\bm{v_1} + \dots + a_n\bm{v_n} \mid a_1, \dots, a_n \in \R\right\}
+    \end{equation}
+\end{definition}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times m}(\R)$ e siano $\bm{a_1}, \bm{a_2}, \dots, \bm{a_m} \in \R^n$ le sue colonne. Allora l'immagine della matrice e' uguale allo span delle sue colonne.
+\end{proposition}
+\begin{proof}
+    L'immagine della matrice e' l'insieme di tutti i vettori del tipo $\begin{pmatrix}
+        b_1 & \dots & b_n
+    \end{pmatrix}^T \in \R^n$ tali che esiste $\bm x = \begin{pmatrix}
+        x_1 & \dots & x_m
+    \end{pmatrix}^T \in \R^m$ tale che \begin{alignat*}
+        {1}
+        \begin{pmatrix} b_1 \\ \vdots \\ b_n \end{pmatrix}
+            &= A\begin{pmatrix} x_1 \\ \vdots \\ x_m \end{pmatrix}\\
+            &= A\left(x_1\begin{pmatrix} 1 \\ \vdots \\ 0 \end{pmatrix} + \dots + x_m\begin{pmatrix} 0 \\ \vdots \\ 1 \end{pmatrix}\right)\\
+            &= x_1A\begin{pmatrix} 1 \\ \vdots \\ 0 \end{pmatrix} + \dots + x_mA\begin{pmatrix} 0 \\ \vdots \\ 1 \end{pmatrix}\\
+        \intertext{Ma sappiamo per la proposizione \ref{j-esima_colonna} che moltiplicare una matrice per un vettore che contiene tutti $0$ tranne un $1$ in posizione $j$ ci da' come risultato la $j$-esima colonna della matrice, dunque:}
+            &= x_1\bm{a_1} + \dots + x_m\bm{a_m} 
+    \end{alignat*}
+    Ma i vettori che appartengono allo span delle colonne di $A$ sono tutti e solo del tipo $x_1\bm{a_1} + \dots + x_m\bm{a_m}$, dunque $\Imm{A} = \Span{\bm{a_1}, \bm{a_2}, \dots, \bm{a_m}}$, come volevasi dimostrare.
 \end{proof}
 
 \begin{proposition}
@@ -88,7 +110,7 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
         \item $\bm{0_V}$ appartiene ad $A$, in quanto basta scegliere $a_1 = \dots = a_n = 0$;
         \item Siano $\bm{v}, \bm{w} \in A$. Allora per qualche $a_1, \dots, a_n, b_1, \dots, b_n \in \R$ vale che \begin{alignat*}{1}
             \bm{v} + \bm{w} &= (a_1\bm{v_1} + \dots + a_n\bm{v_n}) + (b_1\bm{v_1} + \dots + b_n\bm{v_n}) \\
-            &= (a_1 + b_1)\bm{v_1} + \dots + (a_n + b_n)\bm{v_n} \in A\\
+            &= (a_1 + b_1)\bm{v_1} + \dots + (a_n + b_n)\bm{v_n} \in A
         \end{alignat*}
         \item Siano $\bm{v} \in A, k \in \R$. Allora per qualche $a_1, \dots, a_n \in \R$ vale che \begin{alignat*}{1}
             k\bm{v} &= k(a_1\bm{v_1} + \dots + a_n\bm{v_n})  \\
@@ -144,10 +166,59 @@ Possiamo usare una definizione alternativa di dipendenza lineare, equivalente al
 
 Inoltre per comodita' spesso si dice che i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono indipendenti, invece di dire che l'insieme formato da quei vettori e' un insieme linearmente indipendente.
 
+\begin{proposition} \label{span_Gauss}
+    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora per ogni $k \in \R$ e per ogni $i, j \leq n$.
+    \begin{equation}
+        \Span{\bm{v_1}, \dots, \bm{v_i}, \bm{v_j}, \dots, \bm{v_n}} = \Span{\bm{v_1}, \dots, \bm{v_i} + k\bm{v_j}, \bm{v_j}, \dots, \bm{v_n}}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Supponiamo che $v \in \Span{\bm{v_1}, \dots, \bm{v_i}, \bm{v_j}, \dots, \bm{v_n}}$. Allora per definizione esisteranno $a_1, \dots, a_n \in \R$ tali che
+    \begin{alignat*}{1}
+        v &= a_1\bm{v_1} + \dots + a_i\bm{v_i} + a_j\bm{v_j} + \dots + a_n\bm{v_n} \\
+        \intertext{Aggiungiamo e sottraiamo $a_ik\bm{v_j}$ al secondo membro.}
+        &= a_1\bm{v_1} + \dots + a_i\bm{v_i} + a_j\bm{v_j} + \dots + a_n\bm{v_n} + a_ik\bm{v_j} - a_ik\bm{v_j}\\
+        &= a_1\bm{v_1} + \dots + a_i\bm{v_i} + a_ik\bm{v_j} + a_j\bm{v_j} - a_ik\bm{v_j} + \dots + a_n\bm{v_n}\\
+        &= a_1\bm{v_1} + \dots + a_i(\bm{v_i} + k\bm{v_j}) + (a_j - a_ik)\bm{v_j} + \dots + a_n\bm{v_n}\\
+        \implies v &\in \Span{\bm{v_1}, \dots, \bm{v_i} + k\bm{v_j}, \bm{v_j}, \dots, \bm{v_n}}. 
+    \end{alignat*}
+
+    Si dimostra l'altro verso nello stesso modo.
+
+    Dunque in entrambi gli insiemi ci sono gli stessi elementi, cioe' i due span sono uguali.
+\end{proof}
+
+Notiamo inoltre che se scambiamo due vettori o se moltiplichiamo un vettore per uno scalare otteniamo uno span equivalente a quello di partenza. Quindi possiamo "semplificare" uno span di vettori tramite mosse di Gauss per colonna, come suggerisce la prossima proposizione.
+
+\begin{proposition} \label{span_colonne_indipendenti}
+    Siano $\bm{v_1}, \dots, \bm{v_n} \in \R^m$ dei vettori colonna. Allora per stabilire quali di questi vettori sono indipendenti consideriamo la matrice $A$ che contiene come colonna $i$-esima il vettore colonna $v_i$ e riduciamola a scalini per colonna. Lo span delle colonne non nulle della matrice ridotta a scalini e' uguale allo span di $\bm{v_1}, \dots, \bm{v_n}$.
+\end{proposition}
+\begin{proof} 
+    Consideriamo la matrice $\bar{A}$ ridotta a scalini. Allora per la proposizione \ref{span_Gauss} lo span delle sue colonne e' uguale allo span dei vettori iniziali. 
+
+    Tutte le colonne nulle possono essere eliminate da questo insieme, in quanto il vettore nullo e' sempre linearmente dipendente.
+
+    Le colonne rimanenti sono sicuramente linearmente indipendenti: infatti dato che la matrice e' a scalini per colonna per annullare il primo pivot dobbiamo annullare il primo vettore, per annullare il secondo dobbiamo annullare il secondo e cosi' via. Dunque lo span dei vettori colonna non nulli rimanenti e' uguale allo span dei vettori iniziali.
+\end{proof}
+
+\begin{example}
+    Sia    
+\end{example}
+
+\subsection{Generatori e basi}
+\begin{definition}
+    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora si dice che ${\bm{v_1}, \dots, \bm{v_n}}$ e' un insieme di generatori di $V$, oppure che l'insieme ${\bm{v_1}, \dots, \bm{v_n}}$ genera $V$, se
+    \begin{equation}
+        \Span{\bm{v_1}, \dots, \bm{v_n}} = V.
+    \end{equation}
+\end{definition}
+
+Per comodita' spesso si dice che i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono generatori di $V$, invece di dire che l'insieme formato da quei vettori e' un insieme di generatori.
+
 \begin{definition}
     Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora si dice che $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ se
     \begin{itemize}
-        \item $\Span{\bm{v_1}, \dots, \bm{v_n}} = V$;
+        \item i vettori $\bm{v_1}, \dots, \bm{v_n}$ generano $V$;
         \item i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti.
     \end{itemize}
 \end{definition}
