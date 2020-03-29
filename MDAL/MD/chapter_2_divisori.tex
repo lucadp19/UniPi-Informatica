@@ -256,7 +256,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     $\pm 1$ e $\pm p$.
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{primo_divide_prodotto}
     Se $p$ e' primo e $p \divides ab$, allora $p \divides a$ oppure $p \divides b$.
 \end{proposition}
 \begin{proof}
@@ -480,4 +480,93 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     Dunque i due numeri $\frac{ab}{\mcd{a}{b}}$ e $\mcm{a}{b}$ hanno gli stessi divisori, dunque devono essere uguali a meno del segno, da cui segue \[
         \mcd{a}{b}\mcm{a}{b} = \abs{ab}. 
     \]
+\end{proof}
+
+\section{Equazioni diofantee}
+
+\begin{definition}
+    Siano $a, b, c \in \Z$ noti, $x, y \in \Z$ incognite. Allora un'equazione
+    lineare della forma $ax + by = c$ si dice equazione diofantea.
+\end{definition}
+
+\begin{theorem}
+    Siano $a, b, c \in \Z$. Allora l'equazione diofantea $ax + by = c$ ammette soluzioni
+    se e solo se $\mcd{a}{b} \divides c$.
+\end{theorem}
+\begin{proof}
+    Supponiamo che $c = k\mcd{a}{b}$ per qualche $k \in \Z$. Allora per il teorema di Bezout
+    \ref{bezout} esistono $x', y' \in \Z$ tali che $ax' + by' = \mcd{a}{b}$. Moltiplicando
+    entrambi i membri per $k$ otteniamo
+    \begin{alignat*}{2} 
+        k\mcd{a}{b} &= k(ax' + by')
+                    &= akx' + bky'
+                    &= a(kx') + b(ky')
+    \end{alignat*}
+    dunque $x = kx'$ e $y = ky'$ risolvono l'equazione diofantea.
+
+    Supponiamo ora che $c$ non sia un multiplo di $\mcd{a}{b}$ e supponiamo per assurdo che l'equazione
+    abbia soluzione, cioe' che esistano $x, y \in \Z$ tali che $ax + by = c$. Sia $d = \mcd{a}{b}.$
+    Per definizione di $\mcd{a}{b}$ e per la proposizione \ref{divides_sum_subtr_mult},
+    dato che $d \divides a$ e $d \divides b$ segue che $d \divides ax$, $d \divides by$ e dunque
+    $d \divides ax + by$. Ma $ax + by = c$, quindi $d = \mcd{a}{b} \divides c$, che va contro le ipotesi.
+    Dunque l'equazione diofantea non ha soluzione, cioe' la tesi.
+\end{proof}
+
+\begin{theorem} \label{sol_diofantea_omogenea_coprimi}
+    Siano $a, b \in \Z$ coprimi. Allora le soluzioni dell'equazione diofantea omogenea $ax + by = 0$ 
+    sono tutte e solo della forma $x = -kb, y = ka$ al variare di $k \in \Z$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo innanzitutto che $x = -kb, y = ka$ e' una soluzione.
+    \begin{alignat*}{1}
+        ax + by &= a(-kb) + b(ka)\\
+                &= -kab + kab\\
+                &= 0
+    \end{alignat*}
+
+    Mostriamo ora che non vi possono essere altre soluzioni. Dato che $ax + by = 0$, allora $ax = -by$.
+    Dato che $a \divides ax$ allora $a \divides -by$; inoltre per ipotesi $\mcd{a}{-b} = \mcd{a}{b} = 1$.
+    Dunque per il teorema \ref{n_divides_product} segue che $a \divides y$, cioe' $y = ak$ per
+    qualche $k \in \Z$. Sostituendo ottengo $x = -b\frac{y}{a} = -bk$, che e' la tesi.
+\end{proof}
+
+\begin{corollary} \label{sol_diofantea_omogenea}
+    Se $a, b$ non sono coprimi, allora tutte le soluzioni dell'equazione $ax + by = 0$ saranno della forma
+    $x = -kb', y = ka'$ dove $a' = \frac{a}{\mcd{a}{b}}$ e $b' = \frac{b'}{\mcd{a}{b}}.$
+\end{corollary}
+\begin{proof}
+    Dato che $a, b$ non sono coprimi, allora possiamo dividere entrambi i membri di $ax + by = 0$
+    per $\mcd{a}{b}$ ottenendo l'equazione diofantea equivalente $a'x + b'y = 0$. Ma per il teorema
+    \ref{mcd_diviso_mcd} $\mcd{a'}{b'} = 1$, dunque per il teorema \ref{sol_diofantea_omogenea_coprimi}
+    le sue soluzioni saranno tutte e solo della forma $x = -kb', y = ka'$. Ma questa equazione
+    e' equivalente all'originale, dunque anche le soluzioni di $ax + by = 0$ saranno tutte e solo
+    della forma $x = -kb', y = ka'$.
+\end{proof}
+
+\begin{theorem} \label{sol_diofantea_non_omog}
+    Siano $a, b \in \Z$. Allora le soluzioni dell'equazione diofantea $ax + by = c$ 
+    si ottengono sommando ad una soluzione particolare (se esiste) una soluzione qualsiasi dell'equazione
+    omogenea associata $ax + by = 0$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo innanzitutto che se $(x, y)$ e' una soluzione della diofantea non omogenea e $(x_0, y_0)$
+    e' una soluzione dell'omogenea, allora $(x+x_0, y+y_0)$ e' ancora soluzione della non omogenea.
+    \begin{alignat*}{1}
+        a(x + x_0) + b(y + y_0) &= ax + ax_0 + by + by_0 \\
+                                &= (ax + by) + (ax_0 + by_0) \\
+                                &= c + 0\\
+                                &= c
+    \end{alignat*}
+
+    Dimostriamo ora che tutte le soluzioni sono di questa forma. Sia $(\bar{x}, \bar{y})$ una
+    soluzione particolare della diofantea non omogenea e $(x, y)$ un'altra soluzione qualsiasi,
+    e mostriamo che la loro differenza e' una soluzione dell'omogenea associata.
+    \begin{alignat*}
+        {1}
+        a(x - \bar{x}) + b(y - \bar{y}) &= ax - a\bar{x} + by - b\bar{y} \\
+                                        &= (ax + by) - (a\bar{x} + b\bar{y}) \\
+                                        &= c - c\\
+                                        &= 0
+    \end{alignat*}
+    che e' la tesi.
 \end{proof}

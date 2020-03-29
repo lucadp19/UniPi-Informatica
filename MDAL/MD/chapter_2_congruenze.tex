@@ -1,94 +1,6 @@
-\section{Equazioni diofantee}
+\chapter{Congruenze}
 
-\begin{definition}
-    Siano $a, b, c \in \Z$ noti, $x, y \in \Z$ incognite. Allora un'equazione
-    lineare della forma $ax + by = c$ si dice equazione diofantea.
-\end{definition}
-
-\begin{theorem}
-    Siano $a, b, c \in \Z$. Allora l'equazione diofantea $ax + by = c$ ammette soluzioni
-    se e solo se $\mcd{a}{b} \divides c$.
-\end{theorem}
-\begin{proof}
-    Supponiamo che $c = k\mcd{a}{b}$ per qualche $k \in \Z$. Allora per il teorema di Bezout
-    \ref{bezout} esistono $x', y' \in \Z$ tali che $ax' + by' = \mcd{a}{b}$. Moltiplicando
-    entrambi i membri per $k$ otteniamo
-    \begin{alignat*}{2} 
-        k\mcd{a}{b} &= k(ax' + by')
-                    &= akx' + bky'
-                    &= a(kx') + b(ky')
-    \end{alignat*}
-    dunque $x = kx'$ e $y = ky'$ risolvono l'equazione diofantea.
-
-    Supponiamo ora che $c$ non sia un multiplo di $\mcd{a}{b}$ e supponiamo per assurdo che l'equazione
-    abbia soluzione, cioe' che esistano $x, y \in \Z$ tali che $ax + by = c$. Sia $d = \mcd{a}{b}.$
-    Per definizione di $\mcd{a}{b}$ e per la proposizione \ref{divides_sum_subtr_mult},
-    dato che $d \divides a$ e $d \divides b$ segue che $d \divides ax$, $d \divides by$ e dunque
-    $d \divides ax + by$. Ma $ax + by = c$, quindi $d = \mcd{a}{b} \divides c$, che va contro le ipotesi.
-    Dunque l'equazione diofantea non ha soluzione, cioe' la tesi.
-\end{proof}
-
-\begin{theorem} \label{sol_diofantea_omogenea_coprimi}
-    Siano $a, b \in \Z$ coprimi. Allora le soluzioni dell'equazione diofantea omogenea $ax + by = 0$ 
-    sono tutte e solo della forma $x = -kb, y = ka$ al variare di $k \in \Z$.
-\end{theorem}
-\begin{proof}
-    Dimostriamo innanzitutto che $x = -kb, y = ka$ e' una soluzione.
-    \begin{alignat*}{1}
-        ax + by &= a(-kb) + b(ka)\\
-                &= -kab + kab\\
-                &= 0
-    \end{alignat*}
-
-    Mostriamo ora che non vi possono essere altre soluzioni. Dato che $ax + by = 0$, allora $ax = -by$.
-    Dato che $a \divides ax$ allora $a \divides -by$; inoltre per ipotesi $\mcd{a}{-b} = \mcd{a}{b} = 1$.
-    Dunque per il teorema \ref{n_divides_product} segue che $a \divides y$, cioe' $y = ak$ per
-    qualche $k \in \Z$. Sostituendo ottengo $x = -b\frac{y}{a} = -bk$, che e' la tesi.
-\end{proof}
-
-\begin{corollary} \label{sol_diofantea_omogenea}
-    Se $a, b$ non sono coprimi, allora tutte le soluzioni dell'equazione $ax + by = 0$ saranno della forma
-    $x = -kb', y = ka'$ dove $a' = \frac{a}{\mcd{a}{b}}$ e $b' = \frac{b'}{\mcd{a}{b}}.$
-\end{corollary}
-\begin{proof}
-    Dato che $a, b$ non sono coprimi, allora possiamo dividere entrambi i membri di $ax + by = 0$
-    per $\mcd{a}{b}$ ottenendo l'equazione diofantea equivalente $a'x + b'y = 0$. Ma per il teorema
-    \ref{mcd_diviso_mcd} $\mcd{a'}{b'} = 1$, dunque per il teorema \ref{sol_diofantea_omogenea_coprimi}
-    le sue soluzioni saranno tutte e solo della forma $x = -kb', y = ka'$. Ma questa equazione
-    e' equivalente all'originale, dunque anche le soluzioni di $ax + by = 0$ saranno tutte e solo
-    della forma $x = -kb', y = ka'$.
-\end{proof}
-
-\begin{theorem} \label{sol_diofantea_non_omog}
-    Siano $a, b \in \Z$. Allora le soluzioni dell'equazione diofantea $ax + by = c$ 
-    si ottengono sommando ad una soluzione particolare (se esiste) una soluzione qualsiasi dell'equazione
-    omogenea associata $ax + by = 0$.
-\end{theorem}
-\begin{proof}
-    Dimostriamo innanzitutto che se $(x, y)$ e' una soluzione della diofantea non omogenea e $(x_0, y_0)$
-    e' una soluzione dell'omogenea, allora $(x+x_0, y+y_0)$ e' ancora soluzione della non omogenea.
-    \begin{alignat*}{1}
-        a(x + x_0) + b(y + y_0) &= ax + ax_0 + by + by_0 \\
-                                &= (ax + by) + (ax_0 + by_0) \\
-                                &= c + 0\\
-                                &= c
-    \end{alignat*}
-
-    Dimostriamo ora che tutte le soluzioni sono di questa forma. Sia $(\bar{x}, \bar{y})$ una
-    soluzione particolare della diofantea non omogenea e $(x, y)$ un'altra soluzione qualsiasi,
-    e mostriamo che la loro differenza e' una soluzione dell'omogenea associata.
-    \begin{alignat*}
-        {1}
-        a(x - \bar{x}) + b(y - \bar{y}) &= ax - a\bar{x} + by - b\bar{y} \\
-                                        &= (ax + by) - (a\bar{x} + b\bar{y}) \\
-                                        &= c - c\\
-                                        &= 0
-    \end{alignat*}
-    che e' la tesi.
-\end{proof}
-
-
-\section{Congruenze}
+\section{Relazione di congruenza}
 
 \begin{definition} \label{def_congr}
     Siano $a, b, m \in \Z$, $m > 0$. Allora si dice che $a$ e' congruo a $b$ modulo $m$ se e solo se $a - b$ e' un multiplo di $m$, e si scrive
@@ -175,6 +87,8 @@
     
 \end{proof}
 
+\section{Equazioni con congruenze lineari}
+
 \begin{proposition}
     Siano $a, b, c \in \Z$; sia $ax + by = c$ un'equazione diofantea. Allora tutte le soluzioni della diofantea sono soluzioni delle equazioni $ax \equiv c \Mod{b}$ e $by \equiv c \Mod{a}$.
 \end{proposition}
@@ -187,9 +101,6 @@
 \end{proof}
 
 Tramite questa proposizione possiamo risolvere ogni equazione contenente congruenze risolvendo l'equazione diofantea associata, o viceversa.
-
-
-\subsection{Risolvere singole congruenze}
 
 \begin{definition}
     Siano $a \in \Z$; allora si dice che $a$ e' invertibile modulo $m$ se esiste  $x \in \Z$ tale che \[
@@ -307,7 +218,7 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
     \end{enumerate}
 \end{proof}
 
-\subsection{Sistemi di congruenze}
+\section{Sistemi di congruenze}
 
 \begin{theorem}
     [Teorema Cinese del Resto]
@@ -345,3 +256,133 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
         x \equiv x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}
     \end{equation}
 \end{proposition}
+
+\section{Struttura algebrica degli interi modulo m}
+
+\begin{definition}
+    Siano $a, n \in \Z$; allora si dice classe di resto $[a]_n$ l'insieme 
+    \begin{equation}
+        [a]_n = \left\{x \in \Z \mid x \equiv a \Mod{n}\right\}.
+    \end{equation}
+    Il numero $a$ si dice rappresentante della classe $[a]_n$.
+\end{definition}
+
+Due classi di resto si dicono uguali se contengono gli stessi elementi.
+Il rappresentante di una classe non e' unico, anzi per ogni classe ci sono infinite scelte che corrispondono a tutti i numeri appartenenti alla classe. Vale quindi la seguente osservazione:
+\begin{remark}
+    $a \equiv b \Mod{m} \iff [a]_n = [b]_n$.
+\end{remark}
+
+Notiamo che per ogni numero $n$ ci sono esattamente $n$ classi di resto modulo $n$: infatti ce n'e' una esattamente per ogni possibile resto della divisione per $n$, cioe' per ogni numero tra $0$ e $n-1$ inclusi.
+
+\begin{definition}
+    Si dice insieme degli interi modulo $n$ l'insieme
+    \begin{equation}
+        \Z/(n) = \left\{ [0]_n, [1]_n, \dots, [n-1]_n\right\}.
+    \end{equation}
+\end{definition}
+
+Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+$) e prodotto ($\cdot :$) tali che:
+\begin{align}
+    &[a]_n + [b]_n = [a+b]_n    &\forall [a]_n, [b]_n \in \Z/(n)\\
+    &[a]_n \cdot [b]_n = [ab]_n &\forall [a]_n, [b]_n \in \Z/(n)
+\end{align}
+
+\begin{proposition}
+    Per ogni $n \geq 2$ l'insieme $\Z/(n)$ e' un anello.
+\end{proposition}
+
+\section{Binomiale e Triangolo di Tartaglia}
+
+\begin{definition}
+    Si dice \textbf{coefficiente binomiale} $\binom{n}{k}$ il numero intero definito come \begin{equation}
+        \binom{n}{k} = \frac{n!}{k!(n-k)!}
+    \end{equation}    
+\end{definition}
+
+\begin{theorem}[del binomiale] \label{binomiale}
+    Siano $x, y, n \in \Z$. Allora vale che
+    \begin{equation}
+        (x+y)^n = \binom{n}{0}x^0y^n + \binom{n}{1}x^1y^{n-1} + \dots + \binom{n}{n}x^ny^0 = \sum_{k=0}^n \binom{n}{k}x^{n-k}y^k
+    \end{equation}
+\end{theorem}
+
+\begin{proposition}\label{binomio_pk_divisibile_p}
+    Se $p$ e' primo, allora per ogni $k$ tale che $0 < k < p$ vale che
+    \begin{equation}
+        \binom{p}{k} \equiv 0 \Mod{p}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Consideriamo un $k$ generico tale che $0 < k < p$.
+    Allora \[
+        \binom{p}{k} = \frac{p!}{k!(p-k)!} \iff p! = \binom{p}{k}(p-k)!k!    
+    \]
+    Ma $p \divides p!$, dunque $p \divides \binom{p}{k}(p-k)!k!$, dunque per la proposizione \ref{primo_divide_prodotto} segue che \[
+        p \divides \binom{p}{k} \text{ oppure } p \divides (p-k)! \text{ oppure } p \divides k!
+    .\]
+
+    Notiamo che sia $k$ che $p-k$ sono numeri minori di $p$, dunque $k!$ e $(p-k)!$ sono un prodotto di numeri minori di $p$. Ma $p$ e' primo, dunque e' coprimo con tutti i numeri che non siano un multiplo di $p$ (e quindi e' coprimo con tutti i numeri compresi tra $0$ e $p$ esclusi), dunque per la proposizione \ref{prodotto_coprimo_n} $p$ deve essere coprimo anche con $k!$ e con $(p-k)!$. 
+    
+    Da cio' segue che $p$ non puo' dividere $k!$ e $(p-k)!$.
+    L'ultima possibilita' e' che $p \divides \binom{p}{k}$, che e' equivalente a dire che $\binom{p}{k} \equiv 0 \Mod{p}$.
+\end{proof}
+
+\begin{proposition}\label{(x+y)^p_congr_x^p+y^p}
+    Siano $x, y, p \in \Z$, $p$ primo. Allora
+    \begin{equation}
+        (x+y)^p \equiv x^p + y^p \Mod{p}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per il teorema del Binomiale (\ref{binomiale}) sappiamo che
+    \begin{alignat*}{1}
+        (x+y)^p &= \binom{p}{0}x^p + \binom{p}{1}x^{p-1}y^1 + \dots + \binom{p}{i}x^{p-i}y^i + \dots + \binom{p}{p}y^p \\
+        \intertext{Ma per la proposizione \ref{binomio_pk_divisibile_p} tutti i termini intermedi di questa somma sono congrui a $0$ modulo $p$, dunque:}
+        &\equiv \binom{p}{0}x^p + \binom{p}{p}y^p \Mod{p}\\
+        &\equiv x^p + y^p \Mod{p}
+    \end{alignat*}
+    come volevasi dimostrare.
+\end{proof}
+
+\begin{corollary}\label{(x_1+x_n)^p_congr_x_1^p+x_n^p}
+    Siano $x_1, x_2, \dots, x_n, p \in \Z$, $p$ primo. Allora
+    \begin{equation}
+        (x_1+x_2+\dots+x_n)^p \equiv x_1^p + x_2^p + \dots + x_n^p \Mod{p}
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    Per induzione su n.
+    \begin{itemize}
+        \item \textbf{Caso base.}
+
+        Sia $n = 1$. Allora $x_1^p \equiv x_1^p \Mod{p}$ ovviamente.
+        \item \textbf{Passo induttivo.}
+        
+        Supponiamo che la tesi sia vera per $n-1$ e dimostriamola per $n$.
+        \begin{alignat*}{1}
+            (x_1+x_2+\dots+x_n)^p &\equiv ((x_1+x_2+\dots+x_{n-1})+x_n)^p \Mod{p}\\
+            \intertext{(per la proposizione \ref{(x+y)^p_congr_x^p+y^p})}
+            &\equiv (x_1+x_2+\dots+x_{n-1})^p+x_n^p\Mod{p}\\
+            \intertext{(per ipotesi induttiva)}
+            &\equiv x_1^p + x_2^p + \dots + x_{n-1}^p + x_n^p\Mod{p}
+        \end{alignat*}
+        che e' la tesi per $n$.
+    \end{itemize}
+    Dunque dal caso base e dal passo induttivo segue che la tesi vale per ogni $n$.
+\end{proof}
+
+\begin{theorem}
+    [Piccolo Teorema di Fermat]
+    Se $p$ e' primo, allora $x^p \equiv x \Mod{p}$.
+\end{theorem}
+\begin{proof}
+    \begin{alignat*}{1}
+        x^p &\equiv (\overbrace{1 +\dots+ 1}^{x \text{ volte}})^p \Mod{p}\\
+        \intertext{(per il corollario \ref{(x_1+x_n)^p_congr_x_1^p+x_n^p})}
+        &\equiv \overbrace{1^p +\dots+ 1^p}^{x \text{ volte}} \Mod{p}\\
+        &\equiv \overbrace{1 +\dots+ 1}^{x \text{ volte}} \Mod{p}\\
+        &\equiv x \Mod{p}
+    \end{alignat*}
+    che e' la tesi.
+\end{proof}

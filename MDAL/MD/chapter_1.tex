@@ -1,3 +1,48 @@
 \chapter{Numeri interi}
 
 \section{Insiemi numerici}
+
+\begin{definition}
+    Si dice \textbf{anello} un insieme di elementi $A$ insieme con due operazioni $+ : A \times A \to A$ e $\cdot : A \times A \to A$ e due elementi $0, 1 \in A$ per cui valgono i seguenti assiomi: \[
+        \forall a, b, c \in A    
+    \]
+    \begin{align}
+        &\text{1.}      &&(a+b) \in A           &\text{(chiusura rispetto a $+$)}\\
+        &\text{2.}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
+        &\text{3.}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
+        &\text{4.}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
+        &\text{5.}      &&\exists (-a) \in A. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
+        &\text{6.}      &&(ab) \in A            &\text{(chiusura rispetto a $\cdot$)}\\
+        &\text{7.}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+        &\text{8.}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
+        &\text{9.}      &&(a+b)c = ac + bc      &\text{(distributivita' 1)} \\
+        &\text{10.}     &&a(b+c) = ab + ac      &\text{(distributivita' 2)}
+        \intertext{Si dice \textbf{anello commutativo} un anello per cui vale inoltre il seguente assioma:}
+        &\text{11.}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
+    \end{align}
+\end{definition}
+
+Un tipico esempio di anello commutativo e' $\Z$: infatti gli anelli generalizzano le operazioni che possiamo fare sui numeri interi e le loro proprieta' fondamentali per estenderle ad altri insiemi con la stessa struttura algebrica.
+
+\begin{definition}
+    Si dice \textbf{campo} un insieme di elementi $F$ insieme con due operazioni $+ : F \times F \to F$ e $\cdot : F \times F \to F$ e due elementi $0, 1 \in F$ per cui valgono i seguenti assiomi: \[
+        \forall a, b, c \in F    
+    \]
+    \begin{align}
+        &\text{1.}      &&(a+b) \in F           &\text{(chiusura rispetto a $+$)}\\
+        &\text{2.}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
+        &\text{3.}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
+        &\text{4.}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
+        &\text{5.}      &&\exists (-a) \in F. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
+        &\text{6.}      &&(ab) \in F            &\text{(chiusura rispetto a $\cdot$)}\\        
+        &\text{7.}      &&ab = ba               &\text{(commutativita' di $\cdot$)}\\
+        &\text{8.}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+        &\text{9.}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
+        &\text{10.}     &&(a+b)c = ac + bc      &\text{(distributivita')} \\
+        &\text{11.}     &&\text{se } a \neq 0 \text{ allora } \exists a^{-1} \in F. \quad aa^{-1} = 1 &\text{(inverso per $\cdot$)}
+    \end{align}
+
+    La definizione sopra e' equivalente a dire che $F$ e' un anello commutativo per cui ogni elemento non nullo ha un inverso moltiplicativo.
+\end{definition}
+
+Tra gli insiemi numerici classici, gli insiemi $\Q, \R$ e $\C$ sono tutti esempi di campi: infatti le operazioni di addizione e moltiplicazione sono chiuse rispetto all'insieme, rispettano le proprieta' commutativa, associativa e distributiva ed esistono gli inversi per la somma e per il prodotto (per ogni numero diverso da $0$). Il concetto di campo serve quindi a generalizzare la struttura algebrica dei numeri razionali/reali/complessi per altri insiemi numerici.
