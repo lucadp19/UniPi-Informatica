@@ -307,6 +307,29 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     \end{equation}
 \end{theorem}
 
+\begin{definition}
+    Si dice triangolo di Tartaglia un triangolo che contiene alla riga $n$ e in posizione $k$ il coefficiente binomiale $\binom{n}{k}$.
+\end{definition}
+
+\begin{proposition}
+    Il triangolo di Tartaglia gode delle seguenti proprieta':
+    \begin{enumerate}
+        \item la somma degli elementi della riga $n$ e' $2^n$;
+        \item la somma a segni alterni degli elementi di ogni riga e' $0$;
+        \item nella riga $n$, l'elemento al posto $k$ e l'elemento al posto $n-k$ hanno lo stesso valore.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Dimostriamo le tre proposizioni.
+    \begin{enumerate}
+        \item Dimostriamo che $2^n = \sum_{k=0}^n \binom{n}{k}$.
+        \[2^n = (1+1)^n = \sum_k^0 \binom{n}{k}1^{n-k}1^k = \sum_{k=0}^n \binom{n}{k}\]
+        \item La somma a segni alterni della riga $n$-esima e' \[\sum_{k=0}^n (-1)^k\binom{n}{k} = \sum_{k=0}^n (-1)^k1^{n-k}\binom{n}{k} = (1-1)^k = 0^k = 0.\]
+        \item Dobbiamo dimostrare che $\binom{n}{k} = \binom{n}{n-k}$. Allora
+        \[\binom{n}{n-k} = \frac{n!}{(n-k)!(n-(n-k))!} = \frac{n!}{(n-k)!k!} = \binom{n}{k}.\]
+    \end{enumerate}
+\end{proof}
+
 \begin{proposition}\label{binomio_pk_divisibile_p}
     Se $p$ e' primo, allora per ogni $k$ tale che $0 < k < p$ vale che
     \begin{equation}
