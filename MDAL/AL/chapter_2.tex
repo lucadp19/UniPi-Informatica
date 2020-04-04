@@ -1,8 +1,6 @@
 \chapter{Spazi vettoriali}
 
-\section{Spazi vettoriali e prime proprieta'}
-
-\subsection{Spazi vettoriali}
+\section{Spazi vettoriali}
 \begin{definition}
     Si dice \textbf{spazio vettoriale su un campo $\K$} un insieme $V$ di elementi, detti \textbf{vettori}, insieme con due operazioni $+ : V \times V \to V$ e $\cdot : \K \times V \to V$ e un elemento $\bm{0_V} \in V$ che soddisfano i seguenti assiomi:
     \[\forall \bm{v}, \bm{w}, \bm{u} \in V, \quad\forall h, k \in \K \]
@@ -44,7 +42,7 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
 \end{example}
 
 \begin{definition}
-    Sia $V$ uno spazio vettoriale, $A \subset V$. Allora si dice che $A$ e' un sottospazio vettoriale di $V$ (o semplicemente sottospazio) se
+    Sia $V$ uno spazio vettoriale, $A \subseteq V$. Allora si dice che $A$ e' un sottospazio vettoriale di $V$ (o semplicemente sottospazio) se
     \begin{align}
         &\bm{0_V} \in A \\
         &(\bm{v} + \bm{w}) \in A    &&\forall \bm{v}, \bm{w} \in A \\
@@ -56,7 +54,7 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
     Le soluzioni di un sistema omogeneo $A\bm{x} = \bm{0}$ con $n$ variabili formano un sottospazio di $\R^n$.
 \end{proposition}
 \begin{proof}
-    Chiamiamo $S$ l'insieme delle soluzioni. Dato che le soluzioni sono vettori colonna di $n$ elementi, $S \subset \R^n$. Verifichiamo ora le condizioni per cui $S$ e' un sottospazio di $\R^n$:
+    Chiamiamo $S$ l'insieme delle soluzioni. Dato che le soluzioni sono vettori colonna di $n$ elementi, $S \subseteq \R^n$. Verifichiamo ora le condizioni per cui $S$ e' un sottospazio di $\R^n$:
     \begin{enumerate}
         \item $\bm{0}$ appartiene a $S$, poiche' $A\bm{0} = \bm{0}$;
         \item Se $\bm{x}, \bm{y}$ appartengono ad $S$, allora $A(\bm{x} + \bm{y}) = A\bm{x} + A\bm{y} = \bm{0} + \bm{0} = \bm{0}$, dunque $\bm{x} + \bm{y} \in S$;
@@ -65,7 +63,7 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
     Dunque $S$ e' un sottospazio di $\R^n$.
 \end{proof}
 
-\subsection{Combinazioni lineari e span}
+\section{Combinazioni lineari e span}
 \begin{definition}
     Sia $V$ uno spazio vettoriale e $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n} \in V$. Allora il vettore $\bm{v} \in V$ si dice combinazione lineare di $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n}$ se 
     \begin{equation}
@@ -101,7 +99,7 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
 \end{proof}
 
 \begin{proposition}
-    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora $A = \Span{v_1, \dots, v_n} \subset V$ e' un sottospazio di $V$.
+    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora $A = \Span{v_1, \dots, v_n} \subseteq V$ e' un sottospazio di $V$.
 \end{proposition}
 \begin{proof}
     Dimostriamo che valgono le tre condizioni per cui $A$ e' un sottospazio di $V$:
@@ -120,6 +118,8 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
 \end{proof}
 
 Vale anche l'implicazione inversa: ogni sottospazio di $V$ puo' essere descritto come span di alcuni suoi vettori.
+
+\subsubsection{Forma parametrica e cartesiana}
 
 \begin{proposition}
     Ogni sottospazio vettoriale di $R^n$ puo' essere descritto in due forme:
@@ -192,6 +192,8 @@ Vale anche l'implicazione inversa: ogni sottospazio di $V$ puo' essere descritto
     cioe' $W$ e' formato da tutti e solo i vettori che fanno parte del kernel della matrice $A = \begin{pmatrix} 1 &-2 &1 \end{pmatrix}$, cioe' $W = \ker \begin{pmatrix} 1 &-2 &1 \end{pmatrix}$.
 \end{example}
 
+\subsubsection{Indipendenza e dipendenza lineare}
+
 \begin{definition}
     Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora l'insieme $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ si dice insieme di vettori linearmente indipendenti se
     \begin{equation}
@@ -201,7 +203,7 @@ Vale anche l'implicazione inversa: ogni sottospazio di $V$ puo' essere descritto
 \end{definition}
 
 Possiamo usare una definizione alternativa di dipendenza lineare, equivalente alla precedente, tramite questa proposizione:
-\begin{proposition}
+\begin{proposition}\label{dip_se_e'_comb_lin}
     Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora l'insieme dei vettori $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ e' linearmente dipendente se e solo se almeno uno di essi e' esprimibile come combinazione lineare degli altri. 
 \end{proposition}
 \begin{proof}
@@ -231,12 +233,46 @@ Possiamo usare una definizione alternativa di dipendenza lineare, equivalente al
             = & 0\bm{v_2} + \dots + 0\bm{v_n} \\
             = & \bm{0_V}
         \end{alignat*}
-        dunque esiste una scelta dei coefficienti $a_1, a_2, \dots, a_n$ diversa da $a_1 = \dots = a_n = 0$ per cui la combinazione lineare da' come risultato il vettore nullo, cioe' l'insieme dei vettori non e' linearmente indipendente.
+        dunque esiste una scelta dei coefficienti $a_1, a_2, \dots, a_n$ diversa da $a_1 = \dots = a_n = 0$ per cui la combinazione lineare da' come risultato il vettore nullo, cioe' l'insieme dei vettori non e' linearmente indipendente. \qedhere
     \end{itemize}
-    
 \end{proof}
 
 Inoltre per comodita' spesso si dice che i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono indipendenti, invece di dire che l'insieme formato da quei vettori e' un insieme linearmente indipendente.
+
+\begin{proposition}\label{aggiunto_vettore_indipendente}
+    Sia $V$ uno spazio vettoriale, $\bm v \in V$ e $\bm{v_1}, \dots, \bm{v_n} \in V$ indipendenti. Allora i due fatti seguenti sono equivalenti:
+    \begin{enumerate}
+        \item $\bm v \notin \Span{\bm{v_1}, \dots, \bm{v_n}}$;
+        \item $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' ancora un insieme di vettori linearmente indipendenti.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Dimostriamo entrambi i versi dell'implicazione.
+    \begin{itemize}
+        \item[($\implies$)] Supponiamo che $\bm v \notin \Span{\bm{v_1}, \dots, \bm{v_n}}$.
+        
+        Se $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' un insieme di vettori linearmente indipendenti per definizione l'unica combinazione lineare $a_1\bm{v_1} + \dots + a_n\bm{v_n} + b\bm{v}$ che da' come risultato il vettore nullo $\bm{0}$ deve essere quella con coefficienti tutti nulli.
+
+        Supponiamo per assurdo $b \neq 0$,. Allora \begin{alignat*}{1}
+            &\bm 0 = a_1\bm{v_1} + \dots + a_n\bm{v_n} + b\bm{v}\\
+            \iff &-b\bm{v} = a_1\bm{v_1} + \dots + a_n\bm{v_n}\\
+            \iff &\bm{v} = -\frac{a_1}{b}\bm{v_1} - \dots - \frac{a_n}{b}\bm{v_n}
+        \end{alignat*}
+        cioe' $v \in \Span{\bm{v_1}, \dots, \bm{v_n}}$, che pero' e' assurdo perche' per ipotesi $\bm v \notin \Span{\bm{v_1}, \dots, \bm{v_n}}$.
+
+        Dunque $b = 0$, cioe' \begin{alignat*}{1}
+            &\bm 0 = a_1\bm{v_1} + \dots + a_n\bm{v_n} + b\bm{v}\\
+            \iff &\bm 0 = a_1\bm{v_1} + \dots + a_n\bm{v_n}
+            \intertext{Tuttavia $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti, dunque l'unica scelta dei coefficienti che annulla la combinazione lineare e' quella con tutti i coefficienti nulli:}
+            \iff &a_1 = \dots = a_n = b = 0
+        \end{alignat*}
+        cioe' $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' ancora un insieme di vettori linearmente indipendenti.
+        \item[($\impliedby$)] Supponiamo che $\bm{v_1}, \dots, \bm{v_n}, \bm v$ sia un insieme di vettori linearmente indipendenti. 
+        
+        Per la proposizione \ref{dip_se_e'_comb_lin} sappiamo che un insieme di vettori e' linearmente dipendente se e solo se almeno uno di essi puo' essere scritto come combinazione lineare degli altri, cioe' se e solo se almeno uno di essi e' nello span degli altri.
+        Ma questo e' equivalente a dire che un insieme di vettori e' linearmente indipendente se e solo se nessuno di essi e' nello span degli altri, dunque dato che $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' un insieme di vettori linearmente indipendenti segue che $\bm{v}$ non puo' appartenere a $\Span{\bm{v_1}, \dots, \bm{v_n}}$. \qedhere
+    \end{itemize}
+\end{proof}
 
 \begin{proposition} \label{span_Gauss}
     Sia $V$ uno spazio vettoriale e $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora per ogni $k \in \R$ e per ogni $i, j \leq n$.
@@ -310,7 +346,7 @@ Notiamo che alla fine di questo procedimento otteniamo vettori colonna che sono 
     \]
 \end{solution}
 
-\subsection{Generatori e basi}
+\section{Generatori e basi}
 \begin{definition}
     Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora si dice che ${\bm{v_1}, \dots, \bm{v_n}}$ e' un insieme di generatori di $V$, oppure che l'insieme ${\bm{v_1}, \dots, \bm{v_n}}$ genera $V$, se
     \begin{equation}
@@ -534,241 +570,192 @@ Notiamo che alla fine del procedimento non otteniamo dei vettori colonna che gen
 
 Notiamo che sembra esserci una relazione biunivoca tra un vettore di $V$ e le sue coordinate in $\R^n$ rispetto ad una base. Infatti (come vedremo nella prossima parte) la relazione tra vettore di $V$ e vettore colonna delle sue coordinate e' un isomorfismo: essi rappresentano lo stesso oggetto sotto forme diverse. Quindi spesso per fare calcoli (ad esempio semplificare un insieme di vettori per trovare una base) possiamo passare allo spazio isomorfo $\R^n$, sfruttare i vettori colonna e le matrici (ad esempio facendo mosse di Gauss per riga o per colonna) e infine passare di nuovo allo spazio originale.
 
-\section{Applicazioni lineari}
+Abbiamo mostrato come estrarre una base di un sottospazio a partire da un insieme di generatori. Ora vogliamo \textbf{completare una base} di un sottospazio ad una base dello spazio vettoriale che lo contiene.
 
-\begin{definition}
-    Siano $V, W$ spazi vettoriali. Allora un'applicazione $f : V \to W$ si dice lineare
-    se
-    \begin{align}
-        &f(\bm{0_V}) = \bm{0_W} \\
-        &f(\bm{v} + \bm{w}) = f(\bm{v}) + f(\bm{w}) &&\forall v, w \in V \\
-        &f(k\bm{v}) = kf(\bm{v})                    &&\forall v\in V, k \in \R 
-    \end{align}
-    $V$ si dice dominio dell'applicazione lineare, $W$ si dice codominio.
-\end{definition}
-
-\begin{definition}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora si dice immagine di $f$ l'insieme \begin{equation}
-        \Imm{f} = \left\{ f(\bm{v}) \mid \bm v \in V\right\}.
-    \end{equation}
-\end{definition}
-
-\begin{remark}
-    Se $f : V \to W$ allora $\Imm{f} \subseteq W$. In particolare si puo' dimostrare che $\Imm{f}$ e' un sottospazio di $W$, e dunque che $0 \leq \dim\Imm{f} \leq \dim W$.
-\end{remark}
-
-\begin{definition}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora si dice kernel (o nucleo) di $f$ l'insieme \begin{equation}
-        \ker{f} = \left\{ \bm{v} \in V \mid f(\bm v) = \bm{0_W}\right\}.
-    \end{equation}
-\end{definition}
-
-\begin{theorem} 
-    [delle dimensioni] \label{th_dimensioni}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora vale il seguente fatto:
-    \begin{equation}
-        \dim V = \dim \Imm f + \dim \ker f.
-    \end{equation}
+\begin{theorem}
+    [del completamento ad una base] \label{th_completamento}
+    Sia $V$ uno spazio vettoriale di dimensione finita $n = \dim V$ e sia $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_k}}$ un insieme di $k$ vettori linearmente indipendenti. Allora vale che $k \leq n$ ed esistono $n - k$ vettori di $V$, diciamo ${\bm{w_1}, \dots, \bm{w_{n-k}}}$ tali che $\mathcal{B}' = \ang{\bm{v_1}, \dots, \bm{v_k}, \bm{w_1}, \dots, \bm{w_{n-k}}}$ e' una base di $V$.
 \end{theorem}
-
-\subsection{Applicazioni iniettive e surgettive}
-
-Le applicazioni lineari sono funzioni, dunque possono essere iniettive e surgettive, ma essendo lineari hanno delle proprieta' particolari.
-
-\begin{definition}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora $f$ si dice iniettiva se per ogni $\bm{v}, \bm{u} \in V$ vale che $f(\bm{v}) = f(\bm{u})$ se e solo se $\bm{v} = \bm{u}$.
-\end{definition}
-
-\begin{proposition}\label{ker_funzione_iniettiva}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora $f$ e' iniettiva se e solo se $\ker f = \{\bm{0_V}\}$. 
-\end{proposition}
 \begin{proof}
-    Notiamo che dato che $f$ e' lineare allora per definizione $f(\bm{0_V}) = \bm{0_W}$, dunque $\bm{0_V} \in \ker f$.
-    \begin{description}
-        \item [($\implies$).] Supponiamo che $f$ sia iniettiva e supponiamo che per qualche $\bm{v} \in V$ valga $\bm{v} \in \ker f$. Allora per definizione di kernel $f(\bm{v}) = \bm{0_W} = f(\bm{0_V})$, dunque per iniettivita' di $f$ da $f(\bm{v}) = f(\bm{0_V})$ segue che $\bm v = \bm{0_V}$. Dunque $\ker f = \{\bm{0_V}\}$.
-        \item [($\impliedby$).] Supponiamo che $\ker f = \left\{ \bm{0_V}\right\}$. Per dimostrare che $f$ e' iniettiva e' sufficiente dimostrare che per ogni $\bm{v}, \bm{w} \in V$ segue che $f(\bm{v}) = f(\bm{w}) \implies \bm{v} = \bm{w}$.
-        \begin{alignat*}{1}
-            &f(\bm{v}) = f(\bm{w}) \\
-            \iff &f(\bm{v}) - f(\bm{w}) = \bm{0_W} \\
-            \iff &f(\bm{v} - \bm{w}) = \bm{0_W} \\
-            \iff &\bm{v} - \bm{w} \in \ker f \\
-            \intertext{ma l'unico elemento di $\ker f$ e' $\bm{0_V}$, dunque}
-            \implies &\bm{v} - \bm{w} = \bm{0_V}\\
-            \iff &\bm{v} = \bm{w}
-        \end{alignat*}
-        cioe' $f$ e' iniettiva. \qedhere
-    \end{description}
-\end{proof}
+    Non possono esserci piu' di $n$ vettori indipendenti in uno spazio di dimensione $n$, dunque $k \leq n$. Ora dimostriamo che possiamo completare $\mathcal{B}$ ad una base di $V$.
 
-\begin{corollary}\label{iniettiva_allora_dimIm_uguale_dimV}
-    Se $f$ e' iniettiva allora $\dim \Imm{f} = \dim V$.
-\end{corollary}
-\begin{proof}
-    Infatti per la proposizione \ref{ker_funzione_iniettiva} $\dim \ker f = 0$, dunque per il teorema delle dimensioni (\ref{th_dimensioni}) segue che $\dim V = \dim \Imm{f} + \dim \ker f = \dim \Imm{f}$.
-\end{proof}
+    Se $k = n$ allora per la proposizione \ref{base=dim_gener_indip} gli $n$ vettori indipendenti sono gia' una base, dunque abbiamo finito.
 
-\begin{corollary}
-    Siano $V, W$ spazi vettoriali tali che $\dim V > \dim W$. Allora non puo' esistere $f : V \to W$ iniettiva.
-\end{corollary}
-\begin{proof}
-    Infatti per il corollario \ref{iniettiva_allora_dimIm_uguale_dimV} segue che $\dim \Imm{f} = \dim V$, ma $\dim \Imm{f} < \dim W$ dunque non puo' essere che $\dim V > \dim W$.
-\end{proof}
-
-\begin{proposition}\label{indipendenti_mappati_indipendenti}
-    Siano $V, W$ spazi vettoriali, $\bm{v_1}, \dots, \bm{v_n} \in V$ linearmente indipendenti e sia $f : V \to W$ lineare. Se $f$ e' iniettiva allora segue che $f(\bm{v_1}), \dots, f(\bm{v_n})$ sono linearmente indipendenti. 
-\end{proposition}
-\begin{proof}
-    Consideriamo una combinazione lineare di $f(\bm{v_1}), \dots, f(\bm{v_n})$ e dimostriamo che imponendola uguale al vettore nullo segue che i coefficienti devono essere tutti nulli.
-    \begin{alignat*}
-        {1}
-        &x_1f(\bm{v_1}) + \dots + x_nf(\bm{v_n}) = \bm{0_W}\\
-        \iff &f(x_1\bm{v_1} + \dots + x_n\bm{v_n}) = \bm{0_W}\\
-        \intertext{Per la proposizione \ref{ker_funzione_iniettiva} segue che}
-        \iff &x_1\bm{v_1} + \dots + x_n\bm{v_n} = \bm{0_V}\\
-        \intertext{Ma i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti, dunque l'unica combinazione lineare che li annulla e' quella a coefficienti nulli, cioe'}
-        \iff &x_1 = \dots = x_n = 0
-    \end{alignat*}
-    Quindi una combinazione lineare di $f(\bm{v_1}), \dots, f(\bm{v_n})$ e' uguale al vettore nullo se e solo se tutti i coefficienti sono nulli, dunque $f(\bm{v_1}), \dots, f(\bm{v_n})$ sono linearmente indipendenti.
-\end{proof}
-
-\begin{definition}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora $f$ si dice surgettiva se per ogni $\bm{w} \in W$ esiste $\bm{v} \in V$ tale che $f(\bm{v}) = \bm{w}$.
-\end{definition}
-
-\begin{remark}
-    Una funzione $f : V \to W$ e' surgettiva se e solo se $\Imm{f} = W$.
-\end{remark}
-
-\begin{proposition}\label{base_mappata_generatori_immagine}
-    Sia $f : V \to W$. Allora se $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ segue che $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $W$.
-\end{proposition}
-\begin{proof}
-    Sia $\bm{w} \in \Imm{f}$ generico; allora questo equivale a dire che esiste $\bm{v} \in V$ tale che $f(\bm{v}) = \bm{w}$.
-    Dato che $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$, allora possiamo scrivere $\bm{v}$ come $a_1\bm{v_1} + \dots a_n\bm{v_n}$, dunque 
-    \begin{equation*}
-        \bm{w} = f(a_1\bm{v_1} + \dots + a_n\bm{v_n}) = a_1f(\bm{v_1}) + \dots + a_nf(\bm{v_n}).
-    \end{equation*}
-    Dunque per la generalita' di $w$ segue che ogni elemento di $\Imm{f}$ appartiene allo span di $f(\bm{v_1}), \dots, f(\bm{v_n})$, cioe' $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $W$.
-\end{proof}
-
-\begin{corollary}\label{base_mappata_generatori_codominio}
-    Sia $f : V \to W$ surgettiva. Allora se $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ segue che $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $W$.
-\end{corollary}
-\begin{proof}
-    Segue direttamente dalla proposizione \ref{base_mappata_generatori_immagine}: infatti se una funzione e' surgettiva allora $\Imm{f} = W$, dunque se $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $\Imm f$ segue che e' anche un insieme di generatori di $W$.
-\end{proof}
-
-\subsection{Isomorfismi}
-
-\begin{definition}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora $f$ si dice bigettiva se $f$ e' sia iniettiva che surgettiva.
-\end{definition}
-
-\begin{definition}
-    Una funzione $f : V \to W$ si dice invertibile se esiste $f^{-1} : W \to V$ tale che \begin{equation}
-        f(\bm{v}) = \bm{w} \iff f^{-1}(\bm{w}) = \bm{v}
-    \end{equation}
-    Se $f$ e' invertibile allora $f^{-1}$ e' unica e si chiama inversa di $f$.
-\end{definition}
-
-\begin{remark}
-    Un'applicazione lineare e' invertibile se e solo se e' bigettiva. 
-\end{remark}
-
-\begin{definition}
-    Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora se $f$ e' bigettiva si dice che $f$ e' un isomorfismo.
+    Se $k < n$ allora esistera' sicuramente $\bm{w_1} \notin \Span{\bm{v_1}, \dots, \bm{v_k}}$ (altrimenti i vettori genererebbero l'intero spazio vettoriale e sarebbero quindi una base), dunque $\ang{\bm{v_1}, \dots, \bm{v_k}, \bm{w_1}}$ sono ancora indipendenti.
     
-    Se esiste un isomorfismo tra gli spazi $V$ e $W$ allora si dice che $V$ e' isomorfo a $W$, e si indica con $V \cong W$.
-\end{definition}
-
-\begin{remark}
-    Le seguenti affermazioni sono equivalenti:
-    \begin{itemize}
-        \item $f$ e' bigettiva;
-        \item $f$ e' invertibile;
-        \item $f$ e' un isomorfismo.
-    \end{itemize}
-\end{remark}
-
-Gli isomorfismi preservano la linearita' dello spazio vettoriale e tutte le sue proprieta', come ci dicono le seguenti proposizioni.
-
-\begin{proposition}
-    Sia $V$ uno spazio vettoriale, $\alpha = \ang{\bm{v_1}, \dots, \bm{v_n}}$ una base di $V$. Allora se $f : V \to W$ e' un isomorfismo segue che $\beta = \ang{f(\bm{v_1}), \dots, f(\bm{v_n})}$ e' una base di $W$ (cioe' gli isomorfismi mappano basi in basi).
-\end{proposition}
-\begin{proof}
-    Dato che $f$ e' un isomorfismo allora $f$ e' bigettiva.
-
-    Dunque dato che $f$ e' iniettiva essa mappa un insieme di vettori indipendenti (come la base $\alpha$ di $V$) in un insieme di vettori linearmente indipendenti per la proposizione \ref{indipendenti_mappati_indipendenti}, dunque $\beta$ e' un insieme di vettori linearmente indipendenti. 
-
-    Inoltre, dato che $f$ e' surgettiva, per la proposizione \ref{base_mappata_generatori_codominio} essa mappa una base di $V$ in un insieme di generatori del codominio $W$, dunque i vettori di $\beta$ generano $W$.
-
-    Dunque $\beta$ e' un insieme di generatori linearmente indipendenti, e quindi e' una base di $W$.
+    Continuiamo a ripetere questo processo fino a quando l'insieme di vettori non genera l'intero spazio vettoriale $V$. Sia $\mathcal{B}'$ l'insieme creato tramite questo processo. Allora $\mathcal{B}'$ e' un insieme di vettori indipendenti che generano $V$, dunque e' una base di $V$, dunque dovra' contenere $n$ vettori. Ma dato che inizialmente avevamo $k$ vettori, per completare ad una base di $V$ abbiamo dovuto aggiungere $n-k$ vettori di $V$.
 \end{proof}
 
-\begin{proposition}
-    Se $V$ e' uno spazio vettoriale di dimensione $n = \dim V$, allora $V$ e' isomorfo a tutti e soli gli spazi vettoriali di dimensione $n$.
-\end{proposition}
-\begin{proof}
-    Deriva direttamente dalla proposizione precedente: infatti ogni isomorfismo che ha come dominio $V$ deve portare una base di $V$ in una base di $W$, dunque la dimensione di $V$ deve essere uguale a quella di $W$.
-\end{proof}
+\subsubsection{Procedimento per completare ad una base di $\R^n$}
 
-Quindi per calcolare una base di un sottospazio $W$ di uno spazio $V$ spesso conviene passare allo spazio dei vettori colonna $\R^n$ isomorfo allo spazio $V$, calcolare la base del sottospazio $\tilde{W}$ isomorfo a $W$ e infine tornare allo spazio di partenza.
+Sia $V = \R^n$ e siano $\left\{ \bm{v_1}, \dots, \bm{v_k} \right\}$ indipendenti.
+
+Allora formo la matrice $M$ che ha come colonne i vettori $\bm{v_1}, \dots, \bm{v_k}$ e la riduco a scalini per colonna tramite mosse di Gauss di colonna, ottenendo una matrice $M'$ che ha come colonne i vettori $\bm{v'_1}, \dots, \bm{v'_k}$.
+
+Questi vettori sono indipendenti (poiche' le mosse di colonna non modificano lo span) e sono a scalini, dunque dovranno avere pivot su righe diverse, e dovranno averne esattamente $k \leq n$. Allora aggiungo $n - k$, ognuno con un pivot su una riga diversa da quelle gia' occupate: la matrice finale sara' una matrice quadrata con $n$ pivot, dunque sara' formata da colonne indipendenti che formano una base di $\R^n$.
 
 \begin{example}
-    Sia $V = \R[x]^{\leq 2}$ e sia $W \subseteq V$ il sottospazio di $V$ tale che $p \in W \iff p(2) = 0$. Dimostrare che $W$ e' un sottospazio e trovarne una base.
+    Sia $V = \R^4$, $A \subseteq V$ tale che \[
+        A = \Span{\begin{pmatrix}2\\0\\1\\1\end{pmatrix}, \begin{pmatrix}3\\-2\\-2\\0\end{pmatrix}, \begin{pmatrix}1\\0\\-1\\\frac13\end{pmatrix}, \begin{pmatrix}0\\1\\-2\\\frac13\end{pmatrix}}.    
+    \] Trovare una base di $A$ e completarla ad una base di $\R^4$.
 \end{example}
 \begin{solution}
-    Svolgiamo i due punti separatamente.
-    \begin{enumerate}
-        \item Dimostriamo che $W$ e' un sottospazio di $V$.
-        \begin{itemize}
-            \item Sia $\bm{0_V} \in V$ tale che $\bm{0_V}(x) = 0 + 0x + 0x^2$. Allora $\bm{0_V}(2) = 0 + 0\cdot 2 + 0 \cdot 4 = 0$, dunque $\bm{0_V} \in W$.
-            \item Supponiamo $p, q \in W$ e mostriamo che $p+q \in W$. Dunque \[
-                (p+q)(2) = p(2) + q(2) = 0 + 0 = 0    
-            \] dunque $p + q \in W$.
-            \item Supponiamo $p \in W$ e mostriamo che $kp \in W$ per un generico $k \in \R$. Dunque \[
-                (kp)(2) = kp(2) = k \cdot 0 = 0    
-            \] cioe' $kp \in W$ per ogni $k \in \R$.
-        \end{itemize} 
-        Dunque abbiamo dimostrato che $W$ e' un sottospazio di $V$.
-        \item Cerchiamo ora una base per $W$.
-         
-        Consideriamo un generico $p \in V$, cioe' $p(x) = a + bx + cx^2$. La condizione che definisce $W$ e' $p(2) = a + 2b + 4c = 0$. 
-    
-        Passiamo ora allo spazio isomorfo $\R^3$. Il vettore corrispondente a $p$ in $\R^3$ e' $\bm{\tilde{p}} = \begin{psmallmatrix} a \\ b \\ c \end{psmallmatrix}$, mentre la condizione di appartenenza allo spazio $\widetilde{W} \subseteq \R^3$ isomorfo a $W$ e' sempre $a+2b+4c = 0$. Cerchiamo una base di $\widetilde{W}$ passando alla forma parametrica, cioe' cercando di esplicitare la condizione di appartenenza allo spazio e inserendola nella definizione stessa del vettore.
-        Dato che la condizione e' data dal sistema $a+2b+4c = 0$ che ha due variabili libere, scelgo $b, c$ libere ottenendo $a = -2b - 4c$. Sostituendo in $\bm{\tilde{p}}$:\[
-            \bm{\tilde p} = \begin{pmatrix} a \\ b \\ c \end{pmatrix} = \begin{pmatrix}
-                -2b-4c\\b\\c
-            \end{pmatrix} = b\begin{pmatrix} -2 \\ 1 \\ 0 \end{pmatrix} + c\begin{pmatrix} -4 \\ 0 \\ 1 \end{pmatrix}
-        \]
-        Dato che ogni vettore generico di $\widetilde{W}$ puo' essere scritto come combinazione lineare dei due vettori $\bm{\tilde{w}_1} = \begin{psmallmatrix} -2 \\ 1 \\ 0 \end{psmallmatrix}$ e $\bm{\tilde{w}_2} = \begin{psmallmatrix} -4 \\ 0 \\ 1 \end{psmallmatrix}$, allora segue che essi sono generatori di $W$. 
-            
-        Controlliamo ora che siano linearmente indipendenti riducendo a scalini per riga (secondo la proposizione \ref{estrarre_una_base}) la matrice che ha come colonne $\bm{\tilde{w}_1}$ e $\bm{\tilde{w}_2}$.
-        \begin{equation*}
-            \begin{pmatrix}[c|c]
-                -2 & -4 \\ 1 & 0 \\ 0 & 1
-            \end{pmatrix} \xrightarrow[]{R_2 + \frac12R_1}
-            \begin{pmatrix}[c|c]
-                -2 & -4 \\ 0 & -2 \\ 0 & 1
-            \end{pmatrix} \xrightarrow[]{R_3 + \frac12R_2}
-            \begin{pmatrix}[c|c]
-                -2 & -4 \\ 0 & -2 \\ 0 & 0
-            \end{pmatrix}
-        \end{equation*}
-        Dato che ci sono tanti pivot quante colonne segue che tutti i vettori originali sono indipendenti.
-        I vettori $\bm{\tilde{w}_1}$ e $\bm{\tilde{w}_2}$ sono quindi indipendenti e generano $\widetilde{W}$: segue che $\ang{\bm{\tilde{w}_1}, \bm{\tilde{w}_1}}$ e' una base di $\widetilde{W}$, quindi $\dim \widetilde{W} = 2$.
+    Troviamo una base di $A$ tramite mosse di colonna:
+    \begin{gather*}
+        \begin{pmatrix}[c|c|c|c]
+            2&3&1&0\\0&-2&0&1\\1&-2&-1&-2\\1&0&\frac13&\frac13
+        \end{pmatrix} \xrightarrow[]{\text{scambio}}
+        \begin{pmatrix}[c|c|c|c]
+            1&0&3&2\\0&1&-2&0\\-1&-2&-2&1\\\frac13&\frac13&0&1
+        \end{pmatrix} \xrightarrow[C_4 - 2C_1]{C_3 - 3C_1} \\
+        \xrightarrow[C_4 - 2C_1]{C_3 - 3C_1} \begin{pmatrix}[c|c|c|c]
+            1&0&0&0\\0&1&-2&0\\-1&-2&1&3\\\frac13&\frac13&-1&\frac13
+        \end{pmatrix} \xrightarrow[]{C_3 + 2C_1}
+        \begin{pmatrix}[c|c|c|c]
+            1&0&0&0\\0&1&0&0\\-1&-2&-3&3\\\frac13&\frac13&-\frac13&\frac13
+        \end{pmatrix} \xrightarrow[]{C_4 + C_3} \\ \xrightarrow[]{C_4 + C_3}
+        \begin{pmatrix}[c|c|c|c]
+            1&0&0&0\\0&1&0&0\\-1&-2&-3&0\\\frac13&\frac13&-\frac13&0
+        \end{pmatrix}
+    \end{gather*}
+    Dunque una base di $A$ e' formata dai vettori $\ang{\begin{psmallmatrix}1\\0\\-1\\\frac13 \end{psmallmatrix}, \begin{psmallmatrix}0\\1\\-2\\\frac13 \end{psmallmatrix}, \begin{psmallmatrix}0\\0\\-3\\-\frac13 \end{psmallmatrix} }$.
 
-        Tornando allo spazio originale, i vettori corrispondenti alla base sono quindi $w_1(x) = (-2 + x)$ e $w_2(x) = (-4 + x^2)$. L'insieme ordinato $\ang{(-2+x), (-4+x^2)}$ forma dunque una base di $W$ e dunque $\dim W = 2$.
-    \end{enumerate}
+    Notiamo che i pivot di questi vettori sono ad altezza $1$, $2$ e $3$, dunque per completare ad una base di $\R^4$ basta aggiungere un vettore che ha un pivot ad altezza $4$, come $\begin{psmallmatrix} 0\\0\\0\\1 \end{psmallmatrix}$.
+
+    Dunque abbiamo completato la base di $A$ alla seguente base di $\R^4$: \[
+        \ang{
+            \begin{pmatrix}1\\0\\-1\\\frac13 \end{pmatrix}, 
+            \begin{pmatrix}0\\1\\-2\\\frac13 \end{pmatrix}, 
+            \begin{pmatrix}0\\0\\-3\\-\frac13 \end{pmatrix},
+            \begin{pmatrix} 0\\0\\0\\1 \end{pmatrix}
+        }.      
+    \]
 \end{solution}
 
-\subsection{Matrice associata ad una funzione}
-
-Come avevamo visto nel primo capitolo, le matrici sono associate ad applicazioni lineari da vettori colonna in vettori colonna. Possiamo generalizzare questo concetto e definire una matrice associata ad ogni applicazione lineare.
+\section{Sottospazi somma e intersezione}
 
 \begin{definition}
-    Siano $V, W$ spazi vettoriali, $f : V \to W$ lineare, $\alpha$ base di $V$ e $\beta$ base di $W$. Allora si dice chiama \textbf{matrice associata all'applicazione lineare} $f$ la matrice $[f]^{\alpha}_{\beta}$ tale che
-    \begin{equation}
-        \forall \bm{v} \in V. \quad \left( f(\bm{v}) \right)_{\beta} = [f]^{\alpha}_{\beta} \cdot (\bm{v})_{\alpha}
-    \end{equation}
+    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora sono sottospazi vettoriali di $V$:
+    \begin{subequations}
+        \begin{equation}
+            A \cap B = \left\{ \bm{v} \in V \mid \bm v \in A, \bm v \in B\right\}
+        \end{equation}
+        \begin{equation}
+            A + B = \left\{ (\bm{v} + \bm{w}) \in V \mid \bm v \in A, \bm w \in B\right\}
+        \end{equation}
+    \end{subequations}
 \end{definition}
+
+\begin{remark}
+    Possiamo verificare molto semplicemente che i due spazi sopra sono effettivamente sottospazi di $V$. Inoltre $A \cup B$ non e' un sottospazio vettoriale, ma possiamo notare che $(A \cup B) \subset (A + B)$ in quanto $A \subset A + B$ e $B \subset A + B$.
+\end{remark}
+
+\begin{proposition}
+    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$ tali che $A = \Span{\bm{v_1}, \dots, \bm{v_n}}$ e $B = \Span{\bm{w_1}, \dots, \bm{w_m}}$. Allora \begin{equation}
+        A + B = \Span{\bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Consideriamo un generico $\bm u \in A + B$. Allora per definizione di $A + B$ segue che $\bm u = \bm v + \bm w$ per qualche $\bm v \in A, \bm w \in B$.
+    Dato che $A = \Span{\bm{v_1}, \dots, \bm{v_n}}$ e $B = \Span{\bm{w_1}, \dots, \bm{w_m}}$, allora possiamo scrivere 
+    \begin{alignat*}{1}
+        &\bm v = a_1\bm{v_1} + \dots + a_n\bm{v_n},  \quad \bm w = b_1\bm{w_1} + \dots + b_n\bm{w_m} \\
+        \intertext{per qualche $a_1, \dots, a_n, b_1, \dots, b_m \in \R$. Quindi $\bm u = \bm v + \bm w$ diventa}
+        \implies &\bm v + \bm w = a_1\bm{v_1} + \dots + a_n\bm{v_n} + b_1\bm{w_1} + \dots + b_n\bm{w_m}
+    \end{alignat*}
+    dunque ogni vettore in $A + B$ puo' essere scritto come combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}$, dunque questi vettori generano $A + B$. 
+\end{proof}
+
+\begin{remark}
+    I vettori $\bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}$ \textbf{generano} $A+B$ ma non sono una base: dobbiamo prima assicurarci che siano linearmente indipendenti.
+\end{remark}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora il sottospazio somma $A + B$ si dice in somma diretta se per ogni $\bm v \in A$, $\bm w \in B$ allora $\bm v, \bm w$ sono indipendenti. Se la somma e' diretta scrivo $A \oplus B$.
+\end{definition}
+
+\begin{proposition}
+    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora il sottospazio somma $A + B$ e' in somma diretta se e solo se $A \cap B = \{\bm 0\}$.
+\end{proposition}
+\begin{proof}
+    Innanzitutto notiamo che $\bm{0} \in A$ e $\bm 0 \in B$, dunque $\{\bm 0\} \subseteq A \cap B$.
+    \begin{itemize}
+        \item[($\implies$)] Supponiamo $A \oplus B$. 
+        
+        Allora supponiamo per assurdo che esista $\bm u \in A \cap B$ non nullo. Per definizione di intersezione segue che $\bm u \in A$ e $\bm u \in B$, ma questo significa che in $A$ e in $B$ ci sono almeno due vettori $\bm v \in A$ e $\bm w \in B$ non indipendenti tra loro: basta scegliere $\bm v = \bm u$ e $\bm w = \bm u$. 
+        
+        Tuttavia questo e' assurdo poiche' abbiamo assunto che $A$ e $B$ siano in somma diretta, dunque non puo' esserci un $\bm u \in A \cap B$ non nullo, dunque $A \cap B = \{\bm 0\}$.
+        \item[($\impliedby$)] Supponiamo che $A \cap B = \{\bm 0\}$. 
+        
+        Siano $\bm v \in A$, $\bm{w} \in B$ entrambi non nulli. Per dimostrare che $A$ e $B$ sono in somma diretta e' sufficiente dimostrare che sono necessariamente indipendenti, cioe' che l'unica combinazione lineare $a\bm v + b\bm w$ che e' uguale a $\bm 0$ e' quella con $a = b = 0$. 
+        
+        Notiamo che $a\bm v + b\bm w = \bm 0$ se e solo se $a\bm v = -b\bm w$; ma dato che i due vettori (che fanno parte di sottospazi diversi) sono uguali segue che devono entrambi far parte del sottospazio intersezione, cioe' $a\bm v, -b\bm w \in A \cap B$.
+        
+        Per ipotesi $A \cap B = \{\bm 0\}$, dunque $a\bm v = -b\bm w = \bm 0$. Inoltre abbiamo assunto che i vettori $\bm v$ e $\bm{w}$ siano non nulli, dunque segue che $a = b = 0$, come volevasi dimostrare. \qedhere
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}
+    [di Grassman] \label{th_grassman}
+    Sia $V$ uno spazio vettoriale e $A, B \subseteq V$ due sottospazi. Allora \begin{equation}
+        \dim(A + B) = \dim A + \dim B - \dim(A \cap B).
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Consideriamo una base $\gamma = \ang{\bm{u_1}, \dots, \bm{u_k}}$ di $A \cap B$.
+
+    Dato che $A \cap B$ e' un sottospazio sia di $A$ che di $B$, allora per il teorema del completamento ad una base (\ref{th_completamento}) possiamo completarla ad una base $\alpha = \ang{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}}$ di $A$ e ad una base $\beta = \ang{\bm{u_1}, \dots, \bm{u_k}, \bm{w_1}, \dots, \bm{w_m}}$ di $B$.
+
+    Dimostriamo che $\ang{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}}$ e' una base di $A + B$.
+
+    \begin{itemize}
+        \item Mostriamo che $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ generano $A + B$.
+        
+        Sia $\bm u \in A + B$ generico. Allora esistono $\bm v \in A, \bm w \in B$ tali che $\bm{u} = \bm{v} + \bm{w}$. Dato che $\alpha$ e' una base di $A$ e $\beta$ e' una base di $B$ allora possiamo scrivere $\bm v$ e $\bm w$ come \begin{alignat*}{2}
+            \bm{v} &=\ && a_1\bm{u_1} + \dots + a_k\bm{u_k} + a_{k+1}\bm{v_1} + \dots + a_{k+n}\bm{v_n} \\
+            \bm{w} &=\ && b_1\bm{u_1} + \dots + b_k\bm{u_k} + b_{k+1}\bm{w_1} + \dots + b_{k+m}\bm{w_m} \\
+            \intertext{dunque}
+            \bm{u} &=\ && \bm{v} + \bm{w}\\
+                &=\ && a_1\bm{u_1} + \dots + a_k\bm{u_k} + a_{k+1}\bm{v_1} + \dots + a_{k+n}\bm{v_n} + \\
+                & && + b_1\bm{u_1} + \dots + b_k\bm{u_k} + b_{k+1}\bm{w_1} + \dots + b_{k+m}\bm{w_m} \\
+                &=\ && (a_1 + b_1)\bm{u_1} + \dots + (a_k + b_k)\bm{u_k} + \\
+                & && + a_{k+1}\bm{v_1} + \dots + a_{k+n}\bm{v_n} + \\
+                & && + b_{k+1}\bm{w_1} + \dots + b_{k+m}\bm{w_m}.
+        \end{alignat*}
+        Dunque ogni elemento di $A + B$ puo' essere scritto come combinazione lineare di $\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}$, cioe' essi sono generatori di $A + B$.
+
+        \item Mostriamo che $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ e' un insieme di vettori linearmente indipendenti.
+        
+        Consideriamo una combinazione lineare dei vettori $\bm{u_1}, \dots, \bm{u_k}$, $\bm{v_1}, \dots, \bm{v_n}$, $\bm{w_1}, \dots, \bm{w_m}$ e verifichiamo che essa e' uguale al vettore $\bm{0}$ se e solo se tutti i coefficienti sono uguali a $0$.
+
+        \begin{alignat*}{1}
+            &\bm{0} = x_1\bm{v_1} + \dots + x_n\bm{v_n} + y_1\bm{u_1} + \dots + y_k\bm{u_k} + z_1\bm{w_1} + \dots +z_m\bm{w_m} \\
+            \iff &x_1\bm{v_1} + \dots + x_n\bm{v_n} = -(y_1\bm{u_1} + \dots + y_k\bm{u_k} + z_1\bm{w_1} + \dots +z_m\bm{w_m}).
+        \end{alignat*}
+        Notiamo che il primo membro e' un vettore del sottospazio $A$, mentre il secondo membro e' un vettore del sottospazio $B$: dato che i due vettori sono uguali allora devono trovarsi in entrambi i sottospazi e dunque anche nel sottospazio $A \cap B$. Dato che $\gamma$ e' una base di $A \cap B$ possiamo scrivere \begin{alignat*}{1}
+            &x_1\bm{v_1} + \dots + x_n\bm{v_n} = a_1\bm{u_1} + \dots + a_k\bm{u_k} \\
+            \iff &x_1\bm{v_1} + \dots + x_n\bm{v_n} - a_1\bm{u_1} - \dots - a_k\bm{u_k} = \bm{0}
+            \intertext{ma $\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}$ formano una base di $A$, dunque devono essere indipendenti, quindi per definizione segue che}
+            \iff &x_1 = \dots = x_n = 0
+        \end{alignat*}
+        Dunque nella combinazione lineare i termini con $\bm{v_i}$ scompaiono, e rimangono solo
+        \begin{alignat*}{1}
+            &\bm{0} = y_1\bm{u_1} + \dots + y_k\bm{u_k} + z_1\bm{w_1} + \dots +z_m\bm{w_m}
+            \intertext{ma questi vettori formano la base $\beta$ di $B$, dunque devono essere indipendenti, cioe' per definizione}
+            \iff &y_1 = \dots = y_k = z_1 = \dots = z_m = 0.
+        \end{alignat*}
+
+        Segue quindi che $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ e' un insieme di vettori linearmente indipendenti.
+    \end{itemize}
+    Dato che l'insieme $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ e' un insieme di vettori linearmente indipendenti e genera $A+B$, allora esso e' una base di $A + B$.
+
+    Dunque \begin{alignat*}
+        {1}
+        \dim(A + B) &= n + k + m\\ 
+                &= (n + k) + (m + k) - k \\
+                &= \dim A + \dim B - dim(A \cap B)
+    \end{alignat*}
+    come volevasi dimostrare.
+\end{proof}
+
+
