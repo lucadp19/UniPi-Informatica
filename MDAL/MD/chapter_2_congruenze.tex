@@ -112,7 +112,7 @@ Per calcolare gli inversi modulo $m$ basta fare una tabella $m \times m$ in cui 
 
 Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
 
-\begin{theorem}
+\begin{theorem}\label{invertibilita_mod_m}
     Siano $a, m \in \Z$. Allora $a$ e' invertibile modulo $m$ se e solo se $\mcd{a}{m} = 1$. 
 \end{theorem}
 \begin{proof}
@@ -282,23 +282,70 @@ Notiamo che per ogni numero $n$ ci sono esattamente $n$ classi di resto modulo $
     \end{equation}
 \end{definition}
 
-Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+$) e prodotto ($\cdot :$) tali che:
+Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+ : \Z/(n) \times \Z/(n) \to \Z/(n)$) e prodotto ($\cdot : \Z/(n) \times \Z/(n) \to \Z/(n)$) tali che:
 \begin{align}
     &[a]_n + [b]_n = [a+b]_n    &\forall [a]_n, [b]_n \in \Z/(n)\\
     &[a]_n \cdot [b]_n = [ab]_n &\forall [a]_n, [b]_n \in \Z/(n)
 \end{align}
 
-\begin{proposition}
-    Per ogni $n \geq 2$ l'insieme $\Z/(n)$ e' un anello.
+\begin{remark}
+    Le operazioni di somma e prodotto sono ben definite: il loro risultato non cambia a seconda dei rappresentanti scelti per le classi di congruenza.
+\end{remark}
+
+\begin{proposition}\label{Z(n)_anello}
+    Per ogni $n \geq 2$ l'insieme $\Z/(n)$ con le operazioni di somma e prodotto tra classi e con gli elementi $[0]_n, [1]_n$ che svolgono il ruolo di $0$ e $1$ e' un anello commutativo.
 \end{proposition}
+\begin{proof}
+    E' facile verificare che valgono gli assiomi degli anelli.
+\end{proof}
+
+\begin{proposition}
+    Per ogni $p \geq 2$, $p$ primo, l'insieme $\Z/(p)$ con le operazioni di somma e prodotto tra classi e con gli elementi $[0]_n, [1]_n$ che svolgono il ruolo di $0$ e $1$ e' un campo.
+\end{proposition}
+\begin{proof}
+    Per la proposizione \ref{Z(n)_anello} sappiamo che $\Z/(p)$ e' un anello commutativo. Per la proposizione \ref{invertibilita_mod_m} un numero e' invertibile modulo $p$ se e solo se e' coprimo con $pm$; ma tutti i numeri che non sono multipli di $p$ sono coprimi con $p$, dunque tutte le classi tranne $[0]_p$ sono invertibili, dunque esiste l'inverso per la moltiplicazione per ogni elemento non nullo, cioe' $\Z/(p)$ e' un campo.
+\end{proof}
 
 \section{Binomiale e Triangolo di Tartaglia}
 
 \begin{definition}
-    Si dice \textbf{coefficiente binomiale} $\binom{n}{k}$ il numero intero definito come \begin{equation}
+    Si dice \textbf{coefficiente binomiale} $\binom{n}{k}$ il numero intero tale che \begin{equation}
         \binom{n}{k} = \frac{n!}{k!(n-k)!}
     \end{equation}    
 \end{definition}
+
+\begin{proposition}\label{simmetria_binomiale}
+    Sia $n \in \Z$, $k \in \Z$ tale che $0 \leq k \leq n$. Allora \begin{equation}
+        \binom{n}{k} = \binom{n}{n-k}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    \[\binom{n}{n - k} = \frac{n!}{(n-k)!(n-(n-k))!} = \frac{n!}{k!(n-k)!} = \binom{n}{k} \qedhere\]
+\end{proof}
+
+\begin{proposition} \label{binomiale_ricorsivo}
+    Sia $n \in \Z$, $k \in \Z$ tale che $0 \leq k \leq n$. Allora \begin{equation}
+        \binom{n}{k} = \begin{cases}
+            1 &\text{se } k = 0 \text{ oppure } k = n \\
+            \binom{n - 1}{k - 1} + \binom{n - 1}{k} &\text{altrimenti}.
+        \end{cases}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Se $k = 0$ allora \[\binom{n}{0} = \frac{n!}{0!(n-0)!} = \frac{n!}{n!} = 1.\] 
+    Inoltre per la proposizione \ref{simmetria_binomiale} segue che \[\binom{n}{n} = \binom{n}{n - n} = \binom{n}{0} = 1.\]
+
+    Se $0 < k < n$ allora \begin{alignat*}
+        {1}
+        \binom{n - 1}{k - 1} + \binom{n - 1}{k} &= \frac{(n-1)!}{(k-1)!(n-1-(k-1))!} + \frac{(n-1)!}{(k)!(n-1-k)!} \\[1em]
+        &= \frac{(n-1)!}{(k-1)!(n-1-k)!(n-k)} + \frac{(n-1)!}{k(k-1)!(n-1-k)!} \\[1em]
+        &= \frac{(n-1)!k + (n-k)(n-1)!}{k(k-1)!(n-1-k)!(n-k)} \\[1em]
+        &= \frac{(n-1)!k + n(n-1)! - k(n-1)!}{k!(n-k)!} \\
+        &= \frac{n!}{k!(n-k)!} \\[1em]
+        &= \binom{n}{k}
+    \end{alignat*}
+    che e' la tesi.
+\end{proof}
 
 \begin{theorem}[del binomiale] \label{binomiale}
     Siano $x, y, n \in \Z$. Allora vale che
@@ -308,8 +355,43 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \end{theorem}
 
 \begin{definition}
-    Si dice triangolo di Tartaglia un triangolo che contiene alla riga $n$ e in posizione $k$ il coefficiente binomiale $\binom{n}{k}$.
+    Si dice triangolo di Tartaglia un triangolo che ha le seguenti proprieta':
+    \begin{enumerate}
+        \item le righe sono numerate a partire da $0$;
+        \item ogni riga ha $n + 1$ elementi, che vengono numerati da $0$ a $n$;
+        \item l'elemento in riga $n$ e posizione $k$ si indica con $T_{n, k}$;
+        \item $T_{n, 0} = T_{n, n} = 1$;
+        \item per ogni $n \geq 0$, $0 < k \leq n$, $T_{n + 1, k} = T_{n, k - 1} + T_{n, k}$.
+    \end{enumerate}
 \end{definition}
+
+
+\begin{proposition}
+    Sia $n \in \Z$. Allora per ogni $k \in \Z$ tale che $0 \leq k \leq n$ segue che \begin{equation}
+        T_{n,k} = \binom{n}{k}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per induzione su $n$.
+    \begin{itemize}
+        \item[\textbf{Caso base.}]
+
+        Sia $n = 0$, allora dato che $0 \leq k \leq n$ segue che $k = 0$. Dunque
+        \[
+            T_{0, 0} = 1 = \binom{0}{0}.    
+        \]
+        \item[\textbf{Passo induttivo.}]
+        
+        Supponiamo che la tesi sia vera per $n$ e dimostriamola per $n+1$. 
+        \begin{itemize}
+            \item Se $k = 0$ oppure $k = n + 1$ allora per definizione del triangolo di Tartaglia $T_{n+1, 0} = T_{n+1, n+1} = 1$ che e' esattamente $\binom{n+1}{0} = \binom{n+1}{n+1}$ (per la proposizione \ref{binomiale_ricorsivo}),
+            \item Se $0 < k < n+1$ allora per definizione del triangolo di Tartaglia segue che \[
+                T_{n+1, k} = T_{n, k-1} + T_{n, k} = \binom{n}{k-1} + \binom{n}{k} = \binom{n+1}{k}    
+            \] dove l'ultimo passaggio viene dalla proposizione \ref{binomiale_ricorsivo}.
+        \end{itemize}
+    \end{itemize}
+    Dunque la tesi e' vera per ogni $n \in \Z$.
+\end{proof}
 
 \begin{proposition}
     Il triangolo di Tartaglia gode delle seguenti proprieta':
@@ -322,11 +404,10 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \begin{proof}
     Dimostriamo le tre proposizioni.
     \begin{enumerate}
-        \item Dimostriamo che $2^n = \sum_{k=0}^n \binom{n}{k}$.
+        \item Dimostriamo che $2^n = \sum_{k=0}^n T_{n, k} = \sum_{k=0}^n \binom{n}{k}$.
         \[2^n = (1+1)^n = \sum_k^0 \binom{n}{k}1^{n-k}1^k = \sum_{k=0}^n \binom{n}{k}\]
-        \item La somma a segni alterni della riga $n$-esima e' \[\sum_{k=0}^n (-1)^k\binom{n}{k} = \sum_{k=0}^n (-1)^k1^{n-k}\binom{n}{k} = (1-1)^k = 0^k = 0.\]
-        \item Dobbiamo dimostrare che $\binom{n}{k} = \binom{n}{n-k}$. Allora
-        \[\binom{n}{n-k} = \frac{n!}{(n-k)!(n-(n-k))!} = \frac{n!}{(n-k)!k!} = \binom{n}{k}.\]
+        \item La somma a segni alterni della riga $n$-esima e' \[\sum_{k=0}^n (-1)^kT_{n, k} = \sum_{k=0}^n (-1)^k\binom{n}{k} = \sum_{k=0}^n (-1)^k1^{n-k}\binom{n}{k} = (1-1)^k = 0^k = 0.\]
+        \item Dobbiamo dimostrare che $T_{n, k} = T_{n, n-k}$. Ma dato che $T_{n, k} = \binom{n}{k}$ e $T_{n, n-k} = \binom{n}{n-k}$, allora questo e' equivalente a dimostrare che $\binom{n}{k} = \binom{n}{n-k}$, che e' vero per la proposizione \ref{simmetria_binomiale}. \qedhere
     \end{enumerate}
 \end{proof}
 
@@ -377,10 +458,10 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \begin{proof}
     Per induzione su n.
     \begin{itemize}
-        \item \textbf{Caso base.}
+        \item[\textbf{Caso base.}]
 
         Sia $n = 1$. Allora $x_1^p \equiv x_1^p \Mod{p}$ ovviamente.
-        \item \textbf{Passo induttivo.}
+        \item[\textbf{Passo induttivo.}]
         
         Supponiamo che la tesi sia vera per $n-1$ e dimostriamola per $n$.
         \begin{alignat*}{1}
@@ -396,7 +477,7 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \end{proof}
 
 \begin{theorem}
-    [Piccolo Teorema di Fermat]
+    [Piccolo Teorema di Fermat] \label{th_fermat}
     Se $p$ e' primo, allora $x^p \equiv x \Mod{p}$.
 \end{theorem}
 \begin{proof}
@@ -409,3 +490,128 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     \end{alignat*}
     che e' la tesi.
 \end{proof}
+
+\begin{corollary} \label{corollario_fermat}
+    Se $p$ e' primo e $x \nequiv 0 \Mod{p}$ allora $x^{p-1} \equiv 1 \Mod{p}$.
+\end{corollary}
+\begin{proof}
+    Per il piccolo teorema di Fermat (\ref{th_fermat}) vale che $x^p \equiv x \Mod{p}$. Dato che $x \nequiv 0 \Mod{p}$ allora segue che $p$ e $x$ sono coprimi, dunque $x$ e' invertibile modulo $p$. Moltiplicando entrambi i membri per l'inverso $x^{-1}$ otteniamo \begin{alignat*}
+        {1}
+        &x^px^{-1} \equiv x\cdot x^{-1} \Mod{p}\\
+        \iff &x^{p-1} \equiv 1 \Mod{p}
+    \end{alignat*}
+    che e' la tesi.    
+\end{proof}
+
+\section{Congruenze esponenziali}
+
+Iniziamo con un esempio di congruenza esponenziale.
+\begin{example}
+    Trovare tutte le soluzioni di $3^x \equiv 5 \Mod{7}$.
+\end{example}
+\begin{solution}
+    Proviamo per tentativi:
+    \begin{alignat*}
+        {2}
+        &x = 0 \implies &&3^0 \equiv 1 \nequiv 5 \Mod{7}\\
+        &x = 1 \implies &&3^1 \equiv 3 \nequiv 5 \Mod{7}\\
+        &x = 2 \implies &&3^2 \equiv 9 \equiv 2 \nequiv 5 \Mod{7}\\
+        &x = 3 \implies &&3^3 \equiv 3^2 \cdot 3 \equiv 2 \cdot 3 \equiv 6 \nequiv 5 \Mod{7}\\
+        &x = 4 \implies &&3^4 \equiv 3^2 \cdot 3^2 \equiv 2 \cdot 2 \equiv 4 \nequiv 5 \Mod{7}\\
+        &x = 5 \implies &&3^5 \equiv 3^2 \cdot 3^3 \equiv 2 \cdot 6 \equiv 12 \equiv 5 \Mod{7}\\
+        &x = 6 \implies &&3^6 \equiv 3^3 \cdot 3^3 \equiv 6 \cdot 6 \equiv 36 \equiv 1 \nequiv 5 \Mod{7}
+    \end{alignat*}
+    Dunque $x = 5$ e' una soluzione. Non possiamo dire pero' che le soluzioni sono tutti i numeri della forma $x = 5 + 7k$, perche' possiamo notiare che i numeri sembrano ripetersi con periodo $6$ e non $7$ (infatti $3^0 \equiv 3^6 \equiv 1 \Mod{7}$). 
+
+    Dimostriamo che se $x = 5$ e' soluzione, allora anche $x = 5 +6k$ lo e'. Infatti \[
+        3^{5 + 6k} \equiv 3^5 \cdot 3^{6k} \equiv 3^5 \cdot 1^k \equiv 5 \Mod{7}.
+    \]
+    Dunque le soluzioni sono tutte le $x$ tali che $x \equiv 5 \Mod{6}$. Questo vale anche per $x$ negativi, ma dobbiamo definire $x^{-1}$ non come $\frac{1}{x}$ ma come l'inverso di $x$ modulo $m$.
+\end{solution}
+
+\begin{definition}
+    Siano $a, m \in \Z$, $a \nmid m$. Allora si dice ordine di $a$ modulo $m$ il piu' piccolo intero positivo $\ord{a}{m}$ tale che \begin{equation}
+        a^{\ord{a}{m}} \equiv 1 \Mod{m}.
+    \end{equation}
+\end{definition}
+
+\begin{remark}
+    Notiamo che $\ord{a}{m}$ deve essere positivo, e dunque in particolare maggiore di $0$. Inoltre la condizione $a \nmid m$, che equivale a $a \nequiv 0 \Mod{m}$ serve ad evitare la congruenza banale $0^x \equiv b \Mod{m}$, che ha soluzione se e solo se $b \equiv 0 \Mod{m}$.
+\end{remark}
+
+\begin{proposition}\label{multipli_ord_equiv_1}
+    Siano $a, m \in \Z$, $a \nmid m$. Allora per ogni $k \in \Z$ vale che \begin{equation}
+        a^{k\ord{a}{m}} \equiv 1 \Mod{m}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    \[
+        a^{k\ord{a}{m}} \equiv (a^{\ord{a}{m}})^k \equiv 1^k \equiv 1 \Mod{m}. \qedhere
+    \]
+\end{proof}
+
+\begin{proposition}\label{solo_multipli_ord_equiv_1}
+    Siano $a, m \in \Z$, $a \nmid m$. Allora \begin{equation}
+        a^x \equiv 1 \Mod{m} \iff x \equiv 0 \Mod{\ord{a}{m}}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per definizione di congruenza 
+    \[x \equiv 0 \Mod{\ord{a}{m}} \iff x \mid \ord{a}{m} \iff x = \ord{a}{m}\cdot k\] 
+    per qualche $k \in \Z$.
+
+    Per l'unicita' del resto della divisione euclidea (\ref{esistenza_resto}) possiamo scrivere che $x = q\ord{a}{m} + r$ per qualche $q, r \in \Z$ con $0 \leq r < \ord{a}{m}$. Questo e' equivalente a dire \begin{alignat*}
+        {1}
+        &\begin{alignedat}
+            {1}
+            a^x &= a^{q\ord{a}{m} + r}\\
+            &= a^{q\ord{a}{m}}\cdot a^r
+        \end{alignedat} \\
+        \intertext{che equivale a}
+        &\begin{alignedat}
+            {1}
+            a^x &\equiv a^{q\ord{a}{m}}\cdot a^r \Mod{m} \\
+            &\equiv 1 \cdot a^r \Mod{m}\\
+            &\equiv a^r \Mod{m}
+        \end{alignedat}
+    \end{alignat*}
+    dove abbiamo sfruttato la proposizione \ref{multipli_ord_equiv_1} per dire che $a^{q\ord{a}{m}}\equiv 1 \Mod{m}$.
+
+    Dunque dato che $a^x \equiv a^r \Mod{m}$ segue che $a^x \equiv 1 \Mod{m}$ se e solo se $a^r \equiv 1 \Mod{m}$. Ma $r < \ord{a}{m}$, dunque se $r$ fosse maggiore di $0$ avremmo trovato un numero minore di $\ord{a}{m}$ per cui $a^r \equiv 1 \Mod{m}$, che e' assurdo poiche' va contro la minimalita' di $\ord{a}{m}$.
+
+    Segue che $r = 0$, cioe' $x = q\ord{a}{m}$, cioe' equivalentemente $x \equiv 0 \Mod{\ord{a}{m}}$, come volevasi dimostrare.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b, m \in \Z$, $a \nmid m$. Se $x_0 \in \Z$ e' una soluzione di $a^x \equiv b \Mod{m}$ allora le soluzioni sono tutte e solo della forma \begin{equation}
+        x \equiv x_0 \Mod{\ord{a}{m}}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo che se $x = x_0 + k\ord{a}{m}$ allora $x$ e' soluzione.
+    \begin{alignat*}
+        {1}
+        a^{x_0 + k\ord{a}{m}} &\equiv a^{x_0}a^{k\ord{a}{m}} \Mod{m} \\
+        &\equiv b \cdot 1 \Mod{m} \\
+        &\equiv b \Mod{m}.
+    \end{alignat*}
+    Dimostriamo ora che se $x$ e' soluzione, allora $x \equiv x_0 \Mod{\ord{a}{m}}$, cioe' equivalentemente $x - x_0 = k\ord{a}{m}$.
+    \begin{alignat*}
+        {1}
+        a^{x - x_0} &\equiv a^{x}a^{-x_0} \Mod{m} \\
+        &\equiv b \cdot b^{-1} \Mod{m} \\
+        &\equiv 1 \Mod{m}.
+    \end{alignat*}
+    Ma per la proposizione \ref{solo_multipli_ord_equiv_1} $a^{x - x_0} \equiv 1 \Mod{m}$ se e solo se $x - x_0 \equiv 0 \Mod{\ord{a}{m}}$, cioe' se e solo se $x \equiv x_0 \Mod{\ord{a}{m}}$, che e' la tesi.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, p \in \Z$, $a \nmid p$, $p$ primo. Allora vale che $\ord{a}{p} \divides p-1$.
+\end{proposition}
+\begin{proof}
+    Per il corollario al piccolo teorema di Fermat (\ref{corollario_fermat}) sappiamo che $a^{p-1} \equiv 1 \Mod{p}$, cioe' $p-1$ e' una soluzione dell'equazione $a^x \equiv 1 \Mod{p}$. 
+    
+    Per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $p-1 \equiv 0 \Mod{\ord{a}{p}}$, cioe' $\ord{a}{p} \mid p-1$, che e' la tesi.
+\end{proof}
+
+Dunque se dobbiamo trovare l'ordine di un numero $a$ modulo un primo $p$ ci basta provare tutti i divisori di $p - 1$ fino a quando non troviamo il minimo divisore che soddisfa la proprieta'.
