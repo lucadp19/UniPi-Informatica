@@ -81,6 +81,8 @@ Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni s
                   &= \binom{n}{k}.
 \end{alignat*}
 
+\subsection{Esempi}
+
 \begin{example}
     Contare i sottoinsiemi di $\left\{ 1, 2, 3, 4, 5\right\}$ di cardinalita' $3$.
 \end{example}
@@ -193,6 +195,37 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
     \end{enumerate}
 \end{solution}
 
+\begin{example}
+    Consideriamo una tabella $3 \times 3$. In quanti modi possiamo colorare ogni casella di bianco o di nero in modo che:
+    \begin{enumerate}[(i)]
+        \item ogni riga e' colorata in modo diverso;
+        \item esiste una e una sola riga bianca;
+        \item esiste almeno una riga monocromatica.
+    \end{enumerate}
+\end{example}
+\begin{solution}
+    Innanzitutto consideriamo una singola riga: dato che e' formata da $3$ caselle che possono essere colorate in 2 modi, in totale la riga potra' essere colorata in $2^3$ modi distinti.
+    \begin{enumerate}
+        [(i)]
+        \item Coloro la prima riga: dato che non ho ulteriori restrizioni lo posso fare in $2^3 = 8$ modi. Ora ho solo 7 modi per colorare la seconda riga, in quanto non posso ripetere la stessa colorazione della prima; e infine ho 6 modi per colorare l'ultima, in quanto non posso ripetere la prima o la seconda. In totale ho quindi $8\cdot 7\cdot 6$ modi di colorare la tabella.
+        \item Ho $3$ possibilita' per scegliere la riga bianca. Ora ho $7$ modi per colorare la prima riga non bianca e sempre 7 modi per colorare la seconda riga non bianca (devo escludere la colorazione formata da 3 quadratini bianchi). In totale ho dunque $3 \cdot 7\cdot 7$ modi di colorare la tabella.
+        \item Potrei essere tentato da ragionare in questo modo: scelgo una riga monocromatica tra 3, posso colorarla in due modi (tutta bianca o tutta nera), ora posso colorare le due righe rimanenti in 8 modi ciascuna. In realta' questo ragionamento non funziona, perche' conterei piu' volte combinazioni in cui ci sono piu' righe monocromatiche.
+        Abbiamo quindi due modi alternativi a disposizione. \begin{enumerate}[1.]
+            \item Conto separatamente i casi in cui ci sono una, due o tre righe monocromatiche.
+            
+            Supponiamo che ci sia una singola riga monocromatica. Dunque dobbiamo scegliere quale riga e' (3 possibilita') e se la riga e' bianca o nera (2 possibilita'); infine le altre due righe non possono essere monocromatiche dunque avremo $8-2 = 6$ possibilita' per ciascuna di esse. Dunque in questo caso ci sono $3\cdot 2 \cdot 6^2 = 6^3$ possibilita'.
+
+            Supponiamo che ci siano due righe monocromatiche. Allora possiamo sceglierle tra le tre in $\binom{3}{2} = 3$ modi, e possiamo scegliere il loro colore in $2\cdot2 = 4$ modi. L'ultima riga deve essere non monocromatica, dunque possiamo sceglierla in $6$ modi diversi, ottenendo in totale $3 \cdot 4 \cdot 6 = 72$ possibilita'.
+
+            Supponiamo infine che tutte le righe siano monocromatiche. Per ognuna di esse abbiamo due possibilita', dunque abbiamo in totale $2^3 = 8$ scelte possibili.
+
+            Facendo la somma delle varie possibilita' otteniamo che ci sono $6^3 + 72 + 8 = 296$ tabelle con almeno una riga monocromatica.
+            \item Passo al complementare: conto i casi in cui non c'e' nessuna riga monocromatica e lo sottraggo dal totale. Se nessuna riga e' monocromatica significa che abbiamo $8 - 2 = 6$ possibilita' per riga; il numero totale di possibilita' senza restrizioni e' $2^9$ dunque la soluzione al terzo punto e' $2^9 - 6^3 = 296$.
+        \end{enumerate}
+    \end{enumerate}
+\end{solution}
+
+\subsection{Teorema del binomiale}
 Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usando il calcolo combinatorio.
 \begin{proof}[Dimostrazione del Teorema del Binomiale (\ref{binomiale})]
     Per definizione \[
@@ -225,4 +258,42 @@ Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usand
     \] che e' la tesi.
 \end{proof}
 
-\section{Poker}
+\subsection{Poker}
+
+Cerchiamo di calcolare il numero di modi in cui possiamo fare punteggi nel Poker tradizionale. 
+
+Innanzitutto descriviamo il gioco: abbiamo un mazzo di 52 carte divise in 4 semi, con valori 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K.
+Si pescano 5 carte e viene assegnato un punteggio alla mano se e' in una delle seguenti combinazioni: \begin{itemize}
+    \item[\textbf{Scala reale massima.}] una scala formata da 10, J, Q, K, 1 dello stesso seme (es. 10-J-Q-K-1 di cuori);
+    \item[\textbf{Scala reale.}]  una scala formata da cinque carte consecutive dello stesso seme (es. 8-9-10-J-Q di fiori);
+    \item[\textbf{Colore.}]  cinque carte dello stesso seme (es. 1-3-5-6-J di fiori);    
+    \item[\textbf{Scala.}] una scala formata da cinque carte consecutive, non tutte dello stesso seme;
+    \item[\textbf{Poker.}]  quattro carte dal valore uguale e una diversa (es. 3-3-3-3-5);
+    \item[\textbf{Full.}] una coppia di carte dal valore uguale e un tris di carte dal valore uguale (es. 2-2-4-4-4);
+    \item[\textbf{Tris.}] tre carte dal valore uguale e due diverse (es. 3-3-3-1-2);
+    \item[\textbf{Doppia coppia.}] due coppie di carte dal valore uguale e una diversa (es. J-J-5-5-8);
+    \item[\textbf{Coppia.}]una coppia di carte dal valore uguale e tre diverse (es. K-K-1-9-10).
+\end{itemize}
+
+Calcoliamo il numero di mani possibili. Dato che dobbiamo scegliere 5 carte da 52 e non abbiamo altre restrizioni, il numero di mani possibili e' \[\binom{52}{5}.\]
+
+Ora calcoliamo il numero di possibilita' per ogni combinazione che da' punteggio.
+\begin{itemize}
+    \item[\textbf{Scala reale massima.}] Ho una scala reale massima per seme, dunque in tutto devo avere 4 scale reali massime.
+    \item[\textbf{Scala reale.}] Ho 10 scale reali per seme: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che ho 4 semi, il numero totale di scale reali e' $4 \cdot 10 = 40$. 
+    \item[\textbf{Colore.}] Scegliamo un seme (4 possibilita'). Allora il numero di colori che possiamo fare in un dato seme equivale al numero di modi in cui possiamo scegliere 5 carte di quel seme, che e' $\binom{13}{5}$. Dunque in totale il numero di colori che non siano scale reali e' $4\binom{13}{5}-40$.
+    \item[\textbf{Scala.}] Ci sono 10 sequenze di valori possibili che formano una scala: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che posso scegliere liberamente il seme di ogni carta della scala, il numero totale di scale e' $4^5 \cdot 10$. Sottraendo ad esse il numero di scale reali otteniamo il numero di scale non reali, che sono $4^5 \cdot 10 - 40$.
+    \item[\textbf{Poker.}] Scelgo innanzitutto la carta che si deve ripetere 4 volte, e dato che ho 13 valori diversi avro' 13 possibilita' di sceglierla. Dopo devo scegliere l'ultima carta, che puo' essere una qualunque tra le $52 - 4 = 48$ rimanenti. Dunque in totale ho $13\cdot 48$ modi per fare poker.
+    \item[\textbf{Full.}] Scelgo il valore della carta che formera' il tris, e posso sceglierlo in 13 modi; poi scelgo il valore della carta che formera' la coppia, che posso scegliere in $13-1 = 12$ modi. 
+    
+    Ora devo scegliere i valori dei semi: per quanto riguarda il tris devo scegliere 3 semi su 4 (l'ordine non conta), e posso farlo in $\binom{4}{3} = 4$ modi; per quanto riguarda la coppia devo scegliere 2 semi su 4 e posso farlo in $\binom{4}{2} = 6$ modi. 
+    
+    In totale ho dunque $4\cdot 6\cdot 12 \cdot 13$ modi di fare full. 
+    \item[\textbf{Tris.}] Scelgo il valore della carta del tris in $13$ modi e i semi in $\binom{4}{3} = 4$ modi. Non posso tuttavia scegliere le altre due carte liberamente, in quanto altrimenti potremmo ricadere nel poker o nel full. 
+    
+    Dunque scelgo il valore delle due carte rimanenti tra 12 valori (tutti tranne quello del tris), poi scelgo un seme tra 4 per la prima e un seme tra 4 per la seconda. In totale ho quindi $13 \cdot 4 \cdot \binom{12}{2} \cdot 4^2 = 4^3 \cdot 13 \binom{12}{2}$ modi di fare tris.
+    \item[\textbf{Doppia coppia.}] Scelgo il valore delle due coppie tra 13 valori possibili in $\binom{13}{2}$ modi; ora scelgo i semi delle due coppie, e posso farlo in $\binom{4}{2}$ per la prima e $\binom{4}{2}$ per la seconda. 
+    
+    Scelgo la quinta carta in modo che abbia un valore diverso dalle due coppie per non contare anche i full: dunque posso sceglierla in $13 - 2 = 11$ modi per 4 semi diversi. In totale ho quindi $4 \cdot 11\binom{13}{2}\binom{4}{2}^2$ modi di ottenere una doppia coppia.
+    \item[\textbf{Coppia.}] Scelgo il valore della coppia tra 13 valori possibili e i semi in $\binom{4}{2}$ modi. Scelgo le tre carte rimanenti diverse tra di loro e diverse dal valore della coppia per evitare doppie coppie, full e poker: dunque ho $\binom{12}{3}$ modi di sceglierle e, dato che ognuna di esse puo' avere un seme qualunque, ho $4$ possibilita' per ciascuna. In totale ho quindi $4^3 \cdot 13 \binom{4}{2} \binom{12}{3}$ modi di fare coppia.
+\end{itemize}
