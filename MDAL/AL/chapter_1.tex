@@ -43,32 +43,58 @@ E' evidente che se i due vettori $\bm{v}$ e $\bm{w}$ hanno la stessa dimensione 
 \end{definition}
 
 \begin{definition}
+    Si dice \textbf{matrice triangolare superiore} una matrice quadrata tale che tutti gli elementi sotto la diagonale principale siano $0$, cioe'
+    \begin{equation}
+        A \in \M_{n \times n}(\R) \text{ e' triangolare superiore}  \iff \forall i > j. \, (a_{ij}) = 0.
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    Si dice \textbf{matrice triangolare inferiore} una matrice quadrata tale che tutti gli elementi sopra la diagonale principale siano $0$, cioe'
+    \begin{equation}
+        A \in \M_{n \times n}(\R) \text{ e' triangolare inferiore} \iff \forall i < j. \, (a_{ij}) = 0.
+    \end{equation}
+\end{definition}
+
+\begin{definition}
     Si dice \textbf{matrice diagonale} una matrice quadrata tale che tutti gli elementi che non appartengono alla diagonale principale siano $0$, cioe'
     \begin{equation}
-        A \in \M_{n \times n}(\R) \text{ e' diagonale se e solo se } \forall i \neq j. \, (a_{ij}) = 0.
+        A \in \M_{n \times n}(\R) \text{ e' diagonale} \iff \forall i \neq j. \, (a_{ij}) = 0.
     \end{equation}
 \end{definition}
 
 \begin{definition}
     Si dice \textbf{matrice identita'} $n \times n$ una matrice diagonale per cui la diagonale principale contiene solo $1$, cioe'
     \begin{equation}
-        I \in \M_{n \times n}(\R) \text{ e' la matrice identita' se e solo se } (a_{ij}) = \begin{cases}
+        I \in \M_{n \times n}(\R) \text{ e' la matrice identita'} \iff (a_{ij}) = \begin{cases}
             0   &\text{se } i \neq j \\
             1   &\text{se } i = j \\
         \end{cases}.
     \end{equation}
 \end{definition}
 
-Ecco un esempio di una matrice quadrata $4 \times 4$, una matrice diagonale $4 \times 4$ e la matrice identita' $4 \times 4$.
+Ecco un esempio di una matrice quadrata $4 \times 4$, una matrice triangolare superiore $4 \times 4$, una matrice triangolare inferiore $4 \times 4$, una matrice diagonale $4 \times 4$ e la matrice identita' $4 \times 4$.
 
-\[
-    A = \begin{pmatrix}
+\begin{gather*}
+    Q = \begin{pmatrix}
         1   &5   &4  &5\\
         2   &7   &10 &1\\
         0   &34  &3  &-2\\
         6   &-2  &2  &12\\
     \end{pmatrix}, \quad
-    B = \begin{pmatrix}
+    T_s = \begin{pmatrix}
+        1   &5  &4  &5\\
+        0   &7  &10 &1\\
+        0   &0  &3  &-2\\
+        0   &0  &0  &12\\
+    \end{pmatrix}, \quad
+    T_i = \begin{pmatrix}
+        1   &0   &0  &0\\
+        2   &7   &0  &0\\
+        0   &34  &3  &0\\
+        6   &-2  &2  &12\\
+    \end{pmatrix}, \quad    
+    \\D = \begin{pmatrix}
         1   &0              &0  &0\\
         0   &-\frac{1}{3}   &0 &0\\
         0   &0              &-3  &0\\
@@ -80,7 +106,7 @@ Ecco un esempio di una matrice quadrata $4 \times 4$, una matrice diagonale $4 \
         0   &0  &1  &0\\
         0   &0  &0  &1\\
     \end{pmatrix}
-\]
+\end{gather*}
 
 \subsection{Operazioni sulle matrici}
 
@@ -178,7 +204,7 @@ ma non la proprieta' commutativa: infatti in generale $AB \neq BA$ anche nel cas
 \end{solution}
 
 \begin{proposition} \label{j-esima_colonna}
-    Sia $A$ una matrice $m \times n$ e $\bm v \in \R^n$ tale che \[(b_i) = \begin{cases}
+    Sia $A$ una matrice $m \times n$ e $\bm v \in \R^n$ tale che \[(v_i) = \begin{cases}
         0 &\text{se } i \neq j \\
         1 &\text{se } i = j 
     \end{cases}
@@ -506,11 +532,23 @@ Per stabilire le soluzioni del sistema si procede in questo modo:
 
     Dimostriamo poi che se $\bm x$ e' una soluzione di $A\bm x = \bm b$, allora $\bm x - \bm{\bar x}$ e' soluzione del sistema omogeneo.
     \[A(\bm{x} - \bm{\bar{x}}) = A\bm{x} - A\bm{\bar{x}} = \bm b - \bm b = \bm 0\]
+    che e' la tesi.
 \end{proof}
 
 \begin{proposition}
-    Un sistema rappresentabile come una matrice quadrata a scalini che ha un pivot per riga ha una e una sola soluzione.
+    Sia $A \in \M_{n \times n}(\R)$, $\bm{x}, \bm{b} \in \R^n$. Allora il sistema $A\bm x = \bm b$ ha una e una sola soluzione se e solo se $\rk{A} = n$.
 \end{proposition}
+\begin{proof}
+    Riduciamo la matrice completa $(A | \bm b)$ a scalini, ottenendo la matrice $(A' | \bm b')$.
+
+    Se $\rk{A} = n$, allora $\rk{A | \bm b} = n$, dunque $(A' | \bm b')$ avra' $n$ pivot. Dato che non ci sono possibili scelte di variabili libere, sicuramente avremo una e una sola soluzione.
+
+    Se $\rk{A} < n$, allora $\rk{A'} < n$. Abbiamo due casi: \begin{itemize}
+        \item se $\rk{A' | \bm b'} > \rk{A'}$ allora per il teorema  di Rouché-Capelli (\ref{rouche_capelli}) il sistema non ha soluzione;
+        \item se $\rk{A' | \bm b'} = \rk{A'} < n$ allora il sistema avra' delle variabili libere, dunque avra' infinite soluzioni.
+    \end{itemize}
+    Dunque se $\rk{A} < n$ il sistema non puo' avere una ed una sola soluzione.
+\end{proof}
 
 \begin{example}
     Discutere il numero di soluzioni del seguente sistema al variare di $k$.
@@ -597,19 +635,19 @@ Abbiamo visto che moltiplicando una matrice per un vettore colonna con la giusta
 \begin{definition}
     Sia $A \in \M_{n \times m}(\R)$ una matrice, $L_A : \R^m \to \R^n$ la sua applicazione lineare associata. Allora si dice \textbf{immagine} dell'applicazione $L_A$ (o della matrice $A$) l'insieme:
     \begin{equation}
-        \Imm{L_A} = \{L_A(\bm x) \mid \bm x \in \R^m\}
+        \Imm{L_A} = \{L_A(\bm x) \mid \bm x \in \R^m\}.
     \end{equation}
 \end{definition}
 
 \begin{definition}
     Sia $A \in \M_{n \times m}(\R)$ una matrice, $L_A : \R^m \to \R^n$ la sua applicazione lineare associata. Allora si dice \textbf{kernel} dell'applicazione $L_A$ (o della matrice $A$) l'insieme:
     \begin{equation}
-        \ker{L_A} = \{\bm x \mid L_A(\bm x) = \bm 0\}
+        \ker{L_A} = \{\bm x \mid L_A(\bm x) = \bm 0\}.
     \end{equation}
 \end{definition}
 
 \begin{remark}
-    Il kernel di una matrice $A \in \M_{n \times m}(\R)$ e' l'insieme dei vettori colonna $\bm{x} \in \R^m$ tali che $A\bm{x} = \bm{0}$, cioe' e' l'insieme delle soluzioni del sistema omogeneo $A\bm{x}= \bm{0}$ 
+    Il kernel di una matrice $A \in \M_{n \times m}(\R)$ e' l'insieme dei vettori colonna $\bm{x} \in \R^m$ tali che $A\bm{x} = \bm{0}$, cioe' e' l'insieme delle soluzioni del sistema omogeneo $A\bm{x}= \bm{0}$.
 \end{remark}
 
 Notiamo quindi che, essendoci una corrispondenza tra il kernel di una matrice e l'insieme delle soluzioni del sistema omogeneo associato alla matrice, le mosse di Gauss di riga non modificano il kernel di una matrice. Infatti sappiamo che le mosse non modificano l'insieme delle soluzioni del sistema omogeneo, dunque non modificheranno neanche il kernel.

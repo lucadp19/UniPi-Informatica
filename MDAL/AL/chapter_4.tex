@@ -1,0 +1,199 @@
+
+\chapter{Determinanti}
+
+\section{Definizione e significato del determinante}
+
+\begin{definition}
+    Sia $A$ una matrice quadrata $n \times n$ e siano $\bm{C_1}, \dots, \bm{C_n} \in \R^n$ le sue colonne. Allora si dice determinante una funzione \[
+        \det : \M_{n \times n}(\R) \to \R 
+    \] che rispetta le seguenti proprieta':
+
+    \begin{enumerate}[(i)]
+        \item $\det I_n = 1$, cioe' il determinante della matrice identita' $n \times n$ deve essere 1;
+        \item se per qualche $i, j$ compresi tra $1$ e $n$, con $i \neq j$, vale che $\bm{C_i} = \bm{C_j}$, allora $\det A = 0$, cioe' se due colonne della matrice sono uguali il determinante deve essere 0;
+        \item se $A'$ e' la matrice ottenuta moltiplicando una colonna della matrice $A$ per $\lambda \in \R$, cioe' $A' = \begin{pmatrix} \bm{C_1} & \dots & \lambda \bm{C_i} & \dots & \bm{C_n} \end{pmatrix}$ allora \[\det A' = \lambda \det A;\]
+        \item se la colonna $\bm{C_i}$ e' esprimibile come $\bm{v_1} + \bm{v_2}$ con $\bm{v_1}, \bm{v_2} \in \R^n$, cioe' $A = \begin{pmatrix} \bm{C_1} & \dots & \bm{v_1} + \bm{v_2} & \dots & \bm{C_n} \end{pmatrix}$
+        allora \[
+            \det A = \det \begin{pmatrix} \bm{C_1} & \dots & \bm{v_1} & \dots & \bm{C_n} \end{pmatrix} + \det \begin{pmatrix} \bm{C_1} & \dots & \bm{v_2} & \dots & \bm{C_n} \end{pmatrix} 
+        \] cioe' il determinante e' lineare nelle colonne della matrice.
+    \end{enumerate}
+\end{definition}
+
+Possiamo anche definire il determinante come una funzione che prende esattamente $n$ vettori di $\R^n$ e restituisce un numero reale, cioe' $\det : (\R^n)^n \to \R$ e che rispetta le seguenti proprieta':
+\begin{enumerate}
+    [(i)]
+    \item se $\bm{c_1}, \dots, \bm{c_n}$ sono i vettori della base standard di $\R^n$, allora \[\det(\bm{c_1}, \dots, \bm{c_n}) = 1;\]
+    \item $\det(\bm{v_1}, \dots, \bm{v_i}, \dots, \bm{v_i}, \dots, \bm{v_n}) = 0$, cioe' se due dei vettori sono uguali allora il determinante e' nullo;
+    \item $\det(\bm{v_1}, \dots, \lambda\bm{v_i}, \dots, \bm{v_n}) = \lambda \det (\bm{v_1}, \dots, \bm{v_i}, \dots, \bm{v_n})$;
+    \item le somme escono fuori dal determinante, cioe' \begin{alignat*}{1}
+        &\det(\bm{v_1}, \dots, \bm{v_i} + \bm{w}, \dots, \bm{v_n})\\
+        = &\det (\bm{v_1}, \dots, \bm{v_i}, \dots, \bm{v_n}) + \det (\bm{v_1}, \dots, \bm{w}, \dots, \bm{v_n}).
+    \end{alignat*}
+\end{enumerate}
+
+Dalle quattro proprieta' base ne discendono altre, che elenchiamo in questa proposizione:
+\begin{proposition}
+    Il determinante ha le seguenti proprieta':
+    \begin{enumerate}
+        [(i)]
+        \item se scambio due colonne della matrice tra loro il determinante cambia segno;
+        \item le combinazioni lineari escono fuori dal determinante;
+        \item se una delle $n$ colonne e' combinazione lineare delle restanti, cioe' se gli $n$ vettori formano un insieme di vettori linearmente dipendenti, allora il determinante e' uguale a $0$;
+        \item sommando ad una colonna un multiplo di un'altra colonna il determinante non cambia;
+        \item il determinante di una matrice e' uguale al determinante della trasposta.
+    \end{enumerate}
+\end{proposition}
+
+Notiamo che la mossa principale di Gauss-Jordan, cioe' sommare ad una colonna un multiplo di un'altra colonna, non modifica il determinante di una matrice: possiamo calcolare i determinanti quindi tramite mosse di Gauss-Jordan, facendo attenzione a cambiare il segno se scambiamo due colonne o a portare fuori i fattori per cui moltiplichiamo le colonne.
+
+Dall'ultima proprieta' segue che ogni proprieta' che si basa sulle colonne puo' anche essere riformulata in termini delle righe della matrice (che corrispondono alle colonne della trasposta).
+
+Dalle proprieta' precedenti segue che il determinante di una matrice e' $0$ se e solo se ci sono due colonne linearmente dipendenti: dunque il determinante e' una funzione che indica la dipendenza lineare tra i vettori a cui viene applicato.
+
+\subsection{Determinante di matrici particolari}
+
+\subsection{Determinante di matrici diagonali}
+
+Consideriamo la matrice diagonale \[
+    D = \begin{pmatrix}
+        \lambda_1   &0          &\dots  &0 \\
+        0           &\lambda_2  &\dots  &0 \\
+        \vdots      &\vdots     &\ddots &\vdots \\
+        0           &0          &\dots  &\lambda_n \\
+    \end{pmatrix}.    
+\] Applicando il terzo assioma possiamo estrarre i coefficienti di ogni colonna, ottenendo
+\begin{alignat*}{1}
+    \det \begin{pmatrix}
+        \lambda_1   &0          &\dots  &0 \\
+        0           &\lambda_2  &\dots  &0 \\
+        \vdots      &\vdots     &\ddots &\vdots \\
+        0           &0          &\dots  &\lambda_n \\
+    \end{pmatrix} = &\lambda_1 \det \begin{pmatrix}
+        1           &0          &\dots  &0 \\
+        0           &\lambda_2  &\dots  &0 \\
+        \vdots      &\vdots     &\ddots &\vdots \\
+        0           &0          &\dots  &\lambda_n \\
+    \end{pmatrix} \\
+    = &\lambda_1 \lambda_2 \det \begin{pmatrix}
+        1           &0          &\dots  &0 \\
+        0           &1          &\dots  &0 \\
+        \vdots      &\vdots     &\ddots &\vdots \\
+        0           &0          &\dots  &\lambda_n \\
+    \end{pmatrix} \\
+    \intertext{Ripetendo il procedimento per ogni colonna arriviamo a}
+    = &\lambda_1 \lambda_2 \dots \lambda_n \det I_n \\
+    = &\lambda_1 \lambda_2 \dots \lambda_n.
+\end{alignat*}
+Dunque il determinante di una matrice diagonale e' il prodotto degli elementi sulla diagonale principale.
+
+\subsubsection{Determinante di matrici triangolari superiori o inferiori}
+
+Consideriamo una matrice triangolare superiore (o inferiore), cioe' una matrice che ha tutti zeri sotto (o sopra) la diagonale principale. Tramite mosse di Gauss-Jordan possiamo trasformare questa matrice in una matrice diagonale senza dover scambiare colonne tra di loro, dunque il determinante della matrice triangolare e' uguale al determinante della matrice diagonale, cioe' e' il prodotto degli elementi sulla sua diagonale principale.
+
+\begin{equation*}
+    \det \begin{pmatrix}
+        \lambda_1   &\star      &\dots  &\star \\
+        0           &\lambda_2  &\dots  &\star \\
+        \vdots      &\vdots     &\ddots &\vdots \\
+        0           &0          &\dots  &\lambda_n \\
+    \end{pmatrix} = \det \begin{pmatrix}
+        \lambda_1   &0          &\dots  &0 \\
+        \star       &\lambda_2  &\dots  &0 \\
+        \vdots      &\vdots     &\ddots &\vdots \\
+        \star       &\star      &\dots  &\lambda_n \\
+    \end{pmatrix} = \lambda_1 \lambda_2 \dots \lambda_n
+\end{equation*}
+dove $\star$ indica un qualsiasi numero reale.
+
+\subsubsection{Determinante di matrici $2 \times 2$}
+
+Consideriamo una matrice $A \in \M_{2 \times 2}(\R)$ generica e calcoliamone il determinante. Se $a \neq 0$ allora \begin{equation*}
+    \det \begin{pmatrix} a & b \\ c & d \end{pmatrix} = \det \begin{pmatrix} a & b \\ 0 & d - \frac{c}{a}b \end{pmatrix} = ad - bc.
+\end{equation*}
+Se $a = 0$ allora \begin{equation*}
+\det \begin{pmatrix} 0 & b \\ c & d \end{pmatrix} = -\det \begin{pmatrix} b & 0 \\ d & c \end{pmatrix} = -bc = 0d - bc = ad - bc.
+\end{equation*}
+Dunque il determinante di $\begin{psmallmatrix} a & b \\ c & d \end{psmallmatrix}$ e' $ad - bc$.
+
+Il determinante di una matrice $2 \times 2$ e' l'area del parallelogramma che ha come lati i vettori che formano le colonne della matrice. Notiamo infatti che se i due vettori sono sulla stessa retta, cioe' se sono dipendenti, allora l'area del parallelogramma e' 0, esattamente come il determinante.
+
+\subsubsection{Determinante di matrici $3 \times 3$}
+
+Per calcolare il determinante di una matrice $A \in \M_{3 \times 3}(\R)$ generica possiamo usare la regola di Sarrus: creiamo una matrice $3 \times 5$ dove le ultime due colonne sono le prime due ripetute. Il determinante sara' allora la somma dei prodotti delle prime tre diagonali da sinistra verso destra meno il prodotto delle tre diagonali da destra verso sinistra.
+Dunque se \[
+    A = \begin{pmatrix}
+        a & b & c \\
+        d & e & f \\
+        g & h & i \\
+    \end{pmatrix}
+\] consideriamo la matrice \[
+    A = \begin{pmatrix}[ccc|cc]
+        a & b & c & a & b \\
+        d & e & f & d & e\\
+        g & h & i & g & h\\
+    \end{pmatrix}
+\] e otteniamo che \[
+    \det A = aei + bfg + cdh - bdi - afh - ceg.    
+\]
+
+Il determinante di una matrice $3 \times 3$ e' il volume del "parallelepipedo" che ha come lati i vettori che formano le colonne della matrice: infatti se un vettore e' nello span degli altri due allora il volume viene 0.
+
+\section{Sviluppi di Laplace}
+
+\begin{definition}
+    Sia $A \in \M_{n\times m}(\R)$. Allora diciamo che $B$ e' una sottomatrice di $A$ se $B \in \M_{(n-k) \times (m-h)}(\R)$ e $B$ si ottiene eliminando $k$ righe e $h$ colonne di $A$.
+\end{definition}
+
+\begin{definition}
+    Sia $A \in \M_{n\times m}(\R)$. Allora diciamo che $B$ e' un minore di $A$ se e' una sottomatrice quadrata di $A$.
+\end{definition}
+
+Possiamo quindi enunciare il metodo degli sviluppi di Laplace per calcolare il determinante di una matrice.
+
+\begin{theorem}
+    [Sviluppi di Laplace]
+    Sia $A \in \M_{n \times n}(\R)$ una matrice quadrata. 
+    
+    Sia $C_j = \begin{pmatrix}
+        a_{1j} & \dots & a_{nj}
+    \end{pmatrix}^T$ una colonna qualsiasi di $A$. 
+    
+    Chiamo $M_{ij}$ il minore di $A$ ottenuto eliminando la riga $i$-esima e la colonna $j$-esima. Inoltre per ogni $i$ compreso tra 1 e $n$ chiamo cofattore $c_{ij}$ la quantita' \[
+        c_{ij} = (-1)^{i+j} \det M_{ij}.
+    \]
+    Allora vale che \begin{equation}
+        \det A = a_{1j}c_{1j} + \dots + a_{nj}c_{nj} = \sum_{i = 1}^n a_{ij}c_{ij}.
+    \end{equation}
+\end{theorem}
+
+\section{Rango e determinanti}
+
+Diamo ora la definizione esatta di rango di una matrice.
+
+\begin{definition}
+    Sia $A \in \M_{n \times m}(\R)$ e sia $L_A : \R^m \to \R^n$ l'applicazione lineare associata alla matrice $A$. Allora si dice rango della matrice $A$ la dimensione dell'immagine dell'applicazione lineare associata, cioe'
+    \begin{equation}
+        \rk{A} = \dim \Imm{L_A}
+    \end{equation}
+\end{definition}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times m}(\R)$. Siano $R_1, \dots, R_n \in \R^m$ le righe di $A$ e $C_1, \dots, C_m \in \R^n$ le colonne di $A$. Sia inoltre $L_A : \R^m \to \R^n$ l'applicazione lineare associata alla matrice $A$.
+    
+    Allora i seguenti fatti sono equivalenti:
+    \begin{itemize}
+        \item $k = \rk{A}$
+        \item $k = \dim \Span{C_1, \dots, C_m}$;
+        \item $k = \dim \Span{R_1, \dots, R_n}$;
+        \item $k$ e' il numero di pivot della matrice a scalini $A'$ ottenuta tramite mosse di Gauss a partire dalla matrice $A$;
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    Se $k$ e' il rango della matrice, allora per definizione di rango $k = \dim \Imm{L_A}$. Per la proposizione \ref{span_colonne=immagine_applicazione_associata} lo span delle colonne della matrice e' uguale all'immagine dell'applicazione lineare associata, dunque $k = \dim \Span{C_1, \dots, C_m}$.
+
+    Supponiamo che la matrice sia a scalini per colonne. Allora le colonne indipendenti sono tutte e solo le colonne con i pivot, mentre le altre colonne sono nulle. Dato che le colonne con i pivot formano una base dell'immagine, segue che devono esserci esattamente $k = \rk{A}$ colonne indipendenti, e quindi $k$ pivot. 
+    Inoltre le righe indipendenti sono quelle con i pivot, dunque devono esserci anche $k$ righe indipendenti, cioe' $\dim \Span{R_1, \dots, R_n} = k$.
+
+    Supponiamo che la matrice non sia a scalini per colonne. Allora riduciamola a scalini per colonne tramite mosse di Gauss, ottenendo la matrice $A'$ che ha per colonne i vettori $C'_1, \dots, C'_m$ e per righe i vettori $R'_1, \dots, R'_n$.
+    Per la proposizione \ref{span_colonne_indipendenti} segue che $\Span{C'_1, \dots, C'_m} = \Span{C_1, \dots, C_m}$, dunque anche le loro dimensioni saranno uguali. Dato che la dimensione di $\Span{C'_1, \dots, C'_m}$ e' data dal numero di colonne indipendenti, cioe' dal numero di pivot per colonna, abbiamo dimostrato che il numero di pivot e' uguale alla dimensione di $\Span{C_1, \dots, C_m}$, cioe' al rango di $A$. Infine per la proposizione \ref{invarianza_dim_righe_per_mosse_colonna} ridurre una matrice a scalini per colonne non cambia la dimensione delle righe, dunque dato che la dimensione di $\Span{R'_1, \dots, R'_n}$ e' uguale al numero di pivot (cioe' $k$), allora anche la dimensione di $\Span{R_1, \dots, R_n}$ dovra' essere uguale a $k$.
+\end{proof}

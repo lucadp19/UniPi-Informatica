@@ -36,6 +36,73 @@
         \dim V = \dim \Imm f + \dim \ker f.
     \end{equation}
 \end{theorem}
+\begin{proof}
+    Sia $k$ la dimensione di $\ker f$ e $n$ la dimensione di $V$.
+    Sia $\alpha = \ang{\bm{v_1}, \dots, \bm{v_k}}$ una base di $\ker f$. Dato che $\ker f$ e' un sottospazio di $V$, per il teorema del completamento ad una base (\ref{th_completamento}) possiamo completare $\alpha$ ad una base $\beta = \ang{\bm{v_1}, \dots, \bm{v_k}, \bm{u_1}, \dots, \bm{u_{n-k}}}$ di $V$.
+
+    Per la proposizione \ref{base_mappata_generatori_immagine} segue che l'immagine della base $\beta$, cioe' $f(\beta) = \ang{f(\bm{v_1}), \dots, f(\bm{v_k}), f(\bm{u_1}), \dots, f(\bm{u_{n-k}})}$, e' una insieme di generatori di $\Imm{f}$. Dato che $\bm{v_1}, \dots, \bm{v_k} \in \ker f$, allora \begin{alignat*}
+        {1}
+        \Imm{f} &= \Span{f(\bm{v_1}), \dots, f(\bm{v_k}), f(\bm{u_1}), \dots, f(\bm{u_{n-k}})}\\
+        &= \Span{0, \dots, 0, f(\bm{u_1}), \dots, f(\bm{u_{n-k}})}\\
+        &= \Span{f(\bm{u_1}), \dots, f(\bm{u_{n-k}})}.
+    \end{alignat*}
+
+    Se $f(\bm{u_1}), \dots, f(\bm{u_{n-k}})$ sono indipendenti allora segue che essi formano una base di $\Imm{f}$, cioe' che $\dim \Imm{f} = n - k = \dim V - \dim \ker f$.
+
+    Consideriamo quindi una generica combinazione lineare \[
+        x_1f(\bm{u_1}) + \dots + x_{n-k}f(\bm{u_{n-k}})
+    \] e dimostriamo che imponendola uguale a $\bm 0$ segue che i coefficienti della combinazione devono essere uguali a 0.
+    \begin{alignat*}
+        {1}
+        &x_1f(\bm{u_1}) + \dots + x_{n-k}f(\bm{u_{n-k}}) = \bm 0 \\
+        \iff &f(x_1\bm{u_1} + \dots + x_{n-k}\bm{u_{n-k}}) = \bm 0 \\
+        \intertext{che per definizione di kernel significa}
+        \iff &x_1\bm{u_1} + \dots + x_{n-k}\bm{u_{n-k}} \in \ker f.
+    \end{alignat*}
+    Dato che $\alpha$ e' una base di $\ker f$ allora segue che
+    \begin{alignat*}{1}
+        &x_1\bm{u_1} + \dots + x_{n-k}\bm{u_{n-k}} = a_1\bm{v_1} + \dots + a_k\bm{v_k} \\
+        \iff &x_1\bm{u_1} + \dots + x_{n-k}\bm{u_{n-k}} - a_1\bm{v_1} - \dots - a_k\bm{v_k} = \bm 0.
+    \end{alignat*}
+    Ma $\beta = \ang{\bm{v_1}, \dots, \bm{v_k}, \bm{u_1}, \dots, \bm{u_{n-k}}}$ e' una base di $V$, dunque i vettori che la compongono devono essere indipendenti, da cui segue \[
+        x_1 = \dots = x_{n-k} = 0.   
+    \]
+    Dunque $\ang{f(\bm{u_1}), \dots, f(\bm{u_{n-k}})}$ e' una base di $\Imm{f}$ e dunque segue che $\dim V = \dim \ker f + \dim \Imm{f}$, come volevasi dimostrare.
+\end{proof}
+
+Una conseguenza diretta del teorema delle dimensioni e' che data una matrice $A$ e riducendola a scalini tramite mosse di riga non cambia la dimensione dello spazio delle colonne.
+\begin{proposition}\label{invarianza_dim_colonne_per_mosse_riga}
+    Sia $A \in \M_{n\times m}$ e siano $C_1, \dots, C_m \in \R^n$ le colonne della matrice. Sia $S$ la matrice ottenuta riducendo a scalini per riga la matrice $A$, e siano $C'_1, \dots, C'_m$ le colonne di $S$. Allora \begin{equation}
+        \dim \Span{C_1, \dots, C_m} = \dim \Span{C'_1, \dots, C'_m}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dato che $S$ e' ottenuta riducendo $A$ a scalini, allora le soluzioni dei sistemi $A\bm{x} = \bm 0$ e $S\bm{x} = \bm 0$ devono essere le stesse. 
+    
+    Siano $L_A : \R^m \to \R^n$ e $L_S : \R^m \to \R^n$ le applicazioni lineari associate ad $A$ e $S$; trascrivendo le equazioni di prima in termini delle applicazioni otteniamo che $L_A(\bm x) = \bm 0$ se e solo se $L_S(\bm x) = \bm 0$. 
+    
+    Allora segue che $\ker L_A = \ker L_S$, dunque $\dim \ker L_A = \dim \ker L_S$. Per la proposizione \ref{span_colonne=immagine_applicazione_associata} e per il teorema delle dimensioni (\ref{th_dimensioni}) segue quindi che
+    \begin{alignat*}
+        {1}
+        \dim \Span{C_1, \dots, C_m} &= \dim \Imm{L_A}\\
+        &= \dim \R^m - \dim \ker L_A\\
+        &= \dim \R^m - \dim \ker L_S\\
+        &= \dim \Imm{L_S} \\
+        &= \dim \Span{C'_1, \dots, C'_m}
+    \end{alignat*}
+    che e' la tesi.
+\end{proof}
+
+Ovviamente lo stesso ragionamento ci dice che ridurre una matrice a scalini tramite mosse di colonna non cambia la dimensione dello spazio delle righe.
+
+\begin{corollary}\label{invarianza_dim_righe_per_mosse_colonna}
+    Sia $A \in \M_{n\times m}$ e siano $R_1, \dots, R_m \in \R^n$ le righe della matrice. Sia $S$ la matrice ottenuta riducendo a scalini per colonna la matrice $A$, e siano $R'_1, \dots, R'_m$ le righe di $S$. Allora \begin{equation}
+        \dim \Span{R_1, \dots, R_m} = \dim \Span{R'_1, \dots, R'_m}.
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    Consideriamo la matrice $A^T$ e riduciamola per righe, ottenendo la matrice $S$. Per la proposizione \ref{invarianza_dim_colonne_per_mosse_riga} la dimensione dello spazio delle righe di $S$ e' uguale alla dimensione dello spazio delle righe di $A^T$. Notiamo inoltre che $S$ e' la trasposta della matrice ottenuta riducendo $A$ per colonne, dunque la dimensione dello spazio delle colonne di $S^T$ e' la dimensione dello spazio delle colonne di $A$, cioe' la tesi.
+\end{proof}
 
 \section{Applicazioni iniettive e surgettive}
 
