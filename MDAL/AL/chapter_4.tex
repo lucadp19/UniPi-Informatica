@@ -52,7 +52,7 @@ Dalle proprieta' precedenti segue che il determinante di una matrice e' $0$ se e
 
 \subsection{Determinante di matrici particolari}
 
-\subsection{Determinante di matrici diagonali}
+\subsubsection{Determinante di matrici diagonali}
 
 Consideriamo la matrice diagonale \[
     D = \begin{pmatrix}
@@ -197,3 +197,99 @@ Diamo ora la definizione esatta di rango di una matrice.
     Supponiamo che la matrice non sia a scalini per colonne. Allora riduciamola a scalini per colonne tramite mosse di Gauss, ottenendo la matrice $A'$ che ha per colonne i vettori $C'_1, \dots, C'_m$ e per righe i vettori $R'_1, \dots, R'_n$.
     Per la proposizione \ref{span_colonne_indipendenti} segue che $\Span{C'_1, \dots, C'_m} = \Span{C_1, \dots, C_m}$, dunque anche le loro dimensioni saranno uguali. Dato che la dimensione di $\Span{C'_1, \dots, C'_m}$ e' data dal numero di colonne indipendenti, cioe' dal numero di pivot per colonna, abbiamo dimostrato che il numero di pivot e' uguale alla dimensione di $\Span{C_1, \dots, C_m}$, cioe' al rango di $A$. Infine per la proposizione \ref{invarianza_dim_righe_per_mosse_colonna} ridurre una matrice a scalini per colonne non cambia la dimensione delle righe, dunque dato che la dimensione di $\Span{R'_1, \dots, R'_n}$ e' uguale al numero di pivot (cioe' $k$), allora anche la dimensione di $\Span{R_1, \dots, R_n}$ dovra' essere uguale a $k$.
 \end{proof}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times n}(\R)$ e sia $L_A : \R^n \to \R^n$ l'applicazione lineare associata ad $A$. Allora $L_A$ e' bigettiva se e solo se $\rk{A} = n$.
+\end{proposition}
+\begin{proof}
+    Dire che $L_A$ e' bigettiva equivale a dire che per ogni $\bm b \in \R^n$ esiste uno e un solo vettore $\bm x$ tale che $L_A(\bm x) = \bm b$, cioe' che il sistema $A\bm x = \bm b$ ha una e una sola soluzione.
+
+    Per la proposizione \ref{sistema_quadrato_n_pivot_unica_soluzione} questo avviene se e solo se il sistema ridotto a scalini ha $n$ pivot, cioe' $\rk{A} = n$. 
+\end{proof}
+
+Ora iniziamo ad analizzare la relazione tra determinanti e rango di una matrice.
+
+\begin{theorem}\label{det_nonnullo_sse_rango_n}
+    Sia $A \in \M_{n \times n}(\R)$. 
+    
+    Allora $\det A \neq 0$ se e solo se $\rk{A} = n$.
+\end{theorem}
+\begin{proof}
+    Riduciamo $A$ a scalini tramite mosse di Gauss, senza moltiplicare le righe per coefficienti. La matrice ottenuta tramite questo processo, chiamiamola $S$, dovra' avere lo stesso determinante di $A$ a meno del segno: \[
+        \abs{\det A} = \abs{\det S}.
+    \] Dunque $\det A \neq 0$ se e solo se $\det S \neq 0$. 
+    
+    Dato che $S$ e' quadrata e a scalini segue che $S$ dovra' essere triangolare superiore, dunque il determinante di $S$ e' il prodotto degli elementi sulla diagonale principale, cioe' dei pivot di $S$.
+    
+    Dunque il determinante di $S$ e' diverso da $0$ se e solo se $S$ ha $n$ pivot, cioe' $\rk{S} = n$. Dato che le mosse di Gauss non cambiano il rango di una matrice, segue che $\det A \neq 0$ se e solo se $\rk{A} = n$, che e' la tesi.
+\end{proof}
+
+\begin{proposition}\label{rango_geq_k_sse_det_minore_k_neq_0}
+    Sia $A \in \M_{n \times n}(\R)$.
+    
+    Allora $\rk{A} \geq k$ se e solo se esiste un minore $M_k$ di dimensione $k \times k$ tale che $\det M_k \neq 0$.
+\end{proposition}
+\begin{proof} Dimostriamo l'implicazione nei due versi.
+    \begin{description}
+        \item[($\implies$).] Dato che $\rk{A} \geq k$ dovranno esserci almeno $k$ righe e $k$ colonne indipendenti. 
+        
+        Scelgo $k$ righe indipendenti e elimino le altre, ottenendo una sottomatrice $S$ di dimensione $k \times n$ tale che $\rk{S} = k$. Dato che il rango e' anche il numero di colonne linearmente indipendenti, allora questa sottomatrice avra' anche almeno $k$ colonne linearmente indipendenti, dunque ne scelgo $k$ e elimino le altre.
+
+        A questo punto ho ottenuto una sottomatrice $k \times k$ di $A$ con rango uguale a $k$, che e' la tesi.
+        \item[($\impliedby$).] Per la proposizione \ref{det_nonnullo_sse_rango_n} segue che $\rk{B} = k$, dunque $B$ ha $k$ righe indipendenti. Consideriamo le relative $k$ righe di $A$: allora anche esse devono essere indipendenti, in quanto per annullare le prime $k$ componenti e' necessario che i coefficienti della combinazione lineare siano tutti uguali a $0$. Dunque $A$ ha almeno $k$ righe indipendenti, dunque $\rk{A} \geq k$. \qedhere
+    \end{description}
+\end{proof}
+
+\begin{proposition}\label{rango_tramite_minori}
+    Sia $A \in \M_{n \times n}(\R)$.
+    Allora $\rk{A} = k$ se e solo se \begin{enumerate}[(i)]
+        \item esiste almeno un minore $M_k$ di dimensione $k \times k$ tale che $\det M_k \neq 0$;
+        \item per ogni minore $M_{k+1}$ di dimensione $(k + 1) \times (k + 1)$ vale che $\det M_{k+1} = 0$.
+    \end{enumerate} 
+\end{proposition}
+\begin{proof}
+    Dimostriamo l'implicazione nei due versi.
+    \begin{description}
+        \item[($\implies$).] Dato che $\rk{A} = k$ segue che $\rk{A} \geq k$, dunque per la proposizione precedente (\ref{rango_geq_k_sse_det_minore_k_neq_0}) esiste un minore di dimensione $k \times k$ con $\det M_k \neq 0$. 
+        
+        Dato che $\rk{A} = k$ segue che $\rk{A} < k+1$, dunque per la stessa proposizione non puo' esistere un minore di dimensione $(k+1) \times (k+1)$ con determinante diverso da $0$, cioe' $\det M_{k+1} = 0$ per ogni minore $M_{k+1}$ di dimensione $(k+1) \times (k+1)$.
+        \item[($\impliedby$).] Per la proposizione precedente (\ref{rango_geq_k_sse_det_minore_k_neq_0}), dato che esiste almeno un minore con determinante non nullo di dimensione $k \times k$, allora $\rk{A} \geq k$. 
+        
+        Per la stessa proposizione, dato che non esistono minori di dimensioni $(k+1) \times (k+1)$ con determinante non nullo, segue che $\rk{A} < k+1$, che e' equivalente a $\rk{A} \leq k$.
+        
+        Dunque $\rk{A} = k$. \qedhere
+    \end{description}
+\end{proof}
+
+Il seguente teorema riassume le varie definizioni di rango.
+
+\begin{theorem}\label{equivalenza_definizioni_di_rango}
+    Sia $A \in \M_{n \times m}(\R)$ e sia $L_A : \R^m \to \R^n$ l'applicazione lineare associata alla matrice $A$. Siano inoltre $R_1, \dots, R_n \in \R^m$ le righe di $A$ e $C_1, \dots, C_m \in \R^n$ le colonne di $A$. 
+    
+    Allora i seguenti fatti sono equivalenti:
+    \begin{enumerate}
+        [(i)]
+        \item $k = \rk{A} = \dim \Imm L_A$;
+        \item $k = \dim \Span{R_1, \dots, R_n}$, cioe' $k$ e' il numero di righe indipendenti di $A$;
+        \item $k = \dim \Span{C_1, \dots, C_m}$, cioe' $k$ e' il numero di colonne indipendenti di $A$;
+        \item $k$ e' il numero di pivot della matrice $S$ ottenuta riducendo a scalini la matrice $A$;
+        \item $k$ e' il massimo numero tale che esiste $M_k \in \M_{k \times k}(\R)$ tale che $M_k$ e' un minore di $A$ con $\det M_k \neq 0$.
+    \end{enumerate}
+\end{theorem}
+
+Il seguente teorema invece riassume le relazioni tra rango e determinante.
+
+\begin{theorem}\label{relazioni_determinante_rango}
+    Sia $A \in \M_{n \times n}(\R)$ e sia $L_A : \R^n \to \R^n$ l'applicazione lineare associata alla matrice $A$. Siano inoltre $R_1, \dots, R_n \in \R^n$ le righe di $A$ e $C_1, \dots, C_n \in \R^n$ le colonne di $A$. 
+    
+    Allora i seguenti fatti sono equivalenti:
+    \begin{enumerate}
+        [(i)]
+        \item $\det A \neq 0$;
+        \item $\rk{A} = n$;
+        \item $L_A$ e' bigettiva;
+        \item $A$ e' invertibile;
+        \item le righe di $A$ sono indipendenti, ovvero $\dim \Span{R_1, \dots, R_n} = n$;
+        \item le colonne di $A$ sono indipendenti, ovvero $\dim \Span{C_1, \dots, C_n} = n$.
+    \end{enumerate}
+\end{theorem}

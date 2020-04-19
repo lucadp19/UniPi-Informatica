@@ -29,6 +29,18 @@
     \end{equation}
 \end{definition}
 
+\begin{proposition}\label{base_mappata_generatori_immagine}
+    Sia $f : V \to W$. Allora se $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ segue che $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $\Imm{f}$.
+\end{proposition}
+\begin{proof}
+    Sia $\bm{w} \in \Imm{f}$ generico; allora questo equivale a dire che esiste $\bm{v} \in V$ tale che $f(\bm{v}) = \bm{w}$.
+    Dato che $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$, allora possiamo scrivere $\bm{v}$ come $a_1\bm{v_1} + \dots a_n\bm{v_n}$, dunque 
+    \begin{equation*}
+        \bm{w} = f(a_1\bm{v_1} + \dots + a_n\bm{v_n}) = a_1f(\bm{v_1}) + \dots + a_nf(\bm{v_n}).
+    \end{equation*}
+    Dunque per la generalita' di $w$ segue che ogni elemento di $\Imm{f}$ appartiene allo span di $f(\bm{v_1}), \dots, f(\bm{v_n})$, cioe' $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $\Imm{f}$.
+\end{proof}
+
 \begin{theorem} 
     [delle dimensioni] \label{th_dimensioni}
     Siano $V, W$ spazi vettoriali e sia $f : V \to W$ lineare. Allora vale il seguente fatto:
@@ -171,18 +183,6 @@ Le applicazioni lineari sono funzioni, dunque possono essere iniettive e surgett
 \begin{remark}
     Una funzione $f : V \to W$ e' surgettiva se e solo se $\Imm{f} = W$.
 \end{remark}
-
-\begin{proposition}\label{base_mappata_generatori_immagine}
-    Sia $f : V \to W$. Allora se $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ segue che $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $\Imm{f}$.
-\end{proposition}
-\begin{proof}
-    Sia $\bm{w} \in \Imm{f}$ generico; allora questo equivale a dire che esiste $\bm{v} \in V$ tale che $f(\bm{v}) = \bm{w}$.
-    Dato che $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$, allora possiamo scrivere $\bm{v}$ come $a_1\bm{v_1} + \dots a_n\bm{v_n}$, dunque 
-    \begin{equation*}
-        \bm{w} = f(a_1\bm{v_1} + \dots + a_n\bm{v_n}) = a_1f(\bm{v_1}) + \dots + a_nf(\bm{v_n}).
-    \end{equation*}
-    Dunque per la generalita' di $w$ segue che ogni elemento di $\Imm{f}$ appartiene allo span di $f(\bm{v_1}), \dots, f(\bm{v_n})$, cioe' $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $\Imm{f}$.
-\end{proof}
 
 \begin{corollary}\label{base_mappata_generatori_codominio}
     Sia $f : V \to W$ surgettiva. Allora se $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ segue che $\left\{ f(\bm{v_1}), \dots, f(\bm{v_n})\right\}$ e' un insieme di generatori di $W$.
