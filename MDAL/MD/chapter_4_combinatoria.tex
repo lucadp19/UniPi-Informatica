@@ -226,6 +226,38 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
     \end{enumerate}
 \end{solution}
 
+\begin{definition}
+    Indicheremo d'ora in poi con $[n]$ o con $\N_n$ il sottoinsieme dei numeri naturali compresi tra 1 e $n$ inclusi, ovvero \begin{equation}
+        \N_{n} = [n] = \{1; 2; \dots; n\}.
+    \end{equation}
+\end{definition}
+
+\begin{example}
+    Contare i sottoinsiemi di $\N_{100}$ che contengono almeno $3$ pari.
+\end{example}
+\begin{proof}
+    Scelgo i numeri pari e i dispari da includere nel sottoinsieme indipendentemente.
+    \begin{enumerate}
+        \item Posso inserire nel sottoinsieme un numero qualunque di dispari, dunque posso scegliere un sottoinsieme qualsiasi dei numeri dispari in $\N_{100}$: dato che in $\N_{100}$ ci sono $50$ dispari, il numero di sottoinsiemi di numeri dispari e' $2^50$.
+        \item Per contare i possibili sottoinsiemi con i pari passo al complementare e sottraggo dal totale ($2^50$ per le stesse motivazioni) il numero di sottoinsiemi con nessun pari (ovvero $\binom{50}{0}$), il numero di sottoinsiemi con un solo pari (ovvero $\binom{50}{1}$) e il numero di sottoinsiemi con due numeri pari (ovvero $\binom{50}{2}$).
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    Quante sono le triple $(n, m, k)$ con $n, m, k \in \N_{100}$ tali che $nmk = 100$?
+\end{example}
+\begin{solution}
+    Dato che $100 = 2^25^2$ segue che $n, m, k$ devono avere come soli fattori primi $2$ e $5$, ovvero \[
+        n = 2^{a_1}5^{b_1}, \quad m = 2^{a_2}5^{b_2}, \quad k = 2^{a_3}5^{b_3}.
+    \]
+    Dunque $nmk = 2^{a_1+a_2+a_3}5^{b_1+b_2+b_3} = 2^25^2$, ovvero \[
+        a_1 + a_2 + a_3 = 2, \quad b_1 + b_2 + b_3 = 2.    
+    \] Per trovare in quanti modi posso scegliere $a_1, a_2, a_3$ considero un insieme di 2 '1' e 2 separatori e lo permuto, ottenendo $\frac{4!}{2!2!} = 6$ modi. 
+    Equivalentemente, i modi di scegliere $b_1, b_2, b_3$ sono 6.
+
+    In totale ho quindi $6 \cdot 6 = 36$ modi.
+\end{solution}
+
 \subsection{Teorema del binomiale}
 Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usando il calcolo combinatorio.
 \begin{proof}[Dimostrazione del Teorema del Binomiale (\ref{binomiale})]
@@ -298,3 +330,80 @@ Ora calcoliamo il numero di possibilita' per ogni combinazione che da' punteggio
     Scelgo la quinta carta in modo che abbia un valore diverso dalle due coppie per non contare anche i full: dunque posso sceglierla in $13 - 2 = 11$ modi per 4 semi diversi. In totale ho quindi $4 \cdot 11\binom{13}{2}\binom{4}{2}^2$ modi di ottenere una doppia coppia.
     \item[\textbf{Coppia.}] Scelgo il valore della coppia tra 13 valori possibili e i semi in $\binom{4}{2}$ modi. Scelgo le tre carte rimanenti diverse tra di loro e diverse dal valore della coppia per evitare doppie coppie, full e poker: dunque ho $\binom{12}{3}$ modi di sceglierle e, dato che ognuna di esse puo' avere un seme qualunque, ho $4$ possibilita' per ciascuna. In totale ho quindi $4^3 \cdot 13 \binom{4}{2} \binom{12}{3}$ modi di fare coppia.
 \end{itemize}
+
+\section{Principio di Inclusione-Esclusione}
+
+Il principio di inclusione-esclusione mette in relazione la cardinalita' dell'unione di due o piu' insiemi con la cardinalita' delle intersezioni e degli insiemi presi singolarmente. Per due insiemi vale che \begin{equation}
+    \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
+\end{equation}
+Per tre insiemi vale che \begin{alignat*}{1}
+    \abs{A \cup B \cup C} = 
+        &\abs{A} + \abs{B} + \abs{C} +\\
+        &- \abs{A \cap B} - \abs{A \cap C} - \abs{B \cap C} +\\
+        &+ \abs{A \cap B \cap C}.
+\end{alignat*}
+Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottraggono le cardinalita' delle intersezioni due a due, poi si sommano le cardinalita' delle intersezioni tre a tre, eccetera.
+
+\begin{example}
+    Contare i numeri di $\N_{100}$ che non sono divisibili per 3 o per 5.
+\end{example}
+% \begin{solution}
+%     Sia $A$ l'insieme dei numeri divisibili per $3$ e $B$ l'insieme dei numeri divisibili per $5$. Noi vogliamo calcolare $\abs{\compl{A} \cup \compl{B}}$, dove $\compl{A}$ sono i numeri non divisibili per 3 e $\compl{B}$ sono i numeri non divisibili per 5.
+%     Per De Morgan e per il principio di inclusione-esclusione: \[
+%         \abs{\compl{A} \cup \compl{B}} = 100 - \abs{A \cap B} = 100 - \abs{A} - \abs{B} + \abs{A \cup B}. 
+%     \]
+%     Dunque \begin{itemize}
+%         \item un numero su 3 e' divisibile per 3, dunque $\abs{A} = \frac{100}{3} = 33$;
+%         \item un numero su 3 e' divisibile per 3, dunque $\abs{A} = \frac{100}{3} = 33$;
+%         \item i numeri divisibili sia per 3 che per 5, dunque $\abs{A} = \frac{100}{3} = 33$;
+%     \end{itemize}
+% \end{solution}
+
+\section{Contare funzioni}
+\begin{example}
+    Quante sono le funzioni $f : \N_n \to \N_m$?
+\end{example}
+\begin{solution}
+    La funzione $f$ mappa ogni elemento di $\N_n$ in un elemento di $\N_m$. Dunque per $f(1)$ possiamo scegliere $\abs{\N_m} = m$ possibili output, per $f(2)$ possiamo sceglierne altri $\abs{\N_m} = m$, eccetera. 
+    
+    In totale dunque abbiamo $\underbrace{m \cdots m}_{n \text{ volte}} = m^n$ possibili funzioni.
+\end{solution}
+
+\begin{example}
+    Quante sono le funzioni $f : \N_{20} \to \N_{20}$ che in output hanno almeno un valore maggiore o uguale a $11$?
+\end{example}
+\begin{solution}
+    Basta sottrarre al numero totale di funzioni da $\N_{20}$ a $\N_{20}$ (che e' $20^{20}$) il numero di funzioni che non hanno un valore in output maggiore o uguale a 11, ovvero il numero di funzioni $f : \N_{20} \to \N_{10}$ (che e' $10^{20}$).
+
+
+    Dunque avro' $20^{20} - 10^{20}$ funzioni.
+\end{solution}
+
+\begin{example}
+    Quante sono le funzioni $f : \N_{20} \to \N_{20}$ che in output hanno esattamente un valore maggiore o uguale a $11$?
+\end{example}
+\begin{solution}
+    Sia $k$ il valore maggiore o uguale a 11 assunto dalla funzione: posso scegliere $k$ in 10 modi. Il numero di funzioni $f : \N_{20} \to \N_{10} \cup \{k\}$ e' $11^{20}$, in quanto $\abs{\N_{10} \cup \{k\}} = 10 + 1 = 11$. Da queste devo togliere tutte le funzioni che non hanno $k$ come valore in output, che sono tutte e solo le funzioni $f : \N_{20} \to \N_{10}$, che sono $10^{20}$.
+
+    In totale ho quindi $10(11^{20} - 10^{20})$ funzioni.
+\end{solution}
+
+\begin{example}
+    Quante sono le funzioni $f : \N_{10} \to \N_{20}$ strettamente crescenti?
+\end{example}
+\begin{solution}
+    Se la funzione e' strettamente crescente i valori in output devono essere tutti diversi tra loro.
+
+    Scelgo quindi $10$ valori in $\N_{20}$. Scelti questi valori, c'e' un solo modo per cui la funzione sia crescente, cioe' ordinarli in ordine crescente. Dunque ad ogni sottoinsieme di $10$ valori tra $20$ corrisponde una funzione, dunque ho in tutto $\binom{20}{10}$ funzioni che soddisfano la proprieta'.
+\end{solution}
+
+\begin{example}
+    Quante sono le funzioni $f : \N_n \to \N_k$ iniettive?
+\end{example}
+\begin{solution}
+    Dato che la funzione e' iniettiva, i valori in output devono essere tutti diversi tra loro. Ovviamente se $k > n$ non puo' esserci una funzione iniettiva da $\N_n$ a $\N_k$, dunque il numero di funzioni iniettive e' 0 in questo caso.
+
+    Supponiamo $k \leq n$. Dunque scelgo il valore di $f(1)$ in $n$ modi, il valore di $f(2)$ in $n-1$ modi, eccetera. In totale il numero di funzioni iniettive che rispettano queste proprieta' e' \[
+        n(n-1) \cdots (n-k+1) = \frac{n!}{(n-k)!} = D_{n, k}.    
+    \]
+\end{solution}
