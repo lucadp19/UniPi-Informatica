@@ -299,12 +299,12 @@ Quindi per calcolare una base di un sottospazio $W$ di uno spazio $V$ spesso con
 
 Come avevamo visto nel primo capitolo, le matrici sono associate ad applicazioni lineari da vettori colonna in vettori colonna. Possiamo generalizzare questo concetto e definire una matrice associata ad ogni applicazione lineare.
 
-\begin{definition}
+\begin{definition}\label{matrice_associata}
     Siano $V, W$ spazi vettoriali, $f : V \to W$ lineare, $\alpha$ base di $V$ e $\beta$ base di $W$. Allora si dice chiama \textbf{matrice associata all'applicazione lineare} $f$ la matrice $[f]^{\alpha}_{\beta}$ tale che
     \begin{equation}
-        \forall \bm{v} \in V. \quad \left( f(\bm{v}) \right)_{\beta} = [f]^{\alpha}_{\beta} \cdot (\bm{v})_{\alpha}.
+        \forall \bm{v} \in V. \quad \left( [f]^{\alpha}_{\beta} \cdot (\bm{v})_{\alpha}= f(\bm{v}) \right)_{\beta}.
     \end{equation}
-    Cioe' se $f$ mappa $\bm{v} \mapsto \bm{w}$ allora $[f]^{\alpha}_{\beta}$ e' una matrice che porta (tramite il prodotto) il vettore colonna delle coordinate di $\bm{v}$ rispetto ad una base $\alpha$ nel vettore colonna delle coordinate di $\bm{w}$ rispetto ad una base $\beta$.
+    Ovvero se $f$ mappa $\bm{v}$ a $\bm{w}$ allora $[f]^{\alpha}_{\beta}$ e' una matrice che porta (tramite il prodotto) il vettore colonna delle coordinate di $\bm{v}$ rispetto ad una base $\alpha$ nel vettore colonna delle coordinate di $\bm{w}$ rispetto ad una base $\beta$.
 \end{definition}
 
 Per trovare la matrice associata ad $f$ rispetto alle basi $\alpha = \ang{\bm{v_1}, \dots, \bm{v_n}}$ e $\beta = \ang{\bm{w_1}, \dots, \bm{w_m}}$ possiamo seguire questo procedimento:
@@ -327,6 +327,7 @@ Per trovare la matrice associata ad $f$ rispetto alle basi $\alpha = \ang{\bm{v_
         \end{pmatrix}.
     \end{equation}
 \end{itemize}
+
 
 \begin{example}
     Sia $V = \M_{2\times 2}(\R)$ e sia $\alpha = \ang{\begin{psmallmatrix}1&0\\0&0\end{psmallmatrix}, \begin{psmallmatrix}0&1\\0&0\end{psmallmatrix}, \begin{psmallmatrix}0&0\\1&0\end{psmallmatrix}, \begin{psmallmatrix}0&0\\0&1\end{psmallmatrix}}$ una sua base.    
@@ -463,3 +464,168 @@ Per trovare la matrice associata ad $f$ rispetto alle basi $\alpha = \ang{\bm{v_
         \] e' una base di $\ker f$, dunque $\dim \ker f = 2$.
     \end{enumerate}
 \end{solution}
+
+\subsection{Inversa di una matrice}
+
+\begin{definition}
+    Sia $A \in \M_{n \times n}(\R)$ una matrice quadrata. Allora se $A$ e' invertibile si dice che la sua inversa e' la matrice $A^{-1}$ tale che \[
+        AA^{-1} = A^{-1}A = I_n.
+    \]
+\end{definition}
+
+Una matrice e' invertibile se e solo se la sua applicazione lineare associata e' invertibile, ovvero se e solo se e' bigettiva.
+
+\begin{proposition}
+    Siano $V, W$ spazi vettoriali e sia $f : V \to W$. Allora vale che \[
+        [f]^{-1} = [f^{-1}]    
+    \] ovvero l'inversa della matrice associata ad $f$ e' la matrice associata all'inversa di $f$.
+\end{proposition}
+
+Possiamo sfruttare le inverse per risolvere sistemi lineari: \[
+    A\bm x = \bm b \iff A^{-1}A\bm x = A^{-1}\bm b \iff \bm x = A^{-1}\bm b.
+\]
+
+\subsubsection{Metodo di Gauss per l'inversa}
+Possiamo trovare la matrice inversa di una matrice $A \in  \M_{n \times n}(\R)$ in questo modo. 
+
+Consideriamo la matrice $n \times 2n$ formata affiancando alla matrice originale la matrice identita' $n \times n$, e indichiamola con $[A | I_n]$. Tramite mosse di riga riduciamo questa matrice alla forma $[I_n | B]$: allora $B = A^{-1}$.
+
+Questa strategia funziona perche' risolvere il sistema $[A | I_n]$ tramite mosse di Gauss-Jordan e' equivalente a cercare una soluzione della seguente equazione matriciale: \[
+    A\begin{pmatrix}
+        b_{11} & \dots & b_{1n} \\
+        \vdots & \vdots & \vdots \\
+        b_{n1} & \dots & b_{nn} \\
+    \end{pmatrix} = I_n.
+\] Dato che la matrice inversa e' unica, allora la matrice $B$ ottenuta in questo modo dovra' essere l'inversa di $A$.
+
+\begin{example}
+    Trovare l'inversa di \[
+        A = \begin{pmatrix}
+            2  & -1 & 0 \\
+            -1 & 2  & -1 \\
+            0  & -1 & 2 \\
+        \end{pmatrix}. 
+    \]
+\end{example}
+\begin{solution}
+    Usiamo il metodo di Gauss.
+    \begin{gather*}
+        \begin{pmatrix}[ccc|ccc]
+            2  & -1 & 0  & 1 & 0 & 0\\
+            -1 & 2  & -1 & 0 & 1 & 0\\
+            0  & -1 & 2  & 0 & 0 & 1\\
+        \end{pmatrix} \xrightarrow[]{R_2 + \frac12 R_1}
+        \begin{pmatrix}[ccc|ccc]
+            2 & -1      & 0  & 1        & 0 & 0\\
+            0 & \nicefrac32 & -1 & \nicefrac12  & 1 & 0\\
+            0 & -1      & 2  & 0        & 0 & 1\\
+        \end{pmatrix} \xrightarrow[]{R_3 + \frac23 R_2} \\
+        \begin{pmatrix}[ccc|ccc]
+            2 & -1      & 0         & 1        & 0       & 0\\
+            0 & \nicefrac32 & -1        & \nicefrac12  & 1       & 0\\
+            0 & 0       & \nicefrac43   & \nicefrac13  & \nicefrac23 & 1\\
+        \end{pmatrix} \xrightarrow[]{R_2 + \frac34 R_3}
+        \begin{pmatrix}[ccc|ccc]
+            2 & -1      & 0         & 1        & 0       & 0\\
+            0 & \nicefrac32 & 0         & \nicefrac34  & \nicefrac32 & \nicefrac34\\
+            0 & 0       & \nicefrac43   & \nicefrac13  & \nicefrac23 & 1\\
+        \end{pmatrix} \xrightarrow[]{R_1 + \frac23 R_2}\\
+        \begin{pmatrix}[ccc|ccc]
+            2 & 0       & 0         & \nicefrac32  & 1       & \nicefrac12\\
+            0 & \nicefrac32 & 0         & \nicefrac34  & \nicefrac32 & \nicefrac34\\
+            0 & 0       & \nicefrac43   & \nicefrac13  & \nicefrac23 & 1\\
+        \end{pmatrix} \xrightarrow[\frac34 \times R_3]{\frac12 \times R_1, \nicefrac23 \times R_2}
+        \begin{pmatrix}[ccc|ccc]
+            1 & 0 & 0 & \nicefrac34 & \nicefrac12 & \nicefrac14\\
+            0 & 1 & 0 & \nicefrac12 & 1       & \nicefrac12\\
+            0 & 0 & 1 & \nicefrac14 & \nicefrac12 & \nicefrac34 \\
+        \end{pmatrix} \\
+        \implies A^{-1} = \begin{pmatrix}
+            \nicefrac34 & \nicefrac12 & \nicefrac14\\
+            \nicefrac12 & 1       & \nicefrac12\\
+            \nicefrac14 & \nicefrac12 & \nicefrac34 \\
+        \end{pmatrix}
+    \end{gather*}
+\end{solution}
+
+\subsubsection{Inversa di una matrice $2 \times 2$}
+
+Per trovare l'inversa di una matrice $2 \times 2$ possiamo usare questa formula:
+\[
+    A = \begin{pmatrix}
+        a & b \\
+        c & d \\
+    \end{pmatrix} \implies 
+    A^{-1} = \frac{1}{ad-bc}\begin{pmatrix}
+        d  & -b \\
+        -c & a \\
+    \end{pmatrix}.
+\] Il numero $ad - bc$ e' il determinante della matrice $2 \times 2$ e analizzeremo il suo significato in un capitolo successivo.
+
+Ad esempio \[
+    A = A = \begin{pmatrix}
+        3 & 2 \\
+        4 & 7 \\
+    \end{pmatrix} \implies 
+    A^{-1} = \frac{1}{3 \cdot 7 - 2 \cdot 4}\begin{pmatrix}
+        7  & -2 \\
+        -4 & 3 \\
+    \end{pmatrix} = \frac{1}{13}\begin{pmatrix}
+        7  & -2 \\
+        -4 & 3 \\
+    \end{pmatrix}.    
+\]
+
+\subsection{Composizione di funzioni come moltiplicazione tra matrici}
+
+Consideriamo tre spazi vettoriali $U, V, W$ e due funzioni $f, g$ tali che \[
+    U \xmapsto{f} V \xmapsto{g} W  \quad  \iff  \quad  U \xmapsto{g \circ f} W
+\] dunque per ogni $u \in U$ segue che $(g \circ f)(u) = g(f(u))$. 
+
+Consideriamo ora $\alpha$ base di $U$, $\beta$ base di $V$ e $\gamma$ base di $W$ e cerchiamo di rappresentare la relazione tra gli insiemi tramite le matrici associate alle funzioni: \[
+    U_{\alpha} \xmapsto{[f]^{\alpha}_{\beta}} V_{\beta} \xmapsto{[g]^{\beta}_{\gamma}} W_{\gamma}  \quad  \iff  \quad  U_{\alpha} \xmapsto{[g \circ f]^{\alpha}_{\gamma}} W_{\gamma}.
+\] Dunque per lo stesso ragionamento di prima dovra' valere che \[
+    [g \circ f]^{\alpha}_{\gamma}\cdot (u)_{\alpha} = [g]^{\beta}_{\gamma} \cdot \left( [f]^{\alpha}_{\beta} \cdot (u)_{\alpha} \right).
+\]
+
+\begin{theorem}
+    Siano $U,\ V,\ W$ spazi vettoriali e siano $\alpha$, $\beta$ e $\gamma$ delle basi rispettivamente di $U,\ V$ e $W$. Siano $f : U \to V$, $g : V \to W$ e siano $[f]{\alpha}_{\beta}$ e $[g]^{\beta}_{\gamma}$ le matrici associate a $f$ e $g$.
+
+    Allora vale che \begin{equation}
+        [g \circ f]^{\alpha}_{\gamma} = [g]^{\beta}_{\gamma} \cdot [f]^{\alpha}_{\beta}.
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Sia $u \in U$ generico e dimostriamo che $[g \circ f]^{\alpha}_{\gamma} \cdot (u)_{\alpha} = [g]^{\beta}_{\gamma} \cdot [f]^{\alpha}_{\beta} \cdot (u)_{\alpha}$, ricordando la definizione di matrice associata ad una funzione (\ref{matrice_associata}).
+    \begin{align*}
+        [g]^{\beta}_{\gamma} \cdot [f]^{\alpha}_{\beta} \cdot (u)_{\alpha} &= [g]^{\beta}_{\gamma} \cdot ([f]^{\alpha}_{\beta} \cdot (u)_{\alpha}) \\
+        &= [g]^{\beta}_{\gamma} \cdot (f(u))_{\beta} &&\text{per def. di matrice associata ad $f$}\\
+        &= (g(f(u)))_{\gamma} &&\text{per def. di matrice associata a $g$}\\
+        &= ((g \circ f)(u))_{\gamma}\\
+        &= [g \circ f]^{\alpha}_{\gamma} \cdot (u)_{\alpha} &&\text{per def. di matrice associata a $g \circ f$.}
+    \end{align*}
+    Dunque dato che la relazione vale per qualunque $u \in U$, allora segue che \[
+        [g \circ f]^{\alpha}_{\gamma} = [g]^{\beta}_{\gamma} \cdot [f]^{\alpha}_{\beta}    
+    \] che e' la tesi.
+\end{proof}
+
+\subsection{Matrice del cambiamento di base}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale. Allora si dice funzione identita' la funzione $\id_V : V \to V$ tale che \[
+        \forall v \in V. \quad \id_V(v) = v.
+    \]
+\end{definition}
+
+Scriveremo sempre $\id$ sottointendendo lo spazio di riferimento.
+
+Possiamo costruire una matrice che trasforma le coordinate di un vettore rispetto ad una base nelle coordinate di un vettore rispetto ad un'altra base sfruttando la funzione identita'.
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale, $\alpha$ e $\beta$ basi di $V$. 
+    
+    Allora dato un vettore $v \in V$ la matrice $[\id]^{\alpha}_{\beta}$ porta le coordinate di $v$ rispetto ad $\alpha$ nelle coordinate di $v$ rispetto a $\beta$, ovvero \begin{equation}
+        [\id]^{\alpha}_{\beta} \cdot (v)_{\alpha} = (v)_{\beta}.
+    \end{equation}
+    $[\id]^{\alpha}_{\beta}$ si dice \textbf{matrice del cambiamento di base}.
+\end{definition}
