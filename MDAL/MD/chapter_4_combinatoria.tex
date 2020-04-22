@@ -20,7 +20,7 @@ Notiamo che le coppie con gli stessi elementi ma diverso ordine sono diverse: pr
 
 Possiamo definire anche un prodotto cartesiano di tre o piu' insiemi nello stesso modo: gli elementi del prodotto cartesiano di $n$ insiemi si dicono $n$-uple oppure stringhe.
 
-\begin{proposition}
+\begin{proposition}\label{cardinalita_prodotto_cartesiano}
     Siano $A_1, \dots, A_n$ insiemi. Allora \begin{equation}
         \abs{A_1 \cdots A_n} = \abs{A_1} \cdots \abs{A_n}.
     \end{equation}
@@ -345,19 +345,26 @@ Per tre insiemi vale che \begin{alignat*}{1}
 Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottraggono le cardinalita' delle intersezioni due a due, poi si sommano le cardinalita' delle intersezioni tre a tre, eccetera.
 
 \begin{example}
-    Contare i numeri di $\N_{100}$ che non sono divisibili per 3 o per 5.
+    Contare i numeri di $\N_{100}$ che non sono divisibili ne' per 3 ne' per 5.
 \end{example}
-% \begin{solution}
-%     Sia $A$ l'insieme dei numeri divisibili per $3$ e $B$ l'insieme dei numeri divisibili per $5$. Noi vogliamo calcolare $\abs{\compl{A} \cup \compl{B}}$, dove $\compl{A}$ sono i numeri non divisibili per 3 e $\compl{B}$ sono i numeri non divisibili per 5.
-%     Per De Morgan e per il principio di inclusione-esclusione: \[
-%         \abs{\compl{A} \cup \compl{B}} = 100 - \abs{A \cap B} = 100 - \abs{A} - \abs{B} + \abs{A \cup B}. 
-%     \]
-%     Dunque \begin{itemize}
-%         \item un numero su 3 e' divisibile per 3, dunque $\abs{A} = \frac{100}{3} = 33$;
-%         \item un numero su 3 e' divisibile per 3, dunque $\abs{A} = \frac{100}{3} = 33$;
-%         \item i numeri divisibili sia per 3 che per 5, dunque $\abs{A} = \frac{100}{3} = 33$;
-%     \end{itemize}
-% \end{solution}
+\begin{solution}
+    Sia $A$ l'insieme dei numeri divisibili per $3$ e $B$ l'insieme dei numeri divisibili per $5$, dunque $\compl{A}$ sono i numeri non divisibili per 3 e $\compl{B}$ sono i numeri non divisibili per 5.
+    
+    Noi vogliamo calcolare $\abs{\compl{A} \cap \compl{B}}$, cioe' la cardinalita' dell'insieme dei numeri che non sono ne' divisibili per 3 ne' per 5.
+    Per De Morgan: \[
+        \abs{\compl{A} \cap \compl{B}} = \abs{\N_{100}} - \abs{A \cup B} = 100 - \abs{A \cup B}. 
+    \] Per il principio di inclusione-esclusione: \[
+        \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}. 
+    \]
+    Dunque \begin{itemize}
+        \item un numero su 3 e' divisibile per 3, dunque $\abs{A} = \frac{100}{3} = 33$;
+        \item un numero su 5 e' divisibile per 5, dunque $\abs{A} = \frac{100}{5} = 20$;
+        \item i numeri divisibili sia per 3 che per 5 sono tutti i numeri divisibili per 15, dunque $\abs{A \cap B} = \frac{100}{15} = 6$;
+    \end{itemize}
+    ovvero \[
+        \abs{\compl{A} \cap \compl{B}} = 100 - (33+20-6) = 100 - 47 = 53.
+    \]
+\end{solution}
 
 \section{Contare funzioni}
 \begin{example}
@@ -407,3 +414,39 @@ Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottragg
         n(n-1) \cdots (n-k+1) = \frac{n!}{(n-k)!} = D_{n, k}.    
     \]
 \end{solution}
+
+\begin{example}
+    Quante sono le funzioni $f : \N_4 \to \N_3$ surgettive?
+\end{example}
+\begin{solution}
+    Definiamo il seguente insieme: 
+    \begin{alignat*}{1}
+        F_i &\coloneqq \text{ insieme delle funzioni $f : \N_4 \to \N_3$ tali che $i \in \Imm{f}$} \\
+        &= \{ f \mid f : \N_4 \to \N_3, i \in \Imm{f}\}\\
+        \intertext{e dunque il suo complementare}
+        \compl{F_i} &\coloneqq \text{ insieme delle funzioni $f : \N_4 \to \N_3$ tali che $i \notin \Imm{f}$} \\
+        &= \{ f \mid f : \N_4 \to \N_3, i \notin \Imm{f}\}.
+    \end{alignat*}
+    L'insieme delle funzioni $f : \N_4 \to \N_3$ surgettive e' l'insieme delle funzioni tali che $1, 2, 3, \in \Imm{f}$, cioe' e' dato da $F_1 \cap F_2 \cap F_2$. Per De Morgan: \[
+        \abs{F_1 \cap F_2 \cap F_2} = \abs{U} - \abs{\compl{(F_1 \cap F_2 \cap F_2)}}  = \abs{U} - \abs{\compl{F_1} \cup \compl{F_2} \cup \compl{F_3}},
+    \] dove $U$ e' l'insieme di tutte le funzioni $f : \N_4 \to \N_3$, dunque ha cardinalita' $\abs{U} = 3^4$.
+
+    Per il principio di inclusione-esclusione:
+    \begin{alignat*}
+        {1}
+        \abs{\compl{F_1} \cup \compl{F_2} \cup \compl{F_3}} &= \abs{\compl{F_1}} + \abs{\compl{F_2}} + \abs{\compl{F_3}} +\\
+        &\ - \abs{\compl{F_1} \cap \compl{F_2}} - \abs{\compl{F_1} \cap \compl{F_3}} - \abs{\compl{F_2} \cap \compl{F_3}} + \\
+        &\ - \abs{\compl{F_1} \cap \compl{F_2} \cap \compl{F_3}}.
+    \end{alignat*}
+\end{solution}
+
+Calcoliamo le cardinalita' degli insiemi che abbiamo:
+\begin{itemize}
+    \item $\compl{F_1}$ e' l'insieme di tutte le funzioni che non hanno $1$ nell'immagine, cioe' contiene tutte e solo le funzioni da $\N_4$ a $\left\{ 2, 3\right\}$, dunque la sua cardinalita' e' $2^4$; stesso ragionamento per $\compl{F_2}$ e $\compl{F_3}$;
+    \item $\compl{F_1} \cap \compl{F_2}$ e' l'insieme di tutte le funzioni che non hanno $1$ e $2$ nell'immagine, cioe' contiene tutte e solo le funzioni da $\N_4$ a $\left\{ 3\right\}$, dunque la sua cardinalita' e' $1^4 = 1$; stesso ragionamento per $\compl{F_1} \cap \compl{F_3}$ e $\compl{F_2} \cap \compl{F_3}$;
+    \item $\compl{F_1} \cap \compl{F_2} \cap \compl{F_3}$ e' l'insieme di tutte le funzioni che non hanno 1, 2, e 3 nell'immagine, cioe' contiene tutte e solo le funzioni $\N_4$ all'insieme vuoto $\varnothing$, dunque ha cardinalita' 0 (non ci sono funzioni che hanno come codominio l'insieme vuoto).
+\end{itemize}
+
+In totale abbiamo quindi \[
+    \abs{F_1 \cap F_2 \cap F_2} = 3^4 - (3\cdot2^4 - 3 + 0) = 3^4 - 3(2^4 - 1)    
+\] funzioni surgettive da $\N_4$ a $\N_3$.

@@ -221,7 +221,7 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
 \section{Sistemi di congruenze}
 
 \begin{theorem}
-    [Teorema Cinese del Resto]
+    [Teorema Cinese del Resto] \label{th_cinese}
     Dato un sistema di congruenze in forma normale 
     \begin{equation*}
         \left\{
@@ -258,6 +258,8 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
 \end{proposition}
 
 \section{Struttura algebrica degli interi modulo m}
+
+\subsection{Interi modulo m}
 
 \begin{definition}
     Siano $a, n \in \Z$; allora si dice classe di resto $[a]_n$ l'insieme 
@@ -304,6 +306,105 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \end{proposition}
 \begin{proof}
     Per la proposizione \ref{Z(n)_anello} sappiamo che $\Z/(p)$ e' un anello commutativo. Per la proposizione \ref{invertibilita_mod_m} un numero e' invertibile modulo $p$ se e solo se e' coprimo con $pm$; ma tutti i numeri che non sono multipli di $p$ sono coprimi con $p$, dunque tutte le classi tranne $[0]_p$ sono invertibili, dunque esiste l'inverso per la moltiplicazione per ogni elemento non nullo, cioe' $\Z/(p)$ e' un campo.
+\end{proof}
+
+\subsection{Gruppo degli inversi modulo m}
+
+\begin{definition}
+    Sia $n \geq 2$. Allora si indica con $\inverses{\Z/(n)}$ l'insieme delle classi resto invertibili modulo $n$, ovvero \begin{equation}
+        \inverses{\Z/(n)} = \left\{[a]_n \mid \exists [a^{-1}]_n \in \Z/(n). \quad [a]_n[a^{-1}]_n = [1]_n\right\}.
+    \end{equation} 
+\end{definition}
+
+\begin{proposition}\label{prodotto_invertibili_invertibile}
+    Sia $n \geq 2$. Allora se $[a], [b] \in \inverses{\Z/(n)}$ segue che $[ab] \in \inverses{\Z/(n)}$.
+\end{proposition}
+\begin{proof}
+    Ci basta dimostrare che $[ab]$ e' invertibile modulo $n$. Sia $[x]$ l'inverso, se esiste, allora:
+    \begin{alignat*}{1}
+        &[ab][x] = [1] \\
+        \iff &[a][b][x] = [1] \\
+        \iff &[a][b][x][a^{-1}][b^{-1}] = [a^{-1}][b^{-1}] \\
+        \iff &[x] = [a^{-1}][b^{-1}] = [a^{-1}b^{-1}].
+    \end{alignat*}
+    ovvero $[ab]$ e' invertibile e $[a^{-1}b^{-1}]$ e' il suo inverso.
+\end{proof}
+
+\begin{proposition}\label{Z(n)*_anello}
+    Per ogni $n \geq 2$ l'insieme $\inverses{\Z/(n)}$ con l'operazione di prodotto tra classi e con l'elemento $[1]_n$ che svolge il ruolo di $1$ e' un gruppo commutativo.
+\end{proposition}
+
+\begin{definition}
+    Sia $n \geq 2$. Allora si dice funzione di Eulero la funzione $\varphi : \N \to \N$ tale che \begin{equation}
+        \varphi(n) = \abs{\inverses{\Z/(n)}}
+    \end{equation}
+    ovvero $\varphi(n)$ e' il numero di elementi invertibili in $\Z/(n)$.
+\end{definition}
+
+\begin{proposition}
+    Sia $p \in \Z$, $p$ primo. Allora $\varphi(p) = p - 1$. 
+\end{proposition}
+\begin{proof}
+    Tutti le classi resto in $\Z/(p)$ tranne $[0]$ sono coprime con $p$, dunque ci sono $p-1$ classi invertibili.
+\end{proof}
+
+\begin{proposition}
+    Siano $n, p \in \Z$, $p$ primo. Allora $\varphi(p^n) = p^n - p^{n-1}$. 
+\end{proposition}
+\begin{proof}
+    Il numero di elementi in $\Z/(p^n)$ e' $p^n$. 
+    
+    Da essi dobbiamo escludere tutti i numeri che non sono coprimi con $p^n$, che sono tutti i numeri che contengono $p$ nella loro fattorizzazione in primi, cioe' tutti i multipli di $p$.
+    In $[0, p^n - 1]$ ci sono esattamente $\frac{p^n}{p} = p^{n-1}$ multipli di $p$.
+
+    Dunque $\varphi(p^n) = p^n - p^{n-1}$.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b \in \Z$, $\mcd{a}{b} = 1$. Allora \begin{equation}
+        \varphi(ab) = \varphi(a)\varphi(b).
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per definizione di $\varphi$ la tesi e' equivalente a \[
+        \abs{\inverses{\Z/(ab)}} = \abs{\inverses{\Z/(a)}}\abs{\inverses{\Z/(b)}}.
+    \]
+    Dalla proposizione \ref{cardinalita_prodotto_cartesiano} del capitolo sulla combinatoria sappiamo che il prodotto tra le cardinalita' e' la cardinalita' del prodotto cartesiano, dunque la tesi e' equivalente a \[
+        \abs{\inverses{\Z/(ab)}} = \abs{\inverses{\Z/(a)}\times\inverses{\Z/(b)}}.
+    \]
+
+    E' sufficiente dunque dimostrare che esiste una corrisponenza biunivoca tra i due insiemi. Scelgo la funzione $f$ tale che \[
+        f([c]_{ab}) = \ang{[c]_a, [c]_b}    
+    \] e dimostro che $f$ e' bigettiva.
+
+    \begin{description}
+        \item[Iniettivita'.] Siano $[h]_{ab}, [k]_{ab} \in \Z/(ab)$ tali che $f([h]_{ab}) = f([k]_{ab})$, cioe' equivalentemente $\ang{[h]_a, [h]_b} = \ang{[k]_a, [k]_b}$. Dimostriamo che segue che $[h]_{ab} = [k]_{ab}$.
+        
+        Per definizione di $f$ segue che $x = k$ e' soluzione di \[
+            \left\{
+            \begin{alignedat}{1}
+                &x \equiv h \Mod{a}\\
+                &x \equiv h \Mod{b}
+            \end{alignedat}
+            \right.   
+        \] Inoltre banalmente $x = h$ e' soluzione dello stesso sistema, dunque per il Teorema Cinese del Resto (\ref{th_cinese}) (dato che $\mcd{a}{b} = 1$) segue che tutte le soluzioni del sistema sono congrue tra loro modulo $ab$, ovvero $h \equiv k \Mod{ab}$, ovvero $[k]_{ab} = [h]_{ab}$, ovvero $f$ e' iniettiva.
+        \item[Surgettivita'.] Sia $\ang{[r]_a, [s]_b} \in \inverses{\Z/(a)}\times\inverses{\Z/(b)}$. Dimostriamo che esiste un unico $[x]_{ab} \in \inverses{\Z/(ab)}$ tale che $f([x]_{ab}) = \ang{[r]_a, [s]_b}$.
+        
+        Per il teorema cinese dei resti, esiste ed e' unico $[x]_{ab} \in \Z/(ab)$ tale che \[
+            \left\{
+            \begin{alignedat}{1}
+                &x \equiv r \Mod{a}\\
+                &x \equiv s \Mod{b}
+            \end{alignedat}
+            \right.   
+        \] 
+        
+        Dimostriamo ora che $[x]_{ab}$ e' invertibile.
+                
+        Dato che $[r]_a$ e $[s]_b$ sono invertibili segue che $x$ dovra' essere invertibile modulo $a$ e modulo $b$, dunque $\mcd{x}{a} = \mcd{x}{b} = 1$. Per la proposizione \ref{mcd_togliere_fattori_non_comuni}, dato che $\mcd{x}{a} = 1$ allora $\mcd{x}{ab} = \mcd{x}{b} = 1$, dunque $x$ e' invertibile modulo $ab$, cioe' $[x]_{ab} \in \inverses{\Z/(ab)}$, ovvero $f$ e' surgettiva.
+    \end{description}
+
+    Dunque $f$ e' bigettiva e quindi segue la tesi.
 \end{proof}
 
 \section{Binomiale e Triangolo di Tartaglia}
