@@ -3,7 +3,32 @@
 \section{Insiemi numerici}
 
 \begin{definition}
-    Si dice \textbf{anello} un insieme di elementi $A$ insieme con due operazioni $+ : A \times A \to A$ e $\cdot : A \times A \to A$ e due elementi $0, 1 \in A$ per cui valgono i seguenti assiomi: \[
+    Si dice \textbf{gruppo} una tripla ($G$, $\cdot$, $1$) formata da \begin{itemize}
+        \item un insieme di elementi $G$;
+        \item un operazione $\cdot : A \times A \to A$ detta prodotto;
+        \item un elemento $e \in G$
+    \end{itemize} per cui valgono i seguenti assiomi: \[
+        \forall a, b, c \in G 
+    \]
+    \begin{align}
+        &\text{1.}      &&(ab) \in G            &\text{(chiusura rispetto a $\cdot$)}\\
+        &\text{2.}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+        &\text{3.}      &&a \cdot e=e \cdot a=a &\text{($e$ el. neutro di $\cdot$)}\\
+        &\text{4.}     &&\exists a^{-1} \in G. \quad aa^{-1} = e &\text{(inverso per $\cdot$)}
+        \intertext{Si dice \textbf{gruppo commutativo} un gruppo per cui vale inoltre il seguente assioma:}
+        &\text{5.}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
+    \end{align}
+\end{definition}
+
+\begin{definition}
+    Si dice \textbf{anello} una quintupla ($A$, $+$, $\cdot$, $0$, $1$) formata da
+    \begin{itemize}
+        \item un insieme di elementi $A$;
+        \item un operazione $+ : A \times A \to A$ detta somma;
+        \item un operazione $\cdot : A \times A \to A$ detta prodotto;
+        \item un elemento $0 \in A$;
+        \item un elemento $1 \in A$
+    \end{itemize} per cui valgono i seguenti assiomi: \[
         \forall a, b, c \in A    
     \]
     \begin{align}
@@ -25,7 +50,14 @@
 Un tipico esempio di anello commutativo e' $\Z$: infatti gli anelli generalizzano le operazioni che possiamo fare sui numeri interi e le loro proprieta' fondamentali per estenderle ad altri insiemi con la stessa struttura algebrica.
 
 \begin{definition}
-    Si dice \textbf{campo} un insieme di elementi $F$ insieme con due operazioni $+ : F \times F \to F$ e $\cdot : F \times F \to F$ e due elementi $0, 1 \in F$ per cui valgono i seguenti assiomi: \[
+    Si dice \textbf{campo} una quintupla ($F$, $+$, $\cdot$, $0$, $1$) formata da
+    \begin{itemize}
+        \item un insieme di elementi $F$;
+        \item un operazione $+ : F \times F \to F$ detta somma;
+        \item un operazione $\cdot : F \times F \to F$ detta prodotto;
+        \item un elemento $0 \in F$;
+        \item un elemento $1 \in F$
+    \end{itemize}  per cui valgono i seguenti assiomi: \[
         \forall a, b, c \in F    
     \]
     \begin{align}

@@ -222,22 +222,88 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
 
 \begin{theorem}
     [Teorema Cinese del Resto] \label{th_cinese}
-    Dato un sistema di congruenze in forma normale 
+    Siano $a_1, a_2, m_1, m_2 \in \Z$ con $m_1, m_2$ coprimi. Allora esiste un $x \in \Z$ tale che
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            x&\equiv a_1 \Mod{m_1}\\
+            x&\equiv a_2 \Mod{m_2}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    e $x$ e' unico modulo $(m_1m_2)$, ovvero se $x_0$ e' un'altra soluzione del sistema segue che
+    \begin{equation}
+        x \equiv x_0 \pmod{m_1 m_2}.
+    \end{equation} 
+\end{theorem}
+
+Possiamo esprimere il teorema cinese in questo modo equivalente.
+
+\begin{theorem}
+    [Teorema Cinese del Resto] \label{th_cinese_2}
+    Siano $x_0, m \in \Z$; siano inoltre $m_1, m_2$ coprimi tali che $m = m_1m_2$. Allora vale che \begin{equation}
+        x \equiv x_0 \Mod{m} \iff \left\{
+            \begin{alignedat}{1}
+                x&\equiv x_0 \Mod{m_1}\\
+                x&\equiv x_0 \Mod{m_2}
+            \end{alignedat}      
+            \right .
+    \end{equation}
+\end{theorem}
+
+Dato che il Teorema Cinese del Resto ci permette di unire due equazioni con moduli $m_1$, $m_2$ coprimi in un'unica congurenza modulo $(m_1m_2)$, possiamo generalizzare il teorema ad un sistema di $n$ congruenze unendole due a due, come ci dice il prossimo corollario.
+
+\begin{corollary}
+    \label{th_cinese_n}
+    Siano $a_1, \dots, a_n, m_1, \dots, m_n \in \Z$ con $m_1, \dots, m_n$ coprimi a due a due. Allora esiste un $x \in \Z$ tale che
     \begin{equation*}
         \left\{
         \begin{alignedat}{1}
             x&\equiv a_1 \Mod{m_1}\\
             x&\equiv a_2 \Mod{m_2}\\
-            &\vdotswithin{\equiv} \\
+            &\vdotswithin{\equiv}\\
             x&\equiv a_n \Mod{m_n}
         \end{alignedat}      
         \right . 
     \end{equation*}
-    se i moduli $m_1, m_2, \dots, m_n$ sono a due a due coprimi (cioe' se per ogni $i \neq j$ vale che $\mcd{m_i}{m_j} = 1$) allora il sistema ha soluzione, ed e' equivalente ad una singola congruenza del tipo
+    e $x$ e' unico modulo $(m_1\cdots m_n)$, ovvero se $x_0$ e' un'altra soluzione del sistema segue che
     \begin{equation}
-        x \equiv x_0 \pmod{m_1 m_2 \dots m_n}.
+        x \equiv x_0 \pmod{m_1 \cdots m_n}.
     \end{equation} 
-\end{theorem}
+\end{corollary}
+
+Vediamo come stabilire se esistono soluzioni di un sistema di congruenze con moduli non coprimi.
+
+\begin{proposition}
+    Siano $a_1, a_2, m_1, m_2 \in \Z$. Allora esiste $x \in \Z$ tale che 
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            x&\equiv a_1 \Mod{m_1}\\
+            x&\equiv a_2 \Mod{m_2}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    se e solo se $a_1 \equiv a_2 \pmod{\mcd{m_1}{m_2}}$.
+\end{proposition}
+\begin{proof}
+    Consideriamo il sistema di due equazioni. Dalla prima ricaviamo \[
+        x = a_1 + m_1y    
+    \] per qualche $y \in \Z$. Allora sostituendo nella seconda otteniamo \begin{alignat*}
+        {1}
+        &a_1+m_1y \equiv a_2 \Mod{m_2}\\
+        \iff &m_1y \equiv a_2 - a_1 \Mod{m_2}.
+    \end{alignat*}
+    Quest'ultima equazione (per la proposizione \ref{cong_ha_soluzione_sse_mcd_div_b}) ha soluzione se e solo se 
+    \begin{alignat*}
+        {1}
+        &\mcd{m_1}{m_2} \divides (a_2-a_1) \\
+        \iff &(a_2-a_1) \equiv 0 \Mod{\mcd{m_1}{m_2}} \\
+        \iff &a_1 \equiv a_2 \Mod{\mcd{m_1}{m_2}}. \tag*{\qedhere}
+    \end{alignat*}
+\end{proof}
+
+Se abbiamo un sistema con piu' di due equazioni basta risolverle due a due: ogni volta otteniamo una singola equazione, diminuendo di uno il numero di equazioni del sistema senza alterare il numero di soluzioni. Se a un certo punto troviamo una coppia di equazioni non compatibili allora il sistema non ha soluzione, altrimenti la ha ed e' unica.
 
 \begin{proposition}
     Dato un sistema di congruenze 
@@ -256,6 +322,8 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
         x \equiv x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}
     \end{equation}
 \end{proposition}
+
+Per quest'ultima proposizione possiamo risolvere un sistema cercando un numero intero $x_0$ minore del minimo comune multiplo dei moduli che sia soluzione di tutte le equazioni: a quel punto la congruenza che risolve il sistema sara' $x \equiv x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}$.
 
 \section{Struttura algebrica degli interi modulo m}
 
@@ -305,7 +373,7 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     Per ogni $p \geq 2$, $p$ primo, l'insieme $\Z/(p)$ con le operazioni di somma e prodotto tra classi e con gli elementi $[0]_n, [1]_n$ che svolgono il ruolo di $0$ e $1$ e' un campo.
 \end{proposition}
 \begin{proof}
-    Per la proposizione \ref{Z(n)_anello} sappiamo che $\Z/(p)$ e' un anello commutativo. Per la proposizione \ref{invertibilita_mod_m} un numero e' invertibile modulo $p$ se e solo se e' coprimo con $pm$; ma tutti i numeri che non sono multipli di $p$ sono coprimi con $p$, dunque tutte le classi tranne $[0]_p$ sono invertibili, dunque esiste l'inverso per la moltiplicazione per ogni elemento non nullo, cioe' $\Z/(p)$ e' un campo.
+    Per la proposizione \ref{Z(n)_anello} sappiamo che $\Z/(p)$ e' un anello commutativo. Per la proposizione \ref{invertibilita_mod_m} un numero e' invertibile modulo $p$ se e solo se e' coprimo con $p$; ma tutti i numeri che non sono multipli di $p$ sono coprimi con $p$, dunque tutte le classi tranne $[0]_p$ sono invertibili, dunque esiste l'inverso per la moltiplicazione per ogni elemento non nullo, cioe' $\Z/(p)$ e' un campo.
 \end{proof}
 
 \subsection{Gruppo degli inversi modulo m}
@@ -378,19 +446,19 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     \] e dimostro che $f$ e' bigettiva.
 
     \begin{description}
-        \item[Iniettivita'.] Siano $[h]_{ab}, [k]_{ab} \in \Z/(ab)$ tali che $f([h]_{ab}) = f([k]_{ab})$, cioe' equivalentemente $\ang{[h]_a, [h]_b} = \ang{[k]_a, [k]_b}$. Dimostriamo che segue che $[h]_{ab} = [k]_{ab}$.
+        \item[Iniettivita'.] Siano $[h]_{ab}, [k]_{ab} \in \inverses{\Z/(ab)}$ tali che $f([h]_{ab}) = f([k]_{ab})$, cioe' equivalentemente $\ang{[h]_a, [h]_b} = \ang{[k]_a, [k]_b}$. Dimostriamo che segue che $[h]_{ab} = [k]_{ab}$.
         
-        Per definizione di $f$ segue che $x = k$ e' soluzione di \[
+        Per definizione di $f$ segue che \[
             \left\{
             \begin{alignedat}{1}
-                &x \equiv h \Mod{a}\\
-                &x \equiv h \Mod{b}
+                &h \equiv k \Mod{a}\\
+                &h \equiv k \Mod{b}
             \end{alignedat}
             \right.   
-        \] Inoltre banalmente $x = h$ e' soluzione dello stesso sistema, dunque per il Teorema Cinese del Resto (\ref{th_cinese}) (dato che $\mcd{a}{b} = 1$) segue che tutte le soluzioni del sistema sono congrue tra loro modulo $ab$, ovvero $h \equiv k \Mod{ab}$, ovvero $[k]_{ab} = [h]_{ab}$, ovvero $f$ e' iniettiva.
-        \item[Surgettivita'.] Sia $\ang{[r]_a, [s]_b} \in \inverses{\Z/(a)}\times\inverses{\Z/(b)}$. Dimostriamo che esiste un unico $[x]_{ab} \in \inverses{\Z/(ab)}$ tale che $f([x]_{ab}) = \ang{[r]_a, [s]_b}$.
+        \] Dunque per il Teorema Cinese del Resto (\ref{th_cinese_2}) (dato che $\mcd{a}{b} = 1$) segue che deve valere $h \equiv k \Mod{ab}$, ovvero $[k]_{ab} = [h]_{ab}$, ovvero $f$ e' iniettiva.
+        \item[Surgettivita'.] Sia $\ang{[r]_a, [s]_b} \in \inverses{\Z/(a)}\times\inverses{\Z/(b)}$. Dimostriamo che esiste un $[x]_{ab} \in \inverses{\Z/(ab)}$ tale che $f([x]_{ab}) = \ang{[r]_a, [s]_b}$.
         
-        Per il teorema cinese dei resti, esiste ed e' unico $[x]_{ab} \in \Z/(ab)$ tale che \[
+        Per il teorema cinese dei resti (\ref{th_cinese}), esiste ed e' unico $[x]_{ab} \in \Z/(ab)$ tale che \[
             \left\{
             \begin{alignedat}{1}
                 &x \equiv r \Mod{a}\\
