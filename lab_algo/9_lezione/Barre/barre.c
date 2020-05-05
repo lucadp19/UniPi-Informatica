@@ -48,13 +48,13 @@ int main(){
 
     printf("%d\n", DP(n, price, max_gain, sol));
 
-    // printf("\nMAX GAIN: ");
-    // for(int i = 0; i < n+1; i++)
-    //     printf("%d ", max_gain[i]);
-    // printf("\nSOLUTION: ");
-    // for(int i = 0; i < n+1; i++)
-    //     printf("%d ", max_gain[i]);
-    // printf("\n\n");
+    printf("\nMAX GAIN: ");
+    for(int i = 0; i < n+1; i++)
+        printf("%d ", max_gain[i]);
+    printf("\nSOLUTION: ");
+    for(int i = 0; i < n+1; i++)
+        printf("%d ", sol[i]);
+    printf("\n\n");
 
     while(n > 0){
         printf("%d ", sol[n]);
@@ -64,6 +64,6 @@ int main(){
     free(max_gain);
     free(sol);
     free(price);
-    
+
     return 0;
 }
