@@ -302,7 +302,7 @@ Come avevamo visto nel primo capitolo, le matrici sono associate ad applicazioni
 \begin{definition}\label{matrice_associata}
     Siano $V, W$ spazi vettoriali, $f : V \to W$ lineare, $\alpha$ base di $V$ e $\beta$ base di $W$. Allora si dice chiama \textbf{matrice associata all'applicazione lineare} $f$ la matrice $[f]^{\alpha}_{\beta}$ tale che
     \begin{equation}
-        \forall \bm{v} \in V. \quad \left( [f]^{\alpha}_{\beta} \cdot (\bm{v})_{\alpha}= f(\bm{v}) \right)_{\beta}.
+        \forall \bm{v} \in V. \quad  [f]^{\alpha}_{\beta} \cdot (\bm{v})_{\alpha}= \left(f(\bm{v}) \right)_{\beta}.
     \end{equation}
     Ovvero se $f$ mappa $\bm{v}$ a $\bm{w}$ allora $[f]^{\alpha}_{\beta}$ e' una matrice che porta (tramite il prodotto) il vettore colonna delle coordinate di $\bm{v}$ rispetto ad una base $\alpha$ nel vettore colonna delle coordinate di $\bm{w}$ rispetto ad una base $\beta$.
 \end{definition}
@@ -498,6 +498,23 @@ Questa strategia funziona perche' risolvere il sistema $[A | I_n]$ tramite mosse
     \end{pmatrix} = I_n.
 \] Dato che la matrice inversa e' unica, allora la matrice $B$ ottenuta in questo modo dovra' essere l'inversa di $A$.
 
+\begin{proposition}
+    \label{inversa_prodotto}
+    Siano $A, B$ tali che $AB$ e' invertibile. Allora vale che $(AB)^{-1} = B^{-1}A^{-1}$.
+\end{proposition}
+\begin{proof}
+    Per definizione di inversa deve valere che \begin{alignat*}
+        {1}
+        (AB)^{-1}(AB) = I_n \\
+        \iff (AB)^{-1}AB = I_n \\
+        \iff (AB)^{-1}ABB^{-1} = B^{-1}\\
+        \iff (AB)^{-1}A = B^{-1}\\
+        \iff (AB)^{-1}AA^{-1} = B^{-1}A^{-1}\\
+        \iff (AB)^{-1} = B^{-1}A^{-1}
+    \end{alignat*} 
+    che e' la tesi.
+\end{proof}
+
 \begin{example}
     Trovare l'inversa di \[
         A = \begin{pmatrix}
@@ -629,3 +646,52 @@ Possiamo costruire una matrice che trasforma le coordinate di un vettore rispett
     \end{equation}
     $[\id]^{\alpha}_{\beta}$ si dice \textbf{matrice del cambiamento di base}.
 \end{definition}
+
+\begin{example}
+    Sia $\id : \R^2 \to \R^2$, sia $\mathcal{C}$ la base canonica di $\R^2$ e sia \[
+        \alpha = \ang{\begin{pmatrix} 1 \\ 3 \end{pmatrix}, \begin{pmatrix} 2 \\ 1 \end{pmatrix}} = \ang{\bm{\alpha_1}, \bm{\alpha_2}}
+    \] un'altra base di $\R^2$. 
+    
+    Calcolare $[\id]^{\alpha}_{\mathcal{C}}$ e $[\id]^{\mathcal{C}}_{\alpha}$.
+\end{example}
+\begin{solution} Scriviamo \[
+        [\id]^{\alpha}_{\mathcal{C}} = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}.
+    \] Allora:
+    \begin{gather*}
+        \begin{pmatrix} a_{11} \\ a_{21} \end{pmatrix} = [\id]^{\alpha}_{\mathcal{C}} [\bm{\alpha_1}]_{\alpha} = [\id(\bm{\alpha_1})]_{\mathcal{C}}= [\bm{\alpha_1}]_{\mathcal{C}} = \bm{\alpha_1}  \\
+        \begin{pmatrix} a_{12} \\ a_{22} \end{pmatrix} = [\id]^{\alpha}_{\mathcal{C}} [\bm{\alpha_2}]_{\alpha} = [\id(\bm{\alpha_2})]_{\mathcal{C}}= [\bm{\alpha_2}]_{\mathcal{C}} = \bm{\alpha_2}
+    \end{gather*}
+    dunque \[
+        [\id]^{\alpha}_{\mathcal{C}} = \begin{pmatrix} 1 & 2 \\ 3 & 1 \end{pmatrix}.
+    \] Per calcolare la matrice che porta i vettori dalla base $\mathcal{C}$ alla base $\alpha$ basta notare che essa deve invertire il comportamento di $[\id]^{\alpha}_{\mathcal{C}}$, ovvero \[
+        [\id]^{\mathcal{C}}_{\alpha} = ([\id]^{\alpha}_{\mathcal{C}})^{-1} = \frac{1}{1\cdot 1 - 2 \cdot 3} \begin{pmatrix} 1 & -2 \\ -3 & 1 \end{pmatrix} = -\frac{1}{5} \begin{pmatrix} 1 & -2 \\ -3 & 1 \end{pmatrix}.
+    \]
+\end{solution}
+
+Le prossime proposizioni aiutano a scrivere piu' semplicemente le matrici di cambiamento di base e le matrici associate ad applicazioni lineari.
+
+\begin{proposition}
+    Sia $\alpha = \ang{\bm{\alpha_1}, \dots, \bm{\alpha_n}}$ una base di $\R^n$ e $\mathcal{C}$ la base canonica di $\R^n$. Allora la matrice di cambiamento di base $[\id]^{\alpha}_{\mathcal{C}}$ e' la matrice che ha come colonne $\bm{\alpha_1}, \dots, \bm{\alpha_n}$.
+\end{proposition}
+\begin{proof}
+    Consideriamo $[\id]^{\alpha}_{\mathcal{C}} [\bm{\alpha_i}]_{\alpha}$. Allora \begin{alignat*}
+        {1}
+        [\id]^{\alpha}_{\mathcal{C}} [\bm{\alpha_i}]_{\alpha} &= [\id(\bm{\alpha_i})]_{\mathcal{C}} \\
+        &= [\bm{\alpha_i}]_{\mathcal{C}}\\
+        &= \bm{\alpha_i}
+    \end{alignat*} dato che rispetto alle basi canoniche le coordinate del vettore $\bm{\alpha_i}$ e' proprio il vettore stesso.
+    
+    Cerchiamo ora di ricavare $[\bm{\alpha_i}]_{\alpha}$. Il vettore $\bm{\alpha_i}$ rispetto alla base $\alpha$ si puo' scrivere come \begin{alignat*}
+        {1}
+        &\bm{\alpha_i} = 0\bm{\alpha_1} + \dots + 1\bm{\alpha_i} + \dots + 0\bm{\alpha_n} \\
+        \implies &[\bm{\alpha_i}]_{\alpha} = (a_{j1}) = \begin{cases}
+            1 & \text{ se } j = i\\
+            0 & \text{ altrimenti}\\
+        \end{cases}
+    \end{alignat*}
+    cioe' il vettore $[\bm{\alpha_i}]_{\alpha}$ e' un vettore colonna con tutti zeri tranne un uno in posizione $i$.
+
+    Dunque per la proposizione \ref{j-esima_colonna} il prodotto $[\id]^{\alpha}_{\mathcal{C}} [\bm{\alpha_i}]_{\alpha}$ deve dare la $i$-esima colonna della matrice $[\id]^{\alpha}_{\mathcal{C}}$, che deve essere quindi $\bm{\alpha_i}$.
+
+    Dato che questo ragionamento vale per ogni $i$, la matrice di cambiamento di base dalla base $\alpha$ alla canonica ha come colonne i vettori $\bm{\alpha_1}, \dots, \bm{\alpha_n}$.
+\end{proof}

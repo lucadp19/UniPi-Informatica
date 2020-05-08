@@ -19,6 +19,10 @@
     \end{enumerate}
 \end{definition}
 
+Il determinante di una matrice si indica anche con \[
+    \det A = \abs{A}.    
+\]
+
 Possiamo anche definire il determinante come una funzione che prende esattamente $n$ vettori di $\R^n$ e restituisce un numero reale, cioe' $\det : (\R^n)^n \to \R$ e che rispetta le seguenti proprieta':
 \begin{enumerate}
     [(i)]
@@ -166,6 +170,27 @@ Possiamo quindi enunciare il metodo degli sviluppi di Laplace per calcolare il d
     \end{equation}
 \end{theorem}
 
+Il metodo funziona anche scegliendo una colonna invece di una riga.
+
+\begin{example}
+    Trovare il determinante di \[
+    A = \begin{pmatrix}
+        2 & 1 & 0 \\ 3 & 2 & 1 \\ 3 & 3 & 1
+    \end{pmatrix}    
+    \] tramite sviluppi di Laplace.
+\end{example}
+\begin{solution}
+    Scegliamo come colonna la prima colonna.
+    Allora \begin{alignat*}
+        {1}
+        \det A &= a_{13}(-1)^{1+3} \begin{vmatrix}  3 & 2 \\ 3 & 3 \end{vmatrix} + a_{23}(-1)^{2+3} \begin{vmatrix}  2 & 1 \\ 3 & 3 \end{vmatrix} + a_{33}(-1)^{3+3} \begin{vmatrix}  3 & 2 \\ 2 & 1 \end{vmatrix}\\
+            &= -\begin{vmatrix}  2 & 1 \\ 3 & 3 \end{vmatrix} + \begin{vmatrix} 3 & 2 \\ 2 & 1 \end{vmatrix} \\
+            &= -(2 \cdot 3 - 1 \cdot 3) + (2 \cdot 2 - 1 \cdot 3)\\
+            &= -3 + 6 + 4 - 3\\
+            &= 4.
+    \end{alignat*}
+\end{solution}
+
 \section{Rango e determinanti}
 
 Diamo ora la definizione esatta di rango di una matrice.
@@ -287,7 +312,7 @@ Il seguente teorema invece riassume le relazioni tra rango e determinante.
         [(i)]
         \item $\det A \neq 0$;
         \item $\rk{A} = n$;
-        \item $L_A$ e' bigettiva;
+        \item $L_A$ e' bigettiva (ovvero $\Imm L_A = \R^n$ e $\ker L_A = \{\bm 0\}$);
         \item $A$ e' invertibile;
         \item le righe di $A$ sono indipendenti, ovvero $\dim \Span{R_1, \dots, R_n} = n$;
         \item le colonne di $A$ sono indipendenti, ovvero $\dim \Span{C_1, \dots, C_n} = n$.

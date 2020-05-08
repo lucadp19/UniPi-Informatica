@@ -1,0 +1,209 @@
+\chapter{Autovettori e diagonalizzabilita'}
+
+\section{Autovettori e matrici simili}
+
+\subsection{Matrici simili}
+
+\begin{definition}
+    Siano $A, B \in \M_{n \times n}(\R)$. Allora $A$ e' simile a $B$ se esiste $M \in \M_{n \times n}(\R)$ invertibile tale che \begin{equation}
+        A = M^{-1}BM.
+    \end{equation}
+\end{definition}
+
+\begin{remark}
+    Posso anche scrivere la relazione di similitudine come $A = PBP^{-1}$: basta sostituire $P = M^{-1}$ da cui otteniamo $P^{-1} = (M^{-1})^{-1} = M$.
+\end{remark}
+\begin{proposition}
+    La relazione di similitudine e' una relazione di equivalenza, ovvero: siano $A, B, C \in \M_{n \times n}(\R)$; allora valgono le seguenti:
+    \begin{align*}
+        &i.     &&A \text{ e' simile ad } A  &&\text{(riflessivita')}\\
+        &ii.    &&A \text{ e' simile a } B \implies B \text{ e' simile ad } A  &&\text{(simmetria)}\\
+        &iii.   &&A \text{ e' simile a } B,\ B \text{ e' simile a } C \implies A \text{ e' simile a } C.   &&\text{(transitivita')}
+    \end{align*}
+\end{proposition}
+\begin{proof}
+    Dimostriamo i tre fatti.
+    \begin{enumerate}[(i)]
+        \item Basta scegliere come matrice $M$ l'identita' $I_n$. Dato che $(I_n)^{-1} = I_n$ allora vale che $A = I_nAI_n = (I_n)^{-1}AI_n$, cioe' $A$ e' simile a se stessa.
+        \item Dato che $A$ e' simile a $B$ possiamo scrivere $A = M^{-1}BM$. Allora vale che \begin{alignat*}{1}
+            &A = M^{-1}BM\\
+            \iff &MA = MM^{-1}BM \\
+            \iff &MA = BM \\
+            \iff &MAM^{-1} = BMM^{-1} \\
+            \iff &MAM^{-1} = B
+        \end{alignat*}
+        cioe' $B$ e' simile ad $A$.
+        \item Scriviamo $A = M^{-1}BM$ e $B = P^{-1}CP$. Allora segue che \begin{alignat*}
+            {1}
+            A &= M^{-1}BM\\
+            &= M^{-1}(P^{-1}CP)M \\
+            &= (M^{-1}P^{-1})C(PM) \\
+            &= (PM)^{-1}C(PM)
+        \end{alignat*}
+        dove l'ultimo passaggio e' giustificato dalla proposizione \ref{inversa_prodotto}. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}
+    Sia $f : V \to V$ un endomorfismo e siano $\alpha, \beta$ due basi di $V$. Allora $[f]_{\alpha}^{\alpha}$ e' simile a $[f]_{\beta}^{\beta}$.
+\end{proposition}
+\begin{proof}
+    Basta moltiplicare la matrice $[f]_{\alpha}^{\alpha}$ a destra per la matrice del cambio di base da $\beta$ ad $\alpha$ e a sinistra per la sua inversa. Infatti \[
+        ([\id]^{\beta}_{\alpha})^{-1}[f]_{\alpha}^{\alpha}[\id]^{\beta}_{\alpha} = [\id]^{\alpha}_{\beta}[f]_{\alpha}^{\alpha}[\id]^{\beta}_{\alpha} = [\id]^{\alpha}_{\beta}[f]_{\beta}^{\alpha} = [f]_{\beta}^{\beta}
+    \] come volevasi dimostrare.
+\end{proof}
+
+\begin{definition}
+    Sia $A \in \M_{n \times n}(\R)$. Allora $A$ si dice diagonalizzabile se esiste una matrice diagonale $D$ simile ad $A$.
+\end{definition}
+
+\subsection{Autovettori, autovalori e autospazio}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale. Allora ogni applicazione lineare $f : V \to V$ si dice \textbf{endomorfismo}.
+\end{definition}
+
+\begin{definition}
+    Sia $V$ uno spazio vettoriale, $f : V \to V$ un endomorfismo e sia $\lambda \in \R$. Allora si dice \textbf{autospazio di $\bm{V}$ relativo a $\bm{\lambda}$} l'insieme \begin{equation}
+        V_{\lambda} = \left\{ v \in V \mid f(v) = \lambda v \right\}.
+    \end{equation}
+\end{definition}
+
+\begin{proposition}
+    $V_{\lambda}$ e' un sottospazio vettoriale di $V$.
+\end{proposition}
+
+\begin{definition}
+    Sia $f : V \to V$ un endomorfismo. Allora $\bm{v} \in V$, $\bm{v} \neq \bm{0}$ si dice \textbf{autovettore di $\bm{V}$ relativo a $\bm{\lambda}$} se $\bm{v} \in V_{\lambda}$.
+\end{definition}
+
+\begin{definition}
+    Sia $f : V \to V$ un endomorfismo. Allora $\lambda \in \R$ si dice \textbf{autovalore di $\bm{V}$} se $V_{\lambda} \neq \left\{ \bm{0}\right\}$.
+\end{definition}
+
+Possiamo dare le stesse definizioni di autovalore, autovettore e autospazio considerando una matrice quadrata $A \in \M_{n \times n}(\R)$.
+
+\begin{theorem}
+    Sia $f : V \to V$ un endomorfismo e siano $\lambda_1, \dots, \lambda_k$ i suoi autovalori.
+
+    Allora per qualunque $\bm{v_1} \in V_{\lambda_{1}}, \dots, \bm{v_n} \in V_{\lambda_n}$ (con $\bm{v_1}, \dots, \bm{v_n} \neq \bm 0$) segue che $\{\bm{v_1}, \dots, \bm{v_n}\}$ e' un insieme di vettori linearmente indipendenti, ovvero gli autospazi $V_{\lambda_1}, \dots, V_{\lambda_{n}}$ sono in somma diretta.
+\end{theorem}
+\begin{proof}
+    Per induzione su $k$.
+    \begin{description}
+        \item[Caso base.] Se $k = 1$ allora c'e' un solo autovettore nell'insieme. Inoltre dato che $\bm{v_1} \neq 0$ sicuramente esso forma un insieme di vettori linearmente indipendenti.
+        \item[Passo induttivo.] Supponiamo che l'insieme con $k-1$ vettori sia linearmente indipendente e dimostriamo che anche l'insieme formato da $k$ vettori lo e'.
+        
+        Consideriamo una combinazione lineare di questi vettori e poniamola uguale al vettore nullo: \begin{equation} \label{comb_lin_th_autospazi_somma_diretta}
+            c_1\bm{v_1} + \dots + c_{k-1}\bm{v_{k-1}} + c_k\bm{v_k} = \bm 0.
+        \end{equation}
+        Applichiamo ad entrambi i membri l'applicazione lineare $(f - \lambda_k\id) : V \to V$, ottenendo:
+        \begin{alignat*}
+            {1}
+            &(f - \lambda_k\id)(c_1\bm{v_1} + \dots + c_{k-1}\bm{v_{k-1}} + c_k\bm{v_k}) = (f - \lambda_k\id)(\bm 0)\\
+            \iff &c_1(f - \lambda_k\id)(\bm{v_1}) + \dots + c_{k-1}(f - \lambda_k\id)(\bm{v_{k-1}}) +\\
+                 &+ c_k(f - \lambda_k\id)(\bm{v_k}) = \bm 0 \\
+            \iff &c_1(f(\bm{v_1}) - \lambda_k\id(\bm{v_1})) + \dots + c_{k-1}(f(\bm{v_{k-1}}) - \lambda_k\id(\bm{v_{k-1}})) +\\
+                 &+ c_k(f(\bm{v_k}) - \lambda_k\id(\bm{v_k})) = \bm 0 \\
+            \iff &c_1(\lambda_1\bm{v_1} - \lambda_k\bm{v_1}) + \dots + c_{k-1}(\lambda_{k-1}\bm{v_{k-1}} - \lambda_k\bm{v_{k-1}}) + \\
+                 &+ c_k(\lambda_k\bm{v_k} - \lambda_k\bm{v_k}) = \bm 0\\
+            \iff &c_1(\lambda_1 - \lambda_k)\bm{v_1} + \dots + c_{k-1}(\lambda_{k-1} - \lambda_k)\bm{v_{k-1}} = \bm 0.
+        \end{alignat*}
+        Per ipotesi induttiva sappiamo che i vettori $\bm{v_1}, \dots, \bm{v_{k-1}}$ sono indipendenti, dunque segue che \[
+            c_1(\lambda_1 - \lambda_k) = \dots = c_{k-1}(\lambda_{k-1} - \lambda_k) = 0.
+        \]
+        Dato che gli autovalori sono distinti segue che $\lambda_i - \lambda_k \neq 0$ per $i < k$, dunque \[
+            c_1 = \dots = c_{k-1} = 0.    
+        \]
+        Sostituendo cio' nell'equazione \ref{comb_lin_th_autospazi_somma_diretta} otteniamo $c_k\bm{v_k} = \bm 0$, ma dato che $\bm{v_k} \neq \bm{0}$ segue che $c_k = 0$, cioe' i vettori sono indipendenti. \qedhere
+    \end{description}
+\end{proof}
+
+Possiamo sfruttare gli autovettori per diagonalizzare una matrice, come ci conferma la prossima proposizione.
+
+\begin{proposition}
+    Sia $V$ uno spazio vettoriale, $f: V \to V$ un endomorfismo e siano $\bm{v_1}, \dots, \bm{v_n}$ gli autovettori di $f$ relativi agli autovalori $\lambda_1, \dots, \lambda_n$. 
+    
+    Allora se $\beta = \ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ la matrice $[f]_{\beta}^{\beta}$ e' diagonale ed ha sulla diagonale $\lambda_1, \dots, \lambda_n$.
+\end{proposition}
+\begin{proof}
+    Costruiamo la matrice $[f]_{\beta}^{\beta}$. La prima colonna di questa matrice sara' \[
+        [f]_{\beta}^{\beta}[\bm{v_1}]_{\beta} = [f(\bm{v_1})]_{\beta} = [\lambda_1 \bm{v_1}]_{\beta} = \lambda_1 [\bm{v_1}]_{\beta}.
+    \]
+    Ma dato che $\bm{v_1}$ puo' essere espresso nella base $\beta$ dalla combinazione lineare \[
+        \bm{v_1} = 1\cdot \bm{v_1} + 0 \cdot \bm{v_2} + \dots + 0 \cdot \bm{v_n}    
+    \]
+    segue che la prima colonna della matrice $[f]_{\beta}^{\beta}$ e' \[
+        [f]_{\beta}^{\beta}[\bm{v_1}]_{\beta} = \lambda_1 \begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix} = \begin{pmatrix} \lambda_1 \\ 0 \\ \vdots \\ 0 \end{pmatrix}.
+    \]
+    Ripetendo il procedimento per gli altri vettori, otteniamo che la colonna $i$-esima della matrice e' formata da un vettore con tutti $0$ tranne che in posizione $i$, dove compare l'autovalore $\lambda_i$. Di conseguenza $[f]_{\beta}^{\beta}$ e' la matrice diagonale\[
+        [f]_{\beta}^{\beta} = \begin{pmatrix}
+            \lambda_1   & 0         & \dots  & 0             & 0 \\
+            0           & \lambda_2 & \dots  & 0             & 0 \\
+            \vdots      & \vdots    & \ddots & \vdots        & \vdots \\
+            0           & 0         & \dots  & \lambda_{n-1} & 0 \\
+            0           & 0         & \dots  & 0             & \lambda_n \\
+        \end{pmatrix}. \qedhere
+    \]
+\end{proof}
+
+\begin{proposition}
+    Sia $f : V \to V$ un endomorfismo e sia $\lambda \in \R$. 
+    
+    Allora segue che \[
+        V_{\lambda} = \ker (f - \lambda\id)    
+    \] ovvero che l'autospazio $V_{\lambda}$ relativo a $\lambda$ e' dato dal kernel della funzione $(f - \lambda\id)$.
+\end{proposition}
+\begin{proof}
+    Sia $\bm v \in V$. Allora \begin{alignat*}
+        {1}
+        &f(\bm v) = \lambda\bm v \\
+        \iff &f(\bm v) = \lambda\id(\bm v)\\
+        \intertext{Sia $(\lambda\id) : V \to V$ tale che $(\lambda\id)(\bm v) = \lambda \bm v$: }
+        \iff &f(\bm v) = (\lambda\id)(\bm v)\\
+        \iff &f(\bm v) - (\lambda\id)(\bm v) = \bm 0\\
+        \intertext{Sia $(f - \lambda\id) : V \to V$ tale che $(f - \lambda\id)(\bm v) = f(\bm v) - \lambda \bm v$: }
+        \iff &(f - \lambda\id)(\bm v) = \bm 0\\
+        \iff &\bm v \in \ker (f - \lambda\id). \tag*{\qedhere}
+    \end{alignat*}
+\end{proof}
+
+\begin{corollary}\label{autospazio_kernel_matrice}
+    Se $A$ e' una matrice $n \times n$ allora l'autospazio $V_{\lambda}$ relativo a $\lambda$ e' dato dal kernel della matrice $A - \lambda I_n$, dove $I_n$ e' la matrice identita' $n \times n$.
+\end{corollary}
+
+\begin{proposition}\label{autovalore_sse_kernel_nonnullo}
+    Sia $A \in \M_{n \times n}(\R)$. Allora $\lambda$ e' un autovalore di $A$ se e solo se $\ker (A - \lambda I_n) \neq \{\bm 0\}$. 
+\end{proposition}
+\begin{proof}
+    Infatti per la proposizione \ref{autospazio_kernel_matrice} sappiamo che $V_{\lambda} = \ker (A - \lambda I_n)$. Inoltre per definizione di autovalore segue che $\lambda$ e' un autovalore se e solo se $V_{\lambda} \neq \{\bm 0\}$, ovvero se e solo se $\ker (A - \lambda I_n) \neq \{\bm 0\}$.
+\end{proof}
+
+\begin{definition}
+    Sia $A \in \M_{n \times n}(\R)$. Allora si dice \textbf{polinomio caratteristico} di $A$ il polinomio \[
+        p_A(\lambda) = \det (A - \lambda I_n). 
+    \]
+\end{definition}
+
+\begin{theorem}
+    Sia $A \in \M_{n \times n}(\R)$. Allora $\lambda_0$ e' un autovalore di $A$ se e solo se $p_A(\lambda_0) = 0$, ovvero se e solo se $\lambda_0$ e' radice del polinomio caratteristico.
+\end{theorem}
+\begin{proof}
+    Per la proposizione \ref{autovalore_sse_kernel_nonnullo} sappiamo che $\lambda_0$ e' un autovalore se e solo se $\ker (A - \lambda_0 I_n) \neq \{\bm 0\}$.  
+    
+    Per i teoremi sulla relazione tra determinante e rango di una matrice (\ref{relazioni_determinante_rango}) sappiamo che $\ker (A - \lambda_0 I_n) \neq \{\bm 0\}$ se e solo se $\det (A - \lambda_0 I_n) = 0$, ma dato che $\det (A - \lambda_0 I_n) = p_A(\lambda_0)$ questo e' equivalente a dire che $p_A(\lambda_0) = 0$, ovvero che $\lambda_0$ e' una radice di $p_A$, che e' la tesi.
+\end{proof}
+
+\begin{example}
+    Sia $f : \R^2 \to \R^2$ tale che $f\begin{psmallmatrix} x \\ y \end{psmallmatrix} = \begin{psmallmatrix} x + y \\ x \end{psmallmatrix}$. Diagonalizzare $[f]$.
+\end{example}
+\begin{proof}
+    Innanzitutto troviamo la matrice $[f]$ rispetto alle basi standard.
+    \begin{equation*}
+        A\begin{pmatrix} 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \end{pmatrix},
+            \,A\begin{pmatrix} 0 \\ 1 \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}
+        \implies A = \begin{pmatrix}
+            1 & 1 \\ 1 & 0
+        \end{pmatrix}
+    \end{equation*}
+\end{proof}
