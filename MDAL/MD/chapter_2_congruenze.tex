@@ -784,3 +784,63 @@ Iniziamo con un esempio di congruenza esponenziale.
 \end{proof}
 
 Dunque se dobbiamo trovare l'ordine di un numero $a$ modulo un primo $p$ ci basta provare tutti i divisori di $p - 1$ fino a quando non troviamo il minimo divisore che soddisfa la proprieta'.
+
+\subsection{Congruenze esponenziali con modulo non primo}
+
+Per risolvere congruenze esponenziali modulo un numero $n \in \Z$ non primo sfruttiamo la funzione $\varphi$ di Eulero insieme al seguente teorema.
+
+\begin{theorem}
+    [di Eulero] \label{th_Eulero}
+    Siano $a, n \in \Z$ con $a$ invertibile modulo $n$. Allora $a^{\varphi(n)} \equiv 1 \Mod{n}$.
+\end{theorem}
+\begin{proof}
+    Consideriamo l'insieme delle classi resto invertibili modulo $n$, chiamato $\inverses{\Z/(n)}$ e sia $k = \varphi(n)$. Dato che $\varphi(n) = \abs{\inverses{\Z/(n)}}$, questo insieme avra' esattamente $k$ elementi. Indichiamoli con \[
+        \inverses{\Z/(n)} = \{[b_1]_n, \dots, [b_k]_n\}.   
+    \]
+    Inoltre dato che $a$ e' invertibile modulo $n$ segue che $[a]_n \in \inverses{\Z/(n)}$. 
+
+    Moltiplichiamo ora ogni elemento di $\inverses{\Z/(n)}$ per $[a]_n$, ottenendo l'insieme \[
+        \inverses{a\Z/(n)} = \{[a]_n[b_1]_n, \dots, [a]_n[b_k]_n\} = \{[ab_1]_n, \dots, [ab_k]_n\}.
+    \]
+    Per la proposizione \ref{prodotto_invertibili_invertibile} dato che $[a]_n$ e tutti i $[b_i]_n$ sono invertibili, allora anche i prodotti saranno invertibili. Dunque l'insieme $\inverses{a\Z/(n)}$ contiene solo numeri invertibili modulo $n$, quindi deve essere un sottoinsieme di $\inverses{\Z/(n)}$.
+
+    Se dimostriamo che tutti gli elementi di $\inverses{a\Z/(n)}$ sono distinti, allora $\inverses{a\Z/(n)}$ e' un sottoinsieme di $\inverses{\Z/(n)}$ con il suo stesso numero di elementi, cioe' i due insiemi devono essere uguali.
+
+    \begin{description}
+        \item[Gli elementi di $\inverses{a\Z/(n)}$ sono tutti distinti.] Supponiamo per assurdo che esistano $[b_i]_n, [b_j]_n \in \inverses{\Z/(n)}$ con $[b_i]_n \neq [b_j]_n$ tali che \[
+            [ab_i]_n = [ab_j]_n.
+        \]
+        Dato che $[a]_n$ e' invertibile, allora esistera' $[a^{-1}]_n$ che e' l'inverso di $[a]_n$. Moltiplicando entrambi i membri per $[a^{-1}]_n$ otterremo: \begin{alignat*}
+            {1}
+            &[a^{-1}]_n[ab_i]_n = [a^{-1}]_n[ab_j]_n \\
+            \iff &[a^{-1}ab_i]_n = [a^{-1}ab_j]_n \\
+            \iff &[b_i]_n = [b_j]_n 
+        \end{alignat*}
+        che e' assurdo in quanto abbiamo supposto $[b_i]_n \neq [b_j]_n$. Segue quindi che tutti gli elementi in $\inverses{a\Z/(n)}$ sono distinti.
+    \end{description}
+
+    Dunque gli insiemi $\inverses{\Z/(n)}$ e $\inverses{a\Z/(n)}$ sono uguali, dunque anche il prodotto di tutti i loro elementi dovra' essere uguale.
+    \begin{alignat*}
+        {1}
+        &[ab_1]_n[ab_2]_n\cdots [ab_k]_n = [b_1]_n[b_2]_n\cdots [b_k]_n\\
+        \iff &[ab_1 \cdot ab_2 \cdots ab_k]_n = [b_1b_2\cdots b_k]_n\\
+        \intertext{Per definizione di uguaglianza tra classi di resto modulo $n$:}
+        \iff &ab_1 \cdot ab_2 \cdots ab_k \equiv b_1b_2\cdots b_k \Mod{n} \\
+        \iff &(\overbrace{a\cdot a \cdots a}^{k \text{ volte}}) \cdot (b_1b_2\cdots b_k) \equiv (b_1b_2\cdots b_k) \Mod{n}\\
+        \intertext{Per invertibilita' di $b_1$, $b_2, \dots, b_k$:}
+        \iff &a^k \equiv 1 \Mod{n}\\
+        \iff &a^{\varphi(n)} \equiv 1 \Mod{n}
+    \end{alignat*}
+    che e' la tesi.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, n \in \Z$, $a$ invertibile modulo $m$. Allora vale che \[
+        \ord{a}{n} \divides \varphi(n).    
+    \]
+\end{proposition}
+\begin{proof}
+    Per il teorema di Eulero (\ref{th_Eulero}) sappiamo che $a^{\varphi(n)} \equiv 1 \Mod{n}$, ovvero $\varphi(n)$ e' una soluzione dell'equazione $a^x \equiv 1 \Mod{n}$. 
+    
+    Dunque per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $\varphi(n) \equiv 0 \Mod{\ord{a}{n}}$, ovvero $\ord{a}{n} \divides \varphi(n)$.
+\end{proof}
