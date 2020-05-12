@@ -1,6 +1,6 @@
 \chapter{Numeri interi}
 
-\section{Insiemi numerici}
+\section{Strutture algebriche fondamentali}
 
 \begin{definition}
     Si dice \textbf{gruppo} una tripla ($G$, $\cdot$, $1$) formata da \begin{itemize}
@@ -78,3 +78,169 @@ Un tipico esempio di anello commutativo e' $\Z$: infatti gli anelli generalizzan
 \end{definition}
 
 Tra gli insiemi numerici classici, gli insiemi $\Q, \R$ e $\C$ sono tutti esempi di campi: infatti le operazioni di addizione e moltiplicazione sono chiuse rispetto all'insieme, rispettano le proprieta' commutativa, associativa e distributiva ed esistono gli inversi per la somma e per il prodotto (per ogni numero diverso da $0$). Il concetto di campo serve quindi a generalizzare la struttura algebrica dei numeri razionali/reali/complessi per altri insiemi numerici.
+
+Nei campi vale la seguente proposizione.
+\begin{proposition}
+    [Regola di annullamento del prodotto] \label{annullamento_prodotto}
+    Sia $\K$ un campo e siano $a, b \in \K$. Allora \[
+        ab = 0 \implies a = 0 \lor b = 0.    
+    \]
+\end{proposition}
+\begin{proof}
+    Sappiamo che $a = 0 \lor b = 0$ e' equivalente a $a \neq 0 \implies b = 0$, dunque supponiamo che $a$ sia diverso da $0$ e dimostriamo che $b$ e' zero.
+
+    Dato che $a \neq 0$ allora ammette un inverso. Chiamiamolo $a^{-1}$ e moltiplichiamo entrambi i membri per esso:
+    \begin{alignat*}
+        {1}
+        &a^{-1}(ab) = a^{-1} \cdot 0\\
+        \iff &(a^{-1}a)b = 0 \\
+        \iff &b = 0
+    \end{alignat*}
+    che e' la tesi.
+\end{proof}
+
+\section{Numeri complessi}
+
+\begin{definition}
+    Si dice unita' immaginaria il numero $i$ tale che \[
+        i^2 = -1.    
+    \]
+\end{definition}
+
+\begin{definition}
+    L'insieme dei numeri complessi $\C$ e' l'insieme dei numeri della forma $a+ib$ per qualche $a, b \in \R$, ovvero \[
+        \C = \{ a + ib \mid a, b \in \R, i^2 = -1\}.  
+    \]
+\end{definition}
+
+\begin{definition}
+    Sia $z \in \C$ tale che $z = a + ib$. Allora si dicono rispettivamente \begin{itemize}
+        \item parte reale di $z$ il numero $\Re z = a$;
+        \item parte immaginaria di $z$ il numero $\Im z = b$.
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    Definiamo le seguenti due operazioni su $\C$:
+    \begin{itemize}
+        \item $+ : \C \times \C \to \C$ tale che $(a + ib) + (c + id) = (a + c) + i(b + d)$;
+        \item $\cdot : \C \times \C \to \C$ tale che $(a + ib) \cdot (c + id) = (ac - bd) + i(ad + bc)$.
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Le due operazioni vengono naturalmente dalla somma e dal prodotto tra monomi. Infatti \begin{gather*}
+        (a + ib) + (c + id) = a + c + ib + id = (a + c) + i(b + d);\\
+        \begin{alignedat}{1}
+            (a + ib) \cdot (c + id) &= ac + iad + ibc + i^2bd \\
+            &= ac + i(ad + bc) -bd \\
+            &= (ac - bd) + i(ad + bc).
+        \end{alignedat}
+    \end{gather*}
+\end{remark}
+
+Notiamo che i numeri complessi della forma $a + i0$ sono numeri reali, dunque $\R \subset \C$. Inoltre possiamo rappresentare i numeri complessi come punti in uno spazio bidimensionale dove la parte reale rappresenta l'ascissa e la parte immaginaria rappresenta l'ordinata: la retta corrispondente all'asse x e' il sottoinsieme dei numeri reali.
+
+\begin{definition}
+    Sia $z = a+ib \in \C$. Allora si dice coniugato complesso (o semplicemente coniugato) di $z$ il numero \[
+        \conj{z} = a - ib.    
+    \]
+\end{definition}
+
+\begin{definition}
+    Sia $z = a + ib \in \C$. Allora si dice norma di $z$ il numero reale \[
+        \abs{z} = \sqrt{a^2 + b^2}.    
+    \]
+\end{definition}
+
+Notiamo che $\abs{z} = 0$ se e solo se $a = b = 0$, ovvero se $z = 0$.
+
+\begin{proposition}\label{somma_prodotto_tra_coniugati}
+    Siano $z, w \in \C$ tali che $z = a+ib$, $w = c + id$. Allora \begin{enumerate}[(i)]
+        \item $\conj{z} + \conj{w} = \conj{z + w}$;
+        \item $\conj{z}\conj{w} = \conj{zw}$;
+        \item $(\conj{z})^n = \conj{z^n}$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Dimostriamo i tre fatti.
+    \begin{enumerate}[(i)]
+        \item Per definizione di somma \begin{alignat*}
+            {1}
+            \conj{z} + \conj{w} &= (a-ib) + (c - id)\\
+            &= (a+c) - i(b+d)\\
+            &= \conj{z + w}.
+        \end{alignat*}
+        \item Per definizione di prodotto \begin{alignat*}
+            {1}
+            \conj{z}\conj{w} &= (a-ib)(c - id)\\
+            &= (ac - bd) + i(-ad-bc)\\
+            &= (ac - bd) - i(ad+bc)\\
+            &= \conj{zw}.
+        \end{alignat*}
+        \item Dimostriamolo per induzione su $n$.
+        \begin{description}
+            \item[Caso base.] Se $n = 1$ allora banalmente $(\conj{z})^1 = \conj{z} = \conj{z^1}$.
+            \item[Passo induttivo.] Supponiamo che la tesi valga per $n$ e dimostriamola per $n+1$. Allora \[
+                (\conj{z})^{n+1} = (\conj{z})^{n} \cdot \conj{z} = \conj{z^n} \cdot \conj{z} = \conj{z^{n+1}}
+            \] dove l'ultimo passaggio e' giustificato dal punto precedente della dimostrazione. \qedhere
+        \end{description}
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}\label{somma_prodotto_col_coniugato}
+    Sia $z = a+ib \in \C$. Allora valgono i seguenti fatti:
+    \begin{enumerate}[(i)]
+        \item $z + \conj{z} = 2\Re{z}$;
+        \item $z\conj{z} = \abs{z}^2$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Dimostriamo i due fatti.
+    \begin{enumerate}[(i)]
+        \item Per definizione di somma $z + \conj{z} = (a + ib) + (a - ib) = 2a = 2\Re z$.
+        \item Per definizione di prodotto \[
+            z\conj{z} = (a + ib)(a - ib) = a^2 - iab + iab - i^2b^2 = a^2 + b^2 = \abs{z}^2.\qedhere
+        \] 
+    \end{enumerate}
+\end{proof}
+
+La proposizione precedente ci consente di trovare l'inverso di qualunque numero non nullo in $\C$.
+
+\begin{proposition}
+    Sia $z \in \C, z \neq 0$. Allora \[\frac{1}{z} = \frac{\conj{z}}{\abs{z}^2}.\]
+\end{proposition}
+\begin{proof}
+    Per la proposizione \ref{somma_prodotto_col_coniugato} segue che \[
+        z\conj{z} = \abs{z}^2 \iff \frac{1}{z} = \frac{\conj{z}}{\abs{z}^2}. \qedhere   
+    \]
+\end{proof}
+
+\begin{proposition}
+    L'insieme $\C$ insieme alle operazioni di somma e prodotto con i rispettivi elementi neutri $0, 1 \in \C$ forma un campo.
+\end{proposition}
+
+\subsection{Rappresentazione polare dei numeri complessi}
+
+Dato che possiamo considerare i numeri complessi come punti di un piano bidimensionale possiamo rappresentarli in forma polare, cioe' considerando il vettore che congiunge l'origine degli assi con il punto $(a, b)$ che rappresenta il numero complesso $a + ib$. La forma polare di un numero complesso e' data dalla coppia $(r, \theta)$, dove $r$ e' il raggio del vettore e $\theta$ e' l'angolo tra l'asse x e il vettore.
+
+Dunque se $z = a+ib$ e' un numero complesso in forma cartesiana, possiamo esprimerlo come $r(\cos\theta + i\sin\theta)$, dove $r = \sqrt{a^2 + b^2} = \abs{z}$ e $\theta = \arctan \frac{a}{b}$.
+
+\begin{definition}
+    $e^{i\theta} = \cos\theta + i\sin\theta.$
+\end{definition}
+
+Sfruttando la definizione precedente possiamo scrivere ogni numero complesso nella forma $re^{i\theta}$ che e' la forma polare del numero.
+
+\begin{proposition}
+    $e^{i\alpha} e^{i\beta} = e^{i(\alpha + \beta)}$.
+\end{proposition}
+\begin{proof}
+    Per definizione di esponenziale complesso:
+    \begin{alignat*}{1}
+        e^{i\alpha} e^{i\beta} &= (\cos\alpha + i\sin\alpha)(\cos\beta + i\sin\beta)\\
+        &= (\cos\alpha \cos\beta - \sin\alpha \sin\beta) + i(\sin\alpha \cos\beta + \cos\alpha \sin\beta)\\
+        &= \cos(\alpha + \beta) + i\sin(\alpha + \beta)\\
+        &= e^{i(\alpha + \beta)}. \tag*{\qedhere}
+    \end{alignat*}
+\end{proof}

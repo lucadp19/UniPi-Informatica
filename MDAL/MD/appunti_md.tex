@@ -27,6 +27,11 @@
 
 \DeclareMathOperator{\tc}{\text{ tale che }}
 
+\let\oldre\Re
+\let\oldim\Im
+\renewcommand{\Re}[1]{\operatorname{Re}(#1)}
+\renewcommand{\Im}[1]{\operatorname{Im}(#1)}
+\newcommand{\conj}[1]{\overline{#1}}
 \newcommand{\divides}{\mid}
 \newcommand{\nequiv}{\not\equiv}
 \newcommand{\Mod}[1]{\ \left(#1\right)}
