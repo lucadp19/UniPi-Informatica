@@ -2,25 +2,26 @@
 
 \section{Strutture algebriche fondamentali}
 
-\begin{definition}
-    Si dice \textbf{gruppo} una tripla ($G$, $\cdot$, $1$) formata da \begin{itemize}
+\begin{definition}[Gruppo]
+    Si dice \textbf{gruppo} una tripla ($G$, $\cdot$, $e$) formata da \begin{itemize}
         \item un insieme di elementi $G$;
         \item un operazione $\cdot : A \times A \to A$ detta prodotto;
         \item un elemento $e \in G$
-    \end{itemize} per cui valgono i seguenti assiomi: \[
-        \forall a, b, c \in G 
-    \]
-    \begin{align}
-        &\text{1.}      &&(ab) \in G            &\text{(chiusura rispetto a $\cdot$)}\\
-        &\text{2.}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
-        &\text{3.}      &&a \cdot e=e \cdot a=a &\text{($e$ el. neutro di $\cdot$)}\\
-        &\text{4.}     &&\exists a^{-1} \in G. \quad aa^{-1} = e &\text{(inverso per $\cdot$)}
-        \intertext{Si dice \textbf{gruppo commutativo} un gruppo per cui vale inoltre il seguente assioma:}
-        &\text{5.}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
-    \end{align}
+    \end{itemize} per cui valgono i seguenti assiomi: 
+    \begin{description}
+        \item[(Assiomi di gruppo)] Per ogni $a, b, c \in G$ vale che
+        \begin{align}
+            &\text{(P1)}      &&(ab) \in G            &\text{(chiusura rispetto a $\cdot$)}\\
+            &\text{(P2)}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+            &\text{(P3)}      &&a \cdot e=e \cdot a=a &\text{($e$ el. neutro di $\cdot$)}\\
+            &\text{(P4)}     &&\exists a^{-1} \in G. \quad aa^{-1} = e &\text{(inverso per $\cdot$)}
+            \intertext{Si dice \textbf{gruppo commutativo} un gruppo per cui vale inoltre il seguente assioma:}
+            &\text{(P5)}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
+        \end{align}
+    \end{description}
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Anello]
     Si dice \textbf{anello} una quintupla ($A$, $+$, $\cdot$, $0$, $1$) formata da
     \begin{itemize}
         \item un insieme di elementi $A$;
@@ -28,28 +29,29 @@
         \item un operazione $\cdot : A \times A \to A$ detta prodotto;
         \item un elemento $0 \in A$;
         \item un elemento $1 \in A$
-    \end{itemize} per cui valgono i seguenti assiomi: \[
-        \forall a, b, c \in A    
-    \]
-    \begin{align}
-        &\text{1.}      &&(a+b) \in A           &\text{(chiusura rispetto a $+$)}\\
-        &\text{2.}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
-        &\text{3.}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
-        &\text{4.}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
-        &\text{5.}      &&\exists (-a) \in A. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
-        &\text{6.}      &&(ab) \in A            &\text{(chiusura rispetto a $\cdot$)}\\
-        &\text{7.}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
-        &\text{8.}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
-        &\text{9.}      &&(a+b)c = ac + bc      &\text{(distributivita' 1)} \\
-        &\text{10.}     &&a(b+c) = ab + ac      &\text{(distributivita' 2)}
-        \intertext{Si dice \textbf{anello commutativo} un anello per cui vale inoltre il seguente assioma:}
-        &\text{11.}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
-    \end{align}
+    \end{itemize} per cui valgono i seguenti assiomi: 
+    \begin{description}
+        \item[(Assiomi di anello)] Per ogni $a, b, c \in A$ vale che
+        \begin{align}
+            &\text{(S1)}      &&(a+b) \in A           &\text{(chiusura rispetto a $+$)}\\
+            &\text{(S2)}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
+            &\text{(S3)}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
+            &\text{(S4)}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
+            &\text{(S5)}      &&\exists (-a) \in A. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
+            &\text{(P1)}      &&(ab) \in A            &\text{(chiusura rispetto a $\cdot$)}\\
+            &\text{(P2)}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+            &\text{(P3)}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
+            &\text{(P4)}      &&(a+b)c = ac + bc      &\text{(distributivita' 1)} \\
+            &\text{(P5)}     &&a(b+c) = ab + ac      &\text{(distributivita' 2)}
+            \intertext{Si dice \textbf{anello commutativo} un anello per cui vale inoltre il seguente assioma:}
+            &\text{(P6)}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
+        \end{align}
+    \end{description} 
 \end{definition}
 
 Un tipico esempio di anello commutativo e' $\Z$: infatti gli anelli generalizzano le operazioni che possiamo fare sui numeri interi e le loro proprieta' fondamentali per estenderle ad altri insiemi con la stessa struttura algebrica.
 
-\begin{definition}
+\begin{definition}[Campo]
     Si dice \textbf{campo} una quintupla ($F$, $+$, $\cdot$, $0$, $1$) formata da
     \begin{itemize}
         \item un insieme di elementi $F$;
@@ -57,22 +59,23 @@ Un tipico esempio di anello commutativo e' $\Z$: infatti gli anelli generalizzan
         \item un operazione $\cdot : F \times F \to F$ detta prodotto;
         \item un elemento $0 \in F$;
         \item un elemento $1 \in F$
-    \end{itemize}  per cui valgono i seguenti assiomi: \[
-        \forall a, b, c \in F    
-    \]
-    \begin{align}
-        &\text{1.}      &&(a+b) \in F           &\text{(chiusura rispetto a $+$)}\\
-        &\text{2.}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
-        &\text{3.}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
-        &\text{4.}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
-        &\text{5.}      &&\exists (-a) \in F. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
-        &\text{6.}      &&(ab) \in F            &\text{(chiusura rispetto a $\cdot$)}\\        
-        &\text{7.}      &&ab = ba               &\text{(commutativita' di $\cdot$)}\\
-        &\text{8.}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
-        &\text{9.}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
-        &\text{10.}     &&(a+b)c = ac + bc      &\text{(distributivita')} \\
-        &\text{11.}     &&\text{se } a \neq 0 \text{ allora } \exists a^{-1} \in F. \quad aa^{-1} = 1 &\text{(inverso per $\cdot$)}
-    \end{align}
+    \end{itemize}  per cui valgono i seguenti assiomi: 
+    \begin{description}
+        \item[(Assiomi di campo)] Per ogni $a, b, c \in F$ vale che
+        \begin{align}
+            &\text{(S1)}      &&(a+b) \in F           &\text{(chiusura rispetto a $+$)}\\
+            &\text{(S2)}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
+            &\text{(S3)}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
+            &\text{(S4)}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
+            &\text{(S5)}      &&\exists (-a) \in F. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
+            &\text{(P1)}      &&(ab) \in F            &\text{(chiusura rispetto a $\cdot$)}\\        
+            &\text{(P2)}      &&ab = ba               &\text{(commutativita' di $\cdot$)}\\
+            &\text{(P3)}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+            &\text{(P4)}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
+            &\text{(P5)}     &&(a+b)c = ac + bc      &\text{(distributivita')} \\
+            &\text{(P6)}     &&a \neq 0 \implies \exists a^{-1} \in F. \quad aa^{-1} = 1 &\text{(inverso per $\cdot$)}
+        \end{align}
+    \end{description} 
 
     La definizione sopra e' equivalente a dire che $F$ e' un anello commutativo per cui ogni elemento non nullo ha un inverso moltiplicativo.
 \end{definition}
@@ -101,26 +104,26 @@ Nei campi vale la seguente proposizione.
 
 \section{Numeri complessi}
 
-\begin{definition}
+\begin{definition}[Unita' immaginaria]
     Si dice unita' immaginaria il numero $i$ tale che \[
         i^2 = -1.    
     \]
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Numeri complessi]
     L'insieme dei numeri complessi $\C$ e' l'insieme dei numeri della forma $a+ib$ per qualche $a, b \in \R$, ovvero \[
         \C = \{ a + ib \mid a, b \in \R, i^2 = -1\}.  
     \]
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Parte reale e immaginaria]
     Sia $z \in \C$ tale che $z = a + ib$. Allora si dicono rispettivamente \begin{itemize}
         \item parte reale di $z$ il numero $\Re z = a$;
         \item parte immaginaria di $z$ il numero $\Im z = b$.
     \end{itemize}
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Somma e prodotto sui complessi]
     Definiamo le seguenti due operazioni su $\C$:
     \begin{itemize}
         \item $+ : \C \times \C \to \C$ tale che $(a + ib) + (c + id) = (a + c) + i(b + d)$;
@@ -141,13 +144,13 @@ Nei campi vale la seguente proposizione.
 
 Notiamo che i numeri complessi della forma $a + i0$ sono numeri reali, dunque $\R \subset \C$. Inoltre possiamo rappresentare i numeri complessi come punti in uno spazio bidimensionale dove la parte reale rappresenta l'ascissa e la parte immaginaria rappresenta l'ordinata: la retta corrispondente all'asse x e' il sottoinsieme dei numeri reali.
 
-\begin{definition}
+\begin{definition}[Coniugato complesso]
     Sia $z = a+ib \in \C$. Allora si dice coniugato complesso (o semplicemente coniugato) di $z$ il numero \[
         \conj{z} = a - ib.    
     \]
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Norma di un numero complesso]
     Sia $z = a + ib \in \C$. Allora si dice norma di $z$ il numero reale \[
         \abs{z} = \sqrt{a^2 + b^2}.    
     \]
@@ -207,7 +210,7 @@ Notiamo che $\abs{z} = 0$ se e solo se $a = b = 0$, ovvero se $z = 0$.
 
 La proposizione precedente ci consente di trovare l'inverso di qualunque numero non nullo in $\C$.
 
-\begin{proposition}
+\begin{proposition}[Inverso tra i complessi]
     Sia $z \in \C, z \neq 0$. Allora \[\frac{1}{z} = \frac{\conj{z}}{\abs{z}^2}.\]
 \end{proposition}
 \begin{proof}
@@ -216,7 +219,7 @@ La proposizione precedente ci consente di trovare l'inverso di qualunque numero 
     \]
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}[I numeri complessi formano un campo]
     L'insieme $\C$ insieme alle operazioni di somma e prodotto con i rispettivi elementi neutri $0, 1 \in \C$ forma un campo.
 \end{proposition}
 
@@ -226,14 +229,16 @@ Dato che possiamo considerare i numeri complessi come punti di un piano bidimens
 
 Dunque se $z = a+ib$ e' un numero complesso in forma cartesiana, possiamo esprimerlo come $r(\cos\theta + i\sin\theta)$, dove $r = \sqrt{a^2 + b^2} = \abs{z}$ e $\theta = \arctan \frac{a}{b}$.
 
-\begin{definition}
+\begin{definition}[Esponenziale complesso]
     $e^{i\theta} = \cos\theta + i\sin\theta.$
 \end{definition}
 
 Sfruttando la definizione precedente possiamo scrivere ogni numero complesso nella forma $re^{i\theta}$ che e' la forma polare del numero.
 
 \begin{proposition}
-    $e^{i\alpha} e^{i\beta} = e^{i(\alpha + \beta)}$.
+    Siano $e^{i\alpha}, e^{i\beta} \in \C$. Allora vale \[
+        e^{i\alpha} e^{i\beta} = e^{i(\alpha + \beta)}.
+    \]
 \end{proposition}
 \begin{proof}
     Per definizione di esponenziale complesso:

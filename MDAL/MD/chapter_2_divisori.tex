@@ -4,12 +4,12 @@
 
 \subsection{Definizioni e prime conseguenze}
 
-\begin{definition}
+\begin{definition}[Divisore]
     Siano $a, b \in \Z$; allora si dice che $a$ divide $b$ se
     $\exists k \in \Z$ tale che $ak = b$, e si scrive $a \divides b$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Multiplo]
     Siano $a, b \in \Z$. Allora si dice che $b$ e' multiplo di $a$ se $\exists k \in \Z$ tale che $b = ak$.
 \end{definition}
 \begin{remark}
@@ -35,16 +35,16 @@
     che e' la tesi.
 \end{proof}
 
-\begin{definition}
+\begin{definition}[Massimo comun divisore]
     Siano $a, b \in \Z$; allora si dice $\mcd{a}{b}$ il piu' grande intero positivo
     tale che $\mcd{a}{b} \divides a$ e $\mcd{a}{b} \divides b$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Minimo comune multiplo]
     Siano $a, b \in \Z$. Allora si dice minimo comune multiplo di $a$ e $b$ il numero $d = \mcm{a}{b}$ tale che $d$ e' il piu' piccolo multiplo positivo sia di $a$ che di $b$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Coprimo]
     Siano $a, b \in \Z$. Se $\mcd{a}{b} = 1$ allora $a$ e $b$ si dicono coprimi.
 \end{definition}
 
@@ -65,8 +65,9 @@
     \end{align}
     Tale $r$ si dice resto della divisione di $a$ per $b$, e si indica anche con $r = a\bmod b$.
 \end{theorem}
+
 \begin{proof}
-    Notiamo inoltre che i numeri della forma $a - bq$ formano una progressione aritmetica di passo $b$ al variare di $q \in \Z$. 
+    Notiamo che i numeri della forma $a - bq$ formano una progressione aritmetica di passo $b$ al variare di $q \in \Z$. 
     Il resto $r$ definito in questo modo e' l'unico elemento di questa progressione compreso tra $0$ e $b - 1$.
 \end{proof}
 
@@ -77,14 +78,14 @@
 \end{proposition}
 \begin{proof}
     Dimostriamo separatamente i due versi dell'implicazione.
-
-    Dato che $\mcm{a}{b}$ e' un multiplo di $a$ e di $b$ e per ipotesi $c$ e' un multiplo di $\mcm{a}{b}$, allora per transitivita' segue che $c$ e' un multiplo di $a$ e di $b$.
-
-    Supponiamo che $c$ sia un multiplo di $a$ e di $b$. Allora per il teorema \ref{esistenza_resto} esistono $q, r \in \Z$ tali che \[
+    \begin{itemize}
+        \item[($\implies$)] Dato che $\mcm{a}{b}$ e' un multiplo di $a$ e di $b$ e per ipotesi $c$ e' un multiplo di $\mcm{a}{b}$, allora per transitivita' segue che $c$ e' un multiplo di $a$ e di $b$.
+        \item[($\impliedby$)] Supponiamo che $c$ sia un multiplo di $a$ e di $b$. Allora per il teorema \ref{esistenza_resto} esistono $q, r \in \Z$ tali che \[
         c = \mcm{a}{b}q + r
     \]
     con $0 \leq r < \mcm{a}{b}$.
-    Dato che $a$, $b$ dividono sia $c$ (per ipotesi) che $\mcm{a}{b}$ (per definizione di mcm), allora segue che essi dividono anche $r$. Ma $0 \leq r < \mcm{a}{b}$, dunque necessariamente $r = 0$, cioe' $c = \mcm{a}{b}q$ e quindi $\mcm{a}{b} \divides c$.
+    Dato che $a$, $b$ dividono sia $c$ (per ipotesi) che $\mcm{a}{b}$ (per definizione di mcm), allora segue che essi dividono anche $r$. Ma $0 \leq r < \mcm{a}{b}$, dunque necessariamente $r = 0$, cioe' $c = \mcm{a}{b}q$ e quindi $\mcm{a}{b} \divides c$. \qedhere
+    \end{itemize}
 \end{proof}
 
 
@@ -142,10 +143,10 @@ Dunque per calcolare il massimo comun divisore si puo' sfruttare il seguente alg
 \end{enumerate}
 
 \begin{theorem}
-    [di Bezout] \label{bezout}
+    [Teorema di Bezout] \label{bezout}
     Siano $a, b \in \Z$. Allora esistono $x, y \in \Z$ tali che
     \begin{equation}
-        ax + by = \mcd{a}{b} 
+        ax + by = \mcd{a}{b}.
     \end{equation}
 \end{theorem}
 
@@ -184,6 +185,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \end{proposition}
 \begin{proof}
     Per la proposizione \ref{divides_sum_subtr_mult}, se $t \divides a$ e $t \divides b$ allora $t \divides ax+by$ per ogni $x, y \in \Z$.
+
     Per il teorema di Bezout (\ref{bezout}) esistono $\bar{x}, \bar{y} \in \Z$ tali che $a\bar{x}+b\bar{y} = \mcd{a}{b}$. Ma quest'espressione e' della forma $ax + by$, con $x = \bar{x}$, $y = \bar{y}$, dunque 
     $t \divides a\bar{x} + b\bar{y}$, cioe' $t \divides \mcd{a}{b}$.
 \end{proof}
@@ -197,14 +199,14 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
     \begin{itemize}
-        \item Se $t \divides \mcd{a}{b}$, allora $t \divides a$ e $t \divides b$, dunque per la proposizione \ref{divides_sum_subtr_mult} segue che $t$ dovra' dividere una qualsiasi combinazione lineare di $a$ e $b$, cioe' $t \divides ax+by$ per ogni $x, y \in \Z$.
-        \item Viceversa supponiamo che $t \divides ax+by$ per ogni $x, y \in \Z$. Siano per il teorema di Bezout (\ref{bezout}) $\bar{x}, \bar{y}$ i numeri tali che $a\bar{x} + b\bar{y} = \mcd{a}{b}$. Allora $t$ dovra' dividere anche $a\bar{x} + b\bar{y}$, cioe' $t \divides \mcd{a}{b}$.
+        \item[($\implies$)] Se $t \divides \mcd{a}{b}$, allora $t \divides a$ e $t \divides b$, dunque per la proposizione \ref{divides_sum_subtr_mult} segue che $t$ dovra' dividere una qualsiasi combinazione lineare di $a$ e $b$, cioe' $t \divides ax+by$ per ogni $x, y \in \Z$.
+        \item[($\impliedby$)] Viceversa supponiamo che $t \divides ax+by$ per ogni $x, y \in \Z$. Siano per il teorema di Bezout (\ref{bezout}) $\bar{x}, \bar{y}$ i numeri tali che $a\bar{x} + b\bar{y} = \mcd{a}{b}$. Allora $t$ dovra' dividere anche $a\bar{x} + b\bar{y}$, cioe' $t \divides \mcd{a}{b}$. \qedhere
     \end{itemize}
 \end{proof}
 
 \begin{proposition} \label{mcd_of_multiples_of_n}
     Siano $a, b, n \in \Z$. Allora \begin{equation}
-        \mcd{an}{bn} = n\mcd{a}{b}
+        \mcd{an}{bn} = n\mcd{a}{b}.
     \end{equation}
 \end{proposition}
 \begin{intuition}
@@ -219,7 +221,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
         \iff &t \divides nax + nby      \qquad& \forall x, y \in \Z \\
         \iff &t \divides n(ax + by)     \qquad& \forall x, y \in \Z \\
         \intertext{dunque scegliendo $x, y$ tali che $ax+by = \mcd{a}{b}$ per Bezout (\ref{bezout})}
-        \iff &t \divides n\mcd{a}{b}.
+        \iff &t \divides n\mcd{a}{b}. \tag*{\qedhere}
     \end{alignat*}
 \end{proof}
 
@@ -246,12 +248,9 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     che e' la tesi.
 \end{proof}
 
-
-
-
 \section{Numeri primi}
 
-\begin{definition}
+\begin{definition}[Numero primo]
     Sia $p \in \Z$. Si dice che $p$ e' primo se se gli unici interi che dividono $p$ sono
     $\pm 1$ e $\pm p$.
 \end{definition}
@@ -268,12 +267,14 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \begin{proposition} \label{prodotto_numeri_coprimi}
     Siano $a, b \in \Z, c \in \Z$ tali che $\mcd{a}{b} = 1$. Allora
     \begin{equation}
-        a \divides c \land b \divides c \iff ab \divides c
+        a \divides c \land b \divides c \iff ab \divides c.
     \end{equation}
 \end{proposition}
 \begin{proof}
-    Per il teorema di Bezout (\ref{bezout}) esistono $x, y \in \Z$ tali che $\mcd{a}{b} = 1 = ax+by$, da cui segue $n = nax + nby$. 
+    Per il teorema di Bezout (\ref{bezout}) esistono $x, y \in \Z$ tali che $\mcd{a}{b} = 1 = ax+by$, da cui segue $n = nax + nby$.
+
     Dato che $a \divides n$, $b \divides n$, allora $ab \divides na$ e $ab \divides nb$ per la proposizione \ref{divides_sum_subtr_mult}, quindi per la stessa proposizione $ab$ dividera' una loro qualunque combinazione lineare $nak + nbh$, inclusa quella con $k = x, h = y$.
+
     Dunque $ab \divides nax + nby$ che e' equivalente a dire che $ab \divides n$, cioe' la tesi.
 \end{proof}
 
@@ -281,7 +282,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \begin{proposition} \label{prodotto_coprimo_2}
     Siano $a, b, c \in \Z$. Allora
     \begin{equation}
-        \mcd{ab}{c} = 1 \iff \mcd{a}{c} = \mcd{b}{c} = 1
+        \mcd{ab}{c} = 1 \iff \mcd{a}{c} = \mcd{b}{c} = 1.
     \end{equation}
 \end{proposition}
 \begin{intuition}
@@ -308,23 +309,19 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \end{intuition}
 \begin{proof}
     Dimostriamo la proposizione per induzione su $n$.
-    \begin{itemize}
-        \item[ \textbf{Caso base.}]
-
+    \begin{description}
+        \item[Caso base.] 
         Sia $n = 0$, cioe' $a_1\dots a_n = 1$. Allora banalmente $1 \divides c$.
-        \item[ \textbf{Passo induttivo.}]
-        
+        \item[Passo induttivo.]         
         Supponiamo che la tesi sia vera per $n-1$ e dimostriamola per $n$. Dunque per ipotesi $ \left(\prod_{i = 1}^{n - 1} a_i\right) \divides c$.
         Ma per il corollario \ref{prodotto_coprimo_n} $a_n$ e' coprimo con $\prod_{i = 1}^{n - 1} a_i$, dunque per la proposizione \ref{prodotto_numeri_coprimi} segue che
         \begin{equation*}
             a_n \left(\prod_{i = 1}^{n - 1} a_i\right) = \left( \prod_{i = 1}^{n} a_i \right) \divides c
         \end{equation*}
         che e' la tesi per $n$.
-    \end{itemize}
+    \end{description}
     Dunque la proposizione vale per ogni $n \in N$.
 \end{proof}
-
-
 
 
 \subsection{Divisori primi}
@@ -335,19 +332,17 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \end{proposition}
 \begin{proof}
     Per induzione forte su $n$.
-    \begin{itemize}
-        \item[ \textbf{Caso base.}]
-
+    \begin{description}
+        \item[Caso base.]
         Sia $n = 2$. Dato che $2$ e' primo, allora e' esprimibile come prodotto di numeri primi (in particolare e' il prodotto di un solo termine, se stesso).
-        \item[ \textbf{Passo induttivo.}]
-        
+        \item[Passo induttivo.]
         Supponiamo che la tesi sia vera per $2, 3, \dots, n-1$ (induzione forte) e dimostriamola per $n$.
         Abbiamo due casi:
         \begin{itemize}
             \item se $n$ e' primo, allora e' un prodotto di primi e quindi la tesi vale;
             \item se $n$ non e' primo allora dovranno esistere due numeri $1 < a, b < n$ tali che $n = ab$ (infatti se non esistessero $n$ sarebbe primo). Ma per l'ipotesi induttiva forte sappiamo che tutti i numeri compresi tra $2$ e $n-1$ inclusi sono scomponibili in fattori primi, dunque anche $n = ab$ dovra' esserlo.
         \end{itemize}
-    \end{itemize}
+    \end{description}
     Dunque dal caso base e dal passo induttivo segue che la tesi vale per ogni $n \geq 2$.
 \end{proof}
 
@@ -398,7 +393,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \begin{proposition} \label{mcd_togliere_fattori_non_comuni}
     Siano $a, x, y \in \Z$. Allora 
     \begin{equation}
-        \mcd{a}{x} = 1 \implies \mcd{a}{xy} = \mcd{a}{y}
+        \mcd{a}{x} = 1 \implies \mcd{a}{xy} = \mcd{a}{y}.
     \end{equation}
 \end{proposition}
 \begin{intuition}
@@ -420,7 +415,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \begin{proposition} \label{distributivita_mcd_su_mcm}
     Siano $a, x, y \in \Z$. Allora 
     \begin{equation}
-        \mcd{a}{\mcm{x}{y}} = \mcm{\mcd{a}{x}}{\mcd{a}{y}}
+        \mcd{a}{\mcm{x}{y}} = \mcm{\mcd{a}{x}}{\mcd{a}{y}}.
     \end{equation}
 \end{proposition}
 \begin{proof}
@@ -438,7 +433,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 \begin{proposition}
     Siano $a, x, y \in \Z$. Allora 
     \begin{equation}
-        \mcd{x}{y} = 1 \implies \mcd{a}{xy} = \mcd{a}{x}\mcd{a}{y}
+        \mcd{x}{y} = 1 \implies \mcd{a}{xy} = \mcd{a}{x}\mcd{a}{y}.
     \end{equation}
 \end{proposition}
 \begin{intuition}
@@ -457,14 +452,14 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 
 \begin{proposition}\label{a,b|c_iff_(ab/mcd)|c}
     Siano $a, b, c \in \Z$. Allora \begin{equation}
-        a \divides c \land b \divides c \iff \frac{ab}{\mcd{a}{b}} \divides c
+        a \divides c \land b \divides c \iff \frac{ab}{\mcd{a}{b}} \divides c.
     \end{equation}
 \end{proposition}
 \begin{proof}
     Dimostriamo l'implicazione in entrambi i versi.
     \begin{itemize}
-        \item Supponiamo che $a \divides c$ e $b \divides c$. Sia $d = \mcd{a}{b}$. Allora dato che $d \divides a$, $d \divides b$ per transitivita' $d \divides c$, dunque $\frac{a}{d} \divides \frac{c}{d}$ e $\frac{b}{d} \divides \frac{c}{d}$. Ma dato che per il corollario \ref{mcd_diviso_mcd} sappiamo che $\mcd{\frac{a}{d}}{\frac{b}{d}} = 1$, dunque per la \ref{prodotto_numeri_coprimi} segue che il loro prodotto $\frac{ab}{d^2}$ dovra' dividere $\frac{c}{d}$, che e' equivalente a dire che $\frac{ab}{d} \divides c$.
-        \item NON SO FARE QUEST'ALTRA DIMOSTRAZIONE
+        \item[($\implies$)] Supponiamo che $a \divides c$ e $b \divides c$. Sia $d = \mcd{a}{b}$. Allora dato che $d \divides a$, $d \divides b$ per transitivita' $d \divides c$, dunque $\frac{a}{d} \divides \frac{c}{d}$ e $\frac{b}{d} \divides \frac{c}{d}$. Ma dato che per il corollario \ref{mcd_diviso_mcd} sappiamo che $\mcd{\frac{a}{d}}{\frac{b}{d}} = 1$, dunque per la \ref{prodotto_numeri_coprimi} segue che il loro prodotto $\frac{ab}{d^2}$ dovra' dividere $\frac{c}{d}$, che e' equivalente a dire che $\frac{ab}{d} \divides c$.
+        \item[($\impliedby$)] NON SO FARE QUEST'ALTRA DIMOSTRAZIONE \qedhere
     \end{itemize}
 \end{proof}
 
@@ -472,7 +467,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     \label{mcm*mcd=ab}
     Siano $a, b \in \Z$. Allora
     \begin{equation}
-        \mcd{a}{b}\mcm{a}{b} = \abs{ab}
+        \mcd{a}{b}\mcm{a}{b} = \abs{ab}.
     \end{equation}
 \end{proposition}
 \begin{proof}
@@ -484,81 +479,73 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
 
 \section{Equazioni diofantee}
 
-\begin{definition}
-    Siano $a, b, c \in \Z$ noti, $x, y \in \Z$ incognite. Allora un'equazione
-    lineare della forma $ax + by = c$ si dice equazione diofantea.
+\begin{definition}[Equazione diofantea]
+    Siano $a, b, c \in \Z$ noti, $x, y \in \Z$ incognite. Allora un'equazione lineare della forma $ax + by = c$ si dice equazione diofantea.
 \end{definition}
 
-\begin{theorem}
-    Siano $a, b, c \in \Z$. Allora l'equazione diofantea $ax + by = c$ ammette soluzioni
-    se e solo se $\mcd{a}{b} \divides c$.
+\begin{theorem}[Condizione necessaria e sufficiente per le diofantee]
+    Siano $a, b, c \in \Z$. Allora l'equazione diofantea $ax + by = c$ ammette soluzioni se e solo se $\mcd{a}{b} \divides c$.
 \end{theorem}
 \begin{proof}
-    Supponiamo che $c = k\mcd{a}{b}$ per qualche $k \in \Z$. Allora per il teorema di Bezout
-    \ref{bezout} esistono $x', y' \in \Z$ tali che $ax' + by' = \mcd{a}{b}$. Moltiplicando
-    entrambi i membri per $k$ otteniamo
-    \begin{alignat*}{2} 
-        k\mcd{a}{b} &= k(ax' + by')
-                    &= akx' + bky'
-                    &= a(kx') + b(ky')
-    \end{alignat*}
-    dunque $x = kx'$ e $y = ky'$ risolvono l'equazione diofantea.
+    Dimostriamo prima che se $\mcd{a}{b} \divides c$ allora esistono soluzioni di $ax + by = c$ e poi dimostriamo che se $\mcd{a}{b} \nmid c$ allora l'equazione $ax + by = c$ non ha soluzioni.
+    \begin{itemize}
+        \item Supponiamo che $c = k\mcd{a}{b}$ per qualche $k \in \Z$. Allora per il teorema di Bezout \ref{bezout} esistono $x', y' \in \Z$ tali che $ax' + by' = \mcd{a}{b}$. Moltiplicando  entrambi i membri per $k$ otteniamo
+        \begin{alignat*}{2} 
+            k\mcd{a}{b} &= k(ax' + by')
+                        &= akx' + bky'
+                        &= a(kx') + b(ky')
+        \end{alignat*}
+        dunque $x = kx'$ e $y = ky'$ risolvono l'equazione diofantea.
+        \item Supponiamo ora che $c$ non sia un multiplo di $\mcd{a}{b}$ e supponiamo per assurdo che l'equazione abbia soluzione, cioe' che esistano $x, y \in \Z$ tali che $ax + by = c$. Sia $d = \mcd{a}{b}$.
+        
+        Per definizione di $\mcd{a}{b}$ e per la proposizione \ref{divides_sum_subtr_mult}, dato che $d \divides a$ e $d \divides b$ segue che $d \divides ax$, $d \divides by$ e dunque $d \divides ax + by$. Ma $ax + by = c$, quindi $d = \mcd{a}{b} \divides c$, che va contro le ipotesi.
 
-    Supponiamo ora che $c$ non sia un multiplo di $\mcd{a}{b}$ e supponiamo per assurdo che l'equazione
-    abbia soluzione, cioe' che esistano $x, y \in \Z$ tali che $ax + by = c$. Sia $d = \mcd{a}{b}.$
-    Per definizione di $\mcd{a}{b}$ e per la proposizione \ref{divides_sum_subtr_mult},
-    dato che $d \divides a$ e $d \divides b$ segue che $d \divides ax$, $d \divides by$ e dunque
-    $d \divides ax + by$. Ma $ax + by = c$, quindi $d = \mcd{a}{b} \divides c$, che va contro le ipotesi.
-    Dunque l'equazione diofantea non ha soluzione, cioe' la tesi.
+        Dunque l'equazione diofantea non ha soluzione, cioe' la tesi. \qedhere
+    \end{itemize}
 \end{proof}
 
-\begin{theorem} \label{sol_diofantea_omogenea_coprimi}
-    Siano $a, b \in \Z$ coprimi. Allora le soluzioni dell'equazione diofantea omogenea $ax + by = 0$ 
-    sono tutte e solo della forma $x = -kb, y = ka$ al variare di $k \in \Z$.
+\begin{theorem} [Soluzioni di una diofantea omogenea con coefficienti coprimi]\label{sol_diofantea_omogenea_coprimi}
+    Siano $a, b \in \Z$ coprimi. Allora le soluzioni dell'equazione diofantea omogenea $ax + by = 0$ sono tutte e solo della forma $x = -kb, y = ka$ al variare di $k \in \Z$.
 \end{theorem}
 \begin{proof}
     Dimostriamo innanzitutto che $x = -kb, y = ka$ e' una soluzione.
     \begin{alignat*}{1}
         ax + by &= a(-kb) + b(ka)\\
                 &= -kab + kab\\
-                &= 0
+                &= 0.
     \end{alignat*}
 
-    Mostriamo ora che non vi possono essere altre soluzioni. Dato che $ax + by = 0$, allora $ax = -by$.
+    Mostriamo ora che non vi possono essere altre soluzioni. 
+    
+    Dato che $ax + by = 0$, allora $ax = -by$.
     Dato che $a \divides ax$ allora $a \divides -by$; inoltre per ipotesi $\mcd{a}{-b} = \mcd{a}{b} = 1$.
-    Dunque per il teorema \ref{n_divides_product} segue che $a \divides y$, cioe' $y = ak$ per
-    qualche $k \in \Z$. Sostituendo ottengo $x = -b\frac{y}{a} = -bk$, che e' la tesi.
+    Dunque per il teorema \ref{n_divides_product} segue che $a \divides y$, cioe' $y = ak$ per qualche $k \in \Z$. Sostituendo ottengo $x = -b\frac{y}{a} = -bk$, che e' la tesi.
 \end{proof}
 
-\begin{corollary} \label{sol_diofantea_omogenea}
-    Se $a, b$ non sono coprimi, allora tutte le soluzioni dell'equazione $ax + by = 0$ saranno della forma
-    $x = -kb', y = ka'$ dove $a' = \frac{a}{\mcd{a}{b}}$ e $b' = \frac{b'}{\mcd{a}{b}}.$
+\begin{corollary} [Soluzioni di una diofantea omogenea]\label{sol_diofantea_omogenea}
+    Se $a, b$ non sono coprimi, allora tutte le soluzioni dell'equazione $ax + by = 0$ saranno della forma $x = -kb', y = ka'$ dove $a' = \frac{a}{\mcd{a}{b}}$ e $b' = \frac{b'}{\mcd{a}{b}}.$
 \end{corollary}
 \begin{proof}
-    Dato che $a, b$ non sono coprimi, allora possiamo dividere entrambi i membri di $ax + by = 0$
-    per $\mcd{a}{b}$ ottenendo l'equazione diofantea equivalente $a'x + b'y = 0$. Ma per il teorema
-    \ref{mcd_diviso_mcd} $\mcd{a'}{b'} = 1$, dunque per il teorema \ref{sol_diofantea_omogenea_coprimi}
-    le sue soluzioni saranno tutte e solo della forma $x = -kb', y = ka'$. Ma questa equazione
-    e' equivalente all'originale, dunque anche le soluzioni di $ax + by = 0$ saranno tutte e solo
-    della forma $x = -kb', y = ka'$.
+    Dato che $a, b$ non sono coprimi, allora possiamo dividere entrambi i membri di $ax + by = 0$ per $\mcd{a}{b}$ ottenendo l'equazione diofantea equivalente $a'x + b'y = 0$. 
+    
+    Ma per il teorema \ref{mcd_diviso_mcd} $\mcd{a'}{b'} = 1$, dunque per il teorema \ref{sol_diofantea_omogenea_coprimi} le sue soluzioni saranno tutte e solo della forma $x = -kb', y = ka'$. 
+    
+    Ma questa equazione e' equivalente all'originale, dunque anche le soluzioni di $ax + by = 0$ saranno tutte e solo della forma $x = -kb', y = ka'$.
 \end{proof}
 
-\begin{theorem} \label{sol_diofantea_non_omog}
+\begin{theorem} [Soluzioni di una diofantea non omogenea] \label{sol_diofantea_non_omog}
     Siano $a, b \in \Z$ e sia $(x, y)$ una soluzione particolare dell'equazione diofantea $ax + by = c$ (se esiste). Allora le soluzioni di quest'equazione sono tutte e solo della forma $(x + x_0, y + y_0)$ al variare di $(x_0, y_0)$ tra le soluzioni dell'equazione omogenea associata $ax + by = 0$.
 \end{theorem}
 \begin{proof}
-    Dimostriamo innanzitutto che se $(x, y)$ e' una soluzione della diofantea non omogenea e $(x_0, y_0)$
-    e' una soluzione dell'omogenea, allora $(x+x_0, y+y_0)$ e' ancora soluzione della non omogenea.
+    Dimostriamo innanzitutto che se $(x, y)$ e' una soluzione della diofantea non omogenea e $(x_0, y_0)$ e' una soluzione dell'omogenea, allora $(x+x_0, y+y_0)$ e' ancora soluzione della non omogenea.
     \begin{alignat*}{1}
         a(x + x_0) + b(y + y_0) &= ax + ax_0 + by + by_0 \\
                                 &= (ax + by) + (ax_0 + by_0) \\
                                 &= c + 0\\
-                                &= c
+                                &= c.
     \end{alignat*}
 
-    Dimostriamo ora che tutte le soluzioni sono di questa forma. Sia $(\bar{x}, \bar{y})$ una
-    soluzione particolare della diofantea non omogenea e $(x, y)$ un'altra soluzione qualsiasi,
-    e mostriamo che la loro differenza e' una soluzione dell'omogenea associata.
+    Dimostriamo ora che tutte le soluzioni sono di questa forma. Sia $(\bar{x}, \bar{y})$ una soluzione particolare della diofantea non omogenea e $(x, y)$ un'altra soluzione qualsiasi, e mostriamo che la loro differenza e' una soluzione dell'omogenea associata.
     \begin{alignat*}
         {1}
         a(x - \bar{x}) + b(y - \bar{y}) &= ax - a\bar{x} + by - b\bar{y} \\

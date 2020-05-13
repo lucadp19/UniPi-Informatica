@@ -1,29 +1,68 @@
-\documentclass[a4paper]{report}
+\documentclass[italian,oneside,headinclude,11pt]{scrbook}
     \usepackage[utf8]{inputenc}
     \usepackage[italian]{babel}
     \usepackage[T1]{fontenc}
     \usepackage{textcomp, microtype}
     \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm}
+    
     \usepackage{enumerate}
     \usepackage{float}
+    \usepackage{letltxmacro}
+
+    \LetLtxMacro\amsproof\proof
+    \LetLtxMacro\amsendproof\endproof
+
+    \usepackage{thmtools}
 
     \usepackage{hyperref} % ultimo package da caricare!
 
 \restylefloat{table}
 
-\theoremstyle{plain}
-\newtheorem{theorem}{Teorema}[section]
-\newtheorem{corollary}[theorem]{Corollario}
-\newtheorem{proposition}[theorem]{Proposizione}
+\AtBeginDocument{
+    \LetLtxMacro\proof\amsproof
+    \LetLtxMacro\endproof\amsendproof
+}
 
-\theoremstyle{definition}
-\newtheorem{example}[theorem]{Esempio}
-\newtheorem{definition}[theorem]{Definizione}
+\declaretheoremstyle[
+    spaceabove=6pt, spacebelow=6pt,
+    headindent=10pt,
+    headfont=\scshape\bfseries,
+    notefont=\normalfont\bfseries, notebraces={(}{)},
+    bodyfont=\itshape,
+    postheadspace=\newline
+]{thmstyle}
+\declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
+\declaretheorem[name=Corollario, sibling=theorem, style=thmstyle]{corollary}
+\declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
 
-\theoremstyle{remark}
-\newtheorem*{remark}{Osservazione}
-\newtheorem*{solution}{Soluzione}
-\newtheorem*{intuition}{Intuizione}
+\declaretheoremstyle[
+    headfont=\scshape\bfseries,
+    notefont=\normalfont\bfseries, notebraces={(}{)},
+    bodyfont=\normalfont,
+    postheadspace=\newline
+]{defstyle}
+\declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
+
+\declaretheoremstyle[
+    headfont=\scshape\bfseries,
+    notefont=\normalfont\bfseries, notebraces={(}{)},
+    bodyfont=\normalfont,
+    postheadspace=1em
+]{exmplstyle}
+\declaretheorem[name=Esempio, sibling=theorem, style=exmplstyle]{example}
+\declaretheorem[name=Esercizio, sibling=theorem, style=exmplstyle]{exercise}
+
+
+\declaretheoremstyle[
+    headfont=\scshape,
+    notefont=\normalfont, notebraces={(}{)},
+    bodyfont=\normalfont,
+    numbered=no,
+    postheadspace=1em
+]{remarkstyle}
+\declaretheorem[name=Osservazione, style=remarkstyle]{remark}
+\declaretheorem[name=Soluzione, style=remarkstyle]{solution}
+\declaretheorem[name=Intuizione, style=remarkstyle]{intuition}
 
 \DeclareMathOperator{\tc}{\text{ tale che }}
 
@@ -53,7 +92,7 @@
 
 \begin{document}
 
-% \author{Luca De Paulis}
+\author{Luca De Paulis}
 \title{Matematica Discreta}
 \maketitle
 
@@ -61,7 +100,7 @@
 
 \include{chapter_1}
 \include{chapter_2_divisori}
-\include{chapter_2_congruenze}
+\include{chapter_3_congruenze}
 \include{chapter_4_combinatoria}
 \include{chapter_5_polinomi}
 
