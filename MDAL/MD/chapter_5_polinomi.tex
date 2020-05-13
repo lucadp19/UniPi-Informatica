@@ -11,14 +11,14 @@
     L'insieme di tutti i polinomi a coefficienti in $A$ si indica con $A[x]$.
 \end{definition}
 
-Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ non primo) e con $\K$ un campo generico (come $\Q$, $\R$, $\C$, $\Z/(p)$ con $p$ primo). Notiamo inoltre che, dato che un campo e' anche un anello, tutte le definizioni e le proposizioni che valgono per gli anelli valgono anche per i campi (ma non viceversa).
+Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ non primo) e con $\K$ un campo generico (come $\Q$, $\R$, $\C$, $\Z/(p)$ con $p$ primo). Notiamo inoltre che, dato che un campo è anche un anello, tutte le definizioni e le proposizioni che valgono per gli anelli valgono anche per i campi (ma non viceversa).
 
 \begin{definition}[Grado di un polinomio]
     Sia $p(x) \in A[x]$ (ovvero, sia $p(x)$ un polinomio a coefficienti nell'anello $A$). Si dice grado di $p$ il massimo $n$ tale che $a_n \neq 0$, e si indica con $\deg p$.
 \end{definition}
 
 \begin{definition}[Radice di un polinomio]
-    Sia $p(x) \in A[x]$. Allora si dice che $r \in A$ e' radice (o zero) di $p$ se \begin{equation}
+    Sia $p(x) \in A[x]$. Allora si dice che $r \in A$ è radice (o zero) di $p$ se \begin{equation}
         p(r) = 0.
     \end{equation}
 \end{definition}
@@ -27,11 +27,11 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
     Sia $p(x) \in A[x]$ tale che $\deg p = 0$. Allora $p$ non ha radici oppure ne ha infinite.
 \end{proposition}
 \begin{proof}
-    Dato che $\deg p = 0$, allora sara' $p(x) = a_0$ per qualche $a_0 \in A$.
+    Dato che $\deg p = 0$, allora sarà $p(x) = a_0$ per qualche $a_0 \in A$.
 
     Abbiamo due casi: \begin{itemize}
-        \item se $a_0 = 0$, allora $p(x) = 0$ per ogni $x \in A$, dunque ogni elemento di $A$ e' radice del polinomio;
-        \item se $a_0 \neq 0$ allora $p(x) \neq 0$ per ogni $x \in A$, dunque nessun elemento di $A$ e' radice del polinomio. \qedhere
+        \item se $a_0 = 0$, allora $p(x) = 0$ per ogni $x \in A$, dunque ogni elemento di $A$ è radice del polinomio;
+        \item se $a_0 \neq 0$ allora $p(x) \neq 0$ per ogni $x \in A$, dunque nessun elemento di $A$ è radice del polinomio. \qedhere
     \end{itemize}
 \end{proof}
 
@@ -40,7 +40,7 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
     Sia $p(x) \in \K[x]$ tale che $\deg p = 1$. Allora esiste almeno una radice di $p$.
 \end{proposition}
 \begin{proof}
-    Dato che $\deg p = 1$, allora sara' $p(x) = a_0 + a_1x$ per qualche $a_0, a_1 \in \K$.
+    Dato che $\deg p = 1$, allora sarà $p(x) = a_0 + a_1x$ per qualche $a_0, a_1 \in \K$.
 
     Sia $r$ una radice di $p$, allora deve valere che \begin{alignat*}
         {1}
@@ -72,30 +72,30 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 \end{remark}
 
 \begin{definition}[Polinomio monico]
-    Sia $p(x) \in A[x]$ un polinomio. Allora $p$ si dice monico se il coefficiente del termine di grado massimo e' 1, ovvero se \[
+    Sia $p(x) \in A[x]$ un polinomio. Allora $p$ si dice monico se il coefficiente del termine di grado massimo è 1, ovvero se \[
         p(x) = a_0 + a_1x + \dots + a_{n-1}x^{n-1} + x^n    
     \] per qualche $a_0, \dots, a_{n-1} \in A$.
 \end{definition}
 
-\begin{proposition}[Il grado del prodotto e' la somma dei gradi]\label{grado_prodotto_somma_gradi}
+\begin{proposition}[Il grado del prodotto è la somma dei gradi]\label{grado_prodotto_somma_gradi}
     Siano $p(x), q(x) \in A[x]$. Allora $\deg (p \cdot q) = \deg p + \deg q$.
 \end{proposition}
 
 \section{Divisione e fattorizzazioni}
 
-\begin{theorem}[Esistenza e unicita' della divisione polinomiale nei campi]
+\begin{theorem}[Esistenza e unicità della divisione polinomiale nei campi]
     Siano $p(x), q(x) \in \K[x]$. Allora esistono e sono unici $q(x), r(x) \in \K[x]$ tali che \begin{equation}
         p(x) = g(x)q(x) + r(x), \quad \text{con } \deg r < \deg g.
     \end{equation} 
 \end{theorem}
 
-\begin{proposition}[Esistenza e unicita' della divisione polinomiale negli anelli]\label{divisione_polinomi}
+\begin{proposition}[Esistenza e unicità della divisione polinomiale negli anelli]\label{divisione_polinomi}
     Siano $p(x), g(x) \in A[x]$ con $g$ monico. Allora esistono e sono unici $q(x), r(x) \in A[x]$ tali che \begin{equation}
         p(x) = g(x)q(x) + r(x), \quad \text{con } \deg r < \deg g.
     \end{equation} 
 \end{proposition}
 
-\begin{definition}[Divisibilita' tra polinomi]\label{divisione_polinomi_anello}
+\begin{definition}[Divisibilità tra polinomi]\label{divisione_polinomi_anello}
     Siano $p(x), g(x) \in A[x]$. Allora si dice che $g(x) \divides p(x)$ se e solo se esiste $q(x) \in A[x]$ tale che \[
         p(x) = g(x)q(x).    
     \]
@@ -105,11 +105,11 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
     Sia $p(x) \in A[x]$ e sia $a \in A$. Sia $r(x) \in A[x]$ il resto della divisione di $p(x)$ per $(x-a)$. Allora $r(x) = r_0$ per qualche $r_0 \in A$ e $p(a) = r_0$.
 \end{proposition}
 \begin{proof}
-    Per il teorema sulla divisione tra polinomi (\ref{divisione_polinomi_anello}), dato che $x-a$ e' un polinomio monico, sappiamo che esistono $q(x), r(x) \in A[x]$ tali che \[
+    Per il teorema sulla divisione tra polinomi (\ref{divisione_polinomi_anello}), dato che $x-a$ è un polinomio monico, sappiamo che esistono $q(x), r(x) \in A[x]$ tali che \[
         p(x) = (x-a)q(x) + r(x).
     \]
 
-    Dato che $\deg (x - a) = 1$ e $\deg r < \deg a$ segue che $\deg r = 0$, cioe' per ogni $x \in A$ vale che $r(x) = r_0$ per qualche $r_0 \in A$.
+    Dato che $\deg (x - a) = 1$ e $\deg r < \deg a$ segue che $\deg r = 0$, cioè per ogni $x \in A$ vale che $r(x) = r_0$ per qualche $r_0 \in A$.
 
     Ora valutiamo il polinomio in $a$, ottenendo \begin{alignat*}
         {1}
@@ -117,23 +117,23 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
         &= 0q(a) + r_0\\
         &= r_0
     \end{alignat*}
-    che e' la tesi.
+    che è la tesi.
 \end{proof}
 
 \begin{theorem}
     [Teorema di Ruffini] \label{th_Ruffini}
     Sia $p(x) \in A[x]$ e sia $a \in A$. Allora \[
         (x - a) \divides p(x) \iff p(a) = 0    
-    \] ovvero $x - a$ divide $p(x)$ se e solo se $a$ e' una radice di $p$.
+    \] ovvero $x - a$ divide $p(x)$ se e solo se $a$ è una radice di $p$.
 \end{theorem}
 \begin{proof}
-    Per il teorema sulla divisione tra polinomi (\ref{divisione_polinomi_anello}), dato che $x-a$ e' un polinomio monico, sappiamo che esistono $q(x), r(x) \in A[x]$ tali che \[
+    Per il teorema sulla divisione tra polinomi (\ref{divisione_polinomi_anello}), dato che $x-a$ è un polinomio monico, sappiamo che esistono $q(x), r(x) \in A[x]$ tali che \[
         p(x) = (x-a)q(x) + r(x).
     \]
 
-    Dato che $\deg (x - a) = 1$ e $\deg r < \deg a$ segue che $\deg r = 0$, cioe' per ogni $x \in A$ vale che $r(x) = r_0$ per qualche $r_0 \in A$.
+    Dato che $\deg (x - a) = 1$ e $\deg r < \deg a$ segue che $\deg r = 0$, cioè per ogni $x \in A$ vale che $r(x) = r_0$ per qualche $r_0 \in A$.
 
-    Per la proposizione \ref{resto_uguale_valutazione_nel_punto} segue che $p(a) = r_0$, dunque $a$ e' radice se e solo se $r_0 = 0$, cioe' se e solo se il polinomio $p(x)$ e' divisibile per $(x - a)$.
+    Per la proposizione \ref{resto_uguale_valutazione_nel_punto} segue che $p(a) = r_0$, dunque $a$ è radice se e solo se $r_0 = 0$, cioè se e solo se il polinomio $p(x)$ è divisibile per $(x - a)$.
 \end{proof}
 
 \begin{definition}[Polinomio irriducibile]
@@ -156,25 +156,25 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 \end{definition}
 
 \begin{proposition}
-    Sia $p(x) \in \K[x]$. Allora la fattorizzazione di $p$ e' unica (a meno di fattori costanti).
+    Sia $p(x) \in \K[x]$. Allora la fattorizzazione di $p$ è unica (a meno di fattori costanti).
 \end{proposition}
 
 \begin{remark}
-    La fattorizzazione di $p$ non e' unica negli anelli!
+    La fattorizzazione di $p$ non è unica negli anelli!
 \end{remark}
 
 \begin{proposition}\label{radice_di_p_sse_radice_fattore}
-    Sia $p(x) \in \K[x]$ e siano $g(x), h(x) \in \K[x]$ tali che $p(x) = g(x)h(x)$. Allora $r \in \K$ e' una radice di $p$ se e solo se e' radice di $g$ o e' radice di $h$.
+    Sia $p(x) \in \K[x]$ e siano $g(x), h(x) \in \K[x]$ tali che $p(x) = g(x)h(x)$. Allora $r \in \K$ è una radice di $p$ se e solo se è radice di $g$ o è radice di $h$.
 \end{proposition}
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
     \begin{description}
         \item[($\implies$)] Infatti $p(r) = g(r)h(r) = 0$, dunque per la regola di annullamento del prodotto (\ref{annullamento_prodotto}) segue che $h(r) = 0 \lor h(r) = 0$.
-        \item[($\impliedby$)] Supponiamo senza perdita di generalita' che $g(r) = 0$. Allora $p(r) = g(r)h(r) = 0h(r) = 0$. \qedhere 
+        \item[($\impliedby$)] Supponiamo senza perdita di generalità che $g(r) = 0$. Allora $p(r) = g(r)h(r) = 0h(r) = 0$. \qedhere 
     \end{description}
 \end{proof}
 \begin{corollary}
-    Sia $p(x) \in \K[x]$ e sia $p_1(x), \dots, p_n(x) \in \K[x]$ una fattorizzazione di $p$. Allora $r \in \K$ e' una radice di $p$ se e solo se e' radice di uno tra $p_1, \dots, p_n$.
+    Sia $p(x) \in \K[x]$ e sia $p_1(x), \dots, p_n(x) \in \K[x]$ una fattorizzazione di $p$. Allora $r \in \K$ è una radice di $p$ se e solo se è radice di uno tra $p_1, \dots, p_n$.
 \end{corollary}
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
@@ -182,12 +182,12 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
         \item[($\implies$)] Infatti $p(r) = p_1(r) \cdots p_n(r) = 0$, dunque per la regola di annullamento del prodotto (\ref{annullamento_prodotto}) segue che \[
             p_1(r) = 0 \lor p_2(r) = 0 \lor \dots \lor p_n(r) = 0    
         \] ovvero la tesi.
-        \item[($\impliedby$)] Supponiamo senza perdita di generalita' che $p_1(r) = 0$. Allora $p(r) = p_1(r)p_2(r)\cdots p_n(r) = 0p_2(r)\cdots p_n(r) = 0$. \qedhere
+        \item[($\impliedby$)] Supponiamo senza perdita di generalità che $p_1(r) = 0$. Allora $p(r) = p_1(r)p_2(r)\cdots p_n(r) = 0p_2(r)\cdots p_n(r) = 0$. \qedhere
     \end{description} 
 \end{proof}
 
 \begin{remark}
-    La proposizione \ref{radice_di_p_sse_radice_fattore} vale soltanto nei campi, mentre negli anelli vale solo una delle due implicazioni (in particolare quella che dice che se $r$ e' radice di un fattore, allora e' radice anche del polinomio) in quanto non vale la regola di annullamento del prodotto. La conseguenza di questo fatto e' che in un anello $A$ un polinomio ha piu' radici di quante ne abbiano i suoi fattori, cioe' la fattorizzazione di un polinomio non e' unica.
+    La proposizione \ref{radice_di_p_sse_radice_fattore} vale soltanto nei campi, mentre negli anelli vale solo una delle due implicazioni (in particolare quella che dice che se $r$ è radice di un fattore, allora è radice anche del polinomio) in quanto non vale la regola di annullamento del prodotto. La conseguenza di questo fatto è che in un anello $A$ un polinomio ha piu' radici di quante ne abbiano i suoi fattori, cioè la fattorizzazione di un polinomio non è unica.
 \end{remark}
 
 \begin{proposition}[Un polinomio di grado n ha al massimo n radici in un campo]
@@ -196,10 +196,10 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 \begin{proof}
     Dimostriamolo per induzione su $n$.
     \begin{description}
-        \item[Caso base.] Se $n = 1$ allora $p(x) = a_0 + a_1x$, dunque l'unica radice e' $-a_0a_1^{-1}$.
+        \item[Caso base.] Se $n = 1$ allora $p(x) = a_0 + a_1x$, dunque l'unica radice è $-a_0a_1^{-1}$.
         \item[Passo induttivo.] Supponiamo che la tesi valga per $n$ e dimostriamola per $n+1$. Consideriamo due casi: \begin{itemize}
-            \item Se $p$ non ha radici allora $p$ ha meno radici di $n+1$, che e' la tesi.
-            \item Se $p$ ha una radice $r$ allora $p$ e' divisibile per $x-r$, ovvero esiste $q(x) \in \K[x]$ tale che $p(x) = (x-r)q(x)$. Per la proposizione \ref{grado_prodotto_somma_gradi} segue che $\deg q = n$, dunque per ipotesi induttiva il numero di radici di $q$ e' minore o uguale a $n$. Aggiungendo la radice $r$ segue infine che $p$ ha al massimo $n + 1$ radici.
+            \item Se $p$ non ha radici allora $p$ ha meno radici di $n+1$, che è la tesi.
+            \item Se $p$ ha una radice $r$ allora $p$ è divisibile per $x-r$, ovvero esiste $q(x) \in \K[x]$ tale che $p(x) = (x-r)q(x)$. Per la proposizione \ref{grado_prodotto_somma_gradi} segue che $\deg q = n$, dunque per ipotesi induttiva il numero di radici di $q$ è minore o uguale a $n$. Aggiungendo la radice $r$ segue infine che $p$ ha al massimo $n + 1$ radici.
         \end{itemize}  
     \end{description}
     Dunque per induzione la tesi vale per ogni $n \geq 1$.

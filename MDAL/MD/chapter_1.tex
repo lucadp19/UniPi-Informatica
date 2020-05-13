@@ -1,4 +1,4 @@
-\chapter{Numeri interi}
+\chapter{Insiemi numerici}
 
 \section{Strutture algebriche fondamentali}
 
@@ -10,14 +10,14 @@
     \end{itemize} per cui valgono i seguenti assiomi: 
     \begin{description}
         \item[(Assiomi di gruppo)] Per ogni $a, b, c \in G$ vale che
-        \begin{align}
+        \begin{align*}
             &\text{(P1)}      &&(ab) \in G            &\text{(chiusura rispetto a $\cdot$)}\\
-            &\text{(P2)}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+            &\text{(P2)}      &&(ab)c = a(bc)         &\text{(associatività di $\cdot$)}\\
             &\text{(P3)}      &&a \cdot e=e \cdot a=a &\text{($e$ el. neutro di $\cdot$)}\\
             &\text{(P4)}     &&\exists a^{-1} \in G. \quad aa^{-1} = e &\text{(inverso per $\cdot$)}
             \intertext{Si dice \textbf{gruppo commutativo} un gruppo per cui vale inoltre il seguente assioma:}
-            &\text{(P5)}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
-        \end{align}
+            &\text{(P5)}     &&ab = ba               &\text{(commutatività di $\cdot$)}
+        \end{align*}
     \end{description}
 \end{definition}
 
@@ -32,24 +32,24 @@
     \end{itemize} per cui valgono i seguenti assiomi: 
     \begin{description}
         \item[(Assiomi di anello)] Per ogni $a, b, c \in A$ vale che
-        \begin{align}
+        \begin{align*}
             &\text{(S1)}      &&(a+b) \in A           &\text{(chiusura rispetto a $+$)}\\
-            &\text{(S2)}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
-            &\text{(S3)}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
+            &\text{(S2)}      &&a+b = b+a             &\text{(commutatività di $+$)}\\
+            &\text{(S3)}      &&(a+b)+c = a+(b+c)     &\text{(associatività di $+$)}\\
             &\text{(S4)}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
             &\text{(S5)}      &&\exists (-a) \in A. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
             &\text{(P1)}      &&(ab) \in A            &\text{(chiusura rispetto a $\cdot$)}\\
-            &\text{(P2)}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+            &\text{(P2)}      &&(ab)c = a(bc)         &\text{(associatività di $\cdot$)}\\
             &\text{(P3)}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
-            &\text{(P4)}      &&(a+b)c = ac + bc      &\text{(distributivita' 1)} \\
-            &\text{(P5)}     &&a(b+c) = ab + ac      &\text{(distributivita' 2)}
+            &\text{(P4)}      &&(a+b)c = ac + bc      &\text{(distributività 1)} \\
+            &\text{(P5)}     &&a(b+c) = ab + ac      &\text{(distributività 2)}
             \intertext{Si dice \textbf{anello commutativo} un anello per cui vale inoltre il seguente assioma:}
-            &\text{(P6)}     &&ab = ba               &\text{(commutativita' di $\cdot$)}
-        \end{align}
+            &\text{(P6)}     &&ab = ba               &\text{(commutatività di $\cdot$)}
+        \end{align*}
     \end{description} 
 \end{definition}
 
-Un tipico esempio di anello commutativo e' $\Z$: infatti gli anelli generalizzano le operazioni che possiamo fare sui numeri interi e le loro proprieta' fondamentali per estenderle ad altri insiemi con la stessa struttura algebrica.
+Un tipico esempio di anello commutativo è $\Z$: infatti gli anelli generalizzano le operazioni che possiamo fare sui numeri interi e le loro proprietà fondamentali per estenderle ad altri insiemi con la stessa struttura algebrica.
 
 \begin{definition}[Campo]
     Si dice \textbf{campo} una quintupla ($F$, $+$, $\cdot$, $0$, $1$) formata da
@@ -62,25 +62,25 @@ Un tipico esempio di anello commutativo e' $\Z$: infatti gli anelli generalizzan
     \end{itemize}  per cui valgono i seguenti assiomi: 
     \begin{description}
         \item[(Assiomi di campo)] Per ogni $a, b, c \in F$ vale che
-        \begin{align}
+        \begin{align*}
             &\text{(S1)}      &&(a+b) \in F           &\text{(chiusura rispetto a $+$)}\\
-            &\text{(S2)}      &&a+b = b+a             &\text{(commutativita' di $+$)}\\
-            &\text{(S3)}      &&(a+b)+c = a+(b+c)     &\text{(associativita' di $+$)}\\
+            &\text{(S2)}      &&a+b = b+a             &\text{(commutatività di $+$)}\\
+            &\text{(S3)}      &&(a+b)+c = a+(b+c)     &\text{(associatività di $+$)}\\
             &\text{(S4)}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
             &\text{(S5)}      &&\exists (-a) \in F. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
             &\text{(P1)}      &&(ab) \in F            &\text{(chiusura rispetto a $\cdot$)}\\        
-            &\text{(P2)}      &&ab = ba               &\text{(commutativita' di $\cdot$)}\\
-            &\text{(P3)}      &&(ab)c = a(bc)         &\text{(associativita' di $\cdot$)}\\
+            &\text{(P2)}      &&ab = ba               &\text{(commutatività di $\cdot$)}\\
+            &\text{(P3)}      &&(ab)c = a(bc)         &\text{(associatività di $\cdot$)}\\
             &\text{(P4)}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
-            &\text{(P5)}     &&(a+b)c = ac + bc      &\text{(distributivita')} \\
+            &\text{(P5)}     &&(a+b)c = ac + bc      &\text{(distributività)} \\
             &\text{(P6)}     &&a \neq 0 \implies \exists a^{-1} \in F. \quad aa^{-1} = 1 &\text{(inverso per $\cdot$)}
-        \end{align}
+        \end{align*}
     \end{description} 
 
-    La definizione sopra e' equivalente a dire che $F$ e' un anello commutativo per cui ogni elemento non nullo ha un inverso moltiplicativo.
+    La definizione sopra è equivalente a dire che $F$ è un anello commutativo per cui ogni elemento non nullo ha un inverso moltiplicativo.
 \end{definition}
 
-Tra gli insiemi numerici classici, gli insiemi $\Q, \R$ e $\C$ sono tutti esempi di campi: infatti le operazioni di addizione e moltiplicazione sono chiuse rispetto all'insieme, rispettano le proprieta' commutativa, associativa e distributiva ed esistono gli inversi per la somma e per il prodotto (per ogni numero diverso da $0$). Il concetto di campo serve quindi a generalizzare la struttura algebrica dei numeri razionali/reali/complessi per altri insiemi numerici.
+Tra gli insiemi numerici classici, gli insiemi $\Q, \R$ e $\C$ sono tutti esempi di campi: infatti le operazioni di addizione e moltiplicazione sono chiuse rispetto all'insieme, rispettano le proprietà commutativa, associativa e distributiva ed esistono gli inversi per la somma e per il prodotto (per ogni numero diverso da $0$). Il concetto di campo serve quindi a generalizzare la struttura algebrica dei numeri razionali/reali/complessi per altri insiemi numerici.
 
 Nei campi vale la seguente proposizione.
 \begin{proposition}
@@ -90,7 +90,7 @@ Nei campi vale la seguente proposizione.
     \]
 \end{proposition}
 \begin{proof}
-    Sappiamo che $a = 0 \lor b = 0$ e' equivalente a $a \neq 0 \implies b = 0$, dunque supponiamo che $a$ sia diverso da $0$ e dimostriamo che $b$ e' zero.
+    Sappiamo che $a = 0 \lor b = 0$ è equivalente a $a \neq 0 \implies b = 0$, dunque supponiamo che $a$ sia diverso da $0$ e dimostriamo che $b$ è zero.
 
     Dato che $a \neq 0$ allora ammette un inverso. Chiamiamolo $a^{-1}$ e moltiplichiamo entrambi i membri per esso:
     \begin{alignat*}
@@ -99,19 +99,19 @@ Nei campi vale la seguente proposizione.
         \iff &(a^{-1}a)b = 0 \\
         \iff &b = 0
     \end{alignat*}
-    che e' la tesi.
+    che è la tesi.
 \end{proof}
 
 \section{Numeri complessi}
 
-\begin{definition}[Unita' immaginaria]
-    Si dice unita' immaginaria il numero $i$ tale che \[
+\begin{definition}[Unità immaginaria]
+    Si dice unità immaginaria il numero $i$ tale che \[
         i^2 = -1.    
     \]
 \end{definition}
 
 \begin{definition}[Numeri complessi]
-    L'insieme dei numeri complessi $\C$ e' l'insieme dei numeri della forma $a+ib$ per qualche $a, b \in \R$, ovvero \[
+    L'insieme dei numeri complessi $\C$ è l'insieme dei numeri della forma $a+ib$ per qualche $a, b \in \R$, ovvero \[
         \C = \{ a + ib \mid a, b \in \R, i^2 = -1\}.  
     \]
 \end{definition}
@@ -142,7 +142,7 @@ Nei campi vale la seguente proposizione.
     \end{gather*}
 \end{remark}
 
-Notiamo che i numeri complessi della forma $a + i0$ sono numeri reali, dunque $\R \subset \C$. Inoltre possiamo rappresentare i numeri complessi come punti in uno spazio bidimensionale dove la parte reale rappresenta l'ascissa e la parte immaginaria rappresenta l'ordinata: la retta corrispondente all'asse x e' il sottoinsieme dei numeri reali.
+Notiamo che i numeri complessi della forma $a + i0$ sono numeri reali, dunque $\R \subset \C$. Inoltre possiamo rappresentare i numeri complessi come punti in uno spazio bidimensionale dove la parte reale rappresenta l'ascissa e la parte immaginaria rappresenta l'ordinata: la retta corrispondente all'asse x è il sottoinsieme dei numeri reali.
 
 \begin{definition}[Coniugato complesso]
     Sia $z = a+ib \in \C$. Allora si dice coniugato complesso (o semplicemente coniugato) di $z$ il numero \[
@@ -186,7 +186,7 @@ Notiamo che $\abs{z} = 0$ se e solo se $a = b = 0$, ovvero se $z = 0$.
             \item[Caso base.] Se $n = 1$ allora banalmente $(\conj{z})^1 = \conj{z} = \conj{z^1}$.
             \item[Passo induttivo.] Supponiamo che la tesi valga per $n$ e dimostriamola per $n+1$. Allora \[
                 (\conj{z})^{n+1} = (\conj{z})^{n} \cdot \conj{z} = \conj{z^n} \cdot \conj{z} = \conj{z^{n+1}}
-            \] dove l'ultimo passaggio e' giustificato dal punto precedente della dimostrazione. \qedhere
+            \] dove l'ultimo passaggio è giustificato dal punto precedente della dimostrazione. \qedhere
         \end{description}
     \end{enumerate}
 \end{proof}
@@ -225,15 +225,15 @@ La proposizione precedente ci consente di trovare l'inverso di qualunque numero 
 
 \subsection{Rappresentazione polare dei numeri complessi}
 
-Dato che possiamo considerare i numeri complessi come punti di un piano bidimensionale possiamo rappresentarli in forma polare, cioe' considerando il vettore che congiunge l'origine degli assi con il punto $(a, b)$ che rappresenta il numero complesso $a + ib$. La forma polare di un numero complesso e' data dalla coppia $(r, \theta)$, dove $r$ e' il raggio del vettore e $\theta$ e' l'angolo tra l'asse x e il vettore.
+Dato che possiamo considerare i numeri complessi come punti di un piano bidimensionale possiamo rappresentarli in forma polare, cioè considerando il vettore che congiunge l'origine degli assi con il punto $(a, b)$ che rappresenta il numero complesso $a + ib$. La forma polare di un numero complesso è data dalla coppia $(r, \theta)$, dove $r$ è il raggio del vettore e $\theta$ è l'angolo tra l'asse x e il vettore.
 
-Dunque se $z = a+ib$ e' un numero complesso in forma cartesiana, possiamo esprimerlo come $r(\cos\theta + i\sin\theta)$, dove $r = \sqrt{a^2 + b^2} = \abs{z}$ e $\theta = \arctan \frac{a}{b}$.
+Dunque se $z = a+ib$ è un numero complesso in forma cartesiana, possiamo esprimerlo come $r(\cos\theta + i\sin\theta)$, dove $r = \sqrt{a^2 + b^2} = \abs{z}$ e $\theta = \arctan \frac{a}{b}$.
 
 \begin{definition}[Esponenziale complesso]
     $e^{i\theta} = \cos\theta + i\sin\theta.$
 \end{definition}
 
-Sfruttando la definizione precedente possiamo scrivere ogni numero complesso nella forma $re^{i\theta}$ che e' la forma polare del numero.
+Sfruttando la definizione precedente possiamo scrivere ogni numero complesso nella forma $re^{i\theta}$ che è la forma polare del numero.
 
 \begin{proposition}
     Siano $e^{i\alpha}, e^{i\beta} \in \C$. Allora vale \[

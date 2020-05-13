@@ -1,10 +1,10 @@
-\documentclass[italian,oneside,headinclude,11pt]{scrbook}
+\documentclass[italian,oneside,headinclude,10pt]{scrbook}
     \usepackage[utf8]{inputenc}
     \usepackage[italian]{babel}
     \usepackage[T1]{fontenc}
     \usepackage{textcomp, microtype}
     \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm}
-    
+
     \usepackage{enumerate}
     \usepackage{float}
     \usepackage{letltxmacro}
@@ -12,8 +12,12 @@
     \LetLtxMacro\amsproof\proof
     \LetLtxMacro\amsendproof\endproof
 
+    
+    \usepackage[pdfspacing]{classicthesis}
+    % \usepackage{lmodern}
+    
     \usepackage{thmtools}
-
+    \usepackage[framemethod=TikZ]{mdframed}
     \usepackage{hyperref} % ultimo package da caricare!
 
 \restylefloat{table}
@@ -23,29 +27,50 @@
     \LetLtxMacro\endproof\amsendproof
 }
 
+\titleformat*{\chapter}{\LARGE\scshape}
+\titleformat*{\section}{\Large\scshape}
+
+\renewcommand*{\proofname}{\textsc{Dimostrazione}}
+\addto\italian{\renewcommand*{\proofname}{\textsc{Dimostrazione}}}
+
 \declaretheoremstyle[
     spaceabove=6pt, spacebelow=6pt,
-    headindent=10pt,
-    headfont=\scshape\bfseries,
-    notefont=\normalfont\bfseries, notebraces={(}{)},
-    bodyfont=\itshape,
-    postheadspace=\newline
+    % headindent=6pt,
+    headfont=\bfseries,
+    notefont=\bfseries, notebraces={ (}{)},
+    % headfont=\scshape,
+    % notefont=\scshape, notebraces={ (}{)},
+    bodyfont=\itshape\normalsize,
+    shaded={rulecolor={rgb}{255,255,255}},
+    % mdframed={backgroundcolor=halfgray},
+    headpunct={\vspace{0.5\topsep}\newline}
 ]{thmstyle}
 \declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
 \declaretheorem[name=Corollario, sibling=theorem, style=thmstyle]{corollary}
 \declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
 
 \declaretheoremstyle[
-    headfont=\scshape\bfseries,
-    notefont=\normalfont\bfseries, notebraces={(}{)},
-    bodyfont=\normalfont,
-    postheadspace=\newline
+    spaceabove=0pt, spacebelow=0pt,
+    headfont=\bfseries,
+    notefont=\normalfont, notebraces={ (}{)},
+    % headfont=\scshape,
+    % notefont=\scshape, notebraces={(}{)},
+    bodyfont=\normalfont\normalsize,
+    headpunct={\vspace{0.5\topsep}\newline},
+    mdframed={
+        linecolor=halfgray,
+        linewidth=1pt,
+        backgroundcolor=white,
+        topline=false,
+        bottomline=false,
+        rightline=false
+    },
 ]{defstyle}
 \declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
 
 \declaretheoremstyle[
-    headfont=\scshape\bfseries,
-    notefont=\normalfont\bfseries, notebraces={(}{)},
+    headfont=\bfseries,
+    notefont=\normalfont, notebraces={ (}{)},
     bodyfont=\normalfont,
     postheadspace=1em
 ]{exmplstyle}

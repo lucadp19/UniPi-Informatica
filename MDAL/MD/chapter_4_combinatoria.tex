@@ -2,8 +2,8 @@
 
 \section{Insiemi e stringhe}
 
-\begin{definition}[Cardinalita' di un insieme]
-    Sia $A$ un insieme di elementi. Allora si dice cardinalita' di $A$ il numero di elementi contenuti in $A$, e si indica con $\abs{A}$.
+\begin{definition}[Cardinalità di un insieme]
+    Sia $A$ un insieme di elementi. Allora si dice cardinalità di $A$ il numero di elementi contenuti in $A$, e si indica con $\abs{A}$.
 \end{definition}
 Ad esempio se $A = \left\{ 4, 1, 5, 7, 9\right\}$ allora $\abs{A} = 5$.
 
@@ -12,7 +12,7 @@ Ad esempio se $A = \left\{ 4, 1, 5, 7, 9\right\}$ allora $\abs{A} = 5$.
         A \times B = \left\{ (a, b) \mid a \in A, b \in B\right\}   
     .\]
 \end{definition}
-Il prodotto cartesiano di due insiemi e' quindi l'insieme delle coppie ordinate $(a, b)$ dove il primo elemento appartiene al primo insieme e il secondo appartiene al secondo insieme. 
+Il prodotto cartesiano di due insiemi è quindi l'insieme delle coppie ordinate $(a, b)$ dove il primo elemento appartiene al primo insieme e il secondo appartiene al secondo insieme. 
 
 Notiamo che le coppie con gli stessi elementi ma diverso ordine sono diverse: prendiamo $A = \left\{ 4, 5, 6 \right\}, B = \left\{ 3, 4, 5 \right\}$; allora \[
     A \times B = \left\{ (4, 3), (4, 4), (4, 5), (5, 3), (5, 4), (5, 5), (6, 3), (6, 4), (6, 5)\right\}   
@@ -20,28 +20,28 @@ Notiamo che le coppie con gli stessi elementi ma diverso ordine sono diverse: pr
 
 Possiamo definire anche un prodotto cartesiano di tre o piu' insiemi nello stesso modo: gli elementi del prodotto cartesiano di $n$ insiemi si dicono $n$-uple oppure stringhe.
 
-\begin{proposition}[Cardinalita' del prodotto cartesiano]\label{cardinalita_prodotto_cartesiano}
+\begin{proposition}[Cardinalità del prodotto cartesiano]\label{cardinalita_prodotto_cartesiano}
     Siano $A_1, \dots, A_n$ insiemi. Allora \begin{equation}
         \abs{A_1 \cdots A_n} = \abs{A_1} \cdots \abs{A_n}.
     \end{equation}
 \end{proposition}
 \begin{proof}
-    Possiamo scegliere il primo elemento tra uno qualunque degli elementi del primo insieme: abbiamo dunque $\abs{A_1}$ possibilita'; per ognuna di queste abbiamo $\abs{A_2}$ possibilita' di scegliere il secondo elemento, dunque abbiamo $\abs{A_1} \cdot \abs{A_2}$ possibilita' per i primi due; e cosi' via.
+    Possiamo scegliere il primo elemento tra uno qualunque degli elementi del primo insieme: abbiamo dunque $\abs{A_1}$ possibilità; per ognuna di queste abbiamo $\abs{A_2}$ possibilità di scegliere il secondo elemento, dunque abbiamo $\abs{A_1} \cdot \abs{A_2}$ possibilità per i primi due; e cosi' via.
 \end{proof}
 
 \section{Conteggi particolari}
 
 \subsubsection{Disposizioni con ripetizione}
-Supponiamo di avere un insieme $A$ di cardinalita' $\abs{A} = n$ e voler costruire una stringa di $k$ elementi che appartengono ad $n$, potendoli anche ripetere.
+Supponiamo di avere un insieme $A$ di cardinalità $\abs{A} = n$ e voler costruire una stringa di $k$ elementi che appartengono ad $n$, potendoli anche ripetere.
 
-Queste stringhe sono tutte e sole le stringhe formate scegliendo uno degli elementi di $A$ come primo carattere, uno degli elementi di $A$ come secondo, eccetera... Dunque sono tutte e solo le stringhe che appartengono a $\overbrace{A \times \dots \times A}^{k \text{ volte}} = A^k$ che ha cardinalita' $\abs{A^k} = \abs{A}^k = n^k$.
+Queste stringhe sono tutte e sole le stringhe formate scegliendo uno degli elementi di $A$ come primo carattere, uno degli elementi di $A$ come secondo, eccetera... Dunque sono tutte e solo le stringhe che appartengono a $\overbrace{A \times \dots \times A}^{k \text{ volte}} = A^k$ che ha cardinalità $\abs{A^k} = \abs{A}^k = n^k$.
 
 Questo numero si dice \textbf{numero delle disposizioni con ripetizioni di $\bm{n}$ elementi in $\bm{k}$ posizioni}, e si indica con $D'_{n, k} = n^k$.
 
 \subsubsection{Disposizioni senza ripetizione}
-Supponiamo di avere un insieme $A$ di cardinalita' $\abs{A} = n$ e voler costruire una stringa di $k$ elementi che appartengono ad $n$, senza poterli ripetere.
+Supponiamo di avere un insieme $A$ di cardinalità $\abs{A} = n$ e voler costruire una stringa di $k$ elementi che appartengono ad $n$, senza poterli ripetere.
 
-Seguendo il ragionamento di prima abbiamo $n$ possibilita' per il primo elemento, $n-1$ per il secondo, in quanto dobbiamo escludere il primo per evitare di ripeterlo, $n-2$ per il terzo, eccetera, fino ad arrivare a $n-(k-1) = n - k + 1$ per il $k$-esimo. Dunque il numero totale di possibilita' e' \[
+Seguendo il ragionamento di prima abbiamo $n$ possibilità per il primo elemento, $n-1$ per il secondo, in quanto dobbiamo escludere il primo per evitare di ripeterlo, $n-2$ per il terzo, eccetera, fino ad arrivare a $n-(k-1) = n - k + 1$ per il $k$-esimo. Dunque il numero totale di possibilità è \[
     n(n-1)\cdots (n-k+1) = \frac{n(n-1)\cdots (n-k+1)(n-k)\cdots 2\cdot 1}{(n-k)\cdots 2\cdot 1} = \frac{n!}{(n-k)!}
 \]
 
@@ -49,7 +49,7 @@ Questo numero si dice \textbf{numero delle disposizioni senza ripetizioni di $\b
 
 \subsubsection{Permutazioni senza ripetizione}
 
-Consideriamo una stringa di $n$ elementi distinti e cerchiamo di contare i modi in cui possiamo ordinarli per ottenere stringhe diverse. Notiamo che questo e' equivalente a chiederci in quanti modi possiamo creare una stringa di $n$ elementi a partire da un insieme di $n$ elementi, cioe' a quante sono le disposizioni senza ripetizione di $n$ elementi in $n$ posizioni: \[
+Consideriamo una stringa di $n$ elementi distinti e cerchiamo di contare i modi in cui possiamo ordinarli per ottenere stringhe diverse. Notiamo che questo è equivalente a chiederci in quanti modi possiamo creare una stringa di $n$ elementi a partire da un insieme di $n$ elementi, cioè a quante sono le disposizioni senza ripetizione di $n$ elementi in $n$ posizioni: \[
     D_{n, n} = \frac{n!}{(n - n)!} = \frac{n!}{0!} = n!    
 \]
 
@@ -59,19 +59,19 @@ Questo numero si dice \textbf{numero delle permutazioni senza ripetizioni di $\b
 
 Consideriamo una stringa di $n$ elementi, non necessariamente distinti, e cerchiamo di contare i modi in cui possiamo scambiarli di posto ottenendo stringhe diverse.
 
-Dato che alcuni elementi si ripetono, scambiandoli di posto otterremmo una stringa uguale all'originale, dunque il numero degli anagrammi di una parola di $n$ lettere non necessariamente distinte e' minore al numero delle permutazioni senza ripetizione.
+Dato che alcuni elementi si ripetono, scambiandoli di posto otterremmo una stringa uguale all'originale, dunque il numero degli anagrammi di una parola di $n$ lettere non necessariamente distinte è minore al numero delle permutazioni senza ripetizione.
 
-Per capire come ottenere il numero di anagrammi, consideriamo un esempio. Prendiamo la parola ASSASSINI e rendiamo le lettere distinte tra loro aggiungendo dei pedici, ottenendo A$_1$S$_1$S$_2$A$_2$S$_3$S$_4$I$_1$NI$_2$. A questo punto il numero di anagrammi di questa parola e' esattamente il numero di permutazioni senza ripetizioni, dunque $9!$ stringhe. 
+Per capire come ottenere il numero di anagrammi, consideriamo un esempio. Prendiamo la parola ASSASSINI e rendiamo le lettere distinte tra loro aggiungendo dei pedici, ottenendo A$_1$S$_1$S$_2$A$_2$S$_3$S$_4$I$_1$NI$_2$. A questo punto il numero di anagrammi di questa parola è esattamente il numero di permutazioni senza ripetizioni, dunque $9!$ stringhe. 
 
-Se torniamo alla parola originale pero' alcune possibilita' sono contate piu' volte, in quanto si ottengono scambiando due lettere uguali (ad esempio A$_1$S$_1$S$_2$A$_2$S$_3$S$_4$I$_1$NI$_2$ e A$_1$S$_3$S$_2$A$_2$S$_1$S$_4$I$_1$NI$_2$ si ottengono l'una dall'altra scambiando una S, dunque contano come la stessa stringa). 
+Se torniamo alla parola originale pero' alcune possibilità sono contate piu' volte, in quanto si ottengono scambiando due lettere uguali (ad esempio A$_1$S$_1$S$_2$A$_2$S$_3$S$_4$I$_1$NI$_2$ e A$_1$S$_3$S$_2$A$_2$S$_1$S$_4$I$_1$NI$_2$ si ottengono l'una dall'altra scambiando una S, dunque contano come la stessa stringa). 
 
-Possiamo scambiare le $4$ S tra loro in $4!$ modi, le A in $2!$ modi e le I in $2!$ modi; il risultato sara' quindi ottenuto dividendo il numero totale delle permutazioni per ciascuno dei modi di permutare le lettere uguali (che sono il numero di possibilita' che contiamo piu' volte), ottenendo in questo caso \[ 
+Possiamo scambiare le $4$ S tra loro in $4!$ modi, le A in $2!$ modi e le I in $2!$ modi; il risultato sarà quindi ottenuto dividendo il numero totale delle permutazioni per ciascuno dei modi di permutare le lettere uguali (che sono il numero di possibilità che contiamo piu' volte), ottenendo in questo caso \[ 
     \frac{9!}{4!2!2!}
 .\]
 
 \subsubsection{Combinazioni senza ripetizioni}
 
-Consideriamo un insieme di $n$ elementi distinti e cerchiamo di contare i modi di estrarre da questo insieme un sottoinsieme di $k$ elementi; dato che siamo interessati ai sottoinsiemi l'ordine degli elementi non e' rilevante, dunque il numero che cerchiamo deve essere minore di $D_{n, k}$.
+Consideriamo un insieme di $n$ elementi distinti e cerchiamo di contare i modi di estrarre da questo insieme un sottoinsieme di $k$ elementi; dato che siamo interessati ai sottoinsiemi l'ordine degli elementi non è rilevante, dunque il numero che cerchiamo deve essere minore di $D_{n, k}$.
 
 Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni senza ripetizioni} e indichiamolo con $C_{n, k}$. Possiamo notare che ogni sottoinsieme ottenuto corrisponde ad una stringa di lunghezza $k$ che puo' essere permutata in $P_k$ modi per ottenere tutte le disposizioni possibili. Dunque \begin{alignat*}
     {1}
@@ -84,10 +84,10 @@ Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni s
 \subsection{Esempi}
 
 \begin{example}
-    Contare i sottoinsiemi di $\left\{ 1, 2, 3, 4, 5\right\}$ di cardinalita' $3$.
+    Contare i sottoinsiemi di $\left\{ 1, 2, 3, 4, 5\right\}$ di cardinalità $3$.
 \end{example}
 \begin{solution}
-    Dato che stiamo cercando sottoinsiemi l'ordine non conta, dunque dobbiamo usare le combinazioni, ottenendo che la soluzione e' \[
+    Dato che stiamo cercando sottoinsiemi l'ordine non conta, dunque dobbiamo usare le combinazioni, ottenendo che la soluzione è \[
         C_{5, 3} = \binom{5}{3} =  \frac{5!}{3!2!} = \frac{5*4}{2} = 10
     .\]
 \end{solution}
@@ -96,17 +96,17 @@ Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni s
     Quante sono le stringhe binarie di lunghezza $n$? Quante sono le stringhe binarie di lunghezza $10$ con $3$ cifre '$1$' e $7$ cifre '$0$'?
 \end{example}
 \begin{solution}
-    Ogni posizione di una stringa binaria puo' essere riempita con $2$ valori ('0' oppure '1') e ci sono $n$ posizioni, dunque il numero di stringhe possibili e' il numero di disposizioni con ripetizione di $2$ elementi in $n$ posizioni, cioe' $2^n$.
+    Ogni posizione di una stringa binaria puo' essere riempita con $2$ valori ('0' oppure '1') e ci sono $n$ posizioni, dunque il numero di stringhe possibili è il numero di disposizioni con ripetizione di $2$ elementi in $n$ posizioni, cioè $2^n$.
 
     Per risolvere il secondo punto possiamo scegliere due strade equivalenti.
     \begin{enumerate}[(i)]
-        \item Prendiamo una qualunque stringa che rispetta le condizioni, come 1110000000; allora il numero di stringhe con 3 uni e 7 zeri e' il numero di anagrammi di questa stringa, che e' \[
+        \item Prendiamo una qualunque stringa che rispetta le condizioni, come 1110000000; allora il numero di stringhe con 3 uni e 7 zeri è il numero di anagrammi di questa stringa, che è \[
             \frac{10!}{3!7!} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2} = 120.   
         \]
-        \item Notiamo che il problema e' equivalente al seguente problema: ho 10 posizioni possibili e devo sceglierne 3 in cui mettere le cifre '1'; infatti a quel punto le altre 7 sono automaticamente riempite con zeri. Dunque dato che dobbiamo scegliere un sottoinsieme (non ordinato) di posizioni tra 10 posizioni, il risultato sara' \[
+        \item Notiamo che il problema è equivalente al seguente problema: ho 10 posizioni possibili e devo sceglierne 3 in cui mettere le cifre '1'; infatti a quel punto le altre 7 sono automaticamente riempite con zeri. Dunque dato che dobbiamo scegliere un sottoinsieme (non ordinato) di posizioni tra 10 posizioni, il risultato sarà \[
             \binom{10}{3} = \frac{10!}{3!7!} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2} = 120.   
         \]
-        Scegliere le 7 posizioni per gli zeri e' ovviamente equivalente.
+        Scegliere le 7 posizioni per gli zeri è ovviamente equivalente.
     \end{enumerate}
 \end{solution}
 
@@ -124,17 +124,17 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
     Sia $A$ un insieme tale che $\abs{A} = n$. Allora $\abs{\mathcal{P}(A)} = 2^n$.
 \end{proposition}
 \begin{proof}
-    Passiamo ad una rappresentazione alternativa dei sottoinsiemi di $A$: fissiamo un ordine per l'insieme iniziale, poi associamo ad ogni sottoinsieme una stringa binaria che ha in posizione $i$ il numero 1 se e solo se l'elemento in posizione $i$ nell'insieme iniziale e' contenuto nel sottoinsieme.
+    Passiamo ad una rappresentazione alternativa dei sottoinsiemi di $A$: fissiamo un ordine per l'insieme iniziale, poi associamo ad ogni sottoinsieme una stringa binaria che ha in posizione $i$ il numero 1 se e solo se l'elemento in posizione $i$ nell'insieme iniziale è contenuto nel sottoinsieme.
 
-    Ad esempio, se $A = \{1, 2, 3, 4\}$ e il sottoinsieme e' $\{3, 4\}$ allora la stringa binaria ad esso associato e' 0011, in quanto gli elementi in prima e seconda posizione dell'insieme $A$ (1 e 2) non sono nel sottoinsieme, mentre gli elementi in terza e quarta sono nel sottoinsieme. 
+    Ad esempio, se $A = \{1, 2, 3, 4\}$ e il sottoinsieme è $\{3, 4\}$ allora la stringa binaria ad esso associato è 0011, in quanto gli elementi in prima e seconda posizione dell'insieme $A$ (1 e 2) non sono nel sottoinsieme, mentre gli elementi in terza e quarta sono nel sottoinsieme. 
 
-    Questa associazione e' biunivoca, poiche' a ogni sottoinsieme corrisponde una e una sola stringa e ad ogni stringa corrispone uno e un solo sottoinsieme, dunque il numero di stringhe e' uguale al numero di sottoinsiemi.
+    Questa associazione è biunivoca, poiché a ogni sottoinsieme corrisponde una e una sola stringa e ad ogni stringa corrispone uno e un solo sottoinsieme, dunque il numero di stringhe è uguale al numero di sottoinsiemi.
 
-    Dato che ci sono $2^n$ stringhe binarie di lunghezza $n$, allora ci saranno $2^n$ sottoinsiemi, dunque la cardinalita' dell'insieme delle parti $\abs{\mathcal{P}(A)}$ sara' $2^n$.
+    Dato che ci sono $2^n$ stringhe binarie di lunghezza $n$, allora ci saranno $2^n$ sottoinsiemi, dunque la cardinalità dell'insieme delle parti $\abs{\mathcal{P}(A)}$ sarà $2^n$.
 \end{proof}
 
 \begin{example}
-    Consideriamo l'insieme dei numeri da 1 a 100. In quanti modi posso formare un sottoinsieme di cardinalita' 3 in modo che la somma dei numeri sia pari?
+    Consideriamo l'insieme dei numeri da 1 a 100. In quanti modi posso formare un sottoinsieme di cardinalità 3 in modo che la somma dei numeri sia pari?
 \end{example}
 \begin{solution}
     Posso farlo in due modi diversi:
@@ -160,7 +160,7 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
         \overbrace{1 \dots 1}^{x \text{ volte}} \mid   \overbrace{1 \dots 1}^{y \text{ volte}} \mid\overbrace{1 \dots 1}^{z \text{ volte}}
     \] dove le linee verticali fanno da separatori tra i gruppi di uni che vanno contate nelle $x$, nelle $y$ e nelle $z$. 
     
-    Dato che la somma deve fare $4$ devono esserci 4 uni e due separatori, cioe' in totale 6 oggetti; allora il numero di soluzioni puo' essere ottenuto trovando il numero di permutazioni di questi oggetti, che e' \[
+    Dato che la somma deve fare $4$ devono esserci 4 uni e due separatori, cioè in totale 6 oggetti; allora il numero di soluzioni puo' essere ottenuto trovando il numero di permutazioni di questi oggetti, che è \[
         \frac{6!}{2!4!} = \frac{6 \cdot 5}{2} = 15.
     \]
 
@@ -178,50 +178,50 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
 \end{example}
 \begin{solution} Indichiamo con $g$ il numero di gocce di colore giallo che usiamo, $r$ la gocce di rosso, $v$ le gocce di verde e con $b$ le gocce di blu.
     \begin{enumerate}[(i)]
-        \item Il problema e' equivalente a chiederci quante quadruple $(g, r, v, b)$ di naturali soddisfano l'equazione $g + r + v + b = 5$. Rappresentiamo come nell'esercizio precedente una soluzione come uni e separatori: \[
+        \item Il problema è equivalente a chiederci quante quadruple $(g, r, v, b)$ di naturali soddisfano l'equazione $g + r + v + b = 5$. Rappresentiamo come nell'esercizio precedente una soluzione come uni e separatori: \[
             \overbrace{1 \dots 1}^{g \text{ volte}} \mid \overbrace{1 \dots 1}^{r \text{ volte}} \mid \overbrace{1 \dots 1}^{v \text{ volte}} \mid \overbrace{1 \dots 1}^{b \text{ volte}}.
-        \] Dunque abbiamo $8$ oggetti in totale, di cui $5$ sono uni e $3$ sono separatori. Segue quindi che il numero totale di modi per permutare questi oggetti e' \[
+        \] Dunque abbiamo $8$ oggetti in totale, di cui $5$ sono uni e $3$ sono separatori. Segue quindi che il numero totale di modi per permutare questi oggetti è \[
             \binom{8}{3} = \frac{8!}{5!3!} = \frac{8\cdot 7 \cdot 6}{6} = 56.
         \]
-        \item Dal conto del punto (i) sappiamo che senza restrizioni abbiamo $56$ possibilita'. Da queste dobbiamo togliere tutte le possibilita' in cui usiamo 4 o 5 gocce di un colore.
+        \item Dal conto del punto (i) sappiamo che senza restrizioni abbiamo $56$ possibilità. Da queste dobbiamo togliere tutte le possibilità in cui usiamo 4 o 5 gocce di un colore.
      
-        Ho esattamente 4 possibilita' di usare 5 gocce dello stesso colore: \[
+        Ho esattamente 4 possibilità di usare 5 gocce dello stesso colore: \[
             (5, 0, 0, 0); \quad (0, 5, 0, 0); \quad (0, 0, 5, 0); \quad (0, 0, 0, 5).
         \] 
 
-        Contiamo ora in quanti modi posso avere quattro gocce dello stesso colore. Innanzitutto scelgo il colore di cui uso 4 gocce, e posso farlo in 4 modi; dopo scelgo il colore che uso per l'ultima goccia, ed ho 3 possibilita'; in tutto ho quindi $12 = 4 \cdot 3$ possibilita'. (Notiamo che in questo caso non sto scegliendo due colori tra 4 senza considerare l'ordine, in quanto il primo colore e' quello di cui uso 4 gocce, dunque l'ordine conta.)
+        Contiamo ora in quanti modi posso avere quattro gocce dello stesso colore. Innanzitutto scelgo il colore di cui uso 4 gocce, e posso farlo in 4 modi; dopo scelgo il colore che uso per l'ultima goccia, ed ho 3 possibilità; in tutto ho quindi $12 = 4 \cdot 3$ possibilità. (Notiamo che in questo caso non sto scegliendo due colori tra 4 senza considerare l'ordine, in quanto il primo colore è quello di cui uso 4 gocce, dunque l'ordine conta.)
 
-        In totale avro' quindi $56 - 4 - 12 = 40$ possibilita'.
+        In totale avro' quindi $56 - 4 - 12 = 40$ possibilità.
     \end{enumerate}
 \end{solution}
 
 \begin{example}
     Consideriamo una tabella $3 \times 3$. In quanti modi possiamo colorare ogni casella di bianco o di nero in modo che:
     \begin{enumerate}[(i)]
-        \item ogni riga e' colorata in modo diverso;
+        \item ogni riga è colorata in modo diverso;
         \item esiste una e una sola riga bianca;
         \item esiste almeno una riga monocromatica.
     \end{enumerate}
 \end{example}
 \begin{solution}
-    Innanzitutto consideriamo una singola riga: dato che e' formata da $3$ caselle che possono essere colorate in 2 modi, in totale la riga potra' essere colorata in $2^3$ modi distinti.
+    Innanzitutto consideriamo una singola riga: dato che è formata da $3$ caselle che possono essere colorate in 2 modi, in totale la riga potrà essere colorata in $2^3$ modi distinti.
     \begin{enumerate}
         [(i)]
         \item Coloro la prima riga: dato che non ho ulteriori restrizioni lo posso fare in $2^3 = 8$ modi. Ora ho solo 7 modi per colorare la seconda riga, in quanto non posso ripetere la stessa colorazione della prima; e infine ho 6 modi per colorare l'ultima, in quanto non posso ripetere la prima o la seconda. In totale ho quindi $8\cdot 7\cdot 6$ modi di colorare la tabella.
-        \item Ho $3$ possibilita' per scegliere la riga bianca. Ora ho $7$ modi per colorare la prima riga non bianca e sempre 7 modi per colorare la seconda riga non bianca (devo escludere la colorazione formata da 3 quadratini bianchi). In totale ho dunque $3 \cdot 7\cdot 7$ modi di colorare la tabella.
-        \item Potrei pensare di ragionare in questo modo: scelgo una riga monocromatica tra 3; posso colorarla in due modi (tutta bianca o tutta nera); ora posso colorare le due righe rimanenti in 8 modi ciascuna. In realta' questo ragionamento non funziona, perche' conterei piu' volte combinazioni in cui ci sono piu' righe monocromatiche.
+        \item Ho $3$ possibilità per scegliere la riga bianca. Ora ho $7$ modi per colorare la prima riga non bianca e sempre 7 modi per colorare la seconda riga non bianca (devo escludere la colorazione formata da 3 quadratini bianchi). In totale ho dunque $3 \cdot 7\cdot 7$ modi di colorare la tabella.
+        \item Potrei pensare di ragionare in questo modo: scelgo una riga monocromatica tra 3; posso colorarla in due modi (tutta bianca o tutta nera); ora posso colorare le due righe rimanenti in 8 modi ciascuna. In realtà questo ragionamento non funziona, perché conterei piu' volte combinazioni in cui ci sono piu' righe monocromatiche.
         
         Abbiamo quindi due modi alternativi a disposizione. \begin{enumerate}[1.]
             \item Conto separatamente i casi in cui ci sono una, due o tre righe monocromatiche.
             
-            Supponiamo che ci sia una singola riga monocromatica. Dunque dobbiamo scegliere quale riga e' (3 possibilita') e se la riga e' bianca o nera (2 possibilita'); infine le altre due righe non possono essere monocromatiche dunque avremo $8-2 = 6$ possibilita' per ciascuna di esse. Dunque in questo caso ci sono $3\cdot 2 \cdot 6^2 = 6^3$ possibilita'.
+            Supponiamo che ci sia una singola riga monocromatica. Dunque dobbiamo scegliere quale riga è (3 possibilità) e se la riga è bianca o nera (2 possibilità); infine le altre due righe non possono essere monocromatiche dunque avremo $8-2 = 6$ possibilità per ciascuna di esse. Dunque in questo caso ci sono $3\cdot 2 \cdot 6^2 = 6^3$ possibilità.
 
-            Supponiamo che ci siano due righe monocromatiche. Allora possiamo sceglierle tra le tre in $\binom{3}{2} = 3$ modi, e possiamo scegliere il loro colore in $2\cdot2 = 4$ modi. L'ultima riga deve essere non monocromatica, dunque possiamo sceglierla in $6$ modi diversi, ottenendo in totale $3 \cdot 4 \cdot 6 = 72$ possibilita'.
+            Supponiamo che ci siano due righe monocromatiche. Allora possiamo sceglierle tra le tre in $\binom{3}{2} = 3$ modi, e possiamo scegliere il loro colore in $2\cdot2 = 4$ modi. L'ultima riga deve essere non monocromatica, dunque possiamo sceglierla in $6$ modi diversi, ottenendo in totale $3 \cdot 4 \cdot 6 = 72$ possibilità.
 
-            Supponiamo infine che tutte le righe siano monocromatiche. Per ognuna di esse abbiamo due possibilita', dunque abbiamo in totale $2^3 = 8$ scelte possibili.
+            Supponiamo infine che tutte le righe siano monocromatiche. Per ognuna di esse abbiamo due possibilità, dunque abbiamo in totale $2^3 = 8$ scelte possibili.
 
-            Facendo la somma delle varie possibilita' otteniamo che ci sono $6^3 + 72 + 8 = 296$ tabelle con almeno una riga monocromatica.
-            \item Passo al complementare: conto i casi in cui non c'e' nessuna riga monocromatica e lo sottraggo dal totale. Se nessuna riga e' monocromatica significa che abbiamo $8 - 2 = 6$ possibilita' per riga; il numero totale di possibilita' senza restrizioni e' $2^9$ dunque la soluzione al terzo punto e' $2^9 - 6^3 = 296$.
+            Facendo la somma delle varie possibilità otteniamo che ci sono $6^3 + 72 + 8 = 296$ tabelle con almeno una riga monocromatica.
+            \item Passo al complementare: conto i casi in cui non c'è nessuna riga monocromatica e lo sottraggo dal totale. Se nessuna riga è monocromatica significa che abbiamo $8 - 2 = 6$ possibilità per riga; il numero totale di possibilità senza restrizioni è $2^9$ dunque la soluzione al terzo punto è $2^9 - 6^3 = 296$.
         \end{enumerate}
     \end{enumerate}
 \end{solution}
@@ -238,7 +238,7 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
 \begin{proof}
     Scelgo i numeri pari e i dispari da includere nel sottoinsieme indipendentemente.
     \begin{enumerate}
-        \item Posso inserire nel sottoinsieme un numero qualunque di dispari, dunque posso scegliere un sottoinsieme qualsiasi dei numeri dispari in $\N_{100}$: dato che in $\N_{100}$ ci sono $50$ dispari, il numero di sottoinsiemi di numeri dispari e' $2^50$.
+        \item Posso inserire nel sottoinsieme un numero qualunque di dispari, dunque posso scegliere un sottoinsieme qualsiasi dei numeri dispari in $\N_{100}$: dato che in $\N_{100}$ ci sono $50$ dispari, il numero di sottoinsiemi di numeri dispari è $2^50$.
         \item Per contare i possibili sottoinsiemi con i pari passo al complementare e sottraggo dal totale ($2^50$ per le stesse motivazioni) il numero di sottoinsiemi con nessun pari (ovvero $\binom{50}{0}$), il numero di sottoinsiemi con un solo pari (ovvero $\binom{50}{1}$) e il numero di sottoinsiemi con due numeri pari (ovvero $\binom{50}{2}$).
     \end{enumerate}
 \end{proof}
@@ -263,7 +263,7 @@ Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usand
 \begin{proof}[Dimostrazione del Teorema del Binomiale (\ref{binomiale})]
     Per definizione \[
         (x + y)^n = \overbrace{(x+y)\cdots (x+y)}^{n \text{ volte}}.
-    \] Dunque il risultato dell'elevamento a potenza sara' la somma di tutti i monomi formati da una sequenza di $x$ e $y$ di lunghezza $n$, in quanto ogni addendo sara' dato dalla scelta di $x$ o di $y$ in ogni fattore di $(x+y)\cdots (x+y)$.
+    \] Dunque il risultato dell'elevamento a potenza sarà la somma di tutti i monomi formati da una sequenza di $x$ e $y$ di lunghezza $n$, in quanto ogni addendo sarà dato dalla scelta di $x$ o di $y$ in ogni fattore di $(x+y)\cdots (x+y)$.
 
     Ad esempio \begin{alignat*}{1}
         (x+y)^3 &= (x+y)(x+y)(x+y) \\
@@ -272,7 +272,7 @@ Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usand
                 &= x^3 + 3x^2y + 3xy^2 + y^3.
     \end{alignat*}
 
-    Ognuno di questi monomi puo' essere semplificato alla forma $x^ky^h$, ma dato che il numero di $x$ e $y$ deve essere $n$ segue che $k + h = n$, cioe' $h = n - k$, cioe' ogni monomio puo' essere scritto nella forma $x^ky^{n-k}$. Dato che ogni monomio ha al minimo 0 fattori uguali a $x$ e al massimo $n$ fattori uguali a $x$, sommando i monomi uguali insieme otterremo:
+    Ognuno di questi monomi puo' essere semplificato alla forma $x^ky^h$, ma dato che il numero di $x$ e $y$ deve essere $n$ segue che $k + h = n$, cioè $h = n - k$, cioè ogni monomio puo' essere scritto nella forma $x^ky^{n-k}$. Dato che ogni monomio ha al minimo 0 fattori uguali a $x$ e al massimo $n$ fattori uguali a $x$, sommando i monomi uguali insieme otterremo:
     \begin{alignat*}
         {1}
         (x+y)^n &= c_0x^0y^n + c_1x^1y^{n-1} + \dots + c_{n-1}x_{n-1}y_1 + c_nx^ny^0\\
@@ -282,13 +282,13 @@ Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usand
 
     Troviamo quindi un'espressione per $c_k$ per un $k$ generico. Dato che $c_k$ rappresenta il numero di termini nell'espressione originale che possono essere semplificati a $x^ky^{n-k}$, allora $c_k$ indica il numero di termini con $k$ fattori uguali a $x$ (edi conseguenza i restanti $n-k$ uguali a $y$). 
     
-    Il numero di questi termini e' uguale al numero di modi in cui possiamo posizionare $k$ '$x$' in una stringa di $n$ elementi, che e' il numero di modi in cui possiamo scegliere $k$ posizioni da un insieme di $n$ elementi. Inoltre una volta scelte le posizioni per le $x$ le $y$ andranno in tutte le restanti $n-k$ posizioni, dunque \[
+    Il numero di questi termini è uguale al numero di modi in cui possiamo posizionare $k$ '$x$' in una stringa di $n$ elementi, che è il numero di modi in cui possiamo scegliere $k$ posizioni da un insieme di $n$ elementi. Inoltre una volta scelte le posizioni per le $x$ le $y$ andranno in tutte le restanti $n-k$ posizioni, dunque \[
         c_k = \binom{n}{k}.
     \]
 
     Sostituendolo nell'espressione per $(x+y)^n$ otteniamo \[
         (x+y)^n = \sum_{k = 0}^n \binom{n}{k}x^ky^{n-k}
-    \] che e' la tesi.
+    \] che è la tesi.
 \end{proof}
 
 \subsection{Poker}
@@ -296,7 +296,7 @@ Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usand
 Cerchiamo di calcolare il numero di modi in cui possiamo fare punteggi nel Poker tradizionale. 
 
 Innanzitutto descriviamo il gioco: abbiamo un mazzo di 52 carte divise in 4 semi, con valori 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K.
-Si pescano 5 carte e viene assegnato un punteggio alla mano se e' in una delle seguenti combinazioni: \begin{itemize}
+Si pescano 5 carte e viene assegnato un punteggio alla mano se è in una delle seguenti combinazioni: \begin{itemize}
     \item[\textbf{Scala reale massima.}] una scala formata da 10, J, Q, K, 1 dello stesso seme (es. 10-J-Q-K-1 di cuori);
     \item[\textbf{Scala reale.}]  una scala formata da cinque carte consecutive dello stesso seme (es. 8-9-10-J-Q di fiori);
     \item[\textbf{Colore.}]  cinque carte dello stesso seme (es. 1-3-5-6-J di fiori);    
@@ -308,16 +308,16 @@ Si pescano 5 carte e viene assegnato un punteggio alla mano se e' in una delle s
     \item[\textbf{Coppia.}]una coppia di carte dal valore uguale e tre diverse (es. K-K-1-9-10).
 \end{itemize}
 
-Calcoliamo il numero di mani possibili. Dato che dobbiamo scegliere 5 carte da 52 e non abbiamo altre restrizioni, il numero di mani possibili e' \[\binom{52}{5}.\]
+Calcoliamo il numero di mani possibili. Dato che dobbiamo scegliere 5 carte da 52 e non abbiamo altre restrizioni, il numero di mani possibili è \[\binom{52}{5}.\]
 
-Ora calcoliamo il numero di possibilita' per ogni combinazione che da' punteggio.
+Ora calcoliamo il numero di possibilità per ogni combinazione che dà punteggio.
 \begin{itemize}
     \item[\textbf{Scala reale massima.}] Ho una scala reale massima per seme, dunque in tutto devo avere 4 scale reali massime.
-    \item[\textbf{Scala reale.}] Ho 10 scale reali per seme: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che ho 4 semi, il numero totale di scale reali e' $4 \cdot 10 = 40$. 
-    \item[\textbf{Colore.}] Scegliamo un seme (4 possibilita'). Allora il numero di colori che possiamo fare in un dato seme equivale al numero di modi in cui possiamo scegliere 5 carte di quel seme, che e' $\binom{13}{5}$. Dunque in totale il numero di colori che non siano scale reali e' $4\binom{13}{5}-40$.
-    \item[\textbf{Scala.}] Ci sono 10 sequenze di valori possibili che formano una scala: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che posso scegliere liberamente il seme di ogni carta della scala, il numero totale di scale e' $4^5 \cdot 10$. Sottraendo ad esse il numero di scale reali otteniamo il numero di scale non reali, che sono $4^5 \cdot 10 - 40$.
-    \item[\textbf{Poker.}] Scelgo innanzitutto la carta che si deve ripetere 4 volte, e dato che ho 13 valori diversi avro' 13 possibilita' di sceglierla. Dopo devo scegliere l'ultima carta, che puo' essere una qualunque tra le $52 - 4 = 48$ rimanenti. Dunque in totale ho $13\cdot 48$ modi per fare poker.
-    \item[\textbf{Full.}] Scelgo il valore della carta che formera' il tris, e posso sceglierlo in 13 modi; poi scelgo il valore della carta che formera' la coppia, che posso scegliere in $13-1 = 12$ modi. 
+    \item[\textbf{Scala reale.}] Ho 10 scale reali per seme: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che ho 4 semi, il numero totale di scale reali è $4 \cdot 10 = 40$. 
+    \item[\textbf{Colore.}] Scegliamo un seme (4 possibilità). Allora il numero di colori che possiamo fare in un dato seme equivale al numero di modi in cui possiamo scegliere 5 carte di quel seme, che è $\binom{13}{5}$. Dunque in totale il numero di colori che non siano scale reali è $4\binom{13}{5}-40$.
+    \item[\textbf{Scala.}] Ci sono 10 sequenze di valori possibili che formano una scala: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che posso scegliere liberamente il seme di ogni carta della scala, il numero totale di scale è $4^5 \cdot 10$. Sottraendo ad esse il numero di scale reali otteniamo il numero di scale non reali, che sono $4^5 \cdot 10 - 40$.
+    \item[\textbf{Poker.}] Scelgo innanzitutto la carta che si deve ripetere 4 volte, e dato che ho 13 valori diversi avro' 13 possibilità di sceglierla. Dopo devo scegliere l'ultima carta, che puo' essere una qualunque tra le $52 - 4 = 48$ rimanenti. Dunque in totale ho $13\cdot 48$ modi per fare poker.
+    \item[\textbf{Full.}] Scelgo il valore della carta che formerà il tris, e posso sceglierlo in 13 modi; poi scelgo il valore della carta che formerà la coppia, che posso scegliere in $13-1 = 12$ modi. 
     
     Ora devo scegliere i valori dei semi: per quanto riguarda il tris devo scegliere 3 semi su 4 (l'ordine non conta), e posso farlo in $\binom{4}{3} = 4$ modi; per quanto riguarda la coppia devo scegliere 2 semi su 4 e posso farlo in $\binom{4}{2} = 6$ modi. 
     
@@ -328,12 +328,12 @@ Ora calcoliamo il numero di possibilita' per ogni combinazione che da' punteggio
     \item[\textbf{Doppia coppia.}] Scelgo il valore delle due coppie tra 13 valori possibili in $\binom{13}{2}$ modi; ora scelgo i semi delle due coppie, e posso farlo in $\binom{4}{2}$ per la prima e $\binom{4}{2}$ per la seconda. 
     
     Scelgo la quinta carta in modo che abbia un valore diverso dalle due coppie per non contare anche i full: dunque posso sceglierla in $13 - 2 = 11$ modi per 4 semi diversi. In totale ho quindi $4 \cdot 11\binom{13}{2}\binom{4}{2}^2$ modi di ottenere una doppia coppia.
-    \item[\textbf{Coppia.}] Scelgo il valore della coppia tra 13 valori possibili e i semi in $\binom{4}{2}$ modi. Scelgo le tre carte rimanenti diverse tra di loro e diverse dal valore della coppia per evitare doppie coppie, full e poker: dunque ho $\binom{12}{3}$ modi di sceglierle e, dato che ognuna di esse puo' avere un seme qualunque, ho $4$ possibilita' per ciascuna. In totale ho quindi $4^3 \cdot 13 \binom{4}{2} \binom{12}{3}$ modi di fare coppia.
+    \item[\textbf{Coppia.}] Scelgo il valore della coppia tra 13 valori possibili e i semi in $\binom{4}{2}$ modi. Scelgo le tre carte rimanenti diverse tra di loro e diverse dal valore della coppia per evitare doppie coppie, full e poker: dunque ho $\binom{12}{3}$ modi di sceglierle e, dato che ognuna di esse puo' avere un seme qualunque, ho $4$ possibilità per ciascuna. In totale ho quindi $4^3 \cdot 13 \binom{4}{2} \binom{12}{3}$ modi di fare coppia.
 \end{itemize}
 
 \section{Principio di Inclusione-Esclusione}
 
-Il principio di inclusione-esclusione mette in relazione la cardinalita' dell'unione di due o piu' insiemi con la cardinalita' delle intersezioni e degli insiemi presi singolarmente. Per due insiemi vale che \begin{equation}
+Il principio di inclusione-esclusione mette in relazione la cardinalità dell'unione di due o piu' insiemi con la cardinalità delle intersezioni e degli insiemi presi singolarmente. Per due insiemi vale che \begin{equation}
     \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
 \end{equation}
 Per tre insiemi vale che \begin{alignat*}{1}
@@ -342,23 +342,23 @@ Per tre insiemi vale che \begin{alignat*}{1}
         &- \abs{A \cap B} - \abs{A \cap C} - \abs{B \cap C} +\\
         &+ \abs{A \cap B \cap C}.
 \end{alignat*}
-Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottraggono le cardinalita' delle intersezioni due a due, poi si sommano le cardinalita' delle intersezioni tre a tre, eccetera.
+Dunque per $n$ insiemi si sommano le cardinalità degli insiemi, poi si sottraggono le cardinalità delle intersezioni due a due, poi si sommano le cardinalità delle intersezioni tre a tre, eccetera.
 
 \begin{example}
-    Contare i numeri di $\N_{100}$ che non sono divisibili ne' per 3 ne' per 5.
+    Contare i numeri di $\N_{100}$ che non sono divisibili né per 3 né per 5.
 \end{example}
 \begin{solution}
     Sia $A$ l'insieme dei numeri divisibili per $3$ e $B$ l'insieme dei numeri divisibili per $5$, dunque $\compl{A}$ sono i numeri non divisibili per 3 e $\compl{B}$ sono i numeri non divisibili per 5.
     
-    Noi vogliamo calcolare $\abs{\compl{A} \cap \compl{B}}$, cioe' la cardinalita' dell'insieme dei numeri che non sono ne' divisibili per 3 ne' per 5.
+    Noi vogliamo calcolare $\abs{\compl{A} \cap \compl{B}}$, cioè la cardinalità dell'insieme dei numeri che non sono né divisibili per 3 né per 5.
     Per De Morgan: \[
         \abs{\compl{A} \cap \compl{B}} = \abs{\N_{100}} - \abs{A \cup B} = 100 - \abs{A \cup B}. 
     \] Per il principio di inclusione-esclusione: \[
         \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}. 
     \]
     Dunque \begin{itemize}
-        \item un numero su 3 e' divisibile per 3, dunque $\abs{A} = \frac{100}{3} = 33$;
-        \item un numero su 5 e' divisibile per 5, dunque $\abs{A} = \frac{100}{5} = 20$;
+        \item un numero su 3 è divisibile per 3, dunque $\abs{A} = \frac{100}{3} = 33$;
+        \item un numero su 5 è divisibile per 5, dunque $\abs{A} = \frac{100}{5} = 20$;
         \item i numeri divisibili sia per 3 che per 5 sono tutti i numeri divisibili per 15, dunque $\abs{A \cap B} = \frac{100}{15} = 6$;
     \end{itemize}
     ovvero \[
@@ -380,7 +380,7 @@ Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottragg
     Quante sono le funzioni $f : \N_{20} \to \N_{20}$ che in output hanno almeno un valore maggiore o uguale a $11$?
 \end{example}
 \begin{solution}
-    Basta sottrarre al numero totale di funzioni da $\N_{20}$ a $\N_{20}$ (che e' $20^{20}$) il numero di funzioni che non hanno un valore in output maggiore o uguale a 11, ovvero il numero di funzioni $f : \N_{20} \to \N_{10}$ (che e' $10^{20}$).
+    Basta sottrarre al numero totale di funzioni da $\N_{20}$ a $\N_{20}$ (che è $20^{20}$) il numero di funzioni che non hanno un valore in output maggiore o uguale a 11, ovvero il numero di funzioni $f : \N_{20} \to \N_{10}$ (che è $10^{20}$).
 
 
     Dunque avro' $20^{20} - 10^{20}$ funzioni.
@@ -390,7 +390,7 @@ Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottragg
     Quante sono le funzioni $f : \N_{20} \to \N_{20}$ che in output hanno esattamente un valore maggiore o uguale a $11$?
 \end{example}
 \begin{solution}
-    Sia $k$ il valore maggiore o uguale a 11 assunto dalla funzione: posso scegliere $k$ in 10 modi. Il numero di funzioni $f : \N_{20} \to \N_{10} \cup \{k\}$ e' $11^{20}$, in quanto $\abs{\N_{10} \cup \{k\}} = 10 + 1 = 11$. Da queste devo togliere tutte le funzioni che non hanno $k$ come valore in output, che sono tutte e solo le funzioni $f : \N_{20} \to \N_{10}$, che sono $10^{20}$.
+    Sia $k$ il valore maggiore o uguale a 11 assunto dalla funzione: posso scegliere $k$ in 10 modi. Il numero di funzioni $f : \N_{20} \to \N_{10} \cup \{k\}$ è $11^{20}$, in quanto $\abs{\N_{10} \cup \{k\}} = 10 + 1 = 11$. Da queste devo togliere tutte le funzioni che non hanno $k$ come valore in output, che sono tutte e solo le funzioni $f : \N_{20} \to \N_{10}$, che sono $10^{20}$.
 
     In totale ho quindi $10(11^{20} - 10^{20})$ funzioni.
 \end{solution}
@@ -399,18 +399,18 @@ Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottragg
     Quante sono le funzioni $f : \N_{10} \to \N_{20}$ strettamente crescenti?
 \end{example}
 \begin{solution}
-    Se la funzione e' strettamente crescente i valori in output devono essere tutti diversi tra loro.
+    Se la funzione è strettamente crescente i valori in output devono essere tutti diversi tra loro.
 
-    Scelgo quindi $10$ valori in $\N_{20}$. Scelti questi valori, c'e' un solo modo per cui la funzione sia crescente, cioe' ordinarli in ordine crescente. Dunque ad ogni sottoinsieme di $10$ valori tra $20$ corrisponde una funzione, dunque ho in tutto $\binom{20}{10}$ funzioni che soddisfano la proprieta'.
+    Scelgo quindi $10$ valori in $\N_{20}$. Scelti questi valori, c'è un solo modo per cui la funzione sia crescente, cioè ordinarli in ordine crescente. Dunque ad ogni sottoinsieme di $10$ valori tra $20$ corrisponde una funzione, dunque ho in tutto $\binom{20}{10}$ funzioni che soddisfano la proprietà.
 \end{solution}
 
 \begin{example}
     Quante sono le funzioni $f : \N_n \to \N_k$ iniettive?
 \end{example}
 \begin{solution}
-    Dato che la funzione e' iniettiva, i valori in output devono essere tutti diversi tra loro. Ovviamente se $k > n$ non puo' esserci una funzione iniettiva da $\N_n$ a $\N_k$, dunque il numero di funzioni iniettive e' 0 in questo caso.
+    Dato che la funzione è iniettiva, i valori in output devono essere tutti diversi tra loro. Ovviamente se $k > n$ non puo' esserci una funzione iniettiva da $\N_n$ a $\N_k$, dunque il numero di funzioni iniettive è 0 in questo caso.
 
-    Supponiamo $k \leq n$. Dunque scelgo il valore di $f(1)$ in $n$ modi, il valore di $f(2)$ in $n-1$ modi, eccetera. In totale il numero di funzioni iniettive che rispettano queste proprieta' e' \[
+    Supponiamo $k \leq n$. Dunque scelgo il valore di $f(1)$ in $n$ modi, il valore di $f(2)$ in $n-1$ modi, eccetera. In totale il numero di funzioni iniettive che rispettano queste proprietà è \[
         n(n-1) \cdots (n-k+1) = \frac{n!}{(n-k)!} = D_{n, k}.    
     \]
 \end{solution}
@@ -427,9 +427,9 @@ Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottragg
         \compl{F_i} &\coloneqq \text{ insieme delle funzioni $f : \N_4 \to \N_3$ tali che $i \notin \Imm{f}$} \\
         &= \{ f \mid f : \N_4 \to \N_3, i \notin \Imm{f}\}.
     \end{alignat*}
-    L'insieme delle funzioni $f : \N_4 \to \N_3$ surgettive e' l'insieme delle funzioni tali che $1, 2, 3, \in \Imm{f}$, cioe' e' dato da $F_1 \cap F_2 \cap F_2$. Per De Morgan: \[
+    L'insieme delle funzioni $f : \N_4 \to \N_3$ surgettive è l'insieme delle funzioni tali che $1, 2, 3, \in \Imm{f}$, cioè è dato da $F_1 \cap F_2 \cap F_2$. Per De Morgan: \[
         \abs{F_1 \cap F_2 \cap F_2} = \abs{U} - \abs{\compl{(F_1 \cap F_2 \cap F_2)}}  = \abs{U} - \abs{\compl{F_1} \cup \compl{F_2} \cup \compl{F_3}},
-    \] dove $U$ e' l'insieme di tutte le funzioni $f : \N_4 \to \N_3$, dunque ha cardinalita' $\abs{U} = 3^4$.
+    \] dove $U$ è l'insieme di tutte le funzioni $f : \N_4 \to \N_3$, dunque ha cardinalità $\abs{U} = 3^4$.
 
     Per il principio di inclusione-esclusione:
     \begin{alignat*}
@@ -440,11 +440,11 @@ Dunque per $n$ insiemi si sommano le cardinalita' degli insiemi, poi si sottragg
     \end{alignat*}
 \end{solution}
 
-Calcoliamo le cardinalita' degli insiemi che abbiamo:
+Calcoliamo le cardinalità degli insiemi che abbiamo:
 \begin{itemize}
-    \item $\compl{F_1}$ e' l'insieme di tutte le funzioni che non hanno $1$ nell'immagine, cioe' contiene tutte e solo le funzioni da $\N_4$ a $\left\{ 2, 3\right\}$, dunque la sua cardinalita' e' $2^4$; stesso ragionamento per $\compl{F_2}$ e $\compl{F_3}$;
-    \item $\compl{F_1} \cap \compl{F_2}$ e' l'insieme di tutte le funzioni che non hanno $1$ e $2$ nell'immagine, cioe' contiene tutte e solo le funzioni da $\N_4$ a $\left\{ 3\right\}$, dunque la sua cardinalita' e' $1^4 = 1$; stesso ragionamento per $\compl{F_1} \cap \compl{F_3}$ e $\compl{F_2} \cap \compl{F_3}$;
-    \item $\compl{F_1} \cap \compl{F_2} \cap \compl{F_3}$ e' l'insieme di tutte le funzioni che non hanno 1, 2, e 3 nell'immagine, cioe' contiene tutte e solo le funzioni $\N_4$ all'insieme vuoto $\varnothing$, dunque ha cardinalita' 0 (non ci sono funzioni che hanno come codominio l'insieme vuoto).
+    \item $\compl{F_1}$ è l'insieme di tutte le funzioni che non hanno $1$ nell'immagine, cioè contiene tutte e solo le funzioni da $\N_4$ a $\left\{ 2, 3\right\}$, dunque la sua cardinalità è $2^4$; stesso ragionamento per $\compl{F_2}$ e $\compl{F_3}$;
+    \item $\compl{F_1} \cap \compl{F_2}$ è l'insieme di tutte le funzioni che non hanno $1$ e $2$ nell'immagine, cioè contiene tutte e solo le funzioni da $\N_4$ a $\left\{ 3\right\}$, dunque la sua cardinalità è $1^4 = 1$; stesso ragionamento per $\compl{F_1} \cap \compl{F_3}$ e $\compl{F_2} \cap \compl{F_3}$;
+    \item $\compl{F_1} \cap \compl{F_2} \cap \compl{F_3}$ è l'insieme di tutte le funzioni che non hanno 1, 2, e 3 nell'immagine, cioè contiene tutte e solo le funzioni $\N_4$ all'insieme vuoto $\varnothing$, dunque ha cardinalità 0 (non ci sono funzioni che hanno come codominio l'insieme vuoto).
 \end{itemize}
 
 In totale abbiamo quindi \[
