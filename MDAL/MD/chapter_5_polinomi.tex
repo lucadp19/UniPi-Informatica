@@ -3,7 +3,7 @@
 \section{Definizioni base}
 
 \begin{definition}[Polinomio]
-    Sia $A$ un anello. Allora si dice polinomio a coefficienti in $A$ una funzione $p : A \to A$ tale che \begin{equation}
+    Sia $A$ un anello. Allora si dice polinomio a coefficienti in $A$ un'espressione del tipo \begin{equation}
         p(x) = a_0 + a_1x^1 + a_2x^2+ \dots + a_nx^n
     \end{equation}
     dove $a_0, \dots, a_n \in A$.
@@ -12,6 +12,12 @@
 \end{definition}
 
 Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ non primo) e con $\K$ un campo generico (come $\Q$, $\R$, $\C$, $\Z/(p)$ con $p$ primo). Notiamo inoltre che, dato che un campo è anche un anello, tutte le definizioni e le proposizioni che valgono per gli anelli valgono anche per i campi (ma non viceversa).
+
+\begin{definition}[Funzione associata ad un polinomio]
+    Sia $p(x) \in A[x]$. Allora la funzione associata al polinomio $p$ e' la funzione $p : A \to A$ tale che per ogni $x \in A$ vale che \[
+        p(x) = a_0 + a_1x^1 + a_2x^2+ \dots + a_nx^n. 
+    \]
+\end{definition}
 
 \begin{definition}[Grado di un polinomio]
     Sia $p(x) \in A[x]$ (ovvero, sia $p(x)$ un polinomio a coefficienti nell'anello $A$). Si dice grado di $p$ il massimo $n$ tale che $a_n \neq 0$, e si indica con $\deg p$.
@@ -169,7 +175,7 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
     \begin{description}
-        \item[($\implies$)] Infatti $p(r) = g(r)h(r) = 0$, dunque per la regola di annullamento del prodotto (\ref{annullamento_prodotto}) segue che $h(r) = 0 \lor h(r) = 0$.
+        \item[($\implies$)] Supponiamo che $p(r) = 0$. Allora $p(r) = g(r)h(r) = 0$, dunque per la regola di annullamento del prodotto (\ref{annullamento_prodotto}) segue che $g(r) = 0 \lor h(r) = 0$.
         \item[($\impliedby$)] Supponiamo senza perdita di generalità che $g(r) = 0$. Allora $p(r) = g(r)h(r) = 0h(r) = 0$. \qedhere 
     \end{description}
 \end{proof}
@@ -204,3 +210,104 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
     \end{description}
     Dunque per induzione la tesi vale per ogni $n \geq 1$.
 \end{proof}
+
+\section{Fattorizzazione in insiemi specifici}
+
+\subsection{Fattorizzazione in $\C$}
+
+\begin{theorem}
+    [Teorema Fondamentale dell'Algebra] \label{th_fondamentale_algebra}
+    Sia $p(x) \in \C[x]$ tale che $\deg p \geq 1$. Allora esiste almeno una radice di $p$ in $\C$, ovvero esiste almeno un $\lambda \in \C$ tale che $p(\lambda) = 0$.
+\end{theorem}
+
+\begin{corollary}[Ogni polinomio ha $n$ radici complesse]\label{conseguenza_th_fondamentale}
+    Sia $p(x) \in \C$ e sia $n = \deg p \geq 1$. Allora $p$ ha esattamente $n$ radici complesse, ovvero $p$ è fattorizzabile in esattamente $n$ fattori lineari (non necessariamente distinti).
+\end{corollary}
+\begin{proof}
+    Dimostriamo per induzione su $n$.
+
+    \begin{description}
+        \item[Caso base] Sia $n = 1$. Allora $p(x) = a_0 + a_1x$ che ammette la radice $-a_0a_1^{-1}$. Inoltre $p(x)$ è fattorizzabile in fattori lineari in quanto esso stesso è lineare.
+        \item[Passo induttivo] Supponiamo che la tesi valga per $n$ e dimostriamo che vale anche per $n + 1$.
+        
+        Sia $p(x)$ di grado $n+1$. Allora per il Teorema Fondamentale dell'Algebra (\ref{th_fondamentale_algebra}) $p$ ammette almeno una radice $\lambda \in \C$.
+
+        Per il teorema di Ruffini (\ref{th_Ruffini}) segue che $(x - \lambda)$ è un divisore di $p(x)$, ovvero esiste $q(x) \in \C[x]$ tale che \[
+            p(x) = (x - \lambda)q(x).    
+        \] Il grado di $q$ dovrà essere $\deg p - 1 = n+1 - 1 = n$, dunque per ipotesi induttiva $q$ ha $n$ radici ed è fattorizzabile in $n$ fattori lineari.
+
+        Di conseguenza $p$ ha $n+1$ radici ed è fattorizzabile in $n+1$ fattori lineari.
+    \end{description}
+    Per induzione allora la tesi vale per ogni $n \geq 1$.
+\end{proof}
+
+\begin{proposition}[Un polinomio reale ha radici complesse coniugate]\label{radici_coniugate_a_due_a_due}
+    Sia $p(x) \in \R[x]$ un polinomio a coefficienti reali. Allora $\lambda \in \C$ è una radice di $p$ se e solo se $\conj{\lambda}$ è una radice di $p$.
+\end{proposition}
+\begin{proof}
+    Sia $p(x) = a_0 + a_1x + \dots + a_nx^n$ con $a_0, \dots, a_n \in \R$. Supponiamo che $p(\lambda) = 0$. Allora \begin{align*}
+        p(\conj{\lambda}) &= a_0 + a_1\conj{\lambda} + \dots + a_n\conj{\lambda} &&\text{(se $a \in \R$ allora $\conj{a} = a$)}\\
+        &= \conj{a_0} + \conj{a_1}\cdot\conj{\lambda} + \dots + \conj{a_n}\cdot\conj{\lambda} &&\text{(per la \ref{somma_prodotto_tra_coniugati})}\\
+        &= \conj{a_0} + \conj{a_1\lambda} + \dots + \conj{a_n\lambda} &&\text{(per la \ref{somma_prodotto_tra_coniugati})}\\
+        &= \conj{a_0 + a_1\lambda + \dots + a_n\lambda} \\
+        &= \conj{p(\lambda)}.
+    \end{align*}
+
+    Dunque $p(\lambda) = 0 \iff \conj{p(\lambda)} = \conj{0} \iff p(\conj{\lambda}) = 0$, come volevasi dimostrare.
+\end{proof}
+
+\subsection{Fattorizzazione in $\R$}
+
+\begin{lemma}\label{(x-l)(x-conj(l))_in_R}
+    Sia $\lambda \in \C$. Allora il polinomio \[
+        p(x) = (x-\lambda)(x-\conj\lambda)    
+    \] è un polinomio a coefficienti reali.
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+        p(x) &= (x-\lambda)(x-\conj\lambda)\\
+        &= x^2 - (\lambda + \conj\lambda)x + \lambda\conj{\lambda} &&\text{(per \ref{somma_prodotto_col_coniugato})}\\
+        &= x^2 - (\Re \lambda)x + \abs{\lambda}^2.
+    \end{align*}
+    Dato che $\Re \lambda, \abs{\lambda}^2 \in \R$ segue la tesi.
+\end{proof}
+
+\begin{proposition}
+    Sia $p(x) \in \R[x]$. Allora $p$ è fattorizzabile su $\R$ come prodotto di fattori di grado minore o uguale a 2.
+\end{proposition}
+\begin{proof}
+    Dimostriamolo per induzione forte su $n = \deg p$.
+
+    \begin{description}
+        \item[Caso base] Sia $n = 1$ oppure $n = 2$. Allora $p$ è banalmente già fattorizzato in fattori di grado $1$ o $2$.
+        \item[Passo induttivo] Sia $n > 2$ e supponiamo che la tesi sia vera per ogni $n^\prime$ tale che $1 \leq n^\prime < n$.
+        
+        Per il teorema fondamentale dell'algebra (\ref{th_fondamentale_algebra}) allora esiste sicuramente $\lambda \in \C$ tale che $p(\lambda) = 0$. Distinguiamo due casi.
+        \begin{itemize}
+            \item Se $\lambda \in \R$ allora per il teorema di Ruffini (\ref{th_Ruffini}) segue che $(x-\lambda) \divides p(x)$, ovvero esiste $g(x) \in \R[x]$ tale che \[
+                p(x) = (x-\lambda)g(x).    
+            \] Dato che $\deg g = \deg p - 1 = n - 1$ segue che per ipotesi induttiva $g$ è fattorizzabile come prodotto di fattori di grado $1$ o $2$, dunque anche $f$ lo è.
+            \item Se $\lambda \notin \R$ allora per la proposizione \ref{radici_coniugate_a_due_a_due} anche $\conj{\lambda}$ è radice di $p$. Per il teorema di Ruffini (\ref{th_Ruffini}) segue che \[
+                (x-\lambda) \divides p(x),\quad (x - \conj{\lambda}) \divides p(x)
+            \] dunque \[
+                (x-\lambda)(x-\conj\lambda) \divides p(x).
+            \]
+
+            Per il lemma \ref{(x-l)(x-conj(l))_in_R} il polinomio $h(x) = (x-\lambda)(x-\conj\lambda)$ è un polinomio a coefficienti reali, dunque dato che $h(x) \divides p(x)$ esiste $g(x) \in \R[x]$ tale che \[
+                f(x) = h(x)g(x) = (x-\lambda)(x-\conj\lambda) \cdot g(x).  
+            \] Dato che $\deg g = \deg p - 2 = n - 2$ segue che per ipotesi induttiva $g$ è fattorizzabile come prodotto di fattori di grado $1$ o $2$, dunque anche $f$ lo è.
+        \end{itemize}
+    \end{description}
+
+    Per induzione ogni polinomio in $\R[x]$ è esprimibile come prodotto di fattori di grado minore o uguale a $2$.
+\end{proof}
+
+Un modo equivalente di esprimere la proposizione sopra è dire che ogni polinomio a coefficienti reali di grado maggiore di due è riducibile in $\R$.
+
+
+% \begin{proposition}
+%     [Radici razionali di un polinomio a coefficienti interi]
+%     Sia $p(x) \in \Z[x]$ un polinomio a coefficienti interi tale che \[
+%         p(x) = a_0 + a_1x + a_2x^2 + \dots + a_nx^n.    
+%     \] Allora $\frac{}{}
+% \end{proposition}
