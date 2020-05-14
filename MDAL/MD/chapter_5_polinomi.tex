@@ -349,3 +349,18 @@ Un modo equivalente di esprimere la proposizione sopra è dire che ogni polinomi
 \end{theorem}
 
 Per il Lemma di Gauss dunque se vogliamo cercare la fattorizzazione di un polinomio in $\Q[x]$ ci basta cercare una fattorizzazione in $\Z[x]$ (cioè tra i polinomi a coefficienti interi). Viceversa, se non esiste una fattorizzazione in $\Z[x]$ allora il polinomio è irriducibile anche in $\Q[x]$.
+
+\begin{proposition}
+    [Criterio di Eisenstein] \label{criterio_eisenstein}
+    Sia $f(x) \in \Z[x]$ tale che $f(x) = a_0 + \dots + a_nx^n$. Allora se esiste un primo $p \in \Z$ tale che \begin{itemize}
+        \item $a_0 \equiv a_1 \equiv \dots \equiv a_{n-1} \Mod{p}$;
+        \item $p \nmid a_n$;
+        \item $p^2 \nmid a_0$
+    \end{itemize}
+    allora $f$ è irriducibile in $\Z[x]$.
+\end{proposition}
+
+\begin{proposition}
+    [Criterio della sostituzione] \label{criterio_sost}
+    Sia $p(x) \in \Z[x]$ e sia $n \in \Z$. Allora $p(x)$ è riducibile in $\Z[x]$ se e solo se $p(x+n)$ è riducibile in $\Z[x]$.
+\end{proposition}
