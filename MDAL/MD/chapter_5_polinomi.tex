@@ -304,10 +304,41 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 
 Un modo equivalente di esprimere la proposizione sopra è dire che ogni polinomio a coefficienti reali di grado maggiore di due è riducibile in $\R$.
 
+\subsection{Fattorizzazione in $\Z$ o in $\Q$}
 
-% \begin{proposition}
-%     [Radici razionali di un polinomio a coefficienti interi]
-%     Sia $p(x) \in \Z[x]$ un polinomio a coefficienti interi tale che \[
-%         p(x) = a_0 + a_1x + a_2x^2 + \dots + a_nx^n.    
-%     \] Allora $\frac{}{}
-% \end{proposition}
+\begin{proposition}
+    [Radici razionali di un polinomio a coefficienti interi]
+    Sia $p(x) \in \Z[x]$ un polinomio a coefficienti interi tale che \[
+        p(x) = a_0 + a_1x + a_2x^2 + \dots + a_nx^n.    
+    \] Sia $\frac{c}{d} \in \Q$ ridotta ai minimi termini (ovvero $\mcd{c}{d} = 1$). 
+    
+    Allora se $\frac{c}{d}$ è una radice di $p$ segue che $c \divides a_0$ e $d \divides a_n$.
+\end{proposition}
+\begin{proof}
+    Per definizione di radice di un polinomio \[
+        p\left(\frac{c}{d}\right) = a_0 + a_1\frac{c}{d} + \dots + a_{n-1}\left(\frac{c}{d}\right)^{n-1} + a_n\left(\frac{c}{d}\right)^n = 0.
+    \]
+    Moltiplicando entrambi i membri per $d^n$ otteniamo \[
+        \iff a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n = 0.
+    \]
+    Se vale l'uguaglianza, allora i due membri saranno anche congrui modulo $d$: \[
+        a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n \equiv 0 \Mod{d}.
+    \]
+    Tutti i termini tranne l'ultimo contengono una potenza di $d$, dunque:
+    \begin{align*}
+        \iff &a_nc^n \equiv 0 \Mod{d} \\
+        \intertext{Dato che $\mcd{c}{d} = 1$, allora $c^n$ è invertibile modulo $d$)}
+        \iff &a_n \equiv 0 \Mod{d}\\
+        \iff &d \divides a_n.
+    \end{align*}
+
+    Consideriamo ora la congruenza modulo $c$: \[
+        a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n \equiv 0 \Mod{c}.
+    \]
+    Per lo stesso ragionamento segue che:
+    \begin{align*}
+        \iff &a_0d^n \equiv 0 \Mod{c}\\
+        \iff &a_0 \equiv 0 \Mod{c} \\
+        \iff &c \divides a_0. \qedhere
+    \end{align*}
+\end{proof}
