@@ -1,0 +1,7 @@
+uguale
+maggiore
+minore
+minore
+maggiore
+uguale
+minore
