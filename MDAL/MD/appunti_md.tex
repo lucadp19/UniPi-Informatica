@@ -4,6 +4,7 @@
     \usepackage[T1]{fontenc}
     \usepackage{textcomp, microtype}
     \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm}
+    \usepackage{array, multicol}
 
     \usepackage{enumerate}
     \usepackage{float}
@@ -89,6 +90,9 @@
 \declaretheorem[name=Osservazione, style=remarkstyle]{remark}
 \declaretheorem[name=Soluzione, style=remarkstyle]{solution}
 \declaretheorem[name=Intuizione, style=remarkstyle]{intuition}
+
+\newcolumntype{z}{r<{{}}}
+\newcolumntype{o}{@{}>{{}}c<{{}}@{}}
 
 \DeclareMathOperator{\tc}{\text{ tale che }}
 

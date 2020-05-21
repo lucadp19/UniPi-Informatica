@@ -249,3 +249,179 @@ Sfruttando la definizione precedente possiamo scrivere ogni numero complesso nel
         &= e^{i(\alpha + \beta)}. \tag*{\qedhere}
     \end{alignat*}
 \end{proof}
+
+\section{Successioni per ricorrenza}
+
+\begin{definition}[Successione]
+    Si dice successione a valori in un insieme $A$ una funzione $(a_n) : \N \to A$.
+\end{definition}
+
+Solitamente analizzeremo successioni a valori reali, ovvero $(a_n) : \N \to \R$. Inoltre usiamo equivalentemente le notazioni $(a_n)_k$ o $a_k$ per riferirci alla funzione valutata nel punto $k \in \N$.
+
+\begin{definition}[Somma di successioni e prodotto per una costante]
+    Sia $S_{\R}$ l'insieme delle successioni a valori reali. Allora definisco una somma tra successioni $+ : S_{\R} \times S_{\R} \to S_{\R}$ tale che \[
+        (a_n) + (b_n) = (a_n + b_n)  
+    \] e un prodotto per una costante $\cdot : \R \times S_{\R} \to S_{\R}$ tale che \[
+        k(a_n) = (ka_n).    
+    \]
+\end{definition}
+
+\begin{example}
+    Sia $a_n = 3^n$ e $b_n = 2n + 1$. Allora $(c_n) = (a_n) + (b_n)$ è la successione definita dalla legge $c_n = 3^n + 2n + 1$, mentre $(d_n) = 3(b_n)$ è la successione definita da $d_n = 6n + 3$.
+\end{example}
+
+Queste operazioni rispettano le solite proprietà (associativa, commutativa, distributiva). In particolare vale quindi la seguente proposizione.
+
+\begin{proposition}[L'insieme delle successioni è uno spazio vettoriale]
+    L'insieme delle successioni a valori reali $S_{\R}$ insieme alle operazioni di somma e prodotto per costanti e alla successione identicamente nulla $(0_n)$ è uno spazio vettoriale su $\R$.
+\end{proposition}
+
+\begin{definition}[Ricorrenza lineare omogenea]
+    Si dice ricorrenza lineare omogenea di ordine $k$ un'equazione della forma \begin{equation} \label{ricorrenza}
+        a_{n+k} = r_{k-1}a_{n+k-1} + r_{k-2}a_{n+k-2} + \dots + r_{1}a_{n+1} + r_0a_n. 
+    \end{equation}
+    Una soluzione della ricorrenza lineare \ref{ricorrenza} è una successione $(s_n)$ tale che per ogni $n \in \N$ vale che $s_n, s_{n+1}, \dots, s_{n+k}$ soddisfano la ricorrenza.
+\end{definition}
+
+\begin{proposition}
+    Sia $A$ l'insieme delle successioni che soddisfano la ricorrenza lineare omogenea \[
+        s_{n+k} = r_{k-1}s_{n+k-1} + r_{k-2}s_{n+k-2} + \dots + r_{1}s_{n+1} + r_0s_n.
+    \] Allora $A$ è un sottospazio vettoriale di $S_{\R}$.
+\end{proposition}
+\begin{proof}
+    Dobbiamo dimostrare tre fatti:
+    \begin{enumerate}[(i)]
+        \item $(0_n) \in A$;
+        \item se $(a_n), (b_n) \in A$ allora $(c_n) = (a_n) + (b_n) \in A$;
+        \item se $h \in \R$, $(a_n) \in A$ allora $(d_n) = h(a_n) \in A$.
+    \end{enumerate}
+
+    Sia $n \in \N$ qualsiasi.
+    \begin{enumerate}[(i)]
+        \item Verifichiamo che $(0_n)$ sia soluzione. La ricorrenza da verificare è \[
+            0_{n+k} = r_{k-1}0_{n+k-1} + \dots + r_{1}0_{n+1} + r_00_n.
+        \] Ma dato che $(0_n)$ è la successione identicamente nulla, allora questo equivale a dire $0 = 0r_{k-1} + \dots +  + 0r_0 = 0$, che è verificata e quindi $(0_n) \in A$.
+        \item Verifichiamo che $(c_n)$ sia soluzione. \begin{align*}
+            c_{n+k} &= a_{n+k} + b_{n+k}\\
+            &= (r_{k-1}a_{n+k-1} + \dots + r_0a_n) + (r_{k-1}b_{n+k-1} + \dots + r_0b_n) \\
+            &= r_{k-1}(a_{n+k-1} + b_{n+k-1}) + \dots + r_0(a_n + b_n) \\
+            &= r_{k-1}c_{n+k-1} + \dots + r_0c_0
+        \end{align*}
+        dunque $(c_n) \in A$.
+        \item Verifichiamo che $(d_n)$ sia soluzione. \begin{align*}
+            d_{n+k} &= ha_{n+k}\\
+            &= h(r_{k-1}a_{n+k-1} + \dots + r_0a_n)\\
+            &= r_{k-1}(ha_{n+k-1}) + \dots + r_0(ha_n) \\
+            &= r_{k-1}d_{n+k-1} + \dots + r_0d_0
+        \end{align*}
+        dunque $(d_n) \in A$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+La proposizione precedente ci permette di trovare una soluzione generale ad una ricorrenza lineare omogenea.
+
+\begin{example}
+    Siano $a_n = 3^n$ e $b_n = (-1)^n$ due soluzioni di una ricorrenza lineare omogenea. Allora per la proposizione precedente anche $k_1a_n = k_13^n$ e $k_2b_n = k_2(-1)^n$ saranno soluzioni (per ogni $k_1, k_2 \in \R$), e di conseguenza anche $k_1a_n + k_2b_n = k_13^n + k_2(-1)^n$.
+\end{example}
+
+Cerchiamo di risolvere una ricorrenza lineare omogenea.
+\begin{example}
+    Sia $a_{n+2} = 2a_{n+1} + 3a_n$ una ricorrenza lineare omogenea di ordine $2$. Trovare la soluzione generale. Inoltre trovare una soluzione particolare che soddisfi le condizioni iniziali $a_0 = 0$ e $a_1 = 1$.
+\end{example}
+\begin{solution}
+    Proviamo a risolvere la ricorrenza con una soluzione esponenziale della forma $(\lambda^n)$ al variare di $n \in \N$. Sostituendo otteniamo \begin{alignat*}{1}
+        &\lambda^{n+2} = 2\lambda^{n+1} + 3\lambda^{n} \\
+        \iff &\lambda^2 = 2\lambda + 3 \\
+        \iff &\lambda^2 - 2\lambda - 3.
+    \end{alignat*}
+    Dunque se $(\lambda^n)$ è una soluzione allora $\lambda$ deve essere radice di quel polinomio di secondo grado, detto polinomio caratteristico della ricorrenza.
+    Risolvendolo segue che $\lambda_1 = 3$ e $\lambda_2 = -1$ sono soluzioni, dunque le successioni $(3^n)$ e $((-1)^n)$ sono soluzioni della ricorrenza.
+
+    La soluzione generale della ricorrenza è dunque una successione della forma $(a_n) = k_1(3^n) + k_2((-1)^n)$ al variare di $k_1, k_2 \in \R$.
+
+    Imponiamo ora che $a_0 = 0$ e $a_1 = 1$.
+    \begin{equation*}
+        \left\{
+        \begin{array}{@{}roror }
+        3^0k_1 & + & (-1)^0k_2 & = & 0 \\
+        3^1k_1 & + & (-1)^1k_2 & = & 1 \\
+        \end{array}
+        \right. \iff \left\{
+        \begin{array}{@{}ror }
+        k_1 + k_2 & = & 0 \\
+        3k_1 -k_2 & = & 1 \\
+        \end{array}
+        \right. 
+    \end{equation*}
+    da cui segue $k_1 = \frac14$, $k_2 = -\frac14$. La successione che soddisfa le condizioni iniziali è dunque $a_n = \frac14(3)^n - \frac14(-1)^n$.
+\end{solution}
+
+\begin{definition}
+    [Polinomio caratteristico di una ricorrenza]
+    Sia $a_{n+k} = r_{k-1}a_{n+k-1} +  \dots +  r_0a_n$ una ricorrenza lineare omogenea di ordine $k$. Allora si dice polinomio caratteristico associato alla ricorrenza il polinomio \[
+        p(\lambda) = \lambda^k - r_{k-1}\lambda^{k-1} - \dots - r_0.    
+    \]
+\end{definition}
+
+Il polinomio caratteristico si ottiene sostituendo alla ricorrenza lineare la successione $(\lambda^n)$, esattamente come abbiamo fatto nell'esempio precedente.
+
+\begin{example}
+    Consideriamo la successione di Fibonacci $f_{n+2} = f_{n+1} + f_n$ con $f_0 = 0$, $f_1 = 1$. Trovare una successione che risolva la ricorrenza e soddisfi i casi base.
+\end{example}
+\begin{solution}
+    Il polinomio caratteristico di questa ricorrenza è \[
+        p(\lambda) = \lambda^2 - \lambda - 1    
+    \] che ha come radici i numeri $\varphi = \frac12(1 + \sqrt5)$ e $\bar{\varphi} = \frac12(1 - \sqrt5)$.
+
+    La soluzione generale della ricorrenza è dunque una successione della forma $(f_n) = k_1(\varphi^n) + k_2(\bar{\varphi}^n)$ al variare di $k_1, k_2 \in \R$.
+
+    Imponiamo ora che $f_0 = 0$ e $f_1 = 1$.
+    \begin{equation*}
+        \arraycolsep=1.2pt\def\arraystretch{1.3}
+        \left\{
+        \begin{array}{@{}roror }
+        \varphi^0k_1 & + & \bar{\varphi}^0k_2 & = & 0\\
+        \varphi^1k_1 & + & \bar{\varphi}^1k_2 & = & 1 \\
+        \end{array}
+        \right. \iff \left\{
+        \begin{array}{@{}roror }
+        k_1 & + & k_2 & = & 0\\
+        \varphi k_1 & + & \bar{\varphi}k_2 & = & 1 \\
+        \end{array}
+        \right. 
+    \end{equation*}
+    da cui segue $k_1 = \frac{1}{\sqrt5}$, $k_2 = -\frac{1}{\sqrt5}$. La successione che soddisfa le condizioni iniziali è dunque \[
+        f_n = \frac{1}{\sqrt5}\left(\frac{1 + \sqrt5}{2}\right)^n - \frac{1}{\sqrt5}\left(\frac{1 - \sqrt5}{2}\right)^n.
+    \]
+\end{solution}
+
+Nel caso che una radice del polinomio caratteristico abbia una molteplicità maggiore di $1$ essa darà luogo a più di una soluzione della ricorrenza, come ci dice la seguente proposizione.
+\begin{proposition}
+    Sia $p(\lambda)$ il polinomio caratteristico di una ricorrenza lineare omogenea e sia $\lambda_0$ una radice di molteplicità $h$ (ovvero $h$ è il massimo intero per cui $(x - \lambda_0)^h$ compare nella fattorizzazione di $p(\lambda)$) con $h \leq 2$. 
+    
+    Allora $(\lambda_0^n), (n\lambda_0^n), \dots, (n^{h-1}\lambda_0^n)$ sono tutte soluzioni della ricorrenza lineare omogenea.
+\end{proposition}
+
+\begin{example}
+    Sia $p(\lambda) = (\lambda - 3)^3(\lambda + 1)^2(\lambda - \sqrt2)^4$. Allora le seguenti sono tutte soluzioni indipendenti della ricorrenza lineare omogenea associata a $p(\lambda)$:
+    \begin{multicols}{3}
+        \begin{enumerate}[(i)]
+        \item $(3^n)$;
+        \item $(n3^n)$;
+        \item $(n^23^n)$;
+        \item $((-1)^n)$;
+        \item $(n(-1)^n)$;
+        \item $(\sqrt{2}^n)$;
+        \item $(n\sqrt{2}^n)$;
+        \item $(n^2\sqrt{2}^n)$;
+        \item $(n^3\sqrt{2}^n)$.
+    \end{enumerate}
+    \end{multicols}
+    
+    La soluzione generale sarà dunque della forma \begin{align*}
+        (a_n) = 
+            &\ k_1(3^n) + k_2(n3^n) + k_3(n^23^n) + k_4(n(-1)^n) + k_5(n(-1)^n) + \\
+            + &\ k_6(\sqrt{2}^n) + k_7(n\sqrt{2}^n) + k_8(n^2\sqrt{2}^n) + k_9(n^3\sqrt{2}^n)
+    \end{align*}
+    al variare di $k_1, \dots, k_9 \in \R$.
+\end{example}

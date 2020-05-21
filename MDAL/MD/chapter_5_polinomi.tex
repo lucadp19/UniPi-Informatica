@@ -371,6 +371,21 @@ Un modo equivalente di esprimere la proposizione sopra è dire che ogni polinomi
 \end{theorem}
 
 Per il Lemma di Gauss dunque se vogliamo cercare la fattorizzazione di un polinomio in $\Q[x]$ ci basta cercare una fattorizzazione in $\Z[x]$ (cioè tra i polinomi a coefficienti interi). Viceversa, se non esiste una fattorizzazione in $\Z[x]$ allora il polinomio è irriducibile anche in $\Q[x]$.
+\begin{proposition}
+    [Criterio della riduzione modulo un primo] \label{criterio_riduzione}
+    Sia $f(x) \in \Z[x]$ tale che $f(x) = a_0 + \dots + a_nx^n$. 
+    
+    Allora se esiste un primo $p \in \Z$ tale che $f_p(x) \in \Z/(p)[x]$, $f_p(x) = [a_0]_p + \dots + [a_n]_px^n $ (ovvero il polinomio $f$ con coefficienti in $\Z/(p)$) è irriducibile segue che $f(x)$ è irriducibile in $\Z[x]$.
+\end{proposition}
+\begin{proof}
+    Sia $p$ un primo tale che $f_p(x)$ è irriducibile in $\Z/(p)[x]$. Supponiamo per assurdo che $f(x)$ sia riducibile in $\Z[x]$. Per definizione esisteranno $g(x), h(x) \in \Z[x]$ tali che $f(x) = g(x)h(x)$.
+
+    Siano $g_p(x), h_p(x) \in \Z/(p)[x]$ le riduzioni modulo $p$ di $g(x), h(x)$. Per definizione di riduzione modulo $p$ dovrà essere \begin{align*}
+        f(x) \equiv f_p(x) \Mod{p}, &&g(x) \equiv g_p(x) \Mod{p}, &&h(x) \equiv h_p(x) \Mod{p}
+    \end{align*} da cui segue \[
+        f_p(x) \equiv f(x) \equiv g(x)h(x) \equiv g_p(x)h_p(x) \Mod{p}    
+    \] ovvero che $f_p(x) = g_p(x) \cdot h_p(x)$ in $\Z/(p)[x]$. Ma questo è assurdo in quanto per ipotesi $f_p(x)$ è irriducibile in $\Z/(p)[x]$, dunque $f(x)$ dovrà essere irriducibile in $\Z[x]$.
+\end{proof}
 
 \begin{proposition}
     [Criterio di Eisenstein] \label{criterio_eisenstein}
