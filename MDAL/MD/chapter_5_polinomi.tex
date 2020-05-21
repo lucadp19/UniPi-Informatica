@@ -107,6 +107,28 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
     \]
 \end{definition}
 
+Per questa definizione di divisione euclidea possiamo definire un massimo comun divisore e un minimo comune multiplo tra polinomi.
+
+\begin{definition}
+    [Massimo comun divisore tra polinomi]
+    Siano $p(x), g(x) \in K[x]$. Allora si dice massimo comun divisore di $p(x), g(x)$ il polinomio $h(x)$ di grado massimo tale che \[
+        h(x) \divides p(x) \land h(x) \divides g(x)    
+    \] e si indica con $\mcd{f(x)}{g(x)}$.
+\end{definition}
+
+\begin{definition}
+    [Minimo comune multiplo tra polinomi]
+    Siano $p(x), g(x) \in K[x]$. Allora si dice minimo comune multiplo di $p(x), g(x)$ il polinomio $h(x)$ di grado minimo tale che \[
+        p(x) \divides h(x) \land g(x) \divides h(x)  
+    \] ovvero tale che $h(x)$ è multiplo sia di $p(x)$ che di $g(x)$ e si indica con $\mcm{f(x)}{g(x)}$.
+\end{definition}
+
+Molti teoremi sul massimo comun divisore e massimo comune multiplo continuano a valere negli insiemi dei polinomi, come ad esempio il seguente.
+
+\begin{proposition}
+    Siano $p(x), g(x) \in \K[x]$. Allora $\mcd{p(x)}{g(x)} = \mcd{p(x) - g(x)h(x)}{g(x)}$, con $h(x) \in \K[x]$.
+\end{proposition}
+
 \begin{proposition}\label{resto_uguale_valutazione_nel_punto}
     Sia $p(x) \in A[x]$ e sia $a \in A$. Sia $r(x) \in A[x]$ il resto della divisione di $p(x)$ per $(x-a)$. Allora $r(x) = r_0$ per qualche $r_0 \in A$ e $p(a) = r_0$.
 \end{proposition}
@@ -246,10 +268,10 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 \end{proposition}
 \begin{proof}
     Sia $p(x) = a_0 + a_1x + \dots + a_nx^n$ con $a_0, \dots, a_n \in \R$. Supponiamo che $p(\lambda) = 0$. Allora \begin{align*}
-        p(\conj{\lambda}) &= a_0 + a_1\conj{\lambda} + \dots + a_n\conj{\lambda} &&\text{(se $a \in \R$ allora $\conj{a} = a$)}\\
-        &= \conj{a_0} + \conj{a_1}\cdot\conj{\lambda} + \dots + \conj{a_n}\cdot\conj{\lambda} &&\text{(per la \ref{somma_prodotto_tra_coniugati})}\\
-        &= \conj{a_0} + \conj{a_1\lambda} + \dots + \conj{a_n\lambda} &&\text{(per la \ref{somma_prodotto_tra_coniugati})}\\
-        &= \conj{a_0 + a_1\lambda + \dots + a_n\lambda} \\
+        p(\conj{\lambda}) &= a_0 + a_1\conj{\lambda} + \dots + a_n\conj{\lambda^n} &&\text{(se $a \in \R$ allora $\conj{a} = a$)}\\
+        &= \conj{a_0} + \conj{a_1}\cdot\conj{\lambda} + \dots + \conj{a_n}\cdot\conj{\lambda^n} &&\text{(per la \ref{somma_prodotto_tra_coniugati})}\\
+        &= \conj{a_0} + \conj{a_1\lambda} + \dots + \conj{a_n\lambda^n} &&\text{(per la \ref{somma_prodotto_tra_coniugati})}\\
+        &= \conj{a_0 + a_1\lambda + \dots + a_n\lambda^n} \\
         &= \conj{p(\lambda)}.
     \end{align*}
 
@@ -267,9 +289,9 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
     \begin{align*}
         p(x) &= (x-\lambda)(x-\conj\lambda)\\
         &= x^2 - (\lambda + \conj\lambda)x + \lambda\conj{\lambda} &&\text{(per \ref{somma_prodotto_col_coniugato})}\\
-        &= x^2 - (\Re \lambda)x + \abs{\lambda}^2.
+        &= x^2 - 2(\Re \lambda)x + \abs{\lambda}^2.
     \end{align*}
-    Dato che $\Re \lambda, \abs{\lambda}^2 \in \R$ segue la tesi.
+    Dato che $2\Re \lambda, \abs{\lambda}^2 \in \R$ segue la tesi.
 \end{proof}
 
 \begin{proposition}
@@ -294,8 +316,8 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
             \]
 
             Per il lemma \ref{(x-l)(x-conj(l))_in_R} il polinomio $h(x) = (x-\lambda)(x-\conj\lambda)$ è un polinomio a coefficienti reali, dunque dato che $h(x) \divides p(x)$ esiste $g(x) \in \R[x]$ tale che \[
-                f(x) = h(x)g(x) = (x-\lambda)(x-\conj\lambda) \cdot g(x).  
-            \] Dato che $\deg g = \deg p - 2 = n - 2$ segue che per ipotesi induttiva $g$ è fattorizzabile come prodotto di fattori di grado $1$ o $2$, dunque anche $f$ lo è.
+                p(x) = h(x)g(x) = (x-\lambda)(x-\conj\lambda) \cdot g(x).  
+            \] Dato che $\deg g = \deg p - 2 = n - 2$ segue che per ipotesi induttiva $g$ è fattorizzabile come prodotto di fattori di grado $1$ o $2$, dunque anche $p$ lo è.
         \end{itemize}
     \end{description}
 
@@ -359,8 +381,61 @@ Per il Lemma di Gauss dunque se vogliamo cercare la fattorizzazione di un polino
     \end{itemize}
     allora $f$ è irriducibile in $\Z[x]$.
 \end{proposition}
+\begin{proof}
+    Sia $f_p(x) \in \Z/(p)[x]$ il polinomio ottenuto considerando $f(x)$ nel campo $\Z/(p)$. Per le prime due ipotesi segue che \begin{align*}
+        f_p(x) &= [a_n]_px^n + [a_{n-1}]_px^{n-1} + \dots + [a_0]_p \\
+        &= [a_n]_px^n
+    \end{align*} con $[a_n]_p \neq 0$ per la seconda ipotesi.
+
+    Supponiamo per assurdo che $f(x)$ si fattorizzi in $\Z[x]$, ovvero che esistano $g(x), h(x) \in \Z[x]$ tali che \[
+        f(x) = g(x)h(x).
+    \] Notiamo che $a_0 = f(0) = g(0)h(0)$. 
+    
+    Consideriamo ore le rispettive proiezioni $g_p(x), h_p(x) \in \Z/(p)[x]$. Dato che $g(x) \divides f(x)$, $h(x) \divides f(x)$ segue che $g_p(x) \divides f_p(x)$ e $h_p(x) \divides f_p(x)$. Ma $f_p(x)$ è un monomio, quindi anche $g_p(x)$ e $h_p(x)$ devono essere monomi:
+    \[
+        g_p(x) = kx^r, h_p(x) = hx^{n-r}    
+    \] con $k, r \in \Z/(p)$, $k, r$ entrambi diversi da $0$.
+
+    Notiamo che $g_p(0) = h_p(0) = 0$, che in $\Z/(p)$ significa che $g(0) \equiv h(0) \equiv 0 \Mod{p}$, cioè $p \divides g(0)$, $p \divides h(0)$. Ma questo significa che $p^2 \divides g(0)h(0)$, ovvero $p^2 \divides a_0$, che è assurdo poiché abbiamo assunto che $p^2 \nmid a_0$.
+
+    Dunque segue che $f(x)$ non è fattorizzabile in $\Z[x]$, che è la tesi.
+\end{proof}
 
 \begin{proposition}
     [Criterio della sostituzione] \label{criterio_sost}
     Sia $p(x) \in \Z[x]$ e sia $n \in \Z$. Allora $p(x)$ è riducibile in $\Z[x]$ se e solo se $p(x+n)$ è riducibile in $\Z[x]$.
 \end{proposition}
+
+\subsection{Polinomi ciclotomici}
+
+\begin{definition}
+    [Polinomio ciclotomico]
+    Sia $p \in \Z$ primo. Si dice polinomio ciclotomico il polinomio \[
+        f(x) = 1 + x + \dots + x^{p-1}.    
+    \]
+\end{definition}
+
+\begin{proposition}
+    Sia $p \in \Z$ primo e sia $f(x) \in \Z[x]$ il polinomio ciclotomico di grado $p-1$. 
+
+    $f(x)$ non è fattorizzabile in $\Z[x]$.
+\end{proposition}
+\begin{proof}
+    Notiamo che $f(x)$ rappresenta una serie geometrica, dunque \[
+        f(x) = 1 + x + \dots + x^{p-1} = \frac{x^p - 1}{x - 1}.    
+    \] Per il criterio di sostituzione (\ref{criterio_sost}) vale che $f(x)$ è riducibile in $\Z[x]$ se e solo se $f(x+1)$ lo è. Dunque
+    \begin{align*}
+        f(x+1) &= \frac{(x+1)^p - 1}{x+1-1} &&\text{(per il teorema del Binomiale (\ref{binomiale}))}\\
+        &= \frac1x \left( x^p + \binom{p}{1}x^{n-1} + \dots + \binom{p}{p-1}x + 1 - 1 \right)\\
+        &= \frac1x \left( x^p + \binom{p}{1}x^{n-1} + \dots + \binom{p}{p-1}x \right)\\
+        &= x^{p-1} + \binom{p}{1}x^{n-2} + \dots + \binom{p}{p-1}.
+    \end{align*}
+
+    Applichiamo il criterio di Eisenstein col primo $p$:
+    \begin{itemize}
+        \item per la proposizione $\ref{binomio_pk_divisibile_p}$ segue che tutti i coefficienti tranne il coefficiente direttore sono congrui a $0$ modulo $p$;
+        \item dato che il coefficiente direttore è $1$, segue che $p \nmid 1$;
+        \item il termine noto è $\binom{p}{p-1} = p$, dunque $p^2 \nmid p$.
+    \end{itemize}
+    Per il criterio di Eisenstein (\ref{criterio_eisenstein}) dunque il polinomio $f(x+1)$ non è fattorizzabile in $\Z[x]$, dunque per il criterio di sostituzione neanche $f(x)$ lo è. 
+\end{proof}
