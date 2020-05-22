@@ -63,10 +63,10 @@ Hint: bisogna contare quanti numeri vengono letti e tenere traccia della loro so
 
 Scrivere un programma in C che legga dalla tastiera un intero **n** e chiami una procedura che prende in input un intero, passando **n**.
 
-La procedura prende **n** in input ed effettua le seguenti operazioni **finché** $n \neq 1$:
+La procedura prende **n** in input ed effettua le seguenti operazioni **finché** **n** è diverso da 1$:
 - stampa **n**
-- se **n** è pari, allora $n := {n}/{2}$
-- se **n** è dispari, allora $n := 3n + 1$.
+- se **n** è pari, allora assegna ad **n** il valore **n/2**
+- se **n** è dispari, allora assegna ad **n** il valore **3n + 1**.
 
 Infine stampare 1.
 

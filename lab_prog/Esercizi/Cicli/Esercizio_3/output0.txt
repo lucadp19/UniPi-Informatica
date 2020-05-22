@@ -1,4 +1,4 @@
-minore
+minminore
 maggiore
 uguale
 maggiore
