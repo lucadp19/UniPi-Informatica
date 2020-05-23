@@ -90,10 +90,39 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 \section{Divisione e fattorizzazioni}
 
 \begin{theorem}[Esistenza e unicità della divisione polinomiale nei campi]
-    Siano $p(x), q(x) \in \K[x]$. Allora esistono e sono unici $q(x), r(x) \in \K[x]$ tali che \begin{equation}
-        p(x) = g(x)q(x) + r(x), \quad \text{con } \deg r < \deg g.
+    Siano $a(x), b(x) \in \K[x]$. Allora esistono e sono unici $q(x), r(x) \in \K[x]$ tali che \begin{equation}
+        a(x) = b(x)q(x) + r(x), \quad \text{con } \deg r < \deg b.
     \end{equation} 
 \end{theorem}
+\begin{proof}
+    Siano $n = \deg a$ e $m = \deg b$, ovvero \begin{align*}
+        a(x) = a_nx^n + a_{n-1}x^{n-1} + \dots + a_0, &&b(x) = b_mx^m + b_{m-1}x^{m-1} + \dots + b_0.
+    \end{align*}
+    Dimostriamolo per induzione su $n$.
+    \begin{description}
+        \item[Caso base] Se $n < m$ allora possiamo scrivere la divisione polinomiale come \[
+            a(x) = 0\cdot b(x) + a(x)    
+        \] ovvero $q(x) = 0$ e $r(x) = a(x)$, che soddisfa automaticamente il requisito $\deg r < \deg b$.
+        \item[Passo induttivo] Supponiamo di poter eseguire la divisione polinomiale per ogni $n^\prime < n$ e dimostriamolo per $n$. Supponiamo inoltre che $n > m$, altrimenti ricadiamo nel caso base.
+        
+        Scriviamo i polinomi $a(x)$ e $b(x)$ come $a(x) = a_nx^n + a^\prime(x)$, $b(x) = b_mx^m + b^\prime(x)$, dove $a^\prime(x)$ e $b^\prime(x)$ sono due polinomi di grado $n-1$ e $m-1$ rispettivamente che contengono tutti i termini di grado minore del massimo.
+
+        Eseguiamo un passo della divisione polinomiale tra $a$ e $b$: scegliamo come quoziente il polinomio $q_0(x) = \frac{a_n}{b_m} x^{n-m}$. In questo modo infatti otteniamo \begin{align*}
+            r_0(x) &= a(x) - q_0(x)b(x) \\
+            &= a_nx^n + a^\prime(x) - \frac{a_n}{b_m}x^{n-m}(b_mx^m + b^\prime(x)) \\
+            &= a_nx^n + a^\prime(x) - a_nx^n - \frac{a_n}{b_m}x^{n-m}b^\prime(x) \\
+            &= a^\prime(x) - \frac{a_n}{b_m}x^{n-m}b^\prime(x).
+        \end{align*}
+        Il grado del resto $r_0$ è minore del grado di $a$ poiché i due addendi hanno grado $n-1$ e $(m-1)-(n-m) < n$. Dunque possiamo eseguire la divisione polinomiale tra $r_0$ e $b$ per ipotesi induttiva, ottenendo che $r_0(x) = q^\prime(x)b(x) + r^\prime(x)$ con $\deg r^\prime < \deg b$. 
+        
+        Sostituendo nell'equazione per $a$ otteniamo che \begin{align*}
+            a(x) &= q_0(x)b(x) + r_0(x)\\
+            &= q_0(x)b(x) + q^\prime(x)b(x) + r^\prime(x) \\
+            &= (q_0(x) + q^\prime(x))b(x) + r^\prime(x).
+        \end{align*} 
+        Dunque possiamo eseguire la divisione polinomiale tra $a(x)$ e $b(x)$, ottenendo come unici quoziente e resto i polinomi $q(x) = q_0(x) + q^\prime(x)$ e $r(x) = r^\prime(x)$.
+    \end{description}
+\end{proof}
 
 \begin{proposition}[Esistenza e unicità della divisione polinomiale negli anelli]\label{divisione_polinomi}
     Siano $p(x), g(x) \in A[x]$ con $g$ monico. Allora esistono e sono unici $q(x), r(x) \in A[x]$ tali che \begin{equation}

@@ -141,6 +141,15 @@ Dunque per calcolare il massimo comun divisore si puo' sfruttare il seguente alg
         \end{itemize}
         dove i valori di $\mcd{a - b}{b}$ o $\mcd{a}{b - a}$ vengono calcolati riapplicando l'algoritmo.
 \end{enumerate}
+Possiamo velocizzare il procedimento usando i resti della divisione invece che la sottrazione:
+\begin{enumerate}[4.]
+    \item Se $a \neq 0$ e $b \neq 0$, allora
+    \begin{itemize}
+        \item se $a \leq b$ segue che $\mcd{a}{b} = \mcd{a \bmod b}{b}$;
+        \item se $a > b$ segue che $\mcd{a}{b} = \mcd{a}{b \bmod a}$
+    \end{itemize}
+    dove i valori di $\mcd{a \bmod b}{b}$ o $\mcd{a}{b \bmod a}$ vengono calcolati riapplicando l'algoritmo.
+\end{enumerate}
 
 \begin{theorem}
     [Teorema di Bezout] \label{bezout}
@@ -149,6 +158,37 @@ Dunque per calcolare il massimo comun divisore si puo' sfruttare il seguente alg
         ax + by = \mcd{a}{b}.
     \end{equation}
 \end{theorem}
+\begin{proof}
+    Siano $r_0 = a$, $r_1 = b$. Definisco la successione $(r_n)$ come la sequenza dei resti della divisione dati dall'algoritmo di Euclide per l'mcd:\begin{align*}
+        \mcd{a}{b} &= \mcd{r_0}{r_1} &&\text{sia } r_2 = r_0 \bmod{r_1}: \\
+        &= \mcd{r_1}{r_2} &&\text{sia } r_3 = r_1 \bmod{r_2}: \\
+        &= \dots\\
+        &= \mcd{r_n}{r_{n+1}} &&\text{sia } r_{n+2} = r_n \bmod{r_{n+1}}:\\
+        &= \dots
+    \end{align*}
+    Questo processo ha termine quando un resto $r_{m+1}$ è uguale a $0$: in quel caso $\mcd{r_m}{r_{m+1}} = \mcd{r_m}{0}= r_m = \mcd{a}{b}$.
+
+    Dimostriamo che per ogni $n$ possiamo scrivere $r_n$ come $ax_n + by_n$ per qualche $x_n, y_n \in \Z$.
+    \begin{description}
+        \item[Caso base] Per $r_0$ e $r_1$ è banale: \begin{align*}
+            r_0 = 1\cdot a + 0 \cdot b, &&r_1 = 0 \cdot a + 1 \cdot b.
+        \end{align*}
+        \item[Passo induttivo] Supponiamo di saper scrivere $r_n$ e $r_{n-1}$ come combinazione di $a$ e $b$ e dimostriamo che possiamo farlo anche per $r_{n+2}$.
+       
+        Per ipotesi induttiva esistono $x_n, y_n, x_{n+1}, y_{n+1} \in \Z$ tali che \begin{align*}
+            r_n = ax_n + by_n, && r_{n+1} = ax_{n+1} + by_{n+1}.
+        \end{align*}
+
+        Per definizione $r_{n+2} = r_n \bmod{r_{n+1}}$, ovvero per definizione di resto $r_{n+2} = r_n - q_{n+1}r_{n+1}$ per qualche $q_{n+1} \in \Z$. Sostituendo otteniamo \begin{align*}
+            r_{n+2} &= r_n - q_{n+1}r_{n+1}\\
+            &= ax_n + by_n - q_{n+1}(ax_{n+1} + by_{n+1})\\
+            &= a(x_n - q_{n+1}x_{n+1}) + b(y_n - q_{n+1}y_{n+1}).
+        \end{align*}
+        Dunque $x_{n+2} = x_n - q_{n+1}x_{n+1}$ e $y_{n+2} = y_n - q_{n+1}y_{n+1}$, cioè possiamo esprimere $r_{n+2}$ come combinazione lineare di $a, b$.
+    \end{description}
+
+    Dato che per induzione questo risultato vale per tutti gli $n \in \N$, varrà anche per $m$, ovvero esistono $x, y \in \Z$ tali che $r_m = ax + by$. Ma $r_m = \mcd{a}{b}$, dunque la tesi.
+\end{proof}
 
 \subsection{Conseguenze del teorema di Bezout}
 
