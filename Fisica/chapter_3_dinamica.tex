@@ -153,3 +153,125 @@ Se la superficie di contatto non e' piana allora le forze normali non bilanciano
               &= \sqrt{2gh}
     \end{alignat*}
 \end{example}
+
+\begin{example}
+    [Piano inclinato liscio e forza orizzontale]
+    Supponiamo di avere un piano inclinato con angolo alla base $\theta$ e un corpo di massa $m$ che viene spinto su per il piano inclinato tramite una forza orizzontale $\bvv{F_e}$. Sappiamo inoltre che la velocita' del corpo e' costante. Calcoliamo quanto vale la forza orizzontale e la reazione vincolare $\bvv{N}$.
+
+    Dato che per ipotesi il corpo si muove a velocita' costante, allora $\bvv{R} = \bvv{0}$, cioe' $R_x = 0$ e $R_y = 0$. Dunque disegnando il diagramma del corpo libero:
+    \begin{alignat*}{1}
+        &\begin{cases}
+            R_x = mg\sin\theta - F_e\cos\theta = 0\\
+            R_y = N - mg\cos\theta - F_e\sin\theta = 0
+        \end{cases} \\
+        \implies &\begin{cases}
+            F_e\cos\theta = mg\sin\theta\\
+            N = mg\cos\theta + F_e\sin\theta
+        \end{cases} \\
+        \implies &\begin{cases}
+            F_e = mg\tan\theta\\
+            N = mg\cos\theta + mg\tan\theta \sin\theta = mg\cos\theta (1 + \tan^2 \theta)
+        \end{cases}
+    \end{alignat*}
+\end{example}
+
+Le forze di attrito sono esercitate parallelamente alla superficie di contatto. Esse si dividono in due categorie: \begin{itemize}
+    \item attrito statico: si oppone all'inizio del moto del corpo;
+    \item attrito dinamico: si oppone al moto di un corpo che non e' in quiete.
+\end{itemize}
+Le forze di attrito dinamico sono inferiori a quelle di attrito statico.
+
+\subsubsection{Attrito statico}
+
+L'attrito statico si oppone al moto, e ha un'intensita' tale che l'accelerazione e' nulla. La forza di attrito ha direzione tangente alla superficie e ha verso opposto alla forza applicata. Finche' il corpo rimane in uno stato di quiete si ha che $\vmag{f_s} = \vmag{F_{\text{ext}}}$ (dove $\bvv{f_s}$ e' la forza di attrito e $\bvv{F_{\text{ext}}}$ e' la forza esterna). 
+In generale si ha che $\vmag{f_s} \leq \mu_s N$, dove $\mu_s$ e' il coefficiente di attrito statico, dunque al massimo $\vmag{f_s} = \mu_s N$.
+
+\subsubsection{Attrito dinamico}
+
+Se la forza esterna supera il valore $\mu_s N$ il corpo comincia a muoversi e l'attrito diventa attrito dinamico, che ha la stessa direzione del moto, verso opposto e modulo \[
+    \vmag{f_d} = \mu_d N    
+\]
+dove $\mu_d$ e' il coefficiente di attrito dinamico, e risulta sempre $\mu_d \leq \mu_s$.
+
+\begin{example}
+    Un corpo e' lanciato con velocita' $\bvv{v_0}$ lungo un piano scabro con attrito dinamico $\mu_d$. Dopo quanto tempo si ferma? Che tratto percorre prima di fermarsi?
+
+    Consideriamo il modo nelle due dimensioni. Sull'asse $X$ il corpo si muove di moto accelerato (con accelerazione negativa data dall'attrito dinamico), mentre sull'asse $Y$ il corpo e' fermo dunque la somma delle forze sara' $0$. Dunque:
+    \begin{equation*}
+        \begin{cases}
+            R_x = -f_d \\
+            R_y = N - mg = 0            
+        \end{cases}
+        \implies \begin{cases}
+            -f_d = -\mu_d N = -\mu_d mg = ma_x\\
+            N = mg
+        \end{cases} 
+    \end{equation*}
+    Quindi $a_x = -\mu_d g$. Sostituendolo nelle equazioni del moto otteniamo\[
+        t_f = \frac{v_0}{-a_x} = \frac{v_0}{\mu_d g}
+    \] e inoltre \[
+        x_f = v_0t_f + \frac{1}{2}a_xt_f^2 = \frac{v_0^2}{\mu_d g} - \frac{1}{2}\mu_d g\frac{v_0^2}{\mu_d^2g^2} = \frac{v_0^2}{2\mu_d g}.
+    \]
+\end{example}
+
+
+\begin{example}
+    Un corpo e' lanciato con velocita' $\bvv{v_0}$ lungo un piano scabro con attrito dinamico $\mu_d$. Se volessi mantenere il corpo a velocita' costante, che forza esterna dovrei fornire? Ci vuole meno forza a tirare verso l'alto ($\theta > 0$) oppure a spingere verso il basso ($\theta < 0$)?
+
+    Consideriamo il modo nelle due dimensioni includendo una forza $F$ inclinata con un angolo $\theta$: per il primo principio della dinamica la risultante delle forze sul corpo dovra' essere nulla. Dunque:
+    \begin{equation*}
+        \begin{cases}
+            R_x = -f_d + F\cos\theta = -\mu_d N + F\cos\theta = 0\\
+            R_y = N - mg + F\sin\theta = 0       
+        \end{cases}
+        \implies \begin{cases}
+            -\mu_d N + F\cos\theta = -\mu_d (mg - F\sin\theta) + F\cos\theta = -\mu_d mg + F(\cos\theta + \mu_d\sin\theta) = 0\\
+            N = mg - F\sin\theta
+        \end{cases} 
+    \end{equation*}
+    dunque \[
+        F = \frac{\mu_d mg}{\cos\theta + \mu_d \sin\theta}.    
+    \]    
+\end{example}
+
+\begin{example}[Piano inclinato con attrito]
+    Supponiamo di avere un piano inclinato con attrito e che il corpo con massa $m$ sia in uno stato di quiete.
+
+    Questo significa che la forza di attrito $\bvv{f_a}$ riesce a bilanciare le altre forze, in modo che la risultante lungo l'asse $X$ sia nulla. Al massimo vale quindi $f_a = \mu_s N$.
+    \begin{equation*}
+        \begin{cases}
+            R_x = N - mg\cos\theta = 0\\
+            R_y = -f_a + mg\sin\theta = 0
+        \end{cases} \implies
+        \begin{cases}
+            N = mg\cos\theta\\
+            f_a = mg\sin\theta
+        \end{cases} 
+    \end{equation*}
+    
+    Definiamo pendenza critica l'angolo $\theta_c$ oltre il quale la forza di attrito statica non riesce a controbilanciare la forza di gravita'. Quindi quando $\theta > \theta_c$ segue che NON HO CAPITO E NON MI VA DI CAPIRE
+\end{example}
+
+\subsection{Tensioni}
+
+Quando non ci sono altre forze applicate in una qualsiasi sua parte una fune ideale (cioe' inestensibile e di massa trascurabile) esercita sui corpi fissati ai suoi estremi due forze che hanno la direzione della fune, stessa intensita' e versi opposti.
+
+\section{Moto circolare}
+
+Si dice moto circolare uniforme un moto su una traiettoria circolare di raggio $R$ con velocita' costante in modulo. Dato che la velocita' cambia direzione avremo che $\bvv a \neq 0$.
+
+Chiamiamo $s$ lo spazio percorso sulla circonferenza, $\theta = \frac{s}{R}$ l'angolo spazzato. Allora valgono le seguenti: \[
+    \begin{cases}
+        \Delta \bvv r = \bvv{r_f} - \bvv{r_i}\\
+        \Delta \theta= \theta_f - \theta_i\\
+        \Delta s = R\Delta \theta
+    \end{cases}    
+\]
+
+\begin{definition}
+    Diciamo velocita' angolare media di un moto circolare la grandezza $\ang{\omega} = \frac{\Delta \theta}{\Delta t}$. Dunque la velocita' angolare istantanea sara' $\omega = \lim_{\Delta t \to 0} \ang{\omega} = \frac{d\theta}{dt}$.
+\end{definition}
+
+\begin{definition}
+    Diciamo accelerazione angolare media di un moto circolare la grandezza $\ang{\alpha} = \frac{\Delta \omega}{\Delta t}$. Dunque la velocita' angolare istantanea sara' $\alpha = \lim_{\Delta t \to 0} \ang{\alpha} = \frac{d\omega}{dt}$.
+\end{definition}
