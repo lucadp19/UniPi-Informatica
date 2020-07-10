@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[italian,oneside,headinclude,10pt]{scrbook}
     \usepackage[utf8]{inputenc}
     \usepackage[italian]{babel}
     \usepackage[T1]{fontenc}
@@ -8,23 +8,90 @@
     \usepackage{array}
     \usepackage{float}
 
+    \usepackage{letltxmacro}
+
+    \LetLtxMacro\amsproof\proof
+    \LetLtxMacro\amsendproof\endproof
+
+    
+    \usepackage[pdfspacing]{classicthesis}
+    % \usepackage{lmodern}
+    
+    \usepackage{thmtools}
+    \usepackage[framemethod=TikZ]{mdframed}
+
+    \usepackage{cleveref}
     \usepackage{hyperref} % ultimo package da caricare!
 
 \restylefloat{table}
 
-\theoremstyle{plain}
-\newtheorem{theorem}{Teorema}[section]
-\newtheorem{corollary}[theorem]{Corollario}
-\newtheorem{proposition}[theorem]{Proposizione}
+\AtBeginDocument{
+    \LetLtxMacro\proof\amsproof
+    \LetLtxMacro\endproof\amsendproof
+}
 
-\theoremstyle{definition}
-\newtheorem{example}[theorem]{Esempio}
-\newtheorem{definition}[theorem]{Definizione}
+\titleformat*{\chapter}{\LARGE\scshape}
+\titleformat*{\section}{\Large\scshape}
 
-\theoremstyle{remark}
-\newtheorem*{remark}{Osservazione}
-\newtheorem*{solution}{Soluzione}
-\newtheorem*{intuition}{Intuizione}
+\renewcommand*{\proofname}{\textsc{Dimostrazione}}
+\addto\italian{\renewcommand*{\proofname}{\textsc{Dimostrazione}}}
+
+\declaretheoremstyle[
+    spaceabove=6pt, spacebelow=6pt,
+    % headindent=6pt,
+    headfont=\bfseries,
+    notefont=\bfseries, notebraces={ (}{)},
+    % headfont=\scshape,
+    % notefont=\scshape, notebraces={ (}{)},
+    bodyfont=\itshape\normalsize,
+    shaded={rulecolor={rgb}{255,255,255}},
+    % mdframed={backgroundcolor=halfgray},
+    headpunct={\vspace{0.5\topsep}\newline}
+]{thmstyle}
+\declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
+\declaretheorem[name=Corollario, sibling=theorem, style=thmstyle]{corollary}
+\declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
+\declaretheorem[name=Lemma, sibling=theorem, style=thmstyle]{lemma}
+
+\declaretheoremstyle[
+    spaceabove=0pt, spacebelow=0pt,
+    headfont=\bfseries,
+    notefont=\normalfont, notebraces={ (}{)},
+    % headfont=\scshape,
+    % notefont=\scshape, notebraces={(}{)},
+    bodyfont=\normalfont\normalsize,
+    headpunct={\vspace{0.5\topsep}\newline},
+    mdframed={
+        linecolor=halfgray,
+        linewidth=1pt,
+        backgroundcolor=white,
+        topline=false,
+        bottomline=false,
+        rightline=false
+    },
+]{defstyle}
+\declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
+
+\declaretheoremstyle[
+    headfont=\bfseries,
+    notefont=\normalfont, notebraces={ (}{)},
+    bodyfont=\normalfont,
+    postheadspace=1em
+]{exmplstyle}
+\declaretheorem[name=Esempio, sibling=theorem, style=exmplstyle]{example}
+\declaretheorem[name=Esercizio, sibling=theorem, style=exmplstyle]{exercise}
+
+
+\declaretheoremstyle[
+    headfont=\scshape,
+    notefont=\normalfont, notebraces={(}{)},
+    bodyfont=\normalfont,
+    numbered=no,
+    postheadspace=1em
+]{remarkstyle}
+\declaretheorem[name=Osservazione, style=remarkstyle]{remark}
+\declaretheorem[name=Soluzione, style=remarkstyle]{solution}
+\declaretheorem[name=Intuizione, style=remarkstyle]{intuition}
 
 \DeclareMathOperator{\tc}{\ tale che\ }
 
@@ -39,13 +106,20 @@
   \array{#1}}
 \makeatother
 
+\renewcommand{\vec}[1]{\bm{#1}}
+
+\newcommand{\conj}[1]{\overline{#1}}
 \newcommand{\divides}{\mid}
 \newcommand{\Mod}[1]{\ \left(#1\right)}
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\mcm}[2]{\operatorname{mcm}\left(#1, #2\right)}
 \newcommand{\mcd}[2]{\operatorname{mcd}\left(#1, #2\right)}
 \newcommand{\Span}[1]{\operatorname{span}\left\{#1\right\}}
-\newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+\newcommand{\basis}[1]{\left\langle #1 \right\rangle}
+\newcommand{\innerprod}[2]{\langle #1{,}#2\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\ortog}[1]{#1^{\perp}}
+\newcommand{\proj}[2]{\operatorname{proj}_{#2}\!\left( #1 \right)}
 \newcommand{\rk}[1]{\operatorname{rango}\left( #1 \right)}
 \newcommand{\Imm}[1]{\operatorname{Im}#1}
 \newcommand{\id}{\operatorname{id}}
@@ -70,5 +144,6 @@
 \include{chapter_3}
 \include{chapter_4}
 \include{chapter_5}
+\include{chapter_6}
 
 \end{document}

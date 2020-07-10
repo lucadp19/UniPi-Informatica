@@ -4,17 +4,17 @@
 \section{Definizione e significato del determinante}
 
 \begin{definition}
-    Sia $A$ una matrice quadrata $n \times n$ e siano $\bm{C_1}, \dots, \bm{C_n} \in \R^n$ le sue colonne. Allora si dice determinante una funzione \[
+    Sia $A$ una matrice quadrata $n \times n$ e siano $\vec{C_1}, \dots, \vec{C_n} \in \R^n$ le sue colonne. Allora si dice determinante una funzione \[
         \det : \M_{n \times n}(\R) \to \R 
     \] che rispetta le seguenti proprieta':
 
     \begin{enumerate}[(i)]
         \item $\det I_n = 1$, cioe' il determinante della matrice identita' $n \times n$ deve essere 1;
-        \item se per qualche $i, j$ compresi tra $1$ e $n$, con $i \neq j$, vale che $\bm{C_i} = \bm{C_j}$, allora $\det A = 0$, cioe' se due colonne della matrice sono uguali il determinante deve essere 0;
-        \item se $A'$ e' la matrice ottenuta moltiplicando una colonna della matrice $A$ per $\lambda \in \R$, cioe' $A' = \begin{pmatrix} \bm{C_1} & \dots & \lambda \bm{C_i} & \dots & \bm{C_n} \end{pmatrix}$ allora \[\det A' = \lambda \det A;\]
-        \item se la colonna $\bm{C_i}$ e' esprimibile come $\bm{v_1} + \bm{v_2}$ con $\bm{v_1}, \bm{v_2} \in \R^n$, cioe' $A = \begin{pmatrix} \bm{C_1} & \dots & \bm{v_1} + \bm{v_2} & \dots & \bm{C_n} \end{pmatrix}$
+        \item se per qualche $i, j$ compresi tra $1$ e $n$, con $i \neq j$, vale che $\vec{C_i} = \vec{C_j}$, allora $\det A = 0$, cioe' se due colonne della matrice sono uguali il determinante deve essere 0;
+        \item se $A'$ e' la matrice ottenuta moltiplicando una colonna della matrice $A$ per $\lambda \in \R$, cioe' $A' = \begin{pmatrix} \vec{C_1} & \dots & \lambda \vec{C_i} & \dots & \vec{C_n} \end{pmatrix}$ allora \[\det A' = \lambda \det A;\]
+        \item se la colonna $\vec{C_i}$ e' esprimibile come $\vec{v_1} + \vec{v_2}$ con $\vec{v_1}, \vec{v_2} \in \R^n$, cioe' $A = \begin{pmatrix} \vec{C_1} & \dots & \vec{v_1} + \vec{v_2} & \dots & \vec{C_n} \end{pmatrix}$
         allora \[
-            \det A = \det \begin{pmatrix} \bm{C_1} & \dots & \bm{v_1} & \dots & \bm{C_n} \end{pmatrix} + \det \begin{pmatrix} \bm{C_1} & \dots & \bm{v_2} & \dots & \bm{C_n} \end{pmatrix} 
+            \det A = \det \begin{pmatrix} \vec{C_1} & \dots & \vec{v_1} & \dots & \vec{C_n} \end{pmatrix} + \det \begin{pmatrix} \vec{C_1} & \dots & \vec{v_2} & \dots & \vec{C_n} \end{pmatrix} 
         \] cioe' il determinante e' lineare nelle colonne della matrice.
     \end{enumerate}
 \end{definition}
@@ -26,12 +26,12 @@ Il determinante di una matrice si indica anche con \[
 Possiamo anche definire il determinante come una funzione che prende esattamente $n$ vettori di $\R^n$ e restituisce un numero reale, cioe' $\det : (\R^n)^n \to \R$ e che rispetta le seguenti proprieta':
 \begin{enumerate}
     [(i)]
-    \item se $\bm{c_1}, \dots, \bm{c_n}$ sono i vettori della base standard di $\R^n$, allora \[\det(\bm{c_1}, \dots, \bm{c_n}) = 1;\]
-    \item $\det(\bm{v_1}, \dots, \bm{v_i}, \dots, \bm{v_i}, \dots, \bm{v_n}) = 0$, cioe' se due dei vettori sono uguali allora il determinante e' nullo;
-    \item $\det(\bm{v_1}, \dots, \lambda\bm{v_i}, \dots, \bm{v_n}) = \lambda \det (\bm{v_1}, \dots, \bm{v_i}, \dots, \bm{v_n})$;
+    \item se $\vec{c_1}, \dots, \vec{c_n}$ sono i vettori della base standard di $\R^n$, allora \[\det(\vec{c_1}, \dots, \vec{c_n}) = 1;\]
+    \item $\det(\vec{v_1}, \dots, \vec{v_i}, \dots, \vec{v_i}, \dots, \vec{v_n}) = 0$, cioe' se due dei vettori sono uguali allora il determinante e' nullo;
+    \item $\det(\vec{v_1}, \dots, \lambda\vec{v_i}, \dots, \vec{v_n}) = \lambda \det (\vec{v_1}, \dots, \vec{v_i}, \dots, \vec{v_n})$;
     \item le somme escono fuori dal determinante, cioe' \begin{alignat*}{1}
-        &\det(\bm{v_1}, \dots, \bm{v_i} + \bm{w}, \dots, \bm{v_n})\\
-        = &\det (\bm{v_1}, \dots, \bm{v_i}, \dots, \bm{v_n}) + \det (\bm{v_1}, \dots, \bm{w}, \dots, \bm{v_n}).
+        &\det(\vec{v_1}, \dots, \vec{v_i} + \vec{w}, \dots, \vec{v_n})\\
+        = &\det (\vec{v_1}, \dots, \vec{v_i}, \dots, \vec{v_n}) + \det (\vec{v_1}, \dots, \vec{w}, \dots, \vec{v_n}).
     \end{alignat*}
 \end{enumerate}
 
@@ -227,7 +227,7 @@ Diamo ora la definizione esatta di rango di una matrice.
     Sia $A \in \M_{n \times n}(\R)$ e sia $L_A : \R^n \to \R^n$ l'applicazione lineare associata ad $A$. Allora $L_A$ e' bigettiva se e solo se $\rk{A} = n$.
 \end{proposition}
 \begin{proof}
-    Dire che $L_A$ e' bigettiva equivale a dire che per ogni $\bm b \in \R^n$ esiste uno e un solo vettore $\bm x$ tale che $L_A(\bm x) = \bm b$, cioe' che il sistema $A\bm x = \bm b$ ha una e una sola soluzione.
+    Dire che $L_A$ e' bigettiva equivale a dire che per ogni $\vec b \in \R^n$ esiste uno e un solo vettore $\vec x$ tale che $L_A(\vec x) = \vec b$, cioe' che il sistema $A\vec x = \vec b$ ha una e una sola soluzione.
 
     Per la proposizione \ref{sistema_quadrato_n_pivot_unica_soluzione} questo avviene se e solo se il sistema ridotto a scalini ha $n$ pivot, cioe' $\rk{A} = n$. 
 \end{proof}
@@ -312,7 +312,7 @@ Il seguente teorema invece riassume le relazioni tra rango e determinante.
         [(i)]
         \item $\det A \neq 0$;
         \item $\rk{A} = n$;
-        \item $L_A$ e' bigettiva (ovvero $\Imm L_A = \R^n$ e $\ker L_A = \{\bm 0\}$);
+        \item $L_A$ e' bigettiva (ovvero $\Imm L_A = \R^n$ e $\ker L_A = \{\vec 0\}$);
         \item $A$ e' invertibile;
         \item le righe di $A$ sono indipendenti, ovvero $\dim \Span{R_1, \dots, R_n} = n$;
         \item le colonne di $A$ sono indipendenti, ovvero $\dim \Span{C_1, \dots, C_n} = n$.

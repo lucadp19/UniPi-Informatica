@@ -1,20 +1,20 @@
 \chapter{Spazi vettoriali}
 
 \section{Spazi vettoriali}
-\begin{definition}
-    Si dice \textbf{spazio vettoriale su un campo $\K$} un insieme $V$ di elementi, detti \textbf{vettori}, insieme con due operazioni $+ : V \times V \to V$ e $\cdot : \K \times V \to V$ e un elemento $\bm{0_V} \in V$ che soddisfano i seguenti assiomi:
-    \[\forall \bm{v}, \bm{w}, \bm{u} \in V, \quad\forall h, k \in \K \]
+\begin{definition}[Spazio vettoriale]
+    Si dice \textbf{spazio vettoriale su un campo $\K$} un insieme $V$ di elementi, detti \textbf{vettori}, insieme con due operazioni $+ : V \times V \to V$ e $\cdot : \K \times V \to V$ e un elemento $\vec{0_V} \in V$ che soddisfano i seguenti assiomi:
+    \[\forall \vec{v}, \vec{w}, \vec{u} \in V, \quad\forall h, k \in \K \]
     \begin{align}
-        &\text{1.} &&(\bm{v} + \bm{w}) \in V                                        &\text{(chiusura di V rispetto a $+$)} \\      
-        &\text{2.} &&\bm{v} + \bm{w} = \bm{w} + \bm{v}                              &\text{(commutativita' di $+$)} \\
-        &\text{3.} &&(\bm{v} + \bm{w}) + \bm{u} = \bm{w} + (\bm{v} + \bm{u})        &\text{(associativita' di $+$)} \\
-        &\text{4.} &&\bm{0_V} + \bm{v} = \bm{v} + \bm{0_V} = \bm{v}                 &\text{($\bm{0_V}$ el. neutro di $+$)} \\
-        &\text{5.} &&\exists (-\bm{v}) \in V. \quad\bm{v} + (\bm{-v}) = \bm{0_V}    &\text{(opposto per $+$)} \\
-        &\text{6.} &&k\bm{v} \in V                                                  &\text{(chiusura di V rispetto a $\cdot$)} \\
-        &\text{7.} &&k(\bm{v} + \bm{w}) = k\bm{v} + k\bm{w}                         &\text{(distributivita' 1)} \\
-        &\text{8.} &&(k + h)\bm{v}= k\bm{v} + h\bm{v}                               &\text{(distributivita' 2)} \\
-        &\text{9.} &&(kh)\bm{v}= k(h\bm{v})                                         &\text{(associativita' di $\cdot$)} \\
-        &\text{10.}&&1\bm{v}= \bm{v}                                                &\text{(1 el. neutro di $\cdot$)}
+        &\text{1.} &&(\vec{v} + \vec{w}) \in V                                        &\text{(chiusura di V rispetto a $+$)} \\      
+        &\text{2.} &&\vec{v} + \vec{w} = \vec{w} + \vec{v}                              &\text{(commutativita' di $+$)} \\
+        &\text{3.} &&(\vec{v} + \vec{w}) + \vec{u} = \vec{w} + (\vec{v} + \vec{u})        &\text{(associativita' di $+$)} \\
+        &\text{4.} &&\vec{0_V} + \vec{v} = \vec{v} + \vec{0_V} = \vec{v}                 &\text{($\vec{0_V}$ el. neutro di $+$)} \\
+        &\text{5.} &&\exists (-\vec{v}) \in V. \quad\vec{v} + (\vec{-v}) = \vec{0_V}    &\text{(opposto per $+$)} \\
+        &\text{6.} &&k\vec{v} \in V                                                  &\text{(chiusura di V rispetto a $\cdot$)} \\
+        &\text{7.} &&k(\vec{v} + \vec{w}) = k\vec{v} + k\vec{w}                         &\text{(distributivita' 1)} \\
+        &\text{8.} &&(k + h)\vec{v}= k\vec{v} + h\vec{v}                               &\text{(distributivita' 2)} \\
+        &\text{9.} &&(kh)\vec{v}= k(h\vec{v})                                         &\text{(associativita' di $\cdot$)} \\
+        &\text{10.}&&1\vec{v}= \vec{v}                                                &\text{(1 el. neutro di $\cdot$)}
     \end{align}
 \end{definition}
  
@@ -41,49 +41,49 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
     \end{enumerate}
 \end{example}
 
-\begin{definition}
+\begin{definition}[Sottospazio vettoriale]
     Sia $V$ uno spazio vettoriale, $A \subseteq V$. Allora si dice che $A$ e' un sottospazio vettoriale di $V$ (o semplicemente sottospazio) se
     \begin{align}
-        &\bm{0_V} \in A \\
-        &(\bm{v} + \bm{w}) \in A    &&\forall \bm{v}, \bm{w} \in A \\
-        &(k\bm{v}) \in A            &&\forall k \in \R, \bm{v} \in A
+        &\vec{0_V} \in A \\
+        &(\vec{v} + \vec{w}) \in A    &&\forall \vec{v}, \vec{w} \in A \\
+        &(k\vec{v}) \in A            &&\forall k \in \R, \vec{v} \in A
     \end{align}
 \end{definition}
 
 \begin{proposition}
-    Le soluzioni di un sistema omogeneo $A\bm{x} = \bm{0}$ con $n$ variabili formano un sottospazio di $\R^n$.
+    Le soluzioni di un sistema omogeneo $A\vec{x} = \vec{0}$ con $n$ variabili formano un sottospazio di $\R^n$.
 \end{proposition}
 \begin{proof}
     Chiamiamo $S$ l'insieme delle soluzioni. Dato che le soluzioni sono vettori colonna di $n$ elementi, $S \subseteq \R^n$. Verifichiamo ora le condizioni per cui $S$ e' un sottospazio di $\R^n$:
     \begin{enumerate}
-        \item $\bm{0}$ appartiene a $S$, poiche' $A\bm{0} = \bm{0}$;
-        \item Se $\bm{x}, \bm{y}$ appartengono ad $S$, allora $A(\bm{x} + \bm{y}) = A\bm{x} + A\bm{y} = \bm{0} + \bm{0} = \bm{0}$, dunque $\bm{x} + \bm{y} \in S$;
-        \item Se $\bm{x}$ appartiene ad $S$, allora $A(k\bm{x}) = kA\bm{x} = k\bm{0} = \bm{0}$, dunque $k\bm{x} \in S$.
+        \item $\vec{0}$ appartiene a $S$, poiche' $A\vec{0} = \vec{0}$;
+        \item Se $\vec{x}, \vec{y}$ appartengono ad $S$, allora $A(\vec{x} + \vec{y}) = A\vec{x} + A\vec{y} = \vec{0} + \vec{0} = \vec{0}$, dunque $\vec{x} + \vec{y} \in S$;
+        \item Se $\vec{x}$ appartiene ad $S$, allora $A(k\vec{x}) = kA\vec{x} = k\vec{0} = \vec{0}$, dunque $k\vec{x} \in S$.
     \end{enumerate}
     Dunque $S$ e' un sottospazio di $\R^n$.
 \end{proof}
 
 \section{Combinazioni lineari e span}
-\begin{definition}
-    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n} \in V$. Allora il vettore $\bm{v} \in V$ si dice combinazione lineare di $\bm{v_1}, \bm{v_2}, \dots, \bm{v_n}$ se 
+\begin{definition}[Combinazione lineare]
+    Sia $V$ uno spazio vettoriale e $\vec{v_1}, \vec{v_2}, \dots, \vec{v_n} \in V$. Allora il vettore $\vec{v} \in V$ si dice combinazione lineare di $\vec{v_1}, \vec{v_2}, \dots, \vec{v_n}$ se 
     \begin{equation}
-        \bm{v}= a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} 
+        \vec{v}= a_1\vec{v_1} + a_2\vec{v_2} + \dots + a_n\vec{v_n} 
     \end{equation}
     per qualche $a_1, a_2, \dots, a_n \in \R$.
 \end{definition}
 
-\begin{definition}
-    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \dots, \bm{v_n} \in V$. Si indica con $\Span{\bm{v_1}, \dots, \bm{v_n}}$ l'insieme dei vettori che si possono ottenere come combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}$:
+\begin{definition}[Span]
+    Sia $V$ uno spazio vettoriale e $\vec{v_1}, \dots, \vec{v_n} \in V$. Si indica con $\Span{\vec{v_1}, \dots, \vec{v_n}}$ l'insieme dei vettori che si possono ottenere come combinazione lineare di $\vec{v_1}, \dots, \vec{v_n}$:
     \begin{equation}
-        \Span{\bm{v_1}, \dots, \bm{v_n}} = \left\{a_1\bm{v_1} + \dots + a_n\bm{v_n} \mid a_1, \dots, a_n \in \R\right\}
+        \Span{\vec{v_1}, \dots, \vec{v_n}} = \left\{a_1\vec{v_1} + \dots + a_n\vec{v_n} \mid a_1, \dots, a_n \in \R\right\}
     \end{equation}
 \end{definition}
 
-\begin{proposition}\label{span_colonne=immagine_applicazione_associata}
-    Sia $A \in \M_{n \times m}(\R)$ e siano $\bm{a_1}, \bm{a_2}, \dots, \bm{a_m} \in \R^n$ le sue colonne. Allora l'immagine dell'applicazione lineare associata alla matrice e' uguale allo span delle colonne della matrice.
+\begin{proposition}[Lo span delle colonne di una matrice e' la sua immagine]\label{span_colonne=immagine_applicazione_associata}
+    Sia $A \in \M_{n \times m}(\R)$ e siano $\vec{a_1}, \vec{a_2}, \dots, \vec{a_m} \in \R^n$ le sue colonne. Allora l'immagine dell'applicazione lineare associata alla matrice e' uguale allo span delle colonne della matrice.
 \end{proposition}
 \begin{proof}
-    L'immagine dell'applicazione associata alla matrice matrice e' l'insieme di tutti i vettori del tipo $L_A(\bm{x}) = A \cdot \begin{pmatrix}
+    L'immagine dell'applicazione associata alla matrice matrice e' l'insieme di tutti i vettori del tipo $L_A(\vec{x}) = A \cdot \begin{pmatrix}
         x_1 & \dots & x_m
     \end{pmatrix}^T$ al variare di $x_1, \dots, x_m \in \R$. 
     \begin{alignat*}
@@ -93,25 +93,25 @@ Spesso il campo $\K$ su cui e' definito uno spazio vettoriale $V$ e' il campo de
             &= A\left(x_1\begin{pmatrix} 1 \\ \vdots \\ 0 \end{pmatrix} + \dots + x_m\begin{pmatrix} 0 \\ \vdots \\ 1 \end{pmatrix}\right)\\
             &= x_1A\begin{pmatrix} 1 \\ \vdots \\ 0 \end{pmatrix} + \dots + x_mA\begin{pmatrix} 0 \\ \vdots \\ 1 \end{pmatrix}\\
         \intertext{Ma sappiamo per la proposizione \ref{j-esima_colonna} che moltiplicare una matrice per un vettore che contiene tutti $0$ tranne un $1$ in posizione $j$ ci da' come risultato la $j$-esima colonna della matrice, dunque:}
-            &= x_1\bm{a_1} + \dots + x_m\bm{a_m} 
+            &= x_1\vec{a_1} + \dots + x_m\vec{a_m} 
     \end{alignat*}
-    Ma i vettori che appartengono allo span delle colonne di $A$ sono tutti e solo del tipo $x_1\bm{a_1} + \dots + x_m\bm{a_m}$, dunque $\Imm{A} = \Span{\bm{a_1}, \bm{a_2}, \dots, \bm{a_m}}$, come volevasi dimostrare.
+    Ma i vettori che appartengono allo span delle colonne di $A$ sono tutti e solo del tipo $x_1\vec{a_1} + \dots + x_m\vec{a_m}$, dunque $\Imm{A} = \Span{\vec{a_1}, \vec{a_2}, \dots, \vec{a_m}}$, come volevasi dimostrare.
 \end{proof}
 
-\begin{proposition}
-    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora $A = \Span{v_1, \dots, v_n} \subseteq V$ e' un sottospazio di $V$.
+\begin{proposition}[Ogni span e' un sottospazio]
+    Sia $V$ uno spazio vettoriale, $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora $A = \Span{v_1, \dots, v_n} \subseteq V$ e' un sottospazio di $V$.
 \end{proposition}
 \begin{proof}
     Dimostriamo che valgono le tre condizioni per cui $A$ e' un sottospazio di $V$:
     \begin{enumerate}
-        \item $\bm{0_V}$ appartiene ad $A$, in quanto basta scegliere $a_1 = \dots = a_n = 0$;
-        \item Siano $\bm{v}, \bm{w} \in A$. Allora per qualche $a_1, \dots, a_n, b_1, \dots, b_n \in \R$ vale che \begin{alignat*}{1}
-            \bm{v} + \bm{w} &= (a_1\bm{v_1} + \dots + a_n\bm{v_n}) + (b_1\bm{v_1} + \dots + b_n\bm{v_n}) \\
-            &= (a_1 + b_1)\bm{v_1} + \dots + (a_n + b_n)\bm{v_n} \in A
+        \item $\vec{0_V}$ appartiene ad $A$, in quanto basta scegliere $a_1 = \dots = a_n = 0$;
+        \item Siano $\vec{v}, \vec{w} \in A$. Allora per qualche $a_1, \dots, a_n, b_1, \dots, b_n \in \R$ vale che \begin{alignat*}{1}
+            \vec{v} + \vec{w} &= (a_1\vec{v_1} + \dots + a_n\vec{v_n}) + (b_1\vec{v_1} + \dots + b_n\vec{v_n}) \\
+            &= (a_1 + b_1)\vec{v_1} + \dots + (a_n + b_n)\vec{v_n} \in A
         \end{alignat*}
-        \item Siano $\bm{v} \in A, k \in \R$. Allora per qualche $a_1, \dots, a_n \in \R$ vale che \begin{alignat*}{1}
-            k\bm{v} &= k(a_1\bm{v_1} + \dots + a_n\bm{v_n})  \\
-            &= (ka_1)\bm{v_1} + \dots + (ka_n)\bm{v_n} \in A
+        \item Siano $\vec{v} \in A, k \in \R$. Allora per qualche $a_1, \dots, a_n \in \R$ vale che \begin{alignat*}{1}
+            k\vec{v} &= k(a_1\vec{v_1} + \dots + a_n\vec{v_n})  \\
+            &= (ka_1)\vec{v_1} + \dots + (ka_n)\vec{v_n} \in A
         \end{alignat*}
     \end{enumerate}
     cioe' $A$ e' un sottospazio di $V$.
@@ -194,101 +194,101 @@ Vale anche l'implicazione inversa: ogni sottospazio di $V$ puo' essere descritto
 
 \subsubsection{Indipendenza e dipendenza lineare}
 
-\begin{definition}
-    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora l'insieme $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ si dice insieme di vettori linearmente indipendenti se
+\begin{definition}[Indipendenza lineare]
+    Sia $V$ uno spazio vettoriale, $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora l'insieme $\left\{ \vec{v_1}, \dots, \vec{v_n} \right\}$ si dice insieme di vettori linearmente indipendenti se
     \begin{equation}
-        a_1\bm{v_1} + \dots + a_n\bm{v_n} = \bm{0_V} \iff a_1 = \dots = a_n = 0
+        a_1\vec{v_1} + \dots + a_n\vec{v_n} = \vec{0_V} \iff a_1 = \dots = a_n = 0
     \end{equation}
-    cioe' se l'unica combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}$ che da' come risultato il vettore nullo e' quella con $a_1 = \dots = a_n = 0$.
+    cioe' se l'unica combinazione lineare di $\vec{v_1}, \dots, \vec{v_n}$ che da' come risultato il vettore nullo e' quella con $a_1 = \dots = a_n = 0$.
 \end{definition}
 
 Possiamo usare una definizione alternativa di dipendenza lineare, equivalente alla precedente, tramite questa proposizione:
-\begin{proposition}\label{dip_se_e'_comb_lin}
-    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora l'insieme dei vettori $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ e' linearmente dipendente se e solo se almeno uno di essi e' esprimibile come combinazione lineare degli altri. 
+\begin{proposition}[Un vettore e' dipendente se e solo se esprimibile come combinazione lineare degli altri]\label{dip_se_e'_comb_lin}
+    Sia $V$ uno spazio vettoriale, $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora l'insieme dei vettori $\left\{ \vec{v_1}, \dots, \vec{v_n} \right\}$ e' linearmente dipendente se e solo se almeno uno di essi e' esprimibile come combinazione lineare degli altri. 
 \end{proposition}
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
     \begin{itemize}
-        \item Supponiamo che $\left\{ \bm{v_1}, \dots, \bm{v_n} \right\}$ sia linearemente dipendente, cioe' che esistano $a_1, \dots, a_n$ non tutti nulli tali che \[
-            a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} = \bm{0_V}   
+        \item Supponiamo che $\left\{ \vec{v_1}, \dots, \vec{v_n} \right\}$ sia linearemente dipendente, cioe' che esistano $a_1, \dots, a_n$ non tutti nulli tali che \[
+            a_1\vec{v_1} + a_2\vec{v_2} + \dots + a_n\vec{v_n} = \vec{0_V}   
         .\]
         Supponiamo senza perdita di generalita' $a_1 \neq 0$, allora segue che \[
-            \bm{v_1} = -\frac{a_2}{a_1}\bm{v_1} - \dots - \frac{a_n}{a_1}\bm{v_n}
+            \vec{v_1} = -\frac{a_2}{a_1}\vec{v_1} - \dots - \frac{a_n}{a_1}\vec{v_n}
         \]
-        dunque $\bm{v_1}$ puo' essere espresso come combinazione lineare degli altri vettori.
-        \item Supponiamo che il vettore $\bm{v_1}$ sia esprimibile come combinazione lineare degli altri (senza perdita di generalita'), cioe' che esistano $k_2, \dots, k_n \in \R$ tali che \[
-            \bm{v_1} = k_2\bm{v_2} + \dots + k_n\bm{v_n}
+        dunque $\vec{v_1}$ puo' essere espresso come combinazione lineare degli altri vettori.
+        \item Supponiamo che il vettore $\vec{v_1}$ sia esprimibile come combinazione lineare degli altri (senza perdita di generalita'), cioe' che esistano $k_2, \dots, k_n \in \R$ tali che \[
+            \vec{v_1} = k_2\vec{v_2} + \dots + k_n\vec{v_n}
         .\]
         Consideriamo una generica combinazione lineare di $v_1, v_2, \dots, v_n$:
         \begin{alignat*}
             {1}
-            & a_1\bm{v_1} + a_2\bm{v_2} + \dots + a_n\bm{v_n} \\
-            = & a_1(k_2\bm{v_2} + \dots + k_n\bm{v_n}) + a_2\bm{v_2} + \dots + a_n\bm{v_n} \\
-            = & (a_1k_2 + a_2)\bm{v_2} + \dots + (a_1k_n + a_n)\bm{v_n}
+            & a_1\vec{v_1} + a_2\vec{v_2} + \dots + a_n\vec{v_n} \\
+            = & a_1(k_2\vec{v_2} + \dots + k_n\vec{v_n}) + a_2\vec{v_2} + \dots + a_n\vec{v_n} \\
+            = & (a_1k_2 + a_2)\vec{v_2} + \dots + (a_1k_n + a_n)\vec{v_n}
         \end{alignat*}
         Se scegliamo $a_1 =1$, $a_i = -k_i$ per ogni $2 \leq i \leq n$, otterremo
         \begin{alignat*}{1}
-            & (a_1k_2 + a_2)\bm{v_2} + \dots + (a_1k_n + a_n)\bm{v_n} \\
-            = & (k_2 - k_2)\bm{v_2} + \dots + (k_n - k_n)\bm{v_n} \\
-            = & 0\bm{v_2} + \dots + 0\bm{v_n} \\
-            = & \bm{0_V}
+            & (a_1k_2 + a_2)\vec{v_2} + \dots + (a_1k_n + a_n)\vec{v_n} \\
+            = & (k_2 - k_2)\vec{v_2} + \dots + (k_n - k_n)\vec{v_n} \\
+            = & 0\vec{v_2} + \dots + 0\vec{v_n} \\
+            = & \vec{0_V}
         \end{alignat*}
         dunque esiste una scelta dei coefficienti $a_1, a_2, \dots, a_n$ diversa da $a_1 = \dots = a_n = 0$ per cui la combinazione lineare da' come risultato il vettore nullo, cioe' l'insieme dei vettori non e' linearmente indipendente. \qedhere
     \end{itemize}
 \end{proof}
 
-Inoltre per comodita' spesso si dice che i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono indipendenti, invece di dire che l'insieme formato da quei vettori e' un insieme linearmente indipendente.
+Inoltre per comodita' spesso si dice che i vettori $\vec{v_1}, \dots, \vec{v_n}$ sono indipendenti, invece di dire che l'insieme formato da quei vettori e' un insieme linearmente indipendente.
 
 \begin{proposition}\label{aggiunto_vettore_indipendente}
-    Sia $V$ uno spazio vettoriale, $\bm v \in V$ e $\bm{v_1}, \dots, \bm{v_n} \in V$ indipendenti. Allora i due fatti seguenti sono equivalenti:
+    Sia $V$ uno spazio vettoriale, $\vec v \in V$ e $\vec{v_1}, \dots, \vec{v_n} \in V$ indipendenti. Allora i due fatti seguenti sono equivalenti:
     \begin{enumerate}
-        \item $\bm v \notin \Span{\bm{v_1}, \dots, \bm{v_n}}$;
-        \item $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' ancora un insieme di vettori linearmente indipendenti.
+        \item $\vec v \notin \Span{\vec{v_1}, \dots, \vec{v_n}}$;
+        \item $\vec{v_1}, \dots, \vec{v_n}, \vec v$ e' ancora un insieme di vettori linearmente indipendenti.
     \end{enumerate}
 \end{proposition}
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
     \begin{itemize}
-        \item[($\implies$)] Supponiamo che $\bm v \notin \Span{\bm{v_1}, \dots, \bm{v_n}}$.
+        \item[($\implies$)] Supponiamo che $\vec v \notin \Span{\vec{v_1}, \dots, \vec{v_n}}$.
         
-        Se $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' un insieme di vettori linearmente indipendenti per definizione l'unica combinazione lineare $a_1\bm{v_1} + \dots + a_n\bm{v_n} + b\bm{v}$ che da' come risultato il vettore nullo $\bm{0}$ deve essere quella con coefficienti tutti nulli.
+        Se $\vec{v_1}, \dots, \vec{v_n}, \vec v$ e' un insieme di vettori linearmente indipendenti per definizione l'unica combinazione lineare $a_1\vec{v_1} + \dots + a_n\vec{v_n} + b\vec{v}$ che da' come risultato il vettore nullo $\vec{0}$ deve essere quella con coefficienti tutti nulli.
 
         Supponiamo per assurdo $b \neq 0$,. Allora \begin{alignat*}{1}
-            &\bm 0 = a_1\bm{v_1} + \dots + a_n\bm{v_n} + b\bm{v}\\
-            \iff &-b\bm{v} = a_1\bm{v_1} + \dots + a_n\bm{v_n}\\
-            \iff &\bm{v} = -\frac{a_1}{b}\bm{v_1} - \dots - \frac{a_n}{b}\bm{v_n}
+            &\vec 0 = a_1\vec{v_1} + \dots + a_n\vec{v_n} + b\vec{v}\\
+            \iff &-b\vec{v} = a_1\vec{v_1} + \dots + a_n\vec{v_n}\\
+            \iff &\vec{v} = -\frac{a_1}{b}\vec{v_1} - \dots - \frac{a_n}{b}\vec{v_n}
         \end{alignat*}
-        cioe' $v \in \Span{\bm{v_1}, \dots, \bm{v_n}}$, che pero' e' assurdo perche' per ipotesi $\bm v \notin \Span{\bm{v_1}, \dots, \bm{v_n}}$.
+        cioe' $v \in \Span{\vec{v_1}, \dots, \vec{v_n}}$, che pero' e' assurdo perche' per ipotesi $\vec v \notin \Span{\vec{v_1}, \dots, \vec{v_n}}$.
 
         Dunque $b = 0$, cioe' \begin{alignat*}{1}
-            &\bm 0 = a_1\bm{v_1} + \dots + a_n\bm{v_n} + b\bm{v}\\
-            \iff &\bm 0 = a_1\bm{v_1} + \dots + a_n\bm{v_n}
-            \intertext{Tuttavia $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti, dunque l'unica scelta dei coefficienti che annulla la combinazione lineare e' quella con tutti i coefficienti nulli:}
+            &\vec 0 = a_1\vec{v_1} + \dots + a_n\vec{v_n} + b\vec{v}\\
+            \iff &\vec 0 = a_1\vec{v_1} + \dots + a_n\vec{v_n}
+            \intertext{Tuttavia $\vec{v_1}, \dots, \vec{v_n}$ sono linearmente indipendenti, dunque l'unica scelta dei coefficienti che annulla la combinazione lineare e' quella con tutti i coefficienti nulli:}
             \iff &a_1 = \dots = a_n = b = 0
         \end{alignat*}
-        cioe' $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' ancora un insieme di vettori linearmente indipendenti.
-        \item[($\impliedby$)] Supponiamo che $\bm{v_1}, \dots, \bm{v_n}, \bm v$ sia un insieme di vettori linearmente indipendenti. 
+        cioe' $\vec{v_1}, \dots, \vec{v_n}, \vec v$ e' ancora un insieme di vettori linearmente indipendenti.
+        \item[($\impliedby$)] Supponiamo che $\vec{v_1}, \dots, \vec{v_n}, \vec v$ sia un insieme di vettori linearmente indipendenti. 
         
         Per la proposizione \ref{dip_se_e'_comb_lin} sappiamo che un insieme di vettori e' linearmente dipendente se e solo se almeno uno di essi puo' essere scritto come combinazione lineare degli altri, cioe' se e solo se almeno uno di essi e' nello span degli altri.
-        Ma questo e' equivalente a dire che un insieme di vettori e' linearmente indipendente se e solo se nessuno di essi e' nello span degli altri, dunque dato che $\bm{v_1}, \dots, \bm{v_n}, \bm v$ e' un insieme di vettori linearmente indipendenti segue che $\bm{v}$ non puo' appartenere a $\Span{\bm{v_1}, \dots, \bm{v_n}}$. \qedhere
+        Ma questo e' equivalente a dire che un insieme di vettori e' linearmente indipendente se e solo se nessuno di essi e' nello span degli altri, dunque dato che $\vec{v_1}, \dots, \vec{v_n}, \vec v$ e' un insieme di vettori linearmente indipendenti segue che $\vec{v}$ non puo' appartenere a $\Span{\vec{v_1}, \dots, \vec{v_n}}$. \qedhere
     \end{itemize}
 \end{proof}
 
-\begin{proposition} \label{span_Gauss}
-    Sia $V$ uno spazio vettoriale e $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora per ogni $k \in \R$ e per ogni $i, j \leq n$.
+\begin{proposition}[Mosse di Gauss per colonna non modificano lo span] \label{span_Gauss}
+    Sia $V$ uno spazio vettoriale e $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora per ogni $k \in \R$ e per ogni $i, j \leq n$.
     \begin{equation}
-        \Span{\bm{v_1}, \dots, \bm{v_i}, \bm{v_j}, \dots, \bm{v_n}} = \Span{\bm{v_1}, \dots, \bm{v_i} + k\bm{v_j}, \bm{v_j}, \dots, \bm{v_n}}.
+        \Span{\vec{v_1}, \dots, \vec{v_i}, \vec{v_j}, \dots, \vec{v_n}} = \Span{\vec{v_1}, \dots, \vec{v_i} + k\vec{v_j}, \vec{v_j}, \dots, \vec{v_n}}.
     \end{equation}
 \end{proposition}
 \begin{proof}
-    Supponiamo che $v \in \Span{\bm{v_1}, \dots, \bm{v_i}, \bm{v_j}, \dots, \bm{v_n}}$. Allora per definizione esisteranno $a_1, \dots, a_n \in \R$ tali che
+    Supponiamo che $v \in \Span{\vec{v_1}, \dots, \vec{v_i}, \vec{v_j}, \dots, \vec{v_n}}$. Allora per definizione esisteranno $a_1, \dots, a_n \in \R$ tali che
     \begin{alignat*}{1}
-        v &= a_1\bm{v_1} + \dots + a_i\bm{v_i} + a_j\bm{v_j} + \dots + a_n\bm{v_n} \\
-        \intertext{Aggiungiamo e sottraiamo $a_ik\bm{v_j}$ al secondo membro.}
-        &= a_1\bm{v_1} + \dots + a_i\bm{v_i} + a_j\bm{v_j} + \dots + a_n\bm{v_n} + a_ik\bm{v_j} - a_ik\bm{v_j}\\
-        &= a_1\bm{v_1} + \dots + a_i\bm{v_i} + a_ik\bm{v_j} + a_j\bm{v_j} - a_ik\bm{v_j} + \dots + a_n\bm{v_n}\\
-        &= a_1\bm{v_1} + \dots + a_i(\bm{v_i} + k\bm{v_j}) + (a_j - a_ik)\bm{v_j} + \dots + a_n\bm{v_n}\\
-        \implies v &\in \Span{\bm{v_1}, \dots, \bm{v_i} + k\bm{v_j}, \bm{v_j}, \dots, \bm{v_n}}. 
+        v &= a_1\vec{v_1} + \dots + a_i\vec{v_i} + a_j\vec{v_j} + \dots + a_n\vec{v_n} \\
+        \intertext{Aggiungiamo e sottraiamo $a_ik\vec{v_j}$ al secondo membro.}
+        &= a_1\vec{v_1} + \dots + a_i\vec{v_i} + a_j\vec{v_j} + \dots + a_n\vec{v_n} + a_ik\vec{v_j} - a_ik\vec{v_j}\\
+        &= a_1\vec{v_1} + \dots + a_i\vec{v_i} + a_ik\vec{v_j} + a_j\vec{v_j} - a_ik\vec{v_j} + \dots + a_n\vec{v_n}\\
+        &= a_1\vec{v_1} + \dots + a_i(\vec{v_i} + k\vec{v_j}) + (a_j - a_ik)\vec{v_j} + \dots + a_n\vec{v_n}\\
+        \implies v &\in \Span{\vec{v_1}, \dots, \vec{v_i} + k\vec{v_j}, \vec{v_j}, \dots, \vec{v_n}}. 
     \end{alignat*}
 
     Si dimostra l'altro verso nello stesso modo.
@@ -299,7 +299,7 @@ Inoltre per comodita' spesso si dice che i vettori $\bm{v_1}, \dots, \bm{v_n}$ s
 Notiamo inoltre che se scambiamo due vettori o se moltiplichiamo un vettore per uno scalare otteniamo uno span equivalente a quello di partenza. Quindi possiamo "semplificare" uno span di vettori tramite mosse di Gauss per colonna, come suggerisce la prossima proposizione.
 
 \begin{proposition} \label{span_colonne_indipendenti}
-    Siano $\bm{v_1}, \dots, \bm{v_n} \in \R^m$ dei vettori colonna. Allora per stabilire quali di questi vettori sono indipendenti consideriamo la matrice $A$ che contiene come colonna $i$-esima il vettore colonna $v_i$ e riduciamola a scalini per colonna. Lo span delle colonne non nulle della matrice ridotta a scalini e' uguale allo span di $\bm{v_1}, \dots, \bm{v_n}$.
+    Siano $\vec{v_1}, \dots, \vec{v_n} \in \R^m$ dei vettori colonna. Allora per stabilire quali di questi vettori sono indipendenti consideriamo la matrice $A$ che contiene come colonna $i$-esima il vettore colonna $v_i$ e riduciamola a scalini per colonna. Lo span delle colonne non nulle della matrice ridotta a scalini e' uguale allo span di $\vec{v_1}, \dots, \vec{v_n}$.
 \end{proposition}
 \begin{proof} 
     Consideriamo la matrice $\bar{A}$ ridotta a scalini. Allora per la proposizione \ref{span_Gauss} lo span delle sue colonne e' uguale allo span dei vettori iniziali. 
@@ -312,17 +312,17 @@ Notiamo inoltre che se scambiamo due vettori o se moltiplichiamo un vettore per 
 Notiamo che alla fine di questo procedimento otteniamo vettori colonna che sono diversi dai vettori iniziali, ma questi vettori hanno pivot ad "altezze diverse".
 
 \begin{example}
-    Siano $\bm{v_1}, \bm{v_2}, \bm{v_3}, \bm{v_4} \in \R^3$ tali che \[
-        \bm{v_1} = \begin{pmatrix}
+    Siano $\vec{v_1}, \vec{v_2}, \vec{v_3}, \vec{v_4} \in \R^3$ tali che \[
+        \vec{v_1} = \begin{pmatrix}
             1 \\ 2 \\ 3
-        \end{pmatrix}, \bm{v_2} = \begin{pmatrix}
+        \end{pmatrix}, \vec{v_2} = \begin{pmatrix}
             3 \\ 7 \\ 4
-        \end{pmatrix}, \bm{v_3} = \begin{pmatrix}
+        \end{pmatrix}, \vec{v_3} = \begin{pmatrix}
             2 \\ 4 \\ 6
-        \end{pmatrix}, \bm{v_4} = \begin{pmatrix}
+        \end{pmatrix}, \vec{v_4} = \begin{pmatrix}
             -1 \\ 7 \\ 2
         \end{pmatrix}.
-    \] Si trovi un insieme di vettori di $\R^3$ indipendenti con lo stesso span di $\bm{v_1}, \bm{v_2}, \bm{v_3}, \bm{v_4}$.
+    \] Si trovi un insieme di vettori di $\R^3$ indipendenti con lo stesso span di $\vec{v_1}, \vec{v_2}, \vec{v_3}, \vec{v_4}$.
 \end{example}
 \begin{solution}
     Per la proposizione precedente mettiamo i vettori come colonne di una matrice e semplifichiamola tramite mosse di colonna:
@@ -341,45 +341,45 @@ Notiamo che alla fine di questo procedimento otteniamo vettori colonna che sono 
             1 & 0 & 0 & 0 \\ 2 & 1 & 0 & 0 \\ 3 & -5 & -13 & 0
         \end{pmatrix}
     \end{gather*}
-    Dunque i vettori $\bm{w_1} = \begin{psmallmatrix} 1 \\ 2 \\ 3 \end{psmallmatrix}, \bm{w_2} = \begin{psmallmatrix} 0 \\ 1 \\ -5 \end{psmallmatrix}, \bm{w_3} = \begin{psmallmatrix} 0 \\ 0 \\ -13 \end{psmallmatrix}$ sono indipendenti e per la proposizione precedente vale che \[
-        \Span{\bm{v_1}, \bm{v_2}, \bm{v_3}, \bm{v_4}} = \Span{\bm{w_1}, \bm{w_2}, \bm{w_3}}.
+    Dunque i vettori $\vec{w_1} = \begin{psmallmatrix} 1 \\ 2 \\ 3 \end{psmallmatrix}, \vec{w_2} = \begin{psmallmatrix} 0 \\ 1 \\ -5 \end{psmallmatrix}, \vec{w_3} = \begin{psmallmatrix} 0 \\ 0 \\ -13 \end{psmallmatrix}$ sono indipendenti e per la proposizione precedente vale che \[
+        \Span{\vec{v_1}, \vec{v_2}, \vec{v_3}, \vec{v_4}} = \Span{\vec{w_1}, \vec{w_2}, \vec{w_3}}.
     \]
 \end{solution}
 
 \section{Generatori e basi}
-\begin{definition}
-    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora si dice che ${\bm{v_1}, \dots, \bm{v_n}}$ e' un insieme di generatori di $V$, oppure che l'insieme ${\bm{v_1}, \dots, \bm{v_n}}$ genera $V$, se
+\begin{definition}[Insieme di generatori]
+    Sia $V$ uno spazio vettoriale, $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora si dice che ${\vec{v_1}, \dots, \vec{v_n}}$ e' un insieme di generatori di $V$, oppure che l'insieme ${\vec{v_1}, \dots, \vec{v_n}}$ genera $V$, se
     \begin{equation}
-        \Span{\bm{v_1}, \dots, \bm{v_n}} = V.
+        \Span{\vec{v_1}, \dots, \vec{v_n}} = V.
     \end{equation}
 \end{definition}
 
-Per comodita' spesso si dice che i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono generatori di $V$, invece di dire che l'insieme formato da quei vettori e' un insieme di generatori.
+Per comodita' spesso si dice che i vettori $\vec{v_1}, \dots, \vec{v_n}$ sono generatori di $V$, invece di dire che l'insieme formato da quei vettori e' un insieme di generatori.
 
-\begin{definition}
-    Sia $V$ uno spazio vettoriale, $\bm{v_1}, \dots, \bm{v_n} \in V$. Allora si dice che $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$ se
+\begin{definition}[Base di uno spazio vettoriale]
+    Sia $V$ uno spazio vettoriale, $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora si dice che $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_n}}$ e' una base di $V$ se
     \begin{itemize}
-        \item i vettori $\bm{v_1}, \dots, \bm{v_n}$ generano $V$;
-        \item i vettori $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti.
+        \item i vettori $\vec{v_1}, \dots, \vec{v_n}$ generano $V$;
+        \item i vettori $\vec{v_1}, \dots, \vec{v_n}$ sono linearmente indipendenti.
     \end{itemize}
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Dimensione di uno spazio vettoriale]
     Sia $V$ uno spazio vettoriale. Allora il numero di vettori in una sua base si dice dimensione dello spazio vettoriale $V$, e si indica con $\dim V$.
 \end{definition}
 
 Sapendo che un insieme di vettori genera un sottospazio di $\R^n$ (o $\R^n$ stesso) si puo' trovare una base del sottospazio (o di $\R^n$) disponendo i vettori come colonne di una matrice e semplificandoli, come abbiamo visto in precedenza. Tuttavia se vogliamo \textbf{estrarre una base} dal nostro insieme di vettori allora possiamo procedere in un modo leggermente diverso, che utilizza le mosse di Gauss per riga.
 
-\begin{proposition}\label{estrarre_una_base}
-    Siano $\bm{v_1}, \dots, \bm{v_m} \in \R^n$ dei vettori che generano $V \subseteq \R^n$ sottospazio di $\R^n$. Allora possiamo porre i vettori come colonne di una matrice e ridurla a scalini per riga. Alla fine del procedimento i vettori che originariamente erano nelle colonne con i pivot sono indipendenti e generano $V$, dunque formano una base di $V$.
+\begin{proposition}[Algoritmo di estrazione di una base]\label{estrarre_una_base}
+    Siano $\vec{v_1}, \dots, \vec{v_m} \in \R^n$ dei vettori che generano $V \subseteq \R^n$ sottospazio di $\R^n$. Allora possiamo porre i vettori come colonne di una matrice e ridurla a scalini per riga. Alla fine del procedimento i vettori che originariamente erano nelle colonne con i pivot sono indipendenti e generano $V$, dunque formano una base di $V$.
 \end{proposition}
 \begin{proof}
-    Consideriamo i $k$ vettori indipendenti che sono nell'insieme $\bm{v_1}, \dots, \bm{v_m}$ e chiamiamoli $\bm{w_1}, \dots, \bm{w_k}$.
-    Consideriamo una loro combinazione lineare qualunque $x_1\bm{w_1} + \dots + x_k\bm{w_k}$ e la poniamo uguale a $\bm{0}$; questo e' equivalente a dire \[
+    Consideriamo i $k$ vettori indipendenti che sono nell'insieme $\vec{v_1}, \dots, \vec{v_m}$ e chiamiamoli $\vec{w_1}, \dots, \vec{w_k}$.
+    Consideriamo una loro combinazione lineare qualunque $x_1\vec{w_1} + \dots + x_k\vec{w_k}$ e la poniamo uguale a $\vec{0}$; questo e' equivalente a dire \[
         A\begin{pmatrix}
             x_1 \\ \vdots \\ x_k
-        \end{pmatrix} = \bm{0}
-    \] dove $A$ e' la matrice le cui colonne sono i vettori $\bm{w_1}, \dots, \bm{w_k}$. 
+        \end{pmatrix} = \vec{0}
+    \] dove $A$ e' la matrice le cui colonne sono i vettori $\vec{w_1}, \dots, \vec{w_k}$. 
     
     Dato che i $k$ vettori sono indipendenti l'unica soluzione di questo sistema e' il vettore nullo, dunque il sistema ha una sola soluzione e quindi deve avere $0$ variabili libere, cioe' il numero di pivot della matrice ridotta a scalini deve essere uguale al numero di colonne.
 
@@ -389,14 +389,14 @@ Sapendo che un insieme di vettori genera un sottospazio di $\R^n$ (o $\R^n$ stes
 Notiamo che alla fine del procedimento non otteniamo dei vettori colonna che generano il nostro sottospazio, ma dobbiamo andarli a scegliere dall'insieme iniziale: in questo senso possiamo estrarre una base da un insieme di generatori.
 
 \begin{example}
-    Sia $V \subseteq \R^4$ tale che $V = \Span{\bm{c_1}, \bm{c_2}, \bm{c_3}, \bm{c_4}}$ dove \[
-        \bm{c_1} = \begin{pmatrix}
+    Sia $V \subseteq \R^4$ tale che $V = \Span{\vec{c_1}, \vec{c_2}, \vec{c_3}, \vec{c_4}}$ dove \[
+        \vec{c_1} = \begin{pmatrix}
             2 \\ 0 \\ 1 \\ 1
-        \end{pmatrix}, \bm{c_2} = \begin{pmatrix}
+        \end{pmatrix}, \vec{c_2} = \begin{pmatrix}
             3 \\ -2 \\ -2 \\ 0
-        \end{pmatrix}, \bm{c_3} = \begin{pmatrix}
+        \end{pmatrix}, \vec{c_3} = \begin{pmatrix}
             1 \\ 0 \\ -1 \\ 1
-        \end{pmatrix}, \bm{c_4} = \begin{pmatrix}
+        \end{pmatrix}, \vec{c_4} = \begin{pmatrix}
             0 \\ 1 \\ -2 \\ \frac{1}{3}
         \end{pmatrix}.
     \] Si estragga una base di $V$ da questi quattro vettori.
@@ -420,31 +420,31 @@ Notiamo che alla fine del procedimento non otteniamo dei vettori colonna che gen
             2&3&1&0\\0&-1&0&\frac12\\0&0&-3&-\frac{15}{2}\\0&0&0&0
         \end{pmatrix}.
     \end{gather*}
-    Notiamo dunque che i pivot sono nelle colonne $1$, $2$ e $3$, che corrispondono ai vettori $\bm{c_1}, \bm{c_2}, \bm{c_3}$ che per la proposizione precedente sono indipendenti e generano $V$, dunque $\ang{\bm{c_1}, \bm{c_2}, \bm{c_3}}$ e' una base di $V$.
+    Notiamo dunque che i pivot sono nelle colonne $1$, $2$ e $3$, che corrispondono ai vettori $\vec{c_1}, \vec{c_2}, \vec{c_3}$ che per la proposizione precedente sono indipendenti e generano $V$, dunque $\basis{\vec{c_1}, \vec{c_2}, \vec{c_3}}$ e' una base di $V$.
 \end{solution}
 
 \begin{proposition}\label{base=dim_gener_indip}
-    Sia $V$ uno spazio vettoriale e sia $\left\{\bm{v_1}, \dots, \bm{v_n} \right\}$ un insieme di $n$ vettori di $V$. Se valgono due dei seguenti fatti
+    Sia $V$ uno spazio vettoriale e sia $\left\{\vec{v_1}, \dots, \vec{v_n} \right\}$ un insieme di $n$ vettori di $V$. Se valgono due dei seguenti fatti
     \begin{itemize}
         \item $n = \dim V$;
-        \item $\left\{\bm{v_1}, \dots, \bm{v_n} \right\}$ e' un insieme di generatori di $V$;
-        \item $\left\{\bm{v_1}, \dots, \bm{v_n} \right\}$ sono linearmente indipendenti;
+        \item $\left\{\vec{v_1}, \dots, \vec{v_n} \right\}$ e' un insieme di generatori di $V$;
+        \item $\left\{\vec{v_1}, \dots, \vec{v_n} \right\}$ sono linearmente indipendenti;
     \end{itemize}
-    allora vale anche il terzo e $\ang{\bm{v_1}, \dots, \bm{v_n}}$ e' una base di $V$.
+    allora vale anche il terzo e $\basis{\vec{v_1}, \dots, \vec{v_n}}$ e' una base di $V$.
 \end{proposition}
 
 \begin{example}
-    Consideriamo lo spazio dei polinomi di grado minore o uguale a due $\R[x]^{\leq 2}$. Mostrare che $\alpha = \ang{1, (x-1), (x-1)^2}$ e' una base di $\R[x]^{\leq 2}$.
+    Consideriamo lo spazio dei polinomi di grado minore o uguale a due $\R[x]^{\leq 2}$. Mostrare che $\alpha = \basis{1, (x-1), (x-1)^2}$ e' una base di $\R[x]^{\leq 2}$.
 \end{example}
 \begin{solution}
-    Sappiamo che la base standard di $\R[x]^{\leq 2}$ e' la base $\ang{1, x, x^2}$, dunque $\dim \left( \R[x]^{\leq 2} \right) = 3$. Dato che la base $\alpha$ ha esattamente $3$ vettori, per la proposizione \ref{base=dim_gener_indip} ci basta dimostrare una tra:
+    Sappiamo che la base standard di $\R[x]^{\leq 2}$ e' la base $\basis{1, x, x^2}$, dunque $\dim \left( \R[x]^{\leq 2} \right) = 3$. Dato che la base $\alpha$ ha esattamente $3$ vettori, per la proposizione \ref{base=dim_gener_indip} ci basta dimostrare una tra:
     \begin{itemize}
         \item i tre vettori sono indipendenti;
         \item i tre vettori generano $\R[x]^{\leq 2}$.
     \end{itemize}
     Per esercizio, verifichiamole entrambe.
     \begin{itemize}
-        \item Verifichiamo che sono linearmente indipendenti: consideriamo una generica combinazione lineare dei tre vettori e poniamola uguale al vettore $\bm{0} = 0 + 0x + 0x^2$. \begin{alignat*}{1}
+        \item Verifichiamo che sono linearmente indipendenti: consideriamo una generica combinazione lineare dei tre vettori e poniamola uguale al vettore $\vec{0} = 0 + 0x + 0x^2$. \begin{alignat*}{1}
             a \cdot 1 + b \cdot (x - 1) + c \cdot (x - 1)^2 &= 0+0x+0x^2 \\
             \iff a + bx - b + cx^2 -2cx + c &= 0+0x+0x^2 \\
             \iff (a-b+c) +(b-2c)x + cx^2 &= 0+0x+0x^2
@@ -483,14 +483,14 @@ Notiamo che alla fine del procedimento non otteniamo dei vettori colonna che gen
             \end{equation*}
             Quindi $x^2$ e' esprimibile come combinazione lineare di $1, (x-1), (x-1)^2$ (in particolare $x^2 = 1 + 2(x-1) + (x-1)^2$), dunque \[x^2 \in \Span{1, (x-1), (x-1)^2}.\]
         \end{itemize}
-        Abbiamo quindi verificato che i vettori che formano la base canonica di $\R[x]^{\leq 2}$ fanno parte dello span dei nostri tre vettori, dunque se la base canonica genera tutto lo spazio anche $\{1, (x-1), (x-1)^2\}$ sono generatori. Inoltre, dato che $\dim (\R[x]^{\leq 2}) = 3$ segue che $\ang{1, (x-1), (x-1)^2}$ e' una base di $\R[x]^{\leq 2}$.
+        Abbiamo quindi verificato che i vettori che formano la base canonica di $\R[x]^{\leq 2}$ fanno parte dello span dei nostri tre vettori, dunque se la base canonica genera tutto lo spazio anche $\{1, (x-1), (x-1)^2\}$ sono generatori. Inoltre, dato che $\dim (\R[x]^{\leq 2}) = 3$ segue che $\basis{1, (x-1), (x-1)^2}$ e' una base di $\R[x]^{\leq 2}$.
     \end{itemize}
 \end{solution}
 
-\begin{definition}
-    Sia $V$ uno spazio vettoriale, $\bm{v} \in V$ e $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_n}}$ una base di $V$. Allora si dice vettore delle coordinate di $\bm{v}$ rispetto a $\mathcal{B}$ il vettore colonna
+\begin{definition}[Vettore delle coordinate rispetto ad una base]
+    Sia $V$ uno spazio vettoriale, $\vec{v} \in V$ e $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_n}}$ una base di $V$. Allora si dice vettore delle coordinate di $\vec{v}$ rispetto a $\mathcal{B}$ il vettore colonna
     \begin{equation}
-        [\bm{v}]_{\mathcal{B}} = \begin{bmatrix}
+        [\vec{v}]_{\mathcal{B}} = \begin{bmatrix}
                                     a_1 \\
                                     a_2 \\
                                     \vdots \\
@@ -498,25 +498,25 @@ Notiamo che alla fine del procedimento non otteniamo dei vettori colonna che gen
                                  \end{bmatrix} \in \R^n
     \end{equation}
     tale che \begin{equation}
-        \bm{v} = a_1\bm{v_1} + \dots + a_n\bm{v_n}
+        \vec{v} = a_1\vec{v_1} + \dots + a_n\vec{v_n}
     \end{equation}
 \end{definition}
 
-\begin{proposition}
-    Sia $V$ uno spazio vettoriale, $\bm{v} \in V$ e $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_n}}$ una base di $V$. Allora le coordinate di $\bm{v}$ rispetto a $\mathcal{B}$ sono uniche.
+\begin{proposition}[Unicita' delle coordinate rispetto ad una base]
+    Sia $V$ uno spazio vettoriale, $\vec{v} \in V$ e $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_n}}$ una base di $V$. Allora le coordinate di $\vec{v}$ rispetto a $\mathcal{B}$ sono uniche.
 \end{proposition}
 \begin{proof}
-    Supponiamo per assurdo che esistano due vettori colonna distinti $\bm{a}$, $\bm{b}$ che rappresentino le coordinate di $\bm{v}$ rispetto a $\mathcal{B}$. Allora
+    Supponiamo per assurdo che esistano due vettori colonna distinti $\vec{a}$, $\vec{b}$ che rappresentino le coordinate di $\vec{v}$ rispetto a $\mathcal{B}$. Allora
     \begin{alignat*}
         {1}
-        \bm{0_V}  &= \bm{v} - \bm{v} \\
-                &= (a_1\bm{v_1} + \dots + a_n\bm{v_n}) - (b_1\bm{v_1} + \dots + b_n\bm{v_n}) \\
-                &= (a_1 - b_1)\bm{v_1} + \dots + (a_n - b_n)\bm{v_n}
+        \vec{0_V}  &= \vec{v} - \vec{v} \\
+                &= (a_1\vec{v_1} + \dots + a_n\vec{v_n}) - (b_1\vec{v_1} + \dots + b_n\vec{v_n}) \\
+                &= (a_1 - b_1)\vec{v_1} + \dots + (a_n - b_n)\vec{v_n}
     \end{alignat*}
-    Ma per definizione di base $\bm{v_1}, \dots, \bm{v_n}$ sono linearmente indipendenti, dunque l'unica combinazione lineare che da' come risultato il vettore $\bm{0_V}$ e' quella in cui tutti i coefficienti sono $0$. Da cio' segue che
+    Ma per definizione di base $\vec{v_1}, \dots, \vec{v_n}$ sono linearmente indipendenti, dunque l'unica combinazione lineare che da' come risultato il vettore $\vec{0_V}$ e' quella in cui tutti i coefficienti sono $0$. Da cio' segue che
     \begin{gather*}
         a_1 - b_1 = a_2 - b_2 = \dots = a_n - b_n = 0 \\
-        \implies \bm{a} = \begin{bmatrix}
+        \implies \vec{a} = \begin{bmatrix}
             a_1 \\
             a_2 \\
             \vdots \\
@@ -528,24 +528,24 @@ Notiamo che alla fine del procedimento non otteniamo dei vettori colonna che gen
             b_2 \\
             \vdots \\
             b_n
-        \end{bmatrix} = \bm{b}
+        \end{bmatrix} = \vec{b}
     \end{gather*}
-    cioe' i due vettori sono uguali. Ma cio' e' assurdo poiche' abbiamo supposto $\bm{a} \neq \bm{b}$, dunque le coordinate di $\bm{v}$ rispetto a $\mathcal{B}$ devono essere uniche.
+    cioe' i due vettori sono uguali. Ma cio' e' assurdo poiche' abbiamo supposto $\vec{a} \neq \vec{b}$, dunque le coordinate di $\vec{v}$ rispetto a $\mathcal{B}$ devono essere uniche.
 \end{proof}
 
 \begin{example}
-    Sia $V \subseteq \M_{2 \times 2}(\R)$ tale che $V$ e' il sottospazio delle matrici simmetriche. Trovare una base di $V$ e trovare le coordinate di $\bm{u} = \begin{psmallmatrix}
+    Sia $V \subseteq \M_{2 \times 2}(\R)$ tale che $V$ e' il sottospazio delle matrici simmetriche. Trovare una base di $V$ e trovare le coordinate di $\vec{u} = \begin{psmallmatrix}
         3 & 4 \\ 4 & 6
     \end{psmallmatrix} \in V$ rispetto alla base trovata.
 \end{example}
 \begin{solution}
-    Cerco di esprimere un generico vettore $\bm{v} \in V$ in termini della condizione che definisce il sottospazio.
+    Cerco di esprimere un generico vettore $\vec{v} \in V$ in termini della condizione che definisce il sottospazio.
     \begin{alignat*}
         {1}
         V &= \left\{ \begin{pmatrix} a&b\\b&c \end{pmatrix}\mid a, b, c \in \R\right\} \\
         \intertext{Isolando i contributi di $a$, $b$ e $c$ ottengo}
-        &= \left\{ \bm{v} \in \M_{2 \times 2}(\R) \mid \exists a, b, c \in \R. \bm{v} = \begin{pmatrix} a&0\\0&0 \end{pmatrix} + \begin{pmatrix} 0&b\\b&0 \end{pmatrix} + \begin{pmatrix} 0&0\\0&c \end{pmatrix}\right\} \\
-        &= \left\{ \bm{v} \in \M_{2 \times 2}(\R) \mid \exists a, b, c \in \R. \bm{v} = a\begin{pmatrix} 1&0\\0&0 \end{pmatrix} + b\begin{pmatrix} 0&1\\1&0 \end{pmatrix} + c\begin{pmatrix} 0&0\\0&1 \end{pmatrix}\right\} \\
+        &= \left\{ \vec{v} \in \M_{2 \times 2}(\R) \mid \exists a, b, c \in \R. \vec{v} = \begin{pmatrix} a&0\\0&0 \end{pmatrix} + \begin{pmatrix} 0&b\\b&0 \end{pmatrix} + \begin{pmatrix} 0&0\\0&c \end{pmatrix}\right\} \\
+        &= \left\{ \vec{v} \in \M_{2 \times 2}(\R) \mid \exists a, b, c \in \R. \vec{v} = a\begin{pmatrix} 1&0\\0&0 \end{pmatrix} + b\begin{pmatrix} 0&1\\1&0 \end{pmatrix} + c\begin{pmatrix} 0&0\\0&1 \end{pmatrix}\right\} \\
         &= \Span{\begin{pmatrix} 1&0\\0&0 \end{pmatrix}, \begin{pmatrix} 0&1\\1&0 \end{pmatrix}, \begin{pmatrix} 0&0\\0&1 \end{pmatrix}} \\
     \end{alignat*}
 
@@ -555,15 +555,15 @@ Notiamo che alla fine del procedimento non otteniamo dei vettori colonna che gen
         \iff \begin{pmatrix} x&y\\y&z \end{pmatrix} = \begin{pmatrix} 0&0\\0&0 \end{pmatrix} \\
         \iff x = y = z = 0.
     \end{gather*}
-    Dunque $\mathcal{B} = \ang{\begin{psmallmatrix} 1&0\\0&0 \end{psmallmatrix}, \begin{psmallmatrix} 0&1\\1&0 \end{psmallmatrix}, \begin{psmallmatrix} 0&0\\0&1 \end{psmallmatrix}}$ e' una base di $V$.
+    Dunque $\mathcal{B} = \basis{\begin{psmallmatrix} 1&0\\0&0 \end{psmallmatrix}, \begin{psmallmatrix} 0&1\\1&0 \end{psmallmatrix}, \begin{psmallmatrix} 0&0\\0&1 \end{psmallmatrix}}$ e' una base di $V$.
 
-    Per trovare le coordinate di $\bm{u}$ esprimiamo in termini della base:
+    Per trovare le coordinate di $\vec{u}$ esprimiamo in termini della base:
     \begin{equation*}
         \begin{pmatrix}
             3 & 4 \\ 4 & 6
         \end{pmatrix} = 3\begin{pmatrix} 1&0\\0&0 \end{pmatrix} + 4\begin{pmatrix} 0&1\\1&0 \end{pmatrix} + 6\begin{pmatrix} 0&0\\0&1 \end{pmatrix}
     \end{equation*}
-    dunque $[\bm{u}]_{\mathcal{B}} = \begin{pmatrix}
+    dunque $[\vec{u}]_{\mathcal{B}} = \begin{pmatrix}
         3 \\ 4 \\ 6
     \end{pmatrix}$.
 \end{solution}
@@ -573,24 +573,24 @@ Notiamo che sembra esserci una relazione biunivoca tra un vettore di $V$ e le su
 Abbiamo mostrato come estrarre una base di un sottospazio a partire da un insieme di generatori. Ora vogliamo \textbf{completare una base} di un sottospazio ad una base dello spazio vettoriale che lo contiene.
 
 \begin{theorem}
-    [del completamento ad una base] \label{th_completamento}
-    Sia $V$ uno spazio vettoriale di dimensione finita $n = \dim V$ e sia $\mathcal{B} = \ang{\bm{v_1}, \dots, \bm{v_k}}$ un insieme di $k$ vettori linearmente indipendenti. Allora vale che $k \leq n$ ed esistono $n - k$ vettori di $V$, diciamo ${\bm{w_1}, \dots, \bm{w_{n-k}}}$ tali che $\mathcal{B}' = \ang{\bm{v_1}, \dots, \bm{v_k}, \bm{w_1}, \dots, \bm{w_{n-k}}}$ e' una base di $V$.
+    [Teorema del completamento ad una base] \label{th_completamento}
+    Sia $V$ uno spazio vettoriale di dimensione finita $n = \dim V$ e sia $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_k}}$ un insieme di $k$ vettori linearmente indipendenti. Allora vale che $k \leq n$ ed esistono $n - k$ vettori di $V$, diciamo ${\vec{w_1}, \dots, \vec{w_{n-k}}}$ tali che $\mathcal{B}' = \basis{\vec{v_1}, \dots, \vec{v_k}, \vec{w_1}, \dots, \vec{w_{n-k}}}$ e' una base di $V$.
 \end{theorem}
 \begin{proof}
     Non possono esserci piu' di $n$ vettori indipendenti in uno spazio di dimensione $n$, dunque $k \leq n$. Ora dimostriamo che possiamo completare $\mathcal{B}$ ad una base di $V$.
 
     Se $k = n$ allora per la proposizione \ref{base=dim_gener_indip} gli $n$ vettori indipendenti sono gia' una base, dunque abbiamo finito.
 
-    Se $k < n$ allora esistera' sicuramente $\bm{w_1} \notin \Span{\bm{v_1}, \dots, \bm{v_k}}$ (altrimenti i vettori genererebbero l'intero spazio vettoriale e sarebbero quindi una base), dunque $\ang{\bm{v_1}, \dots, \bm{v_k}, \bm{w_1}}$ sono ancora indipendenti.
+    Se $k < n$ allora esistera' sicuramente $\vec{w_1} \notin \Span{\vec{v_1}, \dots, \vec{v_k}}$ (altrimenti i vettori genererebbero l'intero spazio vettoriale e sarebbero quindi una base), dunque $\basis{\vec{v_1}, \dots, \vec{v_k}, \vec{w_1}}$ sono ancora indipendenti.
     
     Continuiamo a ripetere questo processo fino a quando l'insieme di vettori non genera l'intero spazio vettoriale $V$. Sia $\mathcal{B}'$ l'insieme creato tramite questo processo. Allora $\mathcal{B}'$ e' un insieme di vettori indipendenti che generano $V$, dunque e' una base di $V$, dunque dovra' contenere $n$ vettori. Ma dato che inizialmente avevamo $k$ vettori, per completare ad una base di $V$ abbiamo dovuto aggiungere $n-k$ vettori di $V$.
 \end{proof}
 
 \subsubsection{Procedimento per completare ad una base di $\R^n$}
 
-Sia $V = \R^n$ e siano $\left\{ \bm{v_1}, \dots, \bm{v_k} \right\}$ indipendenti.
+Sia $V = \R^n$ e siano $\left\{ \vec{v_1}, \dots, \vec{v_k} \right\}$ indipendenti.
 
-Allora formo la matrice $M$ che ha come colonne i vettori $\bm{v_1}, \dots, \bm{v_k}$ e la riduco a scalini per colonna tramite mosse di Gauss di colonna, ottenendo una matrice $M'$ che ha come colonne i vettori $\bm{v'_1}, \dots, \bm{v'_k}$.
+Allora formo la matrice $M$ che ha come colonne i vettori $\vec{v_1}, \dots, \vec{v_k}$ e la riduco a scalini per colonna tramite mosse di Gauss di colonna, ottenendo una matrice $M'$ che ha come colonne i vettori $\vec{v'_1}, \dots, \vec{v'_k}$.
 
 Questi vettori sono indipendenti (poiche' le mosse di colonna non modificano lo span) e sono a scalini, dunque dovranno avere pivot su righe diverse, e dovranno averne esattamente $k \leq n$. Allora aggiungo $n - k$, ognuno con un pivot su una riga diversa da quelle gia' occupate: la matrice finale sara' una matrice quadrata con $n$ pivot, dunque sara' formata da colonne indipendenti che formano una base di $\R^n$.
 
@@ -618,12 +618,12 @@ Questi vettori sono indipendenti (poiche' le mosse di colonna non modificano lo 
             1&0&0&0\\0&1&0&0\\-1&-2&-3&0\\\frac13&\frac13&-\frac13&0
         \end{pmatrix}
     \end{gather*}
-    Dunque una base di $A$ e' formata dai vettori $\ang{\begin{psmallmatrix}1\\0\\-1\\\frac13 \end{psmallmatrix}, \begin{psmallmatrix}0\\1\\-2\\\frac13 \end{psmallmatrix}, \begin{psmallmatrix}0\\0\\-3\\-\frac13 \end{psmallmatrix} }$.
+    Dunque una base di $A$ e' formata dai vettori $\basis{\begin{psmallmatrix}1\\0\\-1\\\frac13 \end{psmallmatrix}, \begin{psmallmatrix}0\\1\\-2\\\frac13 \end{psmallmatrix}, \begin{psmallmatrix}0\\0\\-3\\-\frac13 \end{psmallmatrix} }$.
 
     Notiamo che i pivot di questi vettori sono ad altezza $1$, $2$ e $3$, dunque per completare ad una base di $\R^4$ basta aggiungere un vettore che ha un pivot ad altezza $4$, come $\begin{psmallmatrix} 0\\0\\0\\1 \end{psmallmatrix}$.
 
     Dunque abbiamo completato la base di $A$ alla seguente base di $\R^4$: \[
-        \ang{
+        \basis{
             \begin{pmatrix}1\\0\\-1\\\frac13 \end{pmatrix}, 
             \begin{pmatrix}0\\1\\-2\\\frac13 \end{pmatrix}, 
             \begin{pmatrix}0\\0\\-3\\-\frac13 \end{pmatrix},
@@ -634,14 +634,14 @@ Questi vettori sono indipendenti (poiche' le mosse di colonna non modificano lo 
 
 \section{Sottospazi somma e intersezione}
 
-\begin{definition}
+\begin{definition}[Sottospazio somma e intersezione]
     Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora sono sottospazi vettoriali di $V$:
     \begin{subequations}
         \begin{equation}
-            A \cap B = \left\{ \bm{v} \in V \mid \bm v \in A, \bm v \in B\right\}
+            A \cap B = \left\{ \vec{v} \in V \mid \vec v \in A, \vec v \in B\right\}
         \end{equation}
         \begin{equation}
-            A + B = \left\{ (\bm{v} + \bm{w}) \in V \mid \bm v \in A, \bm w \in B\right\}
+            A + B = \left\{ (\vec{v} + \vec{w}) \in V \mid \vec v \in A, \vec w \in B\right\}
         \end{equation}
     \end{subequations}
 \end{definition}
@@ -651,103 +651,103 @@ Questi vettori sono indipendenti (poiche' le mosse di colonna non modificano lo 
 \end{remark}
 
 \begin{proposition}
-    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$ tali che $A = \Span{\bm{v_1}, \dots, \bm{v_n}}$ e $B = \Span{\bm{w_1}, \dots, \bm{w_m}}$. Allora \begin{equation}
-        A + B = \Span{\bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}}.
+    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$ tali che $A = \Span{\vec{v_1}, \dots, \vec{v_n}}$ e $B = \Span{\vec{w_1}, \dots, \vec{w_m}}$. Allora \begin{equation}
+        A + B = \Span{\vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}}.
     \end{equation}
 \end{proposition}
 \begin{proof}
-    Consideriamo un generico $\bm u \in A + B$. Allora per definizione di $A + B$ segue che $\bm u = \bm v + \bm w$ per qualche $\bm v \in A, \bm w \in B$.
-    Dato che $A = \Span{\bm{v_1}, \dots, \bm{v_n}}$ e $B = \Span{\bm{w_1}, \dots, \bm{w_m}}$, allora possiamo scrivere 
+    Consideriamo un generico $\vec u \in A + B$. Allora per definizione di $A + B$ segue che $\vec u = \vec v + \vec w$ per qualche $\vec v \in A, \vec w \in B$.
+    Dato che $A = \Span{\vec{v_1}, \dots, \vec{v_n}}$ e $B = \Span{\vec{w_1}, \dots, \vec{w_m}}$, allora possiamo scrivere 
     \begin{alignat*}{1}
-        &\bm v = a_1\bm{v_1} + \dots + a_n\bm{v_n},  \quad \bm w = b_1\bm{w_1} + \dots + b_n\bm{w_m} \\
-        \intertext{per qualche $a_1, \dots, a_n, b_1, \dots, b_m \in \R$. Quindi $\bm u = \bm v + \bm w$ diventa}
-        \implies &\bm v + \bm w = a_1\bm{v_1} + \dots + a_n\bm{v_n} + b_1\bm{w_1} + \dots + b_n\bm{w_m}
+        &\vec v = a_1\vec{v_1} + \dots + a_n\vec{v_n},  \quad \vec w = b_1\vec{w_1} + \dots + b_n\vec{w_m} \\
+        \intertext{per qualche $a_1, \dots, a_n, b_1, \dots, b_m \in \R$. Quindi $\vec u = \vec v + \vec w$ diventa}
+        \implies &\vec v + \vec w = a_1\vec{v_1} + \dots + a_n\vec{v_n} + b_1\vec{w_1} + \dots + b_n\vec{w_m}
     \end{alignat*}
-    dunque ogni vettore in $A + B$ puo' essere scritto come combinazione lineare di $\bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}$, dunque questi vettori generano $A + B$. 
+    dunque ogni vettore in $A + B$ puo' essere scritto come combinazione lineare di $\vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}$, dunque questi vettori generano $A + B$. 
 \end{proof}
 
 \begin{remark}
-    I vettori $\bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}$ \textbf{generano} $A+B$ ma non sono una base: dobbiamo prima assicurarci che siano linearmente indipendenti.
+    I vettori $\vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}$ \textbf{generano} $A+B$ ma non sono una base: dobbiamo prima assicurarci che siano linearmente indipendenti.
 \end{remark}
 
-\begin{definition}
-    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora il sottospazio somma $A + B$ si dice in somma diretta se per ogni $\bm v \in A$, $\bm w \in B$ allora $\bm v, \bm w$ sono indipendenti. Se la somma e' diretta scrivo $A \oplus B$.
+\begin{definition}[Somma diretta]
+    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora il sottospazio somma $A + B$ si dice in somma diretta se per ogni $\vec v \in A$, $\vec w \in B$ allora $\vec v, \vec w$ sono indipendenti. Se la somma e' diretta scrivo $A \oplus B$.
 \end{definition}
 
-\begin{proposition}
-    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora il sottospazio somma $A + B$ e' in somma diretta se e solo se $A \cap B = \{\bm 0\}$.
+\begin{proposition}[La somma e' diretta se e solo se l'intersezione e' vuota]
+    Sia $V$ uno spazio vettoriale e siano $A, B \subseteq V$ due sottospazi di $V$. Allora il sottospazio somma $A + B$ e' in somma diretta se e solo se $A \cap B = \{\vec 0\}$.
 \end{proposition}
 \begin{proof}
-    Innanzitutto notiamo che $\bm{0} \in A$ e $\bm 0 \in B$, dunque $\{\bm 0\} \subseteq A \cap B$.
+    Innanzitutto notiamo che $\vec{0} \in A$ e $\vec 0 \in B$, dunque $\{\vec 0\} \subseteq A \cap B$.
     \begin{itemize}
         \item[($\implies$)] Supponiamo $A \oplus B$. 
         
-        Allora supponiamo per assurdo che esista $\bm u \in A \cap B$ non nullo. Per definizione di intersezione segue che $\bm u \in A$ e $\bm u \in B$, ma questo significa che in $A$ e in $B$ ci sono almeno due vettori $\bm v \in A$ e $\bm w \in B$ non indipendenti tra loro: basta scegliere $\bm v = \bm u$ e $\bm w = \bm u$. 
+        Allora supponiamo per assurdo che esista $\vec u \in A \cap B$ non nullo. Per definizione di intersezione segue che $\vec u \in A$ e $\vec u \in B$, ma questo significa che in $A$ e in $B$ ci sono almeno due vettori $\vec v \in A$ e $\vec w \in B$ non indipendenti tra loro: basta scegliere $\vec v = \vec u$ e $\vec w = \vec u$. 
         
-        Tuttavia questo e' assurdo poiche' abbiamo assunto che $A$ e $B$ siano in somma diretta, dunque non puo' esserci un $\bm u \in A \cap B$ non nullo, dunque $A \cap B = \{\bm 0\}$.
-        \item[($\impliedby$)] Supponiamo che $A \cap B = \{\bm 0\}$. 
+        Tuttavia questo e' assurdo poiche' abbiamo assunto che $A$ e $B$ siano in somma diretta, dunque non puo' esserci un $\vec u \in A \cap B$ non nullo, dunque $A \cap B = \{\vec 0\}$.
+        \item[($\impliedby$)] Supponiamo che $A \cap B = \{\vec 0\}$. 
         
-        Siano $\bm v \in A$, $\bm{w} \in B$ entrambi non nulli. Per dimostrare che $A$ e $B$ sono in somma diretta e' sufficiente dimostrare che sono necessariamente indipendenti, cioe' che l'unica combinazione lineare $a\bm v + b\bm w$ che e' uguale a $\bm 0$ e' quella con $a = b = 0$. 
+        Siano $\vec v \in A$, $\vec{w} \in B$ entrambi non nulli. Per dimostrare che $A$ e $B$ sono in somma diretta e' sufficiente dimostrare che sono necessariamente indipendenti, cioe' che l'unica combinazione lineare $a\vec v + b\vec w$ che e' uguale a $\vec 0$ e' quella con $a = b = 0$. 
         
-        Notiamo che $a\bm v + b\bm w = \bm 0$ se e solo se $a\bm v = -b\bm w$; ma dato che i due vettori (che fanno parte di sottospazi diversi) sono uguali segue che devono entrambi far parte del sottospazio intersezione, cioe' $a\bm v, -b\bm w \in A \cap B$.
+        Notiamo che $a\vec v + b\vec w = \vec 0$ se e solo se $a\vec v = -b\vec w$; ma dato che i due vettori (che fanno parte di sottospazi diversi) sono uguali segue che devono entrambi far parte del sottospazio intersezione, cioe' $a\vec v, -b\vec w \in A \cap B$.
         
-        Per ipotesi $A \cap B = \{\bm 0\}$, dunque $a\bm v = -b\bm w = \bm 0$. Inoltre abbiamo assunto che i vettori $\bm v$ e $\bm{w}$ siano non nulli, dunque segue che $a = b = 0$, come volevasi dimostrare. \qedhere
+        Per ipotesi $A \cap B = \{\vec 0\}$, dunque $a\vec v = -b\vec w = \vec 0$. Inoltre abbiamo assunto che i vettori $\vec v$ e $\vec{w}$ siano non nulli, dunque segue che $a = b = 0$, come volevasi dimostrare. \qedhere
     \end{itemize}
 \end{proof}
 
 \begin{theorem}
-    [di Grassman] \label{th_grassman}
+    [Teorema di Grassman] \label{th_grassman}
     Sia $V$ uno spazio vettoriale e $A, B \subseteq V$ due sottospazi. Allora \begin{equation}
         \dim(A + B) = \dim A + \dim B - \dim(A \cap B).
     \end{equation}
 \end{theorem}
 \begin{proof}
-    Consideriamo una base $\gamma = \ang{\bm{u_1}, \dots, \bm{u_k}}$ di $A \cap B$.
+    Consideriamo una base $\gamma = \basis{\vec{u_1}, \dots, \vec{u_k}}$ di $A \cap B$.
 
-    Dato che $A \cap B$ e' un sottospazio sia di $A$ che di $B$, allora per il teorema del completamento ad una base (\ref{th_completamento}) possiamo completarla ad una base $\alpha = \ang{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}}$ di $A$ e ad una base $\beta = \ang{\bm{u_1}, \dots, \bm{u_k}, \bm{w_1}, \dots, \bm{w_m}}$ di $B$.
+    Dato che $A \cap B$ e' un sottospazio sia di $A$ che di $B$, allora per il teorema del completamento ad una base (\ref{th_completamento}) possiamo completarla ad una base $\alpha = \basis{\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}}$ di $A$ e ad una base $\beta = \basis{\vec{u_1}, \dots, \vec{u_k}, \vec{w_1}, \dots, \vec{w_m}}$ di $B$.
 
-    Dimostriamo che $\ang{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}}$ e' una base di $A + B$.
+    Dimostriamo che $\basis{\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}}$ e' una base di $A + B$.
 
     \begin{itemize}
-        \item Mostriamo che $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ generano $A + B$.
+        \item Mostriamo che $\{\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}\}$ generano $A + B$.
         
-        Sia $\bm u \in A + B$ generico. Allora esistono $\bm v \in A, \bm w \in B$ tali che $\bm{u} = \bm{v} + \bm{w}$. Dato che $\alpha$ e' una base di $A$ e $\beta$ e' una base di $B$ allora possiamo scrivere $\bm v$ e $\bm w$ come \begin{alignat*}{2}
-            \bm{v} &=\ && a_1\bm{u_1} + \dots + a_k\bm{u_k} + a_{k+1}\bm{v_1} + \dots + a_{k+n}\bm{v_n} \\
-            \bm{w} &=\ && b_1\bm{u_1} + \dots + b_k\bm{u_k} + b_{k+1}\bm{w_1} + \dots + b_{k+m}\bm{w_m} \\
+        Sia $\vec u \in A + B$ generico. Allora esistono $\vec v \in A, \vec w \in B$ tali che $\vec{u} = \vec{v} + \vec{w}$. Dato che $\alpha$ e' una base di $A$ e $\beta$ e' una base di $B$ allora possiamo scrivere $\vec v$ e $\vec w$ come \begin{alignat*}{2}
+            \vec{v} &=\ && a_1\vec{u_1} + \dots + a_k\vec{u_k} + a_{k+1}\vec{v_1} + \dots + a_{k+n}\vec{v_n} \\
+            \vec{w} &=\ && b_1\vec{u_1} + \dots + b_k\vec{u_k} + b_{k+1}\vec{w_1} + \dots + b_{k+m}\vec{w_m} \\
             \intertext{dunque}
-            \bm{u} &=\ && \bm{v} + \bm{w}\\
-                &=\ && a_1\bm{u_1} + \dots + a_k\bm{u_k} + a_{k+1}\bm{v_1} + \dots + a_{k+n}\bm{v_n} + \\
-                & && + b_1\bm{u_1} + \dots + b_k\bm{u_k} + b_{k+1}\bm{w_1} + \dots + b_{k+m}\bm{w_m} \\
-                &=\ && (a_1 + b_1)\bm{u_1} + \dots + (a_k + b_k)\bm{u_k} + \\
-                & && + a_{k+1}\bm{v_1} + \dots + a_{k+n}\bm{v_n} + \\
-                & && + b_{k+1}\bm{w_1} + \dots + b_{k+m}\bm{w_m}.
+            \vec{u} &=\ && \vec{v} + \vec{w}\\
+                &=\ && a_1\vec{u_1} + \dots + a_k\vec{u_k} + a_{k+1}\vec{v_1} + \dots + a_{k+n}\vec{v_n} + \\
+                & && + b_1\vec{u_1} + \dots + b_k\vec{u_k} + b_{k+1}\vec{w_1} + \dots + b_{k+m}\vec{w_m} \\
+                &=\ && (a_1 + b_1)\vec{u_1} + \dots + (a_k + b_k)\vec{u_k} + \\
+                & && + a_{k+1}\vec{v_1} + \dots + a_{k+n}\vec{v_n} + \\
+                & && + b_{k+1}\vec{w_1} + \dots + b_{k+m}\vec{w_m}.
         \end{alignat*}
-        Dunque ogni elemento di $A + B$ puo' essere scritto come combinazione lineare di $\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}$, cioe' essi sono generatori di $A + B$.
+        Dunque ogni elemento di $A + B$ puo' essere scritto come combinazione lineare di $\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}$, cioe' essi sono generatori di $A + B$.
 
-        \item Mostriamo che $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ e' un insieme di vettori linearmente indipendenti.
+        \item Mostriamo che $\{\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}\}$ e' un insieme di vettori linearmente indipendenti.
         
-        Consideriamo una combinazione lineare dei vettori $\bm{u_1}, \dots, \bm{u_k}$, $\bm{v_1}, \dots, \bm{v_n}$, $\bm{w_1}, \dots, \bm{w_m}$ e verifichiamo che essa e' uguale al vettore $\bm{0}$ se e solo se tutti i coefficienti sono uguali a $0$.
+        Consideriamo una combinazione lineare dei vettori $\vec{u_1}, \dots, \vec{u_k}$, $\vec{v_1}, \dots, \vec{v_n}$, $\vec{w_1}, \dots, \vec{w_m}$ e verifichiamo che essa e' uguale al vettore $\vec{0}$ se e solo se tutti i coefficienti sono uguali a $0$.
 
         \begin{alignat*}{1}
-            &\bm{0} = x_1\bm{v_1} + \dots + x_n\bm{v_n} + y_1\bm{u_1} + \dots + y_k\bm{u_k} + z_1\bm{w_1} + \dots +z_m\bm{w_m} \\
-            \iff &x_1\bm{v_1} + \dots + x_n\bm{v_n} = -(y_1\bm{u_1} + \dots + y_k\bm{u_k} + z_1\bm{w_1} + \dots +z_m\bm{w_m}).
+            &\vec{0} = x_1\vec{v_1} + \dots + x_n\vec{v_n} + y_1\vec{u_1} + \dots + y_k\vec{u_k} + z_1\vec{w_1} + \dots +z_m\vec{w_m} \\
+            \iff &x_1\vec{v_1} + \dots + x_n\vec{v_n} = -(y_1\vec{u_1} + \dots + y_k\vec{u_k} + z_1\vec{w_1} + \dots +z_m\vec{w_m}).
         \end{alignat*}
         Notiamo che il primo membro e' un vettore del sottospazio $A$, mentre il secondo membro e' un vettore del sottospazio $B$: dato che i due vettori sono uguali allora devono trovarsi in entrambi i sottospazi e dunque anche nel sottospazio $A \cap B$. Dato che $\gamma$ e' una base di $A \cap B$ possiamo scrivere \begin{alignat*}{1}
-            &x_1\bm{v_1} + \dots + x_n\bm{v_n} = a_1\bm{u_1} + \dots + a_k\bm{u_k} \\
-            \iff &x_1\bm{v_1} + \dots + x_n\bm{v_n} - a_1\bm{u_1} - \dots - a_k\bm{u_k} = \bm{0}
-            \intertext{ma $\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}$ formano una base di $A$, dunque devono essere indipendenti, quindi per definizione segue che}
+            &x_1\vec{v_1} + \dots + x_n\vec{v_n} = a_1\vec{u_1} + \dots + a_k\vec{u_k} \\
+            \iff &x_1\vec{v_1} + \dots + x_n\vec{v_n} - a_1\vec{u_1} - \dots - a_k\vec{u_k} = \vec{0}
+            \intertext{ma $\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}$ formano una base di $A$, dunque devono essere indipendenti, quindi per definizione segue che}
             \iff &x_1 = \dots = x_n = 0
         \end{alignat*}
-        Dunque nella combinazione lineare i termini con $\bm{v_i}$ scompaiono, e rimangono solo
+        Dunque nella combinazione lineare i termini con $\vec{v_i}$ scompaiono, e rimangono solo
         \begin{alignat*}{1}
-            &\bm{0} = y_1\bm{u_1} + \dots + y_k\bm{u_k} + z_1\bm{w_1} + \dots +z_m\bm{w_m}
+            &\vec{0} = y_1\vec{u_1} + \dots + y_k\vec{u_k} + z_1\vec{w_1} + \dots +z_m\vec{w_m}
             \intertext{ma questi vettori formano la base $\beta$ di $B$, dunque devono essere indipendenti, cioe' per definizione}
             \iff &y_1 = \dots = y_k = z_1 = \dots = z_m = 0.
         \end{alignat*}
 
-        Segue quindi che $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ e' un insieme di vettori linearmente indipendenti.
+        Segue quindi che $\{\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}\}$ e' un insieme di vettori linearmente indipendenti.
     \end{itemize}
-    Dato che l'insieme $\{\bm{u_1}, \dots, \bm{u_k}, \bm{v_1}, \dots, \bm{v_n}, \bm{w_1}, \dots, \bm{w_m}\}$ e' un insieme di vettori linearmente indipendenti e genera $A+B$, allora esso e' una base di $A + B$.
+    Dato che l'insieme $\{\vec{u_1}, \dots, \vec{u_k}, \vec{v_1}, \dots, \vec{v_n}, \vec{w_1}, \dots, \vec{w_m}\}$ e' un insieme di vettori linearmente indipendenti e genera $A+B$, allora esso e' una base di $A + B$.
 
     Dunque \begin{alignat*}
         {1}

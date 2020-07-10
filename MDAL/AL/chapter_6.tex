@@ -1,0 +1,396 @@
+\chapter{Ortogonalita'}
+
+\section{Prodotto scalare e ortogonalita'}
+
+\begin{definition}[Prodotto scalare]
+    Siano $\vec{v}, \vec{w} \in \R^n$ tali che $\vec v = (a_1, \dots, a_n)$ e $\vec w = (b_1, \dots, b_n)$.
+    
+    Allora si dice prodotto scalare canonico tra $\vec{v}$ e $\vec w$ la funzione \[
+        \innerprod{\cdot}{\cdot} : \R^n \times \R^n \to \R
+    \] tale che \[
+        \innerprod{\vec v}{\vec w} = \vec v^T \cdot \vec w = \sum_{k = 1}^n a_kb_k.
+    \]
+\end{definition}
+
+Se i vettori sono in $\C^n$ si usa un prodotto scalare diverso, detto prodotto hermitiano.
+
+\begin{definition}[Prodotto hermitiano]
+    Siano $\vec{v}, \vec{w} \in \C^n$ tali che $\vec v = (a_1, \dots, a_n)$ e $\vec w = (b_1, \dots, b_n)$.
+    
+    Allora si dice prodotto hermitiano tra $\vec{v}$ e $\vec w$ la funzione \[
+        \innerprod{\cdot}{\cdot} : \C^n \times \C^n \to \C
+    \] tale che \[
+        \innerprod{\vec v}{\vec w} = \vec v^T \cdot \conj{\vec w} = \sum_{k = 1}^n a_k\conj{b_k}.
+    \]
+\end{definition}
+
+\begin{proposition}
+    Siano $\vec u, \vec v, \vec w \in \R^n$. 
+    Il prodotto scalare gode delle seguenti proprieta':
+    \begin{enumerate}[(i)]
+        \item se $k \in \R$ allora $\innerprod{k\vec v}{\vec w} = k\innerprod{\vec v}{\vec w} = \innerprod{\vec v}{k\vec w}$;
+        \item $\innerprod{\vec v + \vec u}{\vec w} = \innerprod{\vec v}{\vec w} + \innerprod{\vec u}{\vec w}$;
+        \item $\innerprod{\vec v}{\vec 0} = \innerprod{\vec 0}{\vec v} = 0$;
+        \item $\innerprod{\vec v}{\vec w} = \innerprod{\vec w}{\vec v}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[Norma di un vettore]
+    Sia $\vec{v} \in \R^n$. Allora si dice norma (o lunghezza) di $\vec{v}$ il numero reale \[
+        \norm{\vec v} = \sqrt{\innerprod{\vec v}{\vec v}} = \sqrt{\sum_{k = 1}^n a_k^2}.     
+    \]
+\end{definition}
+
+\begin{proposition}[La norma e' nulla se e solo se il vettore e' nullo]
+    \label{norma_nulla_sse_vettore_nullo}
+    Sia $\vec v \in \R^n$. Allora $\norm{\vec v} = 0$ se e solo se $\vec v = \vec 0$.
+\end{proposition}
+\begin{proof}
+    Sia $\vec v = (a_1, \dots, a_n)$. Allora
+    \begin{align*}
+        &\norm{\vec{v}} = 0\\
+        \iff &\sqrt{a_1^2 + \dots a_n^2} = 0 \\
+        \iff &a_1^2 + \dots + a_n^2 = 0.
+    \end{align*}
+    Ma $a_1^2 + \dots + a_n^2$ e' una somma di termini maggiori o uguali a 0, dunque $a_1^2 + \dots + a_n^2 = 0$ se e solo se $a_1 = \dots = a_n = 0$, ovvero $\vec v = \vec 0$. 
+\end{proof}
+
+\begin{definition}
+    Siano $\vec v, \vec w \in \R^n$, entrambi non nulli. Allora $\vec v$ e' ortogonale a $\vec w$ (e si indica con $\vec v \perp \vec w$) se $\innerprod{\vec v}{\vec w} = 0$.
+\end{definition}
+
+\begin{proposition}[Ortogonali implica indipendenti]
+    \label{ortogonali=>indip_2}
+    Siano $\vec v, \vec w \in \R^n$ entrambi non nulli. Allora se $\vec v \perp \vec w$ segue che l'insieme $\{\vec v, \vec w\}$ e' un insieme di vettori linearmente indipendenti.
+\end{proposition}
+\begin{proof}
+    Consideriamo una generica combinazione lineare di $\vec v, \vec w$ (come $a\vec v + b \vec w$ al variare di $a, b \in \R$) e poniamola uguale a $\vec 0$. Dobbiamo dimostrare che segue che $a = b = 0$.
+
+    Consideriamo il prodotto scalare $\innerprod{a\vec v + b \vec w}{\vec v}$. Allora \begin{align*}
+        \innerprod{a\vec v + b \vec w}{\vec v} &= \innerprod{a\vec v}{\vec v} +  \innerprod{b\vec w}{\vec v} \\
+        &= a\innerprod{\vec v}{\vec v} + b\innerprod{\vec w}{\vec v} &&\text{(per ipotesi $\innerprod{\vec w}{\vec v} = 0$)} \\
+        &= a\innerprod{\vec{v}}{\vec v} \\
+        &= a\norm{\vec v}^2.
+    \end{align*}
+    Dato che abbiamo imposto che la combinazione lineare sia uguale a $\vec 0$, avremo \[
+        \innerprod{a\vec v + b \vec w}{\vec v} = \innerprod{\vec 0}{\vec v} = 0.    
+    \]
+    Dunque segue che $a\norm{\vec v}^2 = 0$, ma per ipotesi $\vec v \neq \vec 0$, dunque per la proposizione \ref{norma_nulla_sse_vettore_nullo} segue che $a = 0$.
+
+    Quindi $a\vec v + b\vec w = \vec 0$ se e solo se $b \vec w = \vec 0$, ma dato che $\vec w$ non e' nullo segue che anche $b = 0$, ovvero l'insieme $\{\vec v, \vec w\}$ e' un insieme di vettori linearmente indipendenti.
+\end{proof}
+
+\begin{corollary}[Ortogonali implica indipendenti]
+    \label{ortogonali=>indip_n}
+    Siano $\vec{v_1}, \dots, \vec{v_k} \in \R^n$ non nulli e ortogonali a due a due (ovvero per ogni $i, j \leq k$, $i \neq j$ segue che $\vec{v_i} \perp \vec{v_j}$). Allora l'insieme $\{\vec{v_1}, \dots, \vec{v_k}\}$ e' un insieme di vettori linearmente indipendenti.
+\end{corollary}
+\begin{proof}
+    Consideriamo una generica combinazione lineare dei vettori e poniamola uguale a $0$: \[
+        c_1\vec{v_1} + \dots + c_k\vec{v_k} = \vec 0. 
+    \] Dimostriamo che segue che $c_1 = \dots = c_k = 0$.
+
+    Consideriamo il prodotto scalare $\innerprod{c_1\vec{v_1} + \dots + c_k\vec{v_k}}{\vec{v_i}}$. Dato che la combinazione lineare e' uguale al vettore nullo, allora questo prodotto scalare sara' uguale a 0, ovvero:
+    \begin{align*}
+        0 &= \innerprod{c_1\vec{v_1} + \dots + c_i\vec{v_i} + \dots c_k\vec{v_k}}{\vec{v_i}} \\
+        &= \innerprod{c_1\vec{v_1}}{\vec{v_i}} + \dots + \innerprod{c_i\vec{v_i}}{\vec{v_i}} + \dots + \innerprod{c_k\vec{v_k}}{\vec{v_i}} \\
+        &= c_1\innerprod{\vec{v_1}}{\vec{v_i}} + \dots + c_i\innerprod{\vec{v_i}}{\vec{v_i}} + \dots + c_k\innerprod{\vec{v_k}}{\vec{v_i}} \\
+        \intertext{Per ipotesi $\innerprod{\vec{v_j}}{\vec{v_i}} = 0$ per ogni $j \neq i$:} 
+        &= c_i\innerprod{\vec{v_i}}{\vec{v_i}} \\
+        &= a\norm{\vec{v_i}}^2.
+    \end{align*}
+    Dunque $c_i\norm{\vec{v_i}}^2 = 0$, ma dato che $\vec{v_i} \neq \vec 0$ segue che $c_i = 0$.
+
+    Con un analogo ragionamento si dimostra che tutti i coefficienti devono essere $0$, dunque i vettori sono indipendenti.
+\end{proof}
+
+\begin{definition}
+    Sia $\mathcal{B}$ una base di $\R^n$. Allora si dice che $\mathcal{B}$ e' una base ortogonale di $\R^n$ se per ogni $\vec v, \vec w \in \mathcal{B}$ con $\vec v \neq \vec w$ vale che $\vec v \perp \vec w$ (ovvero i vettori sono a due a due ortogonali).
+\end{definition}
+
+\begin{definition}
+    Sia $\mathcal{B}$ una base ortogonale di $\R^n$. Allora si dice che $\mathcal{B}$ e' una base ortonormale di $\R^n$ se per ogni $\vec v \in \mathcal{B}$ vale che $\norm{\vec{v}} = 1$.
+\end{definition}
+
+\begin{proposition}
+    Siano $\vec{v_1}, \dots, \vec{v_n} \in \R^n$ a due a due ortogonali. Allora $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_n}}$ e' una base ortogonale di $\R^n$.
+\end{proposition}
+\begin{proof}
+    Per la proposizione \ref{ortogonali=>indip_n} gli $n$ vettori sono indipendenti. Inoltre $\dim \R^n = n$, dunque per la proposizione \ref{base=dim_gener_indip} segue che $\mathcal{B}$ e' una base di $\R^n$. In particolare, dato che i vettori sono ortogonali a due a due, $\mathcal{B}$ e' una base ortogonale di $\R^n$.
+\end{proof}
+
+\begin{restatable}[Teorema di Gram-Schmidt]{theorem}{gramschmidt}
+    Sia $V \subseteq \R^n$ un sottospazio vettoriale di $\R^n$. Allora esiste una base ortogonale di $V$.
+\end{restatable}
+
+Le basi ortogonali (e ortonormali) sono utili in quanto possiamo sfruttare la seguente proposizione per trovare le coordinate di un vettore rispetto alla suddetta base.
+
+\begin{proposition}[Coordinate rispetto ad una base ortogonale]
+    \label{coordinate_base_ortogonale}
+    Sia $V \subseteq \R^n$ un sottospazio di $\R^n$ e sia $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_k}}$ una base ortogonale di $V$. Sia inoltre $\vec v \in V$.
+
+    Allora il vettore delle coordinate di $\vec v$ rispetto alla base $\mathcal{B}$ e' il vettore $(c_1, \dots, c_k)$ tale che per ogni $i \leq k$:
+    \[
+        c_i = \frac{\innerprod{\vec{v}}{\vec{v_i}}}{\innerprod{\vec{v_i}}{\vec{v_i}}} = \frac{\innerprod{\vec{v}}{\vec{v_i}}}{\norm{\vec{v_i}}^2}.    
+    \]
+\end{proposition}
+\begin{proof}
+    Dato che $(c_1, \dots, c_k)$ e' il vettore delle coordinate di $\vec v$ rispetto a $\mathcal{B}$, allora segue che \[
+        \vec v = c_1\vec{v_1} + \dots + c_k\vec{v_k}.   
+    \] Sia $i \leq k$ generico. Allora
+    \begin{align*}
+        &\innerprod{\vec v}{\vec{v_i}} \\
+        = &\innerprod{c_1\vec{v_1} + \dots + c_i\vec{v_i} + \dots + c_k\vec{v_k}}{\vec{v_i}}\\
+        = &c_1\innerprod{\vec{v_1}}{\vec{v_i}} + \dots + c_i\innerprod{\vec{v_i}}{\vec{v_i}} + \dots + c_k\innerprod{\vec{v_k}}{\vec{v_i}} &&\text{(per ortogonalita' della base)}\\
+        = &c_i\innerprod{\vec{v_i}}{\vec{v_i}}\\
+        = &c_i\norm{\vec{v_1}}^2.
+    \end{align*}
+    Dunque \[
+        c_i = \frac{\innerprod{\vec{v}}{\vec{v_i}}}{\norm{\vec{v_i}}^2}. \qedhere
+    \]
+\end{proof}
+\begin{corollary}[Coordinate rispetto ad una base ortonormale]
+    \label{coordinate_base_ortonormale}
+    Sia $V \subseteq \R^n$ un sottospazio di $\R^n$ e sia $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_k}}$ una base ortonormale di $V$. Sia inoltre $\vec v \in V$.
+
+    Allora il vettore delle coordinate di $\vec v$ rispetto alla base $\mathcal{B}$ e' il vettore $(c_1, \dots, c_k)$ tale che per ogni $i \leq k$:
+    \[
+        c_i = \innerprod{\vec{v}}{\vec{v_i}}.    
+    \]
+\end{corollary}
+\begin{proof}
+    Dato che una base ortonormale e' anche ortogonale, dalla proposizione \ref{coordinate_base_ortogonale} segue che per ogni $i \leq k$ vale che \[
+        c_i = \frac{\innerprod{\vec{v}}{\vec{v_i}}}{\norm{\vec{v_i}}^2}.
+    \] Per definizione di base ortonormale sappiamo che $\norm{\vec{v_i}} = 1$, da cui segue la tesi.
+\end{proof}
+
+\section{Complemento ortogonale}
+
+\begin{definition}[Sottospazi ortogonali]
+    Siano $V, W \subseteq \R^n$ due sottospazi di $\R^n$. Allora dico che $V$ e' ortogonale a $W$ (e scrivo $V \perp W$) se per ogni $\vec v \in V, \vec w \in W$ vale che $\vec v \perp \vec w$.
+\end{definition}
+
+\begin{proposition}[Sottospazi ortogonali sono in somma diretta]
+    Siano $V, W \subseteq \R^n$ due sottospazi di $\R^n$ tali che $V \perp W$. Allora $V$ e $W$ sono in somma diretta.
+\end{proposition}
+\begin{proof}
+    Dire che $V$ e $W$ sono in somma diretta significa che per ogni coppia di vettori $\vec v \in V, \vec w \in W$ segue che $\vec{v}, \vec w$ sono indipendenti.
+
+    Siano $\vec v \in V, \vec w \in W$ due vettori generici. Dato che $V$ e $W$ sono ortogonali, $\vec v \perp \vec w$, ma per la proposizione \ref{ortogonali=>indip_2} questo implica che $\vec v, \vec w$ siano indipendenti, cioe' la tesi.
+\end{proof}
+
+\begin{definition}[Ortogonale di un sottospazio]
+    Sia $V \subseteq \R^n$ un sottospazio di $\R^n$. Allora si dice complemento ortogonale di $V$ (o semplicemente ortogonale di $V$) il sottospazio \[
+        \ortog{V} = \{\vec w \in \R^n \mid \vec w \perp \vec v \quad \forall \vec v \in V\}.  
+    \]
+\end{definition}
+
+\begin{proposition}
+    Sia $V \subseteq \R^n$ un sottospazio di $\R^n$ e sia $\ortog{V}$ il suo ortogonale. Allora valgono le seguenti:
+    \begin{enumerate}[(i)]
+        \item $V \perp \ortog{V}$;
+        \item $V \oplus \ortog{V} = \R^n$, ovvero $\ortog{V}$ e' un complemento di $V$;
+        \item $\ortog{(\ortog{V})} = V$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Un vettore e' in $\ortog{V}$ se e solo se e' ortogonale ad una base di $V$] \label{w_in_ortog_sse_ortogonale_base}
+    Sia $\vec w \in \R^n$ e sia $V \subseteq \R^n$ un sottospazio di $\R^n$. $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_k}}$ una base ortogonale di $V$.
+    
+    Allora $\vec w \in \ortog{V}$ se e solo se $\vec w \perp \vec{v_1}, \dots, \vec w \perp \vec{v_k}$.
+\end{proposition}
+\begin{proof}
+    Dimostriamo le due implicazioni.
+    \begin{itemize}
+        \item[($\implies$)] Se $\vec w$ e' un vettore di $\ortog{V}$ allora per definizione di $\ortog{V}$ segue che $\vec w \perp \vec v$ per ogni $\vec v \in V$; di conseguenza, $\vec w$ sara' ortogonale anche ai vettori della base $\mathcal{B}$.
+        \item[($\impliedby$)] Sia $\vec v \in V$ generico. 
+        Dato che $\mathcal{B}$ e' una base di $V$, allora esisteranno $c_1, \dots, c_k \in \R$ tali che \[
+            \vec v = c_1\vec{v_1} + \dots + c_k\vec{v_k}.    
+        \]
+        E' quindi sufficiente dimostrare che $\vec w \perp \vec v$, ovvero che $\innerprod{\vec v}{\vec w} = 0$.
+        \begin{align*}
+            \innerprod{\vec v}{\vec w} &= \innerprod{c_1\vec{v_1} + \dots + c_k\vec{v_k}}{\vec w} \\
+            &= c_1\innerprod{\vec{v_1}}{\vec w} + \dots + c_k\innerprod{\vec{v_k}}{\vec w} \\
+            \intertext{Ma per ipotesi $\vec w \perp \vec{v_1}, \dots, \vec w \perp \vec{v_k}$, dunque}
+            &= 0. \qedhere
+        \end{align*} 
+    \end{itemize}
+\end{proof}
+
+\section{Proiezioni ortogonali}
+
+\begin{definition}
+    Siano $\vec u, \vec v \in \R^n$. Allora si chiama proiezione ortogonale di $\vec v$ su $\vec u$ il vettore \[
+        \proj{\vec v}{\vec u} = \frac{\innerprod{\vec v}{\vec u}}{\innerprod{\vec u}{\vec u}}\vec u.
+    \]
+\end{definition}
+
+\begin{proposition}
+    Siano $\vec u, \vec v \in \R^n$ e sia $\vec w \in \R^n$ tale che $\vec w = \vec v - \proj{\vec v}{\vec u}$. Allora $\vec w \perp \vec u$.
+\end{proposition}
+\begin{proof}
+    Basta dimostrare che $\innerprod{\vec w}{\vec u} = 0$.
+    \begin{align*}
+        \innerprod{\vec w}{\vec u} &= \innerprod{\vec v - \proj{\vec v}{\vec u}}{\vec u} \\
+        &= \innerprod{\vec v}{\vec u} - \innerprod{\proj{\vec v}{\vec u}}{\vec u} \\
+        &= \innerprod{\vec v}{\vec u} - \innerprod{\frac{\innerprod{\vec v}{\vec u}}{\innerprod{\vec u}{\vec u}}\vec u}{\vec u} \\
+        &= \innerprod{\vec v}{\vec u} - \frac{\innerprod{\vec v}{\vec u}}{\innerprod{\vec u}{\vec u}}\innerprod{\vec u}{\vec u} \\
+        &= \innerprod{\vec v}{\vec u} - \innerprod{\vec v}{\vec u} \\
+        &= 0. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{definition}
+    Sia $\vec v \in \R^n$ e sia $V \subseteq \R^n$ un sottospazio di $\R^n$. Sia inoltre $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_k}}$ una base ortogonale di $V$.
+    
+    Allora si chiama proiezione ortogonale di $\vec v$ sul sottospazio $V$ il vettore \[
+        \proj{\vec v}{V} = \proj{\vec v}{\vec{v_1}} + \dots + \proj{\vec v}{\vec{v_k}}.
+    \]
+\end{definition}
+
+\begin{proposition}\label{(v-proj)_in_ortogonale}
+    Siano $\vec v \in \R^n$, sia $V \subseteq \R^n$ un sottospazio di $\R^n$ e sia $\vec w \in \R^n$ tale che $\vec w = \vec v - \proj{\vec v}{V}$. Allora $\vec w \perp \vec u$ per ogni $\vec u \in V$, ovvero $\vec w \in \ortog{V}$.
+\end{proposition}
+\begin{proof}
+    Sia $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_k}}$ una base di $V$. Per la proposizione \ref{w_in_ortog_sse_ortogonale_base} e' sufficiente dimostrare che $\vec{w} \perp \vec{v_i}$ per ogni vettore $\vec{v_i} \in \mathcal{B}$.
+
+    Dimostriamo che $\vec w \perp \vec{v_1}$.
+    \begin{align*}
+        \innerprod{\vec w}{\vec{v_1}} &= \innerprod{\vec v - \proj{\vec v}{V}}{\vec{v_1}} \\
+        &= \innerprod{\vec v}{\vec{v_1}} - \innerprod{\proj{\vec v}{V}}{\vec{v_1}} \\
+        &= \innerprod{\vec v}{\vec{v_1}} - \innerprod{\proj{\vec v}{\vec{v_1}} + \dots + \proj{\vec v}{\vec{v_k}}}{\vec{v_1}} \\
+        &= \innerprod{\vec v}{\vec{v_1}} - (\innerprod{\proj{\vec v}{\vec{v_1}}}{\vec{v_1}} + \dots + \innerprod{\proj{\vec v}{\vec{v_k}}}{\vec{v_1}}) \\
+        \intertext{Sia $c_i = \frac{\innerprod{\vec v}{\vec{v_i}}}{\innerprod{\vec{v_i}}{\vec{v_i}}}$ per ogni $i \leq k$:}
+        &= \innerprod{\vec v}{\vec{v_1}} - (\innerprod{c_1\vec{v_1}}{\vec{v_1}} + \dots + \innerprod{c_k\vec{v_k}}{\vec{v_1}}) \\
+        &= \innerprod{\vec v}{\vec{v_1}} - (c_1\innerprod{\vec{v_1}}{\vec{v_1}} + \dots + c_k\innerprod{\vec{v_k}}{\vec{v_1}}) \\
+        \intertext{Per ortogonalita' della base $\mathcal{B}$:}
+        &= \innerprod{\vec v}{\vec{v_1}} - c_1\innerprod{\vec{v_1}}{\vec{v_1}}\\
+        &= \innerprod{\vec v}{\vec{v_1}} - \frac{\innerprod{\vec v}{\vec{v_1}}}{\innerprod{\vec{v_1}}{\vec{v_1}}}\innerprod{\vec{v_1}}{\vec{v_1}} \\
+        &= \innerprod{\vec v}{\vec{v_1}} - \innerprod{\vec v}{\vec{v_1}}\\
+        &= 0.
+    \end{align*}
+    Tramite un analogo ragionamento si dimostra che $\vec w$ e' perpendicolare a tutti i vettori di $\mathcal{B}$, dunque appartiene a $\ortog{V}$.
+\end{proof}
+
+Mostriamo ora una dimostrazione del Teorema di Gram-Schmidt.
+
+\gramschmidt*
+\begin{proof}
+    Sia $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_m}}$ una base di $V$. Applichiamo il seguente algoritmo per trovare una base ortogonale di $V$.
+
+    Chiamiamo $\mathcal{B}_k$ una base in cui i primi $k$ vettori sono ortogonali a due a due. Mostriamo che questa base esiste per $k = 1$ e mostriamo come ottenerla per un $k$ qualsiasi induttivamente.
+
+    \begin{description}
+        \item[Caso base] Sia $k = 1$. Allora banalmente $\mathcal{B}_1 = \mathcal{B}$, poiche' il primo vettore non deve essere ortogonale a nessun altro vettore.
+        \item[Passo induttivo] Sia $k \geq 1$ e supponiamo (per ipotesi induttiva) che esista $\mathcal{B}_{k}$. Dimostriamo che esiste $\mathcal{B}_{k+1}$.
+        
+        Sia $\mathcal{B}_k = \basis{\vec{w_1}, \dots, \vec{w_k}, \vec{v_{k+1}}, \dots, \vec{v_m}}$ tale che i primi $k$ vettori sono ortogonali a due a due. Sia inoltre $W_k = \Span{\vec{w_1}, \dots, \vec{w_k}}$.
+        
+        Sia $\mathcal{B}_{k+1} = \basis{\vec{w_1}, \dots, \vec{w_k}, \vec{w_{k+1}}, \vec{v_{k+2}}, \dots, \vec{v_m}}$ dove $\vec{w_{k+1}} = \vec{v_{k+1}} - \proj{v_{k+1}}{W_k}$.
+        Dobbiamo dimostrare che \begin{enumerate}[(i)]
+            \item $\mathcal{B}_{k+1}$ genera ancora tutto $V$ (ovvero lo span dei vettori non e' cambiato);
+            \item i primi $k+1$ vettori sono ortogonali tra loro a due a due.
+        \end{enumerate}
+
+        Dimostriamo questi due punti:
+        \begin{enumerate}[(i)]
+            \item Per definizione di $\vec{w_{k+1}}$:
+            \begin{align*}
+                \vec{w_{k+1}} &= \vec{v_{k+1}} - \proj{v_{k+1}}{W_k} \\
+                &= \vec{v_{k+1}} - \proj{v_{k+1}}{\vec{w_1}} - \dots - \proj{v_{k+1}}{\vec{w_k}}\\
+                &= \vec{v_{k+1}} - c_1{\vec{w_1}} - \dots - c_k{\vec{w_k}}
+            \end{align*} dove $c_1 = \frac{\innerprod{\vec{w_{k+1}}}{\vec{w_i}}}{\innerprod{\vec{w_i}}{\vec{w_i}}}$.
+
+            Dunque stiamo sottraendo ad un vettore della base multipli di altri vettori della base, dunque (per la proposizione \ref{span_Gauss}) lo span non cambia e $\mathcal{B}_{k+1}$ genera ancora tutto $V$ (e in particolare dovra' essere ancora una base di $V$ in quanto ha $m$ elementi).
+            \item Dato che per ipotesi induttiva i primi $k$ vettori sono ortogonali tra loro, ci basta mostrare che $\vec{w_{k+1}}$ e' ortogonale con tutti i vettori $\vec{w_1}, \dots, \vec{w_k}$.
+            
+            Dato che $\vec{w_{k+1}} = \vec{v_{k+1}} - \proj{v_{k+1}}{W_k}$ per la proposizione \ref{(v-proj)_in_ortogonale} segue che $\vec{w_{k+1}} \in \ortog{W_k}$, dunque per definizione di $\ortog{W_k}$ segue che $\vec{w_{k+1}}$ dovra' essere ortogonale ad ogni vettore di $W_k$, ovvero $\vec{w_{k+1}} \perp \vec{w_i}$ per ogni $i \leq k$.
+        \end{enumerate}
+        
+        Dunque $\mathcal{B}_{k+1}$ e' una base di $V$ tale che i primi $k+1$ vettori sono ortogonali tra loro a due a due.
+    \end{description}
+
+    Per induzione dunque esistera' $\mathcal{B}_m$, cioe' una base di $V$ in cui tutti i vettori sono ortogonali a due a due, ovvero $\mathcal{B}_m$ e' una base ortogonale di $V$.
+\end{proof}
+
+\section{Matrici simmetriche e ortogonalita'}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times k}(\R)$, sia $\vec{v} \in \R^k$ e sia $\vec{w} \in \R^n$. Allora \[
+        \innerprod{A\vec v}{\vec w} = \innerprod{\vec v}{A^T\vec w}.    
+    \]
+\end{proposition}
+\begin{proof}
+    $\innerprod{A\vec v}{\vec w} = (A\vec v)^T \vec w = {\vec v}^T A^T \vec w = \innerprod{\vec v}{A^T \vec w}$.
+\end{proof}
+
+\begin{corollary}
+    Sia $A \in \M_{n \times n}(\R)$ simmetrica e siano $\vec v, \vec w \in \R^n$. Allora \[
+        \innerprod{A\vec v}{\vec w} = \innerprod{\vec v}{A\vec w}.    
+    \]
+\end{corollary}
+\begin{proof}
+    Deriva direttamente dalla proposizione precedente: dato che $A$ e' simmetrica segue che $A^T = A$, dunque $\innerprod{A\vec v}{\vec w} = \innerprod{\vec v}{A^T\vec w} = \innerprod{\vec v}{A\vec w}$.
+\end{proof}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times n}(\R)$ una matrice simmetrica e sia $\vec u$ un suo autovettore. Allora per ogni $\vec v \in \R^n$ segue che\[
+        \vec v \perp \vec u \implies A \vec v \perp \vec u.    
+    \]
+\end{proposition}
+\begin{proof}
+    Per la proposizione precedente $\innerprod{A\vec v}{\vec u} = \innerprod{\vec v}{A\vec u}$. Dato che $\vec u$ e' un autovettore di $A$ segue che $A\vec u = \lambda\vec u$ per qualche $\lambda \in \R$. Allora \begin{align*}
+        \innerprod{\vec v}{A\vec u} &= \innerprod{\vec v}{\lambda\vec u}\\
+            &= \lambda\innerprod{\vec v}{\vec u}\\
+            &= 0 \cdot \lambda\\
+            &= 0. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{theorem}
+    [Teorema Spettrale]
+    Sia $A \in \M_{n \times n}(\R)$ una matrice simmetrica. Allora \begin{enumerate}[(i)]
+        \item $A$ e' diagonalizzabile su $\R$;
+        \item autospazi relativi ad autovalori diversi sono ortogonali tra loro.
+    \end{enumerate}
+\end{theorem}
+
+Il teorema spettrale vale solo per matrici a valori in $\R$ o in $\C$.
+
+\section{Matrici ortogonali}
+
+\begin{definition}
+    Una matrice $A \in \M_{n \times n}(\R)$ si dice ortogonale se le sue colonne sono ortonormali a due a due.
+\end{definition}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times n}(\R)$ ortogonale. Allora l'inversa di $A$ e' $A^T$.
+\end{proposition}
+\begin{proof}
+    Siano $\vec{c_1}, \dots, \vec{c_n}$ le colonne di $A$; allora $\vec{c_1}^T, \dots, \vec{c_n}^T$ saranno le righe di $A^T$. Consideriamo il valore in posizione $ij$ della matrice prodotto $A^T \cdot A$:
+    \[
+        [A^TA]_{ij} = \vec{c_i}^T \cdot \vec{c_j} = \innerprod{\vec{c_i}}{\vec{c_j}} = \begin{cases}
+            0, &\text{se } i \neq j \\
+            1, &\text{se } i = j.
+        \end{cases}
+    \]
+    Dunque $A^TA = I_n$, ovvero $A^T = A^{-1}$.
+\end{proof}
+
+\begin{definition}
+    Si dice distanza tra i vettori $\vec v, \vec w \in \R^n$ il numero reale $\norm{\vec v - \vec w}$.
+\end{definition}
+
+\begin{proposition}
+    Sia $A \in \M_{n \times n}(\R)$ ortogonale. Allora valgono le seguenti:
+    \begin{enumerate}[(i)]
+        \item $\norm{A\vec v} = \norm{\vec v}$;
+        \item $\norm{A\vec v - A\vec w} = \norm{\vec v - \vec w}$
+    \end{enumerate}
+    ovvero la matrice $A$ trasforma lo spazio $\R^n$ tramite una trasformazione rigida.
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item $\norm{A\vec v} = \sqrt{\innerprod{A\vec v}{A\vec v}} = \sqrt{\innerprod{\vec v}{A^TA\vec v}} = \sqrt{\innerprod{\vec v}{\vec v}} = \norm{\vec v}$.
+        \item $\norm{A\vec v - A\vec w} = \norm{A(\vec v - \vec w)} = \norm{\vec v - \vec w}$ per il punto precedente. \qedhere
+    \end{enumerate}
+\end{proof}
