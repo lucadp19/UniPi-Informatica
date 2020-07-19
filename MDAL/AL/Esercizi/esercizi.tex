@@ -1,4 +1,4 @@
-\documentclass[italian,oneside,headinclude,10pt]{scrreprt}
+\documentclass[italian,oneside,headinclude,11pt]{scrreprt}
     \usepackage[utf8]{inputenc}
     \usepackage[italian]{babel}
     \usepackage[T1]{fontenc}
@@ -30,8 +30,8 @@
     \LetLtxMacro\endproof\amsendproof
 }
 
-\titleformat*{\chapter}{\LARGE\scshape}
-\titleformat*{\section}{\Large\scshape}
+% \titleformat*{\chapter}{\LARGE\scshape}
+% \titleformat*{\section}{\Large\scshape}
 
 \renewcommand*{\proofname}{\textsc{Dimostrazione}}
 \addto\italian{\renewcommand*{\proofname}{\textsc{Dimostrazione}}}
@@ -74,6 +74,7 @@
 \declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
 
 \declaretheoremstyle[
+    spaceabove=10pt, spacebelow=10pt,
     headfont=\scshape,
     notefont=\normalfont, notebraces={ (}{)},
     bodyfont=\normalfont,
@@ -153,16 +154,19 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\K}{\mathbb{K}}
 \newcommand{\M}{\mathcal{M}}
+\newcommand{\BB}{\mathcal{B}}
 
 \begin{document}
 
 % \author{Luca De Paulis}
-\title{Algebra Lineare}
+\title{Esercizi di Algebra Lineare}
 \maketitle
 
 \tableofcontents
 
 % \include{indipendenza}
+\include{sottospazi}
 \include{parametricacartesiana}
+\include{determinarebasi}
 
 \end{document}

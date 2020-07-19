@@ -1,0 +1,250 @@
+\chapter{Determinare basi di sottospazi}
+
+Dati sottospazi di uno spazio vettoriale $V$, scritti in forma parametrica o cartesiana, vorremmo riuscire a ricavare una base del sottospazio.
+
+\section{Teoremi e definizioni utili}
+
+\begin{definition}[Base di uno spazio vettoriale]
+    Sia $V$ uno spazio vettoriale, $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora si dice che $\mathcal{B} = \basis{\vec{v_1}, \dots, \vec{v_n}}$ e' una base di $V$ se
+    \begin{itemize}
+        \item i vettori $\vec{v_1}, \dots, \vec{v_n}$ generano $V$;
+        \item i vettori $\vec{v_1}, \dots, \vec{v_n}$ sono linearmente indipendenti.
+    \end{itemize}
+\end{definition}
+
+Le basi canoniche degli spazi vettoriali piu' comuni sono:
+\begin{description}
+    \item[base canonica di $R^n$] \hfill \\La base canonica di $\R^n$ e' \[
+        \basis{\begin{pmatrix}
+            1 \\ 0 \\ \vdots \\ 0
+        \end{pmatrix}, \begin{pmatrix}
+            0 \\ 1 \\ \vdots \\ 0
+        \end{pmatrix}, \dots, \begin{pmatrix}
+            0 \\ 0 \\ \vdots \\ 1
+        \end{pmatrix}}.  
+    \] 
+    \item[base canonica di $\M_{n \times m}(\R)$] \hfill \\La base canonica di $\M_{2 \times 2}(\R)$ e' \[
+        \basis{\begin{pmatrix}
+            1 & 0 \\ 0 & 0
+        \end{pmatrix}, \begin{pmatrix}
+            0 & 1 \\ 0 & 0
+        \end{pmatrix}, \begin{pmatrix}
+            0 & 0 \\ 1 & 0
+        \end{pmatrix}, \begin{pmatrix}
+            0 & 0 \\ 0 & 1
+        \end{pmatrix}}.  
+    \] Ragionamento analogo per le $n \times m$. Lo spazio delle matrici $n \times m$ e' isomorfo a $\R^{nm}$.
+    \item[base canonica dello spazio dei polinomi] \hfill \\
+    La base canonica di $\R[x]^{\leq n}$ e' \[
+        \basis{1, x, x^2, \dots, x^{n-1}, x^n}.  
+    \] 
+    Lo spazio dei polinomi di grado minore o uguale a $n$ e' isomorfo a $\R^{n+1}$.
+\end{description}
+
+\begin{proposition}[Mosse di colonna per ottenere uno span di vettori indipendenti] \label{span_colonne_indipendenti}
+
+    Sia $V$ un sottospazio di $\R^n$ tale che $\vec{v_1}, \dots, \vec{v_m} \in \R^n$ siano suoi generatori, ovvero \[
+        V = \Span{\vec{v_1}, \dots, \vec{v_m}}.
+    \] 
+    
+    Consideriamo la matrice $A$ formata dai vettori $\vec{v_i}$ messi in colonna e riduciamola a scalini per colonna.
+    Siano $\vec{c_1}, \dots, \vec{c_k}$ le colonne non nulle della matrice $A$ ridotta a scalini. Allora \begin{enumerate}[(i)]
+        \item $\vec{c_1}, \dots, \vec{c_k}$ sono indipendenti;
+        \item lo span di $\vec{c_1}, \dots, \vec{c_k}$ e' uguale allo span di $\vec{v_1}, \dots, \vec{v_n}$
+    \end{enumerate}
+    ovvero $\basis{\vec{c_1}, \dots, \vec{c_k}}$ e' una base di $V$.
+\end{proposition}
+
+\begin{proposition}[Estrazione di una base tramite mosse di riga]\label{estrarre_una_base}
+    Sia $V$ un sottospazio di $\R^n$ tale che $\vec{v_1}, \dots, \vec{v_m} \in \R^n$ siano suoi generatori, ovvero \[
+        V = \Span{\vec{v_1}, \dots, \vec{v_m}}.  
+    \] 
+    Allora possiamo porre i vettori come colonne di una matrice e ridurla a scalini per riga. Alla fine del procedimento i vettori che originariamente erano nelle colonne con i pivot sono indipendenti e generano $V$, dunque formano una base di $V$.
+\end{proposition}
+
+\section{Trovare una base tramite mosse di colonna}
+
+Cerchiamo di sfruttare la proposizione \ref{span_colonne_indipendenti} per trovare una base di sottospazi vettoriali.
+
+\begin{example}
+    Sia $A \subseteq \R^3$ tale che \[
+        A = \Span{\begin{pmatrix}
+            1 \\ -2 \\ 0
+        \end{pmatrix}; \begin{pmatrix}
+            3 \\ -1 \\ 4
+        \end{pmatrix}; \begin{pmatrix}
+            -1 \\ 2 \\ -1
+        \end{pmatrix}; \begin{pmatrix}
+            4 \\ -3 \\ 0
+        \end{pmatrix}}    
+    \]
+
+    Per trovare una base di $A$ tramite mosse di colonna mettiamo i vettori come colonne di una matrice e riduciamola a scalini per colonna.
+
+    \begin{align*}
+        \begin{pmatrix}
+            1 & 3 & -1 & 4 \\ -2 & -1 & 2 & -3 \\ 0 & 4 & -1 & 0
+        \end{pmatrix} \xrightarrow[C_4 - 4C_1]{C_2 - 3C_1, C_3 + C_1}
+        \begin{pmatrix}
+            1 & 0 & 0 & 0 \\ -2 & 5 & 0 & 5 \\ 0 & 4 & -1 & 0
+        \end{pmatrix} \xrightarrow[]{C_4 - C_2} \\
+        \xrightarrow[]{C_4 - C_2}\begin{pmatrix}
+            1 & 0 & 0 & 0 \\ -2 & 5 & 0 & 0 \\ 0 & 4 & -1 & -4
+        \end{pmatrix} \xrightarrow[]{C_4 + 4C_3}
+        \begin{pmatrix}
+            1 & 0 & 0 & 0 \\ -2 & 5 & 0 & 0 \\ 0 & 4 & -1 & 0
+        \end{pmatrix}
+    \end{align*}
+
+    Dunque per la proposizione \ref{span_colonne_indipendenti} i vettori $(1, -2, 0), (0, 5, 4), (0, 0, -1)$ sono indipendenti e generano $V$, ovvero \[
+        \Span{\begin{pmatrix}
+            1 \\ -2 \\ 0
+        \end{pmatrix}; \begin{pmatrix}
+            3 \\ -1 \\ 4
+        \end{pmatrix}; \begin{pmatrix}
+            -1 \\ 2 \\ -1
+        \end{pmatrix}; \begin{pmatrix}
+            4 \\ -3 \\ 0
+        \end{pmatrix}} = \Span{\begin{pmatrix} 1 \\ -2 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 5 \\ 4 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ -1 \end{pmatrix}}    
+    \]
+    dunque $\BB = \basis{(1, -2, 0);\ (0, 5, 4);\ (0, 0, -1)}$ e' una base di $V$.
+\end{example}
+
+\begin{exercise}
+    Dati uno spazio vettoriale $V$ e un sottospazio $A$, trovare una base di $A$.
+    \begin{enumerate}
+        \item Sia $V = \R^4$ e $A$ sottospazio di $V$ dato da \[
+            A = \Span{\begin{pmatrix}
+                1 \\ 2 \\ 1 \\ 3
+            \end{pmatrix}, \begin{pmatrix}
+                -1 \\ -6 \\ 5 \\ 1
+            \end{pmatrix}, \begin{pmatrix}
+                4 \\ 2 \\ 1 \\ 3
+            \end{pmatrix}, \begin{pmatrix}
+                2 \\ 2 \\ 3 \\ 1
+            \end{pmatrix}}.  
+        \]
+        \item Sia $V = \R^3$ e $A$ sottospazio di $V$ dato da \[
+            A = \Span{\begin{pmatrix}
+                1 \\ -1 \\ 1
+            \end{pmatrix}, \begin{pmatrix}
+                -1 \\ 2 \\ 4
+            \end{pmatrix}, \begin{pmatrix}
+                3 \\ -1 \\ 7
+            \end{pmatrix}, \begin{pmatrix}
+                2 \\ 5 \\ 1
+            \end{pmatrix}}.
+        \]
+        \item Sia $V = \R^3$ e $A$ sottospazio di $V$ dato da \[
+            A = \set{\begin{pmatrix}
+                x \\ y \\ z
+            \end{pmatrix} \in \R^3 \suchthat x - 3y + 2z = 0}.
+        \]
+        \item Sia $V = \R[x]^{\leq 2}$ e $A$ sottospazio di $V$ dato da \[
+            A = \set{p(x) \in V \suchthat p(3) = 0}.
+        \]
+        \item Sia $V = \M_{2 \times 2}(\R)$ e $A$ sottospazio di $V$ dato da \[
+            A = \set{M \in V \suchthat M + M^T = O_2}
+        \] dove $O_2$ e' la matrice $2 \times 2$ con zero in tutte le posizioni, mentre $M^T$ e' la matrice trasposta di $M$ (quella ottenuta trasformando le righe in colonne).
+    \end{enumerate}
+\end{exercise}
+
+
+\textsc{Hint:} se il sottospazio e' in forma cartesiana, va prima portato in forma parametrica per fare i calcoli con gli span.
+
+\textsc{Hint:} come nel capitolo precedente, se la condizione non e' totalmente esplicita (accade spesso quando si hanno spazi diversi da $\R^n$) basta esplicitarla. 
+
+Ad esempio, se lo spazio e' $\R[x]^{\leq 2}$, invece di scrivere la condizione in termini di un polinomio generico $p(x)$ basta esplicitare il polinomio scrivendolo per esteso (in questo caso scriviamo $p(x) = a + bx + cx^2$ lasciando libere $a, b, c \in \R$) e poi riscrivere la condizione in termini delle nuove variabili $a, b, c$. 
+
+A questo punto e' anche facile fare l'isomorfismo con $\R^{\text{quello che ti pare}}$ per risolvere l'esercizio come se fosse con i vettori colonna.
+
+\section{Trovare una base tramite estrazione e mosse di riga}
+
+Cerchiamo di sfruttare la proposizione \ref{estrarre_una_base} per trovare una base di sottospazi vettoriali.
+
+\begin{example}
+    Sia $A \subseteq \R^3$ tale che \[
+        A = \Span{\begin{pmatrix}
+            1 \\ -2 \\ 0
+        \end{pmatrix}; \begin{pmatrix}
+            3 \\ -1 \\ 4
+        \end{pmatrix}; \begin{pmatrix}
+            -1 \\ 2 \\ -1
+        \end{pmatrix}; \begin{pmatrix}
+            4 \\ -3 \\ 0
+        \end{pmatrix}}    
+    \]
+
+    Per trovare una base di $A$ tramite mosse di riga mettiamo i vettori come colonne di una matrice e riduciamola a scalini per riga.
+
+    \begin{align*}
+        \begin{pmatrix}
+            1 & 3 & -1 & 4 \\ -2 & -1 & 2 & -3 \\ 0 & 4 & -1 & 0
+        \end{pmatrix} \xrightarrow[]{R_2 + 2R_1}
+        \begin{pmatrix}
+            1 & 3 & -1 & 4 \\ 0 & 5 & 0 & 5 \\ 0 & 4 & -1 & 0
+        \end{pmatrix} \xrightarrow[]{R_2 \times \dfrac{1}{5}} \\
+        \begin{pmatrix}
+            1 & 3 & -1 & 4 \\ 0 & 1 & 0 & 1 \\ 0 & 4 & -1 & 0
+        \end{pmatrix} \xrightarrow[]{R_3 -4R_2}
+        \begin{pmatrix}
+            1 & 3 & -1 & 4 \\ 0 & 1 & 0 & 1 \\ 0 & 0 & -1 & -4
+        \end{pmatrix}
+    \end{align*}
+
+    I pivot di questa matrice sono nelle colonne $1$, $2$ e $3$, dunque per la proposizione \ref{estrarre_una_base} i vettori $(1, -2, 0), (3, -1, 4), (-1, 2, -1)$ sono indipendenti e generano $V$, ovvero \[
+        \Span{\begin{pmatrix}
+            1 \\ -2 \\ 0
+        \end{pmatrix}; \begin{pmatrix}
+            3 \\ -1 \\ 4
+        \end{pmatrix}; \begin{pmatrix}
+            -1 \\ 2 \\ -1
+        \end{pmatrix}; \begin{pmatrix}
+            4 \\ -3 \\ 0
+        \end{pmatrix}} = \Span{\begin{pmatrix} 1 \\ -2 \\ 0 \end{pmatrix}, \begin{pmatrix} 3 \\ -1 \\ 4 \end{pmatrix}, \begin{pmatrix} -1 \\ 2 \\ -1 \end{pmatrix}}    
+    \]
+    dunque $\BB = \basis{(1, -2, 0);\ (3, -1, 4);\ (-1, 2, -1)}$ e' una base di $V$.
+\end{example}
+
+\textsc{Nota bene:} i due procedimenti (per colonna e per riga) danno quasi sempre due basi diverse, ma ugualmente valide.
+
+\begin{exercise}
+    Dati uno spazio vettoriale $V$ e un sottospazio $A$, estrarre una base di $A$.
+    \begin{enumerate}
+        \item Sia $V = \R^4$ e $A$ sottospazio di $V$ dato da \[
+            A = \Span{\begin{pmatrix}
+                1 \\ 2 \\ 1 \\ 3
+            \end{pmatrix}, \begin{pmatrix}
+                -1 \\ -6 \\ 5 \\ 1
+            \end{pmatrix}, \begin{pmatrix}
+                4 \\ 2 \\ 1 \\ 3
+            \end{pmatrix}, \begin{pmatrix}
+                2 \\ 2 \\ 3 \\ 1
+            \end{pmatrix}}.  
+        \]
+        \item Sia $V = \R^3$ e $A$ sottospazio di $V$ dato da \[
+            A = \Span{\begin{pmatrix}
+                1 \\ -1 \\ 1
+            \end{pmatrix}, \begin{pmatrix}
+                -1 \\ 2 \\ 4
+            \end{pmatrix}, \begin{pmatrix}
+                3 \\ -1 \\ 7
+            \end{pmatrix}, \begin{pmatrix}
+                2 \\ 5 \\ 1
+            \end{pmatrix}}.
+        \]
+        \item Sia $V = \R^3$ e $A$ sottospazio di $V$ dato da \[
+            A = \set{\begin{pmatrix}
+                x \\ y \\ z
+            \end{pmatrix} \in \R^3 \suchthat x - 3y + 2z = 0}.
+        \]
+        \item Sia $V = \R[x]^{\leq 2}$ e $A$ sottospazio di $V$ dato da \[
+            A = \set{p(x) \in V \suchthat p(3) = 0}.
+        \]
+        \item Sia $V = \M_{2 \times 2}(\R)$ e $A$ sottospazio di $V$ dato da \[
+            A = \set{M \in V \suchthat M + M^T = O_2}
+        \] dove $O_2$ e' la matrice $2 \times 2$ con zero in tutte le posizioni, mentre $M^T$ e' la matrice trasposta di $M$ (quella ottenuta trasformando le righe in colonne).
+    \end{enumerate}
+\end{exercise}
+
+\textsc{Hint:} valgono gli stessi hint della sezione predecente.
