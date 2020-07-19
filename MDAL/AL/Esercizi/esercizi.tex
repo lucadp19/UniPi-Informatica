@@ -1,0 +1,168 @@
+\documentclass[italian,oneside,headinclude,10pt]{scrreprt}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp, microtype}
+    \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm, enumerate}
+    \usepackage{nicefrac}
+    \usepackage{array}
+    \usepackage{float}
+
+    \usepackage{letltxmacro}
+
+    \LetLtxMacro\amsproof\proof
+    \LetLtxMacro\amsendproof\endproof
+
+    
+    \usepackage[pdfspacing, eulermath]{classicthesis}
+    % \usepackage{lmodern}
+    
+    \usepackage{thmtools}
+    \usepackage[framemethod=TikZ]{mdframed}
+
+    \usepackage{cleveref}
+    \usepackage{hyperref} % ultimo package da caricare!
+
+\restylefloat{table}
+
+\AtBeginDocument{
+    \LetLtxMacro\proof\amsproof
+    \LetLtxMacro\endproof\amsendproof
+}
+
+\titleformat*{\chapter}{\LARGE\scshape}
+\titleformat*{\section}{\Large\scshape}
+
+\renewcommand*{\proofname}{\textsc{Dimostrazione}}
+\addto\italian{\renewcommand*{\proofname}{\textsc{Dimostrazione}}}
+
+\declaretheoremstyle[
+    spaceabove=10pt, spacebelow=10pt,
+    headindent=-20pt,
+    headfont=\scshape,
+    notefont=\scshape, notebraces={\newline(}{)},
+    headformat={\NUMBER. \NAME.\NOTE},
+    % headfont=\scshape,
+    % notefont=\scshape, notebraces={ (}{)},
+    bodyfont=\itshape\normalsize,
+    % shaded={rulecolor={rgb}{255,255,255}},
+    % mdframed={backgroundcolor=halfgray},
+    headpunct={\vspace{0.5\topsep}\newline}
+]{thmstyle}
+\declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
+\declaretheorem[name=Corollario, sibling=theorem, style=thmstyle]{corollary}
+\declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
+\declaretheorem[name=Lemma, sibling=theorem, style=thmstyle]{lemma}
+
+\declaretheoremstyle[
+    spaceabove=0pt, spacebelow=0pt,
+    headfont=\scshape,
+    notefont=\normalfont, notebraces={ (}{)},
+    % headfont=\scshape,
+    % notefont=\scshape, notebraces={(}{)},
+    bodyfont=\normalfont\normalsize,
+    headpunct={\vspace{0.5\topsep}\newline},
+    mdframed={
+        linecolor=halfgray,
+        linewidth=1pt,
+        backgroundcolor=white,
+        topline=false,
+        bottomline=false,
+        rightline=false
+    },
+]{defstyle}
+\declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
+
+\declaretheoremstyle[
+    headfont=\scshape,
+    notefont=\normalfont, notebraces={ (}{)},
+    bodyfont=\normalfont,
+    postheadspace=1em
+]{exmplstyle}
+\declaretheorem[name=Esempio, sibling=theorem, style=exmplstyle]{example}
+\declaretheorem[name=Esercizio, sibling=theorem, style=exmplstyle]{exercise}
+
+
+\declaretheoremstyle[
+    headfont=\scshape,
+    notefont=\normalfont, notebraces={(}{)},
+    bodyfont=\normalfont,
+    numbered=no,
+    postheadspace=1em
+]{remarkstyle}
+\declaretheorem[name=Osservazione, style=remarkstyle]{remark}
+\declaretheorem[name=Soluzione, style=remarkstyle]{solution}
+\declaretheorem[name=Intuizione, style=remarkstyle]{intuition}
+
+\newcolumntype{z}{r<{{}}}
+\newcolumntype{o}{@{}>{{}}c<{{}}@{}}
+
+% matrix with lines
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+% Set related symbols
+\newcommand{\set}[1]{ \left\{\,#1\,\right\} }
+\newcommand{\union}{\cup}
+\newcommand{\inters}{\cap}
+\newcommand{\suchthat}{\,:\,} % oppure con {:}
+\DeclareMathOperator{\tc}{\text{ tale che }}
+
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\rho}{\varrho}
+\renewcommand{\phi}{\varphi}
+
+\let\oldre\Re
+\let\oldim\Im
+\renewcommand{\Re}[1]{\operatorname{Re}(#1)}
+\renewcommand{\Im}[1]{\operatorname{Im}(#1)}
+\newcommand{\conj}[1]{\overline{#1}}
+
+\newcommand{\deq}{:=}
+\newcommand{\iseq}{\overset{?}{=}}
+\newcommand{\seteq}{\overset{!}{=}}
+\newcommand{\divides}{\mid} % divide esattamente
+\newcommand{\ndivides}{\not\mid} % non divide esattamente
+\newcommand{\congr}{\equiv} % congruo 
+\newcommand{\ncongr}{\not\congr} % non congruo
+
+\renewcommand{\vec}[1]{\bm{#1}}
+
+\newcommand{\Mod}[1]{\ \left(#1\right)}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\mcm}[2]{\operatorname{mcm}\left(#1, #2\right)}
+\newcommand{\mcd}[2]{\operatorname{mcd}\left(#1, #2\right)}
+\newcommand{\Span}[1]{\operatorname{span}\left\{#1\right\}}
+\newcommand{\basis}[1]{\left\langle #1 \right\rangle}
+\newcommand{\innerprod}[2]{\langle #1{,}#2\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\ortog}[1]{#1^{\perp}}
+\newcommand{\proj}[2]{\operatorname{proj}_{#2}\!\left( #1 \right)}
+\newcommand{\rk}[1]{\operatorname{rango}\left( #1 \right)}
+\newcommand{\Imm}[1]{\operatorname{Im}#1}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\M}{\mathcal{M}}
+
+\begin{document}
+
+% \author{Luca De Paulis}
+\title{Algebra Lineare}
+\maketitle
+
+\tableofcontents
+
+% \include{indipendenza}
+\include{parametricacartesiana}
+
+\end{document}

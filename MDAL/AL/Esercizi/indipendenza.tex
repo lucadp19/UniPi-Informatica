@@ -1,0 +1,26 @@
+\chapter{Indipendenza lineare}
+
+\section{Teoremi utili}
+
+\begin{definition}[Indipendenza lineare]
+    Sia $V$ uno spazio vettoriale, $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora l'insieme $\left\{ \vec{v_1}, \dots, \vec{v_n} \right\}$ si dice insieme di vettori linearmente indipendenti se
+    \begin{equation}
+        a_1\vec{v_1} + \dots + a_n\vec{v_n} = \vec{0_V} \iff a_1 = \dots = a_n = 0
+    \end{equation}
+    cioe' se l'unica combinazione lineare di $\vec{v_1}, \dots, \vec{v_n}$ che da' come risultato il vettore nullo e' quella con $a_1 = \dots = a_n = 0$.
+\end{definition}
+
+\begin{proposition}[Mosse di Gauss per colonna non modificano lo span] \label{span_Gauss}
+
+    Sia $V$ uno spazio vettoriale e $\vec{v_1}, \dots, \vec{v_n} \in V$. Allora per ogni $k \in \R$ e per ogni $i, j \leq n$.
+    \begin{equation}
+        \Span{\vec{v_1}, \dots, \vec{v_i}, \vec{v_j}, \dots, \vec{v_n}} = \Span{\vec{v_1}, \dots, \vec{v_i} + k\vec{v_j}, \vec{v_j}, \dots, \vec{v_n}}.
+    \end{equation}
+    
+    Inoltre scambiare due vettori o sostituire ad un vettore un suo multiplo non cambia lo span, dunque le mosse di Gauss non modificano lo span dei vettori.
+\end{proposition}
+
+\begin{proposition}[Mosse di colonna per ottenere uno span di vettori indipendenti] \label{span_colonne_indipendenti}
+
+    Siano $\vec{v_1}, \dots, \vec{v_n} \in \R^m$ dei vettori colonna. Allora per stabilire quali di questi vettori sono indipendenti consideriamo la matrice $A$ che contiene come colonna $i$-esima il vettore colonna $v_i$ e riduciamola a scalini per colonna. Lo span delle colonne non nulle della matrice ridotta a scalini e' uguale allo span di $\vec{v_1}, \dots, \vec{v_n}$.
+\end{proposition}
