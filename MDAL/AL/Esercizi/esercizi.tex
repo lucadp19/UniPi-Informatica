@@ -131,22 +131,31 @@
 \newcommand{\ndivides}{\not\mid} % non divide esattamente
 \newcommand{\congr}{\equiv} % congruo 
 \newcommand{\ncongr}{\not\congr} % non congruo
-
-\renewcommand{\vec}[1]{\bm{#1}}
-
 \newcommand{\Mod}[1]{\ \left(#1\right)}
-\newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\mcm}[2]{\operatorname{mcm}\left(#1, #2\right)}
 \newcommand{\mcd}[2]{\operatorname{mcd}\left(#1, #2\right)}
+
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\ang}{\langle}{\rangle}
+
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
 \newcommand{\Span}[1]{\operatorname{span}\left\{#1\right\}}
 \newcommand{\basis}[1]{\left\langle #1 \right\rangle}
 \newcommand{\innerprod}[2]{\langle #1{,}#2\rangle}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\ortog}[1]{#1^{\perp}}
 \newcommand{\proj}[2]{\operatorname{proj}_{#2}\!\left( #1 \right)}
 \newcommand{\rk}[1]{\operatorname{rango}\left( #1 \right)}
+\newcommand{\inv}{^{-1}}
 \newcommand{\Imm}[1]{\operatorname{Im}#1}
 \newcommand{\id}{\operatorname{id}}
+
+
+
+
+
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
@@ -168,5 +177,7 @@
 \include{sottospazi}
 \include{parametricacartesiana}
 \include{determinarebasi}
+\include{sommainters}
+\include{applineari}
 
 \end{document}

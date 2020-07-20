@@ -1,0 +1,218 @@
+\chapter{Sottospazi somma e intersezione}
+
+\section{Definizioni e teoremi utili}
+
+\begin{definition}[Sottospazio somma e intersezione]
+    Sia $V$ uno spazio vettoriale e siano $U, W \subseteq V$ due sottospazi di $V$. 
+    
+    Allora definisco il sottospazio somma $U + W$ come \[
+        U + W \deq \set{\vec u + \vec w \in V \suchthat \vec u \in U, \vec w \in W}    
+    \] e il sottospazio intersezione $U \inters W$ come \[
+        U \inters W \deq \set{\vec v \in V \suchthat \vec v \in U \land \vec v \in W}.
+    \]
+\end{definition}
+
+\begin{theorem}
+    [Formula di Grassman] \label{th:grassman}
+    Sia $V$ uno spazio vettoriale e siano $U, W \subseteq V$ due sottospazi di $V$. 
+    
+    Allora vale che \[
+        \dim(U + W) = \dim U + \dim W - \dim(U \inters W).    
+    \]
+\end{theorem}
+
+\begin{proposition}[Generatori del sottospazio somma]\label{generatori_somma}
+    Sia $V$ uno spazio vettoriale e siano $U, W \subseteq V$ due sottospazi di $V$. Siano inoltre \begin{align*}
+        &\BB_U = \basis{\vec{u_1}, \dots, \vec{u_n}}\\
+        &\BB_W = \basis{\vec{w_1}, \dots, \vec{w_m}}
+    \end{align*} delle basi rispettivamente di $U$ e di $W$. 
+        
+    Allora l'insieme \[
+        \set{\vec{u_1}, \dots, \vec{u_n}, \vec{w_1}, \dots, \vec{w_m}}
+    \] e' un insieme di generatori di $U+W$, ovvero \begin{equation}
+        U + W = \Span{\vec{u_1}, \dots, \vec{u_n}, \vec{w_1}, \dots, \vec{w_m}}.
+    \end{equation}
+\end{proposition}
+
+\begin{remark}
+    I vettori $\vec{u_1}, \dots, \vec{u_n}, \vec{w_1}, \dots, \vec{w_m}$ \emph{generano} $U+W$ ma non sono necessariamente una base: dobbiamo renderli indipendenti tramite mosse di riga o di colonna.
+\end{remark}
+
+\begin{definition}[Somma diretta]
+    Sia $V$ uno spazio vettoriale e siano $U, W \subseteq V$ due sottospazi di $V$. 
+    
+    Allora il sottospazio somma $U + W$ si dice in \emph{somma diretta} se per ogni $\vec u \in U$, $\vec w \in W$ allora $\vec u, \vec w$ sono indipendenti. Se la somma e' diretta scrivo $U \oplus W$.
+\end{definition}
+
+\begin{proposition}[Condizione necessaria e sufficiente per la somma diretta]
+    Sia $V$ uno spazio vettoriale e siano $U, W \subseteq V$ due sottospazi di $V$. 
+    
+    Allora il sottospazio somma $U + W$ e' in somma diretta se e solo se $U \cap W = \set{\vec 0}$.
+
+    In tal caso la formula di Grassman diventa \[
+        \dim (U \oplus W) = \dim U + \dim W.    
+    \]
+\end{proposition}
+
+\section{Trovare basi di somme/intersezioni}
+
+\begin{example}
+    Sia $V = \R^4$, $U, W \subseteq V$ tali che \begin{align*}
+        U = \Span{\mat{2\\0\\1\\1}, \mat{3\\-2\\-2\\0}}, &&W = \Span{\mat{3\\0\\-3\\1}, \mat{0\\3\\-6\\1}}.
+    \end{align*}
+
+    Cerchiamo di trovare una base di $U+W$ e una base di $U \inters W$. 
+
+    \paragraph{Base di $U + W$}
+    La cosa piu' semplice e' trovare una base di $U+W$: basta sfruttare la proposizione \ref{generatori_somma} e ricavare una base dai vettori trovati.
+
+    Per la proposizione \ref{generatori_somma} sappiamo che \[
+        U + W = \Span{\mat{2\\0\\1\\1}, \mat{3\\-2\\-2\\0}, \mat{3\\0\\-3\\1}, \mat{0\\3\\-6\\1}}.  
+    \]
+
+    Usiamo il metodo delle mosse di riga per trovare una base di $U + W$.
+
+    \begin{gather*}
+        \mat{2 & 3 & 3 & 0 \\ 0 & -2 & 0 & 3  \\ 1 & -2 & -3 & -6 \\ 1 & 0 & 1 & 1} \xrightarrow[]{\text{scambio}}
+        \mat{1 & 0 & 1 & 1 \\ 2 & 3 & 3 & 0 \\ 0 & -2 & 0 & 3  \\ 1 & -2 & -3 & -6  } \xrightarrow[R_4 - R_1]{R_2 - 2R_1} \\
+        \mat{1 & 0 & 1 & 1 \\ 0 & 3 & 1 & -2 \\ 0 & -2 & 0 & 3  \\ 0 & -2 & -4 & -7  } \xrightarrow[R_2 \times -\nicefrac12]{\text{scambio}}
+        \mat{1 & 0 & 1 & 1 \\ 0 & 1 & 2 & \nicefrac72\\ 0 & -2 & 0 & 3  \\  0 & 3 & 1 & -2  } \xrightarrow[R_4 - 3R_2]{R_3 + 2R_2}\\
+        \mat{1 & 0 & 1 & 1 \\ 0 & 1 & 2 & \nicefrac72\\ 0 & 0 & 4 & 10  \\  0 & 0 & -5 & -\nicefrac{25}{2}  } \xrightarrow[R_4 \times -\nicefrac25]{R_3 \times \nicefrac12}
+        \mat{1 & 0 & 1 & 1 \\ 0 & 1 & 2 & \nicefrac72\\ 0 & 0 & 2& 5  \\  0 & 0 & 2 & 5  } \\\xrightarrow[]{R_4 - R_3}
+        \mat{1 & 0 & 1 & 1 \\ 0 & 1 & 2 & \nicefrac72\\ 0 & 0 & 2& 5  \\  0 & 0 & 0 & 0  }
+    \end{gather*}
+
+    Dunque i pivot sono sulle prime tre colonne, ovvero \[
+        \BB_{U + W} = \basis{\mat{2\\0\\1\\1}, \mat{3\\-2\\-2\\0}, \mat{3\\0\\-3\\1}}    
+    \] e' una base di $U+W$ e $\dim(U + W) = 3$.
+
+    \paragraph{Base di $U \inters W$}
+    Trovare una base di $U \inters W$ e' piu' difficile se abbiamo i sottospazi $U$ e $W$ in forma parametrica. Il primo passo sara' quindi portare $U$ e $W$ in forma cartesiana per poi trovare finalmente una base dell'intersezione.
+
+    Notiamo che se siamo soltanto interessati a $\dim(U \inters W)$ sappiamo gia' per Grassman che \[
+        \dim(U \inters W) = \dim U + \dim W - \dim(U + W) = 2 + 2 - 3 = 1.    
+    \]
+
+    Scriviamo $U$ in forma cartesiana.
+    \begin{align*}
+        U &= \Span{\mat{2\\0\\1\\1}, \mat{3\\-2\\-2\\0}}\\
+        &= \set{ \mat{x\\y\\z\\t} \in \R^4 \suchthat \exists a, b \in \R. \; \mat{x\\y\\z\\t} = a\mat{2\\0\\1\\1} + b\mat{3\\-2\\-2\\0}}\\
+        &= \set{ \mat{x\\y\\z\\t} \in \R^4 \suchthat \exists a, b \in \R. \; \mat{x\\y\\z\\t} = \mat{2&3\\0&-2\\1&-2\\1&0}\mat{a\\b}}
+    \end{align*}
+
+    Dunque dobbiamo vedere per quali valori di $(x, y, z, t) \in \R^4$ il sistema ha soluzione. Risolviamo il sistema e imponiamo che non ci siano equazioni impossibili.
+
+    \begin{gather*}
+        \begin{pmatrix}[cc|c]
+            2 & 3 & x \\
+            0 & -2 & y \\
+            1 & -2 & z \\
+            1 & 0 & t 
+        \end{pmatrix} \xrightarrow[]{\text{scambio}}
+        \begin{pmatrix}[cc|c]
+            1 & 0 & t \\
+            2 & 3 & x \\
+            0 & -2 & y \\
+            1 & -2 & z 
+        \end{pmatrix} \xrightarrow[R_4 - R_1]{R_2 - 2R_1}\\
+        \begin{pmatrix}[cc|c]
+            1 & 0 & t \\
+            0 & 3 & x - 2t \\
+            0 & -2 & y \\
+            0 & -2 & z-t 
+        \end{pmatrix} \xrightarrow[\text{scambio}]{R_2 + \nicefrac32R_4, R_3 + R_4}
+        \begin{pmatrix}[cc|c]
+            1 & 0 & t \\
+            0 & -2 & z-t \\
+            0 & 0 & x - 2t + \nicefrac32(z - t) \\
+            0 & 0 & y-z+t
+        \end{pmatrix}
+    \end{gather*}
+
+    Dunque per non avere equazioni impossibili le due condizioni sono \begin{enumerate}
+        \item $x - 2t + \nicefrac32(z - t) = 0$, ovvero $2x + 3z - 7t = 0$;
+        \item $y - z + t = 0$.
+    \end{enumerate}
+
+    Dunque \[
+        U = \set{\mat{x\\y\\z\\t} \in \R^4 \suchthat  \left\{
+            \begin{array}{@{}rorororor }
+            2x &  &  & + & 3z & - & 7t &= & 0 \\
+            &  & y & - & z & + & t &= & 0
+            \end{array}
+        \right.}. 
+    \]
+
+    Con lo stesso ragionamento scriviamo $W$ in forma cartesiana, ottenendo \[
+        W = \set{\mat{x\\y\\z\\t} \in \R^4 \suchthat  \left\{
+            \begin{array}{@{}rorororor }
+            x & + & 2y & + & z & &  &= & 0 \\
+            x & + & y &  & & - & 3t &= & 0
+            \end{array}
+        \right.}.
+    \]
+
+    A questo punto se un vettore di $V$ si trova in $U \inters W$ significa che rispetta entrambe le condizioni, ovvero che e' una soluzione al sistema creato combinando le soluzioni: \[
+        U\inters W = \set{\mat{x\\y\\z\\t} \in \R^4 \suchthat  \left\{
+            \begin{array}{@{}rorororor }
+            2x &  &  & + & 3z & - & 7t &= & 0 \\
+            &  & y & - & z & + & t &= & 0\\
+            x & + & 2y & + & z & &  &= & 0 \\
+            x & + & y &  & & - & 3t &= & 0
+            \end{array}
+        \right.}.
+    \]
+    
+    Per trovarne una base devo tornare alla forma parametrica, risolvendo il sistema.
+
+    \begin{gather*}
+        \begin{pmatrix}
+            2 & 0 & 3 & -7 \\
+            0 & 1 & -1 & 1 \\
+            1 & 2 & 1 & 0 \\
+            1 & 1 & 0 & -3
+        \end{pmatrix} \xrightarrow[]{\text{scambio}}
+        \begin{pmatrix}
+            1 & 1 & 0 & -3\\
+            0 & 1 & -1 & 1 \\
+            2 & 0 & 3 & -7 \\
+            1 & 2 & 1 & 0             
+        \end{pmatrix} \xrightarrow[R_4 - R_1]{R_3 - 2R_1} \\
+        \begin{pmatrix}
+            1 & 1 & 0 & -3\\            
+            0 & 1 & -1 & 1 \\
+            0 & -2 & 3 & -1 \\
+            0 & 1 & 1 & 3            
+        \end{pmatrix} \xrightarrow[R_4 - R_2]{R_3 + 2R_2}
+        \begin{pmatrix}
+            1 & 1 & 0 & -3\\            
+            0 & 1 & -1 & 1 \\
+            0 & 0 & 1 & 1 \\
+            0 & 0 & 2 & 2            
+        \end{pmatrix} \xrightarrow[]{R_4 -2R_3}\\
+        \begin{pmatrix}
+            1 & 1 & 0 & -3\\            
+            0 & 1 & -1 & 1 \\
+            0 & 0 & 1 & 1 \\
+            0 & 0 & 0 & 0            
+        \end{pmatrix} \xrightarrow[]{R_2 + R_3}
+        \begin{pmatrix}
+            1 & 1 & 0 & -3\\            
+            0 & 1 & 0 & 2 \\
+            0 & 0 & 1 & 1 \\
+            0 & 0 & 0 & 0            
+        \end{pmatrix} \xrightarrow[]{R_1 - R_2}\\
+        \begin{pmatrix}
+            1 & 0 & 0 & -5\\            
+            0 & 1 & 0 & 2 \\
+            0 & 0 & 1 & 1 \\
+            0 & 0 & 0 & 0            
+        \end{pmatrix}
+    \end{gather*}
+
+    Dunque $(x, y, z, t) = (5t, -2t, -t, t)$, ovvero \[
+        U \inters W = \Span{\mat{5\\-2\\-1\\1}}    
+    \] e una base di $U \inters W$ e' data da \[
+        \BB_{U\inters W} = \basis{\mat{5\\-2\\-1\\1}}.
+    \]
+\end{example}

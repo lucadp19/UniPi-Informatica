@@ -1,0 +1,336 @@
+\chapter{Applicazioni lineari}
+
+\section{Definizioni e teoremi utili}
+
+Supponiamo che $V$ e $W$ siano due spazi vettoriali.
+
+\begin{definition}[Applicazione lineare]
+    Un'applicazione $f : V \to W$ si dice lineare
+    se
+    \begin{align}
+        &f(\vec{0_V}) = \vec{0_W} \\
+        &f(\vec{v} + \vec{w}) = f(\vec{v}) + f(\vec{w}) &&\forall v, w \in V \\
+        &f(k\vec{v}) = kf(\vec{v})                    &&\forall v\in V, k \in \R 
+    \end{align}
+    $V$ si dice dominio dell'applicazione lineare, $W$ si dice codominio.
+\end{definition}
+
+\begin{definition}[Immagine di un'applicazione lineare]
+    Sia $f : V \to W$ lineare. Allora si dice immagine di $f$ l'insieme \begin{equation}
+        \Imm{f} = \set{ f(\vec{v}) \suchthat \vec v \in V}.
+    \end{equation}
+\end{definition}
+
+\begin{remark}
+    Possiamo esprimere l'immagine di $f$ anche come \[
+        \Imm{f} = \set{ \vec{w} \in W \suchthat \exists \vec v \in V. f(\vec v) = \vec w}.
+    \]
+\end{remark}
+
+\begin{definition}[Kernel di un'applicazione lineare]
+    Sia $f : V \to W$ lineare. Allora si dice kernel (o nucleo) di $f$ l'insieme \begin{equation}
+        \ker{f} = \set{ \vec{v} \in V \suchthat f(\vec v) = \vec{0_W}}.
+    \end{equation}
+\end{definition}
+
+\begin{proposition}[Definizione di un'applicazione lineare attraverso una base]\label{def_attraverso_base}
+    Sia $f : V \to W$ lineare e sia $\BB = \basis{\vec{v_1}, \dots, \vec{v_n}}$ una base del dominio. 
+
+    Se sappiamo i valori assunti da $f$ quando applicata ai vettori di $\BB$ allora possiamo calcolare il valore di $f$ quando applicata ad un qualsiasi valore del dominio.
+
+    In particolare se $\vec v \in V$ e' tale che \[
+        \vec v = a_1\vec{v_1} + \dots + a_n\vec{v_n}    
+    \] allora \[
+        f(\vec v) = a_1f(\vec{v_1}) + \dots + a_nf(\vec{v_n}). 
+    \]
+\end{proposition}
+
+\begin{proposition}[Una funzione mappa una base del dominio in un insieme di generatori del codominio]\label{base_mappata_generatori_immagine}
+    Sia $f : V \to W$ lineare e sia $\BB = \basis{\vec{v_1}, \dots, \vec{v_n}}$ una base di $V$. 
+    
+    Allora segue che $\set{ f(\vec{v_1}), \dots, f(\vec{v_n})}$ e' un insieme di generatori di $\Imm{f}$, ovvero che \[
+        \Imm{f} = \Span{f(\vec{v_1}), \dots, f(\vec{v_n})}.  
+    \]
+\end{proposition}
+
+\begin{remark}
+    I vettori $f(\vec{v_1}), \dots, f(\vec{v_n})$ potrebbero comunque non essere indipendenti, quindi se vogliamo trovare una base di $\Imm{f}$ dobbiamo renderli indipendenti (tramite mosse di riga o di colonna).
+\end{remark}
+
+\begin{theorem} 
+    [Teorema delle dimensioni] \label{th_dimensioni}
+    Sia $f : V \to W$ lineare. Allora vale il seguente fatto:
+    \begin{equation}
+        \dim V = \dim \Imm f + \dim \ker f.
+    \end{equation}
+\end{theorem}
+
+\subsection{Applicazioni iniettive e surgettive}
+
+\begin{definition}[Applicazione iniettiva]
+    Sia $f : V \to W$ lineare. Allora $f$ si dice iniettiva se per ogni $\vec{v}, \vec{u} \in V$ vale che \[
+        f(\vec{v}) = f(\vec{u}) \implies \vec{v} = \vec{u}
+    \] o equivalentemente che \[
+        \vec{v} \neq \vec{u} \implies f(\vec{v}) \neq f(\vec{u}).
+    \]
+\end{definition}
+
+\begin{proposition}[Condizione necessaria e sufficiente per l'iniettivita']\label{ker_funzione_iniettiva}
+    Sia $f : V \to W$ lineare. 
+    
+    Allora $f$ e' iniettiva se e solo se $\ker f = \set{\vec{0_V}}$. 
+\end{proposition}
+
+\begin{corollary}
+    Sia $f : V \to W$ lineare ed iniettiva. Allora \begin{enumerate}[(i)]
+        \item $\dim \Imm{f} = \dim V$ (per il teorema delle dimensioni);
+        \item necessariamente $\dim V \leq \dim W$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{proposition}[Un'applicazione iniettiva preserva l'indipendenza]\label{indipendenti_mappati_indipendenti}
+    Siano  $\vec{v_1}, \dots, \vec{v_n} \in V$ linearmente indipendenti e sia $f : V \to W$ lineare. 
+    
+    Se $f$ e' iniettiva allora segue che $f(\vec{v_1}), \dots, f(\vec{v_n})$ sono linearmente indipendenti. 
+\end{proposition}
+
+\begin{definition}[Surgettiva]
+    Sia $f : V \to W$ lineare. 
+    
+    Allora $f$ si dice surgettiva se per ogni $\vec{w} \in W$ esiste $\vec{v} \in V$ tale che $f(\vec{v}) = \vec{w}$, ovvero se $\Imm{f} = W$.
+\end{definition}
+
+\begin{proposition}[Condizione necessaria e sufficiente per la surgettivita']
+    Sia $f : V \to W$ lineare. 
+    
+    Allora $f$ e' surgettiva se e solo se $\dim \Imm{f} = \dim W$, ovvero (per il teorema delle dimensioni) se e solo se $\dim V - \dim \ker f = \dim W$. 
+\end{proposition}
+
+\subsection{Isomorfismi}
+
+\begin{definition}[Applicazione bigettiva]
+    Sia $f : V \to W$ lineare. 
+    
+    Allora $f$ si dice bigettiva se $f$ e' sia iniettiva che surgettiva.
+
+    In tal caso $f$ e' anche invertibile (ovvero esiste la funzione inversa $f\inv : W \to V$) e $f$ si dice \emph{isomorfismo tra gli spazi vettoriali $V$ e $W$}. 
+    
+    Gli spazi $V$ e $W$ si dicono isomorfi e si scrive $V \cong W$.
+\end{definition}
+
+\begin{proposition}
+    Sia $f : V \to W$ lineare. Allora le seguenti affermazioni sono equivalenti: \begin{enumerate}[(i)]
+        \item $f$ e' un isomorfismo;
+        \item $f$ e' iniettiva e $\dim V = \dim W$;
+        \item $f$ e' surgettiva e $\dim V = \dim W$.
+    \end{enumerate}
+\end{proposition}
+
+
+\section{Calcolo di applicazioni lineari}
+
+\begin{example}
+    Sia $\BB = \Span{(-1,0,3),\ (2, 1, 0),\ (0, 0, 4)}$ una base di $\R^3$. 
+    
+    Sia $f : \R^3 \to \R^2$ lineare tale che \begin{align*}
+        f\mat{-1\\0\\3} = \mat{1\\2}, &&f\mat{2\\ 1\\ 0} = \mat{-1\\1}, &&f\mat{0\\0\\4} = \mat{-1\\3}.
+    \end{align*}
+
+    E' possibile calcolare $f(1, 1, 1)$? E $f(1, 0, 0)$?
+
+    Dato che $\BB$ e' una base di $\R^3$ la proposizione \ref{def_attraverso_base} ci garantisce che e' possibile.
+
+    Per farlo troviamo $a, b, c \in \R$ tali che \[
+        \mat{1\\1\\1} = a\mat{-1\\0\\3} + b\mat{2 \\1\\0} + c\mat{0\\0\\4} = \mat{-1&2&0\\0&1&0\\3&0&4}\mat{a\\b\\c}.
+    \]
+
+    \begin{gather*}
+        \begin{pmatrix}[ccc|c]
+            -1 & 2 & 0 & 1 \\
+            0 & 1 & 0 & 1 \\
+            3 & 0 & 4 & 1
+        \end{pmatrix} \xrightarrow[]{R_3 + 3R_1}
+        \begin{pmatrix}[ccc|c]
+            -1 & 2 & 0 & 1 \\
+            0 & 1 & 0 & 1 \\
+            0 & 6 & 4 & 4
+        \end{pmatrix} \xrightarrow[]{R_3 - 6R_2}\\
+        \begin{pmatrix}[ccc|c]
+            -1 & 2 & 0 & 1 \\
+            0 & 1 & 0 & 1 \\
+            0 & 0 & 4 & -2
+        \end{pmatrix} \xrightarrow[R_1 \times -1]{R_3 \times \nicefrac{1}{4}}
+        \begin{pmatrix}[ccc|c]
+            1 & -2 & 0 & -1 \\
+            0 & 1 & 0 & 1 \\
+            0 & 0 & 1 & -\nicefrac12
+        \end{pmatrix}\\ \xrightarrow[]{R_1 + 2R_2}
+        \begin{pmatrix}[ccc|c]
+            1 & 0 & 0 & 1 \\
+            0 & 1 & 0 & 1 \\
+            0 & 0 & 1 & -\nicefrac12
+        \end{pmatrix}
+    \end{gather*}
+
+    Dunque $a = 1$, $b = 1$ e $c = \nicefrac12$. Sfruttiamo ora la linearita' di $f$: \begin{align*}
+        f\mat{1\\1\\1} &= f\left(1\cdot\mat{-1\\0\\3} + 1\cdot\mat{2\\1\\0}-\frac12\mat{0\\0\\4}\right)\\
+        &=f\mat{-1\\0\\3} + f\mat{2\\1\\0}-\frac12f\mat{0\\0\\4}\\
+        &=\mat{1\\2} + \mat{-1\\1} -\frac12 \mat{-1\\3}\\
+        &= \mat{\nicefrac12\\-\nicefrac32}.
+    \end{align*}
+
+    Il procedimento e' analogo per calcolare $f(1, 0, 0)$.
+\end{example}
+
+\begin{remark}
+    Se dobbiamo risolvere molti sistemi tutti uguali puo' essere conveniente risolvere il sistema usando un vettore di parametri $(p, q, r)$ come termini noti, per poi sostituire i valori che ci interessano. Infatti le mosse di Gauss da fare dipendono solo dai coefficienti delle incognite e non dai termini noti.
+\end{remark}
+
+\begin{exercise}
+    Dati due spazi vettoriali e una base del dominio, calcolare la funzione nei punti specificati.
+
+    \begin{enumerate}[(1)]
+        \item $f : \R^2 \to \R^2$ tale che \begin{align*}
+            f\mat{1\\0} = \mat{2\\1}, &&f\mat{0\\1} = \mat{-4\\-2}.
+        \end{align*}
+        Calcolare $f\mat{3\\2}$
+        \item $f : \R^2 \to \R^3$ tale che \begin{align*}
+            f\mat{1\\0} = \mat{0\\1\\3}, &&f\mat{0\\1} = \mat{1\\-2\\1}.
+        \end{align*}
+        Calcolare $f\mat{2\\1}$, $f\mat{2\\2}$, $f\mat{-1\\1}$. 
+        \item $f : \R^2 \to \R^3$ tale che \begin{align*}
+            f\mat{-1\\3} = \mat{1\\1\\3}, &&f\mat{1\\1} = \mat{2\\-2\\1}.
+        \end{align*}
+        Calcolare $f\mat{2\\1}$, $f\mat{2\\2}$, $f\mat{-1\\1}$.
+        \item $f : \R^3 \to \R^3$ tale che \begin{align*}
+            f\mat{1\\-1\\2} = \mat{0\\1\\1}, &&f\mat{0\\1\\3} = \mat{1\\0\\1}, &&f\mat{0\\3\\-1} = \mat{-1\\-1\\2}.
+        \end{align*}
+        Calcolare $f\mat{-1\\0\\1}$.
+        \item $f : \R[x]^{\leq 2} \to \R^3$ tale che \begin{align*}
+            f(1) = \mat{1\\0\\1}, &&f(-1+x) = \mat{-2\\3\\3}, &&f(1-2x+x^2) = \mat{4\\-2\\1}.
+        \end{align*}
+        Calcolare $f(1+x+x^2)$, $f(2+x^2)$ e $f(3x+2x^2)$.
+    \end{enumerate}
+\end{exercise}
+
+\section{Trovare una base di $\Imm f$ e $\ker f$}
+
+\begin{example}
+    Sia $f : \R^3 \to \R^3$ tale che \begin{align*}
+        f\mat{1\\-1\\2} = \mat{1\\2\\3}, &&f\mat{0\\1\\3} = \mat{3\\5\\7}, &&f\mat{0\\3\\-1} = \mat{0\\1\\2}.
+    \end{align*}
+
+    Trovare una base di $\Imm f$ e $\ker f$.
+
+    \paragraph{Base di $\Imm{f}$} Per trovare una base di $\Imm f$ basta sfruttare la proposizione \ref{base_mappata_generatori_immagine}, che afferma che \[
+        \Imm f = \Span{\mat{1\\2\\3}, \mat{3\\5\\7}, \mat{0\\1\\2}}. 
+    \]
+
+    Questi vettori tuttavia non sono necessariamente indipendenti, quindi provo a renderli indipendenti tramite mosse di riga.
+
+    \begin{gather*}
+        \begin{pmatrix}
+            1 & 3 & 0 \\
+            2 & 5 & 1 \\
+            3 & 7 & 2 
+        \end{pmatrix} \xrightarrow[R_3 - 3R_1]{R_2 - 2R_1}
+        \begin{pmatrix}
+            1 & 3 & 0 \\
+            0 & -1 & 1 \\
+            0 & -2 & 2 
+        \end{pmatrix} \xrightarrow[]{R_3 - 2R_2}
+        \begin{pmatrix}
+            1 & 3 & 0 \\
+            0 & -1 & 1 \\
+            0 & 0 & 0 
+        \end{pmatrix}
+    \end{gather*}
+
+    Dato che le prime due colonne contengono un pivot segue che i vettori $(1, 2, 3)$ e $(3, 5, 7)$ sono indipendenti e \[
+        \Imm f = \Span{\mat{1\\2\\3}, \mat{3\\5\\7}}    
+    \] dunque \[
+        \BB_{\Imm f} = \basis{\mat{1\\2\\3}, \mat{3\\5\\7}}    
+    \] e' una base di $\Imm f$ e $\dim \Imm f = 2$.
+
+    \paragraph{Base di $\ker f$} Notiamo che se volessimo calcolare solo $\dim \ker f$ non dovremmo svolgere nessun calcolo aggiuntivo, in quanto il teorema delle dimensioni ci garantisce che \[
+        \dim \ker f = \dim \R^3 - \dim \Imm f = 3 - 2 = 1.
+    \]
+
+    Per calcolare una base di $\ker f$ sfruttiamo la definizione: sia $(x, y, z) \in \R^3$ generico. Allora $(x, y, z) \in \ker f$ se e solo se \[
+        f\mat{x\\y\\z} = \mat{0\\0\\0}.    
+    \]
+
+    Ricordiamo che abbiamo definito $f$ su una base del dominio (cioe' $\R^3$), dunque possiamo esprimere $(x, y, z)$ come combinazione lineare dei tre vettori della base: \[
+        \mat{x\\y\\z} = a\mat{1\\-1\\2} + b\mat{0\\1\\3} + c\mat{0\\3\\-1}.
+    \]
+    Di conseguenza $f(x, y, z) = (0, 0, 0)$ se e solo se \begin{align*}
+        &f\left(a\mat{1\\-1\\2} + b\mat{0\\1\\3} + c\mat{0\\3\\-1}\right) = \mat{0\\0\\0}\\
+        \iff &af\mat{1\\-1\\2} + bf\mat{0\\1\\3} + cf\mat{0\\3\\-1} = \mat{0\\0\\0}\\
+        \iff &a\mat{1\\2\\3} + b\mat{3\\5\\7} + c\mat{0\\1\\2} = \mat{0\\0\\0}\\
+        \iff &\mat{1&3&0\\2&5&1\\3&7&2}\mat{a\\b\\c} = \mat{0\\0\\0}.
+    \end{align*}
+
+    Risolviamo il sistema: \begin{gather*}
+        \begin{pmatrix}
+            1 & 3 & 0 \\
+            2 & 5 & 1 \\
+            3 & 7 & 2 
+        \end{pmatrix} \xrightarrow[R_3 - 3R_1]{R_2 - 2R_1}
+        \begin{pmatrix}
+            1 & 3 & 0 \\
+            0 & -1 & 1 \\
+            0 & -2 & 2 
+        \end{pmatrix} \\ \xrightarrow[R_3 - 2R_2]{R_2 \times -1}
+        \begin{pmatrix}
+            1 & 3 & 0 \\
+            0 & 1 & -1 \\
+            0 & 0 & 0 
+        \end{pmatrix} \xrightarrow[]{R_1 - 3R_2}
+        \begin{pmatrix}
+            1 & 0 & 3 \\
+            0 & 1 & -1 \\
+            0 & 0 & 0 
+        \end{pmatrix}
+    \end{gather*}
+
+    Dunque le soluzioni del sistema sono della forma \[
+        \mat{a\\b\\c} = \mat{-3c\\c\\c} = c\mat{-3\\1\\1}    
+    \] ovvero $(x, y, z) \in \ker f$ se e solo se \begin{align*}
+        \mat{x\\y\\z} &= -3c\mat{1\\-1\\2} + c\mat{0\\1\\3} + c\mat{0\\3\\-1}\\
+        &= c\left(-3\mat{1\\-1\\2} + \mat{0\\1\\3} + \mat{0\\3\\-1}\right)\\
+        &= c\left(\mat{-3\\3\\-6} + \mat{0\\1\\3} + \mat{0\\3\\-1}\right)\\
+        &= c\mat{-3\\7\\-4}.
+    \end{align*}
+
+    Possiamo quindi concludere che \[
+        \ker f = \Span{\mat{-3\\7\\-4}},
+    \] ovvero che \[
+        \BB_{\ker f} = \basis{\mat{-3\\7\\-4}}   
+    \] e' una base di $\ker f$ e $\dim \ker f = 1$, come ci aspettavamo.
+\end{example}
+
+\begin{exercise}
+    Date le seguenti applicazioni lineari, trovare una base di $\Imm f$ e $\ker f$.
+
+    \begin{enumerate}
+        \item $f : \R^2 \to \R^2$ tale che \begin{align*}
+            f\mat{1\\0} = \mat{1\\0}, &&f\mat{0\\1} = \mat{0\\0}.
+        \end{align*}
+        \item $f : \R^2 \to \R^3$ tale che \begin{align*}
+            f\mat{1\\0} = \mat{1\\3\\1}, &&f\mat{0\\1} = \mat{0\\0\\5}.
+        \end{align*}
+        \item $f : \R^3 \to \R^3$ tale che \begin{align*}
+            f\mat{1\\0\\0} = \mat{10\\14\\18}, &&f\mat{0\\1\\0} = \mat{3\\4\\5}, &&f\mat{0\\0\\1} = \mat{2\\3\\4}.
+        \end{align*}
+        \item $f : \R^3 \to \R^2$ tale che \begin{align*}
+            f\mat{1\\0\\1} = \mat{1\\2}, &&f\mat{0\\1\\0} = \mat{-1\\3}, &&f\mat{-1\\1\\0} = \mat{0\\2}.
+        \end{align*}
+        \item $f : \M_{2\times 2}(\R) \to \M_{2\times 2}(\R)$ tale che \begin{align*}
+            f\mat{a&b\\c&d} = \mat{0&1\\1&0}\mat{a&b\\c&d} - \mat{a&b\\c&d}\mat{0&1\\1&0}.
+        \end{align*}
+
+        \paragraph{Hint:} in questo caso $f$ non e' definita su una base del dominio, ma abbiamo una definizione classica, con un generico elemento del dominio in input. Per passare alla definizione tramite base, basta calcolare $f$ applicata agli elementi di una base del dominio.
+    \end{enumerate}
+\end{exercise}
+
+% \section{Costruire un'applicazione lineare dati immagine e kernel}
