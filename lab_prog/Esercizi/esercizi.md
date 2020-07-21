@@ -70,6 +70,24 @@ La procedura prende **n** in input ed effettua le seguenti operazioni **finché*
 
 Infine stampare 1.
 
+### Esercizio 11
+
+Scrivere un programma in C che legga da tastiera due numeri **a** e **b**. Scrivere poi una funzione che prenda in input due interi e ne calcoli il Massimo Comun Divisore seguendo l'algoritmo di Euclide:
+- se uno dei due numeri è 0, allora si ferma e restituisce l'altro;
+- se **a > b** allora sostituisce **a** con il resto di **a** modulo **b** e continua il processo;
+- se **a < b** allora sostituisce **b** con il resto di **b** modulo **a** e continua il processo.
+
+Chiamare la funzione sui due numeri **a** e **b** e stamparne l'output.
+
+### Esercizio 12
+
+Scrivere un programma in C che legga da tastiera un numero intero **n**. Scrivere poi una procedura che prenda in input **n** e stampi in ordine tutti i numeri di Fibonacci più piccoli di **n**.
+
+Ricordiamo che la successione di Fibonacci è definita come segue:
+- F(0) = 0
+- F(1) = 1
+- F(n) = F(n-1) + F(n-2).
+
 ## Array
 ### Esercizio 1
 
@@ -132,3 +150,14 @@ Scrivere un programma in C che legga da tastiera 10 interi e li inserisca in un 
 Scrivere poi una procedura che prenda in input un array **a**, la sua dimensione e un intero **n**. Questa procedura deve stampare tutti i numeri dell'array che sono strettamente maggiori dell'intero **n**.
 
 Chiamare la procedura sull'array e l'intero letto da tastiera.
+
+### Esercizio 9
+
+Scrivere un programma in C che legga da tastiera 10 interi e li inserisca in un array di 10 elementi.
+
+Scrivere poi una funzione che prenda in input un array e la sua dimensione. Questa funzione deve restituire la media di tutti gli elementi della sequenza diversi da 0 e di segno uguale all'ultimo elemento della sequenza.
+
+Chiamare la funzione sull'array e stamparne il risultato.
+
+NB: la funzione deve essere restituire la media, fai attenzione ai tipi.
+
