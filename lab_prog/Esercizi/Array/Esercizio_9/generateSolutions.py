@@ -20,5 +20,10 @@ for i in range(6):
     
     l1 = [x for x in l if sgn(x) == sgn(l[-1])]
 
+    s = 0
+    c = 1
     for j in l1:
-        outfile.write("{}\n".format(j))
+        s = s + j
+        c = c + 1
+        
+    outfile.write("{:.2f}\n".format(s/c))
