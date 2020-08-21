@@ -1,0 +1,225 @@
+\chapter{Programmazione Lineare}
+
+\section{Geometria della PL}
+
+Ricordiamo che un problema di ottimizzazione si dice di \emph{programmazione lineare} se:
+\begin{enumerate}[label={(\arabic*)}]
+    \item la funzione obiettivo $f : \R^n \to \R$ è \emph{lineare}, ovvero per ogni $\vec x, \vec y \in \R^n$ vale che \[
+        f(\alpha\vec x + \beta\vec y) = \alpha f(\vec x) + \beta f(\vec y).
+    \] Equivalentemente ogni funzione lineare è esprimibile nella forma \[
+        f(\vec x) = \vec c \cdot \vec x = {\vec c}\trans\vec x = \sum_{j = 1}^n c_jx_j,    
+    \] dove $\vec c \in \R^n$ è il \emph{vettore dei costi}.
+    \item l'insieme ammissibile è definito da un numero finito di \emph{vincoli lineari}, ovvero della forma \begin{align*}
+        \vec{a_i} \cdot \vec x \leq b_i, &\text{oppure} &\vec{a_i} \cdot \vec x = b_i, &\text{oppure} &\vec{a_i} \cdot \vec x \geq b_i    
+    \end{align*} con $\vec{a_i} \in \R^n$, $b_i \in \R$. 
+\end{enumerate}
+
+Sia $m$ il numero di vincoli lineari: possiamo scrivere il problema di programmazione lineare in una forma più compatta, detta \emph{forma standard}: \begin{equation}
+    \max \set{\vec c \cdot \vec x \suchthat A\vec x \leq \vec b} \tag{($\PP$)}
+\end{equation} dove $A \in \Mat{m}{n}{\R}$ è la matrice che ha come $j$-esima riga il vettore $\vec{a_j}$, e il vettore $\vec b \in \R^m$ è il vettore che ha come $j$-esima coordinata il numero $b_j$.
+
+Ogni problema di PL può essere ricondotto alla forma standard tramite le seguenti trasformazioni:
+\begin{align*}
+    % &\text{(1):} 
+    &\max \sum_{j = 1}^n c_jx_j &\equiv &{}-\min \sum_{j = 1}^n (-c_j)x_j \\
+    % &\text{(2):} 
+    &\sum_{j = 1}^n a_{ij}x_j \geq b_j &\equiv &{}\sum_{j = 1}^n (-a_{ij})x_j \leq -b_j\\
+    % &\text{(3):} 
+    &\sum_{j = 1}^n a_{ij}x_j = b_j &\equiv &{} \sum_{j = 1}^n a_{ij}x_j \leq b_j, \; \sum_{j = 1}^n a_{ij}x_j \geq b_j  
+\end{align*}
+
+Iniziamo ora a studiare la geometria di un problema di programmazione lineare.
+
+\begin{definition}
+    [Iperpiano e semispazi]
+    Sia $V$ uno spazio vettoriale su $\R$ di dimensione $n$. Un suo sottospazio (vettoriale o affine) di dimensione $n-1$ si dice \emph{iperpiano}.
+
+    Se lo spazio vettoriale è $\R^n$, un iperpiano (affine) è della forma \begin{equation}
+        \label{eq:iperpiano} P_i \deq \set{\vec x \in \R^n \suchthat A_i\vec x = b_i}
+    \end{equation} dove $A_i, \vec x \in \R^n$, $b_i \in \R$.
+
+    Ogni iperpiano in $\R^n$ delimita due \emph{semispazi} della forma \begin{equation}
+        \label{eq:semispazi} S_i \deq \set{\vec x \in \R^n \suchthat A_i\vec x \leq b_i}, \quad S_i^\prime \deq \set{\vec x \in \R^n \suchthat A_i\vec x \geq b_i}.
+    \end{equation}
+\end{definition}
+
+I vincoli di un problema di PL sono definiti come \emph{intersezione di semispazi}: infatti ogni vincolo rappresenta un semispazio e la regione ammissibile è l'intersezione di tutti i semispazi definiti dai vincoli.
+
+\begin{definition}
+    [Poliedri e politopi]
+    Sia $P \subseteq \R^n$. $P$ si dice \emph{poliedro} se è l'intersezione di un numero finito di semispazi di $R^n$, ovvero \begin{equation}
+        P \deq \set{\vec x \in \R^n \suchthat A_i\vec x \leq b_i \;\forall i = 1, \dots, m}.
+    \end{equation}
+
+    In particolare se $P$ è limitato $P$ si dice \emph{politopo}.
+\end{definition}
+
+Possiamo rendere più compatta la scrittura di un poliedro condensando i vincoli in un'unica matrice. Un poliedro $P$ è quindi definito da \[
+    P \deq \set{\vec x \in \R^n \suchthat A\vec x \leq \vec b}, 
+\] dove $A \in \Mat{m}{n}{\R}$ è la matrice che ha per righe i vettori $A_1, \dots, A_m$ e $\vec b \in \R^m$ è il vettore che ha per componenti i vincoli $b_1, \dots, b_m$.
+
+Un'altra caratteristica importante dei poliedri è la loro convessità.
+
+\begin{definition}
+    [Insieme convesso]
+    Sia $C \subseteq \R^n$: $C$ si dice \emph{convesso} se per ogni $\vec x, \vec y \in \C$ il segmento che congiunge $\vec x$ e $\vec y$ è tutto contenuto in $C$, ovvero per ogni $\alpha \in \closedInt*{0, 1}$ vale che \[
+        \alpha\vec x + (1 - \alpha)\vec y \in C.    
+    \]
+\end{definition}
+
+La definizione di insieme convesso ci dice che ogni punto del segmento che congiunge $\vec x$ e $\vec y$ è in $C$: \begin{align*}
+    \alpha\vec x + (1 - \alpha)\vec y = \vec y + \alpha(\vec x - \vec y) \in C.
+\end{align*} Ma il vettore $\vec x - \vec y$ è il vettore che congiunge i due punti, quindi scalandolo di un fattore $\alpha \in \closedInt*{0, 1}$ otteniamo tutti i punti nel segmento.
+
+Si può dimostrare che i semispazi sono insiemi convessi e che l'intersezione finita di semispazi è ancora convessa, da cui segue che ogni poliedro è convesso.
+
+\paragraph{Facce e vertici} Consideriamo un poliedro $P$ tale che \[
+    P = \set{\vec x \in \R^n \suchthat A\vec x \leq \vec b}    
+\] e consideriamo un sottoinsieme dei suoi indici di riga, ovvero un insieme $I \subseteq \set{1, \dots, m}$.
+
+Indichiamo con $A_I$ la sottomatrice che si ottiene da $A$ considerando solo le righe il cui indice è contenuto in $I$ (ad esempio se $I = \set{1, 3}$ la matrice $A_I$ è formata dalla prima e dalla terza riga della matrice $A$) e con $\vec b_I$ il sottovettore ottenuto considerando solo le componenti i cui indici sono in $I$. Infine sia $\bar I$ il complementare di $I$, ovvero \[
+    \bar I = \set{1, \dots, m} \setminus I.    
+\]
+
+La regione definita da \[
+    P_I \deq \set{\vec x \in \R^n \suchthat A_I}    
+\] è ancora un poliedro ed è contenuta in $P$: è l'insieme di tutti i punti di $P$ che soddisfano strettamente (ovvero come uguaglianze) i vincoli il cui indice è in $I$. Se $P_I \neq \varnothing$ questo insieme si dice \emph{faccia} di $P$.
+
+Osserviamo che in particolare anche il poliedro stesso è una sua faccia (basta scegliere $I = \varnothing$); le facce diverse dal poliedro si dicono \emph{facce proprie}.
+
+Un tipo particolare di faccia è quella identificata da un insieme di indici $I$ tali che la sottomatrice $A_I$ abbia rango $n$: il sistema $A_I\vec x = \vec b_I$ ha una e una sola soluzione (chiamiamola $\vecbar{x}$), dunque la faccia $P_I$ è formata dal singolo punto $\vecbar x$: esso si dice \emph{vertice del poliedro}.
+
+\begin{definition}
+    [Vertice di un poliedro]
+    Sia $P \deq \set{\vec x \in \R^n \suchthat A\vec x \leq \vec b}$ un poliedro e sia $I \subseteq \set{1, \dots, m}$ tale che la sottomatrice $A_I$ abbia rango $n$.
+
+    Allora il punto $\vecbar x$ tale che \[
+        A_I\vec x = \vec b_I   
+    \] si dice \emph{vertice del poliedro}.
+\end{definition}
+
+\paragraph{Basi} Siccome per avere un vertice dobbiamo trovare una sottomatrice di rango $n$, possiamo cercare una famiglia $B$ formata da $n$ indici di riga tale che $A_B$ sia invertibile. Tale sottoinsieme di indici viene detto \emph{base} e la sottomatrice $A_B$ si dice \emph{sottomatrice di base}.
+
+Siccome $A_B$ è invertibile vi è un unico punto che soddisfa $A_B\vec x = \vec b_B$: tale punto è detto \emph{soluzione di base} ed è definito da \begin{equation*}
+    \vecbar x \deq A_B\inv \vec b_B.    
+\end{equation*}
+
+Se $\vecbar x \in P$, ovvero $\vecbar x$ soddisfa anche tutti gli altri vincoli, ovvero \[
+    A_i\vecbar x \leq b_i \qquad \forall i \notin B    
+\] allora la soluzione di base $\vecbar x$ si dice \emph{ammissibile}, altrimenti $\vecbar x$ è una soluzione di base \emph{non ammissibile}.
+
+Le soluzioni di base sono importanti nello studio di problemi di PL in quanto si può dimostrare che i vertici di un poliedro sono tutte e sole le soluzioni di base ammissibili.
+
+Se la matrice $A$ associata al poliedro $P$ ha rango minore di $n$ il poliedro non ha vertici. Tuttavia per studiare un problema in cui il poliedro non ha vertici ci si può sempre ricondurre ad un problema in cui il poliedro ha almeno un vertice, dunque d'ora in avanti assumeremo che la matrice $A$ abbia rango maggiore o uguale ad $n$.
+
+\paragraph{Indici attivi} Consideriamo infine un punto $\vecbar{x} \in P$: siccome è un punto del poliedro $P$ allora dovranno valere tutti i vincoli 
+\[
+    A_i\vecbar{x} \leq b_i    
+\] per $i = 1, \dots, m$. Alcuni di questi vincoli possono essere soddisfatti come uguaglianze, ovvero per qualche $i \in \set{1, \dots, m}$ può valere \[
+    A_i\vecbar{x} = b_i.    
+\] Possiamo quindi definire l'insieme degli indici attivi in $\vecbar{x}$:
+
+\begin{definition}
+    [Indici attivi]
+    Sia $P = \set{\vec x \in \R^n \suchthat A\vec x \leq \vec b}$ un poliedro e sia $\vecbar{x} \in P$. Si dice \emph{insieme degli indici attivi in $\vec{\bar{x}}$} l'insieme \begin{equation}
+        I(\vecbar{x}) = \set{i \in \set{1, \dots, m} \suchthat A_i\vecbar{x} = b_i}.
+    \end{equation}
+\end{definition}
+
+\section{Decomposizione di poliedri}
+
+Abbiamo già mostrato che i poliedri sono insiemi convessi. Questa proprietà è di fondamentale importanza, in quanto ci permetterà di esprimere ogni poliedro in due forme: la forma basata sulle facce (ovvero sui vincoli) e la forma basata sui vertici del poliedro.
+
+Diamo alcune definizioni iniziali.
+\begin{definition}
+    [Combinazione convessa]
+    Sia $\vec x \in \R^n$. Si dice che $\vec x$ è \emph{combinazione convessa} di $\vec x^1, \dots, \vec x^k \in \R^n$ se esistono $\alpha_1, \dots, \alpha_k \geq 0$ tali che \begin{equation}
+        \vec x = \alpha_1\vec x^1 + \dots + \alpha_k\vec x^k, \quad \text{con } \sum_{i = 1}^n \alpha_i = 1.
+    \end{equation}
+\end{definition}
+
+Notiamo che siccome gli $\alpha_i$ sono tutti non negativi e la loro somma deve essere uguale a $1$ segue che \[
+    \alpha_1, \dots, \alpha_n \in \closedInt*{0, 1}.    
+\]
+
+\begin{example}
+    Il vettore $(2, 2)$ è combinazione convessa di $(4, 0)$ e $(1, 3)$. Infatti \[
+        \begin{pmatrix} 2 \\ 2 \end{pmatrix} = \frac{1}{3}\begin{pmatrix} 4 \\ 0 \end{pmatrix} + \frac{2}{3}\begin{pmatrix} 1 \\ 3 \end{pmatrix}.
+    \] La combinazione è convessa in quanto $\nicefrac{1}{3} + \nicefrac{2}{3} = 1$ e i coefficienti sono entrambi non negativi.
+\end{example}
+
+\begin{definition}
+    [Inviluppo convesso]
+    Sia $K \subseteq \R^n$ un insieme finito, ovvero \[
+        K = \set{\vec x^1, \dots, \vec x^k}.
+    \] 
+    
+    Si dice \emph{inviluppo convesso} di $K$ l'insieme di tutte le combinazioni convesse di punti di $K$, ovvero \begin{equation}
+        \conv{K} \deq \set{\sum_{i = 0}^k \alpha_i\vec x^i \suchthat \alpha_1, \dots, \alpha_k \geq 0,\; \sum_{i=0}^k \alpha_i = 1}.
+    \end{equation}
+\end{definition}
+
+In particolare si può dimostrare che l'inviluppo complesso di un insieme finito di punti $\conv{K}$ è il più piccolo insieme convesso che contiene tutti i punti di $K$: è quindi il politopo che ha come vertici i punti di $K$. L'inviluppo complesso ci consente quindi di rappresentare tutti i poliedri limitati; per rappresentare quelli illimitati abbiamo bisogno di altri strumenti.
+
+\begin{definition}
+    [Cono convesso] Un insieme $C \subseteq \R^n$ si dice \emph{cono} se per ogni $\vec x \in C$ segue che \begin{equation}
+        \alpha\vec x \in C
+    \end{equation} per ogni $\alpha \geq 0$.
+
+    In particolare se $C$ è un insieme convesso vale che per ogni $\vec x, \vec y \in C$ \[
+        \alpha\vec x + \beta\vec y \in C    
+    \] per ogni $\alpha, \beta \geq 0$. In questo caso $C$ si dice \emph{cono convesso}.
+\end{definition}
+
+\begin{proposition}
+    Sia $P$ un poliedro della forma \begin{equation}
+        P \deq \set{\vec x \suchthat A\vec x \leq \vec 0}.
+    \end{equation} Allora $P$ è un cono convesso.
+\end{proposition}
+
+In particolare un poliedro che è un cono convesso si dice \emph{cono poliedrico}.
+
+\begin{definition}
+    [Combinazioni coniche] Sia $\vec x \in \R^n$. $\vec x$ si dice \emph{combinazione conica} di $\vec x^1, \dots, \vec x^k \in \R^n$ se esistono $\alpha_1, \dots, \alpha_k \geq 0$ tali che \begin{equation}
+        \vec x = \sum_{i = 1}^k \alpha_i\vec x^i.
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    [Inviluppo conico] Sia $K \subseteq \R^n$ un insieme finito, ovvero \[
+        K = \set{\vec x^1, \dots, \vec x^k}.    
+    \] Si dice \emph{inviluppo conico} di $K$ l'insieme di tutte le combinazioni coniche di punti di $K$, ovvero \begin{equation}
+        \cono{K} \deq \set{\sum_{i = 0}^k \alpha_i\vec x^i \suchthat \alpha_1, \dots, \alpha_k \geq 0}.
+    \end{equation}
+\end{definition}
+
+\subsection{Direzioni di recessione e linealità}
+
+\begin{definition}
+    [Direzione di recessione]
+    Sia $P \deq \set{\vec x \in R^n \suchthat A\vec x \leq \vec b}$ un poliedro. $\vec d \in \R^n$ si dice \emph{direzione di recessione per $P$} se per ogni $\alpha \geq 0$ vale che \[
+        \vec x + \alpha\vec d \in P.    
+    \] L'insieme delle direzioni di recessione di un poliedro è indicata con $\rec(P)$.
+\end{definition}
+
+\begin{proposition}
+    Sia $P \deq \set{\vec x \in R^n \suchthat A\vec x \leq \vec b}$ un poliedro. Allora $\rec(P)$ è un cono poliedrico ed in particolare \begin{equation}
+        \rec(P) = \set{\vec d \in R^n \suchthat A\vec d \leq \vec 0}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Mostriamo che $\vec d$ è una direzione di recessione se e solo se $A\vec d \leq \vec 0$.
+    \begin{description}
+        \item[($\implies$)] Sia $\vec x \in P$ qualsiasi. Siccome $\vec d$ è di recessione, segue che $\vec x + \alpha\vec d \in P$ per ogni $\alpha \geq 0$, ovvero \[
+            A(\vec x + \alpha\vec d) \leq \vec b.
+        \]
+        Tuttavia vale che \begin{align*}
+            A(\vec x + \alpha\vec d) &= A\vec x + \alpha A\vec d \tag{$A\vec x \leq \vec b$}\\
+            &\leq \vec b + \alpha A\vec d.
+        \end{align*} 
+        Questa espressione è minore di $\vec b$ se e solo se $\alpha A\vec d \leq \vec 0$, ovvero (siccome $\alpha \geq 0$) se e solo se $A\vec d \leq \vec 0$.
+        \item{($\impliedby$)} Supponiamo $A\vec d \leq \vec 0$ e mostriamo che per qualsiasi $\vec x \in P$, $\alpha \geq 0$ vale che $\vec x + \alpha\vec d \in P$. Ciò significa che \[
+            A(\vec x + \alpha\vec d) = A\vec x + \alpha\vec d \leq \vec b  
+        \] da cui segue la tesi. \qedhere
+    \end{description}
+\end{proof}
