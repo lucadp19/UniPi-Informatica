@@ -9,6 +9,7 @@
     \usepackage{array, multicol}
     \usepackage{centernot}
     \usepackage{faktor}
+    \usepackage{optidef}
 
     \usepackage{xparse}
 
@@ -152,6 +153,15 @@
 \DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
 \DeclareMathAccent{\widebar}{0}{mathx}{"73}
 
+\let\oldeqref\eqref
+\makeatletter
+\RenewDocumentCommand\eqref{s m}{%
+  \IfBooleanTF{#1}%
+  {\textup{\tagform@{\ref*{#2}}}}% If a star is seen
+  {\oldeqref{#2}}%                 If no star is seen
+}
+\makeatother
+
 % Set related symbols
 \newcommand{\set}[1]{\left\{\;#1\;\right\}}
 \newcommand{\union}{\cup}
@@ -209,28 +219,43 @@
 \NewDocumentCommand{\Span}{sm}{
     \operatorname{span}
     \IfBooleanTF{#1}{
-        \set{#1}
+        \set{#2}
     }{
-        \left(#1\right)
+        \left(#2\right)
     }
 }
 \NewDocumentCommand{\conv}{sm}{
     \operatorname{conv}
     \IfBooleanTF{#1}{
-        \set{#1}
+        \set{#2}
     }{
-        \left(#1\right)
+        \left(#2\right)
     }
 }
 \NewDocumentCommand{\cono}{sm}{
     \operatorname{cono}
     \IfBooleanTF{#1}{
-        \set{#1}
+        \set{#2}
     }{
-        \left(#1\right)
+        \left(#2\right)
     }
 }
-\DeclareMathOperator{\rec}{rec}
+\NewDocumentCommand{\rec}{sm}{
+    \operatorname{rec}
+    \IfBooleanTF{#1}{
+        \set{#2}
+    }{
+        \left(#2\right)
+    }
+}
+\NewDocumentCommand{\lineal}{sm}{
+    \operatorname{lineal}
+    \IfBooleanTF{#1}{
+        \set{#2}
+    }{
+        \left(#2\right)
+    }
+}
 
 % \renewcommand{\prime}{^\prime}
 \newcommand{\inv}{^{-1}}

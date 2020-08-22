@@ -202,7 +202,9 @@ In particolare un poliedro che è un cono convesso si dice \emph{cono poliedrico
     \] L'insieme delle direzioni di recessione di un poliedro è indicata con $\rec(P)$.
 \end{definition}
 
-\begin{proposition}
+Intuitivamente un vettore $\vec d$ è di recessione se da qualunque punto $\vec x$ del poliedro $P$ muovendosi lungo la direzione e il verso di $\vec d$ si rimane sempre in $P$.
+
+\begin{proposition}\label[prop]{prop:caratt_dir_recessione}
     Sia $P \deq \set{\vec x \in R^n \suchthat A\vec x \leq \vec b}$ un poliedro. Allora $\rec(P)$ è un cono poliedrico ed in particolare \begin{equation}
         \rec(P) = \set{\vec d \in R^n \suchthat A\vec d \leq \vec 0}
     \end{equation}
@@ -223,3 +225,162 @@ In particolare un poliedro che è un cono convesso si dice \emph{cono poliedrico
         \] da cui segue la tesi. \qedhere
     \end{description}
 \end{proof}
+
+\begin{remark}
+    Per qualsiasi poliedro $P$ l'insieme $\rec P$ non è mai vuoto: infatti contiene sempre almeno lo zero. Tuttavia $\vec 0$ non è una direzione (se ci spostiamo lungo il vettore nullo non compiamo nessuno spostamento), dunque o $\rec P = \set{\vec 0}$ oppure esiste una direzione di recessione $\vec d \neq \vec 0$.
+
+    Questo significa che un poliedro è limitato se e solo se $\rec P = \set{\vec 0}$.
+\end{remark}
+
+\begin{definition}
+    [Direzione di linealità]
+    Sia $P \deq \set{\vec x \in R^n \suchthat A\vec x \leq \vec b}$ un poliedro. $\vec d \in \R^n$ si dice \emph{direzione di linealità per $P$} se per ogni $\alpha \in \R$ vale che \[
+        \vec x + \alpha\vec d \in P.    
+    \] L'insieme delle direzioni di linealità di un poliedro è indicata con $\lineal P$.
+\end{definition}
+
+Osserviamo che una direzione $\vec d$ è di linealità se e solo se \[
+    \vec d, -\vec d \in \rec P.    
+\] \begin{proof} 
+    Sia $\vec x \in P$ qualunque.
+    \begin{description} 
+        \item[($\implies$)] Supponiamo $\vec d$ sia di linealità: $\vec x \alpha\vec d \in P$ per ogni $\alpha \in \R$ significa che la relazione vale per ogni $\alpha \geq 0$ e per ogni $\alpha \leq 0$. La prima implica immediatamente che $\vec d$ è di recessione. 
+        
+        Per la seconda siccome $\alpha \leq 0$ possiamo scriverlo come $\alpha = -\beta$ (con $\beta \geq 0$); allora \[
+            \vec x + \alpha\vec d = \vec x - \beta\vec d = \vec x + \beta(-\vec d) \in P,
+        \] dunque $-\vec d$ è di recessione.
+        \item[($\impliedby$)] Supponiamo che $\vec d, -\vec d$ siano entrambi di recessione. Allora per ogni $\alpha \geq 0$ vale che \[
+            \vec x + \alpha\vec d, \vec x - \alpha\vec d \in P.    
+        \] Dunque $\vec x + \alpha\vec d \in P$ per ogni $\alpha \in \R$, dunque $\vec d$ è una direzione di linealità.
+    \end{description}
+\end{proof}
+
+Questa osservazione ci consente di caratterizzare semplicemente l'insieme delle direzioni di linealità di un poliedro.
+
+\begin{proposition}
+    Sia $P \deq \set{\vec x \in R^n \suchthat A\vec x \leq \vec b}$ un poliedro. Vale che \begin{equation}
+        \lineal P = \set{\vec x \in \R^n \suchthat A\vec x = \vec 0}.    
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per l'osservazione precedente $\vec d \in \lineal P$ se e solo se $\vec d, -\vec d$ sono entrambi di recessione. Per la \autoref{prop:caratt_dir_recessione} questo è equivalente ad affermare che \[
+        A\vec d \leq \vec 0, \quad -A\vec d \leq \vec 0.
+    \] La seconda disuguaglianza è equivalente a $A\vec d \geq \vec 0$, dunque \[
+        \vec 0 \leq A\vec d \leq \vec 0    
+    \] da cui segue che $\vec d$ è di linealità se e solo se $A\vec d = \vec 0$.
+\end{proof}
+
+Possiamo a questo punto enunciare il Teorema di Decomposizione dei Poliedri.
+
+\begin{theorem}
+    [Teorema di Decomposizione dei Poliedri]
+    Sia $P \subseteq \R^n$. $P$ è un poliedro se e solo se esistono due insiemi finiti e non vuoti $\set{\vec v^1, \dots, \vec v^s} \subseteq \R^n$, $\set{\vec d^1, \dots, \vec d^t} \subseteq \R^n$ tali che \begin{equation}
+        P = \conv*{\vec v^1, \dots, \vec v^s} + \cono*{\vec d^1, \dots, \vec d^t}.
+    \end{equation}
+
+    In tal caso $\cono*{\vec d^1, \dots, \vec d^t} = \rec P$. Inoltre, se $\lineal P = \set{\vec 0}$ allora una rappresentazione minimale di $\set{\vec v^1, \dots, \vec v^s}$ contiene tutti e soli i vertici di $P$.
+\end{theorem}
+
+\begin{corollary}
+    Sia $P$ un poliedro tale che $\lineal P = \set{\vec 0}$.
+
+    Se $P$ è un politopo, allora $P = \conv*{\vec v^1, \dots, \vec v^s}$ e $\rec P = \set{\vec{0}}$. Invece se $P$ è un cono poliedrico allora $P = \rec{P}$ e l'unico vertice di $P$ è $\vec 0$.
+\end{corollary}
+
+\section{Teorema Fondamentale della PL}
+
+Cominciamo ad applicare le conoscenze sulla geometria della Programmazione Lineare ad un problema generico in forma canonica, come il seguente:
+\begin{align}
+    \tag{$\PP$} \label{eq:linear_problem}
+    \begin{split} 
+        \max              &\;\; \vec c \cdot \vec x \\
+        \text{s. t.} &\;\; \vec x \in P = \set{\vec x \in \R^n \suchthat A\vec x \leq \vec b}
+    \end{split}
+\end{align}
+
+\begin{definition}
+    [Direzione ammissibile]
+    Sia $\vec x \in P$. Un vettore $\vec \xi \in \R^n$ si dice \emph{direzione ammissibile} per $\vec x$ se esiste un $\bar\lambda \geq 0$ tale che \begin{equation}
+        \vec x + \lambda\vec \xi \in P \quad \text{per ogni } \lambda \in \closedInt*{0, \bar{\lambda}}.
+    \end{equation}
+\end{definition}
+
+Dunque una direzione è ammissibile se e solo se spostandoci dal punto $\vec x$ nella direzione e nel verso di $\vec \xi$ rimaniamo nel poliedro, purché lo spostamento sia sufficientemente piccolo, ovvero minore di $\bar \lambda$.
+
+La prossima proposizione caratterizza le direzioni ammissibili per $\vec x$.
+
+\begin{proposition}
+    Sia $\vec x \in P$. Allora $\vec \xi$ è ammissibile per $\vec x$ se e solo se \[
+        A_{I(\vec x)}\vec \xi \leq \vec 0,
+    \] dove $I(\vec x)$ è l'insieme dei vincoli attivi in $\vec x$.
+\end{proposition}
+\begin{proof}
+    $\vec \xi$ è ammissibile se e solo se il punto $\vec x + \lambda\vec \xi$ è ancora nel poliedro, ovvero se \begin{equation}\label{eq:cond_ammissib}
+        A(\vec x + \lambda\vec \xi) = A\vec x + \lambda A\vec \xi \leq \vec b.
+    \end{equation} Questa relazione deve valere per tutti gli indici di riga $i$ della matrice: se $i \notin I(\vec x)$ significa che $A_i\vec x < b_i$, dunque la \eqref{eq:cond_ammissib} vale a patto che il passo $\lambda$ sia sufficientemente piccolo.
+
+    Invece se $i \in I(\vec x)$ abbiamo che $A_i\vec x = b_i$, dunque segue che \[
+        A_i\vec x + \lambda A_i\vec \xi = b_i + \lambda A_i\vec \xi,
+    \] e questa quantità è minore o uguale a $b_i$ se e solo se $A_i\vec \xi \leq 0$, da cui segue la tesi.
+\end{proof}
+
+Dunque l'insieme delle direzioni ammissibili per $\vec x \in P$ è dato dal cono poliedrico \[
+    C(\vec x) \deq \set{\vec \xi \in \R^n \suchthat A_{I(\vec x)}\vec \xi \leq \vec 0}.    
+\]
+
+\begin{remark}
+    Notiamo che se $\vec x$ è un punto \emph{interno} al poliedro, ovvero se $I(\vec x) = \varnothing$, allora ogni direzione è una direzione ammissibile per $\vec x$.
+\end{remark}
+
+\begin{definition}
+    [Direzione di crescita]
+    Sia $\vec x \in P$. Una direzione $\vec \xi \in \R^n$ si dice \emph{direzione di crescita} per $\vec x$ se \begin{equation}\label{eq:def_crescita}
+        \vec c \cdot (\vec x + \vec \xi) \geq \vec c \cdot \vec x.
+    \end{equation}
+\end{definition}
+
+Una direzione è dunque di crescita se spostandoci lungo di essa aumentiamo il valore della funzione obiettivo. Notiamo inoltre che l'equazione \eqref{eq:def_crescita} è equivalente a \[
+    \vec c \cdot \vec \xi \geq \vec 0, 
+\] dunque le direzioni di crescita sono indipendenti dal punto $\vec x$ considerato. Vale quindi la seguente proposizione.
+
+\begin{proposition}
+    Una direzione $\vec \xi$ è di crescita se e solo se \begin{equation}
+        \vec c \cdot \vec x \geq \vec 0.
+    \end{equation}
+\end{proposition}
+
+Le direzioni di crescita ci consentono di caratterizzare meglio le soluzioni ottime di un problema di Programmazione Lineare, come specificato dal seguente lemma.
+
+\begin{lemma}
+    Sia $\vecbar x \in P$. Allora $\vecbar x$ è soluzione ottima del problema \eqref{eq:linear_problem} se e solo se non esistono direzioni di crescita ammissibili per $\vecbar x$.
+\end{lemma}
+% \begin{proof}
+    % non so se mi va di farla
+% \end{proof}
+
+Ricordando le definizioni di direzione di crescita e direzione ammissibile possiamo affermare che $\vecbar x$ è una soluzione ottima del problema \eqref{eq:linear_problem} se e solo se il seguente sistema \begin{equation*}
+    \begin{cases}
+        A_{I(\vecbar x)}\vec \xi \leq \vec 0\\
+        \vec c \cdot \vec \xi > \vec 0
+    \end{cases}
+\end{equation*}
+non ha soluzione. Infatti una soluzione del sistema è una direzione ammissibile per $\vecbar x$ (per la prima equazione) e di crescita (per la seconda). Vedremo più avanti un modo per capire se questo sistema ha soluzione oppure no.
+
+Enunciamo ora il Teorema Fondamentale della Programmazione Lineare.
+
+\begin{theorem}
+    [Teorema Fondamentale della PL]
+    Sia \eqref{eq:linear_problem} un problema di programmazione lineare in forma canonica e supponiamo che la regione ammissibile $P$ sia tale che \[
+        P = \conv*{\vec v^1, \dots, \vec v^s} + \cono*{\vec d^1, \dots, \vec d^t}.  
+    \]
+
+    Allora valgono i seguenti fatti.
+    \begin{enumerate}
+        \item Il valore ottimo di \eqref*{eq:linear_problem} è finito se e solo se nessuna direzione di recessione di \eqref*{eq:linear_problem} è di crescita, ovvero se \[
+            \vec c \cdot \vec d^j \leq \vec 0    
+        \] per ogni $j \in \set{1, \dots, t}$.
+        \item Se \eqref*{eq:linear_problem} ha ottimo finito, allora esiste un $i \in \set{1, \dots, s}$ tale che $v^i$ è una soluzione ottima di \eqref*{eq:linear_problem}.
+    \end{enumerate}
+\end{theorem}
+
+In particolare se la matrice associata al problema ha rango $n$ segue che la soluzione ottima del problema \eqref*{eq:linear_problem} è in uno dei vertici del poliedro $P$.
