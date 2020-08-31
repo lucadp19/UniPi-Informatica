@@ -259,3 +259,13 @@ Scrivere poi una procedura che calcoli il prodotti tra gli elementi pari dell'ar
 Scrivere un'altra funzione che calcoli il minimo di un array.
 
 Stampare il minimo dell'array $c$.
+
+### Esercizio 16
+
+Scrivere un programma in C che legga da tastiera 10 interi e li inserisca nell'array $a$. 
+
+Scrivere una funzione che prenda in input un array e la sua dimensione, calcoli la somma di tutti gli elementi di posto pari, la somma di tutti gli elementi di posto dispari, faccia la media tra i due risultati e la restituisca in output.
+
+Stampare la media con due cifre decimali e arrotondata all'intero inferiore.
+
+Hint: per arrotondare un float all'intero inferiore basta fare un cast ad int.
