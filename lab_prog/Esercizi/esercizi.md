@@ -269,3 +269,52 @@ Scrivere una funzione che prenda in input un array e la sua dimensione, calcoli 
 Stampare la media con due cifre decimali e arrotondata all'intero inferiore.
 
 Hint: per arrotondare un float all'intero inferiore basta fare un cast ad int.
+
+## Puntatori
+
+### Esercizio 1
+Scrivere un programma in C che legga da tastiera due numeri $a$, $b$. Dichiarare inoltre due variabili intere sum, prod.
+
+Scrivere una procedura che modifica il valore di sum e prod nel seguente modo:
+\begin{itemize}
+   \item sum deve contenere la somma di $a$ e $b$, 
+   \item prod deve contenere il prodotto di $a$ e $b$.
+\end{itemize}
+
+Stampare infine il valore di sum e prod.
+
+### Esercizio 2
+Scrivere un programma in C che legga da tastiera un numero $n$. Scrivere una procedura che modifichi il valore di $n$ nel seguente modo:
+\begin{itemize}
+   \item se $n$ è pari allora $n = n/2$, 
+   \item se $n$ è dispari allora $n = (n+1)/2$.
+\end{itemize}
+
+Stampare il nuovo valore di $n$.
+
+### Esercizio 3
+Scrivere un programma in C che legga da tastiera un array di 10 elementi. Dichiarare inoltre due variabili pos_max e pos_min, di tipo intero.
+
+Scrivere una procedura che modifica i valori di pos_max e pos_min inserendovi dentro la posizione del massimo e del minimo dell'array che viene passato come argomento.
+
+Stampare i valori contenuti in pos_max e pos_min.
+
+### Esercizio 4
+Scrivere un programma in C che legga da tastiera un array di 5 elementi. Dichiarare inoltre due variabili intere (first_even, last_odd).
+
+Scrivere una procedura che dato l'array e la sua dimensione modifichi il contenuto di first_even e last_odd, inserendovi rispettivamente
+\begin{itemize}
+   \item la posizione del primo numero pari contenuto nell'array, 
+   \item la posizione dell'ultimo numero dispari contenuto nell'array.
+\end{itemize}
+
+Stampare infine il contenuto di first_even e last_odd.
+
+### Esercizio 5
+Scrivere un programma in C che legga da tastiera due interi $a$ e $b$. Dichiarare inoltre due puntatori $p_1$ e $p_2$ e fare in modo che $p_1$ punti ad $a$, $p_2$ punti a $b$.
+
+Scrivere una procedura che modifichi il valore dei puntatori (non degli oggetti puntati) e scambi tra di loro i puntatori (ovvero, alla fine dell'esecuzione della procedura, $p_1$ deve puntare a $b$ e $p_2$ deve puntare ad $a$).
+
+Stampare su una riga l'indirizzo di $a$ e di $b$ e su un'altra riga il contenuto di $p_1$ e $p_2$ (devono venire fuori gli stessi indirizzi, ma in ordine inverso).
+
+Hint: per modificare una variabile di tipo int in una procedura abbiamo bisogno di un puntatore a intero, per modificare una variabile di tipo float abbiamo bisogno di un puntatore a float, per modificare una variabile di tipo *puntatore a intero* abbiamo bisogno di...?
