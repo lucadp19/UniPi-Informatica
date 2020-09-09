@@ -1,0 +1,363 @@
+\documentclass[italian,oneside,headinclude,10pt]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp, microtype}
+\usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm, nicefrac}
+% \usepackage{breqn}
+\usepackage{stmaryrd} % per \trianglelefteqslant
+\usepackage{array, multicol}
+\usepackage{centernot}
+\usepackage{faktor}
+
+
+
+\usepackage{xparse}
+
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{letltxmacro}
+
+\LetLtxMacro\amsproof\proof
+\LetLtxMacro\amsendproof\endproof
+
+
+% \usepackage[pdfspacing]{classicthesis}
+\usepackage[style=arsclassica, pdfspacing, eulermath]{classicthesis}
+% \usepackage{lmodern}
+
+\usepackage{tikz}
+\usetikzlibrary{angles, arrows.meta, quotes}
+
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{tikz-cd}
+\usepackage{hyperref} % penultimo package da caricare!
+\usepackage{cleveref} % ultimo package da caricare!
+
+
+\restylefloat{table}
+
+% \AtBeginDocument{
+%     \LetLtxMacro\proof\amsproof
+%     \LetLtxMacro\endproof\amsendproof
+% }
+\makeatletter %only needed in preamble
+\renewcommand\large{\@setfontsize\large{11.5pt}{18}}
+\makeatother
+
+% \titleformat*{\chapter}{\LARGE\scshape}
+% \titleformat*{\section}{\Large\scshape}
+
+% % \renewenvironment{proof}[1][\proofname]{{\scshape #1. }}{\qed\medskip}
+% \renewcommand*{\chapterformat}{%
+% \mbox{\chapappifchapterprefix{\nobreakspace}%
+% \scalebox{2}{\color{gray}\thechapter\autodot}\enskip}}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]
+{\par\pushQED{\qed}%
+\normalfont \topsep3\p@\@plus6\p@\relax
+\list{}{\leftmargin=2em
+      \rightmargin=\leftmargin
+      \settowidth{\itemindent}{\itshape#1}%
+      \labelwidth=\itemindent
+      % the following line is not needed with amsart, but might be with other classes
+      \parsep=0pt \listparindent=\parindent 
+}
+\item[\hskip\labelsep
+    %  \scshape
+     \bfseries
+     #1\@addpunct{.\hspace{1em}}]\ignorespaces}
+{\popQED\endlist\@endpefalse}
+\makeatother
+
+\declaretheoremstyle[
+spaceabove=2\topsep, spacebelow=2\topsep,
+headindent=0pt,
+headfont=\bfseries,
+notefont=\normalfont\normalsize\bfseries, notebraces={}{.},
+bodyfont=\itshape\normalsize,
+headformat={\llap{\smash{\parbox[t]{1.1in}{\centering \NAME\\ \NUMBER}}} \NOTE},
+headpunct={},
+postheadspace=10pt
+]{thmstyle}
+\declaretheorem[numberwithin=section, style=thmstyle]{principle}
+\declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
+\declaretheorem[name=Assioma, sibling=theorem, style=thmstyle]{axiom}
+\declaretheorem[name=Corollario, sibling=theorem, style=thmstyle]{corollary}
+\declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
+\declaretheorem[name=Lemma, sibling=theorem, style=thmstyle]{lemma}
+
+\declaretheoremstyle[
+spaceabove=2\topsep, spacebelow=2\topsep,
+headindent=0pt,
+% headfont=\bfseries,
+% notefont=\bfseries, notebraces={ (}{)},
+headfont=\bfseries,
+notefont=\bfseries, notebraces={}{},
+bodyfont=\itshape\normalsize,
+headformat={\llap{\smash{\parbox[t]{1.1in}{\centering \NUMBER\\ \NAME}}} \NOTE},
+headpunct={},
+% qed={$\triangleright$},
+postheadspace=10pt
+]{unnamedstyle}
+\declaretheorem[name={\ignorespaces}, sibling=theorem, style=unnamedstyle]{unnamed}
+
+\declaretheoremstyle[
+spaceabove=2\topsep, spacebelow=2\topsep,
+headindent=0pt,
+headfont=\bfseries,
+notefont=\normalfont\normalsize\bfseries, notebraces={}{.},
+bodyfont=\normalfont\normalsize,
+headformat={\llap{\smash{\parbox[t]{1.1in}{\centering \NAME\\ \NUMBER}}} \NOTE},
+headpunct={},
+% qed={$\triangleright$},
+postheadspace=10pt
+]{defstyle}
+\declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
+
+\declaretheoremstyle[
+headfont=\scshape,
+notefont=\normalfont, notebraces={ - }{.},
+bodyfont=\normalfont,
+postheadspace=1em
+]{exmplstyle}
+\declaretheorem[name=Esempio, sibling=theorem, style=exmplstyle]{example}
+\declaretheorem[name=Esercizio, sibling=theorem, style=exmplstyle]{exercise}
+
+
+\declaretheoremstyle[
+headfont=\scshape,
+notefont=\normalfont, notebraces={(}{)},
+bodyfont=\normalfont,
+numbered=no,
+postheadspace=1em
+]{remarkstyle}
+\declaretheorem[name=Osservazione, style=remarkstyle]{remark}
+\declaretheorem[name=Soluzione, style=remarkstyle]{solution}
+\declaretheorem[name=Intuizione, style=remarkstyle]{intuition}
+
+\newcolumntype{z}{r<{{}}}
+\newcolumntype{o}{@{}>{{}}c<{{}}@{}}
+
+% \newenvironment{FuncDef}[1]
+%     {  \begin{split} \begin{align} } 
+%     {  \end{align} \end{split} }
+% \newenvironment{FuncDefN}[1]{
+%     \begin{split*}
+%         \begin{align*}
+%             #1
+%         \end{align*}
+%     \end{split*}
+% }
+
+% Set related symbols
+\newcommand{\set}[1]{\left\{\;#1\;\right\}}
+\newcommand{\union}{\cup}
+\newcommand{\inters}{\cap}
+\newcommand{\bigunion}{\bigcup}
+\newcommand{\biginters}{\bigcap}
+\newcommand{\disjunion}{\sqcup}
+\newcommand{\bigdisjunion}{\bigsqcup}
+\newcommand{\suchthat}{\,:\,} % oppure con {:}
+\DeclareMathOperator{\tc}{\text{ tale che }}
+
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\rho}{\varrho}
+\renewcommand{\phi}{\varphi}
+
+\DeclarePairedDelimiter{\braces}{[}{]}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+% \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
+\DeclarePairedDelimiter{\cycl}{\langle}{\rangle}
+
+\let\oldre\Re
+\let\oldim\Im
+\renewcommand{\Re}[1]{\operatorname{Re}(#1)}
+\renewcommand{\Im}[1]{\operatorname{Im}(#1)}
+\newcommand{\conj}[1]{\overline{#1}}
+
+\newcommand{\deq}{:=}
+\newcommand{\iseq}{\overset{?}{=}}
+\newcommand{\seteq}{\overset{!}{=}}
+\newcommand{\divides}{\mid} % divide esattamente
+\newcommand{\ndivides}{\not\mid} % non divide esattamente
+\newcommand{\congr}{\equiv} % congruo 
+\newcommand{\ncongr}{\not\congr} % non congruo
+% \newcommand{\isomorph}{\cong}
+\newcommand{\isomorph}{\simeq}
+\newcommand{\normal}{\trianglelefteqslant}
+\newcommand{\grindex}[2]{\braces*{#1\;:\;#2}}
+
+\newcommand{\Mod}[1]{\ \left(#1\right)}
+\newcommand{\mcm}[2]{\left[#1, #2\right]}
+\newcommand{\mcd}[2]{\left(#1, #2\right)}
+\newcommand{\ord}[2][]{\operatorname{ord}_{#1}\!\left( #2 \right)}
+
+
+% \renewcommand{\prime}{^\prime}
+\newcommand{\inv}{^{-1}}
+\newcommand{\Imm}[1]{\operatorname{Im} #1}
+% \newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+\newcommand{\invertible}[1]{#1^{\times}}
+\newcommand{\compl}[1]{#1^C}
+
+\newcommand{\Mat}[2]{\operatornamewithlimits{Mat}_{#1 \times #1}\!(#2)}
+\newcommand{\Hom}[2]{\operatorname{Hom}\left(#1, #2\right)}
+\newcommand{\Aut}[1]{\operatorname{Aut}\left(#1\right)}
+\DeclareMathOperator{\id}{id}
+
+\NewDocumentCommand{\eqclass}{sm}{
+\IfBooleanTF{#1}{
+    \left[C_{#2}\right]
+}{
+    \overline{#2}
+}
+}
+\newcommand{\quot}[2]{{#1}/_{#2}}
+% \newcommand{\quot}[2]{\faktor{#1}{#2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zmod}[1]{\Z/_{#1\Z}}
+% \newcommand{\Zmod}[1]{\quot{\Z}{#1\Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+
+
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\KK}{\mathcal{K}}
+\renewcommand{\SS}{\mathcal{S}}
+\newcommand{\PP}{\mathcal{P}}
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Esercizi}
+\maketitle
+
+% \tableofcontents
+
+\section{Esercizio 1}
+
+Scrivere un programma in C che implementi le seguenti funzioni:
+\begin{itemize}
+    \item inserimento in testa ad una lista,
+    \item una funzione che data una lista cancelli tutti gli elementi pari della lista. 
+\end{itemize}
+
+Nel main dichiarare la lista e leggere i suoi elementi usando la funzione di inserimento. L'acquisizione viene interrotta quando il numero letto è uguale a $0$ (questo elemento non va incluso nella lista). Applicare la funzione che cancella gli elementi pari. Stampare poi la lista usando una funzione di stampa. Infine cancellare la lista con una funzione apposita.
+
+\section{Esercizio 2}
+Scrivere un programma in C che implementi le seguenti funzioni:
+\begin{itemize}
+    \item inserimento in ordine decrescente in una lista
+    \item una funzione che prende una lista e restituisce un intero che rappresenta la lunghezza della lista
+    \item una funzione che data una lista e un array (con la sua dimensione) controlli se nell'array c'è un elemento minore di tutti gli elementi della lista. Se esiste restituire l'indice di quell'elemento, altrimenti restituire -1.
+\end{itemize}
+
+Nel main dichiarare la lista e leggere i suoi elementi usando la funzione di inserimento. L'acquisizione viene interrotta quando il numero letto è uguale a $0$ (questo elemento non va incluso nella lista). Leggere poi l'array di 5 elementi. Stampare il numero di elementi della lista e il risultato della terza funzione. Cancellare la lista con una funzione apposita.
+
+\section{Esercizio 3}
+Scrivere un programma in C che implementi la seguente funzione:
+\begin{itemize}
+    \item inserimento in coda
+    \item data una lista, cancellare ogni elemento seguito da un numero negativo.
+\end{itemize}
+
+Nel main dichiarare la lista e leggere i suoi elementi usando la funzione di inserimento. L'acquisizione viene interrotta quando il numero letto è uguale a $0$ (questo elemento non va incluso nella lista). Chiamare la seconda funzione e poi stampare il contenuto della lista. Cancellare la lista con una funzione apposita.
+
+\section{Esercizio 4}
+Scrivere un programma in C che implementi la seguente funzione:
+\begin{itemize}
+    \item dato un array di interi e la sua dimensione, sostituire ogni numero dell'array con la somma dei numeri che lo precedono.
+\end{itemize}
+
+Nel main dichiarare un array di 5 interi, leggere i valori da tastiera e passare l'array alla funzione. Infine stampare il risultato.
+
+\section{Esercizio 5}
+Scrivere un programma in C che implementi le seguenti funzioni:
+\begin{itemize}
+    \item dato un array di interi e la sua dimensione, calcolare il massimo dell'array,
+    \item dato un array di interi, la sua dimensione e un valore, calcolare quante volte quel valore occorre nell'array.
+\end{itemize}
+
+Nel main dichiarare un array di 5 interi, leggere i valori da tastiera. Calcolare il massimo e tramite la seconda funzione trovare il numero di occorrenze del massimo. Infine stampare il massimo e il numero delle sue occorrenze.
+
+\section{Esercizio 6}
+Scrivere un programma in C che implementi la seguenti funzioni:
+\begin{itemize} 
+    \item dato un array di interi, la sua dimensione e due puntatori ad intero \textrm{pos\_min} e \textrm{min}, calcolare la posizione del minimo e il minimo dell'array, inserendoli nei due puntatori,
+    \item dato un array, la sua dimensione  e la posizione dell'elemento minimo, sostituire il minimo con la somma di tutti gli elementi pari dell'array,
+    \item dato un array e la sua dimensione, scrivere una funzione che restituisce 1 se tutti gli elementi dell'array sono pari, 0 altrimenti.
+\end{itemize}
+
+Nel main dichiarare un array di 5 interi, leggere i valori da tastiera. Modificare i valori di due variabili in modo che contengano il massimo e il minimo dell'array. Controllare se tutti gli elementi dell'array sono pari. Infine modificare l'array tramite la seconda funzione e stamparlo.
+
+\section{Esercizio 7}
+Scrivere un programma in C che implementi le seguenti funzioni:
+\begin{itemize}
+    \item inserimento ordinato in una lista, ma se l'elemento è già nella lista non va inserito,
+    \item dato un array, la sua dimensione e una lista, sfruttare la funzione precedente per inserire gli elementi dell'array nella lista senza ripetizioni.
+\end{itemize}
+
+Nel main dichiarare un array di 5 interi e leggerne i valori da tastiera. Dichiarare inoltre una lista vuota. Usare la seconda funzione per inserire gli elementi dell'array nella lista senza ripetizioni. Infine stampare il contenuto della lista e cancellarla usando due apposite funzioni.
+
+\section{Esercizio 8}
+Scrivere un programma in C che implementi la seguente funzione:
+\begin{itemize}
+    \item inserimento ordinato
+    \item data una lista, stampare i suoi elementi in ordine inverso (hint: modifica la solita printRec)inserisca nell'array tutti gli elementi pari della lista.
+\end{itemize}
+
+Nel main dichiarare la lista e leggere i suoi elementi usando la funzione di inserimento. L'acquisizione viene interrotta quando il numero letto è uguale a $0$ (questo elemento non va incluso nella lista). Stampare la lista in ordine inverso e verificare che sia effettivamente in ordine decrescente. Cancellare la lista con una funzione apposita.
+
+
+
+
+\section{Esercizio 1 - DA ESAME}
+
+Scrivere un programma in C che implementi la seguente funzione:
+\begin{itemize}
+    \item la funzione deve avere come argomento una lista e un intero, deve inserire l'intero nella lista nel seguente modo: se il numero è pari va inserito nella lista dall'inizio in ordine crescente, invece se è dispari va inserito comunque in ordine crescente, ma dopo tutti i pari.
+    
+    Ad esempio una possibile lista che rispetta queste condizioni è: \[
+        2 \to 6 \to 8 \to 3 \to 15 \to \text{NULL}.    
+    \]
+\end{itemize}
+
+Nel main dichiarare la lista e leggere i suoi elementi usando la funzione. L'acquisizione viene interrotta quando il numero letto è minore o uguale a $0$ (questo elemento non va incluso nella lista). Stampare poi la lista usando una funzione di stampa. Infine cancellare la lista con una funzione apposita.
+
+\section{Esercizio 2 - DA ESAME}
+
+Scrivere un programma in C che implementi le seguenti funzioni:
+\begin{itemize}
+    \item una funzione che data una lista calcoli la "massima distanza tra due elementi consecutivi della lista", ovvero la massima differenza in valore assoluto tra due elementi consecutivi della lista.
+    
+    Ad esempio se la lista è $(3, 5, 9, 10)$ la massima distanza è data da $\abs*{5 - 9} = 4$.
+    \item un'altra funzione che data una lista e la massima distanza tra gli elementi di questa lista elimini il primo elemento di ogni coppia della lista originale la cui distanza è uguale alla distanza massima.
+    
+    Ad esempio se la lista è $(2, 5, 9, 10, 14)$ (massima distanza $= 4$) le coppie a massima distanza sono $(2, 5)$, $(5, 9)$, $(10, 14)$, dunque prima cancelliamo $2$, poi $5$ e infine $10$; la lista finale deve quindi essere $(9, 14)$.
+\end{itemize}
+
+Nel main dichiarare la lista e leggere i suoi elementi usando la funzione. L'acquisizione viene interrotta quando il numero letto è minore o uguale a $0$ (questo elemento non va incluso nella lista). Stampare poi la lista usando una funzione di stampa. Infine cancellare la lista con una funzione apposita.
+
+\section{Esercizio 3 - DA ESAME}
+
+Scrivere un programma in C che implementi le seguenti funzioni:
+\begin{itemize}
+    \item la prima funzione deve avere come argomento una lista e un intero, deve inserire l'intero in testa alla lista;
+    \item la seconda funzione prende una lista in input e deve fare in modo che ogni elemento della lista sia uguale alla somma di quelli che lo precedono (il primo elemento rimane invariato);
+    \item la terza funzione prende una lista e un intero e deve cancellare dalla lista ogni elemento maggiore dell'intero passato in input;
+    \item la quarta funzione deve stampare la lista passata come argomento;
+    \item l'ultima funzione deve cancellare la lista dalla memoria.
+\end{itemize}
+
+Nel main dichiarare la lista e leggere i suoi elementi usando la prima funzione. L'acquisizione viene interrotta quando il numero letto è minore o uguale a $0$ (questo elemento non va incluso nella lista). Stampare poi la lista usando la quarta funzione.
+
+Applicare la terza funzione alla lista e stamparne il risultato. Applicare la quarta funzione alla lista e ad un intero letto dall'input e stamparne il risultato. Infine cancellare la lista tramite la quinta funzione.
+\end{document}
