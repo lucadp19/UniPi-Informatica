@@ -1,0 +1,36 @@
+\section{Potenze e radici complesse}
+
+Per risolvere equazioni nel campo dei complessi (o equivalentemente per fattorizzare polinomi in $\C[x]$) è necessario saper calcolare potenze di numeri complessi e radici $n$-esime.
+
+La forma cartesiana non è particolarmente di aiuto in questo caso: calcolare le potenze è difficile in quanto dovremmo ricorrere costantemente a prodotti tra binomi della forma $a+ib$, mentre calcolare le radici è impossibile a causa della somma tra parte reale e immaginaria.
+
+La forma polare risulta invece molto più comoda, come ci garantisce la seguente proposizione.
+\begin{proposition}
+    Sia $z = \rho e^{i\theta}$ un numero complesso. Allora la sua potenza $n$-esima è \begin{equation}
+        z^n = \rho^n e^{in\theta}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Lo mostriamo per induzione su $n$.
+    \begin{description}
+        \item[Caso base] Se $n = 1$ allora \[
+            z^1 = (\rho e^{i\theta})^1 = \rho^1 e^{1 \cdot 1\theta}.    
+        \] 
+        \item[Passo induttivo] Supponiamo la formula valga per $k$ e dimostriamola per $k + 1$.
+        \begin{align*}
+            z^{k+1} = z^k \cdot z \tag{per hp. induttiva}\\
+            &= \rho^k e^{ik\theta} \cdot \rho e^{i\theta} \tag{per la \autoref{prop:product_polar}}\\
+            &= (\rho^k \rho) e^{i(k\theta+\theta)} \\
+            &= \rho^{k+1} e^{i(k+1)\theta}.
+        \end{align*} 
+    \end{description}
+    Dunque la formula è vera per ogni valore di $n$, come volevasi dimostrare.
+\end{proof}
+
+La potenza $n$-esima di un numero complesso di modulo unitario (diciamo $z = e^{i\theta}$) corrisponde alla rotazione del vettore corrispondente fino ad arrivare al vettore di angolo $n\theta$: equivale infatti a moltiplicare il vettore per se stesso $n$ volte, e ognuna di queste moltiplicazioni ruota il vettore di un angolo di $\theta$ radianti (come abbiamo osservato nella sezione precedente).
+
+Il problema di trovare la radice $n$-esima di un numero è completamente riconducibile al problema di calcolare potenze di numeri complessi. Supponiamo di voler calcolare la radice $n$-esima di un numero complesso $w \in \C$ dato, ovvero vogliamo trovare $z \in \C$ tale che \begin{equation}
+    z = \sqrt[n]{w}.
+\end{equation} Riformulando il problema, vogliamo trovare $z \in \C$ tale che \begin{equation}
+    z^n = w.
+\end{equation}

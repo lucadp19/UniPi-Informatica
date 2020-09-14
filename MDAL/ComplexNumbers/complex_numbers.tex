@@ -1,0 +1,249 @@
+\documentclass[italian,oneside,headinclude,10pt]{scrartcl}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp, microtype}
+    \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm, nicefrac}
+    % \usepackage{breqn}
+    \usepackage{stmaryrd} % per \trianglelefteqslant
+    \usepackage{array, multicol}
+    \usepackage{centernot}
+    \usepackage{faktor}
+
+
+
+    \usepackage{xparse}
+
+    \usepackage{enumitem}
+    \usepackage{float}
+    \usepackage{letltxmacro}
+
+    \LetLtxMacro\amsproof\proof
+    \LetLtxMacro\amsendproof\endproof
+
+    
+    % \usepackage[pdfspacing]{classicthesis}
+    \usepackage[style=arsclassica, pdfspacing, eulermath]{classicthesis}
+    % \usepackage{lmodern}
+
+    \usepackage{tikz}
+    \usetikzlibrary{angles, arrows.meta, quotes}
+    
+    \usepackage{thmtools}
+    \usepackage[framemethod=TikZ]{mdframed}
+    \usepackage{tikz-cd}
+    \usepackage{hyperref} % penultimo package da caricare!
+    \usepackage{cleveref} % ultimo package da caricare!
+
+
+\restylefloat{table}
+
+% \AtBeginDocument{
+%     \LetLtxMacro\proof\amsproof
+%     \LetLtxMacro\endproof\amsendproof
+% }
+\makeatletter %only needed in preamble
+\renewcommand\large{\@setfontsize\large{11.5pt}{18}}
+\makeatother
+
+% \titleformat*{\chapter}{\LARGE\scshape}
+% \titleformat*{\section}{\Large\scshape}
+
+% % \renewenvironment{proof}[1][\proofname]{{\scshape #1. }}{\qed\medskip}
+% \renewcommand*{\chapterformat}{%
+% \mbox{\chapappifchapterprefix{\nobreakspace}%
+% \scalebox{2}{\color{gray}\thechapter\autodot}\enskip}}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]
+  {\par\pushQED{\qed}%
+   \normalfont \topsep3\p@\@plus6\p@\relax
+   \list{}{\leftmargin=2em
+          \rightmargin=\leftmargin
+          \settowidth{\itemindent}{\itshape#1}%
+          \labelwidth=\itemindent
+          % the following line is not needed with amsart, but might be with other classes
+          \parsep=0pt \listparindent=\parindent 
+  }
+   \item[\hskip\labelsep
+        %  \scshape
+         \bfseries
+         #1\@addpunct{.\hspace{1em}}]\ignorespaces}
+  {\popQED\endlist\@endpefalse}
+\makeatother
+
+\declaretheoremstyle[
+    spaceabove=2\topsep, spacebelow=2\topsep,
+    headindent=0pt,
+    headfont=\bfseries,
+    notefont=\normalfont\normalsize\bfseries, notebraces={}{.},
+    bodyfont=\itshape\normalsize,
+    headformat={\llap{\smash{\parbox[t]{1.1in}{\centering \NAME\\ \NUMBER}}} \NOTE},
+    headpunct={},
+    postheadspace=10pt
+]{thmstyle}
+\declaretheorem[numberwithin=section, style=thmstyle]{principle}
+\declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
+\declaretheorem[name=Assioma, sibling=theorem, style=thmstyle]{axiom}
+\declaretheorem[name=Corollario, sibling=theorem, style=thmstyle]{corollary}
+\declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
+\declaretheorem[name=Lemma, sibling=theorem, style=thmstyle]{lemma}
+
+\declaretheoremstyle[
+    spaceabove=2\topsep, spacebelow=2\topsep,
+    headindent=0pt,
+    % headfont=\bfseries,
+    % notefont=\bfseries, notebraces={ (}{)},
+    headfont=\bfseries,
+    notefont=\bfseries, notebraces={}{},
+    bodyfont=\itshape\normalsize,
+    headformat={\llap{\smash{\parbox[t]{1.1in}{\centering \NUMBER\\ \NAME}}} \NOTE},
+    headpunct={},
+    % qed={$\triangleright$},
+    postheadspace=10pt
+]{unnamedstyle}
+\declaretheorem[name={\ignorespaces}, sibling=theorem, style=unnamedstyle]{unnamed}
+
+\declaretheoremstyle[
+    spaceabove=2\topsep, spacebelow=2\topsep,
+    headindent=0pt,
+    headfont=\bfseries,
+    notefont=\normalfont\normalsize\bfseries, notebraces={}{.},
+    bodyfont=\normalfont\normalsize,
+    headformat={\llap{\smash{\parbox[t]{1.1in}{\centering \NAME\\ \NUMBER}}} \NOTE},
+    headpunct={},
+    % qed={$\triangleright$},
+    postheadspace=10pt
+]{defstyle}
+\declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
+
+\declaretheoremstyle[
+    headfont=\scshape,
+    notefont=\normalfont, notebraces={ - }{.},
+    bodyfont=\normalfont,
+    postheadspace=1em
+]{exmplstyle}
+\declaretheorem[name=Esempio, sibling=theorem, style=exmplstyle]{example}
+\declaretheorem[name=Esercizio, sibling=theorem, style=exmplstyle]{exercise}
+
+
+\declaretheoremstyle[
+    headfont=\scshape,
+    notefont=\normalfont, notebraces={(}{)},
+    bodyfont=\normalfont,
+    numbered=no,
+    postheadspace=1em
+]{remarkstyle}
+\declaretheorem[name=Osservazione, style=remarkstyle]{remark}
+\declaretheorem[name=Soluzione, style=remarkstyle]{solution}
+\declaretheorem[name=Intuizione, style=remarkstyle]{intuition}
+
+\newcolumntype{z}{r<{{}}}
+\newcolumntype{o}{@{}>{{}}c<{{}}@{}}
+
+% \newenvironment{FuncDef}[1]
+%     {  \begin{split} \begin{align} } 
+%     {  \end{align} \end{split} }
+% \newenvironment{FuncDefN}[1]{
+%     \begin{split*}
+%         \begin{align*}
+%             #1
+%         \end{align*}
+%     \end{split*}
+% }
+
+% Set related symbols
+\newcommand{\set}[1]{\left\{\;#1\;\right\}}
+\newcommand{\union}{\cup}
+\newcommand{\inters}{\cap}
+\newcommand{\bigunion}{\bigcup}
+\newcommand{\biginters}{\bigcap}
+\newcommand{\disjunion}{\sqcup}
+\newcommand{\bigdisjunion}{\bigsqcup}
+\newcommand{\suchthat}{\,:\,} % oppure con {:}
+\DeclareMathOperator{\tc}{\text{ tale che }}
+
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\rho}{\varrho}
+\renewcommand{\phi}{\varphi}
+
+\DeclarePairedDelimiter{\braces}{[}{]}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+% \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
+\DeclarePairedDelimiter{\cycl}{\langle}{\rangle}
+
+\let\oldre\Re
+\let\oldim\Im
+\renewcommand{\Re}[1]{\operatorname{Re}(#1)}
+\renewcommand{\Im}[1]{\operatorname{Im}(#1)}
+\newcommand{\conj}[1]{\overline{#1}}
+
+\newcommand{\deq}{:=}
+\newcommand{\iseq}{\overset{?}{=}}
+\newcommand{\seteq}{\overset{!}{=}}
+\newcommand{\divides}{\mid} % divide esattamente
+\newcommand{\ndivides}{\not\mid} % non divide esattamente
+\newcommand{\congr}{\equiv} % congruo 
+\newcommand{\ncongr}{\not\congr} % non congruo
+% \newcommand{\isomorph}{\cong}
+\newcommand{\isomorph}{\simeq}
+\newcommand{\normal}{\trianglelefteqslant}
+\newcommand{\grindex}[2]{\braces*{#1\;:\;#2}}
+
+\newcommand{\Mod}[1]{\ \left(#1\right)}
+\newcommand{\mcm}[2]{\left[#1, #2\right]}
+\newcommand{\mcd}[2]{\left(#1, #2\right)}
+\newcommand{\ord}[2][]{\operatorname{ord}_{#1}\!\left( #2 \right)}
+
+
+% \renewcommand{\prime}{^\prime}
+\newcommand{\inv}{^{-1}}
+\newcommand{\Imm}[1]{\operatorname{Im} #1}
+% \newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+\newcommand{\invertible}[1]{#1^{\times}}
+\newcommand{\compl}[1]{#1^C}
+
+\newcommand{\Mat}[2]{\operatornamewithlimits{Mat}_{#1 \times #1}\!(#2)}
+\newcommand{\Hom}[2]{\operatorname{Hom}\left(#1, #2\right)}
+\newcommand{\Aut}[1]{\operatorname{Aut}\left(#1\right)}
+\DeclareMathOperator{\id}{id}
+
+\NewDocumentCommand{\eqclass}{sm}{
+    \IfBooleanTF{#1}{
+        \left[C_{#2}\right]
+    }{
+        \overline{#2}
+    }
+}
+\newcommand{\quot}[2]{{#1}/_{#2}}
+% \newcommand{\quot}[2]{\faktor{#1}{#2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zmod}[1]{\Z/_{#1\Z}}
+% \newcommand{\Zmod}[1]{\quot{\Z}{#1\Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+
+
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\KK}{\mathcal{K}}
+\renewcommand{\SS}{\mathcal{S}}
+\newcommand{\PP}{\mathcal{P}}
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Appunti sui numeri complessi}
+\maketitle
+
+% \tableofcontents
+
+\input{cartesian.tex}
+\input{polar.tex}
+\input{powers_roots.tex}
+
+\end{document}

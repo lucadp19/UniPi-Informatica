@@ -1,0 +1,181 @@
+\section{Forma polare}
+
+Nella sezione precedente abbiamo visto come ad ogni numero complesso può essere associato un vettore nel piano complesso le cui coordinate corrispondono alla parte reale e alla parte immaginaria del numero complesso in esame.
+
+I vettori nel piano possono però essere rappresentati anche da un altro punto di vista: ad ogni vettore può essere associata la sua lunghezza e l'angolo che il vettore forma con ĺ'asse delle ascisse: 
+\begin{center}
+    \begin{tikzpicture}
+        \coordinate (a) at (1, 0);
+        \draw[step=1cm,gray!25!,very thin] (-4,-3) grid (4,3);
+        \draw[thick,->] (-3,0) -- (3,0) node[anchor=north west] {Re};
+        \draw[thick,->] (0,-2) -- (0,2) node[anchor=south east] {Im};
+        \draw[red,thick,->] (0,0) coordinate (O) -- (2, 1) coordinate (P)
+        node[midway,above] {$\rho$};
+
+        \draw pic[draw,angle radius=1cm,"$\theta$" shift={(6mm,1mm)}] {angle=a--O--P};
+    \end{tikzpicture}
+\end{center}
+
+Per formalizzare questa associazione, consideriamo innanzitutto l'insieme dei numeri complessi con modulo uguale ad $1$. Per definizione di modulo, un numero complesso $z = a+ib$ ha modulo $1$ se e solo se \[
+    \sqrt{a^2 + b^2} = 1 \iff a^2 + b^2 = 1.
+\] I numeri di modulo unitario formano quindi una circonferenza di raggio $1$ con centro nell'origine degli assi:
+\begin{center}
+    \begin{tikzpicture}
+        \coordinate (a) at (1, 0);
+        \draw[step=1.5cm,gray!25!,very thin] (-4,-3) grid (4,3);
+        \draw[thick,->] (-3,0) -- (3,0) node[anchor=north west] {Re};
+        \draw[thick,->] (0,-3) -- (0,3) node[anchor=south east] {Im};
+        % \draw[red,thick,->] (0,0) coordinate (O) -- (60:1) coordinate (P)
+        % node[midway,above] {$1$};
+
+        \draw[blue,thick,->] (0,0) coordinate (O) -- (135:1.5) coordinate (Q)
+        node[midway,above] {$1$};
+
+        \draw[color=black, very thick](0,0) circle (1.5);
+
+        % \draw pic[draw,color=red,angle radius=0.5cm,"$\nicefrac{\pi}{3}$" shift={(6mm,1mm)}] {angle=a--O--P};
+        \draw pic[draw,color=blue,angle radius=0.75cm,"$\frac{3\pi}{4}$" shift={(6mm,1mm)}] {angle=a--O--Q};
+    \end{tikzpicture}
+\end{center}
+
+Ogni vettore di questa circonferenza è univocamente determinato dall'angolo che forma con l'asse delle ascisse: dato un angolo $\theta$, il vettore che corrisponde a $\theta$ avrà come coordinate $(\cos \theta, \sin \theta)$, dunque il corrispondente numero complesso sarà \[
+    z = \cos \theta + i\sin\theta.    
+\]
+
+La prossima proposizione ci mostra come moltiplicare tra di loro numeri complessi di modulo unitario.
+\begin{proposition}\label{prop:product_unitary}
+    Siano $z, w \in \C$ tali che \[
+        z = \cos \theta + i\sin\theta, \quad w = \cos \phi + i\sin\phi.
+    \]
+    Allora vale che \begin{equation}
+        zw = \cos (\theta + \phi) + i\sin (\theta + \phi).
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    \begin{align*}
+        zw &= (\cos \theta + i\sin\theta)(\cos \phi + i\sin\phi)\\
+        &= (\cos \theta\cos \phi - \sin\theta\sin\phi) + i(\cos\theta\sin\phi + \sin\theta\cos\phi)\\
+        &= \cos(\theta + \phi) + i\sin(\theta+\phi). \qedhere
+    \end{align*}
+\end{proof}
+
+Dunque molitplicare tra di loro due numeri complessi di angoli $\theta$ e $\phi$ e di modulo unitario ci restituisce un numero complesso di modulo unitario e di angolo $\theta + \phi$: equivale quindi a ruotare uno dei due vettori per l'angolo associato all'altro.
+
+Consideriamo ora un vettore con modulo $\rho \geq 0$ qualunque. Tramite la trigonometria possiamo ricavare le sue coordinate:
+\begin{center}
+    \begin{tikzpicture}
+        % \coordinate (a) at (1, 0);
+        \draw[step=1cm,gray!25!,very thin] (-2,-2) grid (4,3);
+        \draw[thick,->] (-1,0) -- (3,0) node[anchor=north west] {Re};
+        \draw[thick,->] (0,-1) -- (0,2) node[anchor=south east] {Im};
+        \draw[red,thick,->] (0,0) coordinate (O) -- (2, 1) coordinate (P)
+        node[midway,above] {$\rho$};
+
+        \draw[black,<->] (2,0) coordinate (A) -- (P)
+        node[midway,right] {$\rho\sin\theta$};
+        \draw[black,<->] (O) -- (A)
+        node[midway,below] {$\rho\cos\theta$};
+
+        \draw pic[draw,angle radius=1cm,"$\theta$" shift={(6mm,1mm)}] {angle=A--O--P};
+    \end{tikzpicture}
+\end{center}
+
+Dunque un vettore di modulo $\rho$ e angolo $\theta$ ha come coordinate \[
+    (\rho\cos\theta, \rho\sin\theta),
+\] da cui segue che il corrispondente numero complesso è della forma \[
+    z = \rho\cos\theta + \rho\sin\theta = \rho(\cos\theta + \sin\theta).
+\]
+
+Anche in questo caso moltiplicare due numeri complessi è particolarmente facile:
+\begin{proposition} \label{prop:product_polar}
+    Siano $z, w \in \C$ tali che \[
+        z = r_1(\cos \theta + i\sin\theta), \quad w = r_2(\cos \phi + i\sin\phi).
+    \]
+    Allora vale che \begin{equation}
+        zw = r_1r_2(\cos (\theta + \phi) + i\sin (\theta + \phi)).
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    \begin{align*}
+        zw &= r_1(\cos \theta + i\sin\theta) \cdot r_2(\cos \phi + i\sin\phi)\\
+        &= r_1r_2 \cdot ((\cos \theta + i\sin\theta)(\cos \phi + i\sin\phi)) \tag{per la \autoref{prop:product_unitary}}\\
+        &= r_1r_2(\cos (\theta + \phi) + i\sin (\theta + \phi)). \qedhere
+    \end{align*}
+\end{proof}
+
+In questo caso il prodotto tra due numeri complessi corrisponde al vettore con \begin{itemize}
+    \item modulo uguale al prodotto dei moduli,
+    \item angolo dato dalla rotazione di uno dei due vettori per l'angolo definito dal secondo.
+\end{itemize}
+
+Possiamo quindi introdurre la \emph{forma polare} di un numero complesso.
+\begin{definition}
+    [Forma polare]
+    Sia $z \in \C$ un numero complesso con modulo $\rho$ e angolo associato $\theta$. Si dice forma polare di $z$ la forma \begin{equation}
+        z = \rho(\cos\theta +i\sin\theta) = \rho e^{i\theta}.
+    \end{equation}
+    L'angolo $\theta$ viene detto \emph{argomento} del numero complesso $z$ e lo si indica con $\arg z$.
+\end{definition}
+
+Per trasformare un numero complesso da una forma all'altra basta sfruttare un po' di trigonometria:
+\paragraph{Dalla forma cartesiana alla polare} Consideriamo un numero $z = a+ib \in \C$ espresso in forma cartesiana. Per portarlo in forma polare dobbiamo trovare $\rho = \abs*{z}$ e $\arg z$.
+
+Per definizione di modulo, $\abs*{z} = \sqrt{a^2 + b^2}$. Per trovare l'argomento basta fare l'arcotangente del rapporto tra i cateti, facendo attenzione al quadrante in cui ci troviamo:
+\begin{equation}\label{eq:argument}
+    \arg z = \begin{cases}
+        \arctan \frac{b}{a}, &\text{se } a > 0 \\
+        \arctan \frac{b}{a} + \pi, &\text{se } a < 0 \\
+        \nicefrac{\pi}{2} &\text{se } a = 0, b > 0\\
+        \nicefrac{3\pi}{2} &\text{se } a = 0, b < 0.
+    \end{cases}    
+\end{equation}
+\paragraph{Dalla forma polare alla cartesiana} Se $z = \rho(\cos\theta +i\sin\theta)$ è un numero complesso in forma polare, per portarlo in forma cartesiana basta calcolare le due funzioni trigonometriche: \begin{align*}
+    z = \rho\cos\theta + i\rho\sin\theta\\
+    \implies a = \rho\cos\theta, b = \rho\sin\theta.
+\end{align*}
+
+\begin{example}
+    Il numero $i = 0 + 1i$ ha come forma polare $e^{i\frac{\pi}{2}}$. Infatti: \begin{itemize}
+        \item $\abs*{i} = \abs*{0 + 1i} = \sqrt{0^2 + 1^2} = 1$.
+        \item $\arg i = \nicefrac{\pi}{2}$ poiché ci troviamo nel terzo caso della \eqref{eq:argument}.
+    \end{itemize}
+
+    Ciò è evidente anche disegnando il numero $i$ nel piano complesso:
+    \begin{center}
+        \begin{tikzpicture}
+            \coordinate (a) at (1, 0);
+            \draw[step=1cm,gray!25!,very thin] (-3,-3) grid (3,3);
+            \draw[thick,->] (-2,0) -- (2,0) node[anchor=north west] {Re};
+            \draw[thick,->] (0,-2) -- (0,2) node[anchor=south east] {Im};
+            \draw[red,thick,->] (0,0) coordinate (O) -- (0, 1) coordinate (i)
+            node[midway,left] {$\abs*{i} = 1$};
+    
+            \draw pic[draw,angle radius=0.5cm,"$\frac{\pi}{2}$" shift={(3mm,3mm)}] {angle=a--O--i};
+
+            \filldraw [black] (i) circle (1pt)
+            node[above right] {$i = 0 + 1i$};
+        \end{tikzpicture}
+    \end{center}
+\end{example}
+
+La forma "esponenziale", data da $z = \rho e^{i\theta}$ è comoda poiché più sintetica della forma con le funzioni trigonometriche. Inoltre, essa continua a rispettare la \autoref{prop:product_polar}: \[
+    r_1e^{i\theta} \cdot r_2e^{i\phi} = r_1r_2 e^{i(\theta + \phi)}.    
+\]
+
+Prima di studiare le potenze e le radici $n$-esime nei complessi,facciamo alcune osservazioni finali.
+\begin{remark}
+    I numeri complessi di modulo unitario sono tutti e soli della forma $z = e^{i\theta}$, in quanto il loro modulo è uguale ad $1$.
+\end{remark}
+\begin{remark}
+    Il coniugato in forma polare di $\rho e^{i\theta}$ è il numero $\rho e^{-i\theta}$, dunque la forma polare è comoda anche per calcolare i coniugati di numeri complessi.
+\end{remark} 
+\begin{remark}
+    I numeri reali, essendo tutti sull'asse delle ascisse, hanno argomento $0$ (se sono positivi) oppure $\pi$ (se sono negativi): dunque i numeri reali sono tutti e solo delle forme $\rho e^{i0} = rho$ oppure $\rho e^{i\pi} = -\rho$.
+\end{remark}
+\begin{remark}
+    Due numeri complessi in forma polare sono uguali se e solo se \begin{itemize}
+        \item i loro moduli sono uguali,
+        \item i loro argomenti sono uguali, a meno di un multiplo intero di $2\pi$.
+    \end{itemize}
+    Infatti gli angoli $\theta$ e $\theta + 2k\pi$ sono uguali per ogni $k \in \Z$, dunque è necessario considerare che gli argomenti non sono necessariamente in $[0, 2\pi)$.
+\end{remark}

@@ -1,0 +1,59 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\zref@newlabel[2]{}
+\providecommand*\new@tpo@label[2]{}
+\@nameuse{bbl@beforestart}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\providecommand\BKM@entry[2]{}
+\BKM@entry{id=1,dest={73656374696F6E2E31},srcline={1}}{4E756D65726920636F6D706C65737369}
+\babel@aux{italian}{}
+\babel@aux{italian}{}
+\providecommand\mph@setcol[2]{}
+\@writefile{lof}{\deactivateaddvspace  }
+\@writefile{lot}{\deactivateaddvspace  }
+\@writefile{toc}{\contentsline {section}{\numberline {1}{Numeri complessi}}{1}{section.1}\protected@file@percent }
+\@writefile{loe}{\contentsline {definition}{\numberline {1.1}Definizione\thmtformatoptarg {Unità immaginaria}}{1}{definition.1.1}\protected@file@percent }
+\newlabel{def:immaginary_unit}{{1.1}{1}{Unità immaginaria}{definition.1.1}{}}
+\newlabel{def:immaginary_unit@cref}{{[definition][1][]1.1}{[1][1][]1}}
+\@writefile{loe}{\contentsline {definition}{\numberline {1.2}Definizione\thmtformatoptarg {Insieme dei numeri complessi}}{1}{definition.1.2}\protected@file@percent }
+\mph@setcol{ii:1}{\mph@nr}
+\@writefile{loe}{\contentsline {definition}{\numberline {1.3}Definizione\thmtformatoptarg {Modulo di un numero complesso}}{2}{definition.1.3}\protected@file@percent }
+\@writefile{loe}{\contentsline {definition}{\numberline {1.4}Definizione\thmtformatoptarg {Coniugato complesso}}{2}{definition.1.4}\protected@file@percent }
+\mph@setcol{ii:2}{\mph@nr}
+\@writefile{loe}{\contentsline {proposition}{\numberline {1.5}Proposizione}{3}{proposition.1.5}\protected@file@percent }
+\newlabel{somma_prodotto_tra_coniugati}{{1.5}{3}{}{proposition.1.5}{}}
+\newlabel{somma_prodotto_tra_coniugati@cref}{{[proposition][5][]1.5}{[1][3][]3}}
+\mph@setcol{ii:3}{\mph@nr}
+\BKM@entry{id=2,dest={73656374696F6E2E32},srcline={1}}{466F726D6120706F6C617265}
+\@writefile{loe}{\contentsline {proposition}{\numberline {1.6}Proposizione}{4}{proposition.1.6}\protected@file@percent }
+\newlabel{somma_prodotto_col_coniugato}{{1.6}{4}{}{proposition.1.6}{}}
+\newlabel{somma_prodotto_col_coniugato@cref}{{[proposition][6][]1.6}{[1][3][]4}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}{Forma polare}}{4}{section.2}\protected@file@percent }
+\mph@setcol{ii:4}{\mph@nr}
+\@writefile{loe}{\contentsline {proposition}{\numberline {2.1}Proposizione}{5}{proposition.2.1}\protected@file@percent }
+\newlabel{prop:product_unitary}{{2.1}{5}{}{proposition.2.1}{}}
+\newlabel{prop:product_unitary@cref}{{[proposition][1][]2.1}{[1][5][]5}}
+\mph@setcol{ii:5}{\mph@nr}
+\@writefile{loe}{\contentsline {proposition}{\numberline {2.2}Proposizione}{6}{proposition.2.2}\protected@file@percent }
+\newlabel{prop:product_polar}{{2.2}{6}{}{proposition.2.2}{}}
+\newlabel{prop:product_polar@cref}{{[proposition][2][]2.2}{[1][6][]6}}
+\@writefile{loe}{\contentsline {definition}{\numberline {2.3}Definizione\thmtformatoptarg {Forma polare}}{6}{definition.2.3}\protected@file@percent }
+\mph@setcol{ii:6}{\mph@nr}
+\mph@setcol{ii:7}{\mph@nr}
+\gdef\mph@lastpage{8}
+\csname mph@do@warn\endcsname
