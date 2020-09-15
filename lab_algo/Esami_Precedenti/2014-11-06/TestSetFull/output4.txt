@@ -1,0 +1,15 @@
+a
+ax
+axx
+axxx
+axxxx
+axxxxx
+axxxxxx
+axxxxxxx
+axxxxxxxx
+axxxxxxxxx
+axxxxxxxxxx
+axxxxxxxxxxx
+axxxxxxxxxxxx
+axxxxxxxxxxxxx
+axxxxxxxxxxxxxx

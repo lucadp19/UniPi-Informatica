@@ -19,10 +19,15 @@ int order_by_colour(const void* p, const void* q){
     return ((point*) p)->colour - ((point*) q)->colour;
 }
 
+int is_inbetween(int x, int a, int b){
+    // assumption: a < b
+    return  ((x >= a) && (x <= b));
+}
+
 int main(){
     int N, M;
     point* points;
-    int rx_sx, rx_dx, ry_sx, ry_dx;
+    int rx_sx, rx_dx, ry_sx, ry_dx, count, already_counted;
 
     scanf("%d %d", &N, &M);
     points = (point*) malloc(N*sizeof(point));
@@ -30,82 +35,30 @@ int main(){
     for(int i = 0; i < N; i++)
         scanf("%d %d %d", &points[i].x, &points[i].y, &points[i].colour);
 
-    qsort(points, N, sizeof(point), order_by_x);
+    qsort(points, N, sizeof(point), order_by_colour);
 
     for(int k = 0; k < M; k++){
-        int x_sx, x_dx, y_sx, y_dx, count;
         scanf("%d %d %d %d", &rx_sx, &ry_sx, &rx_dx, &ry_dx);
 
-        // printf("rx_sx: %d; rx_dx: %d\n", rx_sx, rx_dx);
-        if(rx_sx > points[N-1].x || rx_dx < points[0].x){
-            // printf("ESCO A 1: ");
-            printf("0\n");
-            // printf("\n\n");
-            continue;
-        }
-        
-        x_sx = 0;
-        x_dx = N-1;
-        while(x_sx < N && points[x_sx].x < rx_sx) x_sx++;
-        while(x_dx >= x_sx && points[x_dx].x > rx_dx) x_dx--;
-        
-        // printf("x_sx: %d; x_dx: %d\n", x_sx, x_dx);
-        // printf("ORIGINAL ORDER: \n");
-        // for(int i = 0; i < N; i++)
-            // printf("%d: %d %d %d\n", i, points[i].x, points[i].y, points[i].colour);
-        if(x_dx < x_sx){
-            // printf("ESCO A 2: ");
-            printf("0\n");
-            // printf("\n\n");
-            continue;
-        }
-        
-
-        qsort(points+x_sx, x_dx - x_sx + 1, sizeof(point), order_by_y);
-
-        // printf("ry_sx: %d; ry_dx: %d\n", ry_sx, ry_dx);
-        if(ry_sx > points[x_dx].y || ry_dx < points[x_sx].y){
-            // printf("ESCO A 3: ");
-            printf("0\n");
-            qsort(points+x_sx, x_dx - x_sx + 1, sizeof(point), order_by_x);
-            // printf("\n\n");
-            continue;
+        if(is_inbetween(points[0].x, rx_sx, rx_dx) && is_inbetween(points[0].y, ry_sx, ry_dx)){
+            count = 1; 
+            already_counted = 1;
+        } else {
+            count = 0; 
+            already_counted = 0;
         }
 
-        
-        y_sx = x_sx;
-        y_dx = x_dx;
-        while(y_sx <= x_dx && points[y_sx].y < ry_sx) y_sx++;
-        while(y_dx >= y_sx && points[y_dx].y > ry_dx) y_dx--;
-        // printf("y_sx: %d; y_dx: %d\n", y_sx, y_dx); 
-        // printf("ORDERED BY Y: \n");
-        // for(int i = 0; i < N; i++)
-            // printf("%d: %d %d %d\n", i, points[i].x, points[i].y, points[i].colour);
-        if(y_dx < y_sx){
-            // printf("ESCO A 4: ");
-            printf("0\n");
-            qsort(points+x_sx, x_dx - x_sx + 1, sizeof(point), order_by_x);
-            // printf("\n\n");
-            continue;
-        }
-
-        qsort(points+y_sx, y_dx - y_sx + 1, sizeof(point), order_by_colour);
-
-        // printf("ORDERED BY COLOUR: \n");
-        // for(int i = 0; i < N; i++)
-            // printf("%d: %d %d %d\n", i, points[i].x, points[i].y, points[i].colour);
-
-        count = 1;
-        for(int i = y_sx+1; i <= y_dx; i++){
+        for(int i = 1; i < N; i++){
             if(points[i].colour != points[i-1].colour)
+                already_counted = 0;
+            
+            if(!already_counted && is_inbetween(points[i].x, rx_sx, rx_dx) && is_inbetween(points[i].y, ry_sx, ry_dx)){
+                already_counted = 1;
                 count++;
+            }
         }
-
-        // printf("COUNT!: ");
-        // printf("ESCO A 5: ");
+        
         printf("%d\n", count);
-        qsort(points+x_sx, x_dx - x_sx + 1, sizeof(point), order_by_x);
-        // printf("\n\n");        
     }
     return 0;
 }

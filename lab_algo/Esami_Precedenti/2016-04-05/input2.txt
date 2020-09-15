@@ -1,0 +1,10 @@
+4
+ciao
+60
+mamma
+100
+estro
+140
+zeta
+120
+ciao

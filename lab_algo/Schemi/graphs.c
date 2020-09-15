@@ -123,12 +123,12 @@ void iterative_dfs(graph G, int N, int src, int* colours){
 
 /* --- IMPLEMENTARE OPERAZIONI CODA --- */
 
+// Assuming the queue isn't circular
 void queue_init(queue* Q, int capacity){
     Q->capacity = capacity;
     Q->values = (int*) malloc(capacity * sizeof(int));
     Q->head = 0;
-    Q->tail = -1;
-    Q->size = 0;
+    Q->tail = 0;
 }
 
 void queue_delete(queue* Q){
@@ -137,23 +137,17 @@ void queue_delete(queue* Q){
 
 void queue_pushBack(queue* Q, int value){
     // it works iff the queue is not full
-    if(Q->size < Q->capacity){
-        Q->tail = (Q->tail + 1) % Q->capacity;
-        Q->values[Q->tail] = value;
-        Q->size++;
-    }
+    Q->values[Q->tail++] = value;
 }
 
 int queue_popFront(queue* Q){
     // it works under the assumption that the queue is not empty
-    int front = Q->values[Q->head];
-    Q->head = (Q->head + 1) % Q->capacity;
-    Q->size--;
+    int front = Q->values[Q->head++];
     return front;
 }
 
 int queue_isEmpty(queue* Q){
-    return Q->size == 0;
+    return Q->head == Q->tail;
 }
 
 

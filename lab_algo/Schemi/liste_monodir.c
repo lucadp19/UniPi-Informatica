@@ -7,7 +7,7 @@ typedef struct _node{
 } node;
 
 node* create_list(node* list, int elem){
-    // la lista e' VUOTA
+    // la lista DEVE ESSERE VUOTA
 
     list = (node*) malloc(sizeof(node));
     list->data = elem;
