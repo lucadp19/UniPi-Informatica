@@ -28,6 +28,7 @@
     \usepackage{thmtools}
     \usepackage[framemethod=TikZ]{mdframed}
     \usepackage{tikz-cd}
+    % \usepackage{tkz-berge}
     \usepackage{hyperref} % penultimo package da caricare!
     \usepackage{cleveref} % ultimo package da caricare!
 
@@ -256,6 +257,7 @@
         \left(#2\right)
     }
 }
+\newcommand{\opt}[1]{z\left( #1 \right)}
 
 % \renewcommand{\prime}{^\prime}
 \newcommand{\inv}{^{-1}}
@@ -301,9 +303,13 @@
 
 \tableofcontents
 
+% CAPITOLO 1
 % \input{Models/models.tex}
 
 % CAPITOLO 2
-\input{Linear_Programming/geometry}
+\input{Graphs/intro_graphs.tex}
+
+% CAPITOLO 3
+% \input{Linear_Programming/geometry}
 
 \end{document}

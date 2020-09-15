@@ -340,12 +340,12 @@ Dunque l'insieme delle direzioni ammissibili per $\vec x \in P$ è dato dal cono
 \end{definition}
 
 Una direzione è dunque di crescita se spostandoci lungo di essa aumentiamo il valore della funzione obiettivo. Notiamo inoltre che l'equazione \eqref{eq:def_crescita} è equivalente a \[
-    \vec c \cdot \vec \xi \geq \vec 0, 
+    \vec c \cdot \vec \xi \geq 0, 
 \] dunque le direzioni di crescita sono indipendenti dal punto $\vec x$ considerato. Vale quindi la seguente proposizione.
 
 \begin{proposition}
     Una direzione $\vec \xi$ è di crescita se e solo se \begin{equation}
-        \vec c \cdot \vec x \geq \vec 0.
+        \vec c \cdot \vec x \geq 0.
     \end{equation}
 \end{proposition}
 
@@ -361,7 +361,7 @@ Le direzioni di crescita ci consentono di caratterizzare meglio le soluzioni ott
 Ricordando le definizioni di direzione di crescita e direzione ammissibile possiamo affermare che $\vecbar x$ è una soluzione ottima del problema \eqref{eq:linear_problem} se e solo se il seguente sistema \begin{equation*}
     \begin{cases}
         A_{I(\vecbar x)}\vec \xi \leq \vec 0\\
-        \vec c \cdot \vec \xi > \vec 0
+        \vec c \cdot \vec \xi > 0
     \end{cases}
 \end{equation*}
 non ha soluzione. Infatti una soluzione del sistema è una direzione ammissibile per $\vecbar x$ (per la prima equazione) e di crescita (per la seconda). Vedremo più avanti un modo per capire se questo sistema ha soluzione oppure no.
@@ -377,7 +377,7 @@ Enunciamo ora il Teorema Fondamentale della Programmazione Lineare.
     Allora valgono i seguenti fatti.
     \begin{enumerate}
         \item Il valore ottimo di \eqref*{eq:linear_problem} è finito se e solo se nessuna direzione di recessione di \eqref*{eq:linear_problem} è di crescita, ovvero se \[
-            \vec c \cdot \vec d^j \leq \vec 0    
+            \vec c \cdot \vec d^j \leq 0    
         \] per ogni $j \in \set{1, \dots, t}$.
         \item Se \eqref*{eq:linear_problem} ha ottimo finito, allora esiste un $i \in \set{1, \dots, s}$ tale che $v^i$ è una soluzione ottima di \eqref*{eq:linear_problem}.
     \end{enumerate}

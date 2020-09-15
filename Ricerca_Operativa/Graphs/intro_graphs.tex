@@ -1,0 +1,71 @@
+\chapter{Grafi}
+
+\section{Introduzione ai grafi}
+
+\begin{definition}
+    [Grafo]
+    Si dice \emph{grafo} $G$ una coppia $(N, A)$ dove:
+    \begin{enumerate}
+        \item $N$ è l'insieme dei \emph{nodi} o \emph{vertici};
+        \item $A \subseteq N \times N$ è l'insieme degli \emph{archi}, ed è un sottoinsieme dell'insieme delle coppie di nodi.
+    \end{enumerate}
+\end{definition}
+
+Graficamente possiamo rappresentare i nodi di un grafo come pallini, mentre un arco $(i, j)$ è rappresentato da una freccia dal nodo $i$ al nodo $j$, come mostra la seguente figura.
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}
+%         \SetVertexMath
+%         \Vertex[x = 0, y = 0, L=1]{v1}
+%         \Vertex[x = 4, y = 3, L=2]{v2}
+%         \Vertex[x = 4, y = -3, L=3]{v3}
+%         \Vertex[x = 8, y = 3, L=4]{v4}
+%         \Vertex[x = 8, y = -3, L=5]{v5}
+
+%         \tikzset{EdgeStyle/.style={->}}
+%         \Edge(v1)(v2)
+%         \Edge(v1)(v3)
+%         \Edge(v2)(v4)
+%         \Edge(v3)(v2)
+%         \Edge(v3)(v5)
+%         \Edge(v4)(v5)
+
+%         \tikzstyle{EdgeStyle}=[bend left]
+%         \Edge(v4)(v3)
+
+%         \tikzstyle{EdgeStyle}=[bend right]
+%         \Edge(v3)(v4)
+%     \end{tikzpicture}
+% \end{figure}
+
+L'insieme dei nodi di questo grafo è $N = \set{1, 2, 3, 4, 5}$ e l'insieme degli archi è \[
+    A = \set{(1, 2), (1, 3), (2, 4), (3, 2), (3, 4), (3, 5), (4, 3), (4, 5)}.    
+\]
+
+Nel caso in cui tutti gli archi possono essere percorsi in entrambe le direzioni il grafo viene detto \emph{non orientato}, altrimenti si dice \emph{orientato}. Nei grafi orientati se la coppia di nodi $(i, j)$ è un arco allora dovrà esserlo necessariamente anche la coppia $(j, i)$: l'ordine nelle coppie non conta. Per rendere ciò più evidente indichiamo un arco come un sottoinsieme $\set{i, j}$ di due elementi, oppure tra i due archi possibili $(i, j)$ e $(j, i)$ scegliamo quello per cui la prima coordinata è minore della seconda.
+
+Un esempio di grafo non orientato è il seguente:
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}
+%         \SetVertexMath
+%         \Vertex[x = 0, y = 0, L=1]{v1}
+%         \Vertex[x = 4, y = 3, L=2]{v2}
+%         \Vertex[x = 4, y = -3, L=3]{v3}
+%         \Vertex[x = 8, y = 3, L=4]{v4}
+%         \Vertex[x = 8, y = -3, L=5]{v5}
+
+%         \Edge(v1)(v2)
+%         \Edge(v1)(v3)
+%         \Edge(v2)(v4)
+%         \Edge(v3)(v2)
+%         \Edge(v3)(v5)
+%         \Edge(v4)(v5)
+%         \Edge(v4)(v3)
+%     \end{tikzpicture}
+% \end{figure}
+In questo caso l'insieme dei nodi è lo stesso di prima, mentre l'insieme degli archi è \[
+    A = \set{\set{1, 2}, \set{1, 3}, \set{2, 4}, \set{3, 2}, \set{3, 4}, \set{3, 5}, \set{4, 5}}    
+\] oppure, scrivendo gli archi come coppie $(i, j)$ con $i < j$ \[
+    A = \set{(1, 2), (1, 3), (2, 4), (2, 3), (3, 4), (3, 5), (4, 5)}.  
+\]

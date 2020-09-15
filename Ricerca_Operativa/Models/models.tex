@@ -1,3 +1,107 @@
 \chapter{Modelli di Programmazione Lineare}
 
-Lo scopo della ricerca operativa è quella di risolvere \emph{problemi di ottimizzazione}: ogni problema è associato ad una funzione, detta \emph{funzione obiettivo}
+\section{Problemi di Ottimizzazione}
+La Ricerca Operativa è una branca della matematica applicata il cui scopo è quello di risolvere una particolare classe di problemi, detti \emph{problemi di ottimizzazione}.
+
+Un problema di ottimizzazione consiste nel trovare il valore massimo (oppure il valore minimo) di una data funzione, detta \emph{funzione obiettivo}, quando i possibili valori in input sono soggetti a dei vincoli.
+Formalizziamo questi concetti: consideriamo il problema generico 
+\begin{align}
+    \tag{$\PP$} \label{eq:optimization_problem}
+    \begin{split} 
+        \text{maximize}              &\;\; c(x) \\
+        \text{subject to} &\;\; x \in F
+    \end{split}
+\end{align}
+
+L'insieme $F$ è detto \emph{insieme delle soluzioni ammissibili} (dall'inglese "feasible solutions"): rappresenta tutti i possibili valori che soddisfano le condizioni del problema. 
+Spesso si definisce anche un \emph{insieme di supporto} $F^{\prime} \supseteq F$: gli elementi di $F^{\prime} \setminus F$ si dicono \emph{soluzioni non ammissibili}.
+
+\begin{example}
+    Se le variabili del problema sono $x_1, x_2 \in \R$ e sono soggette ai vincoli \begin{align*}
+        1 \leq {}&{} x_1 \leq 3\\
+        0 \leq {}&{} x_2 \leq 10
+    \end{align*}
+    allora l'insieme ammissibile è \[
+        F = \set{(x_1, x_2) \in \R^2 \suchthat 1 \leq x_1 \leq 3,\; 
+        0 \leq x_2 \leq 10}; 
+    \] inoltre un possibile insieme di supporto è $R^2$.
+\end{example}
+
+La funzione $c : F \to \R$ viene detta \emph{funzione obiettivo}: essa descrive il "costo" di tutte le possibili soluzioni ammissibili. Il valore ottimo del problema si indica con \[
+    \opt{\PP} \deq \max \set{c(x) \suchthat x \in F}.
+\] Se $x^{\ast} \in F$ 
+è tale che $c(x^{\ast}) = z(\PP)$
+(ovvero la funzione obiettivo in $x^{\ast}$ assume il valore ottimo) allora $x^{\ast}$ viene detta \emph{soluzione ottima} del problema 
+\eqref*{eq:optimization_problem}.
+
+Dato il problema di ottimizzazione \eqref{eq:optimization_problem} possono presentarsi quattro diversi casi: \begin{enumerate}[label={(\arabic*)}]
+    \item L'insieme ammissibile è vuoto, ovvero $F = \varnothing$. In questo caso si pone per convenzione \[
+        \opt{\PP} = -\infty.    
+    \]
+    \item Il problema è superiormente illimitato, ovvero per ogni $M \in \R$ esiste un $x \in F$ tale che $c(x) \geq M$.Il valore ottimo del problema è \[
+        \opt{\PP} = +\infty.    
+    \]
+    \item Il problema ha un valore ottimo finito ($-\infty < \opt{\PP} < +\infty$) ma non esiste una soluzione ottima, ovvero non esiste un $x \in F$ tale che $c(x) = z(\PP)$.
+    \item Il valore ottimo del problema è finito ed esiste una soluzione ottima $x^\ast$.
+\end{enumerate}
+
+Nel seguito considereremo solo il secondo e il quarto caso.
+
+\section{Rilassamento di un problema}
+
+In alcuni casi risolvere un problema di programmazione lineare è "difficile", ovvero non si ha un algoritmo per ricavare la soluzione oppure l'algoritmo è poco efficiente; si ricorre quindi alla tecnica del \emph{rilassamento}.
+
+\begin{definition}
+    Sia $(\PP)$ un problema di ottimizzazione della forma
+    \begin{align}
+        \tag{$\PP$} 
+        \begin{split} 
+            \max             &\;\; c(x) \\
+            \text{s.t.} &\;\; x \in F
+        \end{split}
+    \end{align}
+    Si dice \emph{rilassamento di $(\PP)$} un problema 
+    \begin{align}
+        \tag{$\bar\PP$} 
+        \begin{split} 
+            \max             &\;\; \bar c(x) \\
+            \text{s.t.} &\;\; x \in \bar F
+        \end{split}
+    \end{align}
+    tale che \begin{enumerate}[label={(\roman*)}]
+        \item $F \subseteq \bar F$, ovvero l'insieme ammissibile di $(\bar\PP)$ contiene l'insieme ammissibile di $(\PP)$, ovvero il rilassamento "ha più soluzioni ammissibili" del problema originale;
+        \item per ogni $x$ ammissibile per entrambi i problemi vale che \[
+            \bar c(x) \geq c(x)    
+        \] ovvero la funzione obiettivo del rilassamento è un'approssimazione superiore della funzione obiettivo del problema originale.
+    \end{enumerate}
+\end{definition}
+
+Si può mostrare che il valore ottimo di $(\bar\PP)$ è una valutazione superiore del valore ottimo di $(\PP)$, ovvero \[
+    \opt{\bar\PP} \geq \opt{\PP}.    
+\]
+
+Ovviamente valgono le stesse considerazioni per un problema di minimo, sostituendo la seconda condizione con \[
+    \bar c(x) \leq c(x),
+\] in quanto $\bar c$ deve essere una valutazione inferiore della funzione obiettivo $c$.
+
+I rilassamenti sono utili per \emph{approssimare} il problema originale, cercandone soluzioni via via più accurate. Tuttavia, in alcuni casi il rilassamento ci consente di risolvere il problema originale, come afferma la seguente proposizione.
+
+\begin{proposition}
+    Siano $(\PP)$ e $(\bar\PP)$ un problema di massimo e un suo rilassamento. Sia inoltre $x^\ast$ una soluzione ottima di $(\bar\PP)$.
+
+    Allora $x^\ast$ è soluzione ottima di $(\PP)$ se \begin{enumerate}[label={(\arabic*)}]
+        \item $x^\ast \in F$, ovvero la soluzione $x^\ast$ è ammissibile per il problema originale;
+        \item $\bar c(x^\ast) = c(x^\ast)$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Infatti segue che \begin{align*}
+        \bar c(x^\ast) &= \opt{\bar\PP} \tag{$(\bar\PP)$ è un rilass. di $(\PP)$}\\
+        &\geq \opt{\PP} \tag{$z(\PP)$ è il valore massimo}\\
+        &\geq c(x^\ast) \tag{per l'ipotesi (2)}\\
+        &= \bar c(x^\ast).
+    \end{align*}
+    Dunque tutte le disuguaglianze sono in realtà uguaglianze e segue quindi che \[
+        \opt{\PP} = c(x^\ast),    
+    \] ma siccome $x^\ast \in F$ per l'ipotesi (1) segue che $x^\ast$ è soluzione ottima di $(\PP)$, cioè la tesi.
+\end{proof}
