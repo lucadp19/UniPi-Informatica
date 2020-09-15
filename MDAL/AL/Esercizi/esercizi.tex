@@ -46,7 +46,14 @@
     % notefont=\scshape, notebraces={ (}{)},
     bodyfont=\itshape\normalsize,
     % shaded={rulecolor={rgb}{255,255,255}},
-    % mdframed={backgroundcolor=halfgray},
+    mdframed={
+        linecolor=halfgray,
+        linewidth=0.5pt,
+        backgroundcolor=white,
+        % topline=false,
+        % bottomline=false,
+        % rightline=false
+    },
     headpunct={\vspace{0.5\topsep}\newline}
 ]{thmstyle}
 \declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
