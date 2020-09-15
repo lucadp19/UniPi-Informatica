@@ -5,31 +5,31 @@
 \begin{definition} [Congruenza modulo $m$]\label{def_congr}
     Siano $a, b, m \in \Z$, $m > 0$. Allora si dice che $a$ è congruo a $b$ modulo $m$ se e solo se $a - b$ è un multiplo di $m$, e si scrive
     \begin{align*}
-        &a \equiv b \pmod m.
+        &a \congr b \pmod m.
     \end{align*}
 \end{definition}
 
 \begin{theorem} [Congruenza come relazione di equivalenza]
     Siano $a, b, m \in \Z$, $m > 0$. Allora la relazione di congruenza modulo $m$ è una relazione di equivalenza, e dunque soddisfa le proprietà:
     \begin{align}
-        &\text{Riflessiva: } &&a \equiv a \Mod{m} \label{congr_rifl}\\
-        &\text{Simmetrica: } &&a \equiv b \Mod{m} \implies b \equiv a \Mod{m} \label{congr_simm}\\
-        &\text{Transitiva: } &&a \equiv b \Mod{m} \land b \equiv c \Mod{m} \implies a \equiv c \Mod{m}  \label{congr_trans}
+        &\text{Riflessiva: } &&a \congr a \Mod{m} \label{congr_rifl}\\
+        &\text{Simmetrica: } &&a \congr b \Mod{m} \implies b \congr a \Mod{m} \label{congr_simm}\\
+        &\text{Transitiva: } &&a \congr b \Mod{m} \land b \congr c \Mod{m} \implies a \congr c \Mod{m}  \label{congr_trans}
     \end{align}
 \end{theorem}
 \begin{proof} Dimostriamo le tre proprietà della congruenza come relazione di equivalenza.
     \begin{enumerate}
-        \item $a - a = 0 = 0m$, dunque $a \equiv a \Mod{m}$.
-        \item Se $a - b = km$ allora $b - a = -(a - b) = -km = (-k)m$, cioè $b \equiv a \Mod{m}$.
+        \item $a - a = 0 = 0m$, dunque $a \congr a \Mod{m}$.
+        \item Se $a - b = km$ allora $b - a = -(a - b) = -km = (-k)m$, cioè $b \congr a \Mod{m}$.
         \item Se $a - b = km$ e $b - c = hm$ allora $a - c = (a - b) + (b - c) = km + hm = (k + h)m$, 
-            cioè $a \equiv c \Mod{m}$. \qedhere
+            cioè $a \congr c \Mod{m}$. \qedhere
     \end{enumerate}
 \end{proof}
 
 \begin{theorem} [Relazione tra congruenza e resto della divisione euclidea] \label{equiv_congr_resto}
     Siano $a, b, m \in \Z$, $m > 0$. Allora
     \begin{equation}
-        a \equiv b \Mod{m} \iff a \bmod m = b \bmod m.
+        a \congr b \Mod{m} \iff a \bmod m = b \bmod m.
     \end{equation}
     cioè $a$ è congruo a $b$ se e solo se $a$ e $b$ hanno lo stesso resto quando divisi per $m$.
 \end{theorem}
@@ -37,7 +37,7 @@
     Dimostriamo l'implicazione nei due versi.
     \begin{itemize}
         \item[($\implies$)]
-        Supponiamo che $a \equiv b \Mod{m}$ e dimostriamo che i resti di $a$ e $b$ modulo $m$ siano uguali.
+        Supponiamo che $a \congr b \Mod{m}$ e dimostriamo che i resti di $a$ e $b$ modulo $m$ siano uguali.
         Per la proposizione \ref{esistenza_resto} esistono $q, r \in \Z$ tale che $b = mq + r$ e $0 \leq r < m$.
         Allora per definizione di congruenza per qualche $k \in \Z$ avremo
         \begin{alignat*}
@@ -53,22 +53,22 @@
             a - b &= cq + r - cq' - r' \\
                 &= c(q - q')
         \end{alignat*}
-        cioè $a \equiv b \Mod{m}$. \qedhere
+        cioè $a \congr b \Mod{m}$. \qedhere
         \end{itemize}
 \end{proof}
 
 \begin{proposition}
     Siano $a, b, a^\prime, b^\prime, m \in \Z$, $m > 0$. Allora valgono le seguenti
     \begin{align}
-        &a \equiv b \Mod{m}\land a^\prime \equiv b^\prime \Mod{m}\implies a+a^\prime \equiv b+b^\prime\Mod{m} \label{somma_congrui}\\
-        &a \equiv b \Mod{m}\land a^\prime \equiv b^\prime \Mod{m}\implies a-a^\prime \equiv b-b^\prime\Mod{m} \label{differenza_congrui}\\
-        &a \equiv b \Mod{m}\land a^\prime \equiv b^\prime \Mod{m}\implies aa^\prime \equiv bb^\prime\Mod{m} \label{prodotto_congrui}
+        &a \congr b \Mod{m}\land a^\prime \congr b^\prime \Mod{m}\implies a+a^\prime \congr b+b^\prime\Mod{m} \label{somma_congrui}\\
+        &a \congr b \Mod{m}\land a^\prime \congr b^\prime \Mod{m}\implies a-a^\prime \congr b-b^\prime\Mod{m} \label{differenza_congrui}\\
+        &a \congr b \Mod{m}\land a^\prime \congr b^\prime \Mod{m}\implies aa^\prime \congr bb^\prime\Mod{m} \label{prodotto_congrui}
     \end{align}
 \end{proposition}
 \begin{proof}
     \begin{enumerate}
-        \item Per definizione di congruenza $m \divides a - b$ e $m \divides a^\prime - b^\prime$. Per la proposizione \ref{divides_sum_subtr_mult} segue che $m \divides (a - b) + (a^\prime - b^\prime)$, cioè $m \divides (a + a^\prime) - (b + b^\prime)$, che è equivalente a $a+a^\prime \equiv b+b^\prime\Mod{m}$.
-        \item Per definizione di congruenza $m \divides a - b$ e $m \divides a^\prime - b^\prime$. Per la proposizione \ref{divides_sum_subtr_mult} segue che $m \divides (a - b) - (a^\prime - b^\prime)$, cioè $m \divides (a - a^\prime) - (b - b^\prime)$, che è equivalente a $a-a^\prime \equiv b-b^\prime\Mod{m}$.
+        \item Per definizione di congruenza $m \divides a - b$ e $m \divides a^\prime - b^\prime$. Per la proposizione \ref{divides_sum_subtr_mult} segue che $m \divides (a - b) + (a^\prime - b^\prime)$, cioè $m \divides (a + a^\prime) - (b + b^\prime)$, che è equivalente a $a+a^\prime \congr b+b^\prime\Mod{m}$.
+        \item Per definizione di congruenza $m \divides a - b$ e $m \divides a^\prime - b^\prime$. Per la proposizione \ref{divides_sum_subtr_mult} segue che $m \divides (a - b) - (a^\prime - b^\prime)$, cioè $m \divides (a - a^\prime) - (b - b^\prime)$, che è equivalente a $a-a^\prime \congr b-b^\prime\Mod{m}$.
         \item Per definizione di congruenza, scriviamo $a - b = km$ e $a^\prime - b^\prime = hm$, che è equivalente a $b = a - km$ e $b^\prime = a^\prime - hm$. Dunque
         \begin{alignat*}
             {1}
@@ -79,7 +79,7 @@
         che è equivalente a
         \begin{alignat*} {1}
             aa^\prime - bb^\prime &= (ah + a^\prime k - kh)m \\
-            \iff aa^\prime &\equiv bb^\prime \Mod{m}.
+            \iff aa^\prime &\congr bb^\prime \Mod{m}.
         \end{alignat*} \qedhere
     \end{enumerate}
 \end{proof}
@@ -87,13 +87,13 @@
 \section{Equazioni con congruenze lineari}
 
 \begin{proposition}[Equivalenza diofantea-congruenza]
-    Siano $a, b, c \in \Z$; sia $ax + by = c$ un'equazione diofantea. Allora tutte le soluzioni della diofantea sono soluzioni delle equazioni $ax \equiv c \Mod{b}$ e $by \equiv c \Mod{a}$.
+    Siano $a, b, c \in \Z$; sia $ax + by = c$ un'equazione diofantea. Allora tutte le soluzioni della diofantea sono soluzioni delle equazioni $ax \congr c \Mod{b}$ e $by \congr c \Mod{a}$.
 \end{proposition}
 \begin{proof}
     Dimostriamo entrambi i versi dell'implicazione.
     \begin{enumerate}
-        \item Siano $x, y \in \Z$ tali che $ax + by = c$. Dato che $ax + by$ è uguale a $c$ segue che $ax + by \equiv c \Mod{b}$. Ma $b \equiv 0 \Mod{b}$, dunque $x$ sarà anche soluzione di $ax \equiv c \Mod{b}$. Analogo ragionamento considerando $ax + by \equiv c \Mod{a}$.
-        \item Sia $x \in \Z$ tale che $ax \equiv c \Mod{b}$. Allora per definizione di congruenza esiste $k \in \Z$ per cui $ax - c = bk$. Sia $y = -k$; l'equazione è quindi equivalente a $ax + by = c$, cioè la coppia $(x, y)$ è una soluzione dell'equazione diofantea. Analogo ragionamento se partiamo da $by \equiv c \Mod{a}$. \qedhere
+        \item Siano $x, y \in \Z$ tali che $ax + by = c$. Dato che $ax + by$ è uguale a $c$ segue che $ax + by \congr c \Mod{b}$. Ma $b \congr 0 \Mod{b}$, dunque $x$ sarà anche soluzione di $ax \congr c \Mod{b}$. Analogo ragionamento considerando $ax + by \congr c \Mod{a}$.
+        \item Sia $x \in \Z$ tale che $ax \congr c \Mod{b}$. Allora per definizione di congruenza esiste $k \in \Z$ per cui $ax - c = bk$. Sia $y = -k$; l'equazione è quindi equivalente a $ax + by = c$, cioè la coppia $(x, y)$ è una soluzione dell'equazione diofantea. Analogo ragionamento se partiamo da $by \congr c \Mod{a}$. \qedhere
     \end{enumerate}
 \end{proof}
 
@@ -101,7 +101,7 @@ Tramite questa proposizione possiamo risolvere ogni equazione contenente congrue
 
 \begin{definition}[Invertibilità e inverso]
     Siano $a \in \Z$; allora si dice che $a$ è invertibile modulo $m$ se esiste  $x \in \Z$ tale che \[
-        ax \equiv 1 \Mod{m}
+        ax \congr 1 \Mod{m}
     .\]
     In particolare tra tutti gli $x$ che soddisfano la relazione precedente, il numero $x$ tale che $0 \leq x < m$ si dice inverso di $a$ modulo $m$.
 \end{definition}
@@ -115,102 +115,102 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
 \begin{proof}
     Dimostriamo l'implicazione nei due versi.
     \begin{itemize}
-        \item[($\implies$)] Supponiamo che $a$ sia invertibile modulo $m$, cioè che $\exists x \in \Z$ tale che $ax \equiv= 1 \Mod{m}$. Ma sappiamo che $ax + my$ è un multiplo di $\mcd{a}{m}$, quindi anche $1$ dovrà essere un multiplo di $\mcd{a}{m}$, cioè $\mcd{a}{m} = 1$.
+        \item[($\implies$)] Supponiamo che $a$ sia invertibile modulo $m$, cioè che $\exists x \in \Z$ tale che $ax \congr= 1 \Mod{m}$. Ma sappiamo che $ax + my$ è un multiplo di $\mcd{a}{m}$, quindi anche $1$ dovrà essere un multiplo di $\mcd{a}{m}$, cioè $\mcd{a}{m} = 1$.
         \item[($\impliedby$)] Supponiamo $\mcd{a}{m} = 1$. Allora per il teorema di Bezout \ref{bezout} $\exists x, y \in \Z$ tali che
         \begin{alignat*}{1}
             &ax + my = 1 \\
             \iff &ax - 1 = m(-y) \\
-            \iff &ax \equiv 1 \Mod{m}
+            \iff &ax \congr 1 \Mod{m}
         \end{alignat*}
         dunque $x$ è l'inverso di $a$ modulo $m$. \qedhere
     \end{itemize}
 \end{proof}
 
 \begin{corollary}
-    Se $p$ è primo e $a \not\equiv 0 \Mod{p}$, allora $a$ è invertibile modulo $p$.
+    Se $p$ è primo e $a \not\congr 0 \Mod{p}$, allora $a$ è invertibile modulo $p$.
 \end{corollary}
 \begin{proof}
-    Se $p$ è primo, allora necessariamente $p$ è coprimo con tutti i numeri che non sono suoi multipli, cioè con tutti gli $a$ tali che $a \equiv 0 \Mod{p}$. Dunque se $a \equiv 0 \Mod{p}$ allora $\mcd{a}{p} = 1$, cioè per il teorema precedente $a$ è invertibile modulo $p$.
+    Se $p$ è primo, allora necessariamente $p$ è coprimo con tutti i numeri che non sono suoi multipli, cioè con tutti gli $a$ tali che $a \congr 0 \Mod{p}$. Dunque se $a \congr 0 \Mod{p}$ allora $\mcd{a}{p} = 1$, cioè per il teorema precedente $a$ è invertibile modulo $p$.
 \end{proof}
 
 \begin{proposition} \label{se_invertibile_allora_soluzione}
-    Siano $a, b, m \in \Z$; allora se $a$ è invertibile modulo $m$ segue che $\exists x \in \Z$ tale che $ax \equiv b \Mod{m}$.
+    Siano $a, b, m \in \Z$; allora se $a$ è invertibile modulo $m$ segue che $\exists x \in \Z$ tale che $ax \congr b \Mod{m}$.
 \end{proposition}
 \begin{proof}
-    Dato che $a$ è invertibile modulo $m$ esisterà $x^\prime \in \Z$ tale che $ax^\prime \equiv 1 \Mod{m}$. Moltiplicando entrambi i membri per $b$ otteniamo $ax'b \equiv b \Mod{m}$, dunque la $x \equiv x'b \Mod{b}$ soddisfa $ax \equiv b \Mod{m}$, cioè la tesi.
+    Dato che $a$ è invertibile modulo $m$ esisterà $x^\prime \in \Z$ tale che $ax^\prime \congr 1 \Mod{m}$. Moltiplicando entrambi i membri per $b$ otteniamo $ax'b \congr b \Mod{m}$, dunque la $x \congr x'b \Mod{b}$ soddisfa $ax \congr b \Mod{m}$, cioè la tesi.
 \end{proof}
 
 \begin{proposition}[Condizione necessaria e sufficiente per la risoluzione di congruenze lineari] \label{cong_ha_soluzione_sse_mcd_div_b}
-    Siano $a, b, m, x \in \Z$; allora l'equazione $ax \equiv b \Mod{m}$ ha soluzione se e solo se $\mcd{a}{m} \divides b$.
+    Siano $a, b, m, x \in \Z$; allora l'equazione $ax \congr b \Mod{m}$ ha soluzione se e solo se $\mcd{a}{m} \divides b$.
 \end{proposition}
 \begin{proof}
     Dimostriamo l'implicazione nei due versi.
     \begin{itemize}
-        \item[($\implies$)] Supponiamo che $ax \equiv b \Mod{m}$ ammetta soluzione. Allora esiste $y \in \Z$ tale che $ax - my = b$. Dato che $a$ e $m$ sono multipli di $\mcd{a}{m}$, allora lo sarà anche la combinazione lineare $ax - my$ che è uguale a $b$, cioè $\mcd{a}{m} \divides b$.
+        \item[($\implies$)] Supponiamo che $ax \congr b \Mod{m}$ ammetta soluzione. Allora esiste $y \in \Z$ tale che $ax - my = b$. Dato che $a$ e $m$ sono multipli di $\mcd{a}{m}$, allora lo sarà anche la combinazione lineare $ax - my$ che è uguale a $b$, cioè $\mcd{a}{m} \divides b$.
         \item[($\impliedby$)] Supponiamo che $d = \mcd{a}{m}$ divida $b$. Allora $d\divides a$, $d \divides b$, $d \divides m$. Siano $a^\prime = \frac{a}{d}, b^\prime = \frac{b}{d}, m^\prime = \frac{m}{d}$. Allora 
         \begin{align*}
-            &ax \equiv b \Mod{m}\\
+            &ax \congr b \Mod{m}\\
             \iff{} &ax - b = mk   &\text{per qualche $k \in \Z$} \\
             \iff{} &a^\prime dx - b^\prime d = m^\prime dk &\text{per qualche $k \in \Z$} \\
             \iff{} &a^\prime x - b^\prime = m^\prime k &\text{per qualche $k \in \Z$} \\
-            \iff{} &a^\prime x \equiv b^\prime \Mod{m^\prime }.
+            \iff{} &a^\prime x \congr b^\prime \Mod{m^\prime }.
         \end{align*}
-        Ma per il corollario \ref{mcd_diviso_mcd} $\mcd{a^\prime}{m^\prime} = 1$, dunque $a^\prime$ è invertibile modulo $m^\prime$, dunque per la proposizione \ref{se_invertibile_allora_soluzione} segue che $a^\prime x \equiv b^\prime \Mod{m^\prime}$ ha soluzione. Tuttavia $a^\prime x \equiv b^\prime \Mod{m^\prime}$ è equivalente a $ax \equiv b \Mod{m}$, dunque anche $ax \equiv b \Mod{m}$ ha soluzione e in particolare ha le stesse soluzioni di $a^\prime x \equiv b^\prime \Mod{m^\prime}$. \qedhere
+        Ma per il corollario \ref{mcd_diviso_mcd} $\mcd{a^\prime}{m^\prime} = 1$, dunque $a^\prime$ è invertibile modulo $m^\prime$, dunque per la proposizione \ref{se_invertibile_allora_soluzione} segue che $a^\prime x \congr b^\prime \Mod{m^\prime}$ ha soluzione. Tuttavia $a^\prime x \congr b^\prime \Mod{m^\prime}$ è equivalente a $ax \congr b \Mod{m}$, dunque anche $ax \congr b \Mod{m}$ ha soluzione e in particolare ha le stesse soluzioni di $a^\prime x \congr b^\prime \Mod{m^\prime}$. \qedhere
     \end{itemize}
 \end{proof}
 
 \begin{proposition}
     Se vogliamo semplificare una congruenza possiamo sfruttare le seguenti regole:
     \begin{alignat}{3}
-        A &\equiv B \Mod{m} \quad &\iff      \quad &A + c \equiv B + c \Mod{m} \\
-        A &\equiv B \Mod{m} \quad &\implies  \quad &cA \equiv cB \Mod{m} \\
-        A &\equiv B \Mod{m} \quad &\iff      \quad &(A \bmod m) \equiv (B \bmod m) \Mod{m} \\
-        Ad &\equiv Bd \Mod{m} \quad &\implies\quad &A \equiv B \Mod{m} \qquad \text{se }\mcd{d}{m} = 1\\
-        Ad &\equiv Bd \Mod{md} \quad &\iff   \quad &A \equiv B \Mod{m}
+        A &\congr B \Mod{m} \quad &\iff      \quad &A + c \congr B + c \Mod{m} \\
+        A &\congr B \Mod{m} \quad &\implies  \quad &cA \congr cB \Mod{m} \\
+        A &\congr B \Mod{m} \quad &\iff      \quad &(A \bmod m) \congr (B \bmod m) \Mod{m} \\
+        Ad &\congr Bd \Mod{m} \quad &\implies\quad &A \congr B \Mod{m} \qquad \text{se }\mcd{d}{m} = 1\\
+        Ad &\congr Bd \Mod{md} \quad &\iff   \quad &A \congr B \Mod{m}
     \end{alignat}
 \end{proposition}
 \begin{proof}
     Dimostriamo le 5 proposizioni.
     \begin{enumerate}
-        \item Dato che $c \equiv c \Mod{m}$, si tratta di un caso particolare della \ref{somma_congrui}. Inoltre l'implicazione inversa si ricava dalla \ref{differenza_congrui}, dunque si tratta di un'equivalenza.
-        \item Dato che $c \equiv c \Mod{m}$, si tratta di un caso particolare della \ref{prodotto_congrui}.
-        \item Dato che $A \equiv (A \bmod m) \Mod{m}$ e $B \equiv (B \bmod m) \Mod{m}$, per transitività otteniamo che $A \equiv B \Mod{m}$ è equivalente a $(A \bmod m) \equiv (B \bmod m) \Mod{m}$.
+        \item Dato che $c \congr c \Mod{m}$, si tratta di un caso particolare della \ref{somma_congrui}. Inoltre l'implicazione inversa si ricava dalla \ref{differenza_congrui}, dunque si tratta di un'equivalenza.
+        \item Dato che $c \congr c \Mod{m}$, si tratta di un caso particolare della \ref{prodotto_congrui}.
+        \item Dato che $A \congr (A \bmod m) \Mod{m}$ e $B \congr (B \bmod m) \Mod{m}$, per transitività otteniamo che $A \congr B \Mod{m}$ è equivalente a $(A \bmod m) \congr (B \bmod m) \Mod{m}$.
         \item Se $\mcd{d}{m} = 1$ allora esiste l'inverso di $d$ modulo $m$. Chiamiamo $x$ questo inverso e moltiplichiamo entrambi i membri della congruenza per $x$, ottenendo
         \begin{alignat*}
             {1}
-            Ad &\equiv Bd \Mod{m}  \\
-            \iff Adx &\equiv Bdx \Mod{m} \\
-            \iff A \cdot 1 &\equiv B \cdot 1 \Mod{m} \\
-            \iff A &\equiv B \Mod{m}.
+            Ad &\congr Bd \Mod{m}  \\
+            \iff Adx &\congr Bdx \Mod{m} \\
+            \iff A \cdot 1 &\congr B \cdot 1 \Mod{m} \\
+            \iff A &\congr B \Mod{m}.
         \end{alignat*}
         \item Per definizione di congruenza esiste $y \in \Z$ tale che
         \begin{alignat*}
             {1}
             Ad &= Bd + mdy \\
             \iff A &= B + my \\
-            \iff A &\equiv B \Mod{m}. \tag*{\qedhere}
+            \iff A &\congr B \Mod{m}. \tag*{\qedhere}
         \end{alignat*}
     \end{enumerate}
 \end{proof}
 
 \begin{proposition}
-    Siano $a, b, m \in \Z$ noti, $x \in \Z$ non noto. Allora per risolvere l'equazione $ax \equiv b \Mod{m}$ possiamo ricondurci ad uno dei seguenti tre casi:
+    Siano $a, b, m \in \Z$ noti, $x \in \Z$ non noto. Allora per risolvere l'equazione $ax \congr b \Mod{m}$ possiamo ricondurci ad uno dei seguenti tre casi:
     \begin{enumerate}
-        \item se $\mcd{a}{m} = 1$, allora l'equazione ha soluzione $x \equiv by \Mod{m}$, dove $y$ è l'inverso di $a$ modulo $m$;
-        \item se $\mcd{a}{m} \neq 1$, $d = \mcd{a}{m} \divides b$, allora l'equazione è equivalente all'equazione $a^\prime x \equiv b^\prime \Mod{m^\prime}$, con $a^\prime = \frac{a}{d}$, $b^\prime = \frac{b}{d}$, $m^\prime = \frac{m}{d}$, che ha soluzione;
-        \item se $\mcd{a}{m} \neq 1$, $\mcd{a}{m} \nmid b$, allora l'equazione non ha soluzione.
+        \item se $\mcd{a}{m} = 1$, allora l'equazione ha soluzione $x \congr by \Mod{m}$, dove $y$ è l'inverso di $a$ modulo $m$;
+        \item se $\mcd{a}{m} \neq 1$, $d = \mcd{a}{m} \divides b$, allora l'equazione è equivalente all'equazione $a^\prime x \congr b^\prime \Mod{m^\prime}$, con $a^\prime = \frac{a}{d}$, $b^\prime = \frac{b}{d}$, $m^\prime = \frac{m}{d}$, che ha soluzione;
+        \item se $\mcd{a}{m} \neq 1$, $\mcd{a}{m} \ndivides b$, allora l'equazione non ha soluzione.
     \end{enumerate}
 \end{proposition}
 \begin{proof}
     I tre casi sono conseguenza diretta della proposizione \ref{cong_ha_soluzione_sse_mcd_div_b}. Infatti
     \begin{enumerate}
-        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione ha soluzione. Se $y$ è l'inverso di $a$, moltiplicando entrambi i membri per $y$ otteniamo la soluzione $x \equiv by \Mod{m}$.
+        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione ha soluzione. Se $y$ è l'inverso di $a$, moltiplicando entrambi i membri per $y$ otteniamo la soluzione $x \congr by \Mod{m}$.
         \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione ha soluzione. 
         Sia $d = \mcd{a}{m}$. Allora la congruenza è equivalente a $ax - b = mk$ per qualche $k \in \Z$. Dato che $a, b, m$ sono divisibili per $d$, dividendo per $d$ otteniamo l'equazione equivalente
         \begin{alignat*}
             {1}
             &\frac{a}{d}x - \frac{b}{d} = \frac{m}{d}k \\
-            \iff &\frac{a}{d}x \equiv \frac{b}{d} \Mod{\frac{m}{d}}
+            \iff &\frac{a}{d}x \congr \frac{b}{d} \Mod{\frac{m}{d}}
         \end{alignat*}
         Ma per il corollario \ref{mcd_diviso_mcd} $\mcd{\frac{a}{d}}{\frac{m}{d}} = 1$, dunque possiamo trovare la soluzione sfruttando il primo caso.
         \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione non ha soluzione. \qedhere
@@ -225,14 +225,14 @@ Notiamo che non sempre i numeri diversi da $0$ ammettono inverso modulo $m$.
     \begin{equation*}
         \left\{
         \begin{alignedat}{1}
-            x&\equiv a_1 \Mod{m_1}\\
-            x&\equiv a_2 \Mod{m_2}
+            x&\congr a_1 \Mod{m_1}\\
+            x&\congr a_2 \Mod{m_2}
         \end{alignedat}      
         \right . 
     \end{equation*}
     e $x$ è unico modulo $(m_1m_2)$, ovvero se $x_0$ è un'altra soluzione del sistema segue che
     \begin{equation}
-        x \equiv x_0 \pmod{m_1 m_2}.
+        x \congr x_0 \pmod{m_1 m_2}.
     \end{equation} 
 \end{theorem}
 
@@ -241,10 +241,10 @@ Possiamo esprimere il teorema cinese in questo modo equivalente.
 \begin{theorem}
     [Teorema Cinese del Resto] \label{th_cinese_2}
     Siano $x_0, m \in \Z$; siano inoltre $m_1, m_2$ coprimi tali che $m = m_1m_2$. Allora vale che \begin{equation}
-        x \equiv x_0 \Mod{m} \iff \left\{
+        x \congr x_0 \Mod{m} \iff \left\{
             \begin{alignedat}{1}
-                x&\equiv x_0 \Mod{m_1}\\
-                x&\equiv x_0 \Mod{m_2}
+                x&\congr x_0 \Mod{m_1}\\
+                x&\congr x_0 \Mod{m_2}
             \end{alignedat}      
             \right .
     \end{equation}
@@ -258,16 +258,16 @@ Dato che il Teorema Cinese del Resto ci permette di unire due equazioni con modu
     \begin{equation*}
         \left\{
         \begin{alignedat}{1}
-            x&\equiv a_1 \Mod{m_1}\\
-            x&\equiv a_2 \Mod{m_2}\\
-            &\vdotswithin{\equiv}\\
-            x&\equiv a_n \Mod{m_n}
+            x&\congr a_1 \Mod{m_1}\\
+            x&\congr a_2 \Mod{m_2}\\
+            &\vdotswithin{\congr}\\
+            x&\congr a_n \Mod{m_n}
         \end{alignedat}      
         \right . 
     \end{equation*}
     e $x$ è unico modulo $(m_1\cdots m_n)$, ovvero se $x_0$ è un'altra soluzione del sistema segue che
     \begin{equation}
-        x \equiv x_0 \pmod{m_1 \cdots m_n}.
+        x \congr x_0 \pmod{m_1 \cdots m_n}.
     \end{equation} 
 \end{corollary}
 
@@ -278,27 +278,27 @@ Vediamo come stabilire se esistono soluzioni di un sistema di congruenze con mod
     \begin{equation*}
         \left\{
         \begin{alignedat}{1}
-            x&\equiv a_1 \Mod{m_1}\\
-            x&\equiv a_2 \Mod{m_2}
+            x&\congr a_1 \Mod{m_1}\\
+            x&\congr a_2 \Mod{m_2}
         \end{alignedat}      
         \right . 
     \end{equation*}
-    se e solo se $a_1 \equiv a_2 \pmod{\mcd{m_1}{m_2}}$.
+    se e solo se $a_1 \congr a_2 \pmod{\mcd{m_1}{m_2}}$.
 \end{proposition}
 \begin{proof}
     Consideriamo il sistema di due equazioni. Dalla prima ricaviamo \[
         x = a_1 + m_1y    
     \] per qualche $y \in \Z$. Allora sostituendo nella seconda otteniamo \begin{alignat*}
         {1}
-        &a_1+m_1y \equiv a_2 \Mod{m_2}\\
-        \iff &m_1y \equiv a_2 - a_1 \Mod{m_2}.
+        &a_1+m_1y \congr a_2 \Mod{m_2}\\
+        \iff &m_1y \congr a_2 - a_1 \Mod{m_2}.
     \end{alignat*}
     Quest'ultima equazione (per la proposizione \ref{cong_ha_soluzione_sse_mcd_div_b}) ha soluzione se e solo se 
     \begin{alignat*}
         {1}
         &\mcd{m_1}{m_2} \divides (a_2-a_1) \\
-        \iff &(a_2-a_1) \equiv 0 \Mod{\mcd{m_1}{m_2}} \\
-        \iff &a_1 \equiv a_2 \Mod{\mcd{m_1}{m_2}}. \tag*{\qedhere}
+        \iff &(a_2-a_1) \congr 0 \Mod{\mcd{m_1}{m_2}} \\
+        \iff &a_1 \congr a_2 \Mod{\mcd{m_1}{m_2}}. \tag*{\qedhere}
     \end{alignat*}
 \end{proof}
 
@@ -309,20 +309,20 @@ Se abbiamo un sistema con piu' di due equazioni basta risolverle due a due: ogni
     \begin{equation*}
         \left\{
         \begin{alignedat}{1}
-            a_1x &\equiv b_1 \Mod{m_1}\\
-            a_2x &\equiv b_2 \Mod{m_2}\\
-            &\vdotswithin{\equiv} \\
-            a_nx &\equiv b_n \Mod{m_n}
+            a_1x &\congr b_1 \Mod{m_1}\\
+            a_2x &\congr b_2 \Mod{m_2}\\
+            &\vdotswithin{\congr} \\
+            a_nx &\congr b_n \Mod{m_n}
         \end{alignedat}      
         \right . 
     \end{equation*}
     se $x_0$ è una soluzione particolare, allora tutte le soluzioni del sistema si ottengono sommando a $x_0$ un multiplo di $\operatorname{mcm}(m_1, m_2, \dots, m_n)$; o equivalentemente la soluzione del sistema è una singola congruenza della forma
     \begin{equation}
-        x \equiv x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}
+        x \congr x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}
     \end{equation}
 \end{proposition}
 
-Per quest'ultima proposizione possiamo risolvere un sistema cercando un numero intero $x_0$ minore del minimo comune multiplo dei moduli che sia soluzione di tutte le equazioni: a quel punto la congruenza che risolve il sistema sarà $x \equiv x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}$.
+Per quest'ultima proposizione possiamo risolvere un sistema cercando un numero intero $x_0$ minore del minimo comune multiplo dei moduli che sia soluzione di tutte le equazioni: a quel punto la congruenza che risolve il sistema sarà $x \congr x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}$.
 
 \section{Struttura algebrica degli interi modulo m}
 
@@ -331,7 +331,7 @@ Per quest'ultima proposizione possiamo risolvere un sistema cercando un numero i
 \begin{definition}[Classe di resto]
     Siano $a, n \in \Z$; allora si dice classe di resto $[a]_n$ l'insieme 
     \begin{equation}
-        [a]_n = \left\{x \in \Z \mid x \equiv a \Mod{n}\right\}.
+        [a]_n = \left\{x \in \Z \suchthat x \congr a \Mod{n}\right\}.
     \end{equation}
     Il numero $a$ si dice rappresentante della classe $[a]_n$.
 \end{definition}
@@ -339,7 +339,7 @@ Per quest'ultima proposizione possiamo risolvere un sistema cercando un numero i
 Due classi di resto si dicono uguali se contengono gli stessi elementi.
 Il rappresentante di una classe non è unico, anzi per ogni classe ci sono infinite scelte che corrispondono a tutti i numeri appartenenti alla classe. Vale quindi la seguente osservazione:
 \begin{remark}
-    $a \equiv b \Mod{m} \iff [a]_n = [b]_n$.
+    $a \congr b \Mod{m} \iff [a]_n = [b]_n$.
 \end{remark}
 
 Notiamo che per ogni numero $n$ ci sono esattamente $n$ classi di resto modulo $n$: infatti ce n'é una esattamente per ogni possibile resto della divisione per $n$, cioè per ogni numero tra $0$ e $n-1$ inclusi.
@@ -378,13 +378,13 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \subsection{Gruppo degli inversi modulo m}
 
 \begin{definition}[Insieme degli invertibili]
-    Sia $n \geq 2$. Allora si indica con $\inverses{\Z/(n)}$ l'insieme delle classi resto invertibili modulo $n$, ovvero \begin{equation}
-        \inverses{\Z/(n)} = \left\{[a]_n \mid \exists [a^{-1}]_n \in \Z/(n). \quad [a]_n[a^{-1}]_n = [1]_n\right\}.
+    Sia $n \geq 2$. Allora si indica con $\invertible{\Z/(n)}$ l'insieme delle classi resto invertibili modulo $n$, ovvero \begin{equation}
+        \invertible{\Z/(n)} = \left\{[a]_n \suchthat \exists [a^{-1}]_n \in \Z/(n). \quad [a]_n[a^{-1}]_n = [1]_n\right\}.
     \end{equation} 
 \end{definition}
 
 \begin{proposition}[Il prodotto di classi invertibili è invertibile]\label{prodotto_invertibili_invertibile}
-    Sia $n \geq 2$. Allora se $[a], [b] \in \inverses{\Z/(n)}$ segue che $[ab] \in \inverses{\Z/(n)}$.
+    Sia $n \geq 2$. Allora se $[a], [b] \in \invertible{\Z/(n)}$ segue che $[ab] \in \invertible{\Z/(n)}$.
 \end{proposition}
 \begin{proof}
     Ci basta dimostrare che $[ab]$ è invertibile modulo $n$. Sia $[x]$ l'inverso, se esiste, allora:
@@ -397,13 +397,13 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     ovvero $[ab]$ è invertibile e $[a^{-1}b^{-1}]$ è il suo inverso.
 \end{proof}
 
-\begin{proposition}[$\inverses{\Z/(n)}$ è un gruppo]\label{Z(n)*_gruppo}
-    Per ogni $n \geq 2$ l'insieme $\inverses{\Z/(n)}$ con l'operazione di prodotto tra classi e con l'elemento $[1]_n$ che svolge il ruolo di $1$ è un gruppo commutativo.
+\begin{proposition}[$\invertible{\Z/(n)}$ è un gruppo]\label{Z(n)*_gruppo}
+    Per ogni $n \geq 2$ l'insieme $\invertible{\Z/(n)}$ con l'operazione di prodotto tra classi e con l'elemento $[1]_n$ che svolge il ruolo di $1$ è un gruppo commutativo.
 \end{proposition}
 
 \begin{definition}[Funzione di Eulero]
     Sia $n \geq 2$. Allora si dice funzione di Eulero la funzione $\varphi : \N \to \N$ tale che \begin{equation}
-        \varphi(n) = \abs{\inverses{\Z/(n)}}
+        \varphi(n) = \abs{\invertible{\Z/(n)}}
     \end{equation}
     ovvero $\varphi(n)$ è il numero di elementi invertibili in $\Z/(n)$.
 \end{definition}
@@ -434,10 +434,10 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \end{proposition}
 \begin{proof}
     Per definizione di $\varphi$ la tesi è equivalente a \[
-        \abs{\inverses{\Z/(ab)}} = \abs{\inverses{\Z/(a)}}\abs{\inverses{\Z/(b)}}.
+        \abs{\invertible{\Z/(ab)}} = \abs{\invertible{\Z/(a)}}\abs{\invertible{\Z/(b)}}.
     \]
     Dalla proposizione \ref{cardinalita_prodotto_cartesiano} del capitolo sulla combinatoria sappiamo che il prodotto tra le cardinalità è la cardinalità del prodotto cartesiano, dunque la tesi è equivalente a \[
-        \abs{\inverses{\Z/(ab)}} = \abs{\inverses{\Z/(a)}\times\inverses{\Z/(b)}}.
+        \abs{\invertible{\Z/(ab)}} = \abs{\invertible{\Z/(a)}\times\invertible{\Z/(b)}}.
     \]
 
     è sufficiente dunque dimostrare che esiste una corrisponenza biunivoca tra i due insiemi. Scelgo la funzione $f$ tale che \[
@@ -445,30 +445,30 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     \] e dimostro che $f$ è bigettiva.
 
     \begin{description}
-        \item[Iniettività.] Siano $[h]_{ab}, [k]_{ab} \in \inverses{\Z/(ab)}$ tali che $f([h]_{ab}) = f([k]_{ab})$, cioè equivalentemente $\ang{[h]_a, [h]_b} = \ang{[k]_a, [k]_b}$. Dimostriamo che segue che $[h]_{ab} = [k]_{ab}$.
+        \item[Iniettività.] Siano $[h]_{ab}, [k]_{ab} \in \invertible{\Z/(ab)}$ tali che $f([h]_{ab}) = f([k]_{ab})$, cioè equivalentemente $\ang{[h]_a, [h]_b} = \ang{[k]_a, [k]_b}$. Dimostriamo che segue che $[h]_{ab} = [k]_{ab}$.
         
         Per definizione di $f$ segue che \[
             \left\{
             \begin{alignedat}{1}
-                &h \equiv k \Mod{a}\\
-                &h \equiv k \Mod{b}
+                &h \congr k \Mod{a}\\
+                &h \congr k \Mod{b}
             \end{alignedat}
             \right.   
-        \] Dunque per il Teorema Cinese del Resto (\ref{th_cinese_2}) (dato che $\mcd{a}{b} = 1$) segue che deve valere $h \equiv k \Mod{ab}$, ovvero $[k]_{ab} = [h]_{ab}$, ovvero $f$ è iniettiva.
-        \item[Surgettività.] Sia $\ang{[r]_a, [s]_b} \in \inverses{\Z/(a)}\times\inverses{\Z/(b)}$. Dimostriamo che esiste un $[x]_{ab} \in \inverses{\Z/(ab)}$ tale che $f([x]_{ab}) = \ang{[r]_a, [s]_b}$.
+        \] Dunque per il Teorema Cinese del Resto (\ref{th_cinese_2}) (dato che $\mcd{a}{b} = 1$) segue che deve valere $h \congr k \Mod{ab}$, ovvero $[k]_{ab} = [h]_{ab}$, ovvero $f$ è iniettiva.
+        \item[Surgettività.] Sia $\ang{[r]_a, [s]_b} \in \invertible{\Z/(a)}\times\invertible{\Z/(b)}$. Dimostriamo che esiste un $[x]_{ab} \in \invertible{\Z/(ab)}$ tale che $f([x]_{ab}) = \ang{[r]_a, [s]_b}$.
         
         Per il teorema cinese dei resti (\ref{th_cinese}), esiste ed è unico $[x]_{ab} \in \Z/(ab)$ tale che \[
             \left\{
             \begin{alignedat}{1}
-                &x \equiv r \Mod{a}\\
-                &x \equiv s \Mod{b}
+                &x \congr r \Mod{a}\\
+                &x \congr s \Mod{b}
             \end{alignedat}
             \right.   
         \] 
         
         Dimostriamo ora che $[x]_{ab}$ è invertibile.
                 
-        Dato che $[r]_a$ e $[s]_b$ sono invertibili segue che $x$ dovrà essere invertibile modulo $a$ e modulo $b$, dunque $\mcd{x}{a} = \mcd{x}{b} = 1$. Per la proposizione \ref{mcd_togliere_fattori_non_comuni}, dato che $\mcd{x}{a} = 1$ allora $\mcd{x}{ab} = \mcd{x}{b} = 1$, dunque $x$ è invertibile modulo $ab$, cioè $[x]_{ab} \in \inverses{\Z/(ab)}$, ovvero $f$ è surgettiva.
+        Dato che $[r]_a$ e $[s]_b$ sono invertibili segue che $x$ dovrà essere invertibile modulo $a$ e modulo $b$, dunque $\mcd{x}{a} = \mcd{x}{b} = 1$. Per la proposizione \ref{mcd_togliere_fattori_non_comuni}, dato che $\mcd{x}{a} = 1$ allora $\mcd{x}{ab} = \mcd{x}{b} = 1$, dunque $x$ è invertibile modulo $ab$, cioè $[x]_{ab} \in \invertible{\Z/(ab)}$, ovvero $f$ è surgettiva.
     \end{description}
 
     Dunque $f$ è bigettiva e quindi segue la tesi.
@@ -582,7 +582,7 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \begin{proposition}\label{binomio_pk_divisibile_p}
     Se $p$ è primo, allora per ogni $k$ tale che $0 < k < p$ vale che
     \begin{equation}
-        \binom{p}{k} \equiv 0 \Mod{p}.
+        \binom{p}{k} \congr 0 \Mod{p}.
     \end{equation}
 \end{proposition}
 \begin{proof}
@@ -597,13 +597,13 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     Notiamo che sia $k$ che $p-k$ sono numeri minori di $p$, dunque $k!$ e $(p-k)!$ sono un prodotto di numeri minori di $p$. Ma $p$ è primo, dunque è coprimo con tutti i numeri che non siano un multiplo di $p$ (e quindi è coprimo con tutti i numeri compresi tra $0$ e $p$ esclusi), dunque per la proposizione \ref{prodotto_coprimo_n} $p$ deve essere coprimo anche con $k!$ e con $(p-k)!$. 
     
     Da cio' segue che $p$ non puo' dividere $k!$ e $(p-k)!$.
-    L'ultima possibilità è che $p \divides \binom{p}{k}$, che è equivalente a dire che $\binom{p}{k} \equiv 0 \Mod{p}$.
+    L'ultima possibilità è che $p \divides \binom{p}{k}$, che è equivalente a dire che $\binom{p}{k} \congr 0 \Mod{p}$.
 \end{proof}
 
 \begin{proposition}\label{(x+y)^p_congr_x^p+y^p}
     Siano $x, y, p \in \Z$, $p$ primo. Allora
     \begin{equation}
-        (x+y)^p \equiv x^p + y^p \Mod{p}.
+        (x+y)^p \congr x^p + y^p \Mod{p}.
     \end{equation}
 \end{proposition}
 \begin{proof}
@@ -611,8 +611,8 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     \begin{alignat*}{1}
         (x+y)^p &= \binom{p}{0}x^p + \binom{p}{1}x^{p-1}y^1 + \dots + \binom{p}{i}x^{p-i}y^i + \dots + \binom{p}{p}y^p \\
         \intertext{Ma per la proposizione \ref{binomio_pk_divisibile_p} tutti i termini intermedi di questa somma sono congrui a $0$ modulo $p$, dunque:}
-        &\equiv \binom{p}{0}x^p + \binom{p}{p}y^p \Mod{p}\\
-        &\equiv x^p + y^p \Mod{p}
+        &\congr \binom{p}{0}x^p + \binom{p}{p}y^p \Mod{p}\\
+        &\congr x^p + y^p \Mod{p}
     \end{alignat*}
     come volevasi dimostrare.
 \end{proof}
@@ -620,7 +620,7 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 \begin{corollary}\label{(x_1+x_n)^p_congr_x_1^p+x_n^p}
     Siano $x_1, x_2, \dots, x_n, p \in \Z$, $p$ primo. Allora
     \begin{equation}
-        (x_1+x_2+\dots+x_n)^p \equiv x_1^p + x_2^p + \dots + x_n^p \Mod{p}.
+        (x_1+x_2+\dots+x_n)^p \congr x_1^p + x_2^p + \dots + x_n^p \Mod{p}.
     \end{equation}
 \end{corollary}
 \begin{proof}
@@ -628,16 +628,16 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
     \begin{description}
         \item[Caso base.]
 
-        Sia $n = 1$. Allora $x_1^p \equiv x_1^p \Mod{p}$ ovviamente.
+        Sia $n = 1$. Allora $x_1^p \congr x_1^p \Mod{p}$ ovviamente.
         \item[Passo induttivo.]
         
         Supponiamo che la tesi sia vera per $n-1$ e dimostriamola per $n$.
         \begin{alignat*}{1}
-            (x_1+x_2+\dots+x_n)^p &\equiv ((x_1+x_2+\dots+x_{n-1})+x_n)^p \Mod{p}\\
+            (x_1+x_2+\dots+x_n)^p &\congr ((x_1+x_2+\dots+x_{n-1})+x_n)^p \Mod{p}\\
             \intertext{(per la proposizione \ref{(x+y)^p_congr_x^p+y^p})}
-            &\equiv (x_1+x_2+\dots+x_{n-1})^p+x_n^p\Mod{p}\\
+            &\congr (x_1+x_2+\dots+x_{n-1})^p+x_n^p\Mod{p}\\
             \intertext{(per ipotesi induttiva)}
-            &\equiv x_1^p + x_2^p + \dots + x_{n-1}^p + x_n^p\Mod{p}
+            &\congr x_1^p + x_2^p + \dots + x_{n-1}^p + x_n^p\Mod{p}
         \end{alignat*}
         che è la tesi per $n$.
     \end{description}
@@ -646,27 +646,27 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 
 \begin{theorem}
     [Piccolo Teorema di Fermat] \label{th_fermat}
-    Se $p$ è primo, allora $x^p \equiv x \Mod{p}$.
+    Se $p$ è primo, allora $x^p \congr x \Mod{p}$.
 \end{theorem}
 \begin{proof}
     \begin{alignat*}{1}
-        x^p &\equiv (\overbrace{1 +\dots+ 1}^{x \text{ volte}})^p \Mod{p}\\
+        x^p &\congr (\overbrace{1 +\dots+ 1}^{x \text{ volte}})^p \Mod{p}\\
         \intertext{(per il corollario \ref{(x_1+x_n)^p_congr_x_1^p+x_n^p})}
-        &\equiv \overbrace{1^p +\dots+ 1^p}^{x \text{ volte}} \Mod{p}\\
-        &\equiv \overbrace{1 +\dots+ 1}^{x \text{ volte}} \Mod{p}\\
-        &\equiv x \Mod{p}
+        &\congr \overbrace{1^p +\dots+ 1^p}^{x \text{ volte}} \Mod{p}\\
+        &\congr \overbrace{1 +\dots+ 1}^{x \text{ volte}} \Mod{p}\\
+        &\congr x \Mod{p}
     \end{alignat*}
     che è la tesi.
 \end{proof}
 
 \begin{corollary} \label{corollario_fermat}
-    Se $p$ è primo e $x \nequiv 0 \Mod{p}$ allora $x^{p-1} \equiv 1 \Mod{p}$.
+    Se $p$ è primo e $x \ncongr 0 \Mod{p}$ allora $x^{p-1} \congr 1 \Mod{p}$.
 \end{corollary}
 \begin{proof}
-    Per il piccolo teorema di Fermat (\ref{th_fermat}) vale che $x^p \equiv x \Mod{p}$. Dato che $x \nequiv 0 \Mod{p}$ allora segue che $p$ e $x$ sono coprimi, dunque $x$ è invertibile modulo $p$. Moltiplicando entrambi i membri per l'inverso $x^{-1}$ otteniamo \begin{alignat*}
+    Per il piccolo teorema di Fermat (\ref{th_fermat}) vale che $x^p \congr x \Mod{p}$. Dato che $x \ncongr 0 \Mod{p}$ allora segue che $p$ e $x$ sono coprimi, dunque $x$ è invertibile modulo $p$. Moltiplicando entrambi i membri per l'inverso $x^{-1}$ otteniamo \begin{alignat*}
         {1}
-        &x^px^{-1} \equiv x\cdot x^{-1} \Mod{p}\\
-        \iff &x^{p-1} \equiv 1 \Mod{p}
+        &x^px^{-1} \congr x\cdot x^{-1} \Mod{p}\\
+        \iff &x^{p-1} \congr 1 \Mod{p}
     \end{alignat*}
     che è la tesi.    
 \end{proof}
@@ -675,57 +675,57 @@ Possiamo definire due operazioni in $\Z/(n)$ che sono le operazioni di somma ($+
 
 Iniziamo con un esempio di congruenza esponenziale.
 \begin{example}
-    Trovare tutte le soluzioni di $3^x \equiv 5 \Mod{7}$.
+    Trovare tutte le soluzioni di $3^x \congr 5 \Mod{7}$.
 \end{example}
 \begin{solution}
     Proviamo per tentativi:
     \begin{alignat*}
         {2}
-        &x = 0 \implies &&3^0 \equiv 1 \nequiv 5 \Mod{7}\\
-        &x = 1 \implies &&3^1 \equiv 3 \nequiv 5 \Mod{7}\\
-        &x = 2 \implies &&3^2 \equiv 9 \equiv 2 \nequiv 5 \Mod{7}\\
-        &x = 3 \implies &&3^3 \equiv 3^2 \cdot 3 \equiv 2 \cdot 3 \equiv 6 \nequiv 5 \Mod{7}\\
-        &x = 4 \implies &&3^4 \equiv 3^2 \cdot 3^2 \equiv 2 \cdot 2 \equiv 4 \nequiv 5 \Mod{7}\\
-        &x = 5 \implies &&3^5 \equiv 3^2 \cdot 3^3 \equiv 2 \cdot 6 \equiv 12 \equiv 5 \Mod{7}\\
-        &x = 6 \implies &&3^6 \equiv 3^3 \cdot 3^3 \equiv 6 \cdot 6 \equiv 36 \equiv 1 \nequiv 5 \Mod{7}
+        &x = 0 \implies &&3^0 \congr 1 \ncongr 5 \Mod{7}\\
+        &x = 1 \implies &&3^1 \congr 3 \ncongr 5 \Mod{7}\\
+        &x = 2 \implies &&3^2 \congr 9 \congr 2 \ncongr 5 \Mod{7}\\
+        &x = 3 \implies &&3^3 \congr 3^2 \cdot 3 \congr 2 \cdot 3 \congr 6 \ncongr 5 \Mod{7}\\
+        &x = 4 \implies &&3^4 \congr 3^2 \cdot 3^2 \congr 2 \cdot 2 \congr 4 \ncongr 5 \Mod{7}\\
+        &x = 5 \implies &&3^5 \congr 3^2 \cdot 3^3 \congr 2 \cdot 6 \congr 12 \congr 5 \Mod{7}\\
+        &x = 6 \implies &&3^6 \congr 3^3 \cdot 3^3 \congr 6 \cdot 6 \congr 36 \congr 1 \ncongr 5 \Mod{7}
     \end{alignat*}
-    Dunque $x = 5$ è una soluzione. Non possiamo dire pero' che le soluzioni sono tutti i numeri della forma $x = 5 + 7k$, perché possiamo notiare che i numeri sembrano ripetersi con periodo $6$ e non $7$ (infatti $3^0 \equiv 3^6 \equiv 1 \Mod{7}$). 
+    Dunque $x = 5$ è una soluzione. Non possiamo dire pero' che le soluzioni sono tutti i numeri della forma $x = 5 + 7k$, perché possiamo notiare che i numeri sembrano ripetersi con periodo $6$ e non $7$ (infatti $3^0 \congr 3^6 \congr 1 \Mod{7}$). 
 
     Dimostriamo che se $x = 5$ è soluzione, allora anche $x = 5 +6k$ lo e'. Infatti \[
-        3^{5 + 6k} \equiv 3^5 \cdot 3^{6k} \equiv 3^5 \cdot 1^k \equiv 5 \Mod{7}.
+        3^{5 + 6k} \congr 3^5 \cdot 3^{6k} \congr 3^5 \cdot 1^k \congr 5 \Mod{7}.
     \]
-    Dunque le soluzioni sono tutte le $x$ tali che $x \equiv 5 \Mod{6}$. Questo vale anche per $x$ negativi, ma dobbiamo definire $x^{-1}$ non come $\frac{1}{x}$ ma come l'inverso di $x$ modulo $m$.
+    Dunque le soluzioni sono tutte le $x$ tali che $x \congr 5 \Mod{6}$. Questo vale anche per $x$ negativi, ma dobbiamo definire $x^{-1}$ non come $\frac{1}{x}$ ma come l'inverso di $x$ modulo $m$.
 \end{solution}
 
 \begin{definition}[Ordine moltiplicativo]
-    Siano $a, m \in \Z$, $a \nmid m$. Allora si dice ordine di $a$ modulo $m$ il piu' piccolo intero positivo $\ord{a}{m}$ tale che \begin{equation}
-        a^{\ord{a}{m}} \equiv 1 \Mod{m}.
+    Siano $a, m \in \Z$, $a \ndivides m$. Allora si dice ordine di $a$ modulo $m$ il piu' piccolo intero positivo $\ord{a}{m}$ tale che \begin{equation}
+        a^{\ord{a}{m}} \congr 1 \Mod{m}.
     \end{equation}
 \end{definition}
 
 \begin{remark}
-    Notiamo che $\ord{a}{m}$ deve essere positivo, e dunque in particolare maggiore di $0$. Inoltre la condizione $a \nmid m$, che equivale a $a \nequiv 0 \Mod{m}$ serve ad evitare la congruenza banale $0^x \equiv b \Mod{m}$, che ha soluzione se e solo se $b \equiv 0 \Mod{m}$.
+    Notiamo che $\ord{a}{m}$ deve essere positivo, e dunque in particolare maggiore di $0$. Inoltre la condizione $a \ndivides m$, che equivale a $a \ncongr 0 \Mod{m}$ serve ad evitare la congruenza banale $0^x \congr b \Mod{m}$, che ha soluzione se e solo se $b \congr 0 \Mod{m}$.
 \end{remark}
 
 \begin{proposition}\label{multipli_ord_equiv_1}
-    Siano $a, m \in \Z$, $a \nmid m$. Allora per ogni $k \in \Z$ vale che \begin{equation}
-        a^{k\ord{a}{m}} \equiv 1 \Mod{m}.
+    Siano $a, m \in \Z$, $a \ndivides m$. Allora per ogni $k \in \Z$ vale che \begin{equation}
+        a^{k\ord{a}{m}} \congr 1 \Mod{m}.
     \end{equation}
 \end{proposition}
 \begin{proof}
     \[
-        a^{k\ord{a}{m}} \equiv (a^{\ord{a}{m}})^k \equiv 1^k \equiv 1 \Mod{m}. \qedhere
+        a^{k\ord{a}{m}} \congr (a^{\ord{a}{m}})^k \congr 1^k \congr 1 \Mod{m}. \qedhere
     \]
 \end{proof}
 
 \begin{proposition}\label{solo_multipli_ord_equiv_1}
-    Siano $a, m \in \Z$, $a \nmid m$. Allora \begin{equation}
-        a^x \equiv 1 \Mod{m} \iff x \equiv 0 \Mod{\ord{a}{m}}.
+    Siano $a, m \in \Z$, $a \ndivides m$. Allora \begin{equation}
+        a^x \congr 1 \Mod{m} \iff x \congr 0 \Mod{\ord{a}{m}}.
     \end{equation}
 \end{proposition}
 \begin{proof}
     Per definizione di congruenza 
-    \[x \equiv 0 \Mod{\ord{a}{m}} \iff x \mid \ord{a}{m} \iff x = \ord{a}{m}\cdot k\] 
+    \[x \congr 0 \Mod{\ord{a}{m}} \iff x \divides \ord{a}{m} \iff x = \ord{a}{m}\cdot k\] 
     per qualche $k \in \Z$.
 
     Per l'unicità del resto della divisione euclidea (\ref{esistenza_resto}) possiamo scrivere che $x = q\ord{a}{m} + r$ per qualche $q, r \in \Z$ con $0 \leq r < \ord{a}{m}$. Questo è equivalente a dire \begin{alignat*}
@@ -738,48 +738,48 @@ Iniziamo con un esempio di congruenza esponenziale.
         \intertext{che equivale a}
         &\begin{alignedat}
             {1}
-            a^x &\equiv a^{q\ord{a}{m}}\cdot a^r \Mod{m} \\
-            &\equiv 1 \cdot a^r \Mod{m}\\
-            &\equiv a^r \Mod{m}
+            a^x &\congr a^{q\ord{a}{m}}\cdot a^r \Mod{m} \\
+            &\congr 1 \cdot a^r \Mod{m}\\
+            &\congr a^r \Mod{m}
         \end{alignedat}
     \end{alignat*}
-    dove abbiamo sfruttato la proposizione \ref{multipli_ord_equiv_1} per dire che $a^{q\ord{a}{m}}\equiv 1 \Mod{m}$.
+    dove abbiamo sfruttato la proposizione \ref{multipli_ord_equiv_1} per dire che $a^{q\ord{a}{m}}\congr 1 \Mod{m}$.
 
-    Dunque dato che $a^x \equiv a^r \Mod{m}$ segue che $a^x \equiv 1 \Mod{m}$ se e solo se $a^r \equiv 1 \Mod{m}$. Ma $r < \ord{a}{m}$, dunque se $r$ fosse maggiore di $0$ avremmo trovato un numero minore di $\ord{a}{m}$ per cui $a^r \equiv 1 \Mod{m}$, che è assurdo poiché va contro la minimalità di $\ord{a}{m}$.
+    Dunque dato che $a^x \congr a^r \Mod{m}$ segue che $a^x \congr 1 \Mod{m}$ se e solo se $a^r \congr 1 \Mod{m}$. Ma $r < \ord{a}{m}$, dunque se $r$ fosse maggiore di $0$ avremmo trovato un numero minore di $\ord{a}{m}$ per cui $a^r \congr 1 \Mod{m}$, che è assurdo poiché va contro la minimalità di $\ord{a}{m}$.
 
-    Segue che $r = 0$, cioè $x = q\ord{a}{m}$, cioè equivalentemente $x \equiv 0 \Mod{\ord{a}{m}}$, come volevasi dimostrare.
+    Segue che $r = 0$, cioè $x = q\ord{a}{m}$, cioè equivalentemente $x \congr 0 \Mod{\ord{a}{m}}$, come volevasi dimostrare.
 \end{proof}
 
 \begin{proposition}[Soluzione di una congruenza esponenziale]
-    Siano $a, b, m \in \Z$, $a \nmid m$. Se $x_0 \in \Z$ è una soluzione di $a^x \equiv b \Mod{m}$ allora le soluzioni sono tutte e solo della forma \begin{equation}
-        x \equiv x_0 \Mod{\ord{a}{m}}.
+    Siano $a, b, m \in \Z$, $a \ndivides m$. Se $x_0 \in \Z$ è una soluzione di $a^x \congr b \Mod{m}$ allora le soluzioni sono tutte e solo della forma \begin{equation}
+        x \congr x_0 \Mod{\ord{a}{m}}.
     \end{equation}
 \end{proposition}
 \begin{proof}
     Dimostriamo che se $x = x_0 + k\ord{a}{m}$ allora $x$ è soluzione.
     \begin{alignat*}
         {1}
-        a^{x_0 + k\ord{a}{m}} &\equiv a^{x_0}a^{k\ord{a}{m}} \Mod{m} \\
-        &\equiv b \cdot 1 \Mod{m} \\
-        &\equiv b \Mod{m}.
+        a^{x_0 + k\ord{a}{m}} &\congr a^{x_0}a^{k\ord{a}{m}} \Mod{m} \\
+        &\congr b \cdot 1 \Mod{m} \\
+        &\congr b \Mod{m}.
     \end{alignat*}
-    Dimostriamo ora che se $x$ è soluzione, allora $x \equiv x_0 \Mod{\ord{a}{m}}$, cioè equivalentemente $x - x_0 = k\ord{a}{m}$.
+    Dimostriamo ora che se $x$ è soluzione, allora $x \congr x_0 \Mod{\ord{a}{m}}$, cioè equivalentemente $x - x_0 = k\ord{a}{m}$.
     \begin{alignat*}
         {1}
-        a^{x - x_0} &\equiv a^{x}a^{-x_0} \Mod{m} \\
-        &\equiv b \cdot b^{-1} \Mod{m} \\
-        &\equiv 1 \Mod{m}.
+        a^{x - x_0} &\congr a^{x}a^{-x_0} \Mod{m} \\
+        &\congr b \cdot b^{-1} \Mod{m} \\
+        &\congr 1 \Mod{m}.
     \end{alignat*}
-    Ma per la proposizione \ref{solo_multipli_ord_equiv_1} $a^{x - x_0} \equiv 1 \Mod{m}$ se e solo se $x - x_0 \equiv 0 \Mod{\ord{a}{m}}$, cioè se e solo se $x \equiv x_0 \Mod{\ord{a}{m}}$, che è la tesi.
+    Ma per la proposizione \ref{solo_multipli_ord_equiv_1} $a^{x - x_0} \congr 1 \Mod{m}$ se e solo se $x - x_0 \congr 0 \Mod{\ord{a}{m}}$, cioè se e solo se $x \congr x_0 \Mod{\ord{a}{m}}$, che è la tesi.
 \end{proof}
 
 \begin{proposition}[L'ordine è un divisore di $p-1$]
-    Siano $a, p \in \Z$, $a \nmid p$, $p$ primo. Allora vale che $\ord{a}{p} \divides p-1$.
+    Siano $a, p \in \Z$, $a \ndivides p$, $p$ primo. Allora vale che $\ord{a}{p} \divides p-1$.
 \end{proposition}
 \begin{proof}
-    Per il corollario al piccolo teorema di Fermat (\ref{corollario_fermat}) sappiamo che $a^{p-1} \equiv 1 \Mod{p}$, cioè $p-1$ è una soluzione dell'equazione $a^x \equiv 1 \Mod{p}$. 
+    Per il corollario al piccolo teorema di Fermat (\ref{corollario_fermat}) sappiamo che $a^{p-1} \congr 1 \Mod{p}$, cioè $p-1$ è una soluzione dell'equazione $a^x \congr 1 \Mod{p}$. 
     
-    Per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $p-1 \equiv 0 \Mod{\ord{a}{p}}$, cioè $\ord{a}{p} \mid p-1$, che è la tesi.
+    Per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $p-1 \congr 0 \Mod{\ord{a}{p}}$, cioè $\ord{a}{p} \divides p-1$, che è la tesi.
 \end{proof}
 
 Dunque se dobbiamo trovare l'ordine di un numero $a$ modulo un primo $p$ ci basta provare tutti i divisori di $p - 1$ fino a quando non troviamo il minimo divisore che soddisfa la proprietà.
@@ -790,23 +790,23 @@ Per risolvere congruenze esponenziali modulo un numero $n \in \Z$ non primo sfru
 
 \begin{theorem}
     [Teorema di Eulero] \label{th_Eulero}
-    Siano $a, n \in \Z$ con $a$ invertibile modulo $n$. Allora $a^{\varphi(n)} \equiv 1 \Mod{n}$.
+    Siano $a, n \in \Z$ con $a$ invertibile modulo $n$. Allora $a^{\varphi(n)} \congr 1 \Mod{n}$.
 \end{theorem}
 \begin{proof}
-    Consideriamo l'insieme delle classi resto invertibili modulo $n$, chiamato $\inverses{\Z/(n)}$ e sia $k = \varphi(n)$. Dato che $\varphi(n) = \abs{\inverses{\Z/(n)}}$, questo insieme avrà esattamente $k$ elementi. Indichiamoli con \[
-        \inverses{\Z/(n)} = \{[b_1]_n, \dots, [b_k]_n\}.   
+    Consideriamo l'insieme delle classi resto invertibili modulo $n$, chiamato $\invertible{\Z/(n)}$ e sia $k = \varphi(n)$. Dato che $\varphi(n) = \abs{\invertible{\Z/(n)}}$, questo insieme avrà esattamente $k$ elementi. Indichiamoli con \[
+        \invertible{\Z/(n)} = \{[b_1]_n, \dots, [b_k]_n\}.   
     \]
-    Inoltre dato che $a$ è invertibile modulo $n$ segue che $[a]_n \in \inverses{\Z/(n)}$. 
+    Inoltre dato che $a$ è invertibile modulo $n$ segue che $[a]_n \in \invertible{\Z/(n)}$. 
 
-    Moltiplichiamo ora ogni elemento di $\inverses{\Z/(n)}$ per $[a]_n$, ottenendo l'insieme \[
-        \inverses{a\Z/(n)} = \{[a]_n[b_1]_n, \dots, [a]_n[b_k]_n\} = \{[ab_1]_n, \dots, [ab_k]_n\}.
+    Moltiplichiamo ora ogni elemento di $\invertible{\Z/(n)}$ per $[a]_n$, ottenendo l'insieme \[
+        \invertible{a\Z/(n)} = \{[a]_n[b_1]_n, \dots, [a]_n[b_k]_n\} = \{[ab_1]_n, \dots, [ab_k]_n\}.
     \]
-    Per la proposizione \ref{prodotto_invertibili_invertibile} dato che $[a]_n$ e tutti i $[b_i]_n$ sono invertibili, allora anche i prodotti saranno invertibili. Dunque l'insieme $\inverses{a\Z/(n)}$ contiene solo numeri invertibili modulo $n$, quindi deve essere un sottoinsieme di $\inverses{\Z/(n)}$.
+    Per la proposizione \ref{prodotto_invertibili_invertibile} dato che $[a]_n$ e tutti i $[b_i]_n$ sono invertibili, allora anche i prodotti saranno invertibili. Dunque l'insieme $\invertible{a\Z/(n)}$ contiene solo numeri invertibili modulo $n$, quindi deve essere un sottoinsieme di $\invertible{\Z/(n)}$.
 
-    Se dimostriamo che tutti gli elementi di $\inverses{a\Z/(n)}$ sono distinti, allora $\inverses{a\Z/(n)}$ è un sottoinsieme di $\inverses{\Z/(n)}$ con il suo stesso numero di elementi, cioè i due insiemi devono essere uguali.
+    Se dimostriamo che tutti gli elementi di $\invertible{a\Z/(n)}$ sono distinti, allora $\invertible{a\Z/(n)}$ è un sottoinsieme di $\invertible{\Z/(n)}$ con il suo stesso numero di elementi, cioè i due insiemi devono essere uguali.
 
     \begin{description}
-        \item[Gli elementi di $\inverses{a\Z/(n)}$ sono tutti distinti.] Supponiamo per assurdo che esistano $[b_i]_n, [b_j]_n \in \inverses{\Z/(n)}$ con $[b_i]_n \neq [b_j]_n$ tali che \[
+        \item[Gli elementi di $\invertible{a\Z/(n)}$ sono tutti distinti.] Supponiamo per assurdo che esistano $[b_i]_n, [b_j]_n \in \invertible{\Z/(n)}$ con $[b_i]_n \neq [b_j]_n$ tali che \[
             [ab_i]_n = [ab_j]_n.
         \]
         Dato che $[a]_n$ è invertibile, allora esisterà $[a^{-1}]_n$ che è l'inverso di $[a]_n$. Moltiplicando entrambi i membri per $[a^{-1}]_n$ otterremo: \begin{alignat*}
@@ -815,20 +815,20 @@ Per risolvere congruenze esponenziali modulo un numero $n \in \Z$ non primo sfru
             \iff &[a^{-1}ab_i]_n = [a^{-1}ab_j]_n \\
             \iff &[b_i]_n = [b_j]_n 
         \end{alignat*}
-        che è assurdo in quanto abbiamo supposto $[b_i]_n \neq [b_j]_n$. Segue quindi che tutti gli elementi in $\inverses{a\Z/(n)}$ sono distinti.
+        che è assurdo in quanto abbiamo supposto $[b_i]_n \neq [b_j]_n$. Segue quindi che tutti gli elementi in $\invertible{a\Z/(n)}$ sono distinti.
     \end{description}
 
-    Dunque gli insiemi $\inverses{\Z/(n)}$ e $\inverses{a\Z/(n)}$ sono uguali, dunque anche il prodotto di tutti i loro elementi dovrà essere uguale.
+    Dunque gli insiemi $\invertible{\Z/(n)}$ e $\invertible{a\Z/(n)}$ sono uguali, dunque anche il prodotto di tutti i loro elementi dovrà essere uguale.
     \begin{alignat*}
         {1}
         &[ab_1]_n[ab_2]_n\cdots [ab_k]_n = [b_1]_n[b_2]_n\cdots [b_k]_n\\
         \iff &[ab_1 \cdot ab_2 \cdots ab_k]_n = [b_1b_2\cdots b_k]_n\\
         \intertext{Per definizione di uguaglianza tra classi di resto modulo $n$:}
-        \iff &ab_1 \cdot ab_2 \cdots ab_k \equiv b_1b_2\cdots b_k \Mod{n} \\
-        \iff &(\overbrace{a\cdot a \cdots a}^{k \text{ volte}}) \cdot (b_1b_2\cdots b_k) \equiv (b_1b_2\cdots b_k) \Mod{n}\\
+        \iff &ab_1 \cdot ab_2 \cdots ab_k \congr b_1b_2\cdots b_k \Mod{n} \\
+        \iff &(\overbrace{a\cdot a \cdots a}^{k \text{ volte}}) \cdot (b_1b_2\cdots b_k) \congr (b_1b_2\cdots b_k) \Mod{n}\\
         \intertext{Per invertibilità di $b_1$, $b_2, \dots, b_k$:}
-        \iff &a^k \equiv 1 \Mod{n}\\
-        \iff &a^{\varphi(n)} \equiv 1 \Mod{n}
+        \iff &a^k \congr 1 \Mod{n}\\
+        \iff &a^{\varphi(n)} \congr 1 \Mod{n}
     \end{alignat*}
     che è la tesi.
 \end{proof}
@@ -839,7 +839,7 @@ Per risolvere congruenze esponenziali modulo un numero $n \in \Z$ non primo sfru
     \]
 \end{proposition}
 \begin{proof}
-    Per il teorema di Eulero (\ref{th_Eulero}) sappiamo che $a^{\varphi(n)} \equiv 1 \Mod{n}$, ovvero $\varphi(n)$ è una soluzione dell'equazione $a^x \equiv 1 \Mod{n}$. 
+    Per il teorema di Eulero (\ref{th_Eulero}) sappiamo che $a^{\varphi(n)} \congr 1 \Mod{n}$, ovvero $\varphi(n)$ è una soluzione dell'equazione $a^x \congr 1 \Mod{n}$. 
     
-    Dunque per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $\varphi(n) \equiv 0 \Mod{\ord{a}{n}}$, ovvero $\ord{a}{n} \divides \varphi(n)$.
+    Dunque per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $\varphi(n) \congr 0 \Mod{\ord{a}{n}}$, ovvero $\ord{a}{n} \divides \varphi(n)$.
 \end{proof}

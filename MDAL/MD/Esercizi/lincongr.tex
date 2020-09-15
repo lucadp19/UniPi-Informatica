@@ -1,0 +1,86 @@
+\chapter{Congruenze lineari}
+
+\section{Teoremi e definizioni utili}
+
+\begin{definition}
+    [Congruenza lineare]
+
+    Siano $a, b, n \in \Z$, $n > 0$. Allora la congruenza \[
+        ax \congr b \Mod n    
+    \] si dice congruenza lineare.
+\end{definition}
+
+\begin{proposition}
+    [Condizione necessaria e sufficiente per la risolubilita']
+    \label{cond_risolubilita'}
+    Siano $a, b, n \in \Z$, $n > 0$. Allora la congruenza \[
+        ax \congr b \Mod n    
+    \] ha soluzione se e solo se $\mcd{a}{n} \divides b$.
+\end{proposition}
+
+\begin{definition}[Invertibilità e inverso]
+    Siano $a \in \Z$.
+    
+    Allora si dice che $a$ è invertibile modulo $n$ se esiste  $y \in \Z$ tale che \[
+        ay \congr 1 \Mod{n}
+    .\]
+
+    In particolare tra tutti gli $y$ che soddisfano la relazione precedente, il numero $y$ tale che $0 \leq y < n$ si dice inverso di $a$ modulo $n$.
+\end{definition}
+
+\begin{proposition}
+    [Condizione necessaria e sufficiente per l'invertibilità]
+    Siano $a, n \in \Z$, $n > 0$. 
+    
+    Allora $a$ è invertibile modulo $n$ se e solo se $\mcd{a}{n} \divides 1$.
+\end{proposition}
+
+\begin{proposition}[Risoluzione di una congruenza lineare] \label{risoluzione_congr_lineare}
+    Siano $a, b, n \in \Z$, $n > 0$. 
+    
+    Allora per risolvere l'equazione $ax \congr b \Mod{n}$ possiamo ricondurci ad uno dei seguenti tre casi:
+    \begin{description}
+        \item[$(1):\ \mcd{a}{n} = 1$.] L'equazione ha soluzione \[
+            x \congr by \Mod{n},   
+        \] dove $y$ è l'inverso di $a$ modulo $n$;
+        \item[$(2):\ \mcd{a}{n} \divides b$.]L'equazione è equivalente all'equazione \[
+            \frac{a}{d} x \congr \frac{b}{d} \Mod{\frac{n}{d}};
+        \]
+        \item[$(3):\ \mcd{a}{n} \ndivides b$.] L'equazione non ha soluzione.
+    \end{description}
+\end{proposition}
+
+\section{Esercizi}
+
+\begin{example}
+    Proviamo a risolvere la congruenza \[
+        57x \congr 81 \Mod{ 21}.
+    \]
+
+    Innanzitutto notiamo che il coefficiente della $x$ e il termine noto sono maggiori del modulo, dunque possiamo semplificarli: \begin{align*}
+        &57 = 2\cdot 21 + 15 \implies 57 \congr 15 \Mod{ 21}\\
+        &81 = 3\cdot 21 + 18 \implies 57 \congr 18 \Mod{ 21}
+    \end{align*}
+
+    La congruenza diventa quindi \[
+        15x \congr 18 \Mod{ 21}.    
+    \]
+    Notiamo che $\mcd{15}{21} = 3 \divides 18$, quindi la congruenza ha soluzione (per la proposizione \ref{cond_risolubilita'}) e possiamo applicare la regola $(ii)$ della proposizione \label{risoluzione_congr_lineare}, ottenendo \[
+        5x \congr 6 \Mod 7.    
+    \]
+
+    A questo punto $\mcd{5}{7} = 1$, dunque $5$ e' invertibile modulo $7$ e possiamo trovare l'inverso a tentativi (dato che $7$ e' piccolo).
+    \begin{align*}
+        &5 \cdot 1 \congr 5 \ncongr 1 \Mod 7\\
+        &5 \cdot 2 \congr 10 \congr 3 \ncongr 1 \Mod 7\\
+        &5 \cdot 3 \congr 15 \congr 1 \Mod 7
+    \end{align*}
+    dunque $3$ e' l'inverso di $5$ modulo $7$. 
+    
+    Moltiplicando entrambi i membri dell'equazione per $3$ otteniamo quindi \begin{align*}
+        &3 \cdot 5x \congr 6 \cdot 3 \Mod 7\\
+        \iff & x \congr 18 \congr 4 \Mod 7.
+    \end{align*}
+
+    La soluzione della congruenza e' quindi $x \congr 4 \Mod 7$.
+\end{example}

@@ -61,10 +61,10 @@ Nel seguito indicheremo con $A$ un anello generico (come $\Z$, $\Z/(n)$ con $n$ 
 \begin{remark}
     I polinomi di grado $1$ potrebbero non avere radici in un anello $A$. Ad esempio sia $p(x) \in \Z/(8)$, $p(x) = -3 + 4x$. Allora \begin{alignat*}
         {1}
-        &4x - 3\equiv 0 \Mod{8} \\
-        \iff &4x \equiv 3 \Mod{8}
+        &4x - 3\congr 0 \Mod{8} \\
+        \iff &4x \congr 3 \Mod{8}
     \end{alignat*}
-    che non ha soluzioni in quanto $\mcd{4}{8} \nmid 3$.
+    che non ha soluzioni in quanto $\mcd{4}{8} \ndivides 3$.
 \end{remark}
 
 \begin{remark}
@@ -373,23 +373,23 @@ Un modo equivalente di esprimere la proposizione sopra è dire che ogni polinomi
         \iff a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n = 0.
     \]
     Se vale l'uguaglianza, allora i due membri saranno anche congrui modulo $d$: \[
-        a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n \equiv 0 \Mod{d}.
+        a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n \congr 0 \Mod{d}.
     \]
     Tutti i termini tranne l'ultimo contengono una potenza di $d$, dunque:
     \begin{align*}
-        \iff &a_nc^n \equiv 0 \Mod{d} \\
+        \iff &a_nc^n \congr 0 \Mod{d} \\
         \intertext{Dato che $\mcd{c}{d} = 1$, allora $c^n$ è invertibile modulo $d$)}
-        \iff &a_n \equiv 0 \Mod{d}\\
+        \iff &a_n \congr 0 \Mod{d}\\
         \iff &d \divides a_n.
     \end{align*}
 
     Consideriamo ora la congruenza modulo $c$: \[
-        a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n \equiv 0 \Mod{c}.
+        a_0d^n + a_1cd^{n-1} + \dots + a_{n-1}c^{n-1}d + a_nc^n \congr 0 \Mod{c}.
     \]
     Per lo stesso ragionamento segue che:
     \begin{align*}
-        \iff &a_0d^n \equiv 0 \Mod{c}\\
-        \iff &a_0 \equiv 0 \Mod{c} \\
+        \iff &a_0d^n \congr 0 \Mod{c}\\
+        \iff &a_0 \congr 0 \Mod{c} \\
         \iff &c \divides a_0. \qedhere
     \end{align*}
 \end{proof}
@@ -410,18 +410,18 @@ Per il Lemma di Gauss dunque se vogliamo cercare la fattorizzazione di un polino
     Sia $p$ un primo tale che $f_p(x)$ è irriducibile in $\Z/(p)[x]$. Supponiamo per assurdo che $f(x)$ sia riducibile in $\Z[x]$. Per definizione esisteranno $g(x), h(x) \in \Z[x]$ tali che $f(x) = g(x)h(x)$.
 
     Siano $g_p(x), h_p(x) \in \Z/(p)[x]$ le riduzioni modulo $p$ di $g(x), h(x)$. Per definizione di riduzione modulo $p$ dovrà essere \begin{align*}
-        f(x) \equiv f_p(x) \Mod{p}, &&g(x) \equiv g_p(x) \Mod{p}, &&h(x) \equiv h_p(x) \Mod{p}
+        f(x) \congr f_p(x) \Mod{p}, &&g(x) \congr g_p(x) \Mod{p}, &&h(x) \congr h_p(x) \Mod{p}
     \end{align*} da cui segue \[
-        f_p(x) \equiv f(x) \equiv g(x)h(x) \equiv g_p(x)h_p(x) \Mod{p}    
+        f_p(x) \congr f(x) \congr g(x)h(x) \congr g_p(x)h_p(x) \Mod{p}    
     \] ovvero che $f_p(x) = g_p(x) \cdot h_p(x)$ in $\Z/(p)[x]$. Ma questo è assurdo in quanto per ipotesi $f_p(x)$ è irriducibile in $\Z/(p)[x]$, dunque $f(x)$ dovrà essere irriducibile in $\Z[x]$.
 \end{proof}
 
 \begin{proposition}
     [Criterio di Eisenstein] \label{criterio_eisenstein}
     Sia $f(x) \in \Z[x]$ tale che $f(x) = a_0 + \dots + a_nx^n$. Allora se esiste un primo $p \in \Z$ tale che \begin{itemize}
-        \item $a_0 \equiv a_1 \equiv \dots \equiv a_{n-1} \Mod{p}$;
-        \item $p \nmid a_n$;
-        \item $p^2 \nmid a_0$
+        \item $a_0 \congr a_1 \congr \dots \congr a_{n-1} \Mod{p}$;
+        \item $p \ndivides a_n$;
+        \item $p^2 \ndivides a_0$
     \end{itemize}
     allora $f$ è irriducibile in $\Z[x]$.
 \end{proposition}
@@ -440,7 +440,7 @@ Per il Lemma di Gauss dunque se vogliamo cercare la fattorizzazione di un polino
         g_p(x) = kx^r, h_p(x) = hx^{n-r}    
     \] con $k, r \in \Z/(p)$, $k, r$ entrambi diversi da $0$.
 
-    Notiamo che $g_p(0) = h_p(0) = 0$, che in $\Z/(p)$ significa che $g(0) \equiv h(0) \equiv 0 \Mod{p}$, cioè $p \divides g(0)$, $p \divides h(0)$. Ma questo significa che $p^2 \divides g(0)h(0)$, ovvero $p^2 \divides a_0$, che è assurdo poiché abbiamo assunto che $p^2 \nmid a_0$.
+    Notiamo che $g_p(0) = h_p(0) = 0$, che in $\Z/(p)$ significa che $g(0) \congr h(0) \congr 0 \Mod{p}$, cioè $p \divides g(0)$, $p \divides h(0)$. Ma questo significa che $p^2 \divides g(0)h(0)$, ovvero $p^2 \divides a_0$, che è assurdo poiché abbiamo assunto che $p^2 \ndivides a_0$.
 
     Dunque segue che $f(x)$ non è fattorizzabile in $\Z[x]$, che è la tesi.
 \end{proof}
@@ -478,8 +478,8 @@ Per il Lemma di Gauss dunque se vogliamo cercare la fattorizzazione di un polino
     Applichiamo il criterio di Eisenstein col primo $p$:
     \begin{itemize}
         \item per la proposizione $\ref{binomio_pk_divisibile_p}$ segue che tutti i coefficienti tranne il coefficiente direttore sono congrui a $0$ modulo $p$;
-        \item dato che il coefficiente direttore è $1$, segue che $p \nmid 1$;
-        \item il termine noto è $\binom{p}{p-1} = p$, dunque $p^2 \nmid p$.
+        \item dato che il coefficiente direttore è $1$, segue che $p \ndivides 1$;
+        \item il termine noto è $\binom{p}{p-1} = p$, dunque $p^2 \ndivides p$.
     \end{itemize}
     Per il criterio di Eisenstein (\ref{criterio_eisenstein}) dunque il polinomio $f(x+1)$ non è fattorizzabile in $\Z[x]$, dunque per il criterio di sostituzione neanche $f(x)$ lo è. 
 \end{proof}

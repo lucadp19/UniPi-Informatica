@@ -6,6 +6,7 @@
     \usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm}
     \usepackage{array, multicol}
     \usepackage{centernot}
+    \usepackage{faktor}
 
     \usepackage{enumerate}
     \usepackage{float}
@@ -15,7 +16,7 @@
     \LetLtxMacro\amsendproof\endproof
 
     
-    \usepackage[pdfspacing]{classicthesis}
+    \usepackage[pdfspacing, eulermath]{classicthesis}
     % \usepackage{lmodern}
     
     \usepackage{thmtools}
@@ -47,6 +48,7 @@
     % mdframed={backgroundcolor=halfgray},
     headpunct={\vspace{0.5\topsep}\newline}
 ]{thmstyle}
+\declaretheorem[name=, numberwithin=section, style=thmstyle]{principle}
 \declaretheorem[name=Teorema, numberwithin=section, style=thmstyle]{theorem}
 \declaretheorem[name=Corollario, sibling=theorem, style=thmstyle]{corollary}
 \declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
@@ -96,10 +98,16 @@
 \newcolumntype{o}{@{}>{{}}c<{{}}@{}}
 
 % Set related symbols
+\newcommand{\set}[1]{\left\{\;#1\;\right\}}
 \newcommand{\union}{\cup}
 \newcommand{\inters}{\cap}
 \newcommand{\suchthat}{\,\mid\,} % oppure con {:}
 \DeclareMathOperator{\tc}{\text{ tale che }}
+
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\rho}{\varrho}
+\renewcommand{\phi}{\varphi}
 
 \let\oldre\Re
 \let\oldim\Im
@@ -107,11 +115,14 @@
 \renewcommand{\Im}[1]{\operatorname{Im}(#1)}
 \newcommand{\conj}[1]{\overline{#1}}
 
+\newcommand{\deq}{:=}
+\newcommand{\iseq}{\overset{?}{=}}
+\newcommand{\seteq}{\overset{!}{=}}
+\newcommand{\divides}{\mid} % divide esattamente
+\newcommand{\ndivides}{\centernot\mid} % non divide esattamente
+\newcommand{\congr}{\equiv} % congruo 
+\newcommand{\ncongr}{\not\congr} % non congruo
 
-\newcommand{\divides}{\mid}
-\newcommand{\ndivides}{\centernot\mid}
-\newcommand{\congr}{\equiv}
-\newcommand{\ncongr}{\not\equiv}
 \newcommand{\Mod}[1]{\ \left(#1\right)}
 \newcommand{\mcm}[2]{\operatorname{mcm}\!\left(#1, #2\right)}
 \newcommand{\mcd}[2]{\operatorname{mcd}\!\left(#1, #2\right)}
@@ -129,6 +140,7 @@
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zmod}[1]{\faktor{\Z}{/#1\Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
@@ -138,15 +150,12 @@
 \begin{document}
 
 \author{Luca De Paulis}
-\title{Matematica Discreta}
+\title{Esercizi di Matematica Discreta}
 \maketitle
 
 \tableofcontents
 
-\include{chapter_1}
-\include{chapter_2_divisori}
-\include{chapter_3_congruenze}
-\include{chapter_4_combinatoria}
-\include{chapter_5_polinomi}
+\include{lincongr}
+
 
 \end{document}

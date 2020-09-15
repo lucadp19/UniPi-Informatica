@@ -299,7 +299,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     Se $p$ è primo e $p \divides ab$, allora $p \divides a$ oppure $p \divides b$.
 \end{proposition}
 \begin{proof}
-    Supponiamo $p \nmid a$. Dato che $p$ è primo, $\mcd{a}{p} = 1$ oppure $p$.
+    Supponiamo $p \ndivides a$. Dato che $p$ è primo, $\mcd{a}{p} = 1$ oppure $p$.
     Tuttavia se $\mcd{a}{p} = p$ allora $p \divides a$, che va contro l'ipotesi, dunque 
     $\mcd{a}{p} = 1$. Per la proposizione \ref{n_divides_product} allora $p \divides b$, che è la tesi.
 \end{proof}
@@ -445,7 +445,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
         {1}
         &p^k \divides \mcd{a}{xy} \\ 
         \iff &p^k \divides a \land p^k \divides xy\\
-        \intertext{ma $p^k \nmid x$ dunque per la \ref{n_divides_product}}
+        \intertext{ma $p^k \ndivides x$ dunque per la \ref{n_divides_product}}
         \iff &p^k \divides a \land p^k \divides y \\
         \iff &p^k \divides \mcd{a}{y}.
     \end{alignat*}
@@ -527,7 +527,7 @@ Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle prop
     Siano $a, b, c \in \Z$. Allora l'equazione diofantea $ax + by = c$ ammette soluzioni se e solo se $\mcd{a}{b} \divides c$.
 \end{theorem}
 \begin{proof}
-    Dimostriamo prima che se $\mcd{a}{b} \divides c$ allora esistono soluzioni di $ax + by = c$ e poi dimostriamo che se $\mcd{a}{b} \nmid c$ allora l'equazione $ax + by = c$ non ha soluzioni.
+    Dimostriamo prima che se $\mcd{a}{b} \divides c$ allora esistono soluzioni di $ax + by = c$ e poi dimostriamo che se $\mcd{a}{b} \ndivides c$ allora l'equazione $ax + by = c$ non ha soluzioni.
     \begin{itemize}
         \item Supponiamo che $c = k\mcd{a}{b}$ per qualche $k \in \Z$. Allora per il teorema di Bezout \ref{bezout} esistono $x', y^\prime \in \Z$ tali che $ax^\prime + by^\prime = \mcd{a}{b}$. Moltiplicando  entrambi i membri per $k$ otteniamo
         \begin{alignat*}{2} 

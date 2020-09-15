@@ -9,7 +9,7 @@ Ad esempio se $A = \left\{ 4, 1, 5, 7, 9\right\}$ allora $\abs{A} = 5$.
 
 \begin{definition}[Prodotto cartesiano]
     Siano $A$, $B$ due insiemi. Allora si dice prodotto cartesiano di $A$ e di $B$ l'insieme $A \times B$ tale che \[
-        A \times B = \left\{ (a, b) \mid a \in A, b \in B\right\}   
+        A \times B = \left\{ (a, b) \suchthat a \in A, b \in B\right\}   
     .\]
 \end{definition}
 Il prodotto cartesiano di due insiemi è quindi l'insieme delle coppie ordinate $(a, b)$ dove il primo elemento appartiene al primo insieme e il secondo appartiene al secondo insieme. 
@@ -112,7 +112,7 @@ Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni s
 
 \begin{definition}
     Sia $A$ un insieme. Allora si dice insieme delle parti di $A$ l'insieme $\mathcal{P}(A)$ tale che \[
-        \mathcal{P}(A) = \left\{ X \mid X \subseteq A\right\}    
+        \mathcal{P}(A) = \left\{ X \suchthat X \subseteq A\right\}    
     .\]
 \end{definition}
 
@@ -422,10 +422,10 @@ Dunque per $n$ insiemi si sommano le cardinalità degli insiemi, poi si sottragg
     Definiamo il seguente insieme: 
     \begin{alignat*}{1}
         F_i &\coloneqq \text{ insieme delle funzioni $f : \N_4 \to \N_3$ tali che $i \in \Imm{f}$} \\
-        &= \{ f \mid f : \N_4 \to \N_3, i \in \Imm{f}\}\\
+        &= \{ f \suchthat f : \N_4 \to \N_3, i \in \Imm{f}\}\\
         \intertext{e dunque il suo complementare}
         \compl{F_i} &\coloneqq \text{ insieme delle funzioni $f : \N_4 \to \N_3$ tali che $i \notin \Imm{f}$} \\
-        &= \{ f \mid f : \N_4 \to \N_3, i \notin \Imm{f}\}.
+        &= \{ f \suchthat f : \N_4 \to \N_3, i \notin \Imm{f}\}.
     \end{alignat*}
     L'insieme delle funzioni $f : \N_4 \to \N_3$ surgettive è l'insieme delle funzioni tali che $1, 2, 3, \in \Imm{f}$, cioè è dato da $F_1 \cap F_2 \cap F_2$. Per De Morgan: \[
         \abs{F_1 \cap F_2 \cap F_2} = \abs{U} - \abs{\compl{(F_1 \cap F_2 \cap F_2)}}  = \abs{U} - \abs{\compl{F_1} \cup \compl{F_2} \cup \compl{F_3}},
