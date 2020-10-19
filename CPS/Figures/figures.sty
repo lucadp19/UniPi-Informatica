@@ -1,0 +1,17 @@
+\usepackage{pgfplots}
+% \pgfplotsset{compat=1.17}
+
+\pgfplotsset{every axis/.append style={
+    axis x line=middle,    % put the x axis in the middle
+    axis y line=middle,    % put the y axis in the middle
+    axis line style={->}, % arrows on the axis
+    xlabel={$x$},          % default put x on x-axis
+    ylabel={$y$},          % default put y on y-axis
+    },
+    dashed/.style={color=black,mark=none,line width=0.5pt,dash pattern=on 2pt off 1pt},
+    cmhplot/.style={color=red,mark=none,line width=1pt},
+    soldot/.style={color=red,only marks,mark=*},
+    holdot/.style={color=red,fill=white,only marks,mark=*},
+}
+
+\tikzset{>=stealth}

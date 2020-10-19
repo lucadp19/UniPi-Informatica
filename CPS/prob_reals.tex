@@ -1,0 +1,95 @@
+\section{Probabilità sulla retta reale}
+
+Se il nostro insieme $\Omega$ è l'insieme $\R$ dei numeri reali, possiamo definire diversi tipi di probabilità.
+
+\subsubsection{Probabilità discreta}
+Il primo tipo di probabilità che possiamo definire su $\R$ è la \emph{probabilità discreta}: dato un insieme finito o numerabile di punti $(x_i)_{i \in \N}$ poniamo \[
+    p(x_i) \deq \Prob{\set{x_i}}.    
+\] Siccome vogliamo definire la nostra probabilità in modo che questi sottoinsiemi siano gli unici non trascurabili, imponiamo inoltre che \[
+    \sum_{i \in \N} p(x_i) = 1.    
+\] 
+
+La probabilità è quindi \emph{concentrata} in un insieme numerabile di punti: dato $A \subseteq \R$ la probabilità dell'insieme $A$ è \[
+    \Prob{A} = \sum_{x_i \in A} p(x_i).    
+\]
+
+\begin{definition}[Funzione di massa]
+    La funzione $p : \R \to \R$ tale che \[
+        p(x) \deq \begin{cases}
+            \Prob{\set{x_i}} &\text{se } x = x_1 \text{ per qualche } x_i\\
+            0 &\text{altrimenti}
+        \end{cases}    
+    \]  è detta \emph{funzione di massa} oppure \emph{densità discreta}.
+\end{definition}
+
+\begin{remark}
+    Una probabilità discreta può essere definita su ogni sottoinsieme di $\R$: come vedremo, questo non è il caso per altri tipi di probabilità.
+\end{remark}
+
+\subsubsection{Probabilità definita da una densità}
+
+\begin{definition}
+    [Densità di probabilità]
+    Si dice \emph{densità di probabilità} una funzione $f : \R \to \interval[{0, +\infty})$ integrabile e tale che \[
+        \int_{-\infty}^{+\infty} f(x)dx = 1.    
+    \]
+\end{definition}
+
+\begin{definition}
+    [Probabilità definita da una densità]
+    Sia $f : \R \to \interval[{0, +\infty})$ una densità, $A \subseteq \R$. La probabilità definita da $f$ è tale che \[
+        \Prob{A} = \int_{A} f(x)dx.    
+    \]
+\end{definition}
+
+Notiamo che questa funzione definisce davvero una probabilità:
+\begin{itemize}
+    \item la probabilità di tutto $\R$ è \[
+        \Prob{\R} = \int_\R f(x)dx = \int_{-\infty}^{+\infty} f(x)dx = 1.    
+    \]
+    \item è finitamente additiva: se $A, B \subseteq \R$ sono disgiunti, allora \[
+        \Prob{A \union B} = \int_{A \union B} f(x)dx = \int_A f(x)dx + \int_B f(x)dx = \Prob{A} + \Prob{B}.    
+    \]
+    \item è anche numerabilmente additiva (deriva dal Teorema di Beppo-Levi).
+\end{itemize}
+
+Tuttavia questa probabilità, al contrario della probabilità discreta, non è definibile su tutti i sottoinsiemi di $\R$.
+\begin{example}
+    Supponiamo di volere una funzione che restituisce un numero reale a caso tra $0$ e $1$.
+
+    Lo spazio di probabilità più naturale per questa funzione è $\Omega = \interval[{0, 1}]$, in quanto sicuramente il numero scelto sarà in questo intervallo. Per definire la probabilità di un sottoinsieme di $\Omega$, iniziamo studiando il caso in cui il sottoinsieme sia un intervallo chiuso $\interval[{a, b}]$.
+
+    La probabilità che un numero casuale sia in $\interval[{a, b}]$ può essere pensata come la lunghezza dell'intervallo $\interval[{a, b}]$ diviso la lunghezza dello spazio universo $\Omega$: dunque \[
+        \Prob{\interval[{a, b}]} = \frac{b - a}{1} = b - a.    
+    \]
+
+    Questa probabilità può essere definita come \emph{probabilità data da una densità}: la densità ad essa relativa è la funzione \[
+        f(x) \deq \begin{cases}
+            1 &\text{se } 0 \leq x \leq 1\\
+            0 &\text{altrimenti}.
+        \end{cases}    
+    \]
+
+    Questo esempio innanzitutto mostra la differenza tra \emph{eventi trascurabili} e \emph{eventi impossibili}: preso un qualunque $x \in \interval[{0, 1}]$ si ha che \[
+        \set{x} \subseteq \interval*[{x - \frac1n, x + \frac{1}{n}}],    
+    \] qualunque sia $n \in \N$. Questo significa che la probabilità del singoletto $\set{x}$ deve essere minore o uguale della probabilità dell'insieme in cui è contenuto, ovvero \[
+        \Prob{\set{x}} \leq \Prob*{\interval*[{x - \frac1n, x + \frac1n}]} = \frac2n,    
+    \] ma siccome ciò deve valere per $n$ arbitrariamente grande segue che $\Prob{\set x} = 0$. L'evento definito da $\set{x}$ è quindi trascurabile, ma certamente non è impossibile in quanto $x$ può essere il risultato dell'estrazione di un numero reale casuale.
+
+    Il secondo punto, molto più difficile da mostrare, è che questa probabilità non è definita per ogni sottoinsieme di $\R$, ma solo per i sottoinsiemi \emph{misurabili}: il \emph{controesempio di Vitali} mostra che esistono sottoinsiemi di $\interval[{0, 1}]$ per cui questa probabilità non può essere definita. 
+\end{example} 
+
+D'ora in avanti considereremo soltanto sottoinsiemi misurabili di $\R$.
+
+\paragraph{Densità esponenziale} Un tipo di densità molto utile è quella definita dalla seguente funzione: \[
+    f(x) = \begin{cases}
+        e^{-x} &\text{se } x \geq 0\\
+        0 &\text{altrimenti.}
+    \end{cases}    
+\] Questa funzione è una probabilità in quanto è integrabile e \begin{align*}
+    \int_{-\infty}^{+\infty} f(x)dx &= \int_{-\infty}^0 0dx + \int_0^{+\infty} e^{-x} \\
+    = &\lim_{M \to +\infty} \left[ -e^{-x} \right]_0^M \\
+    % = &\parens*{\lim_{M \to +\infty} -e^{-x}} + 1 \\
+    = &\lim_{M \to +\infty} -e^{-x} + 1 \\
+    = &1.
+\end{align*}

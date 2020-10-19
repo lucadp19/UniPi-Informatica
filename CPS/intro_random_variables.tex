@@ -1,0 +1,309 @@
+\section{Variabili aleatorie}
+
+Per introdurre il concetto di variabili aleatorie e la loro utilità useremo il seguente esempio:
+\begin{example}
+    Supponiamo di giocare alla roulotte e di aver puntato 1£ sul numero $28$ e 1£ sull'uscita di un numero pari. Possiamo ad esempio domandarci quanto sia la probabilità di vincere più di 10£, oppure quanto sia la probabilità di perdere soldi.
+
+    Lo spazio più naturale per questo problema è l'insieme dei possibili risultati della roulotte, ovvero $\Omega = \set{0, 1, \dots, 36}$ munito della distribuzione uniforme di probabilità; tuttavia gli eventi che vogliamo considerare ("vincere più di 10£", "perdere soldi") non sono sottoinsiemi di $\Omega$, bensì di $\R$.
+    
+    Possiamo quindi definire una funzione $X : \Omega \to \R$ che indichi nel seguente modo la "vittoria netta": \[
+        X(\omega) = \begin{cases}
+            36, &\text{se } \omega = 28\\
+            0, &\text{se } \omega \neq 28, \omega \text{ è pari}\\
+            -1, &\text{se } \omega = 0\\
+            -2, &\text{se } \omega \text{ è dispari}.\\
+        \end{cases}  
+    \]
+    Usando la funzione $X$ possiamo \emph{trasportare} la probabilità da $\Omega$ a $\R$: la risposta alla prima domanda è dunque \[
+        \Prob[\big]{\set{\omega \in \Omega \given X(\omega) > 10}} 
+        = \Prob*{X^{-1}\parens[\big]{\interval[{0, +\infty})}} 
+        = \frac{1}{37};    
+    \] la risposta alla seconda domanda è invece \[
+        \Prob[\big]{\set{\omega \in \Omega \given X(\omega) < 0}} 
+        = \Prob*{X^{-1}\parens[\big]{\interval({-\infty, 0})}} 
+        = \frac{19}{37}.    
+    \]
+\end{example}
+
+\begin{definition}
+    [Variabili aleatorie] Sia $(\Omega, \FF, \P)$ uno spazio di probabilità. Una funzione $X : \Omega \to \R$ si dice \emph{variabile aleatoria} e la funzione \[
+        \Prob(X){A} = \Prob{X\inv(A)}  
+    \] viene detta \emph{legge di probabilità} associata alla variabile aleatoria $X$.
+\end{definition}
+
+Dato $A \subseteq \R$, introduciamo la notazione $\set{X \in A}$ per indicare l'insieme di tutti i valori dello spazio fondamentale $\Omega$ la cui immagine cade in $A$, ovvero \[
+    \set{X \in A} \deq \set{\omega \in \Omega \given X(\omega) \in A} = X\inv(A).    
+\] 
+
+\begin{definition}
+    [Variabili equidistribuite] Siano $X, Y : \Omega \to \R$. $X$ e $Y$ si dicono equidistribuite se hanno la stessa legge di probabilità.
+\end{definition}
+
+\begin{definition}
+    [Variabili discrete e continue] Sia $X : \Omega \to \R$ una variabile aleatoria. Allora $X$ si dice: \begin{enumerate}
+        \item \emph{discreta} se la sua distribuzione è discreta, ovvero se l'immagine di $X$ è un sottoinsieme finito o numerabile di $\R$;
+        \item \emph{con densità} se la sua distribuzione è con densità, ovvero se esiste una densità $f : \R \to \interval[{0, +\infty})$ tale che \[
+            \Prob(X){A} = \Prob{\set{X \in A}} = \int_A f(x)dx.    
+        \]
+    \end{enumerate}
+\end{definition}
+
+Questi due tipi non sono tutti i tipi possibili di variabili aleatorie, tuttavia ci occuperemo solo di questi due casi (anche perché sono i casi più rilevanti nelle applicazioni).
+
+\begin{definition}
+    [Funzione di ripartizione]
+    Data una variabile aleatoria $X : \Omega \to \R$ si dice \emph{funzione di ripartizione} di $X$ (o anche c.d.f., da \emph{cumulative distribution function}) la funzione $F_{X} : \R \to \interval[{0,1}]$ tale che \[
+        F_{X}(x) = \Prob{\set{X \leq x}} = \Prob{\set{X \in \interval({-\infty, x}]}}.   
+    \]
+\end{definition}
+
+Notiamo che la funzione di ripartizione ha due comportamenti diversi a seconda del tipo di variabile aleatoria che stiamo considerando: \begin{description}
+    \item[Discreta] La funzione di ripartizione è data da \[
+        F_X(x) = \sum_{x_i \leq x} p(x_i).    
+    \]
+    \item[Con densità] La funzione di ripartizione è data da \[
+        F_X(x) = \int_{-\infty}^x f(t)dt,   
+    \] dove $f$ è la densità associata alla variabile $X$.
+    Notiamo che siccome $f$ è integrabile, allora la corrispondente $F_X$ è necessariamente continua.
+
+    Non vale invece il viceversa: è possibile trovare una funzione $F_X$ continua la cui variabile aleatoria associata $X$ non è con densità.
+\end{description}
+
+La funzione di ripartizione ha delle interessanti proprietà che racchiuderemo nella prossima proposizione.
+\begin{proposition}
+    [Proprietà della funzione di ripartizione]
+    \label{prop:proprietà_cdf}
+    Sia $X : \Omega \to \R$ una variabile aleatoria e sia $F_X$ la sua funzione di ripartizione. Valgono le seguenti affermazioni:
+    \begin{itemize}
+        \item $F_X$ è crescente.
+        \item $\displaystyle\lim_{x \to -\infty} F_X(x) = 0$, $\displaystyle\lim_{x\to +\infty} F_X(x) = 1.$
+        \item $F_X$ è sempre continua a destra; ovvero per ogni $x_0 \in \R$ vale che \[
+            \lim_{x \to x_0^+} F_X(x) = F_X(x_0).    
+        \]
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    Dimostriamo ad esempio che $\displaystyle\lim_{x \to -\infty} F_X(x) = 0$.
+
+    Sia $\seqn{x_n}$ una successione decrescente che diverge negativamente (ovvero $x_n \to -\infty$).
+    Sia $A_n$ l'insieme definito da \[
+        A_n \deq \set{X \leq x_n} = X\inv\parens[\big]{\interval({-\infty, x_n}]}.
+    \] Siccome $x_n$ è decrescente segue che $A_n \supseteq A_{n-1}$; dunque (sfruttando il fatto che $x_n \to -\infty$) \[
+        \biginters_{n = 1}^\infty X\inv\parens[\big]{\interval({-\infty, x_n}]}
+        =  X\inv\parens*{ \biginters_{n = 1}^\infty A_n }
+        = X\inv\parens*{\varnothing}
+        = \varnothing.
+    \] Vale quindi che \[
+        \lim_{x \to -\infty} F_X(x) 
+        \begin{alignedat}[t]{1}
+            &= \lim_{n \to +\infty} F_X(x_n)
+            = \lim_{n \to +\infty} \Prob{A_n}\\
+            &= \Prob*{\lim_{n\to +\infty} A_n}
+            = \Prob*{\varnothing}
+            = 0.    
+        \end{alignedat} \tag*{\qedhere}
+    \]
+\end{proof}
+
+Un fatto importante è che la proposizione precedente può essere in qualche modo "invertita": data una funzione $F : \R \to \interval[{0, 1}]$ che rispetta le tre proprietà della \autoref{prop:proprietà_cdf} esiste una e una sola probabilità $\Prob{}$ sui sottoinsiemi di $\R$ tale che $F$ sia la funzione di ripartizione di una variabile aleatoria con legge di probabilità $\Prob{}$.
+
+Da ciò segue che tutte le variabili aleatorie che hanno la stessa funzione di ripartizione hanno a maggior ragione la stessa legge di probabilità, ovvero sono \emph{equidistribuite}. Nel caso generale è difficile ricavare la legge di probabilità dalla c.d.f., ma se ci limitiamo al caso delle variabili discrete e con densità è fattibile. Possiamo notrare infatti che in generale vale che \[
+    F_X(x_0) - \lim_{x \to x_0^-} F_X(x) = \Prob[\big]{\set{X = x_0}}.    
+\]
+
+Nel caso discreto questo implica che $\Prob{\set{X = x_i}} = p(x_i)$: in ogni punto di salto l'\emph{ampiezza del salto} è data proprio dal valore della funzione di massa nel punto.
+
+Nel caso con densità possiamo ricavare la legge di probabilità invertendo l'operazione di integrazione: in ogni punto in cui la densità $f$ è continua vale che \[
+    f(x) = \frac{dF_X(x)}{dx}.    
+\]
+
+Vediamo ora la definizione di quantile:
+\begin{definition}
+    [Quantile]
+    Sia $X$ una variabile aleatoria con legge di probabilità $\Prob{}$. Sia inoltre $\beta \in \interval({0, 1})$. Si dice \emph{$\beta$-quantile} un numero $r_\beta$ tale che \begin{align*}
+        \Prob[\big]{\set{X \leq r_\beta}} \geq \beta,\quad &\Prob[\big]{\set{X \geq r_\beta}} \geq 1 - \beta.   
+    \end{align*}
+\end{definition}
+
+Nel caso in cui la variabile sia discreta ci sono due possibilità:
+\begin{enumerate}
+    \item La funzione non assume mai il valore $\beta$ poiché $\beta$ è compreso tra gli estremi di un punto di salto.
+    In questo caso l'unico $r_\beta$ possibile è il punto di salto, il cui valore è il minimo valore assunto dalla funzione superiore a $\beta$.
+
+    \item La funzione assume il valore $\beta$ su tutto un intervallo. In questo caso per convenzione si sceglie $r_\beta$ come il punto medio dell'intervallo, anche se tutti i punti dell'intervallo andrebbero ugualmente bene.
+\end{enumerate}
+\begin{figure}[H]
+    \begin{center}
+        \includestandalone{Figures/quantile_discr}
+    \end{center}
+\end{figure}
+
+Se invece la variabile $X$ ha densità, \emph{solitamente} esiste uno e un solo $\beta$-quantile, ed è il valore $r_\beta \in \R$ tale che $F_X(r_\beta) = \beta$.
+
+\begin{example}
+    Sia $X$ una variabile aleatoria con densità esponenziale, ovvero \[
+        f(x) = \begin{cases}
+            0, &\text{se } x \leq 0\\
+            e^{-x}, &\text{se } x > 0.
+        \end{cases}    
+    \] La sua funzione di ripartizione è \[
+        F_X(x) = \begin{cases}
+            0, &\text{se } x \leq 0\\
+            \int_0^x e^{-t}dt = 1 - e^{-x}, &\text{se } x > 0.
+        \end{cases}    
+    \] Il $\beta$-quantile di $X$ è quindi quel numero $r_\beta$ tale che \begin{align*}
+        F_X(r_\beta) = 1 - e^{-r_\beta} = \beta \iff r_\beta = -\log\parens*{1 - \beta}.
+    \end{align*} 
+\end{example}
+
+Definiamo ora i tipi più comuni di variabili aleatorie.
+
+\subsection{Variabile binomiale}
+La situazione concreta da cui nasce questa variabile aleatoria è ad esempio la seguente: vogliamo ripetere $n$ volte, in condizioni di indipendenza, un esperimento che può avere come risultato o il successo (con probabilità $p_0$), o l'insuccesso (con probabilità $1 - p_0$).
+La variabile $X$ deve quindi contare il numero di successi in $n$ tentativi.
+
+È chiaro quindi che i possibili valori che la variabile $X$ può assumere sono $0, 1, \dots, n$: negli $n$ tentativi posso avere $0$, $1$, $\dots$, oppure $n$ successi.
+
+Calcoliamo ora la funzione di massa $p$: dato un qualsiasi $k \in \set{0, \dots, n}$ vogliamo calcolare la probabilità che la variabile aleatoria valga esattamente $k$, ovvero che su $n$ tentativi $k$ di essi siano successi.
+
+La funzione di massa è la seguente: \[
+    p(k) = \Prob{\set{X = k}} = \binom{n}{k}p_0^k(1-p_0)^{n-k}.
+\] 
+\begin{proof}
+    Consideriamo una stringa di successi/insuccessi di lunghezza $n$. Esistono esattamente $\binom{n}{k}$ stringhe con $k$ successi; inoltre la probabilità ad essa associata è $p_0^k(1-p_0)^{n-k}$, in quanto ogni successo ha probabilità $p_0$ e ogni insuccesso ha probabilità $1-p_0$, da cui la tesi.
+\end{proof}
+
+Per esser certo che $p$ sia effettivamente una funzione di massa verifico che $\displaystyle \sum_{k = 0}^n p(k) = 1$.
+\begin{proof}
+    Per definizione di $p$:
+    \[
+        \sum_{k = 0}^n p(k) = \sum_{k = 0}^n \binom{n}{k}p_0^k(1-p_0)^{n-k} = \parens[\Big]{p_0 + (1 - p_0)}^n = 1,
+    \] dove il terzo passaggio è giustificato dal binomio di Newton.
+\end{proof}
+
+Se $n = 1$ la variabile $X$ viene detta \emph{di Bernoulli} di parametro $p_0$.
+
+\subsection{Variabile geometrica}
+Vogliamo ripetere, in condizioni di indipendenza, un esperimento che ha come risultati il successo (con probabilità $p_0$) oppure l'insuccesso (con probabilità $1 - p_0$) finché l'esperimento non ha successo. 
+
+Come nel caso della variabile binomiale, la variabile aleatoria $X$ conta il numero di tentativi necessari: in questo caso però i valori possibili sono tutti i possibili valori naturali positivi insieme a $\set{+\infty}$, in quanto a priori il successo potrebbe non arrivare mai.
+
+Calcoliamo ora la funzione di massa $p$: dato un qualsiasi $k \in \set{1, 2, \dots, +\infty}$ vogliamo calcolare la probabilità che la variabile aleatoria valga esattamente $k$, ovvero che i primi $k-1$ tentativi siano insuccessi e il $K$-esimo sia un successo. Nel caso $k = +\infty$, questo significa che tutti i tentativi sono insuccessi.
+
+La funzione di massa legata a questa variabile è la seguente: \[
+    p(k) = \Prob[\big]{\set{X = k}} = (1-p_0)^{k-1} \cdot p_0.
+\]
+\begin{proof}
+    Siccome la probabilità di ogni insuccesso è di $1 - p_0$ e abbiamo $k-1$ insuccessi, la probabilità di ogni successo è $p_0$ e ne abbiamo uno solo, e gli eventi sono tutti indipendenti segue la tesi.
+\end{proof}
+
+Verifichiamo che $\sum p(k) = 1$:
+\begin{align*}
+    \sum_{k=1}^{+\infty} p(k) 
+    &= \sum_{k=1}^{+\infty} \Prob{\set{X = k}}\\
+    &= \sum_{k=1}^{+\infty} (1 - p_0)^{k-1} \cdot p\\
+    &= p \cdot \sum_{k=1}^{+\infty} (1 - p_0)^{k-1}\\
+    \intertext{Per ricondurmi alla serie geometrica pongo $h \deq k -1$, ottenendo}
+    &= p \cdot \sum_{h=0}^{+\infty} (1 - p_0)^{h}\\
+    &= p \cdot \frac{1}{1 - (1-p)}\\
+    &= 1.
+\end{align*}
+
+La variabile geometrica ha un'altra interessante proprietà, detta \emph{proprietà dell'assenza di memoria}.
+\begin{proposition}
+    [Assenza di memoria della variabile geometrica]
+    Siano $n, h \in \N$, $n, h > 0$ e sia $X$ una variabile aleatoria geometrica. Allora vale che \[
+        \Prob[\big]{\set{X = n + h} \given \set{X > n}} = \Prob[\big]{\set{X = h}}.    
+    \]
+\end{proposition}
+\begin{proof}
+    Per definizione di probabilità condizionata \begin{equation}
+        \label{eq:tmp_abs_mem}
+        \Prob[\big]{\set{X = n + h} \given \set{X > n}} 
+        = \frac{\Prob[\big]{\set{X = n + h}}}{\Prob[\big]{\set{X > n}}}.
+    \end{equation}
+    Calcoliamo il denominatore di questa espressione: \begin{align*}
+        \Prob[\big]{\set{X > n}}
+        &= \sum_{h = n + 1}^\infty p(h)\\
+        &= \sum_{h = n + 1}^\infty (1-p_0)^{h-1}\cdot p_0\\
+        \intertext{Ponendo $k \deq h - n$, ovvero $h = k + n$:}
+        &= \sum_{k = 1}^\infty (1-p_0)^{k+n-1} \cdot p_0\\
+        &= (1 - p_0)^n \cdot \sum_{k = 1}^\infty (1-p_0)^{k-1}\cdot p_0\\
+        &= (1 - p_0)^n,
+    \end{align*}
+    dove l'ultimo passaggio è giustificato dai calcoli fatti nel verificare la correttezza della funzione di massa della variabile binomiale.
+
+    Sostituendo nella \eqref{eq:tmp_abs_mem}: \begin{align*}
+        \frac{\Prob[\big]{\set{X = n + h}}}{\Prob[\big]{\set{X > n}}}
+        &= \frac{(1+p_0)^{n+h-1} \cdot p_0}{(1-p_0)^n}\\
+        &= (1-p_0)^{h-1}\cdot p_0\\
+        &= \Prob[\big]{\set{X = h}}. \qedhere
+    \end{align*}
+\end{proof}
+
+\subsection{Variabile di Poisson}
+Si dice \emph{variabile di Poisson di parametro $\lambda$} (con $\lambda \in \R$, $\lambda > 0$) la variabile aleatoria con dominio $\N$ definita dalla seguente funzione di massa: \[
+    p(h) = \Prob[\big]{\set{X = h}} \deq e^{-\lambda}\frac{\lambda^h}{h!}.    
+\]
+Verifichiamo che $\sum p(h) = 1$: \begin{align*}
+    \sum_{h = 0}^\infty p(h)
+    &= \sum_{h = 0}^\infty e^{-\lambda}\frac{\lambda^h}{h!}\\
+    &= e^{-\lambda} \sum_{h = 0}^\infty \frac{\lambda^h}{h!}\\
+    &= e^{-\lambda}e^{\lambda}\\
+    &= 1.
+\end{align*}
+
+\subsection{Densità esponenziale}
+Si definisce \emph{densità esponenziale di parametro $\lambda$} la funzione $f : \R \to \interval[{0, +\infty})$ tale che \[
+    f(x) \deq \begin{cases}
+        \lambda e^{-\lambda x}, &x \geq 0\\
+        0, &x < 0.
+    \end{cases} 
+\]
+
+Questa funzione è effettivamente una densità: infatti \begin{align*}
+    \int_{-\infty}^{+\infty} f(x)dx
+    &= \int_{-\infty}^0 0dx + \int_0^{+\infty} \lambda e^{-\lambda x}dx\\
+    \intertext{Sostituendo $t \deq \lambda x$ (da cui $dt = \lambda dx$) l'integrale è equivalente a}
+    &= \int_0^{+\infty} e^{-t}dt\\
+    &= 1.
+\end{align*}
+
+La funzione di ripartizione corrispondente a questa densità è data da \[
+    F_X(x) = \int_{-\infty}^x f(t)dt = \begin{cases}
+        0, &x < 0 \\[5pt]
+        \displaystyle\int_0^x \lambda e^{-\lambda t}dt = 1 - e^{-\lambda x}, &x \geq 0.
+    \end{cases}    
+\]
+
+La variabile esponenziale è \emph{senza memoria}, esattamente come la variabile binomiale, ovvero per ogni $s, t > 0$ vale che \[
+    \Prob[\big]{\set{X \leq s + t} \given \set{X > s}} = \Prob[\big]{\set{X \leq t}}.    
+\]
+\begin{proof}
+    Per definizione di probabilità condizionata:
+    \begin{align*}
+        \Prob[\big]{\set{X \geq s + t} \given \set{X > s}}
+        &= \frac{\Prob[\big]{\set{X \leq s + t} \inters \set{X > s}}}{\Prob[\big]{\set{X > s}}}\\
+        &= \frac{\Prob[\big]{\set{s < X \leq s + t}}}{\Prob[\big]{\set{X > s}}}.
+    \end{align*}
+
+    Facciamo alcune osservazioni generali:
+    \begin{alignat*}{2}
+        &(1):\; &&\Prob[\big]{\set{X > s}} = 1 - \Prob[\big]{\set{X \leq s}} = 1 - F_X(s).\\
+        &(2):\; &&\begin{alignedat}[t]{1}
+                \Prob[\big]{\set{s < X \leq s + t}} 
+                &= \Prob[\big]{\set{X \leq s + t}} - \Prob[\big]{\set{X \leq s}} \\
+                &= F_X(s+t) - F_X(s).
+            \end{alignedat}
+    \end{alignat*}
+
+    Sostituendo nel nostro caso si ha \begin{align*}
+        \frac{\Prob[\big]{\set{s < X \leq s + t}}}{\Prob[\big]{\set{X > s}}}
+        &= \frac{F_X(s+t) - F_X(s)}{1 - F_X(s)}\\[3pt]
+        &= \frac{1 - e^{-\lambda (s+t)} - (1 - e^{-\lambda s})}{1 - (1 - e^{-\lambda s})}\\[3pt]
+        &= \frac{-e^{-\lambda s}e^{-\lambda t} + e^{-\lambda s}}{e^{-\lambda s}}\\[3pt]
+        &= \frac{e^{-\lambda s}\parens*{1 - e^{-\lambda t}}}{e^{-\lambda s}}\\[3pt]
+        &= 1 - e^{-\lambda t}\\[3pt]
+        &= \Prob[\big]{X \leq t}. \qedhere
+    \end{align*}
+\end{proof}

@@ -1,0 +1,202 @@
+\chapter{Probabilità}
+
+\section{Spazio di probabilità}
+
+\begin{definition}
+    [Algebra delle parti]
+    Sia $\Omega$ un insieme. Una famiglia $\FF$ di sottoinsiemi di $\Omega$ si dice \emph{algebra delle parti su $\Omega$} se valgono le seguenti proprietà: \begin{enumerate}[label={(\roman*)}]
+        \item $\varnothing, \Omega \in \FF$;
+        \item se $A \in \FF$ allora $A\compl \in \FF$;
+        \item se $A, B \in \FF$ allora $A \union B \in \FF$, $A \inters B \in \FF$.
+    \end{enumerate}
+\end{definition}
+
+Un'algebra di parti su $\Omega$ modella bene l'insieme dei possibili eventi: \begin{enumerate}[label={(\roman*)}]
+    \item l'insieme vuoto è un evento, ed in particolare corrisponde all'evento "non accade nessuno degli eventi nel nostro universo";
+    \item l'insieme universo è un evento, ed in particolare corrisponde all'evento "accade una cosa qualsiasi nel nostro universo";
+    \item se $A$ è un evento, allora $A\compl$ corrisponde all'evento "non accade $A$";
+    \item se $A, B$ sono eventi, allora $A \union B$ corrisponde all'evento "accade $A$ oppure accade $B$";
+    \item se $A, B$ sono eventi, allora $A \inters B$ corrisponde all'evento "accadono sia $A$ che $B$".
+\end{enumerate}
+
+\begin{definition}
+    [Probabilità]
+    Sia $\Omega$ un insieme e $\FF$ un'algebra delle parti su $\Omega$. Si dice \emph{probabilità} una funzione \[
+        \P : \FF \to \interval[{0, 1}]  
+    \] tale che \begin{enumerate}
+        % [label={(\roman*)}]
+        \item $\Prob{\Omega} = 1$,
+        \item \label{def:prob_finit_add} $\P$ è \emph{finitamente additiva}: per ogni $A, B \in \FF$ disgiunti (ovvero $A \inters B = \varnothing$) vale che \[
+            \Prob{A \union B} = \Prob{A} + \Prob{B}.
+        \]
+    \end{enumerate}
+\end{definition}
+
+% Questa definizione di probabilità è particolarmente intuitiva: la probabilità che accada l'evento $\Omega$ (ovvero che accada un evento qualsiasi) è $1$; invece se sappiamo che due eventi 
+
+\begin{proposition}[Proprietà della probabilità]
+    \label{prop:prop_probabil}
+    Sia $\Omega$ un insieme e $\FF$ un'algebra delle parti su $\Omega$. Allora la funzione probabilità $\P$ soddisfa le seguenti proprietà:
+    \begin{enumerate}
+        \item $\Prob{\varnothing} = 0$;
+        \item $\Prob{A\compl} = 1 - \Prob{A}$;
+        \item se $B \subseteq A$ allora $\Prob{A \setminus B} = \Prob{A} - \Prob{B}$;
+        \item per ogni $A, B \in \FF$ vale il \emph{principio di inclusione-esclusione}: \[
+            \Prob{A \union B} = \Prob{A} + \Prob{B} - \Prob{A \inters B}.    
+        \]
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Dimostriamo le quattro affermazioni separatamente: \begin{enumerate}
+        \item Siccome \begin{itemize}
+            \item $\varnothing \inters \varnothing = \varnothing$,
+            \item $\varnothing \union \varnothing = \varnothing$,
+            \item la funzione probabilità è \hyperref[def:prob_finit_add]{finitamente additiva}
+        \end{itemize} segue che \[
+            \Prob{\varnothing} = \Prob{\varnothing \union \varnothing} = \Prob{\varnothing} + \Prob{\varnothing}, 
+        \] da cui, sottraendo $\Prob{\varnothing}$ ad entrambi i membri, otteniamo $\Prob{\varnothing} = 0$.
+        \item Per definizione di complementare segue che $\Omega = A \union A\compl$. Inoltre un insieme e il suo complementare sono sempre disgiunti, dunque vale l'\hyperref[def:prob_finit_add]{additività finita}: \[
+            1 = \Prob{\Omega} = \Prob{A \union A\compl} = \Prob{A} + \Prob{A\compl}    
+        \] da cui segue che $\Prob{A\compl} = 1 - \Prob{A}$.
+        \item Siccome $B \subseteq A$ possiamo scrivere $A = B \union (A \setminus B)$. Inoltre $B$ e $A \setminus B$ sono ovviamente disgiunti, dunque vale l'\hyperref[def:prob_finit_add]{additività finita}: \[
+            \Prob{A} = \Prob[\big]{B \union (A \setminus B)} = \Prob{B} + \Prob{A \setminus B}   
+        \] da cui segue che $\Prob{A \setminus B} = \Prob{A} - \Prob{B}$.
+        \item Separiamo gli insiemi $A$ e $B$ in tre sottoinsiemi particolari: \begin{itemize}
+            \item $C_1 = A \setminus (A \inters B)$, ovvero $C_1$ contiene solo gli elementi che sono in $A$ e non in $B$,
+            \item $C_2 = B \setminus (A \inters B)$, ovvero $C_2$ contiene solo gli elementi che sono in $B$ e non in $A$,
+            \item $C_3 = A \inters B$, ovvero $C_3$ contiene tutti e soli gli elementi che appartengono sia ad $A$ che a $B$.
+        \end{itemize}
+        Notiamo che \begin{itemize}
+            \item $A \union B = C_1 \union C_2 \union C_3$,
+            \item $A = C_1 \union C_3$, $B = C_2 \union \C_3$,
+            \item i tre insiemi $C_1, C_2, C_3$ sono tutti e tre disgiunti.
+        \end{itemize} Dunque per additività finita:
+        \begin{align*}
+            \Prob{A \union B} &= \Prob{C_1 \union C_2 \union C_3}\\
+            &= \Prob{C_1} + \Prob{C_2 \union C_3}
+            \intertext{Aggiungiamo e sottraiamo $\Prob{C_3}$:}
+            &= \Prob{C_1} + \Prob{C_2 \union C_3} + \Prob{C_3} - \Prob{C_3}\\
+            &= \Prob{C_1 \union C_3} + \Prob{C_2 \union C_3} - \Prob{C_3}\\
+            \intertext{Infine, siccome $C_1 \union C_3 = A$, $C_2 \union C_3 = B$, $C_3 = A \inters B$:}
+            &= \Prob{A} + \Prob{B} - \Prob{A \inters B}. \qedhere   
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+Questa formalizzazione dei concetti di evento e probabilità è però limitata: possiamo calcolare la probabilità di unioni e intersezioni di un numero finito di eventi, ma non di un numero infinito (anche se numerabile). Abbiamo quindi bisogno di un'estensione di questi concetti che ci permetta di "andare al limite".
+
+\begin{definition}[Sigma-algebra]
+    Sia $\Omega$ un insieme. Una famiglia $\FF$ di sottoinsiemi di $\Omega$ si dice \emph{$\sigma$-algebra su $\Omega$} se valgono le seguenti proprietà: 
+    \begin{enumerate}[label={(\roman*)}]
+        \item $\varnothing, \Omega \in \FF$;
+        \item se $A \in \FF$ allora $A\compl \in \FF$;
+        \item se $\parens*{A_n}_{n\in\N}$ è un insieme numerabile di elementi di $\FF$ (ovvero per ogni $n \in \N$ vale che $A_n \in \FF$), allora \[
+            \bigunion_{n = 1}^{\infty} A_n \in \FF, \quad \biginters_{n = 1}^{\infty} A_n \in \FF.    
+        \]
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    [Probabilità]
+    Sia $\Omega$ un insieme e $\FF$ una $\sigma$-algebra su $\Omega$. Si dice \emph{probabilità} una funzione \[
+        \P : \FF \to \interval[{0,1}]    
+    \] tale che \begin{enumerate}[label={(\roman*)}]
+        \item $\Prob{\Omega} = 1$,
+        \item \label{def:prob_numerab_add} $\P$ è \emph{numerabilmente additiva}: data una successione $(A_n)_{n\in\N}$ a valori in $\FF$ (ovvero con $A_i \in \FF$ per ogni $i \in \N$) a due a due disgiunti (ovvero $A_i \inters A_j = \varnothing$ per ogni $i \neq j$) vale che \[
+            \Prob*{\bigunion_{n = 1}^{\infty} A_n} 
+            = \sum_{n = 1}^{\infty} \Prob{A_i}.
+        \]
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    Questa nuova definizione di probabilità è un'\emph{estensione} della definizione iniziale: infatti dalla additività numerabile segue necessariamente l'additività finita.
+\end{remark}
+\begin{proof}
+    Siano $A, B \in \FF$ disgiunti. Allora possiamo costruire la successione \[
+        C_n \deq \begin{cases}
+            A, &\text{se } n = 1, \\
+            B, &\text{se } n = 2, \\
+            \varnothing, &\text{altrimenti.}
+        \end{cases}
+    \] Gli insiemi che formano questa successione sono a due a due disgiunti, in quanto $A$ e $B$ sono disgiunti e l'intersezione tra un insieme qualunque e l'insieme vuoto è sempre vuota.
+
+    Inoltre l'unione di tutti questi insiemi è uguale all'unione di $A$ e $B$, da cui segue che \begin{align*}
+        \Prob*{A \union B} &= \Prob*{\bigunion_{n = 1}^\infty C_n} \tag{per addit. num.}\\
+        &= \sum_{i=1}^\infty \Prob{C_n} \\
+        &= \Prob{C_1} + \Prob{C_2} + \sum_{i=3}^\infty \Prob{C_n}\\
+        \intertext{Siccome $C_n = \varnothing$ per ogni $n \geq 3$ e la probabilità dell'insieme vuoto è $0$ la sommatoria vale $0$ e dunque segue che}
+        &= \Prob{C_1} + \Prob{C_2}\\
+        &= \Prob{A} + \Prob{B}
+    \end{align*} cioè la funzione probabilità è finitamente additiva.
+\end{proof}
+\begin{remark}
+    Dato che la probabilità estesa è finitamente additiva, continua a valere la \autoref{prop:prop_probabil}.
+\end{remark}
+
+\begin{definition}
+    [Spazio di probabilità] Sia $\Omega$ un insieme, $\FF$ una $\sigma$-algebra su $\Omega$ e $\P$ una funzione probabilità definita su $\FF$: la tripla $(\Omega, \FF, \P)$ si dice \emph{spazio di probabilità}.
+\end{definition}
+
+\begin{definition}
+    [Eventi trascurabili e quasi certi] Sia $(\Omega, \FF, \P)$ uno spazio di probabilità. Un evento $A \in \FF$ si dice \begin{itemize}
+        \item \emph{trascurabile} se $\Prob{A} = 0$;
+        \item \emph{quasi certo} se $\Prob{A} = 1$.
+    \end{itemize}
+\end{definition}
+
+La definizione "estesa" di probabilità ci consente di "passare al limite", ovvero di calcolare in modo semplice la probabilità di un evento definito come unione o intersezione numerabile di eventi.
+
+\begin{proposition}
+    Sia $(\Omega, \FF, \P)$ uno spazio di probabilità e sia \[
+        A_1 \subseteq A_2 \subseteq A_3 \subseteq \dots    
+    \] una catena di insiemi, con $A_i \in \FF$ per ogni $i \in \N$. Sia inoltre \[
+        A \deq \bigunion_{i=1}^\infty A_i.    
+    \] Allora vale che \begin{equation}
+        \Prob{A} = \lim_{n \to +\infty} \Prob{A_i}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Definiamo $B_1 = A_1$, $B_n = A_n \setminus A_{n-1}$. L'unione di queste due successioni di insiemi è la stessa: \[
+        \bigunion_{i=1}^\infty B_i = \bigunion_{i=1}^\infty A_i.    
+    \] Dalla definizione di $B_n$ e dalla \autoref{prop:prop_probabil} (in particolare dal terzo punto, siccome $A_{n-1} \subseteq A_n$) segue che \[
+        \Prob{B_n} = \Prob{A_n \setminus A_{n-1}} = \Prob{A_n} - \Prob{A_{n-1}}.
+    \] Inoltre i $B_n$ sono a due a due disgiunti, dunque vale l'\hyperref[def:prob_numerab_add]{additività numerabile}: \begin{align*}
+        \Prob{A} &= \Prob*{\bigunion_{i=1}^\infty A_i} \\
+        &= \Prob*{\bigunion_{i=1}^\infty B_i}\\
+        &= \sum_{i=1}^\infty \Prob{B_n}\\
+        &= \lim_{n\to +\infty} \sum_{i=1}^n \Prob{B_i}\\
+        &\begin{aligned}
+            \ = \lim_{n \to +\infty} &\Prob{B_1} + \Prob{B_2} + \dots \\
+            &+ \Prob{B_{n-1}} + \Prob{B_n}\\
+        \end{aligned}\\
+        &\begin{aligned}
+            \ = \lim_{n \to +\infty} &\Prob{A_1} + (\Prob{A_2} - \Prob{A_1}) + \dots\\
+            &+ (\Prob{A_{n-1}} - \Prob{A_{n-2}})\\
+            &+ (\Prob{A_{n}} - \Prob{A_{n-1}})
+        \end{aligned}\\
+        &= \lim_{n \to +\infty} \Prob{A_n}. \qedhere
+    \end{align*}
+\end{proof}
+
+\paragraph{Insieme fondamentale finito} Nel caso in cui $\Omega$ sia un insieme finito possiamo scriverlo come \[
+    \Omega \deq \set{w_1, \dots, w_n}    
+\] dove $n$ è la cardinalità di $\Omega$. Come $\sigma$-algebra su $\Omega$ possiamo sempre prendere l'insieme delle parti $\PP(\Omega)$, ovvero l'insieme di tutti i sottoinsiemi di $\Omega$: in questo modo tutti i sottoinsiemi di $\Omega$ sono eventi.
+
+Chiamiamo $p_i$ la probabilità che accada l'evento $\set{w_i} \in \PP(\Omega)$, ovvero \[
+    p_i \deq \Prob[\big]{\set{w_i}}.    
+\] Sicuramente $p_i \geq 0$ (in quanto la funzione probabilità restituisce numeri reali tra $0$ e $1$); inoltre vale che \[
+    \sum_{i=1}^n p_i = p_1 + p_2 + \dots + p_n = 1.    
+\] Infatti: \begin{align*}
+    p_1 + p_2 + \dots + p_n &= \Prob[\big]{\set{w_1}} + \Prob[\big]{\set{w_2}} + \dots + \Prob[\big]{\set{w_n}}\\
+    &= \Prob[\big]{\set{w_1} \union \set{w_2} \union \dots \union \set{w_n}}\\
+    &= \Prob[\big]{\set{w_1, w_2, \dots, w_n}}\\
+    &= \Prob{\Omega}\\
+    &= 1.
+\end{align*}
+
+Se $\Omega$ è finito e tutti gli eventi sono circa equiprobabili si può prendere \[
+    p_i = \frac1n.    
+\] In questo caso si parla di \emph{distribuzione uniforme di probabilità}. Dato un evento $A \in \PP(\Omega)$, nel caso di distribuzione uniforme, si ha che \[
+    \Prob{A} = \frac{\#A}{\#\Omega} = \frac{\#\text{casi favorevoli}}{\#\text{casi totali}}.   
+\]

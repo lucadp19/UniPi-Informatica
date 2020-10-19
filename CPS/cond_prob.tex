@@ -1,0 +1,113 @@
+\section{Probabilità condizionata}
+
+\begin{example}
+    Immaginiamo di star giocando alla roulotte e sappiamo che è appena uscito un numero pari. Qual è la probabilità che questo numero sia $4$?
+    
+    Sia $A$ l'evento "è uscito $4$" e sia $B$ l'evento "è uscito un numero pari". Siccome sappiamo che è uscito un numero pari, e i numeri pari alla roulotte sono $18$, la probabilità che sia uscito proprio $4$ (sapendo che il numero uscito è pari) equivale a $\nicefrac{1}{18}$.
+
+    Possiamo tuttavia pensarla in questo modo: $\nicefrac{1}{18}$ è la probabilità che gli eventi $A$ e $B$ accadano contemporaneamente (ovvero è la probabilità di $A \inters B$) diviso la probabilità che sia avvenuto l'evento $B$: \[
+        \frac{1}{18} = \frac{\Prob{A \inters B}}{\Prob{B}} = \frac{\nicefrac{1}{37}}{\nicefrac{18}{37}}.    
+    \]
+\end{example}
+
+\begin{definition}
+    [Probabilità condizionata] Sia $(\Omega, \FF, \P)$ uno spazio di probabilità e sia $B \in \FF$ non trascurabile. Si dice \emph{probabilità di $A$ condizionata a $B$} la quantità \[
+        \Prob{A \given B} =  \frac{\Prob{A \inters B}}{\Prob{B}}.   
+    \]
+\end{definition}
+
+\begin{remark}
+    La funzione $\P^\prime : \FF \to \interval[{0, 1}]$ data da \[
+        \P^\prime(A) \deq \Prob{A \given B}    
+    \] è una probabilità.
+\end{remark}
+
+\begin{proposition}
+    [Formula di Bayes] Siano $A, B$ due eventi non trascurabili. Allora vale che \[
+        \Prob{B \given A} = \frac{\Prob{A \given B}\Prob{B}}{\Prob{A}}.    
+    \]
+\end{proposition}
+\begin{proof}
+    Per definizione di probabilità condizionata \[
+        \Prob{A \given B}\Prob{B} = \Prob{A \inters B} = \Prob{B \given A}\Prob{A},    
+    \] da cui la tesi.
+\end{proof}
+
+\begin{proposition}
+    [Formula del condizionamento ripetuto]
+    Siano $A_1, \dots, A_n$ eventi non trascurabili. Allora \[
+        \Prob{A_1 \inters \dots \inters A_n} = \Prob{A_1}\Prob{A_2 \given A_1}\cdots \Prob{A_n \given A_{n-1} \inters \dots \inters A_1}.    
+    \]
+\end{proposition}
+\begin{proof}
+    Per definizione di probabilità condizionata \begin{align*}
+        &\Prob{A_1}\Prob{A_2 \given A_1}\cdots \Prob{A_n \given A_{n-1} \inters \dots \inters A_1}\\
+        = {}&{}\Prob{A_1}
+        \frac{\Prob{A_1 \inters A_2}}{\Prob{A_1}}
+        \frac{\Prob{A_3 \inters A_2 \inters A_1}}{\Prob{A_2 \inters A_1}}
+        \cdots 
+        \frac{\Prob{A_n \inters \dots \inters A_1}}{\Prob{A_{n-1} \inters \dots \inters A_1}}\\
+        = {}&{}\Prob{A_1 \inters \dots \inters A_n}. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{definition}
+    [Sistema di alternative]
+    Sia $(\Omega, \FF, \P$ uno spazio di probabilità e siano $B_1, \dots, B_n \in \FF$. Allora se $B_1, \dots, B_n$ formano una partizione di $\Omega$ (ovvero la loro unione è $\Omega$ e la loro intersezione a due a due è vuota) si dice che $B_1, \dots, B_n$ è un \emph{sistema di alternative}.
+\end{definition}
+\begin{remark}
+    Un sistema di alternative non è necessariamente finito: data una famiglia numerabile $(B_i)_{i \in \N}$ di sottoinsiemi di $\Omega$, essa rappresenta un sistema di alternative se è una partizione di $\Omega$.
+\end{remark}
+
+\begin{proposition}
+    [Formula di fattorizzazione]
+    Sia $B_1, \dots, B_n$ un sistema di alternative e $A \in \FF$ un evento. Allora vale che \[
+        \Prob{A} = \sum_{i = 1}^n \Prob{A \given B_i}\Prob{B_i}.    
+    \]
+\end{proposition}
+
+\begin{proposition}
+    [Formula delle probabilità delle cause]
+    Sia $B_1, \dots, B_n$ un sistema di alternative e $A \in \FF$ un evento. Allora per ogni $i \in \set{1, \dots, n}$ vale che \[
+        \Prob{B_i \given A} = \frac{\Prob{A \given B_i}\Prob{B_i}}{\Prob{A}}.    
+    \]
+\end{proposition}
+
+\section{Indipendenza stocastica}
+
+Vogliamo rendere l'idea che talvolta conoscere se un evento $A$ si è verificato oppure no non influenza la probabilità che l'evento $B$ si verifichi e viceversa. Sfruttando le probabilità condizionate, possiamo esprimerlo con una di queste due formule: \begin{align*}
+    &(1):\; \Prob{B \given A} = \Prob{A}. &(2):\; \Prob{A \given B} = \Prob{A}.
+\end{align*}
+
+È facile dimostrare che queste due condizioni sono equivalenti; tuttavia nessuna delle due modella precisamente la nostra condizione, poiché non sono simmetriche e richiedono che $A$ e $B$ siano non trascurabili.
+
+\begin{definition}
+    [Indipendenza stocastica] Siano $A, B \in \FF$ due eventi. Allora $A$ e $B$ sono indipendenti stocasticamente se \[
+        \Prob{A \inters B} = \Prob{A}\Prob{B}.    
+    \]
+\end{definition}
+
+\begin{proposition}
+    [Conseguenze dell'indipendenza stocastica] Sia $(\Omega, \FF, \P$ uno spazio di probabilità e siano $A, B$ due eventi. Valgono le seguenti affermazioni.
+    \begin{enumerate}
+        \item Se $A, B$ sono indipendenti, allora $A\compl$ e $B$ sono indipendenti.
+        \item Se $A$ è trascurabile oppure quasi certo, allora $A$ e $B$ sono indipendenti qualunque sia $B$.
+        \item Se $A$ e $B$ sono non trascurabili e incompatibili (ovvero $A \inters B = \varnothing$) allora $A$ e $B$ non sono indipendenti.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Mostriamo le tre affermazioni separatamente.
+    \begin{enumerate}
+        \item Mostriamo che $A\compl$ e $B$ sono indipendenti tramite la definizione: \begin{align*}
+            \Prob{A\compl \inters B} &= \Prob{B \setminus (A \inters B)}  \tag{per la \ref{prop:prop_probabil}}\\
+            &= \Prob{B} - \Prob{A \inters B} \tag{$A, B$ indip.}\\
+            &= \Prob{B} - \Prob{A}\Prob{B}\\
+            &= \Prob{B}(1 - \Prob{A})\\
+            &= \Prob{B}\Prob{A\compl}.
+        \end{align*}
+        \item Sia $B$ un evento qualunque: allora se $A$ è quasi certo segue che \[
+            \Prob{A \inters B} = \Prob{A \given B}\Prob{B} = 1 \cdot \Prob{B} = \Prob{A}\Prob{B}.    
+        \] Dimostrazione analoga se $A$ è trascurabile.
+        \item Se $A \inters B = \varnothing$ allora $\Prob{A \inters B} = \Prob{\varnothing} = 0$, dunque se fossero indipendenti avremmo che $\Prob{A}\Prob{B} = 0$, il che è assurdo poiché li abbiamo supposti entrambi non trascurabili. \qedhere
+    \end{enumerate}
+\end{proof}

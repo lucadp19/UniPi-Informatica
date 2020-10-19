@@ -1,0 +1,110 @@
+\chapter{Prerequisiti}
+
+\section{Serie}
+
+\begin{definition}
+    [Successioni delle somme parziali] Sia $\seqn{a_n}(n \in \N)$ una successione. Si dice \emph{successione delle somme parziali} la successione $\seqn{s_n}(n \in \N)$ tale che \[
+        s_n \deq a_0 + a_1 + \dots + a_n = \sum_{i=0}^n a_i.    
+    \]
+\end{definition}
+
+\begin{definition}
+    [Serie] Sia $\seqn{a_n}(n \in \N)$ una successione e $\seqn{s_n}(n \in \N)$ la sua successione delle somme parziali. Allora si dice serie il limite per $n \to +\infty$ delle somme parziali, e lo si indica con \[
+        \sum_{i=0}^\infty a_n \deq \lim_{n\to +\infty} s_n.    
+    \]
+\end{definition}
+
+Spesso si usa anche la notazione $\sum a_n$ quando l'indice di partenza è sottointeso oppure non è importante nel calcolo della serie.
+
+\begin{definition}
+    [Comportamento di una serie] Sia $\seqn{a_n}$ una successione. Allora si dice che \begin{enumerate}[label={(\arabic*)}]
+        \item $\sum a_n$ converge se $\displaystyle\lim_{n \to +\infty} s_n = l$ per qualche $l \in \R$;
+        \item $\sum a_n$ diverge positivamente se $\displaystyle\lim_{n \to +\infty} s_n = +\infty$;
+        \item $\sum a_n$ diverge negativamente se $\displaystyle\lim_{n \to +\infty} s_n = -\infty$;
+        \item $\sum a_n$ è indeterminata se $\displaystyle\lim_{n \to +\infty} s_n$ non esiste.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    [Condizione necessaria per la convergenza]
+    Sia $\seqn{a_n}$ una successione. Allora se $\sum a_n$ converge segue che \[
+        \lim_{n\to +\infty} a_n = 0. 
+    \]
+\end{proposition}
+\begin{proof}
+    Per definizione della successione delle somme parziali \begin{gather*}
+        s_n \deq a_0 + \dots + a_{n-1} + a_n\\
+        s_{n-1} \deq a_0 + \dots + a_{n-1}
+    \end{gather*} dunque \[
+        a_n = s_n - s_{n-1}.    
+    \] Supponiamo che $\sum a_n$ converga al valore reale $l$: il limite della successione $\seqn{a_n}$ sarà quindi \begin{align*}
+           \lim_{n\to +\infty} a_n
+        &= \lim_{n\to +\infty} s_n - s_{n-1} \\
+        &= l - l\\
+        &= 0.
+    \end{align*}
+\end{proof}
+
+\begin{proposition}
+    \label{prop:serie_succ_cresc_nonneg}
+    Sia $\seqn{a_n}$ una successione crescente e a termini non negativi (ovvero $a_n \geq 0$ per ogni $n \in \N$): allora la serie $\sum a_n$ è convergente oppure divergente positivamente. 
+\end{proposition}
+\begin{proof}
+    La successione delle somme parziali è debolmente crescente (ad ogni passo aggiungiamo un numero positivo o nullo), dunque non può divergere negativamente o essere indeterminata.
+\end{proof}
+
+\begin{definition}
+    [Serie assolutamente convergente] Sia $\seqn{a_n}$ una successione. Se $\sum \abs{a_n}$ converge, allora la serie $\sum a_n$ si dice assolutamente convergente.
+\end{definition}
+
+\begin{remark}
+    Siccome $\abs{a_n}$ è una successione a termini positivi o nulli, la serie $\sum \abs*{a_n}$ (in virtù della \autoref{prop:serie_succ_cresc_nonneg}) può soltanto convergere o divergere positivamente.
+\end{remark}
+
+\begin{proposition}
+    [Proprietà delle serie assolutamente convergenti]
+    Sia $\seqn{a_n}$ una successione la cui serie converge assolutamente. Allora valgono le seguenti affermazioni: \begin{enumerate}[label={(\roman*)}]
+        \item la serie $\sum a_n$ converge;
+        \item se cambio l'ordine dei termini della successione, la serie converge allo stesso valore della serie relativa alla successione originale;
+        \item data una partizione di $\N$ della forma $A_1, A_2, \dots$ vale che \[
+            \sum_{n=1}^\infty a_n = \sum_{n=1}^\infty \parens*{\sum_{k \in A_n} a_k}.
+        \]
+    \end{enumerate}
+\end{proposition}
+
+\subsubsection{Serie geometrica}
+
+Dato $a \in \R$ tale che $\abs*{a}< 1$ si dice \emph{serie geometrica} la serie \[
+    \sum_{n=0}^\infty a^n = 1 + a + a^2 + \dots    
+\]
+
+\begin{proposition}
+    Sia $a \in \R$, $\abs*{a} < 1$. Allora \begin{equation}\label{eq:geometric_series}
+        \sum_{n = 0}^\infty a^n = \frac{1}{1-a}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Mostriamo innanzitutto per induzione su $n$ che \[
+        s_n = \frac{a^{n+1} - 1}{a - 1}.    
+    \]
+    \begin{description}
+        \item[Caso base] Se $n = 0$ allora $s_0 = a^0 = 1$.
+        \item[Passo induttivo] Supponiamo che la formula valga per $n-1$ e dimostriamo che vale per $n$.
+        \begin{align*}
+            s_{n} &= s_{n - 1} + a^{n}\\
+            &= \frac{a^n - 1}{a - 1} + a^n\\
+            &= \frac{a^n - 1 + a^n(a - 1)}{a - 1}\\
+            &= \frac{a^n - 1 + a^{n+1} - a^n}{a-1}\\
+            &= \frac{a^{n+1} - 1}{a-1}.
+        \end{align*}  
+    \end{description}
+    Dunque la formula vale per ogni $n \in \N$: quando $n$ tende a $+\infty$ allora avremo che \[
+        \sum a^n = \lim_{n \to +\infty} s_n = \lim_{n \to +\infty} \frac{a^{n+1} - 1}{a-1} = \frac{-1}{a-1} = \frac{1}{1-a},   
+    \] dove abbiamo usato il fatto che $a^n \to 0$ se $\abs{a} < 1$.
+\end{proof}
+
+\subsubsection{Serie esponenziale}
+Vale la seguente formula per l'esponenziale: per ogni $x \in \R$ \begin{equation}
+    \label{eq:exp_series}
+    e^x = \sum_{n=0}^\infty \frac{x^n}{n!}.
+\end{equation}
