@@ -8,6 +8,8 @@
 *.fls
 *.synctex.gz
 *.toc
+*.class
+IllegalMaterial
 Appunti
 LezioniRossini
 ## *.pdf
