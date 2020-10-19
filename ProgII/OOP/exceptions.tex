@@ -1,0 +1,113 @@
+\section{Eccezioni in Java}
+
+In alcuni casi vogliamo segnalare il fatto che un metodo non può restituire il risultato corretto perché si è verificato un errore (ad esempio, si vuole leggere un file che non esiste). Il Java fornisce un potente strumento sintattico per gestire questi casi: le cosiddette \emph{eccezioni}.
+
+Le eccezioni sono particolari oggetti che servono a segnalare una situazione anomala: esse sono uno strumento più potente di scegliere "valori particolari" da restituire in caso di errore in quanto
+\begin{itemize}
+    \item possiamo avere eccezioni specializzate per ogni tipo di errore;
+    \item c'è \emph{separations of concerns}: abbiamo un costrutto sintattico che si occupa di gestire gli errori.
+\end{itemize}
+
+Per sollevare un'eccezione bisogna usare la parola chiave \InlineJava{throw}:
+\begin{Java}
+    throw new MyException();
+\end{Java}
+Esso richiede come argomento un qualunque oggetto che sia un sottotipo della classe \InlineJava{Throwable}. Questa classe ha una famiglia di sottoclassi molto ramificata, su cui torneremo più avanti per una distinzione particolare.
+
+\subsubsection{Gestione delle eccezioni}
+Per gestire le eccezioni il Java mette a disposizione il costrutto \InlineJava{try - catch - finally}.
+\begin{itemize}
+    \item Nella clausola \InlineJava{try} si inseriscono le istruzioni che potrebbero sollevare un'eccezione. Ad esempio \begin{Java}
+        try {
+            int[] arr = new int[3];
+            System.out.println(arr[4].toString);
+        }
+    \end{Java}
+    Siccome l'array ha solo 3 elementi, tentando di accedere alla posizione di indice 4 viene sollevata una \InlineJava{IndexOutOfBoundsException}, che sarà catturata da un eventuale blocco \InlineJava{catch}.
+    \item Nelle clausole \InlineJava{catch} si specifica un'eccezione che può essere sollevata dal codice contenuto nella \InlineJava{try}: nel caso questa eccezione venisse sollevata, il codice all'interno della specifica clausola \InlineJava{catch} viene eseguito. Ad esempio:
+    \begin{Java}
+        try {
+            int[] arr = new int[3];
+            System.out.println(arr[4].toString);
+        } catch (ArrayOutOfBoundsException e) {
+            System.out.println(e);
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+    \end{Java}
+    In questo caso, dopo che \InlineJava{IndexOutOfBoundsException} viene sollevata, essa viene catturata dal primo blocco \InlineJava{catch} che quindi esegue il suo codice e fa proseguire l'esecuzione del programma alla fine del blocco \InlineJava{try - catch}.
+    Se l'eccezione sollevata non compare in nessuno dei blocchi \InlineJava{catch}, l'esecuzione del metodo si interrompe con un fallimento e l'eccezione viene passata al metodo chiamante.
+    \item Il blocco \InlineJava{finally} viene eseguito alla fine dell'esecuzione \InlineJava{try - catch}, in \emph{qualsiasi} caso. Infatti anche se nessuno dei blocchi \InlineJava{catch} riesce a catturare l'eccezione sollevata nel blocco \InlineJava{try}, il metodo esegue il blocco \InlineJava{finally} prima di restituire il controllo al chiamante. La clauolsa \InlineJava{finally} è utile per eseguire del codice di \emph{clean-up} a prescindere dal fatto che sia stata sollevata un'eccezione o meno.
+\end{itemize}
+
+Osserviamo che il blocco \InlineJava{catch} non può catturare solamente l'eccezione che viene specificata come argomento, ma anche tutti i suoi sottotipi: ad esempio in
+\begin{Java}
+    try {
+        int[] arr = new int[3];
+        System.out.println(arr[4].toString);
+    } catch (Throwable e) {
+        System.out.println(e);
+    }
+\end{Java}
+la \InlineJava{catch} cattura qualsiasi tipo di eccezione, in quanto tutte sono sottotipo di \InlineJava{throwable}.
+
+Inoltre possiamo avere più blocchi \InlineJava{try - catch} annidati.
+\begin{Java}
+    try {
+        try {
+            x = Array.searchSorted(v, y);
+        } catch (NullPointerException e) {
+            throw new NotFoundException();
+        }
+    } catch (NotFoundException e) {
+        System.out.println(e);
+    }
+\end{Java}
+In questo caso il blocco \InlineJava{catch} esterno può catturare sia la \InlineJava{NotFoundException} sollevata dal blocco \InlineJava{catch} interno, sia una possibile \InlineJava{NotFoundException} sollevata dal metodo \InlineJava{Array.searchSorted}.
+
+\subsection{Eccezioni checked e unchecked}
+Come abbiamo detto prima la classe \InlineJava{Throwable} ha diverse sottoclassi. Esse si dividono in due categorie: le classi che generano eccezioni \emph{checked} e quelle che generano eccezioni \emph{unchecked}.
+
+\paragraph{Eccezioni \emph{checked}} Le eccezioni \emph{checked} sono tutte le eccezioni che sono sottotipo della classe \InlineJava{Exception}. Esse sono delle eccezioni particolari in quanto devono essere elencate nelle firme dei metodi che possono sollevarle, come in \begin{Java}
+public void myMethod() throws MyCheckedException { ... }
+\end{Java}
+Inoltre le eccezioni checked non possono essere propagate, ma devono essere gestite (tramite \InlineJava{try - catch}) appena vengono sollevate (a meno che il metodo corrente non le dichiari nella sua firma).
+
+Queste condizioni vengono controllate dal compilatore, per cui le eccezioni checked sono le eccezioni che non "distruggono il flusso del programma": basta catturare l'eccezione e si può continuare con l'esecuzione.
+
+\paragraph{Eccezioni \emph{unchecked}} Un'eccezione \emph{unchecked} è un'eccezione che estende \InlineJava{RuntimeException}: esse rappresentano tutti gli errori che possono accadere a runtime, come ad esempio la possibilità di avere un riferimento a \InlineJava{null} (codificato dalla \InlineJava{NullPointerException}), oppure di essere andati fuori dagli indici permessi in un array (errore codificato dalla \InlineJava{IndexOutOfBoundsException}), o tante altre.
+
+Al contrario delle eccezioni checked, le unchecked non devono necessariamente essere enumerate nella firma di un metodo (anche se è buona pratica farlo ugualmente), né devono essere obbligatoriamente catturate da una specifica clausola \InlineJava{try - catch}.
+
+Le eccezioni checked sono più sicure e robuste delle unchecked, poiché il compilatore si assicura che vengano elencate e gestite; tuttavia quando siamo ragionevolmente sicuri che l'eccezione non verrà sollevata può essere più utile usare un'eccezione unchecked. Al contempo, le eccezioni unchecked possono essere difficili da notare, in quanto non vengono dichiarate esplicitamente e il programmatore non sa quale metodo le ha sollevate: in questo caso l'unica cosa da fare è separare il blocco \InlineJava{try} in più blocchi, in modo da sapere effettivamente quale metodo solleva la specifica eccezione.
+
+\subsection{Definire nuove eccezioni}
+
+Per definire una nuova eccezione bisogna innanzitutto decidere se la si vuole definire checked o unchecked. Nel primo caso, essa deve essere un sottotipo di \InlineJava{Exception}, e deve contenere al suo intero solamente uno o più costruttori: 
+\begin{Java}
+    public MyCheckedException extends Exception {
+        public MyCheckedException(){
+            super();
+        }
+
+        public MyCheckedException(String e){
+            super(e);
+        }
+    }
+\end{Java}
+Il discorso è identico per eccezioni unchecked, con la differenza che la classe deve estendere \InlineJava{RuntimeException}:
+\begin{Java}
+    public MyUnCheckedException extends RuntimeException {
+        public MyUnCheckedException(){
+            super();
+        }
+
+        public MyUnCheckedException(String e){
+            super(e);
+        }
+    }
+\end{Java}
+
+\subsection{Introduzione alla Programmazione Difensiva}
+Lo stile di programmazione che usa le eccezioni (insieme, come vedremo nel prossimo capitolo, ai contratti d'uso) per evitare situazioni anomale viene chiamato \emph{defensive programming} o programmazione difensiva. In questo stile di programmazione il programmatore descrive quali sono gli input ammessi per ogni metodo definito, e in caso di input non ammessi solleva un'eccezione per segnalare all'utente che il metodo non può svolgere il suo compito correttamente. Parleremo più approfonditamente di defensive programming più avanti.
+

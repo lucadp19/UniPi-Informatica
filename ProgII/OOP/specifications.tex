@@ -1,0 +1,135 @@
+\section{Design-by-contract}
+Il concetto di \emph{design-by-contract} è stato introdotto per permettere di costruire progetti robusti e facilmente estendibili. Secondo questo modello di progettazione è necessario creare una \emph{barriera di astrazione} tra colui che progetta il software e il cliente tramite un \emph{contratto d'uso}.
+
+Il contratto è formato da due parti:
+\begin{itemize}
+    \item una \emph{precondizione} (clausola \emph{requires}), che serve a colui che progetta il software per dire quali devono essere i vincoli sui dati prima della chiamata di un metodo;
+    \item una \emph{postcondizione} (clausola \emph{effects}), che indica l'effetto del metodo nei casi in cui la precondizione è soddisfatta: il metodo deve sottostare precisamente alla postcondizione, ad esempio modificando le giuste variabili, oppure sollevando le eccezioni specificate, eccetera.
+\end{itemize}
+
+Facciamo un esempio:
+\begin{Java}
+    // @requires: num >= 0
+    // @effects: returns the square root of the number num
+    public static double sqrt(double num);
+\end{Java}
+In questo caso la precondizione è che il parametro in ingresso \InlineJava{num} sia non-negativo (se ciò non fosse l'operazione di radice quadrata non avrebbe senso); la postcondizione invece è che il metodo (se la precondizione è verificata) restituisce effettivamente la radice quadrata del numero.
+
+Il contratto d'uso serve ad astrarre l'uso di un metodo dalla sua implementazione: non serve conoscere il codice sorgente di un metodo per poterlo usare. Nel caso del metodo \InlineJava{sqrt} non importa sapere \emph{in che modo} esso calcola la radice quadrata: il contratto d'uso ci dice che il parametro in ingresso deve essere non-negativo e ci assicura che in questo caso il risultato sia davvero la radice quadrata del numero, a prescindere da quale sia l'algoritmo usato per calcolarla.
+
+Questo concetto si rivela molto utile quando si vogliono fare modifiche incrementali ai metodi: se volessimo migliorare l'implementazione di un metodo non dobbiamo preoccuparci di come esso viene usato, ma dobbiamo assicurarci solamente di mantenere inalterate la precondizione e la postcondizione. In questo modo il cliente non vede alcuna differenza nell'uso del metodo precedente con quello nuovo e non possono esserci errori dovuti all'implementazione di nuove funzionalità, in quanto tutte le richieste e tutte le funzionalità vanno inserite nelle clausole \emph{requires} e \emph{effects}.
+
+\section{Defensive programming}
+Le precondizioni e le postcondizioni viste nella sezione precedente possono essere pensate come formule logiche della Logica del Primo Ordine. La relazione tra le due (ovvero che se vale la precondizione allora dobbiamo assicurarci che, alla fine del metodo, valga la postcondizione) può essere realizzata tramite una semplice implicazione: \[
+    \InlineJava{Pre} \implies \InlineJava{Post}.    
+\]
+
+Tuttavia un'implicazione è sempre vera quando l'antecedente (in questo caso \InlineJava{Pre}) è falso, dunque il contratto ci permette di fare qualsiasi cosa quando l'antecedente è falso. Ad esempio il seguente programma rispetta il contratto d'uso dato:
+\begin{Java}
+    // @requires: num >= 0
+    // @effects: returns the 4th root of the number num
+    public static double fourthRoot(double num) {
+        if(num < 0) {       // anything's allowed
+            return 254;
+        } else {
+            return sqrt(sqrt(num));
+        }
+    }
+\end{Java}
+Infatti, siccome abbiamo specificato chiaramente che il programma funziona correttamente solamente quando \InlineJava{num} è non-negativo, ci aspettiamo di non trovarci mai nel primo caso, per cui potremmo direttamente eliminare il costrutto \InlineJava{if}.
+
+Tuttavia una buona pratica di programmazione è controllare due volte la precondizione: la prima tramite la clausola requires, la seconda attraverso l'uso delle eccezioni.
+\begin{Java}
+    // @requires: num >= 0
+    // @effects: returns the 4th root of the number num
+    public static double fourthRoot(double num)
+                throws IllegalArgumentException {
+        if(num < 0) {
+            throw new IllegalArgumentException();
+        } else {
+            return sqrt(sqrt(num));
+        }
+    }
+\end{Java}
+In questo caso siamo certi che il programma non può comportarsi in modi diversi da come lo vogliamo poiché, oltre ad aver esplicitato le precondizioni, abbiamo anche sollevato un'eccezione adatta in caso il metodo fosse stato chiamato con i parametri errati.
+
+Questo stile di programmazione si chiama \emph{programmazione difensiva} (oppure \emph{defensive programming}), e serve a creare programmi facili da usare, facili da mantenere e al contempo sicuri (poiché blocchiamo qualsiasi possibile input che non rispetta le precondizioni tramite le eccezioni).
+
+\section{Abstract Data Types}
+Abbiamo visto che il concetto di specifica ci permette di astrarre l'uso di un metodo dalla sua implementazione: possiamo fare la stessa cosa con le strutture dati, che sono la base di ogni progetto. Infatti può capitare spesso che una scelta di struttura dati fatta ad inizio progetto possa rivelarsi non ottimale in seguito a causa della sua implementazione: vorremmo quindi un modo per astrarre dall'organizzazione e dal significato specifico dei dati e pensare solo in termini delle operazioni fornite.
+
+Un esempio di tipo di dato astratto può essere una classe in Java da un punto di vista esterno: per operare sulla classe possiamo solamente usare i metodi che ci vengono forniti dalla classe, insieme alle loro specifiche; se essi in futuro dovessero essere migliorati (ad esempio dal punto di vista della performance) il cliente non avrà modo di rendersene conto.
+
+I metodi di un ADT devono essere nascosti all'utente se non per la loro specifica: ognuno di essi dovrà avere delle precondizioni e delle postcondizioni che permettono a chi usa il metodo di sfruttarlo anche senza conoscerne l'implementazione. I metodi di un ADT possono essere divisi in 4 categorie a seconda del loro scopo:
+\begin{itemize}
+    \item i \emph{creators}, che servono a creare nuove istanze dell'ADT (in Java sono i costruttori);
+    \item i \emph{producers}, che sono metodi che restituiscono nuovi dati;
+    \item i \emph{mutators}, che modificano i dati esistenti;
+    \item gli \emph{observers}, che servono a dare informazioni relative allo stato interno degli oggetti, facendo attenzione a non violare la barriera di rappresentazione.
+\end{itemize}
+Infine gli ADT possono essere divisi in due gruppi: quelli \emph{mutable}, che permettono operazioni che ne modifichino lo stato interno, e quelli \emph{immutable}, che non hanno \emph{mutators}.
+
+Facciamo due esempi.
+
+\subsection{ADT Poly}
+\paragraph{Clausole Overview e Typical Object}
+Supponiamo di voler creare un ADT che rappresenti un polinomio. Il primo passo è specificare \emph{cosa rappresenta} il nostro ADT e qual è un elemento tipico di questo tipo di dato astratto.
+\begin{Java}
+    /**
+      * A Poly is an immutable polynomial with integer coefficient.
+      * A typical element is 
+      *          c_0 + c_1x + c_2x^2 + ...  
+      */
+    public class Poly { ...
+\end{Java}
+La clausola \emph{overview} stabilisce se il tipo di dato astratto è mutable o immutable e ne definisce il modello astratto tramite il \emph{typical element}.
+
+\paragraph{Creators}
+I metodi \emph{creators} servono a creare una nuova istanza del tipo di dato astratto.
+\begin{Java}
+    /**
+     * @effects: makes a new Poly = 0
+     */
+    public Poly();
+
+    /**
+     * @throws: NegExponentException if n < 0
+     * @effects: makes a new Poly = cx^n
+     */
+    public Poly(int c, int n);
+\end{Java}
+Siccome i creators servono a creare nuovi oggetti, l'unica clausola indispensabile è la clausola effects.
+
+\paragraph{Observers}
+I metodi \emph{observers} servono a reperire parte dell'informazione contenuta nello stato interno di un'istanza di un ADT.
+\begin{Java}
+    /**
+     * @returns: the degree of this,
+     *      the greatest exponent with a
+     *      non-zero coefficient.
+     *      Returns 0 if this = 0. 
+     */
+    public int degree() { }
+
+    /**
+     * @throws: NegExponentException if n < 0
+     * @returns: the coefficient of the term
+     *      of this whose exponent is n.
+     */
+    public int coeff(int n) { }
+\end{Java}
+È importante che gli observers non modifichino lo stato astratto, né violino la barriera di astrazione esponendo dati all'esterno, ad esempio restituendo il riferimento ad un oggetto contenuto nello stato interno. Inoltre notiamo che nella descrizione degli observers si usa sempre la rappresentazione astratta dell'oggetto fornita tramite la clausola overview.
+
+\paragraph{Producers}
+I \emph{producers} servono a produrre nuovi oggetti del tipo dell'ADT a partire da oggetti già esistenti. Essi non devono avere effetti laterali, ovvero non devono modificare lo stato astratto degli oggetti su cui sono chiamati, ma devono solamente produrre nuovi dati.
+\begin{Java}
+    /**
+     * @returns: this + p
+     */
+    public Poly add(Poly p) { }
+
+    /**
+     * @returns: this * p
+     */
+    public Poly mult(Poly p) { }
+\end{Java}

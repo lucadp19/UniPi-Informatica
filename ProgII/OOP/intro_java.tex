@@ -1,0 +1,125 @@
+\part{Object-Oriented Programming}
+
+\chapter{OOP in Java}
+
+\section{Classi e oggetti in Java}
+
+Java, come tutti i linguaggi Object-Oriented, si basa fortemente sulle nozioni di \emph{classe} e di \emph{oggetto}. 
+
+\begin{itemize}
+    \item Un oggetto è un insieme strutturato di \emph{variabili di istanza}, che rappresentano lo stato interno dell'oggetto, e di \emph{metodi}, che rappresentano le azioni che possiamo compiere sull'oggetto.
+    \item Una classe, invece, è un \emph{template} che possiamo usare per creare oggetti di un determinato tipo: la definizione di una classe specifica \begin{itemize}
+        \item tipo e valori iniziali dello stato locale degli oggetti;
+        \item l'insieme delle operazioni che possono essere eseguite su oggetti che sono istanze di quella classe.
+    \end{itemize}
+    In particolare ogni definizione di classe implementa uno o più metodi costruttore: essi servono a "costruire" un oggetto di quella determinata classe.
+\end{itemize}
+
+Per implementare il concetto di \emph{information hiding} gli oggetti in Java nascondono all'esterno il loro stato locale, ma hanno un'interfaccia ben definita, data dai loro metodi pubblici, che consentono di agire sull'oggetto solo nei modi concessi dal programmatore.
+
+Gli oggetti sono caratterizzati da: \begin{itemize}
+    \item uno stato interno
+    \item un nome che individua ogni oggetto
+    \item un ciclo di vita (creazione, riferimento, disattivazione)
+    \item una locazione di memoria
+    \item dei comportamenti, dati dai metodi.
+\end{itemize}
+
+Il meccanismo utilizzato per gli assegnamenti tra oggetti è il cosiddetto \emph{sharing strutturale}: l'assegnamento \InlineJava{obj1 = obj2} (dove \InlineJava{obj1} e \InlineJava{obj2} sono due oggetti) fa in modo che \InlineJava{obj1} sia un \emph{riferimento} all'oggetto riferito da \InlineJava{obj2}. Non viene quindi creata una copia di \InlineJava{obj2}, ma ora due variabili si riferiscono alla stessa locazione di memoria: questo concetto va sotto il nome di \emph{aliasing}.
+
+\subsection{Definizione di classe}
+
+Vediamo ora come si definisce una classe in Java.
+
+% \lstinputlisting[language=Java]{3_lezione/Point.java}
+\begin{Java}
+    public class Point {
+        private int x, y;
+
+        public Point(int x0, int y0){
+            x = x0;
+            y = y0;
+        }
+
+        public void add(Point p){
+            x += p.x;
+            y += p.y;
+        }
+
+        public Point sum(Point p){
+            Point res = new Point(x + p.x, y + p.y);
+            return res;
+        }
+
+        public String toString(){
+            return "("+ x + ", " + y + ")"; 
+        }
+    }
+\end{Java}
+
+\begin{itemize}
+    \item \InlineJava{public} e \InlineJava{private} sono dei \emph{modificatori}: \InlineJava{public} si usa per dire che un metodo, una variabile di istanza o la dichiarazione di una classe devono essere visibili al codice esterno, mentre \InlineJava{private} si usa per nascondere la dichiarazione al resto del codice.
+    
+    Generalmente le variabili di istanza devono essere nascoste (per rispettare il principio dell'information hiding), mentre i metodi sono pubblici in modo da consentire lo scambio di dati tra le istanze di una classe e l'esterno.
+    \item La parola chiave \InlineJava{class}, seguita da un nome, è l'inizio della dichiarazione della classe.
+    \item Nella prima parte si dichiarano le \emph{variabili di istanza} dela classe: in questo caso \InlineJava{x} e \InlineJava{y} sono dichiarate private in quanto vogliamo che siano visibili e modificabili solo dalla classe.
+    \item Il primo metodo dichiarato è il \emph{costruttore della classe}: esso ha lo stesso nome della classe e ci consente di creare nuovi oggetti di tipo \InlineJava{Point} inizializzando le variabili di istanza.
+    \item Seguono poi dei \emph{metodi}: essi permettono al resto del codice di operare con oggetti di tipo \InlineJava{Point}, ad esempio sommandoli tra loro o stampandoli a schermo tramite il metodo \InlineJava{toString}.
+\end{itemize}
+
+Un programma Java è mandato in esecuzione invocando un metodo speciale, detto \emph{main}, con la seguente firma:
+\begin{Java}
+    public static void main(String[] args)
+\end{Java}
+
+Un esempio potrebbe essere il seguente:
+\begin{Java}
+    public class Main {
+    public static void main(String args[]){
+        Point a = new Point(1, 0);
+        Point b = new Point(0, 2);
+        Point c = a.sum(b);
+        System.out.println(a.toString() + " + " + b + " = " + c);
+    }
+}
+\end{Java}
+
+Il metodo \InlineJava{main} crea due oggetti di tipo \InlineJava{Point} tramite la parola chiave \InlineJava{new}: essa manda in esecuzione il costruttore della classe, creando due oggetti che rappresentano rispettivamente il punto $(1, 0)$ e il punto $(1, 2)$.
+Successivamente viene invocato il metodo \InlineJava{sum} dell'oggetto \InlineJava{a}: questo metodo restituisce un nuovo oggetto di tipo \InlineJava{Point} che contiene il punto dato dalla "somma" dei punti \InlineJava{a} e \InlineJava{b}. 
+Infine il metodo stampa i tre punti sfruttando il metodo \InlineJava{toString}.
+
+\section{Abstract Stack Machine}
+
+Per descrivere il funzionamento di Java sfrutteremo un modello computazionale chiamato \emph{Abstract Stack Machine}: essa ci consente di descrivere i cambiamenti dello stato e le interazioni tra gli oggetti.
+
+La ASM è formata da tre componenti:
+\begin{itemize}
+    \item un \emph{workspace}, dove sono memorizzati i programmi in esecuzione e quindi le istruzioni da eseguire;
+    \item uno \emph{stack}, che viene usato per gestire i binding tra variabili e locazioni di memoria che contengono gli oggetti;
+    \item uno \emph{heap} che contiene le locazioni di memoria degli oggetti e viene usato per la gestione della memoria dinamica.
+\end{itemize}
+
+Supponiamo ad esempio di avere una dichiarazione di classe di questo tipo:
+\begin{Java}
+    public class Node{
+        private int elt;
+        private Node next;
+
+        public Node(int e0, Node n0){
+            elt = e0;
+            next = n0;
+        }
+        ...
+    }
+\end{Java}
+
+Se creiamo un oggetto di tipo \InlineJava{Node}
+\begin{Java}
+    Node first = new Node(5, null);
+\end{Java} la ASM si modificherà nel seguente modo:
+\begin{itemize}
+    \item nello stack comparirà un nuovo binding: il nome di variabile \InlineJava{first} sarà un riferimento ad una locazione di memoria sullo heap, in cui sarà contenuto un nuovo oggetto di tipo \InlineJava{Node};
+    \item nello heap verrà allocato lo spazio per il nuovo oggetto: in particolare vi sarà lo spazio per le variabili di istanza (inizializzate a $5$ e a \InlineJava{null} rispettivamente) e dello spazio aggiuntivo che analizzeremo in seguito.
+\end{itemize}
+
+È importante rendersi conto che i riferimenti di Java sono simili ai puntatori definiti in C/C++, ma non consentono l'uso dell'aritmetica dei puntatori: sono semplicemente \emph{riferimenti} agli oggetti allocati sullo heap.

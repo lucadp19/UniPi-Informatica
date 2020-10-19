@@ -1,0 +1,389 @@
+\section{Interfacce}
+
+Abbiamo visto che un meccanismo per definire nuovi tipi in Java è il meccanismo delle classi. Tuttavia Java definisce anche altri costrutti sintattici per realizzare nuovi tipi di dati, come ad esempio le \emph{interfacce}.
+
+Un'interfaccia serve a definire il tipo di un oggetto in modo dichiarativo: vengono dichiarati i metodi che gli oggetti di quel tipo devono implementare, ma non viene definita la loro implementazione.
+
+Ad esempio, consideriamo gli oggetti che vengono rappresentati graficamente su uno schermo bidimensionale: ognuno di essi ha una posizione rispetto all'asse delle ascisse e delle ordinate; inoltre ognuno di essi può essere spostato sullo schermo muovendo le sue coordinate in un altro punto dello schermo. Per rappresentare ciò in Java dichiariamo un'interfaccia:
+\begin{Java}
+    public interface Displaceable{
+        public int getX();
+        public int getY();
+        public void mode(int dx, int dy);
+    }
+\end{Java}
+
+Questa interfaccia dichiara tre metodi: \begin{itemize}
+    \item il metodo \InlineJava{getX}, che (quando implementato) dovrà restituire la posizione sulle ascisse del nostro oggetto;
+    \item il metodo \InlineJava{getY}, che (quando implementato) dovrà restituire la posizione sulle ordinate del nostro oggetto;
+    \item il metodo \InlineJava{mode}, che prende in input due interi (\InlineJava{dx} e \InlineJava{dy}) e avrà lo scopo di spostare l'oggetto dalla posizione corrente, aggiungendo \InlineJava{dx} alle ascisse e \InlineJava{dy} alle ordinate.
+\end{itemize}
+
+Le interfacce sono utili in quanto possono essere \emph{implementate dalle classi}:
+\begin{Java}
+    public class Point implements Displaceable {
+        private int x, y;
+
+        public Point(int x0, int y0){
+            x = x0;
+            y = y0;
+        }
+
+        public int getX(){
+            return x;
+        }
+
+        public int getY(){
+            return y;
+        }
+
+        public void move(int dx, int dy){
+            x += dx;
+            y += dy;
+        }
+    }
+\end{Java}
+
+La classe \InlineJava{Point} implementa i metodi definiti dall'interfaccia \InlineJava{Displaceable}:
+\begin{itemize}
+    \item la parola chiave \InlineJava{implements} serve a specificare che la classe sta implementando un'interfaccia;
+    \item ogni classe può implementare più di un interfaccia;
+    \item quando una classe implementa un'interfaccia \emph{deve} fornire un'implementazione di ogni metodo definito nell'interfaccia.
+\end{itemize}
+
+Ovviamente una classe può implementare più metodi di quelli definiti da un'interfaccia, come si può vedere nel prossimo esempio:
+\begin{Java}
+    public class ColorPoint implements Displaceable {
+        private Point p;
+        private Color c;
+
+        public ColorPoint(int x0, int y0, Color c0){
+            p = new Point(x0, y0);
+            c = c0;
+        }
+
+        public int getX(){
+            return p.getX();
+        }
+
+        public int getY(){
+            return p.getY();
+        }
+
+        public Color getColor(){
+            return c;
+        }
+
+        public void move(int dx, int dy){
+            p.move(dx, dy);
+        }
+    }
+\end{Java}
+
+La classe \InlineJava{ColorPoint} ha più metodi di quelli definiti nell'interfaccia \InlineJava{Displaceable}; 
+inoltre notiamo che essa delega il compito di restituire la posizione sulle ascisse/ordinate e il compito di spostare il punto alla classe \InlineJava{Point}: ciò è una buona pratica di programmazione in quanto consente il riuso del codice. 
+Infatti se volessimo estendere le funzionalità di \InlineJava{mode} in questo caso possiamo semplicemente modificare l'implementazione contenuta nella classe \InlineJava{Point}: la classe \InlineJava{ColorPoint} sarebbe automaticamente aggiornata e non dovremmo cambiare anche il suo codice.
+
+\subsection{Interfacce come tipi di variabili}
+
+Possiamo usare le interfacce per dichiarare nuove variabili:
+\begin{Java}
+    Displaceable d;
+    d = new Point(3, 1);
+    d.move(1, -1);
+    d = new ColorPoint(0, 0, new Color("white"));
+\end{Java}
+
+La variabile \InlineJava{d} è di tipo \InlineJava{Displaceable}: possiamo assegnare ad essa una qualsiasi istanza di una classe che implementa \InlineJava{Displaceable}, come ad esempio \InlineJava{Point} oppure \InlineJava{ColorPoint}.
+
+Questo fenomeno è chiamato \emph{sub-typing}: la variabile \InlineJava{d} è di tipo \InlineJava{Displaceable}, dunque può essere legata ad un qualsiasi oggetto che implementi l'interfaccia \InlineJava{Displaceable}. Più in generale, un tipo \InlineJava{A} è detto \emph{sottotipo} di un altro tipo \InlineJava{B} se \InlineJava{A} soddisfa tutti gli obblighi richiesti da \InlineJava{B}.
+
+\subsection{Interfacce multiple}
+
+Come abbiamo detto prima, un oggetto può implementare più di un'interfaccia. Ad esempio dichiariamo questa nuova interfaccia:
+\begin{Java}
+    public interface Area{
+        public void getArea();
+    }
+\end{Java}
+
+Una classe che implementa sia \InlineJava{Displaceable} che \InlineJava{Area} può essere la seguente:
+\begin{Java}
+    public class Circle implements Area, Displaceable{
+        private Point center;
+        private int rad;
+
+        public Circle(int x0, int y0, int r0){
+            center = new Point(x0, y0);
+            rad = r0;
+        }
+
+        public double getArea(){
+            return Math.pi * rad * rad;
+        }
+
+        public int getX(){
+            return center.getX();
+        }
+
+        public int getY(){
+            return center.getY();
+        }
+
+        public void move(int dx, int dy){
+            center.move(dx, dy);
+        }
+    }
+\end{Java}
+
+\section{Ereditarietà}
+
+Consideriamo il seguente codice:
+\begin{Java}
+    public class PaintedCircle {
+        private Point center;
+        private int radius;
+        private Color fillColor;
+        private Color borderColor;
+        private double borderThickness;
+
+        public void fillWith(Color c){
+            fillColor = c;
+        }
+
+        public void setBorderThickness(double t){
+            borderThickness = t;
+        }
+
+        public void setBorderColor(Color c){
+            borderColor = c;
+        }
+        ...
+    }
+
+    public class PaintedTriangle {
+        private Point v1, v2, v3;
+        private Color fillColor;
+        private Color borderColor;
+        private double borderThickness;
+
+        public void fillWith(Color c){
+            fillColor = c;
+        }
+
+        public void setBorderThickness(double t){
+            borderThickness = t;
+        }
+
+        public void setBorderColor(Color c){
+            borderColor = c;
+        }
+        ...
+    }
+\end{Java}
+
+Il codice delle due classi è corretto e funziona, ma non è buon codice: se volessimo modificare il funzionamento dei bordi, ad esempio aggiungendo la possibilità di avere bordi tratteggiati, dovremmo modificarlo per ognuna delle due classi \InlineJava{PaintedCircle} e \InlineJava{PaintedTriangle}.
+Per questo si ricorre al meccanismo dell'\emph{ereditarietà tra classi}.
+
+L'ereditarietà ci consente di \begin{itemize}
+    \item riusare il codice e creare una gerarchia tra le classi, in modo che \begin{itemize}
+        \item le classi in alto nella gerarchia rappresentino tipi più generalizzati/astratti;
+        \item le classi in basso nella gerarchia rappresentino tipi più specifici/concreti;
+    \end{itemize}
+    \item sfruttare il meccanismo del sub-typing per usare tipi più specifici dove sono previsti i loro supertipi.
+\end{itemize}
+
+Il secondo punto viene generalmente chiamato \emph{principio di sostituzione}: se \InlineJava{B} è un sottotipo di \InlineJava{A}, allora gli oggetti di tipo \InlineJava{B} possono essere usati dove sono previsti oggetti di tipo \InlineJava{A}. In particolare \begin{itemize}
+    \item un'istanza del sottotipo (\InlineJava{B}) soddisfa sempre le proprietà del supertipo (\InlineJava{A});
+    \item un'istanza del sottotipo può avere più vincoli del supertipo.
+\end{itemize}
+
+\subsection{Ereditarietà in Java}
+
+L'ereditarietà tra due classi \InlineJava{B} e \InlineJava{A} viene realizzata in Java tramite la parola chiave \InlineJava{extends}:
+\begin{Java}
+    class B extends A {...}
+\end{Java}
+
+Al contrario delle interfacce, una classe in Java può estendere una sola classe: questo meccanismo è chiamato \emph{ereditarietà singola} (al contrario dell'ereditarietà multipla, come ad esempio accade in C++).
+
+Facciamo un esempio di ereditarietà:
+\begin{Java}
+    public class D {
+        private int x, y;
+
+        public int addBoth(){
+            return x + y;
+        }
+    }
+
+    public class C extends D {
+        private int z;
+
+        public int addThree(){
+            return addBoth() + z;
+        }
+    }
+\end{Java}
+
+Notiamo che:
+\begin{itemize}
+    \item la classe \InlineJava{C} eredita tutte le variabili di istanza di \InlineJava{D} implicitamente; tuttavia, dato che le variabili di istanza di \InlineJava{D} sono dichiarate private, gli oggetti di tipo \InlineJava{C} non possono accedervi (anche se sono presenti!);
+    \item la classe \InlineJava{C} eredita tutti i metodi di \InlineJava{D} e quindi (se sono dichiarati \InlineJava{public}) può usarli all'interno dei suoi metodi.
+\end{itemize}
+
+\paragraph{Modificatore \InlineJava{protected}} Per fare in modo che le variabili di istanza siano nascoste all'esterno ma visibili alle sottoclassi il Java mette a disposizione la parola chiave \InlineJava{protected}: se dichiarassimo protette (invece che private) le variabili della classe \InlineJava{D} riusciremmo ad accedervi e a modificarle dalla classe \InlineJava{C}.
+
+La scelta \InlineJava{private}/\InlineJava{protected} dipende dalla situazione e non vi sono regole generali per capire quando è meglio usare l'una oppure l'altra.
+
+\paragraph{Il metodo \InlineJava{super}} Il metodo costruttore della classe padre non viene ereditato direttamente: per chiamarlo è necessario usare il metodo \InlineJava{super}, come mostrato dal seguente esempio:
+\begin{Java}
+    public class D {
+        private int x, y;
+        
+        public D(int initX, int initY){
+            x = initX;
+            y = initY;
+        }
+        ...
+    }
+
+    public class C extends D {
+        private int z;
+
+        public C(int initX, int initY, int initZ){
+            super(initX, initY);
+            z = initZ;
+        }
+    }
+\end{Java}
+
+\paragraph{This} La parola chiave \InlineJava{this} ci permette di riferirci all'oggetto corrente. Anche se solitamente possiamo usare i metodi e le variabili dell'oggetto corrente senza farli precedere dal nome dell'oggetto e dall'operatore punto, in alcuni casi può essere utile.
+
+Uno di questi casi è quando vogliamo disambiguare i nomi delle variabili di istanza con i nomi delle variabili in ingresso al metodo:
+\begin{Java}
+    public class Point {
+        private int x, y;
+        public Point(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+\end{Java}
+
+Nel metodo costruttore \InlineJava{x} e \InlineJava{y} si riferiscono ai parametri formali del metodo, mentre \InlineJava{this.x} e \InlineJava{this.y} si riferiscono alle variabili di istanza dell'oggetto.
+
+Un altro uso per \InlineJava{this} è come costruttore implicito:
+\begin{Java}
+    public class Rectangle{
+        private int x, y;
+        private int width, height;
+
+        public Rectangle(int x0, int y0, int w, int h){
+            x = x0;
+            y = y0;
+            width = w;
+            height = h;
+        }
+
+        public Rectangle(int w, int h){
+            this(0, 0, w, h);
+        }
+
+        public Rectangle(){
+            this(0, 0, 0, 0);
+        }
+    }
+\end{Java}
+
+In questo caso la classe \InlineJava{Rectangle} ha tre diversi costruttori: il primo prende 4 parametri (posizione sull'asse x, sull'asse y, larghezza e altezza), il secondo ne prende solo 2 (larghezza e altezza) e infine il terzo non prende parametri. Il costruttore implicito \InlineJava{this} usa il codice del costruttore con 4 parametri per definire i costruttori con 2 e 0 parametri, ponendo a $0$ i termini non specificati.
+
+\subsubsection{Upcasting e downcasting}
+
+L'ereditarietà in Java ci consente di usare oggetti sottotipo al posto di oggetti supertipo, in modo da avere codice più modulare. Possiamo inoltre trasformare un oggetto di un supertipo in un oggetto di un sottotipo e viceversa, tramite l'\emph{upcasting} e il \emph{downcasting}.
+
+L'upcasting serve a trasformare una variabile di un sottotipo in una variabile di un supertipo: 
+\begin{Java}
+    public class Vehicle {...}
+    public class Car extends Vehicle {...}
+
+    ...
+    Vehicle v = (Vehicle) new Car();
+\end{Java}
+Invece il downcasting serve per trasformare una variabile di un supertipo e specializzarla in un sottotipo:
+\begin{Java}
+    Car c = (Car) new Vehicle();
+\end{Java}
+
+L'upcasting può essere anche implicito, mentre il downcasting va sempre esplicitato e può avvenire solo tra una classe e una sua super-classe.
+
+\subsubsection{Ogni classe estende \InlineJava{Object}}
+
+Esiste una classe in Java che fa da "antenato" a tutte le altre classi: la classe \InlineJava{Object}. Infatti tutte le classi estendono \InlineJava{Object} implicitamente, poiché in \InlineJava{Object} sono definiti alcuni metodi che devono essere comuni a tutti gli oggetti.
+
+\paragraph{Metodo \InlineJava{equals}} Il metodo \InlineJava{equals} viene usato per controllare la \emph{deep equality} tra due oggetti: si usa \InlineJava{equals} quando si vuole verificare non se due variabili sono riferimenti allo stesso oggetto (\emph{shallow equality}), ma quando si vuole verificare che due oggetti (che occupano due posizioni in memoria diverse) hanno lo stesso \emph{stato interno}.
+
+Siccome il concetto di \emph{deep equality} dipende dal tipo di oggetto che stiamo considerando, il metodo \InlineJava{equals} va ridefinito per ogni nuova classe: la definizione di default controlla solo la \emph{shallow equality} tra due oggetti (tramite l'operatore \InlineJava{==}).
+
+\paragraph{Metodo \InlineJava{toString}} Il metodo \InlineJava{toString} permette di rappresentare lo stato interno di un oggetto sotto forma di stringa. Anche in questo caso il metodo va ridefinito per ogni classe.
+
+\paragraph{Metodo \InlineJava{clone}} Il metodo \InlineJava{clone} permette di creare un nuovo oggetto con lo stesso stato interno dell'oggetto corrente (anche se in alcuni casi può creare una situazione di condivisione di dati). Questo metodo viene ereditato solo se la classe implementa l'interfaccia \InlineJava{Cloneable}.
+
+\section{Tipi dinamici e statici}
+
+Consideriamo il seguente esempio:
+\begin{Java}
+    public class Vehicle {...}
+    public class Car extends Vehicle {...}
+
+    ...
+    Vehicle v = (Vehicle) new Car();
+\end{Java}
+
+Qual è il tipo di \InlineJava{v}? \begin{itemize}
+    \item Da una parte \InlineJava{v} è una variabile di tipo \InlineJava{Vehicle}.
+    \item D'altro canto l'oggetto il cui riferimento è contenuto in \InlineJava{v} è di tipo \InlineJava{Car}, un sottotipo di \InlineJava{Vehicle}.
+\end{itemize}
+
+Definiamo quindi due \emph{tipi} associati ad ogni variabile: \begin{itemize}
+    \item Il \emph{tipo statico}, che è dato da tutte le informazioni di carattere sintattico (in particolare, dal tipo della variabile). Nel nostro caso il tipo statico di \InlineJava{v} è \InlineJava{Vehicle}.
+    \item Il \emph{tipo dinamico} che rappresenta il tipo dell'oggetto istanziato sullo heap riferito dalla variabile in questione. Nel nostro caso, il tipo dinamico è \InlineJava{Car}.
+\end{itemize}
+
+Facciamo un esempio:
+\begin{Java}
+    public class Father {
+        ...
+        public void printA(){
+            System.out.println("A");
+        }
+        public void printB(){
+            System.out.println("B");
+        }
+    }
+    public class Son extends Father {
+        ...
+        public void printB(){
+            System.out.println("B from Son");
+        }
+        public void printC(){
+            System.out.println("C");
+        }
+    }
+
+    ...
+    Father obj = new Son();
+    obj.printA();
+    obj.printB();
+    obj.printC();
+\end{Java}
+
+Il metodo \InlineJava{printA()} stampa "A" a schermo, come dovrebbe. I metodi successivi si comportano in maniera più particolare:
+\begin{itemize}
+    \item Il metodo \InlineJava{printB()} stampa "B from Son": siccome il tipo dinamico della variabile \InlineJava{obj} è \InlineJava{Son}, dunque il metodo \InlineJava{printB()} usa l'implementazione fornita dalla classe \InlineJava{Son} e non dalla classe padre.
+    \item Il metodo \InlineJava{printC()} dà un errore di compilazione: siccome il tipo statico della variabile \InlineJava{obj} è \InlineJava{Father} il compilatore non riconosce il metodo \InlineJava{printC()} e quindi dà errore, anche se il tipo dinamico lo consentirebbe.
+\end{itemize}
+
+Il motivo di questo comportamento è il seguente: siccome una variabile di tipo \InlineJava{Father} può contenere un riferimento ad oggetti di un qualunque suo sottotipo, a priori gli unici metodi che siamo certi che essa può eseguire sono quelli definiti da \InlineJava{Father}. Infatti tutti i metodi della classe padre devono essere ereditati o ridefiniti dalle classi che ereditano da essa, mentre i metodi definiti dai sottotipi non sono sempre accessibili (come nel caso di \InlineJava{printC()}).
+
+Invece il punto dei sottotipi è quello di specializzare le classi supertipo, dunque se un metodo della classe supertipo viene ridefinito, la versione invocata sarà sempre la più specializzata possibile (come nel caso di \InlineJava{printB()}).
