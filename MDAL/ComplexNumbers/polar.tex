@@ -66,15 +66,15 @@ Consideriamo ora un vettore con modulo $\rho \geq 0$ qualunque. Tramite la trigo
     \begin{tikzpicture}
         % \coordinate (a) at (1, 0);
         \draw[step=1cm,gray!25!,very thin] (-2,-2) grid (4,3);
-        \draw[thick,->] (-1,0) -- (3,0) node[anchor=north west] {Re};
-        \draw[thick,->] (0,-1) -- (0,2) node[anchor=south east] {Im};
+        \draw[thin,->] (-1,0) -- (3,0) node[anchor=north west] {Re};
+        \draw[thin,->] (0,-1) -- (0,2) node[anchor=south east] {Im};
         \draw[red,thick,->] (0,0) coordinate (O) -- (2, 1) coordinate (P)
         node[midway,above] {$\rho$};
 
         \draw[black,<->] (2,0) coordinate (A) -- (P)
-        node[midway,right] {$\rho\sin\theta$};
+        node[midway,right, fill=white] {$\rho\sin\theta$};
         \draw[black,<->] (O) -- (A)
-        node[midway,below] {$\rho\cos\theta$};
+        node[midway,below, fill=white] {$\rho\cos\theta$};
 
         \draw pic[draw,angle radius=1cm,"$\theta$" shift={(6mm,1mm)}] {angle=A--O--P};
     \end{tikzpicture}
@@ -145,15 +145,15 @@ Per definizione di modulo, $\abs*{z} = \sqrt{a^2 + b^2}$. Per trovare l'argoment
         \begin{tikzpicture}
             \coordinate (a) at (1, 0);
             \draw[step=1cm,gray!25!,very thin] (-3,-3) grid (3,3);
-            \draw[thick,->] (-2,0) -- (2,0) node[anchor=north west] {Re};
-            \draw[thick,->] (0,-2) -- (0,2) node[anchor=south east] {Im};
+            \draw[thin,->] (-2,0) -- (2,0) node[anchor=north west] {Re};
+            \draw[thin,->] (0,-2) -- (0,2) node[anchor=south east] {Im};
             \draw[red,thick,->] (0,0) coordinate (O) -- (0, 1) coordinate (i)
-            node[midway,left] {$\abs*{i} = 1$};
+            node[midway,left, fill=white] {$\abs*{i} = 1$};
     
             \draw pic[draw,angle radius=0.5cm,"$\frac{\pi}{2}$" shift={(3mm,3mm)}] {angle=a--O--i};
 
             \filldraw [black] (i) circle (1pt)
-            node[above right] {$i = 0 + 1i$};
+            node[above right, fill=white] {$i = 0 + 1i$};
         \end{tikzpicture}
     \end{center}
 \end{example}

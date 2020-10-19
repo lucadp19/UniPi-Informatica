@@ -26,16 +26,16 @@ Questa rappresentazione ci consente di rappresentare i numeri complessi come se 
 
 \begin{center}\begin{tikzpicture}[>=latex]
     \draw[step=1cm,gray!25!,very thin] (-2,-2) grid (4,4);
-    \draw[thick,->] (-1,0) -- (3,0) node[anchor=north west] {Re};
-    \draw[thick,->] (0,-1) -- (0,3) node[anchor=south east] {Im};
+    \draw[thin,->] (-1,0) -- (3,0) node[anchor=north west] {Re};
+    \draw[thin,->] (0,-1) -- (0,3) node[anchor=south east] {Im};
     \draw[red,thick,->] (0,0) coordinate (O) -- (1, 2)
-    node[midway,below] {$z$};
+    node[midway,below, fill=white] {$z$};
     \filldraw [black] (1,0) circle (1pt)
-    node[below] {$a$};
+    node[below, fill=white] {$a$};
     \filldraw [black] (0,2) circle (1pt)
-    node[left] {$b$};
+    node[left, fill=white] {$b$};
     \filldraw [black] (1,2) circle (1pt)
-    node[right] {$(a, b)$};
+    node[right, fill=white] {$(a, b)$};
 \end{tikzpicture}\end{center}
 
 Avendo rappresentato i numeri complessi come vettori, viene spontaneo definire una quantità che rappresenti la \emph{lunghezza} del vettore.
@@ -77,22 +77,22 @@ Prima di vedere se ogni numero ammette un \emph{inverso moltiplicativo}, ovvero 
 Nel piano complesso il coniugato di un numero è il vettore ribaltato rispetto all'asse delle ascisse: \begin{center}
     \begin{tikzpicture}
         \draw[step=1cm,gray!25!,very thin] (-2,-3) grid (5,3);
-        \draw[thick,->] (-1,0) -- (4,0) node[anchor=north west] {Re};
-        \draw[thick,->] (0,-2) -- (0,2) node[anchor=south east] {Im};
+        \draw[thin,->] (-1,0) -- (4,0) node[anchor=north west] {Re};
+        \draw[thin,->] (0,-2) -- (0,2) node[anchor=south east] {Im};
         \draw[red,thick,->] (0,0) coordinate (O) -- (2, 1)
-        node[midway,above] {$z$};
+        node[midway,above, fill=white] {$z$};
         \draw[blue,thick,->] (0,0) coordinate (O) -- (2, -1)
-        node[midway,below] {$\conj z$};
+        node[midway,below, fill=white] {$\conj z$};
         \filldraw [black] (2,0) circle (1pt)
-        node[below] {$a$};
+        node[below, fill=white] {$a$};
         \filldraw [black] (0,1) circle (1pt)
-        node[left] {$b$};
+        node[left, fill=white] {$b$};
         \filldraw [black] (0,-1) circle (1pt)
-        node[left] {$-b$};
+        node[left, fill=white] {$-b$};
         \filldraw [black] (2,1) circle (1pt)
-        node[right] {$(a, b)$};
+        node[right, fill=white] {$(a, b)$};
         \filldraw [black] (2,-1) circle (1pt)
-        node[right] {$(a, -b)$};
+        node[right, fill=white] {$(a, -b)$};
     \end{tikzpicture}
 \end{center}
 
