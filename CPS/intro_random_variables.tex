@@ -27,7 +27,7 @@ Per introdurre il concetto di variabili aleatorie e la loro utilità useremo il 
 
 \begin{definition}
     [Variabili aleatorie] Sia $(\Omega, \FF, \P)$ uno spazio di probabilità. Una funzione $X : \Omega \to \R$ si dice \emph{variabile aleatoria} e la funzione \[
-        \Prob(X){A} = \Prob{X\inv(A)}  
+        \Prob_{X}{A} = \Prob{X\inv(A)}  
     \] viene detta \emph{legge di probabilità} associata alla variabile aleatoria $X$.
 \end{definition}
 
@@ -43,7 +43,7 @@ Dato $A \subseteq \R$, introduciamo la notazione $\set{X \in A}$ per indicare l'
     [Variabili discrete e continue] Sia $X : \Omega \to \R$ una variabile aleatoria. Allora $X$ si dice: \begin{enumerate}
         \item \emph{discreta} se la sua distribuzione è discreta, ovvero se l'immagine di $X$ è un sottoinsieme finito o numerabile di $\R$;
         \item \emph{con densità} se la sua distribuzione è con densità, ovvero se esiste una densità $f : \R \to \interval[{0, +\infty})$ tale che \[
-            \Prob(X){A} = \Prob{\set{X \in A}} = \int_A f(x)dx.    
+            \Prob_{X}{A} = \Prob\set[\big]{X \in A} = \int_A f(x)dx.    
         \]
     \end{enumerate}
 \end{definition}
@@ -53,7 +53,7 @@ Questi due tipi non sono tutti i tipi possibili di variabili aleatorie, tuttavia
 \begin{definition}
     [Funzione di ripartizione]
     Data una variabile aleatoria $X : \Omega \to \R$ si dice \emph{funzione di ripartizione} di $X$ (o anche c.d.f., da \emph{cumulative distribution function}) la funzione $F_{X} : \R \to \interval[{0,1}]$ tale che \[
-        F_{X}(x) = \Prob{\set{X \leq x}} = \Prob{\set{X \in \interval({-\infty, x}]}}.   
+        F_{X}(x) = \Prob\set[\big]{X \leq x} = \Prob\set[\big]{X \in \interval({-\infty, x}]}.   
     \]
 \end{definition}
 
@@ -105,13 +105,13 @@ La funzione di ripartizione ha delle interessanti proprietà che racchiuderemo n
     \]
 \end{proof}
 
-Un fatto importante è che la proposizione precedente può essere in qualche modo "invertita": data una funzione $F : \R \to \interval[{0, 1}]$ che rispetta le tre proprietà della \autoref{prop:proprietà_cdf} esiste una e una sola probabilità $\Prob{}$ sui sottoinsiemi di $\R$ tale che $F$ sia la funzione di ripartizione di una variabile aleatoria con legge di probabilità $\Prob{}$.
+Un fatto importante è che la proposizione precedente può essere in qualche modo "invertita": data una funzione $F : \R \to \interval[{0, 1}]$ che rispetta le tre proprietà della \autoref{prop:proprietà_cdf} esiste una e una sola probabilità $\Prob$ sui sottoinsiemi di $\R$ tale che $F$ sia la funzione di ripartizione di una variabile aleatoria con legge di probabilità $\Prob$.
 
 Da ciò segue che tutte le variabili aleatorie che hanno la stessa funzione di ripartizione hanno a maggior ragione la stessa legge di probabilità, ovvero sono \emph{equidistribuite}. Nel caso generale è difficile ricavare la legge di probabilità dalla c.d.f., ma se ci limitiamo al caso delle variabili discrete e con densità è fattibile. Possiamo notrare infatti che in generale vale che \[
-    F_X(x_0) - \lim_{x \to x_0^-} F_X(x) = \Prob[\big]{\set{X = x_0}}.    
+    F_X(x_0) - \lim_{x \to x_0^-} F_X(x) = \Prob\set[\big]{X = x_0}.    
 \]
 
-Nel caso discreto questo implica che $\Prob{\set{X = x_i}} = p(x_i)$: in ogni punto di salto l'\emph{ampiezza del salto} è data proprio dal valore della funzione di massa nel punto.
+Nel caso discreto questo implica che $\Prob\set[\big]{X = x_i} = p(x_i)$: in ogni punto di salto l'\emph{ampiezza del salto} è data proprio dal valore della funzione di massa nel punto.
 
 Nel caso con densità possiamo ricavare la legge di probabilità invertendo l'operazione di integrazione: in ogni punto in cui la densità $f$ è continua vale che \[
     f(x) = \frac{dF_X(x)}{dx}.    
@@ -121,7 +121,7 @@ Vediamo ora la definizione di quantile:
 \begin{definition}
     [Quantile]
     Sia $X$ una variabile aleatoria con legge di probabilità $\Prob{}$. Sia inoltre $\beta \in \interval({0, 1})$. Si dice \emph{$\beta$-quantile} un numero $r_\beta$ tale che \begin{align*}
-        \Prob[\big]{\set{X \leq r_\beta}} \geq \beta,\quad &\Prob[\big]{\set{X \geq r_\beta}} \geq 1 - \beta.   
+        \Prob\set[\big]{X \leq r_\beta} \geq \beta,\quad &\Prob\set[\big]{X \geq r_\beta} \geq 1 - \beta.   
     \end{align*}
 \end{definition}
 
@@ -156,6 +156,7 @@ Se invece la variabile $X$ ha densità, \emph{solitamente} esiste uno e un solo 
     \end{align*} 
 \end{example}
 
+\section{Tipi più comuni di variabili aleatorie}
 Definiamo ora i tipi più comuni di variabili aleatorie.
 
 \subsection{Variabile binomiale}
@@ -167,13 +168,15 @@ La variabile $X$ deve quindi contare il numero di successi in $n$ tentativi.
 Calcoliamo ora la funzione di massa $p$: dato un qualsiasi $k \in \set{0, \dots, n}$ vogliamo calcolare la probabilità che la variabile aleatoria valga esattamente $k$, ovvero che su $n$ tentativi $k$ di essi siano successi.
 
 La funzione di massa è la seguente: \[
-    p(k) = \Prob{\set{X = k}} = \binom{n}{k}p_0^k(1-p_0)^{n-k}.
+    p(k) = \Prob\set[\big]{X = k} = \binom{n}{k}p_0^k(1-p_0)^{n-k}.
 \] 
 \begin{proof}
     Consideriamo una stringa di successi/insuccessi di lunghezza $n$. Esistono esattamente $\binom{n}{k}$ stringhe con $k$ successi; inoltre la probabilità ad essa associata è $p_0^k(1-p_0)^{n-k}$, in quanto ogni successo ha probabilità $p_0$ e ogni insuccesso ha probabilità $1-p_0$, da cui la tesi.
 \end{proof}
 
-Per esser certo che $p$ sia effettivamente una funzione di massa verifico che $\displaystyle \sum_{k = 0}^n p(k) = 1$.
+Per esser certo che $p$ sia effettivamente una funzione di massa verifico che \[
+    \sum_{k = 0}^n p(k) = 1.
+\]
 \begin{proof}
     Per definizione di $p$:
     \[
@@ -191,7 +194,7 @@ Come nel caso della variabile binomiale, la variabile aleatoria $X$ conta il num
 Calcoliamo ora la funzione di massa $p$: dato un qualsiasi $k \in \set{1, 2, \dots, +\infty}$ vogliamo calcolare la probabilità che la variabile aleatoria valga esattamente $k$, ovvero che i primi $k-1$ tentativi siano insuccessi e il $K$-esimo sia un successo. Nel caso $k = +\infty$, questo significa che tutti i tentativi sono insuccessi.
 
 La funzione di massa legata a questa variabile è la seguente: \[
-    p(k) = \Prob[\big]{\set{X = k}} = (1-p_0)^{k-1} \cdot p_0.
+    p(k) = \Prob\set[\big]{X = k} = (1-p_0)^{k-1} \cdot p_0.
 \]
 \begin{proof}
     Siccome la probabilità di ogni insuccesso è di $1 - p_0$ e abbiamo $k-1$ insuccessi, la probabilità di ogni successo è $p_0$ e ne abbiamo uno solo, e gli eventi sono tutti indipendenti segue la tesi.
@@ -213,17 +216,17 @@ La variabile geometrica ha un'altra interessante proprietà, detta \emph{proprie
 \begin{proposition}
     [Assenza di memoria della variabile geometrica]
     Siano $n, h \in \N$, $n, h > 0$ e sia $X$ una variabile aleatoria geometrica. Allora vale che \[
-        \Prob[\big]{\set{X = n + h} \given \set{X > n}} = \Prob[\big]{\set{X = h}}.    
+        \Prob[\Big]{\set[\big]{X = n + h} \given \set[\big]{X > n}} = \Prob\set[\big]{X = h}.    
     \]
 \end{proposition}
 \begin{proof}
     Per definizione di probabilità condizionata \begin{equation}
         \label{eq:tmp_abs_mem}
-        \Prob[\big]{\set{X = n + h} \given \set{X > n}} 
-        = \frac{\Prob[\big]{\set{X = n + h}}}{\Prob[\big]{\set{X > n}}}.
+        \Prob[\Big]{\set[\big]{X = n + h} \given \set[\big]{X > n}}
+        = \frac{\Prob\set[\big]{X = n + h}}{\Prob\set[\big]{X > n}}.
     \end{equation}
     Calcoliamo il denominatore di questa espressione: \begin{align*}
-        \Prob[\big]{\set{X > n}}
+        \Prob\set[\big]{X > n}
         &= \sum_{h = n + 1}^\infty p(h)\\
         &= \sum_{h = n + 1}^\infty (1-p_0)^{h-1}\cdot p_0\\
         \intertext{Ponendo $k \deq h - n$, ovvero $h = k + n$:}
@@ -234,10 +237,10 @@ La variabile geometrica ha un'altra interessante proprietà, detta \emph{proprie
     dove l'ultimo passaggio è giustificato dai calcoli fatti nel verificare la correttezza della funzione di massa della variabile binomiale.
 
     Sostituendo nella \eqref{eq:tmp_abs_mem}: \begin{align*}
-        \frac{\Prob[\big]{\set{X = n + h}}}{\Prob[\big]{\set{X > n}}}
+        \frac{\Prob\set[\big]{X = n + h}}{\Prob\set[\big]{X > n}}
         &= \frac{(1+p_0)^{n+h-1} \cdot p_0}{(1-p_0)^n}\\
         &= (1-p_0)^{h-1}\cdot p_0\\
-        &= \Prob[\big]{\set{X = h}}. \qedhere
+        &= \Prob\set[\big]{X = h}. \qedhere
     \end{align*}
 \end{proof}
 
@@ -269,12 +272,13 @@ Questa funzione è effettivamente una densità: infatti \begin{align*}
     &= 1.
 \end{align*}
 
-La funzione di ripartizione corrispondente a questa densità è data da \[
+La funzione di ripartizione corrispondente a questa densità è data da \begin{equation}
+    \label{eq:cdf_exponential}
     F_X(x) = \int_{-\infty}^x f(t)dt = \begin{cases}
         0, &x < 0 \\[5pt]
         \displaystyle\int_0^x \lambda e^{-\lambda t}dt = 1 - e^{-\lambda x}, &x \geq 0.
     \end{cases}    
-\]
+\end{equation}
 
 La variabile esponenziale è \emph{senza memoria}, esattamente come la variabile binomiale, ovvero per ogni $s, t > 0$ vale che \[
     \Prob[\big]{\set{X \leq s + t} \given \set{X > s}} = \Prob[\big]{\set{X \leq t}}.    
@@ -307,3 +311,74 @@ La variabile esponenziale è \emph{senza memoria}, esattamente come la variabile
         &= \Prob[\big]{X \leq t}. \qedhere
     \end{align*}
 \end{proof}
+
+\subsection{Variabile gaussiana}
+
+Consideriamo la funzione $f(x) = e^{-\frac{x^2}{2}}$: anche se non ha una primitiva (esprimibile tramite funzioni elementari), si può calcolare il valore del suo integrale sulla retta reale, e si ha che \[
+    \int_\R f(x) = \int_{-\infty}^{+\infty} e^{-\frac{x^2}{2}} = \sqrt{2\pi}.    
+\] La conseguenza immediata di questo fatto è che dividendo la funzione per $\sqrt{2\pi}$ si ottiene una densità.
+
+\begin{definition}
+    [Densità Gaussiana standard] Si dice \emph{densità gaussiana standard} (o anche \emph{densità normale standard}) la funzione \[
+        \phi(x) = \frac{1}{\sqrt{2\pi}}e^{\frac{x^2}{2}}.    
+    \] La funzione di ripartizione ad essa associata è \[
+        \Phi(x) = \frac{1}{\sqrt{2\pi}}\int_{\infty}^x e^{\frac{t^2}{2}}dt.
+    \] La densità gaussiana standard si indica spesso con $N(0, 1)$; inoltre indicheremo con $q_\alpha$ lo $\alpha$-quantile della variabile $N(0, 1)$.
+\end{definition}
+
+\begin{remark}
+    La densità $\phi$ è una funzione pari: infatti \[
+        \phi(-x) = \frac{1}{\sqrt{2\pi}}e^{\frac{(-x)^2}{2}} =  \frac{1}{\sqrt{2\pi}}e^{\frac{x^2}{2}} = \phi(x).
+    \] Da questo segue immediatamente che $\Phi(0) = \nicefrac{1}{2}$.
+\end{remark}
+
+\begin{proposition}
+    Vale la seguente proprietà per la funzione di ripartizione della $N(0, 1)$: \[
+        \Phi(-x) = 1 - \Phi(x).    
+    \]
+\end{proposition}
+\begin{proof} Siccome $\Phi$ è pari:
+    \begin{align*}
+        \Phi(-x) &= \int_{-\infty}^{-x} \phi(t)dt \\
+        &= \int_x^{+\infty} \phi(t)dt \\
+        &= \int_x^{+\infty} \phi(t)dt + \int_{\infty}^{x} \phi(t)dt - \int_{\infty}^{x} \phi(t)dt\\
+        &= \int_{-\infty}^{+\infty} \phi(t)dt - \int_{\infty}^{x} \phi(t)dt\\
+        &= 1 - \Phi(x). \qedhere
+    \end{align*}
+\end{proof}
+\begin{proposition}
+    Vale la seguente proprietà per l'$\alpha$-quantile $q_\alpha$ della funzione di ripartizione della variabile gaussiana: \[
+        q_{-\alpha} = 1 - q_{\alpha}.
+    \]
+\end{proposition}
+
+La variabile $N(0, 1)$ può essere generalizzata (tramite una trasformazione) ad una variabile di parametri $m$ e $\sigma^2$, detta variabile $N(m, \sigma^2)$.
+
+\begin{definition}
+    [Variabile gaussiana $N(m, \sigma^2)$] Si dice variabile gaussiana $N(m, \sigma^2)$ la variabile $Y$ ottenuta a partire dalla variabile $X = N(0, 1)$ tramite la trasformazione \[
+        Y = \sigma X + m.     
+    \]
+\end{definition}
+
+Facciamo alcune osservazioni. \begin{itemize}
+    \item La funzione di ripartizione di $Y$ è data da \[
+        F_Y(y) = \Phi\parens*{\frac{y-m}{\sigma}}.    
+    \] Infatti \begin{align*}
+        F_Y(y) &= \Prob\set[\big]{Y \leq y} \\
+        &= \Prob\set[\big]{\sigma X + m \leq y}\\
+        &= \Prob\set[\Big]{X \leq \frac{y-m}{\sigma}}\\
+        &= F_X\parens*{\frac{y-m}{\sigma}}\\
+        &= \Phi\parens*{\frac{y-m}{\sigma}}.
+    \end{align*}
+    \item La densità di $Y$ è data da \[
+        f_Y(y) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(y-m)^2}{2\sigma^2}}.
+    \] Infatti \begin{align*}
+        f_Y(y) &= \frac{dF_Y(y)}{dy}\\
+        &= \Phi^\prime\parens*{\frac{y-m}{\sigma}}\frac{1}{\sigma}\\
+        &= \frac{1}{\sigma}\phi\parens*{\frac{y-m}{\sigma}}\\
+        &= \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(y-m)^2}{2\sigma^2}}.
+    \end{align*}
+\end{itemize}
+
+Il principio fondamentale per descrivere le variabili gaussiane non standard è il seguente: se $Y$ è una variabile $N(m, \sigma)$, allora la variabile $\frac{Y-m}{\sigma}$ è standard.
+

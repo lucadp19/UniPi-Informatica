@@ -1,0 +1,165 @@
+\section{Trasformazioni di variabili aleatorie}
+
+Consideriamo la variabile aleatoria $X$ con densità $f_X$: vogliamo studiare se, data una funzione $h$ qualsiasi, la variabile aleatoria definita da $Y \deq h \circ X$ è ancora con densità e in generale come fare per calcolarla.
+
+In assenza di altre informazioni su $h$ l'unica strada è calcolare la funzione di ripartizione di $Y$: \[
+    F_Y(y) = \Prob\set[\big]{Y \leq y} = \Prob\set[\big]{h \circ X \leq y}.    
+\] Se essa è derivabile (o derivabile a tratti), derivandola in ogni punto in cui è possibile si ottiene la densità $f_Y$ di $Y$.
+
+\begin{example}
+    Consideriamo $X$ esponenziale di parametro $\lambda$ e la trasformazione $h : \R \to \R$ tale che $h(x) = x + 5$. Cerchiamo di vedere se la variabile $Y = h \circ X$ ha densità o meno: \begin{align*}
+            F_Y(y) 
+        &= \Prob\set[\big]{Y \leq y}\\
+        &= \Prob\set[\big]{h \circ X \leq y} \\
+        &= \Prob\set[\big]{X + 5 \leq y}\\
+        &= \Prob\set[\big]{X \leq y - 5}\\
+        &= F_X(y-5).
+    \end{align*}
+
+    Siccome abbiamo già calcolato la funzione di ripartizione della variabile esponenziale in \eqref{eq:cdf_exponential}, segue facilmente che la funzione di ripartizione di $Y$ è \[
+        F_Y(y) = F_X(y-5) = \begin{cases}
+            0, &y < 5\\
+            1 - e^{-\lambda(y-5)}, &y \geq 5.
+        \end{cases}    
+    \] Derivando questa espressione si ha che la densità di $Y$ è \[
+        f_Y(y) = \begin{cases}
+            0, &y < 5\\
+            \lambda e^{-\lambda(y-5)}, &y \geq 5,
+        \end{cases}    
+    \] ovvero la densità di $Y$ è la densità esponenziale traslata di $+5$.
+\end{example}
+
+Tuttavia in un caso particolare vi è una formula che ci permette di calcolare la densità senza passare per la funzione di ripartizione.
+
+\begin{proposition} \label{prop:trasf_rand_var}
+    Sia $X$ una variabile aleatoria la cui densità è non-nulla su un intervallo aperto $A \subseteq \R$. Sia $B \subseteq \R$ un altro intervallo aperto, $h : A \to B$ bigettiva e derivabile, con inversa derivabile. Allora $Y \deq h \circ X$ è una variabile aleatoria con densità data dalla formula \[
+        f_Y(y) = \begin{cases}
+            f_X\parens*{h\inv(y)} \abs*{\frac{dh\inv(y)}{dy}}, &y \in B\\
+            0, &y \notin B.
+        \end{cases}    
+    \]
+\end{proposition}
+
+\begin{example}
+    Consideriamo ancora una volta $X$ esponenziale di parametro $\lambda$ e la trasformazione $h : \R \to \R$ tale che $h(x) = x + 5$.
+
+    Notiamo che la densità esponenziale è non-nulla nell'intervallo aperto $\interval[{0, +\infty})$ e la funzione $h$ è bigettiva, derivabile ed ha come inversa la funzione $h\inv(y) = y - 5$ che è a sua volta derivabile. 
+    
+    Per la \autoref{prop:trasf_rand_var} possiamo quindi trovare direttamente la densità di $Y$:
+    se $y \in B = h\parens[\big]{\interval[{0, +\infty})} = \interval[{5, +\infty})$ vale che \begin{align*}
+        f_Y(y) &= f_X\parens*{h\inv(y)} \abs*{\frac{dh\inv(y)}{dy}}\\
+        &= f_X(y - 5) \abs*{\frac{d}{dy}(y - 5)}\\
+        &= f_X(y-5)\\
+        &= \lambda e^{-\lambda(y-5)}.
+    \end{align*} Dunque la densità di $Y$ è data in generale da \[
+        f_Y(y) = \begin{cases}
+            0, &y < 5\\
+            \lambda e^{-\lambda(y-5)}, &y \geq 5,
+        \end{cases}
+    \] che è lo stesso risultato ottenuto precedentemente.
+\end{example}
+
+\section{Variabili aleatorie doppie}
+
+Una variabile aleatoria doppia è una funzione \[
+    (X, Y) : \Omega \to \R^2    
+\] a cui è associata una probabilità sui sottoinsiemi di $\R^2$: per ogni $A \subseteq \R^2$ deve essere definita \[
+    \Prob_{X, Y}{A} = \Prob\set[\big]{(X, Y) \in A} = \Prob[\big]{(X, Y)\inv (A)}.   
+\]
+Come nel caso di una singola variabile aleatoria, possiamo avere variabili aleatorie doppie \emph{discrete} e \emph{con densità}.
+
+\paragraph{Caso discreto} L'immagine della variabile aleatoria è un sottoinsieme finito o numerabile di $\R^2$. La funzione di massa sarà quindi \[
+    p(x_i, y_i) = \Prob\set[\big]{X = x_i, Y = y_i},    
+\] da cui per ogni insieme $A \subseteq \R^2$ la probabilità di $A$ è \[
+    \Prob_{X, Y}{A} = \sum_{(x_i, y_i) \in A} p(x_i, y_i).    
+\]
+
+\paragraph{Caso con densità} In questo caso esiste una funzione $f : R^2 \to \interval[{0, +\infty})$ tale che \[
+    \iint_{\R^2} f(x, y)dxdy = 1.    
+\] La probabilità definita da questa densità è data da \[
+    \Prob*_{X, Y}{A} = \iint_{A} f(x, y)dxdy    
+\] per ogni $A \subseteq \R^2$.
+
+\subsubsection{Leggi marginali}
+Data una variabile aleatoria doppia $(X, Y)$ possiamo porci la domanda di ricavare le cosiddette \emph{leggi marginali}, ovvero le leggi di probabilità delle variabili $X$ e $Y$ prese separatamente.
+
+\begin{proposition}
+    Sia $(X, Y)$ una variabile aleatoria doppia.
+    \begin{description}
+        \item[Caso discreto] Se $(X, Y)$ è discreta con legge di massa $p_{X, Y}$, allora $X$ e $Y$ hanno rispettivamente funzioni di massa $p_X$ e $p_Y$ date da \[
+            p_X(x_i) = \sum_{y_j}p_{X, Y}(x_i, y_j), \qquad  p_Y(y_j) = \sum_{x_i}p_{X, Y}(x_i, y_j).
+        \]
+        \item[Caso con densità] Se $(X, Y)$ è con densità e la sua densità è $f_{X, Y}$, allora $X$ e $Y$ hanno rispettivamente densità $f_X$ e $f_Y$ date da \[
+            f_X(x) = \int_{\R}f_{X, Y}(x, y)dy, \qquad  f_Y(y) = \int_{\R}f_{X, Y}(x, y)dx.
+        \]
+    \end{description}
+\end{proposition}
+\begin{proof}
+    Mostriamo solo il caso discreto. Notiamo che \[
+        \set{X = x_i} = \bigdisjunion_{y_j} \set[\big]{X = x_i, Y = y_j},    
+    \] da cui segue che \begin{align*}
+        p_X(x_i) &= \Prob_{X}\set{X=x_i}\\
+        &= \Prob*_{X}{\bigdisjunion_{y_j} \set[\big]{X = x_i, Y = y_j}}\\
+        &= \sum_{y_j} \Prob_{X, Y}\set{X = x_i, Y = y_J}\\
+        &= \sum_{y_j} p_{X, Y}(x_i, y_j). \qedhere
+    \end{align*}
+\end{proof}
+
+Potremmo chiederci se sia possibile fare il contrario, ovvero trovare la legge della variabile $(X, Y)$ conoscendo le leggi marginali delle variabili $X$ e $Y$. La risposta è che ciò è impossibile, tranne nel caso in cui $X$ e $Y$ siano variabili \emph{indipendenti}.
+
+\begin{definition}
+    [Indipendenza di variabili aleatorie]
+    Siano $X, Y : \Omega \to \R$ variabili aleatorie. $X$ e $Y$ si dicono \emph{indipendenti} se e solo se per ogni $A, B \in \R$ vale che gli eventi $X\inv(A)$ e $Y\inv(B)$ sono indipendenti, ovvero \[
+        \Prob[\big]{X\inv(A) \inters Y\inv(B)} = \Prob[\big]{X\inv(A)}\Prob[\big]{Y\inv(B)},    
+    \] o equivalentemente \[
+        \Prob\set[\big]{X \in A, Y \in B} = \Prob\set[\big]{X \in A}\Prob\set[\big]{Y \in B}.     
+    \]
+\end{definition}
+
+La prossima proposizione ci mostra una semplice caratterizzazione delle variabili indipendenti.
+\begin{proposition}
+    Siano $X, Y$ due variabili aleatorie. \begin{description}
+        \item[Caso discreto] Se $X$ e $Y$ sono discrete, allora sono indipendenti se e solo se per ogni $x_i, y_j$ vale che \[
+            p_{X, Y}(x_i, y_j) = p_X(x_i)p_Y(y_j).
+        \]
+        \item[Caso con densità] Se $X$ e $Y$ sono con densità, allora sono indipendenti se e solo se per ogni $x, y \in \R^2$ vale che \[
+            f_{X, Y}(x, y) = f_X(x)f_Y(y).
+        \]
+    \end{description}
+\end{proposition}
+\begin{proof}
+    Mostriamo soltanto il caso discreto: dimostriamo entrambi i versi dell'implicazione.
+    \begin{description}
+        \item[($\implies$)] Siano $x_i, y_j$ qualunque e siano $A = \set{x_i}$ e $B = \set{y_j}$. Allora \begin{align*}
+            p(x_i, y_j) = \Prob\set[\big]{X = x_i, Y = y_j} = \Prob{X = x_i}\Prob{Y = y_j} = p_X(x_i)p_Y(y_j).
+        \end{align*}
+        \item[($\impliedby$)] Siano $A, B \subseteq \R$ qualunque. Allora \begin{align*}
+            \Prob\set[\big]{X \in A, Y \in B} &= \sum_{x_i \in A, y_j \in B} p(x_i, y_j)\\
+            &= \sum_{x_i \in A}\sum_{y_j \in B} p_X(x_i)p_Y(y_j)\\
+            &= \parens*{\sum_{x_i \in A} p_X(x_i)} \parens*{\sum_{y_j \in B} p_Y(y_j)}\\
+            &= \Prob\set[\big]{X \in A}\Prob\set[\big]{Y \in B},
+        \end{align*} ovvero $X$ e $Y$ sono indipendenti. \qedhere
+    \end{description}
+\end{proof}
+
+\subsection{Formule di convoluzione}
+
+Consideriamo due variabili aleatorie $X$ e $Y$. La seguente formula ci permette di trovare la legge della variabile somma $X + Y$.
+
+\begin{proposition}
+    [Formule di convoluzione] Siano $X$, $Y$ due variabili aleatorie indipendenti. 
+    \paragraph{Caso discreto} Se $X$, $Y$ sono discrete allora $Z \deq X + Y$ è una variabile aleatoria discreta la cui funzione di massa è \[
+        p_Z(m) = \sum_{h = 0}^m p_X(h)p_Y(m-h).    
+    \]
+    \paragraph{Caso con densità} Se $X$, $Y$ sono con densità allora $Z \deq X + Y$ è una variabile aleatoria con densità la cui densità è \[
+        f_Z(z) = \int_\R f_X(x)f_Y(z-x)dx = \int_\R f_X(z-y)f_Y(y)dy.
+    \]
+\end{proposition}
+
+Le due formule precedenti, dette rispettivamente \emph{formula di convoluzione discreta} e \emph{fomula di convoluzione}, sono utilissime per descrivere le somme di variabili aleatorie.
+
+\begin{proof}
+    Dimostriamo la formula di convoluzione discreta. Essa deriva direttamente dall'uguaglianza insiemistica \[
+        \set{X+Y = m} = \bigdisjunion_{h = 0}^m \set{X = h, Y = m-h};    
+    \] siccome i due insiemi sono uguali anche le loro probabilità lo saranno, da cui la tesi.
+\end{proof}

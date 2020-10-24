@@ -1,0 +1,27 @@
+\section{Valore atteso e momenti}
+
+Nel primo capitolo abbiamo introdotto il concetto di media empirica: data una collezione di dati $\vec x = (x_1, \dots, x_n)$ possiamo calcolarne il valore medio con la formula \[
+    \frac1n \sum_{i = 1}^n x_i. 
+\] Potremmo generalizzare questa formula come la somma pesata dei valori assunti da una variabile aleatoria $X$, ognuno moltiplicato per il valore della funzione di massa in quel punto: \[
+    \sum_{x_i} x_i p(x_i). 
+\] Tuttavia nel caso di variabili che prendono infiniti valori dobbiamo prima assicurarci che la serie converga. Diamo quindi la seguente definizione.
+
+\begin{definition}
+    [Valore atteso] Sia $X$ una variabile aleatoria.
+    \paragraph{Caso discreto} Se $X$ è discreta e vale che \[
+        \sum_{x_i} \abs{x_i}p(x_i) < +\infty
+    \] si dice che $X$ ha \emph{valore atteso} (oppure \emph{speranza matematica}, oppure ancora \emph{momento primo}) e il valore atteso di $X$ è \[
+        \Expect{X} = \sum_{x_i} x_ip(x_i).    
+    \]
+    \paragraph{Caso discreto} Se $X$ è con densità e vale che \[
+        \int_\R \abs{x}f_X(x)dx < +\infty
+    \] si dice che $X$ ha \emph{valore atteso} e il valore atteso di $X$ è \[
+        \Expect{X} = \int_\R xf_X(x)dx.    
+    \]
+\end{definition}
+
+\begin{remark}
+    Osserviamo che siccome la funzione di massa di una variabile aleatoria è sempre non-negativa, allora \[
+        \Expect[\big]{\abs{X}} = \sum_{x_i} \abs*{x_ip(x_i)} = \sum_{x_i} \abs*{x_i}p(x_i).   
+    \] Segue quindi che $X$ ha momento primo se e solo se $\Expect[\big]{\abs{X}} < +\infty$. Un risultato analogo ovviamente vale per le variabili con densità.
+\end{remark}
