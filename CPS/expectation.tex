@@ -21,7 +21,131 @@ Nel primo capitolo abbiamo introdotto il concetto di media empirica: data una co
 \end{definition}
 
 \begin{remark}
-    Osserviamo che siccome la funzione di massa di una variabile aleatoria è sempre non-negativa, allora \[
+    Notiamo che nel caso in cui una variabile aleatoria prenda solo valori non-negativi $\Expect{X}$ è sempre definito, anche se potrebbe essere uguale a $+\infty$.
+    Inoltre, siccome la funzione di massa di una variabile aleatoria è sempre non-negativa, allora \[
         \Expect[\big]{\abs{X}} = \sum_{x_i} \abs*{x_ip(x_i)} = \sum_{x_i} \abs*{x_i}p(x_i).   
     \] Segue quindi che $X$ ha momento primo se e solo se $\Expect[\big]{\abs{X}} < +\infty$. Un risultato analogo ovviamente vale per le variabili con densità.
 \end{remark}
+
+\begin{proposition}
+    [Valore atteso di una trasformazione]
+    Sia $X$ una variabile aleatoria e sia $h$ una trasformazione.
+    \paragraph{Caso discreto} Se $X$ è discreta allora $h \circ X$ ammette valore atteso se e solo se \[
+        \sum_{x_i} \abs*{h(x_i)}p(x_i) < +\infty.    
+    \] Il valore atteso di $h \circ X$ è quindi \[
+        \Expect{h \circ X} = \sum_{x_i} h(x_i)p(x_i).    
+    \]
+    \paragraph{Caso con densità} Se $X$ è con densità allora $h \circ X$ ammette valore atteso se e solo se \[
+        \int_{\R} \abs*{h(x)}f_X(x)dx < +\infty.    
+    \] Il valore atteso di $h \circ X$ è quindi \[
+        \Expect{h \circ X} = \int_{\R} h(x)f_X(x)dx.
+    \]
+\end{proposition}
+
+\begin{example}
+    Consideriamo $X$ uniforme in $\interval[{0, 1}]$ e calcoliamo $\Expect*{X^2}$. Usando la proposizione precedente otteniamo che \[
+        \Expect*{X^2} = \int_0^1 x^2dx = \EvaluateAt*{\frac{x^3}{3}}_0^1 = \frac13.
+    \]
+
+    Tuttavia potremmo anche considerare la variabile $Y = X^2$, calcolarne la densità e infine il valore atteso: verifichiamo che il valore ottenuto è lo stesso.
+    Siccome la funzione $h(x) = x^2$ è invertibile su $\interval[{0, 1}]$, è derivabile e anche la sua inversa è derivabile, vale la \autoref{prop:trasf_rand_var}, per cui \[
+        f_Y(y) = \begin{cases}
+            0, &y \leq 0\\
+            f_X(\sqrt{y}) \abs*{\frac{1}{2\sqrt{y}}} = \frac{1}{2\sqrt{y}}, &y \in \interval*({0, 1}]\\
+            0, &y > 1.
+        \end{cases}
+    \] Segue quindi che \[
+        \Expect*{Y} = \int_0^1 y\frac{1}{2\sqrt y}dy = \int_0^1 \frac12\sqrt{y}dy = \EvaluateAt*{\frac12 \cdot \frac23 y^{\frac32}}_0^1 = \frac13,
+    \] che è lo stesso risultato ottenuto precedentemente.
+\end{example}
+
+\begin{proposition}
+    [Proprietà del valore atteso]
+    Siano $X$, $Y$ variabili aleatorie. Valgono i seguenti fatti.
+    \begin{enumerate}[label={(\roman*)}]
+        \item Se $X$ e $Y$ ammettono momento primo, allora anche $X + Y$ ammette momento primo e vale che \[
+            \Expect*{X+ Y} = \Expect*{X} + \Expect*{Y}.    
+        \]
+        \item Se $X$ ammette momento primo, allora per ogni $a, b \in \R$ la variabile $Y \deq aX + b$ ammette momento primo e vale che \[
+            \Expect*{aX + b} = a\Expect*{X} + b.    
+        \]
+        \item Se $X \geq 0$ allora $\Expect*{X} \geq 0$. In particolare da ciò segue che se $X \geq Y$ allora $\Expect*{X} \geq \Expect*{Y}$.
+        \item Se $X$ e $Y$ ammettono momento primo e sono indipendenti, allora $XY$ ammette momento primo e \[
+            \Expect*{XY} = \Expect*{X}\Expect*{Y}.    
+        \]
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    [Momento di ordine $n$] Sia $X$ una variabile aleatoria. Si dice che $X$ \emph{ammette momento $n$-esimo} (oppure \emph{di ordine n}) se vale che $\Expect[\big]{\abs*{X^n}}$, e in questo caso il momento $n$-esimo è il numero $\Expect[\big]{X^n}$.
+\end{definition}
+
+La seguente proposizione mostra che se una variabile aleatoria ha momento $n$-esimo, allora ammette tutti i momenti di ordine inferiore.
+
+\begin{proposition}
+    Sia $X$ una variabile aleatoria tale che $\Expect[\big]{\abs*{X^n}} < +\infty$ (ovvero $X$ ammette momento $n$-esimo). Allora per ogni $m = 1, \dots, n$ vale che \[
+        \Expect[\big]{\abs*{X^m}} < +\infty,    
+    \] ovvero $X$ ammette momento $m$-esimo.
+\end{proposition}
+\begin{proof}
+    Sia $1 \leq m \leq n$ qualsiasi. Osserviamo che per qualunque $t \in \R$ vale che \[
+        \abs*{t}^m \leq \abs*{t}^n + 1.
+    \] Infatti se $\abs{t} \in \interval*[{1, +\infty})$ vale che $\abs*{t}^m \leq \abs*{t}^n$; invece se $\abs{t} \in \interval*[{0, 1}]$ vale che $\abs*{t}^m \leq 1$.
+
+    Da questa disuguaglianza segue che (supponendo $X$ discreta) \begin{align*}
+        \sum_{x_i} \abs*{x_i}^m p(x_i)
+        &\leq \sum_{x_i} \parens[\big]{\abs*{x_i}^n + 1}p(x_i)\\
+        &= \sum_{x_i} \abs*{x_i}^np(x_i) + \sum_{x_i} p(x_i)\\
+        &= \Expect[\big]{\abs*{X}^n} + 1\\
+        &< +\infty. \qedhere
+    \end{align*}
+\end{proof}
+
+\subsection{Disuguaglianze relative ai momenti}
+
+\begin{proposition}
+    [Disuguaglianza di Markov] Sia $Y$ una variabile aleatoria a valori positivi e $a > 0$. Allora vale la disuguaglianza \[
+        a\Prob\set[\big]{Y \geq a} \leq \Expect*{Y}.    
+    \]
+\end{proposition}
+
+\begin{proposition}
+    [Disuguaglianza di Schwartz] Siano $X, Y$ due variabili aleatorie. Allora \[
+        \Expect[\big]{\abs{XY}} \leq \sqrt{\Expect*{X^2}}\sqrt{\Expect*{Y^2}}
+    \]
+\end{proposition}
+
+Introduciamo ora il concetto di \emph{varianza} per variabili aleatorie.
+
+\begin{definition}
+    [Varianza e scarto quadratico medio di una v.a.] Sia $X$ una variabile aleatoria. Si definisce la \emph{varianza di $X$} come \[
+        \var{X} = \Expect[\big]{\parens*{X-\Expect*{X}}^2}.    
+    \] Si dice \emph{scarto quadratico medio} la quantità \[
+        \sd{X} = \sqrt{\var{X}}.     
+    \]
+\end{definition}
+
+\begin{proposition}
+    Sia $X$ una variabile aleatoria. Vale che \[
+        \var{X} = \Expect[\big]{X^2} - \Expect{X}^2.
+    \]
+\end{proposition}
+\begin{proof}
+    È sufficiente sviluppare i calcoli: \begin{align*}
+        \var{X} &= \Expect[\big]{\parens*{X-\Expect*{X}}^2}\\
+        &= \Expect[\big]{X^2 - 2X\Expect*{X} + \Expect*{X}^2}.
+        \intertext{Siccome $\Expect*{X}$ è una costante vale allora}
+        &= \Expect[\big]{X^2} - 2\Expect*{X}\Expect*{X} + \Expect*{X}^2\\
+        &= \Expect[\big]{X^2} - \Expect*{X}^2. \qedhere
+    \end{align*}
+\end{proof}
+
+Notiamo inoltre che la varianza di una trasformazione affine è data da \[
+    \var{aX + b} = a^2\var{X}.    
+\]
+
+\begin{proposition}
+    [Disuguaglianza di Chebyshev] Sia $X$ una variabile aleatoria. Allora per ogni $d > 0$ si ha \[
+        \Prob\set[\big]{\abs*{X - \Expect*{X}} > d} \leq \frac{\var{X}}{d^2}.
+    \]
+\end{proposition}

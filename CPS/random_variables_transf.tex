@@ -32,7 +32,7 @@ In assenza di altre informazioni su $h$ l'unica strada è calcolare la funzione 
 Tuttavia in un caso particolare vi è una formula che ci permette di calcolare la densità senza passare per la funzione di ripartizione.
 
 \begin{proposition} \label{prop:trasf_rand_var}
-    Sia $X$ una variabile aleatoria la cui densità è non-nulla su un intervallo aperto $A \subseteq \R$. Sia $B \subseteq \R$ un altro intervallo aperto, $h : A \to B$ bigettiva e derivabile, con inversa derivabile. Allora $Y \deq h \circ X$ è una variabile aleatoria con densità data dalla formula \[
+    Sia $X$ una variabile aleatoria a valori su un intervallo aperto $A \subseteq \R$. Sia $B \subseteq \R$ un altro intervallo aperto, $h : A \to B$ bigettiva e derivabile, con inversa derivabile. Allora $Y \deq h \circ X$ è una variabile aleatoria con densità data dalla formula \[
         f_Y(y) = \begin{cases}
             f_X\parens*{h\inv(y)} \abs*{\frac{dh\inv(y)}{dy}}, &y \in B\\
             0, &y \notin B.
@@ -40,13 +40,15 @@ Tuttavia in un caso particolare vi è una formula che ci permette di calcolare l
     \]
 \end{proposition}
 
+L'insieme $B$ che rappresenta il codominio di $h$ è l'insieme in cui assume valori la variabile $Y$, ovvero è data da $h(A)$, dove $A$ è l'insieme in cui assume valori la variabile $X$.
+
 \begin{example}
     Consideriamo ancora una volta $X$ esponenziale di parametro $\lambda$ e la trasformazione $h : \R \to \R$ tale che $h(x) = x + 5$.
 
-    Notiamo che la densità esponenziale è non-nulla nell'intervallo aperto $\interval[{0, +\infty})$ e la funzione $h$ è bigettiva, derivabile ed ha come inversa la funzione $h\inv(y) = y - 5$ che è a sua volta derivabile. 
+    Notiamo che la densità esponenziale assme valori nell'intervallo aperto $A = \interval[{0, +\infty})$ e la funzione $h$ è bigettiva, derivabile ed ha come inversa la funzione $h\inv(y) = y - 5$ che è a sua volta derivabile. 
     
     Per la \autoref{prop:trasf_rand_var} possiamo quindi trovare direttamente la densità di $Y$:
-    se $y \in B = h\parens[\big]{\interval[{0, +\infty})} = \interval[{5, +\infty})$ vale che \begin{align*}
+    se $y \in B = h(A) = h\parens[\big]{\interval[{0, +\infty})} = \interval[{5, +\infty})$ vale che \begin{align*}
         f_Y(y) &= f_X\parens*{h\inv(y)} \abs*{\frac{dh\inv(y)}{dy}}\\
         &= f_X(y - 5) \abs*{\frac{d}{dy}(y - 5)}\\
         &= f_X(y-5)\\

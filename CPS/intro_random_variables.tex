@@ -50,6 +50,16 @@ Dato $A \subseteq \R$, introduciamo la notazione $\set{X \in A}$ per indicare l'
 
 Questi due tipi non sono tutti i tipi possibili di variabili aleatorie, tuttavia ci occuperemo solo di questi due casi (anche perché sono i casi più rilevanti nelle applicazioni).
 
+\begin{definition}["Assume valori in"]
+    Sia $X$ una variabile aleatoria, $A \subseteq \R$. Si dice che $X$ \emph{assume valori in} $A$ se
+    \begin{description}
+        \item[Caso discreto] $p(x_i) \neq 0$ se e solo se $x_i \in A$.
+        \item[Caso con densità] $f_X(x) \neq 0$ se e solo se $x \in A$. 
+    \end{description}
+\end{definition}
+
+In particolare $X$ assume valori in $A$ se e solo se la funzione di massa (o rispettivamente la densità) è \emph{maggiore o uguale} di $0$, poiché sono funzioni non-negative.
+
 \begin{definition}
     [Funzione di ripartizione]
     Data una variabile aleatoria $X : \Omega \to \R$ si dice \emph{funzione di ripartizione} di $X$ (o anche c.d.f., da \emph{cumulative distribution function}) la funzione $F_{X} : \R \to \interval[{0,1}]$ tale che \[
@@ -348,7 +358,7 @@ Consideriamo la funzione $f(x) = e^{-\frac{x^2}{2}}$: anche se non ha una primit
 \end{proof}
 \begin{proposition}
     Vale la seguente proprietà per l'$\alpha$-quantile $q_\alpha$ della funzione di ripartizione della variabile gaussiana: \[
-        q_{-\alpha} = 1 - q_{\alpha}.
+        q_{1-\alpha} = - q_{\alpha}.
     \]
 \end{proposition}
 
