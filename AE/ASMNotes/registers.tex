@@ -1,0 +1,19 @@
+\section{Registri}
+
+L'architettura ARMv7 ci permette di operare direttamente su $16$ registri (da \ARMinline{R0} a \ARMinline{R15}), detti \strong{registri generali}. Essi si dividono in 2 categorie più tre eccezioni:
+\begin{itemize}
+    \item I registri da \ARMinline{R0} a \ARMinline{R3} vengono detti \strong{registri temporanei}: vengono usati per contenere valori temporanei e non vi è alcuna garanzia che dopo una chiamata di funzione essi rimangano immutati. In particolare convenzionalmente essi vengono usati per il passaggio di parametri alle funzioni e il registro \ARMinline{R0} contiene il valore di ritorno di una funzione.
+    \item I registri da \ARMinline{R4} a \ARMinline{R11} sono dei \strong{registri permanenti}: possono essere usati per i calcoli, ma dobbiamo assicurarci che alla fine dell'esecuzione di una funzione essi abbiano lo stesso valore che avevano all'inizio (ad esempio salvando i dati sullo \emph{stack} e poi rimettendoli nei registri).
+    \item Il registro \ARMinline{R13} è lo \strong{stack pointer} (\ARMinline{SP}): esso contiene l'indirizzo corrente dello stack, ovvero della struttura dati \emph{LIFO} (Last In First Out) che usiamo per memorizzare i contenuti dei registri in memoria e per implementare le chiamate di funzione.
+    \item Il registro \ARMinline{R14} è il \strong{link register} (\ARMinline{LR}): viene usato nelle chiamate di funzione per memorizzare l'indirizzo di memoria contenente l'istruzione da cui ripartire quando la funzione restituisce il suo valore.
+    \item Il registro \ARMinline{R15} è il \strong{program counter} (\ARMinline{PC}): esso contiene l'indirizzo in memoria della prossima istruzione da eseguire.
+\end{itemize}
+
+Un altro registro utile, ma non direttamente modificabile, è il \ARMinline{CPSW} (ovvero Current Program Status Word, o semplicemente parola di stato): questo registro contiene in particolare $4$ flag:
+\begin{itemize}
+    \item un flag $N$ (\emph{Negative}) che è settato ad $1$ se e solo se l'operazione precedente ha dato come risultato un numero negativo;
+    \item un flag $Z$ (\emph{Zero}) che è settato ad $1$ se e solo se l'operazione precedente ha dato come risultato uno zero;
+    \item un flag $C$ (\emph{Carry}) che è settato ad $1$ se e solo se l'operazione precedente ha generato un riporto;
+    \item un flag $V$ (\emph{oVerflow}) che è settato ad $1$ se e solo se l'operazione precedente è andata in overflow.
+\end{itemize}
+Come vedremo, di default la maggior parte delle operazioni non modificano i flag: per farlo abbiamo bisogno di alcune varianti speciali, che terminano per \ARMinline{S}.

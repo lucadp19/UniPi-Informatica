@@ -1,0 +1,32 @@
+\documentclass[italian,oneside,headinclude,10pt]{scrartcl}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp, microtype}
+    \usepackage{preamble}
+
+    \newcommand{\cmd}[1]{\llap{\smash{\parbox[t]{1.0in}{\centering \bfseries #1}}}}
+    \newmintinline{ARM}{}
+    \newmint{ARM}{
+        escapeinside=||
+        % bgcolor=lightgray
+    }
+    \newminted{ARM}{
+        escapeinside=||
+        % bgcolor=lightgray
+    }
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Assembler ARMv7}
+\maketitle
+
+% \tableofcontents
+
+\input{ASMNotes/registers}
+\input{ASMNotes/logical-arithm}
+\input{ASMNotes/load-store}
+\input{ASMNotes/branch}
+
+\end{document}

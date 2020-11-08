@@ -1,0 +1,84 @@
+\section{Operazioni da e per la memoria}
+
+Esistono fondamentalmente due tipi di operazioni per la memoria:
+\begin{itemize}
+    \item operazioni di \emph{load}, che prendono il contenuto della memoria ad un certo indirizzo e lo caricano in un registro;
+    \item operazioni di \emph{store}, che prendono il contenuto di un registro e lo caricano in memoria in un certo indirizzo.
+\end{itemize}
+
+La sintassi base è
+\begin{ARMcode}
+    LDR |<reg\_dest>|, |<ind>|
+    STR |<reg\_src>|,  |<ind>|
+\end{ARMcode}
+
+Per stabilire l'indirizzo abbiamo diversi metodi.
+
+\paragraph{Versione base}
+\begin{ARMcode}
+    LDR R0, [R1]
+    STR R0, [R1]
+\end{ARMcode}
+In questo caso l'indirizzo usato è l'indirizzo contenuto nel registro \ARMinline{R1}.
+
+\paragraph{Base + offset}
+\begin{ARMcode}
+    LDR R0, [R1, R2]
+    STR R0, [R1, R2]
+\end{ARMcode}
+In questo caso l'indirizzo usato è l'indirizzo dato da \ARMinline{R1} $+$ \ARMinline{R2}: \ARMinline{R1} si comporta da \emph{base}, mentre \ARMinline{R2} fa da \emph{offset}. (Notare che siccome l'architettura ARMv7 è indirizzata al byte, per andare da una parola alla parola successiva l'offset deve essere di $4$ e non di $1$.)
+
+Questa istruzione può essere resa ancora più flessibile, in quanto al posto del secondo operando (nel nostro caso \ARMinline{R2}) possiamo inserire uno shift:
+\begin{ARMcode}
+    LDR R0, [R1, R2, LSL #2]
+    STR R0, [R1, R2, LSL #2]
+\end{ARMcode}
+Quindi in questo caso l'indirizzo di memoria è dato dalla somma del contenuto di \ARMinline{R1} con il contenuto di \ARMinline{R2} shiftato a sinistra di due posizioni, ovvero moltiplicato per $2^2 = 4$.
+
+\paragraph{Pre-Index}
+\begin{ARMcode}
+    LDR R0, [R1, R2]!
+    STR R0, [R1, R2]!
+\end{ARMcode}
+Questa modalità di accesso viene chiamata \emph{Pre-Index}: l'indirizzo considerato è sempre quello dato da \ARMinline{R1} $+$ \ARMinline{R2}, ma dopo aver caricato il valore nel registro \ARMinline{R0} aggiorniamo il registro \ARMinline{R1}, sommando ad esso il valore di \ARMinline{R2}.
+Quindi ad esempio nel caso della \ARMinline{LDR} la sintassi del Pre-Index è equivalente a
+\begin{ARMcode}
+    LDR R0, [R1, R2]
+    ADD R1, R1, R2
+\end{ARMcode}
+
+\paragraph{Post-Index}
+\begin{ARMcode}
+    LDR R0, [R1], R2
+    STR R0, [R1], R2
+\end{ARMcode}
+Questa modalità di accesso viene chiamata \emph{Post-Index}: l'indirizzo considerato è quello contenuto in \ARMinline{R1}, ma dopo aver caricato il valore nel registro \ARMinline{R0} aggiorniamo il registro \ARMinline{R1}, sommando ad esso il valore di \ARMinline{R2}.
+Quindi ad esempio nel caso della \ARMinline{LDR} la sintassi del Post-Index è equivalente a
+\begin{ARMcode}
+    LDR R0, [R1]
+    ADD R1, R1, R2
+\end{ARMcode}
+
+\paragraph{Load/Store Byte}
+\begin{ARMcode}
+    LDRB R0, [R1]
+    STRB R0, [R1]
+\end{ARMcode}
+Stessa cosa della Load/Store normale, soltanto che viene caricato un singolo byte (e viene messo nella posizione meno significativa del registro).
+
+\paragraph*{Load/Store Multiple}
+\begin{ARMcode}
+    LDM|xx| [R0], {R1, |...|}
+    STM|xx| [R0], {R1, |...|}
+\end{ARMcode}
+Queste istruzioni sono utilizzate per caricare in memoria più registri oppure per caricare in più informazioni dalla memoria nei registri. Esse possono essere utilizzate in quattro modi distinti, che vengono specificati rimpiazzando le lettere "xx" nel codice dell'istruzione con lettere adeguate:
+\begin{itemize}
+    \item la prima lettera può essere rimpiazzata con \ARMinline{F} (per \emph{full}) oppure \ARMinline{E} (per \emph{empty}): nel caso del full si parte dalla prima posizione di memoria piena, mentre nel caso dell'empty si parte dalla prima posizione vuota;
+    \item la seconda lettera può essere sostituita da \ARMinline{A} (per \emph{ascending}) oppure \ARMinline{D} (per \emph{descending}): nel primo caso la memoria viene letta andando verso indirizzi più grandi, mentre nel secondo viene letta andando verso indirizzi più piccoli.
+\end{itemize}
+
+Queste istruzioni vengono spesso utilizzate insieme allo Stack Pointer, dunque esistono due istruzioni equivalenti ma più brevi:
+\begin{ARMcode}
+    POP  {|sequenza di registri|}
+    PUSH {|sequenza di registri|}
+\end{ARMcode}

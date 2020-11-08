@@ -1,0 +1,19 @@
+\section{Operazioni di salto}
+
+\paragraph*{Branch}
+\begin{ARMcode}
+    B |<etich>|
+\end{ARMcode}
+È l'operazione base per rappresentare i salti: il flusso del programma viene incondizionatamente interrotto e si salta all'istruzione contrassegnata dall'etichetta <etich> (modificando il contenuto del Program Counter). Aggiungendo i flag di condizione (come \ARMinline{EQ}, \ARMinline{NE}, ...) possiamo ottenere \emph{salti condizionati}, cioè che avvengono solo sotto determinate condizioni.
+
+\paragraph*{Branch and Link}
+\begin{ARMcode}
+    BL |<etich>|
+\end{ARMcode}
+Funziona come la branch normale, ma in più memorizza nel Link Register il contenuto corrente del Program Counter (ovvero l'indirizzo dell'istruzione che avremmo eseguito se non ci fosse il salto). Questo è particolarmente utile nel caso delle chiamate di funzione:se ci spostiamo al corpo della funzione con una \ARMinline{BL}, al termine della funzione possiamo semplicemente copiare il contenuto del \ARMinline{LR} nel \ARMinline{PC} per tornare ad eseguire la funzione chiamante.
+
+\paragraph{Branch tramite registro}
+\begin{ARMcode}
+    BX |<reg>|
+\end{ARMcode}
+Fa in modo che la prossima istruzione sia quella il cui indirizzo è contenuto nel registro <reg>.

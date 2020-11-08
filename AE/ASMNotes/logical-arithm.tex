@@ -1,0 +1,92 @@
+\section{Operazioni aritmetico-logiche}
+
+Nel caso delle operazioni aritmetico-logiche la destinazione e il primo operando devono essere necessariamente dei registri (eventualmente anche lo stesso), mentre il secondo operando può essere un registro oppure un immediato (ovvero una costante numerica, come ad esempio \mintinline{ARM}|#5|).
+
+\paragraph{Somme}
+\begin{ARMcode}
+    ADD  |<dest>|, |<op1>|, |<op2>|
+    ADC  |<dest>|, |<op1>|, |<op2>|
+    ADDS |<dest>|, |<op1>|, |<op2>|
+\end{ARMcode}
+Calcola la somma tra <op1> e <op2> e la salva nel registro <dest>. La variante \ARMinline{ADC} aggiunge eventualmente il riporto contenuto nel flag \strong{C}; la variante \ARMinline{ADDS} setta i flag dopo l'operazione.
+
+\paragraph{Sottrazioni}
+\begin{ARMcode}
+    SUB  |<dest>|, |<op1>|, |<op2>|
+    SBC  |<dest>|, |<op1>|, |<op2>|
+    SUBS |<dest>|, |<op1>|, |<op2>|
+\end{ARMcode}
+Calcola la differenza tra <op1> e <op2> e la salva nel registro <dest>. La variante \ARMinline{ADC} aggiunge eventualmente il riporto contenuto nel flag \strong{C}; la variante \ARMinline{ADDS} setta i flag dopo l'operazione.
+
+\begin{ARMcode}
+    RSB |<dest>|, |<op1>|, |<op2>|
+\end{ARMcode}
+Calcola la differenza tra <op2> ed <op1> (notare l'ordine): la sua utilità è nel fatto che con la \ARMinline{SUB} non possiamo calcolare differenze della forma "costante - registro" poiché solo il secondo operando può contenere immediati.
+
+\paragraph{Moltiplicazioni}
+\begin{ARMcode}
+    MUL  |<dest>|, |<op1>|, |<op2>|
+    UMUL |<dest1>|, |<dest2>|, |<op1>|, |<op2>|
+    SMUL |<dest1>|, |<dest2>|, |<op1>|, |<op2>|
+\end{ARMcode}
+\ARMinline{MUL} calcola il prodotto tra <op1> e <op2>: siccome essi sono a 32 bit e il prodotto di due interi a 32 bit è un intero con al massimo 64 bit, \ARMinline{MUL} mette in <dest> i 32 bit meno significativi del risultato. \ARMinline{UMUL} e \ARMinline{SMUL} invece calcolano il risultato a 64 bit e mettono i 32 bit più significativi in <dest2> e i 32 bit meno significativi in <dest1>: la differenza tra le due è che \ARMinline{UMUL} considera gli operandi come interi \emph{unsigned} (ovvero senza segno), mentre \ARMinline{SMUL} li considera con segno.
+
+\paragraph{"Move"}
+\begin{ARMcode}
+    MOV |<dest>|, |<src>|
+    MVN |<dest>|, |<src>|
+\end{ARMcode}
+\ARMinline{MOV} copia il contenuto di <src> dentro <dest>. \ARMinline{MVN} copia il contenuto \emph{negato} di <src> dentro <dest>.
+
+\paragraph{"Compare"}
+\begin{ARMcode}
+    CMP |<op1>|, |<op2>|
+\end{ARMcode}
+\ARMinline{CMP} opera un confronto tra <op1> e <op2>: in particolare calcola la differenza tra i due valori e setta i flag.
+
+\paragraph{Operazioni logiche}
+\begin{ARMcode}
+    AND |<dest>|, |<op1>|, |<op2>|
+    ORR |<dest>|, |<op1>|, |<op2>|
+    EOR |<dest>|, |<op1>|, |<op2>|
+\end{ARMcode}
+Calcolano rispettivamente l'AND bit a bit, l'OR bit a bit e lo XOR bit a bit di <op1> e <op2>, mettendo il risultato in <dest>.
+
+\paragraph{"Bit clear"}
+\begin{ARMcode}
+    BIC |<dest>|, |<op1>|, |<op2>|
+\end{ARMcode}
+Effettua un'operazione di \emph{bit clear}: mette a 0 tutti i bit di <op1> che sono settati ad 1 in <op2> e mette il risultato in <dest>.
+
+\paragraph{Shift binario}
+\begin{ARMcode}
+    LSL |<dest>|, |<op1>|, |<op2>|
+    LSR |<dest>|, |<op1>|, |<op2>|
+    ASL |<dest>|, |<op1>|, |<op2>|
+    ASR |<dest>|, |<op1>|, |<op2>|
+\end{ARMcode}
+Calcolano gli shift logici (L) o arimetici (A) a sinistra (L) o destra (R) di <op1> (il numero di posizioni da shiftare è dato da <op2>) e mettono il risultato in <dest>.
+
+\paragraph{Rotazione binaria}
+\begin{ARMcode}
+    ROR |<dest>|, |<op1>|, |<op2>|
+\end{ARMcode}
+Ruota a destra i bit di <op1> di <op2> posizioni e mette il risultato in <dest>.
+
+\paragraph*{Operazioni condizionali}
+Possiamo aggiungere a tutte le operazioni precedenti due lettere finali che indicano sotto quali condizioni (dei flag) l'operazione viene svolta. Le condizioni sono:
+\begin{itemize}
+    \item \ARMinline{EQ}: sta per $Z = 1$;
+    \item \ARMinline{NE}: sta per $Z = 0$;
+    \item \ARMinline{GE}: sta per $N = V$;
+    \item \ARMinline{GT}: sta per $Z = 0$, $N = V$;
+    \item \ARMinline{LE}: sta per $Z = 1$, $N \neq V$;
+    \item \ARMinline{LT}: sta per $N \neq V$.
+\end{itemize}
+
+Quindi ad esempio il codice
+\begin{ARMcode}
+    CMP   R0, #1
+    ADDEQ R0, R0, #1
+\end{ARMcode}
+aggiunge $1$ al registro \ARMinline{R0} solo se la \ARMinline{CMP} ha dato come risultato \ARMinline{EQ}, ovvero se la differenza tra \ARMinline{R0} e $1$ è $0$ (e quindi sono uguali).
