@@ -19,16 +19,16 @@ Supponiamo di avere un vettore $\vec{x} = (x_1, \dots, x_n) \in \R^n$ che rappre
 Per descrivere quanto i dati contenuti in $\vec x$ si discostano dalla media $\mean x$ si usa il concetto di varianza:
 \begin{definition}
     [Varianza] Dato $\vec x$ vettore di dati, si dice \emph{varianza campionaria} il valore \begin{equation}
-        \var{\vec x} \deq \sum_{i=1}^n \frac{(x_i - \mean x)^2}{n-1};
+        \Var{\vec x} \deq \sum_{i=1}^n \frac{(x_i - \mean x)^2}{n-1};
     \end{equation} si dice invece \emph{varianza empirica} il valore \begin{equation}
-        \var*{\vec x} \deq \sum_{i=1}^n \frac{(x_i - \mean x)^2}{n}.
+        \Var*{\vec x} \deq \sum_{i=1}^n \frac{(x_i - \mean x)^2}{n}.
     \end{equation}
 \end{definition}
 
 La varianza campionaria verrà usata quando i dati si riferiscono ad un campione, mentre la varianza empirica sarà più utile per trattare dati riferiti alle popolazioni.
 
 In alcuni casi è utile conoscere la radice quadrata della varianza, quindi definiamo lo \emph{scarto quadratico medio} (o \emph{deviazione standard}) nel seguente modo: \begin{equation}
-    \sd{\vec x} \deq \sqrt{\var{\vec x}}, \quad \sd*{\vec x} \deq \sqrt{\var*{\vec x}}.
+    \sd{\vec x} \deq \sqrt{\Var{\vec x}}, \quad \sd*{\vec x} \deq \sqrt{\Var*{\vec x}}.
 \end{equation}
 
 \begin{proposition}
@@ -48,7 +48,7 @@ In alcuni casi è utile conoscere la radice quadrata della varianza, quindi defi
 \end{proof}
 
 Usando la \eqref{eq:uguaglianza_base} otteniamo che \[
-    \var*{\vec x} = \sum_{i=1}^n \frac{x_i^2}{n} - \mean x^2.
+    \Var*{\vec x} = \sum_{i=1}^n \frac{x_i^2}{n} - \mean x^2.
 \]
 
 \begin{proposition}
@@ -63,7 +63,7 @@ Possiamo generalizzare questa idea: fissata una soglia $d \in \R$ consideriamo i
 \] È possibile dimostrare che vale la seguente disuguaglianza: \[
     \#\set{x_1 \given \abs*{x_i - \mean x} \geq d} \leq \frac{1}{d}\sum_{i=1}^n (x_i - \mean x)^2,
 \] da cui, dividendo entrambi i membri per $n$, segue un caso particolare della cosiddetta \emph{disuguaglianza di Chebyshev}: \begin{equation}
-    \frac{\#\set{x_1 \given \abs*{x_i - \mean x} \geq d}}{n} \leq \frac{\var*{\vec x}}{d}.
+    \frac{\#\set{x_1 \given \abs*{x_i - \mean x} \geq d}}{n} \leq \frac{\Var*{\vec x}}{d}.
 \end{equation} Il membro sinistro rappresenta la \emph{percentuale} dei dati che si discostano dalla media per un valore superiore alla soglia $d$.
 
 Un altro metodo utile per ripartire i dati è utilizzare la cosiddetta \emph{funzione di ripartizione empirica}.
@@ -183,7 +183,7 @@ Per approssimare linearmente $(\vec x, \vec y)$ dobbiamo fare in modo che la nos
 
 \begin{theorem}
     Il valore minimo della quantità in \eqref{eq:min_dist_retta} si ottiene scegliendo \[
-        b^\ast = \frac{\cov{\vec x, \vec y}}{\var{\vec x}}, \quad a^\ast = -b\mean x + \mean y.    
+        b^\ast = \frac{\cov{\vec x, \vec y}}{\Var{\vec x}}, \quad a^\ast = -b\mean x + \mean y.    
     \] Inoltre vale che \[
         \min_{a, b \in \R^2} \sum_{i=1}^n (y_i - a - bx_i)^2 = \sum_{i= 1}^n (y_i - \mean y)^2\left( 1 - r(\vec x, \vec y)^2 \right).
     \]
@@ -201,8 +201,8 @@ La retta $a^\ast + b^\ast x$ viene detta \emph{retta di regressione} ed è la fu
     \item più $r(\vec x, \vec y)^2$ si avvicina a $0$, più la distanza minima cresce e quindi i dati sono dispersi e non seguono una correlazione lineare.
 \end{itemize}
 Inoltre il coefficiente angolare della retta di regressione $b^\ast$ può essere riscritto come \[
-    b^\ast = \frac{\cov{\vec x, \vec y}}{\var{\vec x}} = \frac{\cov{\vec x, \vec y}}{\sd{\vec x}\sd{\vec y}}\frac{\sd{\vec x}\sd{\vec y}}{\var{\vec x}} = r(\vec x, \vec y)\frac{\sd{\vec x}\sd{\vec y}}{\var{\vec x}}.
-\] Dato che $\frac{\sd{\vec x}\sd{\vec y}}{\var{\vec x}} \geq 0$ il segno del coefficiente angolare dipende solamente dal coefficiente di correlazione: \begin{itemize}
+    b^\ast = \frac{\cov{\vec x, \vec y}}{\Var{\vec x}} = \frac{\cov{\vec x, \vec y}}{\sd{\vec x}\sd{\vec y}}\frac{\sd{\vec x}\sd{\vec y}}{\Var{\vec x}} = r(\vec x, \vec y)\frac{\sd{\vec x}\sd{\vec y}}{\Var{\vec x}}.
+\] Dato che $\frac{\sd{\vec x}\sd{\vec y}}{\Var{\vec x}} \geq 0$ il segno del coefficiente angolare dipende solamente dal coefficiente di correlazione: \begin{itemize}
     \item se $r(\vec x, \vec y) > 0$ la retta di regressione ha coefficiente angolare positivo, dunque è crescente e al crescere delle $x$ tendenzialmente crescono anche le $y$;
     \item se $r(\vec x, \vec y) < 0$ la retta di regressione ha coefficiente angolare negativo, dunque è decrescente e al crescere delle $x$ tendenzialmente le $y$ decrescono.
 \end{itemize}

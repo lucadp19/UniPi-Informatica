@@ -1,0 +1,149 @@
+\section{Funzione generatrice dei momenti}
+
+Data una variabile aleatoria $X$ possiamo considerare la variabile aleatoria derivata $e^{tX}$: essa è sempre maggiore o uguale di $0$, dunque ha sicuramente senso calcolarne il valore atteso (che quindi è un numero reale positivo oppure più infinito).
+
+\begin{definition}
+    [Funzione generatrice dei momenti]
+    Si dice \strong{funzione generatrice dei momenti} della variabile aleatoria $X$ la funzione \[
+        G_X(t) \deq \Expect[\big]{e^{tX}} = \begin{cases}
+            \displaystyle \sum_{x_i} e^{tx_i}p(x_i), &X \text{ discreta},\\
+            \displaystyle \int_\R e^{tx}f(x), &X \text{ con densità}.
+        \end{cases}
+    \] Si chiama \strong{dominio} di $G_X$ l'insieme dei $t \in \R$ tali che $G_X(t) < +\infty$.
+\end{definition}
+
+Osserviamo che $0$ appartiene necessariamente al dominio di $G_X$, in quanto \[
+    G_X(0) = \Expect[\big]{e^{0X}} = \Expect{1} = 1. 
+\] Segue quindi che il dominio della funzione generatrice è il singolo punto $t = 0$ oppure contiene almeno un intervallo $\interval({-\eps, \eps})$ centrato in $0$.
+
+\begin{theorem}
+    Siano $X$, $Y$ due variabili aleatorie tali che i domini di $G_X$ e $G_Y$ contengano entrambe un intervallo aperto $\interval({-\eps, \eps})$ e che si abbia $G_X(t) = G_Y(t)$ per ogni $t \in \interval({-\eps, \eps})$. Allora $X$ e $Y$ sono equidistribuite, ovvero hanno la stessa distribuzione di probabilità.
+\end{theorem}
+
+\begin{proposition}
+    [Proprietà della funzione generatrice]
+    Sia $X$ una variabile aleatoria.
+    \begin{enumerate}[label={(\roman*)}]
+        \item Se $Y \deq aX + B$, allora \[
+            G_Y(t) = e^{tb} G_X(at).
+        \]
+        \item Se $Z$ è una variabile aleatoria e $X$, $Z$ sono indipendenti, allora \[
+            G_{X + Z}(t) = G_X(t)G_Z(t).    
+        \]
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    La dimostrazione della prima proprietà è immediata: \begin{align*}
+        G_Y(t)
+        = \Expect{e^{(aX + b)t}}
+        = \Expect{e^{atX}e^{bt}}
+        = e^{bt}\Expect{e^{atX}}
+        = e^{bt}G_X(at).
+    \end{align*}
+    Per la seconda, basta osservare che $e^{tX}$ e $e^{tZ}$ sono indipendenti, dunque per la \autoref{prop:prop_expect} (in particolare per il terzo punto) vale che \begin{align*}
+        G_{X + Z}(t)
+        = \Expect{e^{(X + Z)t}}
+        = \Expect{e^{tX}e^{tZ}}
+        = \Expect{e^{tX}}\Expect{e^{tZ}}
+        = G_X(t)G_Z(t).
+    \end{align*}
+\end{proof}
+
+Il motivo per cui la funzione generatrice dei momenti ha questo nome deriva dal prossimo risultato: in alcuni casi possiamo usarla per calcolare i momenti di una variabile aleatoria.
+
+\begin{theorem}
+    [Generazione dei momenti] Sia $X$ una variabile aleatoria tale che esista un intervallo $\interval({-\eps, \eps})$ completamente contenuto nel dominio di $G_X$. Allora $X$ possiede tutti i momenti e vale che \[
+        \Expect[\big]{X^n} = G_X^{(n)}(0),    
+    \] dove $G_X^{(n)}$ è la derivata $n$-esima di $G_X$.
+\end{theorem}
+
+Possiamo dare una dimostrazione intuitiva del teorema nel caso di $n = 1$ nel seguente modo: \[
+    G_X^\prime(t) = \frac{d}{dt}\Expect[\big]{e^{tX}} = 
+    \Expect*{\frac{d}{dt}e^{tX}} = \Expect[\big]{Xe^{tX}},
+\] dunque per $t = 0$ si ha esattamente $G_X^\prime(t) = \Expect[\big]{X}$.
+
+\subsection*{Esempi}
+
+% TODO
+
+\section{Teoremi limite}
+
+In questa sezione considereremo il comportamento al limite di una successione $\seqn{X_n}$ di variabili aleatorie indipendenti ed equidistribuite. Enunciamo i due teoremi limite fondamentali.
+
+\begin{theorem}
+    [Legge Debole dei Grandi Numeri]
+    \label{th:law_large_numbers}
+    Sia $\seqn{X_n}$ una successione di variabili aleatorie indipendenti ed equidistribuite, dotate tutte di momento secondo. Sia inoltre $\mu \deq \Expect[\big]{X_i}$ il loro valore atteso.
+
+    Allora per ogni $\eps > 0$ vale che \begin{equation}
+        \lim_{n \to +\infty} \Prob*{\abs*{\frac{X_1 + \dots + X_n}{n} - \mu} > \eps} = 0.    
+    \end{equation}
+\end{theorem}
+
+\begin{theorem}
+    [Teorema del Limite Centrale]
+    \label{th:central_limit}
+    Sia $\seqn{X_n}$ una successione di variabili aleatorie indipendenti ed equidistribuite. Sia inoltre $\mu \deq \Expect[\big]{X_i}$ il loro valore atteso e $\sigma^2 \deq \Var{X_i}$ la loro varianza.
+
+    Allora per ogni $\infty \leq a < b \leq +\infty$ vale che \begin{equation}
+        \lim_{n \to +\infty} \Prob*{a \leq \frac{X_1 + \dots + X_n - n\mu}{\sigma\sqrt{n}} \leq b} = \Phi(b) - \Phi(a),  
+    \end{equation}
+    dove $\Phi$ è la funzione di ripartizione dela variabile aleatoria gaussiana standard.
+\end{theorem}
+
+Iniziamo studiando la \nameref{th:law_large_numbers} con una definizione.
+\begin{definition}
+    [Convergenza in probabilità]
+    Sia $\seqn{X_n}$ una successione di variabili aleatorie. Si dice che $\seqn{X_n}$ \strong{converge in probabilità} alla variabile aleatoria $X$ se per ogni $\eps > 0$ si ha \[
+        \lim_{n \to +\infty} \Prob[\big]{\abs{X_n - X} > \eps} = 0.    
+    \]
+\end{definition}
+
+Diamo una semplice condizione sufficiente per la convergenza in probabilità.
+\begin{proposition}
+    [Condizione sufficiente per la convergenza in probabilità]
+    \label{prop:cond_suff_conv_prob} Sia $\seqn{X_n}$ una successione di variabili aleatorie tale che \[
+        \lim_{n \to +\infty} \Expect[\big]{X_n} = c \in \R, \qquad \lim_{n \to +\infty} \Var{X_n} = 0.    
+    \] Allora $\seqn{X_n}$ converge in probabilità alla costante $c$.
+\end{proposition}
+\begin{proof}
+    Sia $\eps > 0$ qualunque. Per la \nameref{prop:dis_Markov} sostituendo $Y = (X_n - c)^2$, $a \deq \eps^2$ si ha \[
+        \eps^2\Prob[\big]{(X_n - c)^2 > \eps^2} = \eps^2\Prob[\big]{\abs{X_n - c} > \eps} \leq \Expect[\big]{(X_n - c)^2},
+    \] ovvero \begin{equation}
+        \Prob[\big]{\abs{X_n - c} > \eps} \leq \frac{\Expect[\big]{(X_n - c)^2}}{\eps^2}. \label{eq:dis_cond_suff_conv_prob}
+    \end{equation} Tuttavia \begin{align*}
+        &\Expect[\big]{(X_n - c)^2}\\
+        = {}&\Expect[\Big]{\parens[\big]{X_n - \Expect{X_n} + \Expect{X_n} - c}^2}\\
+        = {}&\Expect[\Big]{\parens[\big]{X_n - \Expect{X_n}}^2 + \Expect[\big]{2(X_n - \Expect{X_n})(\Expect{X_n} - c)} + \parens[\big]{\Expect{X_n} - c}^2}\\
+        = {}&\Expect[\Big]{\parens[\big]{X_n - \Expect{X_n}}^2} + 2(\Expect{X_n} - c)\Expect[\big]{X_n - \Expect{X_n}} + \parens[\big]{\Expect{X_n} - c}^2\\
+        = {}&\Var{X_n} + \parens[\big]{\Expect{X_n} - c}^2.
+    \end{align*}
+    Di conseguenza $\Expect[\big]{(X_n - c)^2} \to 0$, dunque per la disuguaglianza \eqref{eq:dis_cond_suff_conv_prob} segue che \[
+        \Prob[\big]{\abs{X_n - c} > \eps} \to 0,
+    \] ovvero la successione $\seqn{X_n}$ converge in probabilità a $c$.
+\end{proof}
+
+Possiamo quindi dimostrare la \nameref{th:law_big_numbers}.
+\begin{proof}
+    [Dimostrazione della \nameref{th:law_large_numbers}]
+    Sia $\bar X_n$ la variabile aleatoria definita da: \[
+        \bar X_n \deq \frac{1}{n}\sum_{i = 1}^{n}X_i = \frac{X_1 + \dots + X_n}{n}.
+    \] Allora si ha che il valore atteso di $\bar X_n$ è \[
+       \Expect[\big]{\bar X_n} = \frac{\Expect[\big]{X_1} + \dots + \Expect[\big]{X_n}}{n} = \frac{n\mu}{n} = \mu, 
+    \] mentre la sua varianza è \begin{align*}
+        \Var{\bar X_n} 
+        &= \Var*{\frac1n \sum_{i = i}^n X_i} \\
+        &= \frac{1}{n^2} \sum_{i = 1}^n \Var{X_i}\\
+        &= \frac{n\sigma^2}{n^2}\\
+        &= \frac{\sigma^2}{n} \xrightarrow{n \to +\infty} 0.
+    \end{align*} Per la \autoref{prop:cond_suff_conv_prob} segue quindi che $\seqn*{\bar X_n}$ converge in probabilità a $\mu$, ovvero \[
+        \lim_{n \to +\infty} \Prob*{\abs*{\bar X_n - \mu} > \eps} = 0. \qedhere
+    \]
+\end{proof}
+
+In realtà le ipotesi del teorema possono essere indebolite: è sufficiente che 
+\begin{itemize}
+    \item le variabili $X_i$ siano \emph{incorrelate} (non è necessario che siano indipendenti);
+    \item le variabili abbiano tutte lo stesso valore atteso $\mu$;
+    \item le varianze siano \emph{equilimitate} (invece di essere tutte uguali a $\sigma^2$), ovvero che esista $M \in \R$ tale che $\Var{X_i} \leq M$ per ogni $i$.
+\end{itemize}

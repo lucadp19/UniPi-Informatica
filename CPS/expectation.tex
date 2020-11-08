@@ -61,6 +61,7 @@ Nel primo capitolo abbiamo introdotto il concetto di media empirica: data una co
 
 \begin{proposition}
     [Proprietà del valore atteso]
+    \label{prop:prop_expect}
     Siano $X$, $Y$ variabili aleatorie. Valgono i seguenti fatti.
     \begin{enumerate}[label={(\roman*)}]
         \item Se $X$ e $Y$ ammettono momento primo, allora anche $X + Y$ ammette momento primo e vale che \[
@@ -104,13 +105,17 @@ La seguente proposizione mostra che se una variabile aleatoria ha momento $n$-es
 \subsection{Disuguaglianze relative ai momenti}
 
 \begin{proposition}
-    [Disuguaglianza di Markov] Sia $Y$ una variabile aleatoria a valori positivi e $a > 0$. Allora vale la disuguaglianza \[
+    [Disuguaglianza di Markov] 
+    \label{prop:dis_Markov}
+    Sia $Y$ una variabile aleatoria a valori positivi e $a > 0$. Allora vale la disuguaglianza \[
         a\Prob\set[\big]{Y \geq a} \leq \Expect*{Y}.    
     \]
 \end{proposition}
 
 \begin{proposition}
-    [Disuguaglianza di Schwartz] Siano $X, Y$ due variabili aleatorie. Allora \[
+    [Disuguaglianza di Schwartz] 
+    \label{prop:dis_Schwartz}
+    Siano $X, Y$ due variabili aleatorie. Allora \[
         \Expect[\big]{\abs{XY}} \leq \sqrt{\Expect*{X^2}}\sqrt{\Expect*{Y^2}}
     \]
 \end{proposition}
@@ -119,20 +124,20 @@ Introduciamo ora il concetto di \emph{varianza} per variabili aleatorie.
 
 \begin{definition}
     [Varianza e scarto quadratico medio di una v.a.] Sia $X$ una variabile aleatoria. Si definisce la \emph{varianza di $X$} come \[
-        \var{X} = \Expect[\big]{\parens*{X-\Expect*{X}}^2}.    
+        \Var{X} = \Expect[\big]{\parens*{X-\Expect*{X}}^2}.    
     \] Si dice \emph{scarto quadratico medio} la quantità \[
-        \sd{X} = \sqrt{\var{X}}.     
+        \sd{X} = \sqrt{\Var{X}}.     
     \]
 \end{definition}
 
 \begin{proposition}
     Sia $X$ una variabile aleatoria. Vale che \[
-        \var{X} = \Expect[\big]{X^2} - \Expect{X}^2.
+        \Var{X} = \Expect[\big]{X^2} - \Expect{X}^2.
     \]
 \end{proposition}
 \begin{proof}
     È sufficiente sviluppare i calcoli: \begin{align*}
-        \var{X} &= \Expect[\big]{\parens*{X-\Expect*{X}}^2}\\
+        \Var{X} &= \Expect[\big]{\parens*{X-\Expect*{X}}^2}\\
         &= \Expect[\big]{X^2 - 2X\Expect*{X} + \Expect*{X}^2}.
         \intertext{Siccome $\Expect*{X}$ è una costante vale allora}
         &= \Expect[\big]{X^2} - 2\Expect*{X}\Expect*{X} + \Expect*{X}^2\\
@@ -141,11 +146,13 @@ Introduciamo ora il concetto di \emph{varianza} per variabili aleatorie.
 \end{proof}
 
 Notiamo inoltre che la varianza di una trasformazione affine è data da \[
-    \var{aX + b} = a^2\var{X}.    
+    \Var{aX + b} = a^2\Var{X}.    
 \]
 
 \begin{proposition}
-    [Disuguaglianza di Chebyshev] Sia $X$ una variabile aleatoria. Allora per ogni $d > 0$ si ha \[
-        \Prob\set[\big]{\abs*{X - \Expect*{X}} > d} \leq \frac{\var{X}}{d^2}.
+    [Disuguaglianza di Chebyshev]
+    \label{prop:dis_Chebyshev}
+    Sia $X$ una variabile aleatoria. Allora per ogni $d > 0$ si ha \[
+        \Prob\set[\big]{\abs*{X - \Expect*{X}} > d} \leq \frac{\Var{X}}{d^2}.
     \]
 \end{proposition}
