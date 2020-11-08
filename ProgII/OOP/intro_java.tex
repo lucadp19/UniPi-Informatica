@@ -113,10 +113,11 @@ Supponiamo ad esempio di avere una dichiarazione di classe di questo tipo:
     }
 \end{Java}
 
-Se creiamo un oggetto di tipo \InlineJava{Node}
+Se creiamo un oggetto di tipo \InlineJava{Node}:
 \begin{Java}
     Node first = new Node(5, null);
-\end{Java} la ASM si modificherà nel seguente modo:
+\end{Java} 
+la ASM si modificherà nel seguente modo:
 \begin{itemize}
     \item nello stack comparirà un nuovo binding: il nome di variabile \InlineJava{first} sarà un riferimento ad una locazione di memoria sullo heap, in cui sarà contenuto un nuovo oggetto di tipo \InlineJava{Node};
     \item nello heap verrà allocato lo spazio per il nuovo oggetto: in particolare vi sarà lo spazio per le variabili di istanza (inizializzate a $5$ e a \InlineJava{null} rispettivamente) e dello spazio aggiuntivo che analizzeremo in seguito.

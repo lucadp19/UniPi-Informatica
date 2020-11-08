@@ -21,12 +21,12 @@ Questo concetto si rivela molto utile quando si vogliono fare modifiche incremen
 
 \section{Defensive programming}
 Le precondizioni e le postcondizioni viste nella sezione precedente possono essere pensate come formule logiche della Logica del Primo Ordine. La relazione tra le due (ovvero che se vale la precondizione allora dobbiamo assicurarci che, alla fine del metodo, valga la postcondizione) può essere realizzata tramite una semplice implicazione: \[
-    \InlineJava{Pre} \implies \InlineJava{Post}.    
+    \text{Pre} \implies \text{Post}.    
 \]
 
 Tuttavia un'implicazione è sempre vera quando l'antecedente (in questo caso \InlineJava{Pre}) è falso, dunque il contratto ci permette di fare qualsiasi cosa quando l'antecedente è falso. Ad esempio il seguente programma rispetta il contratto d'uso dato:
 \begin{Java}
-    // @requires: num >= 0
+    // @requires: num $\geq$ 0
     // @effects: returns the 4th root of the number num
     public static double fourthRoot(double num) {
         if(num < 0) {       // anything's allowed
@@ -40,7 +40,7 @@ Infatti, siccome abbiamo specificato chiaramente che il programma funziona corre
 
 Tuttavia una buona pratica di programmazione è controllare due volte la precondizione: la prima tramite la clausola requires, la seconda attraverso l'uso delle eccezioni.
 \begin{Java}
-    // @requires: num >= 0
+    // @requires: num $\geq$ 0
     // @effects: returns the 4th root of the number num
     public static double fourthRoot(double num)
                 throws IllegalArgumentException {
@@ -78,7 +78,7 @@ Supponiamo di voler creare un ADT che rappresenti un polinomio. Il primo passo �
     /**
       * A Poly is an immutable polynomial with integer coefficient.
       * A typical element is 
-      *          c_0 + c_1x + c_2x^2 + ...  
+      *          $c_0 + c_1x + c_2x^2 + \dots$  
       */
     public class Poly { ...
 \end{Java}
@@ -94,7 +94,7 @@ I metodi \emph{creators} servono a creare una nuova istanza del tipo di dato ast
 
     /**
      * @throws: NegExponentException if n < 0
-     * @effects: makes a new Poly = cx^n
+     * @effects: makes a new Poly = $cx^n$
      */
     public Poly(int c, int n);
 \end{Java}
@@ -132,4 +132,68 @@ I \emph{producers} servono a produrre nuovi oggetti del tipo dell'ADT a partire 
      * @returns: this * p
      */
     public Poly mult(Poly p) { }
+\end{Java}
+
+% MANCA IL SECONDO ESEMPIO
+
+\section{Implementare ADT}
+
+Abbiamo visto come la specifica e i concetti del design-by-contract ci consentano progettare tipi di dati robusti. Per implementare un tipo di dato astratto abbiamo bisogno di altri due importanti strumenti: l'\emph{invariante di rappresentazione} e la \emph{funzione di astrazione}.
+
+\paragraph{Invariante di rappresentazione} L'invariante di rappresentazione (abbreviato ad RI, per \emph{rapresentation invariant}) è una funzione che prende un oggetto e ritorna un valore di verità (vero o falso): esso serve per stabilire se l'istanza considerata è ben formata, ovvero rispetta delle condizioni particolari. 
+L'invariante di rappresentazione è una guida per chi implementa, modifica o verifica il funzionamento del tipo di dato astratto: nessun oggetto deve violare l'invariante di rappresentazione.
+
+Ad esempio, se volessimo codificare una struttura dati che rappresenta un insieme matematico, potremmo richiedere che non vi siano mai due valori uguali nell'insieme: l'invariante di rappresentazione conterrà questa clausola e quindi le istanze ben formate della classe saranno soltanto quelle che non contengono duplicati.
+
+\paragraph{Funzione di astrazione} La funzione di astrazione (o AF, dall'inglese \emph{abstraction function}) è una funzione che serve ad interpretare astrattamente un'istanza del tipo di dato astratto: essa è definita solo sugli oggetti che rispettano l'invariante di rappresentazione e ci permette di pensare agli oggetti come se fossero la loro rappresentazione astratta.
+
+Ad esempio, nel caso degli insiemi la funzione di astrazione prende un oggetto della classe \InlineJava{Set} e restituisce l'insieme $\set{a_1, a_2, \dots, a_n}$ che contiene tutti i dati dell'oggetto originale.
+
+La funzione di astrazione ci consente di pensare alle varie operazioni eseguibili sulla classe \InlineJava{Set} come se fossero effettivamente insiemi matematici.
+
+Facciamo un esempio.
+
+\begin{Java}
+public interface CharSet{
+    // Overview: CharSet is a finite and 
+    // modifiable set of characters.
+    // A typical element is
+    //          $\set{ c_1, ..., c_n }$.
+
+    //@effects: creates a new and empty CharSet 
+    public CharSet() {...}
+
+    //@modifies: this
+    //@effects: $\text{this}_\text{pre} = \text{this}_\text{post} \union \set{c}$
+    public void insert(Character c) {...}
+
+    //@modifies: this
+    //@effects: $\text{this}_\text{pre} = \text{this}_\text{post} \setminus \set{c}$
+    public void delete(Character c) {...}
+
+    //@effects: returns true if and only if c is an element of this
+    public void member(Character c) {...}
+
+    //@effects: return cardinality of this
+    public int size() {...}
+}
+\end{Java}
+
+Consideriamo ora la seguente implementazione:
+\begin{Java}
+    public class ArrayListCharSet{
+        private List<Character> elems = new ArrayList<Character>();
+
+        public void insert(Character c) { elems.add(c); }
+        public void delete(Character c) {
+            int i = elems.indexOf(c);
+            if (i > -1) elems.remove(i);
+        }
+        public void member(Character c) {
+            return elems.contains(c);
+        }
+        public int size() {
+            return elems.size();
+        }
+    }
 \end{Java}

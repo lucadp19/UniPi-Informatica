@@ -1,0 +1,339 @@
+\chapter{Sintassi di OCaml}
+
+\section{Valori ed espressioni}
+
+OCaml è un linguaggio multiparadigma derivato dal linguaggio funzionale CaML e dai suoi antenati nella famiglia di ML. Essendo alla base un linguaggio funzionale, un programma OCaml è un'\emph{espressione} che può essere valutata ad un \emph{valore}, ovvero ad un'espressione che non deve essere valutata ulteriormente.
+
+Useremo la notazione $\textrm{<exp>} \implies v$ oppure la notazione $\Eval{\textrm{exp}} = v$ per dire che l'espressione $\textrm{exp}$ viene valutata al valore $v$.
+
+Il primo metodo per creare espressioni è il costrutto \InlineOCaml{let}. Ad esempio l'espressione 
+\begin{OCaml}
+    let x = 42;;
+\end{OCaml}
+ci permette di \emph{legare} al nome della variabile \InlineOCaml{x} il valore \InlineOCaml{42}. Questo costrutto ci consente tuttavia di definire espressioni più complesse:
+\begin{OCaml}
+    let x = 7*3
+        in x*x;;
+\end{OCaml}
+Questa espressione lega alla variabile \InlineOCaml{x} il valore \InlineOCaml{21}, cioè il valore a cui l'espressione \InlineOCaml{7*3} viene valutata; inoltre, questo legame è \emph{locale} all'espressione che segue la parola chiave \InlineOCaml{in}. Il valore dell'espressione è quindi \InlineOCaml{441}.
+
+\section{Costrutto \InlineOCaml{let}}
+
+Il costrutto \InlineOCaml{let} ci permette inoltre di introdurre una nozione di \emph{scope}: nel seguente codice la variabile \InlineOCaml{x} è definita e visibile dentro il \InlineOCaml{let} più esterno, mentre la variabile \InlineOCaml{y} esiste ed è visibile solo all'interno del secondo \InlineOCaml{let}.
+\begin{OCaml}
+    let x = 42
+        in x + (let y = "3110"
+                    in int_of_string y);;
+\end{OCaml}
+
+Il valore di questa espressione è \InlineOCaml{3152}, in quanto il valore dell'espressione \InlineOCaml{let} interna è il numero intero \InlineOCaml{3110}, mentre il valore dell'espressione più esterna è dato dalla valutazione di \InlineOCaml{x + 3110}, che restituisce \InlineOCaml{3152}.
+
+\subsection*{Regola di valutazione del costrutto \InlineOCaml{let}}
+Studiamo ora la regola formale di valutazione del \InlineOCaml{let}: \[
+    \infer{
+        \Eval{\text{\InlineOCaml{let x = e1 in e2}}} = v 
+    }{
+            \Eval{\text{\InlineOCaml{e1}}} = v^\prime
+        &   \Subst{\text{\InlineOCaml{e2}}, \text{\InlineOCaml{x}}, v^\prime} = \text{\InlineOCaml{e2}}^\prime
+        &   \Eval{\text{\InlineOCaml{e2}}^\prime} = v
+    }.
+\]
+
+Questa regola ci dice che la valutazione dell'espressione \InlineOCaml{let x = e1 in e2} è $v$ se:
+\begin{itemize}
+    \item la valutazione di \InlineOCaml{e1} è un valore $v^\prime$;
+    \item sostituendo il valore $v^\prime$ al posto di tutte le occorrenze libere di \InlineOCaml{x} nell'espressione \InlineOCaml{e2} otteniamo l'espressione \InlineOCaml{e2}$^\prime$;
+    \item la valutazione di \InlineOCaml{e2}$^\prime$ è esattamente il valore $v$. 
+\end{itemize}
+
+\begin{example}
+    Usiamo la regola di inferenza per calcolare il valore dell'espressione
+    \begin{OCaml}
+        let x = 2 + (5 * 3) in x + 10;;
+    \end{OCaml}
+
+    \begin{enumerate}[label={(\arabic*)}]
+        \item Valutiamo l'espressione \InlineOCaml{2 + (5 * 3)}, il cui valore è $17$.
+        \item Sostituiamo $17$ al posto di ogni occorrenza libera di \InlineOCaml{x} nell'espressione \InlineOCaml{x + 10}, ottenendo l'espressione \InlineOCaml{17 + 10}.
+        \item Valutiamo quest'ultima espressione, ottenendo $27$, che è il valore dell'espressione iniziale. \qedhere
+    \end{enumerate}
+\end{example}
+
+\begin{example}
+    Usiamo la regola di inferenza per calcolare il valore dell'espressione
+    \begin{OCaml}
+        let x = 12 - 3 
+            in let y = 2 + x 
+                    in x == y;;
+    \end{OCaml}
+
+    \begin{enumerate}[label={(\arabic*)}]
+        \item Valutiamo l'espressione \InlineOCaml{12 - 3}, il cui valore è $9$.
+        \item Sostituiamo $9$ al posto di ogni occorrenza libera di \InlineOCaml{x} nell'espressione \InlineOCaml{let y = 2 + x in x == y}, ottenendo l'espressione \InlineOCaml{let y = 2 + 9 in 9 == y}.
+        \item Valutiamo quest'ultima espressione: siccome anch'essa è un costrutto \InlineOCaml{let} bisogna applicare nuovamente la regola di inferenza:
+        \begin{enumerate}[label={(\roman*)}]
+            \item Valutiamo l'espressione \InlineOCaml{2 + 9}, il cui valore è $11$.
+            \item Sostituiamo $11$ al posto di ogni occorrenza libera di \InlineOCaml{y} nell'espressione \InlineOCaml{9 == y}, ottenendo l'espressione \InlineOCaml{9 == 11}.
+            \item Valutiamo l'ultima espressione: siccome $9 \neq 11$ il risultato dell'espressione è \InlineOCaml{false}.
+        \end{enumerate}
+    \end{enumerate}
+    Segue quindi che il codice iniziale ha valore \InlineOCaml{false}.
+\end{example}
+
+\section{Funzioni}
+
+Come in ogni linguaggio funzionale in OCaml le funzioni sono elementi del primo ordine: sono dunque espressioni, esattamente come ogni costrutto del linguaggio.
+
+\paragraph{Sintassi} La sintassi per dichiarare una funzione è la seguente:
+\begin{OCaml}
+    let <fun_name> (<par_1> : <type_1>) ... (<par_n> : type_n) : ret_type =
+        <fun_body>.
+\end{OCaml}
+Per fare un esempio:
+\begin{OCaml}
+    let f (x : int) : int =
+        let y = x * 10
+            in y * y;;
+\end{OCaml}
+Una funzione è quindi formata da \begin{itemize}
+    \item un nome di funzione, in questo caso \InlineOCaml{f};
+    \item una lista di parametri, in questo caso il singolo parametro \InlineOCaml{x}. Notiamo che abbiamo esplicitato il tipo di \InlineOCaml{x} tramite la notazione \InlineOCaml{(x : int)}, anche se può essere sottointeso;
+    \item un tipo di ritorno, in questo caso \InlineOCaml{int}, anch'esso opzionale;
+    \item un corpo di funzione, in questo caso dato dal \InlineOCaml{let} interno.
+\end{itemize}
+
+\paragraph{Inferenza di tipi} L'inferenza dei tipi dell'interprete OCaml ci permette di dichiarare funzioni senza esplicitare i tipi degli argomenti e/o del risultato, come nel seguente caso:
+\begin{OCaml}
+    let f x = x + 3;;
+\end{OCaml}
+Siccome l'operatore di somma è specifico per il tipo \InlineOCaml{int} sia l'argomento della funzione che il suo risultato dovranno essere di tipo intero: il tipo di questa funzione sarà quindi denotato con \InlineOCaml{int -> int}.
+
+\paragraph{Chiamata di funzione} Per chiamare una funzione non è necessario usare le parentesi: se dichiarassi la funzione \InlineOCaml{plus} in questo modo
+\begin{OCaml}
+    let plus x y = x + y;;
+\end{OCaml}
+l'espressione \InlineOCaml{plus 2 3} sarebbe valutata a \InlineOCaml{5}. 
+
+Possiamo anche dichiarare delle funzioni interne al corpo di un'espressione \InlineOCaml{let}:
+\begin{OCaml}
+    let square x = x*x 
+        in square 3 + square 4;;
+\end{OCaml}
+Questa espressione ha valore \InlineOCaml{25} poiché l'interprete calcola i valori di \InlineOCaml{square 3} e \InlineOCaml{square 4} utilizzando la formula data dal \InlineOCaml{let}, ovvero \InlineOCaml{let square x = x * x}.
+
+\paragraph{Funzione ricorsiva} Per dichiarare funzioni ricorsive bisogna usare la parola chiave \InlineOCaml{rec}. Ad esempio la funzione fattoriale può essere implementata in questo modo:
+\begin{OCaml}
+    let rec fact x = 
+        if x = 0 
+            then 1
+            else x * fact (x-1);;
+\end{OCaml}
+Ancora una volta il meccanismo di inferenza dei tipi assegna alla funzione \InlineOCaml{fact} il tipo \InlineOCaml{int -> int}.
+
+\paragraph{Currying} Consideriamo nuovamente la funzione \InlineOCaml{plus} definita sopra. Se chiedessimo all'interprete OCaml di ricavarne il tipo, la risposta sarebbe che la funzione \InlineOCaml{plus} ha tipo \InlineOCaml{int -> int -> int}, ovvero la funzione prende un intero e restituisce un'altra funzione \InlineOCaml{int -> int}. Possiamo quindi sfruttare questo fatto per ottenere una funzione applicata parzialmente:
+\begin{OCaml}
+    let incr = plus 1;;
+\end{OCaml}
+Il tipo della funzione \InlineOCaml{incr} è \InlineOCaml{int -> int} (ovvero prende un intero e restituisce un intero), e semplicemente questa funzione si comporta come una \InlineOCaml{plus} con il primo parametro fissato ad \InlineOCaml{1}.
+
+\paragraph{Funzioni anonime}
+Possiamo dichiarare funzioni con una sintassi diversa usando la parola chiave \InlineOCaml{fun} oppure \InlineOCaml{function}.
+\begin{OCaml}
+    let f = 
+        function x y = x * y;;
+\end{OCaml}
+La funzione \InlineOCaml{f} è semplicemente una funzione che prende due parametri interi (chiamati \InlineOCaml{x} e \InlineOCaml{y}) e ne restituisce il prodotto, dunque è equivalente a
+\begin{OCaml}
+    let f x y = x * y;;
+\end{OCaml}
+
+\subsection*{Regola di valutazione di una funzione}
+La regola formale di valutazione di una chiamata di funzione è la seguente: \[
+    \infer{
+        \Eval{\text{\InlineOCaml{f e_1 ... e_n}}} = v 
+    }{
+            \Eval{\text{\InlineOCaml{f}}} = \text{\InlineOCaml{fun x_1}}\ \dots\ \text{\InlineOCaml{x_n}} = \text{\InlineOCaml{e}}
+        &   \parens*{\forall i: \; \Eval{\text{\InlineOCaml{e_i}}} = v_i}
+        &   \Subst{\text{\InlineOCaml{e}}, \text{\InlineOCaml{x_1}}, \dots, \text{\InlineOCaml{x_n}}, v_1, \dots, v_n} = \text{\InlineOCaml{e}}^\prime
+        &   \Eval{\text{\InlineOCaml{e}}^\prime} = v
+    }.
+\] La regola ci dice quindi che la chiamata di \InlineOCaml{f e_1 ... e_n} viene valutata ad un valore $v$ se:
+\begin{itemize}
+    \item \InlineOCaml{f} viene valutata ad una funzione (\InlineOCaml{fun}) che prende $n$ parametri (\InlineOCaml{x_1 ... x_n}) e restituisce un'espressione che dipende da questi parametri (\InlineOCaml{e});
+    \item i parametri attuali \InlineOCaml{e_1 ... e_n} vengono valutati a dei valori $v_1, \dots, v_n$;
+    \item sostituendo all'interno dell'espressione \InlineOCaml{e} ogni parametro formale \InlineOCaml{x_i} con il suo valore $v_i$ si ottiene una nuova espressione \InlineOCaml{e}$^\prime$;
+    \item la valutazione di \InlineOCaml{e}' dà come risultato $v$.
+\end{itemize}
+
+\begin{example}
+    Consideriamo la funzione \InlineOCaml{plus} definita sopra e la chiamata \InlineOCaml{plus 5 4}. Allora:
+    \begin{itemize}
+        \item \InlineOCaml{plus} viene valutata ad una funzione che prende due parametri e ne restituisce la somma, ovvero: \[
+            \Eval{\text{\InlineOCaml{plus}}} = \text{\InlineOCaml{fun x y = x + y}}.   
+        \]
+        \item I parametri vengono valutati rispettivamente a $5$ e a $4$.
+        \item Sostituendo i valori $5$ e $4$ nell'espressione \InlineOCaml{x + y} (al posto di \InlineOCaml{x} e \InlineOCaml{y} rispettivamente) otteniamo l'espressione \InlineOCaml{5 + 4}.
+        \item Valutando quest'ultima espressione otteniamo $9$, cioè il valore restituito dalla funzione.
+    \end{itemize}
+\end{example}
+
+\paragraph{Funzioni di ordine superiore} Siccome le funzioni in OCaml sono oggetti del primo ordine possiamo usarle come parametri di altre funzioni, come in questo esempio:
+\begin{OCaml}
+    let compose (f : int -> int) (g : int -> int) (x : int) : int =
+        g(f x);;
+\end{OCaml}
+La funzione \InlineOCaml{compose} prende tre parametri:
+\begin{itemize}
+    \item una \emph{funzione} \InlineOCaml{f} da interi in interi;
+    \item una \emph{funzione} \InlineOCaml{g} da interi in interi;
+    \item un valore intero \InlineOCaml{x}.
+\end{itemize} Il risultato della funzione \InlineOCaml{compose} è la composizione matematica delle funzioni \InlineOCaml{f} e \InlineOCaml{g}.
+
+Un altro possibile esempio è il seguente:
+\begin{OCaml}
+    let rec n_times (f : int -> int) (n : int) : (int -> int) = 
+        if n = 0 then (fun x -> x)
+                 else compose f (n_times f (n-1));; 
+\end{OCaml}
+Questa funzione restituisce la composizione di una funzione \InlineOCaml{f} con se stessa per \InlineOCaml{n} volte usando la ricorsione.
+
+\paragraph{Polimorfismo}
+Se chiedessimo all'interprete di inferire il tipo della funzione \InlineOCaml{compose} definita sopra, rimuovendo le annotazioni di tipo, la risposta sarebbe:
+\begin{OCaml}
+    compose : ('a -> 'b) -> ('b -> 'c) -> 'a -> 'c = <fun>
+\end{OCaml}
+Le variabili \InlineOCaml{'a}, \InlineOCaml{'b} e \InlineOCaml{'c} sono \emph{variabili di tipo}: ciò significa che la funzione \InlineOCaml{compose} non accetta solo parametri di tipo \InlineOCaml{int}, ma accetta tipi qualsiasi fintanto che tutti i tipi legati ad \InlineOCaml{'a} siano uguali, tutti i tipi legati a \InlineOCaml{'b} siano uguali e stessa cosa anche per \InlineOCaml{'c}.
+
+\section{Liste}
+
+Una lista in OCaml è una collezione di valori dello stesso tipo. Le seguenti sono tutte liste:
+\begin{OCaml}
+    let l1 = [1; 2; 3];;
+    let l2 = 1 :: 2 :: 3 :: [];;
+    let l3 = [];;
+    let l4 = 'a' :: 'b' :: ['c', 'd'];;
+\end{OCaml}
+Il simbolo \InlineOCaml{[]} rappresenta una lista vuota, pertanto la lista \InlineOCaml{l3} ha tipo polimorfo \InlineOCaml{'a list}, mentre le altre liste hanno tipo \InlineOCaml{int list} oppure \InlineOCaml{char list}.
+
+L'operatore \InlineOCaml{::} (chiamato \emph{cons}) ci permette di aggiungere un elemento in testa ad una lista (a patto che il tipo dell'elemento sia uguale al tipo della lista). In realtà la sintassi con le parentesi quadre (ad esempio nel caso della prima lista) è del tutto equivalente alla sintassi con l'operatore cons (come nel caso della seconda lista), dunque \InlineOCaml{l1 = l2}.
+
+\subsection*{Pattern matching}
+Per scrivere comodamente funzioni su liste è possibile usare il \emph{pattern matching}:
+\begin{OCaml}
+    let empty lst = 
+        match lst with
+        | []    -> true
+        | x::xs -> false;;
+\end{OCaml}
+L'espressione \InlineOCaml{match lst with} ci permette di confrontare il parametro \InlineOCaml{lst} con alcuni "pattern", in modo da poter dare la risposta a seconda del pattern a cui la lista viene associata. Quindi se \InlineOCaml{lst} viene associata alla lista vuota \InlineOCaml{[]} significa che \InlineOCaml{lst} è vuota, dunque la funzione \InlineOCaml{empty} restituisce \InlineOCaml{true}; invece se \InlineOCaml{lst} viene associata ad una lista della forma \InlineOCaml{x::xs} significa che \InlineOCaml{lst} contiene almeno un elemento (cioè \InlineOCaml{x}), dunque non è vuota e pertanto restituiamo \InlineOCaml{false}.
+
+Osserviamo che \begin{itemize}
+    \item il pattern \InlineOCaml{[]} viene associato soltanto ad una lista vuota;
+    \item il pattern \InlineOCaml{x::xs} viene associato ad una lista con \emph{almeno} un elemento (\InlineOCaml{xs} rappresenta il resto della lista, che può essere vuoto oppure contenere altri elementi);
+    \item il pattern \InlineOCaml{x::[]} viene associato ad una lista con \emph{esattamente} un elemento;
+    \item il pattern \InlineOCaml{x::y::xs} viene associato ad una lista con \emph{almeno} due elementi;
+    \item il pattern \InlineOCaml{x::y::[]} viene associato ad una lista con \emph{esattamente} due elementi;
+\end{itemize} e così via.
+
+\subsection*{Option types}
+Alcune funzioni su liste non possono essere applicate ad ogni tipo di lista, ma solo a liste non vuote. Un esempio è la funzione che calcola il massimo di una lista:
+\begin{OCaml}
+    let rec max_list lst = 
+        match lst with
+        | []    -> ???
+        | [x]   -> x
+        | x::xs -> max x (max_list xs);; 
+\end{OCaml}
+Per risolvere questi problemi (senza ricorrere all'uso del \InlineOCaml{null}) OCaml implementa gli \emph{option types}:
+\begin{OCaml}
+    let rec max_list lst = 
+        match lst with
+        | [] -> None
+        | x::xs -> match (max_list xs) with
+                    | None   -> x
+                    | Some v -> Some (max x v);;
+\end{OCaml}
+Studiamo più nel dettaglio il funzionamento di \InlineOCaml{max_list}: \begin{itemize}
+    \item se \InlineOCaml{lst} è \InlineOCaml{[]} allora il risultato è un valore particolare, chiamato \InlineOCaml{None} per indicare l'assenza di valore;
+    \item se \InlineOCaml{lst} ha un elemento in testa \InlineOCaml{x} e una coda \InlineOCaml{xs}, allora la funzione
+    \begin{itemize}
+        \item calcola ricorsivamente il valore della coda e lo usa come parametro del pattern matching;
+        \item se il risultato di \InlineOCaml{max_list xs} è \InlineOCaml{None}, allora la lista \InlineOCaml{xs} è vuota e il valore massimo della lista \InlineOCaml{x::xs} è \InlineOCaml{x};
+        \item altrimenti se il valore massimo della lista \InlineOCaml{xs} è \InlineOCaml{Some v}, allora il valore massimo della lista \InlineOCaml{x::xs} è il massimo tra \InlineOCaml{x} e \InlineOCaml{v}.
+    \end{itemize}
+\end{itemize}
+Notiamo che se il risultato non è \InlineOCaml{None} allora deve essere racchiuso dal costruttore di tipo \InlineOCaml{Some}: infatti la funzione deve restituire un valore di un tipo preciso e non può restituire talvolta option types e talvolta tipi standard.
+
+Il tipo di questa funzione è quindi \InlineOCaml{max_list : 'a list -> 'a option}, dove l'\InlineOCaml{option} indica il fatto che possiamo restituire \InlineOCaml{None}.
+
+\section{Nuovi tipi di dato}
+
+OCaml ci permette di dichiarare nuovi tipi di dato tramite la parola chiave \InlineOCaml{type}:
+\begin{OCaml}
+    type day = 
+        | Monday
+        | Tuesday
+        | Wednesday
+        | Thursday
+        | Friday
+        | Saturday
+        | Sunday;;
+\end{OCaml}
+Questo costrutto dichiara un nuovo tipo (\InlineOCaml{day}) che può assumere i valori \InlineOCaml{Monday}, \InlineOCaml{Tuesday}, ..., \InlineOCaml{Sunday}.
+
+Per dichiarare funzioni che operano su valori di tipo \InlineOCaml{day} possiamo usare il pattern matching:
+\begin{OCaml}
+    let string_of_day d = 
+        match d with
+        | Monday    -> "Monday"
+        | Tuesday   -> "Tuesday"
+        | Wednesday -> "Wednesday"
+        | Thursday  -> "Thursday"
+        | Friday    -> "Friday"
+        | Saturday  -> "Saturday"
+        | Sunday    -> "Sunday";;
+\end{OCaml}
+
+I nuovi tipi di dato possono anche "trasportare valori" di tipi standard:
+\begin{OCaml}
+    type foo = 
+        | Nothing
+        | Int of int
+        | Pair of int * int
+        | String of string;;
+\end{OCaml}
+Dunque i seguenti sono tutti valori di tipo \InlineOCaml{foo}:
+\begin{OCaml}
+    Nothing;;
+    Int 3;;
+    Pair (2, 7);;
+    String "ciao";;
+\end{OCaml}
+
+Il sistema di creazione di tipi di OCaml è molto potente in quanto ci consente di creare tipi ricorsivi:
+\begin{OCaml}
+    type bool_expr = 
+        | True
+        | False
+        | And of bool_expr * bool_expr
+        | Or of bool_expr * bool_expr
+        | Not of bool_expr;;
+\end{OCaml}
+
+Il tipo \InlineOCaml{bool_expr} è quindi un tipo usato per rappresentare espressioni booleane con gli operatori \textup{And}, \textup{Or} e \textup{Not}: ad esempio i seguenti valori sono di tipo \InlineOCaml{bool_expr}.
+\begin{OCaml}
+    True;;
+    And (False, True);;
+    Or (Not (And (True, True)), Or (Not True, False));;
+\end{OCaml}
+
+Scriviamo ora una funzione per valutare un'espressione booleana di tipo \InlineOCaml{bool_expr}:
+\begin{OCaml}
+    let rec bool_eval expr =
+        match expr with
+        | True         -> true
+        | False        -> false
+        | Or (e1, e2)  -> bool_eval e1 || bool_eval e2
+        | And (e1, e2) -> bool_eval e1 && bool_eval e2
+        | Not e1       -> not (bool_eval e1);;
+\end{OCaml}
