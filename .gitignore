@@ -9,6 +9,7 @@
 *.synctex.gz
 *.toc
 *.class
+_minted*
 IllegalMaterial
 Appunti
 LezioniRossini
