@@ -1,0 +1,51 @@
+\section{Type System}
+
+Finora il nostro semplice linguaggio può produrre soltanto valori di tipo intero, quindi non vi è la necessità di un sistema di tipi. Tuttavia quando i valori cominciano ad essere più complicati, un \strong{type system} può essere utile per diversi motivi:
+\begin{itemize}
+    \item i tipi sono utili a livello di \emph{progetto}: organizzano l'informazione e ci consentono di astrarre esplicitamente sui dati;
+    \item sono utili a livello di \emph{programma}: identificano e prevengono alcuni errori automaticamente;
+    \item sono anche utili a livello di \emph{implementazione}: tipi diversi richiedono risorse diverse (ad esempio un booleano richiede solo un bit, mentre un valore floating-point ad alta precisione ne richiede $64$) e quindi forniscono alcune informazioni necessarie alla macchina astratta per allocare lo spazio di memoria.
+\end{itemize}
+
+Distinguiamo innanzitutto tra diversi tipi di dati:
+\begin{itemize}
+    \item un dato si dice \emph{denotabile} se può essere associato ad un nome;
+    \item un dato si dice \emph{esprimibile} se può essere il risultato della valutazione di un'espressione;
+    \item un dato si dice \emph{memorizzabile} se può essere memorizzato in una variabile.
+\end{itemize}
+
+Ad esempio le funzioni in OCaml sono denotabili ed esprimibili ma non sono memorizzabili, mentre in C sono solamente denotabili.
+
+\subsubsection{Descrittori di dato}
+
+Quando studiamo i tipi di dato vogliamo studiare sia la loro semantica, sia la loro implementazione. Partendo da quest'ultima, sembra necessario che un tipo di dato nella sua rappresentazione concreta contenga una "descrizione del tipo": a run-time vogliamo infatti (ad esempio) essere certi che il tipo del dato che abbiamo sia quello previsto dall'operazione che stiamo effettuando.
+
+In OCaml potremmo rappresentare questo fatto nel seguente modo:
+\begin{OCaml}
+    (* Espressione sintattica *)
+    type exp =
+        | EInt of int
+        | EBool of bool
+    
+    (* Tipo a run-time *)
+    type evT =
+        | Int of int
+        | Bool of bool
+
+    (* Funzione per il typechecking *)
+    let typecheck descr x = 
+        match descr with
+        | "int" -> (match x with
+                    | Int n -> true
+                    | _     -> false)
+        | "bool" -> (match x with
+                     | Bool b -> true
+                     | _      -> false)
+\end{OCaml}
+
+Tuttavia l'uso dei descrittori di dato può essere superfluo a seconda del tipo di linguaggio considerato.
+\begin{itemize}
+    \item Se l'informazione sui tipi è conosciuta completamente a tempo di compilazione (come nel caso di OCaml) si possono eliminare i descrittori di dato, in quanto il typecheck è effettuato dal compilatore (\emph{typecheck statico}).
+    \item Se l'informazione sui tipi è conosciuta solamente a tempo di esecuzione (come ad esempio in Javascript) i descrittori sono necessari per tutti i tipi e il typechecking è completamente \emph{dinamico}.
+    \item Se l'informazione sui tipi è conosciuta parzialmente a tempo di compilazione (come nel caso di Java) i descrittori di dato devono contenere solo l'informazione "dinamica" e il typecheck è effettuato parzialmente a tempo di compilazione e parzialmente a tempo di esecuzione.
+\end{itemize}

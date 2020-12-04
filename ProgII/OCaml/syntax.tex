@@ -1,0 +1,301 @@
+\chapter{Sintassi e semantica}
+
+\section{Sintassi}
+
+Per descrivere un linguaggio di programmazione abbiamo bisogno di diversi strumenti:
+\begin{itemize}
+    \item una \strong{grammatica libera dal contesto} per descrivere la sintassi;
+    \item un metodo per descrivere le regole di scoping e il sistema dei tipi, chiamato \strong{semantica statica};
+    \item un metodo per descrivere i comportamenti del linguaggio, detto \strong{semantica dinamica}.
+\end{itemize}
+
+Per analizzare la sintassi di un linguaggio abbiamo bisogno quindi di studiarne la grammatica: tuttavia questo può essere scomodo in alcune circostanze, in quanto possono presentarsi problemi di ambiguità tra espressioni.
+
+Si ricorre quindi all'uso dei cosiddetti \strong{Alberi di Sintassi Astratta} (abbreviati in AST, dall'inglese Abstract Syntax Tree): ogni nodo dell'albero rappresenta un'operazione e i suoi nodi figli rappresentano gli operandi dell'operazione (e possono essere a loro volta altre operazioni).
+
+\section{Meccanismi di inferenza}
+
+Per asserire proprietà (statiche o dinamiche) dei nostri programmi abbiamo bisogno di un meccanismo di inferenza. 
+
+\begin{definition}
+    [judgment] Si dice \strong{judgment} (o anche \strong{sentenza}) un enunciato che asserisca una proprietà di un oggetto.
+\end{definition}
+
+Ad esempio, la frase "Il numero $3$ è dispari" è un judgment.
+
+\begin{definition}
+    [Regola di inferenza] Siano $J_1, \dots, J_n$, $J$ delle sentenze. Una \strong{regola di inferenza} è un'implicazione della forma \[
+        \infer{J}{
+            J_1 & \dots & J_n
+        },
+    \] il cui significato è che se $J_1, \dots, J_n$ sono sentenze derivabili dal sistema assiomatico, allora lo è anche $J$.
+
+    I judgment $J_1, \dots, J_n$ vengono detti \emph{premesse} o \emph{precondizioni}, mentre il judgment $J$ viene detto \emph{conclusione} o \emph{postcondizione}.
+
+    Una regola di inferenza senza premesse si dice \emph{assioma}.
+\end{definition}
+
+Ad esempio la seguente regola è un assioma: \[
+    \infer{0 : \text{nat}}{},    
+\] mentre la seguente è una regola con premesse: \[
+    \infer{
+        s(n) : \text{nat}
+    }{
+        n : \text{nat}
+    },
+\] dove con $s(n)$ intendiamo il successore di $n$.
+
+La strategia che useremo per dimostrare sentenze della forma $s : A$ (il cui significato è "l'oggetto "s" soddisfa la proprietà $A$") è la seguente:
+\begin{itemize}
+    \item troviamo una regola $R$ la cui conclusione corrisponde alla sentenza $s : A$;
+    \item dimostriamo tutte le precondizioni con la stessa strategia.
+\end{itemize}
+
+\section{Semantica statica}
+
+La semantica statica è il meccanismo che ci permette di descrivere proprietà di un programma che si manifestano senza doverlo eseguire. Queste proprietà sono spesso controllate dal compilatore o da strumenti esterni e ci permettono di avere un controllo statico sui programmi che vogliamo eseguire.
+
+Per mostrare l'uso della semantica statica studiamo un semplice linguaggio di programmazione che può solo fare calcoli. La grammatica di questo linguaggio è la seguente:
+\begin{BNF}
+E ::= Const | Ide | (Times E1 E2) | (Plus E1 E2) | (Let Ide E1 E2)
+Const ::= 0 | 1 | 2 | ...
+Ide ::= x | y | z | ...
+\end{BNF}
+
+Consideriamo il seguente judgment: $E : \text{ok}$ se tutti gli identificatori contenuti in $E$ sono definiti correttamente tramite un espressione di tipo Let.
+
+Le regole per le costanti e per le operazioni di addizione e moltiplicazione sono molto semplici:
+\begin{align*}
+    \infer{\mt{Const : ok}}{} 
+    & \qquad
+    \infer{
+        \mt{(Times E1 E2) : ok}
+    }{
+        \mt{E1 : ok} & \mt{E2 : ok}
+    } 
+    & \qquad
+    \infer{
+        \mt{(Plus E1 E2) : ok}
+    }{
+        \mt{E1 : ok} & \mt{E2 : ok}
+    }
+\end{align*}
+Tuttavia non possiamo al momento descrivere una regola per verificare la correttezza delle singole variabili e delle espressioni \mt{Let}: data un'espressione del tipo \mt{Ide} non abbiamo abbastanza informazione per decidere se essa è corretta oppure no, poiché potrebbe essere sia libera nell'espressione generale (e in tal caso sarebbe sbagliata), sia legata da qualche \mt{Let} precedente. 
+
+Abbiamo quindi bisogno di introdurre una struttura di supporto per recuperare le informazioni relative agli identificatori. Chiameremo questa struttura \strong{tabella dei simboli}, ed essa conterrà tutti i nomi delle variabili che abbiamo dichiarato nel programma. Inoltre se $\Gamma$ è una tabella dei simboli, il judgment $\Gamma \proves \mt{e : A}$ signfica che considerando l'\emph{ambiente} $\Gamma$ l'espressione \mt{e} ha la proprietà \mt{A}.
+
+Possiamo quindi esprimere completamente la condizione di correttezza di un programma del nostro linguaggio:
+\begin{gather*}
+    \infer{\Gamma \proves \mt{Const : ok}}{} 
+    \qquad
+    \infer{
+        \mt{\Gamma \proves (Times E1 E2) : ok}
+    }{
+        \mt{\Gamma \proves E1 : ok} & \mt{\Gamma \proves E2 : ok}
+    } 
+    \qquad
+    \infer{
+        \mt{\Gamma \proves (Plus E1 E2) : ok}
+    }{
+        \mt{\Gamma \proves E1 : ok} & \mt{\Gamma \proves E2 : ok}
+    } \\
+    \infer{
+        \Gamma \proves \mt{x : ok}
+    }{
+        \mt{x} \in \Gamma
+    }
+    \qquad
+    \infer{
+        \Gamma \proves \mt{(Let x E1 E2)}
+    }{
+        \Gamma \proves \mt{E1 : ok} & \Gamma \union \set{\mt{x}} \proves \mt{E2 : ok}
+    }
+\end{gather*}
+
+\subsection*{Simulazione in OCaml}
+
+Cerchiamo ora di simulare le regole dell'analisi statica in OCaml. Introduciamo innanzitutto le definizioni di tipo per le espressioni e gli identificatori:
+\begin{OCaml}
+    type ide = string;;
+    type expr = 
+        | Int   of int
+        | Den   of ide * int
+        | Plus  of expr * expr
+        | Times of expr * expr
+        | Let   of ide * expr * expr;;
+\end{OCaml}
+
+Dato un ambiente e un identificatore, controlliamo se l'identificatore esiste nell'ambiente:
+\begin{OCaml}
+    let rec lookup st x =
+        match st with
+        | []    -> false
+        | y::ys -> if x = y then true
+                            else lookup ys x;;
+\end{OCaml}
+
+La funzione che controlla se l'espressione è ben formata è quindi la seguente:
+\begin{OCaml}
+    let rec check (e : expr) (st : string list) =
+        match e with
+        | Int n -> true
+        | Den id -> lookup st x
+        | Plus (e1, e2) -> (check e1 st) && (check e2 st)
+        | Times (e1, e2) -> (check e1 st) && (check e2 st)
+        | Let (id, e1, e2) -> (check e1 st) && (check e2 (x::st))
+\end{OCaml}
+
+\section{Semantica dinamica}
+
+Vogliamo ora studiare la \strong{semantica dinamica}, che ci dà le regole di esecuzione di un programma e ci permette di calcolarne il risultato. Vi sono diversi stili di semantica (in particolare \emph{denotazionale}, \emph{operazionale} e \emph{assiomatica}), ma noi ci concentreremo sulla semantica operazionale ed in particolare su due tipi particolari:
+\begin{itemize}
+    \item la \strong{Structural Operational Semantics}, anche chiamata \emph{semantica Small Steps}, che descrive ogni passo dell'esecuzione di un programma;
+    \item la \strong{Natural Semantics}, che descrive il risultato dell'esecuzione di un programma completo.
+\end{itemize}
+
+\subsubsection{Semantica Small Steps}
+
+L'idea di base della semantica small steps è che ogni passo di valutazione ci porta da un'espressione ad un'espressione più semplice, fino ad arrivare ad un'espressione che non può più essere semplificata (un valore).
+
+Si dice quindi \strong{sistema di transizione} una tupla $(S, I, F, \sstep)$ dove:
+\begin{itemize}
+    \item $S$ è l'insieme dei possibili stati della macchina astratta del linguaggio;
+    \item $I$ è l'insieme degli stati iniziali;
+    \item $F$ è l'insieme degli stati finali;
+    \item $\sstep \subseteq S \times S$ è la \emph{relazione di transizione}, che descrive l'effetto di un singolo passo di valutazione.
+\end{itemize}
+
+Nel caso del nostro semplice linguaggio possiamo definire:
+\begin{itemize}
+    \item $S$ come l'insieme delle espressioni aritmetiche sintatticamente corrette (in qualche ambiente), ovvero \[
+        S \deq \set*{\mt{e} \given \exists\Gamma \text{ tale che } \Gamma \proves \mt{e : ok}};    
+    \]
+    \item $I$ come l'insieme delle espressioni aritmetiche "chiuse", ovvero che non contengono variabili libere: \[
+        I \deq \set*{\mt{e} \given \varnothing \proves \mt{e : ok}};    
+    \]
+    \item $F$ come l'insieme dei valori interi: \[
+        F \deq \set*{\mt{Int n} \given n \in \N}.
+    \]
+\end{itemize}
+
+Iniziamo a studiare le regole di valutazione.
+\paragraph{Times} Facciamo l'esempio della regola del costrutto \mt{Times}:
+\begin{align*}
+    \infer{
+        \mt{(Times (Int n) (Int m))} \sstep \mt{Int (n * m)}
+    }{}\\
+    \infer{
+        \mt{(Times e1 e2)} \sstep \mt{(Times e1' e2)}
+    }{
+        e1 \sstep e1'
+    }\\
+    \infer{
+        \mt{(Times (Int n) e2)} \sstep \mt{(Times (Int n) e2')}
+    }{
+        e2 \sstep e2'
+    }
+\end{align*}
+
+Questa regola composta ci dice che \begin{itemize}
+    \item se stiamo cercando di calcolare il risultato di \mt{Times} applicato a due valori, il risultato è un valore (in particolare è \mt{Int (n * m)});
+    \item se entrambi gli operandi non sono valori, eseguiamo uno step sul primo operando (che quindi può diventare un valore, ma può anche dover essere semplificato ancora) e rivalutiamo l'espressione;
+    \item se il primo operando è un valore ma il secondo non lo è, eseguiamo uno step sul secondo operando e rivalutiamo l'espressione.
+\end{itemize}
+Facciamo alcune osservazioni:
+\begin{itemize}
+    \item questa regola di moltiplicazione è \strong{eager}: prima valuta completamente entrambi gli operandi, poi valuta l'espressione completa;
+    \item inoltre anche l'ordine in cui vengono eseguite le valutazioni è evidente: prima viene eseguita la valutazione del primo operando, poi viene eseguita la valutazione del secondo.
+\end{itemize}
+
+\paragraph{Let} Studiamo ora la regola di valutazione del \mt{Let}:
+\begin{align*}
+    \infer{
+        \mt{(Let x (Int n) e2)} \sstep \mt{e2[x} \deq \mt{(Int n)]}
+    }{}\\
+    \infer{
+        \mt{(Let x e1 e2)} \sstep \mt{(Let x e1' e2)}
+    }{
+        e1 \sstep e1'
+    }\\
+\end{align*}
+
+Questa regola ci dice che \begin{itemize}
+    \item se abbiamo valutato completamente \mt{e1} al valore \mt{(Int n)} allora lo step consiste nel restituire l'espressione \mt{e2} dove tutte le occorrenze di \mt{x} vengono sostituite da occorrenze di \mt{(Int n)};
+    \item altrimenti eseguiamo uno step di valutazione sull'espressione \mt{e1} e rivalutiamo l'espressione.
+\end{itemize}
+
+\subsubsection{Semantica naturale}
+
+Nel caso della semantica naturale non siamo più interessati a semplificare un'espressione \emph{un passo alla volta}, ma vogliamo valutare in un passo solo un'intera espressione. Per far ciò avremmo bisogno di
+\begin{itemize}
+    \item un insieme $E$ di espressioni valutabili,
+    \item un insieme $V$ di valori (che non è necessariamente un sottoinsieme di $E$),
+    \item una relazione $\evaluatesTo \subseteq E \times V$ (anche indicata con $\Downarrow$), detta \emph{relazione di valutazione}.
+\end{itemize}
+
+Ad esempio nel caso del nostro semplice linguaggio possiamo dare una semantica naturale nel seguente modo:
+\begin{itemize}
+    \item $E$ è l'insieme di tutte le espressioni ben formate, ovvero $E = \set*{\mt{e} \given \Gamma \proves \mt{e : ok}}$,
+    \item $V$ è l'insieme dei valori interi,
+    \item alcune regole di valutazione sono le seguenti: \begin{gather*}
+        \infer{\mt{Int n} \evaluatesTo \mt{Int n}}{}\\[5pt]
+        \infer{\mt{Times e1 e2} \evaluatesTo \mt{Int (n*m)}}{\mt{e1} \evaluatesTo \mt{Int n} & \mt{e2} \evaluatesTo \mt{Int m}}\\[5pt]
+        \infer{\mt{(Let x e1 e2)} \evaluatesTo \mt{Int m}}{\mt{e1} \evaluatesTo \mt{(Int n)} & \mt{e2[x := (Int n)]} \evaluatesTo \mt{(Int m)}}.
+    \end{gather*}
+\end{itemize}
+
+Osserviamo che la regola data sopra per il \mt{Let} è una regola di valutazione \emph{eager}, nel senso che valuta tutti gli operandi prima di passare alla valutazione dell'operazione principale. Una regola di valutazione \emph{lazy} per il \mt{Let} è ad esempio la seguente: \[
+    \infer{\mt{Let x e1 e2} \evaluatesTo \mt{(Int m)}}{\mt{e2[x := e1]} \evaluatesTo \mt{(Int m)}}.    
+\]
+
+Tuttavia per definire correttamente un interprete abbiamo bisogno di un metodo per recuperare a tempo di esecuzione le informazioni relative alle variabili legate dai \mt{Let} (e successivamente dalle funzioni): definiamo quindi il concetto di \emph{ambiente} e di \emph{binding}.
+
+Si dice \strong{binding} un'associazione tra un nome (di variabile) e un valore; si dice \strong{ambiente} una funzione \[
+    \env : \mt{Ide} \to \mt{Values} \union \mt{Unbound}    
+\] dove \mt{Ide} è l'insieme degli identificatori di variabili, \mt{Values} è l'insieme dei valori e \mt{Unbound} è il valore particolare assunto da una variabile che non è legata ad alcun valore. Per aggiungere un nuovo binding ad un ambiente useremo la notazione $\env\mt{[x := v]}$, che indica la funzione che si comporta esattamente come $\env$ per ogni $y \in \mt{Ide} \setminus \set{\mt{x}}$, mentre $\env{\mt{x}} = \mt{v}$.
+
+Una possibile prima implementazione di questo tipo di ambiente in OCaml è la seguente:
+\begin{OCaml}
+    let empty_env = [];;
+
+    let rec lookup env x = 
+        match env with
+        | []         -> failwith ("not found")
+        | (a, v)::as -> if x = a then v
+                                 else lookup as x;;
+    
+    let bind x v env = (x, v)::env;;
+\end{OCaml}
+
+Possiamo quindi specificare meglio la nostra costruzione della semantica naturale: abbiamo bisogno di \begin{itemize}
+    \item un insieme di stati \[
+        S = \set*{\rho \envTo \mt{e} \given \rho \in \mt{Env}, \mt{e} \in \mt{Exp}, \varnothing \proves \mt{e : ok}}.
+    \] Ogni stato rappresenta una coppia formata da un ambiente e da un'espressione da valutare in quell'ambiente.
+    \item un insieme di valori, che nel nostro caso sono i numeri naturali,
+    \item una relazione di valutazione $\evaluatesTo \subseteq S \times V$.
+\end{itemize}
+
+Le regole di valutazione dell'interprete diventano quindi ad esempio:
+\begin{gather*}
+    \infer{\env \envTo \mt{(Den id)} \evaluatesTo v}{\env{\mt{id}} = v \in V}\\[5pt]
+    \infer{
+        \env \envTo \mt{(Times e1 e2)} \evaluatesTo v
+    }{
+        \env \envTo \mt{e1} \evaluatesTo v_1 &
+        \env \envTo \mt{e2} \evaluatesTo v_2 &
+        v_1 \cdot v_2 = v
+    }\\[5pt]
+    \infer{
+        \env \envTo \mt{(Let x e body)} \evaluatesTo v
+    }{
+        \env \envTo \mt{e} \evaluatesTo v' &
+        \env\mt{[x := }v'\mt{]} \envTo \mt{body} \evaluatesTo v 
+    }
+\end{gather*}
+
+Una possibile ottimizzazione di questo processo viene data dall'uso degli \strong{indici di De Bruijn}: a tempo di compilazione sostituiamo il nome di ogni variabile con il numero di \mt{Let} che bisogna attraversare per raggiungere il \mt{Let} in cui è stata definita tale variabile. Quindi ad esempio l'espressione \[
+    \mt{Let ("x", (Int 5), (Let ("z", (Int 17), (Times (Den "z", Den "x"))))}    
+\] può essere trasformata nell'espressione \[
+    \mt{Let ((Int 5), (Let ((Int 17), (Times (Den 0, Den 1)))))}    
+\]
+
