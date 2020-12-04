@@ -35,16 +35,16 @@ Osserviamo che $0$ appartiene necessariamente al dominio di $G_X$, in quanto \[
 \begin{proof}
     La dimostrazione della prima proprietà è immediata: \begin{align*}
         G_Y(t)
-        = \Expect{e^{(aX + b)t}}
-        = \Expect{e^{atX}e^{bt}}
-        = e^{bt}\Expect{e^{atX}}
+        = \Expect*{e^{(aX + b)t}}
+        = \Expect*{e^{atX}e^{bt}}
+        = e^{bt}\Expect*{e^{atX}}
         = e^{bt}G_X(at).
     \end{align*}
     Per la seconda, basta osservare che $e^{tX}$ e $e^{tZ}$ sono indipendenti, dunque per la \autoref{prop:prop_expect} (in particolare per il terzo punto) vale che \begin{align*}
         G_{X + Z}(t)
-        = \Expect{e^{(X + Z)t}}
-        = \Expect{e^{tX}e^{tZ}}
-        = \Expect{e^{tX}}\Expect{e^{tZ}}
+        = \Expect*{e^{(X + Z)t}}
+        = \Expect*{e^{tX}e^{tZ}}
+        = \Expect*{e^{tX}}\Expect*{e^{tZ}}
         = G_X(t)G_Z(t).
     \end{align*}
 \end{proof}
@@ -147,3 +147,9 @@ In realtà le ipotesi del teorema possono essere indebolite: è sufficiente che
     \item le variabili abbiano tutte lo stesso valore atteso $\mu$;
     \item le varianze siano \emph{equilimitate} (invece di essere tutte uguali a $\sigma^2$), ovvero che esista $M \in \R$ tale che $\Var{X_i} \leq M$ per ogni $i$.
 \end{itemize}
+
+Per quanto riguarda il \nameref{th:central_limit}, esso afferma che, per $n$ \emph{sufficientemente grande}, la variabile \[
+    \frac{X_1 + \dots + X_n - n\mu}{\sigma\sqrt{n}} = \sqrt{n} \frac{\bar X_n - n\mu}{\sigma}    
+\] è approssimativamente una Gaussiana standard. Questa approssimazione comincia a diventare sufficientemente precisa per $n \geq 80$, e viene usata soprattutto per approssimare variabili binomiali di parametri $n$ e $p$: infatti siccome una binomiale $X \sim B(n, p)$ del genere è uguale alla somma di $n$ variabili di Bernoulli, segue che la variabile \[
+    \frac{X - np}{\sqrt{np(1-p)}}
+\] è approssimativamente $N(0, 1)$.

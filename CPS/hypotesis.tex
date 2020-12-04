@@ -1,0 +1,82 @@
+\section{Verifica di ipotesi}
+
+Se vogliamo pianificare un \emph{test statistico} dobbiamo \begin{itemize}
+    \item formulare un'ipotesi;
+    \item realizzare un esperimento per accettare o rifiutare l'ipotesi fatta.
+\end{itemize}
+
+Per formulare un'ipotesi si divide l'insieme dei parametri $\Theta$ in due sottoinsiemi $\Theta_0$, $\Theta_1$ che formino una partizione di $\Theta$. Il primo rappresenta l'insieme dei parametri dell'ipotesi, il secondo quelli dell'alternativa.
+
+\begin{example}
+    Se vogliamo fare un controllo di qualità nel quale si desidera valutare il numero di pezzi difettosi in una produzione con l'ipotesi \emph{"la percentuale dei pezzi difettosi non supera il $2$\%"} allora \begin{itemize}
+        \item l'insieme dei parametri è $\Theta = \interval*[{0, 1}]$;
+        \item l'insieme dei parametri dell'ipotesi è $\Theta_0 = \interval*[{0, 0.02}]$;
+        \item l'insieme dei parametri dell'alternativa è $\Theta_1 = \interval*({0.02, 1}]$.
+    \end{itemize}
+\end{example}
+
+Si usa anche la seguente notazione:
+\begin{itemize}
+    \item l'ipotesi (anche detta \strong{ipotesi nulla}) è \[
+        \NullHp \theta \leq 0.02,    
+    \]
+    \item l'\strong{ipotesi alternativa} è \[
+        \AltHp \theta > 0.02.    
+    \]
+\end{itemize}
+
+Fissata un'ipotesi, si individua inoltre un insieme di risultati che portano a rifiutare l'ipotesi: questo insieme è un sottoinsieme dello spazio campionario $\Omega$ chiamato \strong{regione critica} ed indicato con $C$.
+
+Il suo complementare viene detto \strong{regione di accettazione} ed è indicato con $A$.
+
+\subsection*{Errori e livelli}
+
+Per analizzare un test dobbiamo decidere in quali casi stiamo commettendo un errore. In particolare, vi sono due tipi di errori principali:
+\begin{itemize}
+    \item gli \emph{errori di prima specie}, che consistono nel rifiutare un'ipotesi soddisfatta;
+    \item gli \emph{errori di seconda specie}, che consistono nell'accettare un'ipotesi non soddisfatta.
+\end{itemize}
+
+\begin{definition}
+    [Livello del test] Sia $\alpha \in \interval*({0, 1})$ fissato. Si dice che il test è \strong{di livello $\alpha$} se per ogni $\theta \in \Theta_0$ vale che \[
+        \Prob_{\theta}{C} \leq \alpha.    
+    \]
+\end{definition}
+
+Tipicamente il valore di $\alpha$ è molto basso, come $0.05$ oppure $0.01$. Intuitivamente fissare un livello significa fissare un limite superiore per la probabilità dell'errore di prima specie: fissando un livello basso si impone che gli errori di prima specie siano minimizzati.
+
+\begin{definition}
+    [Potenza del test]
+    Si dice \strong{potenza del test} la funzione da $\Theta_1$ in $\R$ data da \[
+        \Theta_1 \ni \theta \mapsto \Prob_\theta{C} \in \R.    
+    \]
+\end{definition}
+
+Intuitivamente la potenza rappresenta la \emph{capacità del test di accorgersi che l'ipotesi non è soddisfatta}: più è alta (per ogni valore di $\theta \in \Theta_1$) più siamo certi che l'ipotesi sia sensata.
+
+L'ideale quindi sarebbe avere livello basso e potenza alta; tuttavia ciò è impossibile poiché le due misure si influenzano a vicenda, quindi dobbiamo accontentarci di un compromesso.
+
+\begin{definition}
+    [Curva operativa]
+    Si dice \strong{curva operativa} la funzione \begin{align*}
+        \beta : \Theta &\to \R\\
+        \theta &\mapsto \Prob_{\theta}{A}.
+    \end{align*}
+\end{definition}
+
+Dalla curva operativa si possono ricavare il livello e la potenza, in quanto $\Prob_{\theta}{A} = 1 -\Prob_{\theta}{C}$.
+
+\subsection*{p-value}
+
+Osserviamo che se il livello del test diminuisce deve diminuire anche la regione critica, dunque diventa più semplice accettare un'ipotesi.
+\begin{definition}
+    [p-value] Si dice \emph{p-value} il numero reale $\bar\alpha$ tale che
+    \begin{itemize}
+        \item  per ogni $\alpha < \bar\alpha$ l'ipotesi viene accettata al livello $\alpha$;
+        \item per ogni $\alpha > \bar\alpha$ l'ipotesi viene rifiutata al livello $\alpha$.
+    \end{itemize} 
+\end{definition}
+
+Una definizione alternativa del p-value è la seguente: il p-value è la probabilità che il rifiuto dell'ipotesi sia dovuto al caso (ovvero ad un errore statistico).
+
+Osserviamo inoltre che, mentre il livello e la regione critica vengono decisi prima di raccogliere i dati, il p-value dipende dai dati raccolti effettuando l'esperimento.

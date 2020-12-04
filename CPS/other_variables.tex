@@ -1,0 +1,129 @@
+\section{Altre densità importanti}
+
+\subsection{Densità gamma}
+
+Definiamo innanzitutto la funzione Gamma di Eulero come \[
+    \Gamma(r) \deq \int_0^{+\infty} x^{r-1}e^{-x} dx.   
+\] Anche se questo integrale non è calcolabile direttamente, per $r > 1$ vale la relazione \[
+    \Gamma(r) = (r-1)\Gamma(r-1).
+\] Infatti integrando per parti si ha \begin{align*}
+    \Gamma(r) &= \int_0^{+\infty} x^{r-1}e^{-x} dx\\
+    &= \EvaluateAt[\bigg]{-x^{r-1}e^{-x}}_0^{+\infty} + (r-1)\int_0^{+\infty} x^{r-2}e^{-x} dx\\
+    &= (r-1)\Gamma(r-1).
+\end{align*} Inoltre siccome $\Gamma(1) = 1$ si ha che $\Gamma(n) = (n-1)!$ per ogni $n \in \N \setminus \set{0}$.
+
+Definiamo quindi la densità gamma.
+\begin{definition}
+    [Densità gamma] Siano $r, \lambda > 0$. Si dice \strong{densità gamma di parametri $r$ e $\lambda$} la densità data da \[
+        f(x) \deq \begin{cases}
+            \displaystyle \frac{1}{\Gamma(r)}\lambda^r x^{r-1} e^{-\lambda x}, &x > 0\\[2pt]
+            0,                                                         &x \leq 0.
+        \end{cases}    
+    \]
+\end{definition}
+Questa funzione è effettivamente una densità: infatti \begin{align*}
+    \int_0^{+\infty} \frac{1}{\Gamma(r)}\lambda^r x^{r-1} e^{-\lambda x} dx
+    &= \frac{1}{\Gamma(r)} \int_0^{+\infty} (x\lambda)^{r-1} e^{-\lambda x} \lambda dx\\[2pt]
+    &= \frac{1}{\Gamma(r)} \int_0^{+\infty} t^{r-1} e^{-t}dt\\[2pt]
+    &= \frac{1}{\Gamma(r)} \cdot \Gamma(r)\\
+    &= 1.
+\end{align*}
+
+\begin{remark}
+    La densità esponenziale di parametro $\lambda$ è semplicemente una densità $\Gamma(1, \lambda)$.
+\end{remark}
+
+\begin{proposition}
+    [Momenti della densità gamma]
+    Sia $X$ una variabile aleatoria di densità $\Gamma(r, \lambda)$. Allora $X$ possiede tutti i momenti e preso $\beta \in \R, \beta > 0$ si ha che \[
+        \Expect[\big]{X^\beta} = \frac{\Gamma(r+\beta)}{\Gamma(r)\lambda^\beta}.    
+    \] 
+\end{proposition}
+\begin{proof}
+    Siccome $X$ prende solo valori positivi, possiamo scrivere \begin{align*}
+        \Expect[\big]{X^\beta} &=  \frac{1}{\Gamma(r)} \int_0^{+\infty} x^\beta \lambda^r x^{r-1} e^{-\lambda x} dx.\\
+        \intertext{Moltiplicando e dividendo per $\lambda^\beta$ si ha che}
+        &= \frac{1}{\Gamma(r)\lambda^\beta} \int_0^{+\infty} \lambda^{r+\beta} x^{\beta+r-1} e^{-\lambda x} dx\\[2pt]
+        &= \frac{\Gamma(r+\beta)}{\Gamma(r)\lambda^\beta}. \qedhere
+    \end{align*}
+\end{proof}
+
+Da questa proposizione riusciamo a calcolare semplicemente tutti i momenti: infatti ad esempio \[
+    \Expect[\big]{X} = \frac{\Gamma(r+1)}{\Gamma(r)\lambda} = \frac{r\Gamma(r)}{\Gamma(r)\lambda} = \frac{r}{\lambda},    
+\] oppure anche \[
+    \Expect[\big]{X^2} = \frac{\Gamma(r+2)}{\Gamma(r)\lambda^2} = \frac{r(r+1)}{\lambda^2},    
+\] da cui $\Var{X} = \dfrac{r}{\lambda^2}$.
+
+\begin{proposition}
+    [Funzione generatrice della densità gamma]
+    Sia $X$ una variabile aleatoria con densità $\Gamma(r, \lambda)$. Allora $G_X(t)$ è finito se e solo se $t < \lambda$ e in tal caso si ha \[
+        G_X(t) = \parens*{\frac{\lambda}{\lambda - t}}^r.    
+    \]
+\end{proposition}
+\begin{proof}
+    Dalla definizione di funzione generatrice dei momenti si ha \begin{align*}
+        \Expect*{e^{tX}} 
+        &= \frac{1}{\Gamma(r)}\int_0^{+\infty} e^{tx} \lambda^r x^{r-1} e^{-\lambda x} dx.\\
+        \intertext{Moltiplicando e dividendo per $(\lambda - t)^r$ si ha}
+        &= \frac{\lambda^r}{\Gamma(r)(\lambda - t)^r} \int_0^{+\infty}  (\lambda - t)^r x^{r-1} e^{-(\lambda - t)x} dx\\[3pt]
+        &= \frac{\lambda^r}{\Gamma(r)(\lambda - t)^r} \Gamma(r)\\[3pt]
+        &= \parens*{\frac{\lambda}{\lambda - t}}^r. \qedhere
+    \end{align*}
+\end{proof}
+
+Come conseguenza immediata se $X \sim \Gamma(r, \lambda)$ e $Y \sim \Gamma(s, \lambda)$ e $X, Y$ sono indipendenti, allora $X + Y \sim \Gamma(r + s, \lambda)$.
+
+\subsection{Densità chi-quadro}
+
+\begin{definition}
+    [Densità chi-quadro]
+    Siano $X_1, \dots, X_n$ variabili gaussiane standard indipendenti. La densità della variabile \[
+        C_n \deq X_1^2 + \dots + X_n^2    
+    \] si chiama \strong{densità chi-quadro ad $n$ gradi di libertà}, e la si indica con $\chi^2(n)$.
+\end{definition}
+
+\begin{proposition}
+    La densità $\chi^2(n)$ è uguale alla densità $\Gamma(\nicefrac{n}{2}, \nicefrac{1}{2})$.
+\end{proposition}
+\begin{proof}
+    È sufficiente dimostrare che se $X$ è gaussiana standard allora $X^2$ ha densità $\Gamma(\nicefrac{n}{2}, \nicefrac{1}{2})$.
+
+    Consideriamo la funzione generatrice di $X^2$. Essa è uguale a \begin{align*}
+        G_{X^2}(t) &= \Expect*{e^{tX^2}}\\
+        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{tx^2}e^{-\frac{x^2}{2}} dx\\
+        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{-\frac{x^2}{2}(1 - 2t)} dx.\\
+        \intertext{Siccome $\int_\R e^{-\frac{x^2}{2\sigma^2}} = \sqrt{2\pi} \cdot \sigma$, ponendo $\sigma \deq \parens*{1 - 2t}^{-\nicefrac12}$ si ottiene }
+        &= \frac{1}{\sqrt{2\pi}} \sqrt{\frac{2\pi}{1-2t}}\\
+        &= \sqrt{\frac{1}{1-2t}}\\
+        &= \parens*{\frac{\nicefrac12}{\nicefrac12 - t}}^\frac12,
+    \end{align*} che è proprio la funzione generatrice della funzione $\Gamma(\nicefrac{n}{2}, \nicefrac12)$.
+\end{proof}
+
+Lo $\alpha$-quantile della variabile $\chi^2(n)$ è denotato con $\chi^2_{(\alpha, n)}$.
+
+Osserviamo che non è necessario calcolare nuovamente i momenti o la funzione generatrice di questa variabile, in quanto essa si comporta esattamente come una variabile $\Gamma(\nicefrac{n}{2}, \nicefrac12)$; in particolare la somma di due variabili indipendenti $X \sim \chi^2(n)$, $Y \sim \chi^2(m)$ è una variabile $(X + Y) \sim \chi^2(n + m)$.
+
+Inoltre se $C_n$ ha densità $\chi^2(n)$, allora possiamo pensarla come somma di $n$ quadrati di variabili gaussiane $X_i$: per quanto abbiamo visto sulle variabili gaussiane vale che \[
+    \Expect[\big]{X_i^2} = 1, \qquad \Var*{X_i^2} = 2.    
+\] Valgono quindi i seguenti due risultati: \begin{itemize}
+    \item per la \nameref{th:law_large_numbers} vale che $\dfrac{C_n}{n} \approx 1$ per $n \to +\infty$;
+    \item per il \nameref{th:central_limit} vale che la successione $\seqn*{\dfrac{C_n - n}{\sqrt{2n}}}$ converge in distribuzione ad una variabile gaussiana standard, e quindi per $n$ sufficientemente grande la variabile $\dfrac{C_n - n}{\sqrt{2n}}$ è approssimativamente una gaussiana standard.
+\end{itemize}
+
+\subsection{Densità di Student}
+
+\begin{definition}
+    [Densità di Student] Sia $X \sim N(0, 1)$, $C_n \sim \chi^2(n)$ e siano le due indipendenti. La densità della variabile \[
+        T_n \deq \frac{X}{\sqrt{\frac{C_n}{n}}} = \sqrt n \frac{X}{\sqrt{C_n}} 
+    \] si dice \strong{densità di Student a $n$ gradi di libertà}.
+\end{definition}
+
+Osserviamo che una variabile di Student è pari, in quanto la variabile gaussiana è pari: da questo segue che la densità di Student è pari e valgono relazioni simili a quelle descritte per la funzione di ripartizione e per i quantili della variabile gaussiana. In particolare se $F_n$ è la funzione di ripartizione di una variabile di Student con $n$ gradi di libertà vale che \[
+    F_n(-x) = 1 - F_n(x),    
+\] mentre se $\tau_{(\alpha, n)}$ è l'$\alpha$-quantile di una variabile di Student ad $n$ gradi di libertà vale che \[
+    \tau_{(\alpha, n)} = -\tau_{(1-\alpha, n)}.
+\]
+
+Inoltre per definizione quando $n$ è sufficientemente grande una variabile di Student a $n$ gradi di libertà può essere approssimata con una variabile gaussiana: infatti siccome $\frac{C_n}{n} \approx 1$ quando $n$ è grande segue che \[
+    T_n = \frac{X}{\sqrt{\frac{C_n}{n}}} \approx \frac{X}{1} = X.    
+\]

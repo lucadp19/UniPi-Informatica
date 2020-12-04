@@ -1,0 +1,139 @@
+\section{Primi cenni di inferenza statistica}
+
+Lo scopo dell'inferenza statistica è quello di partire da un certo campione, analizzarne i dati e dedurre informazioni sull'intera popolazione. Per fare ciò si suppone che vi sia un'implicita distribuzione di probabilità nell'intera popolazione e che le osservazioni del campione siano le realizzazioni di un insieme di variabili aleatorie indipendenti aventi questa distribuzione di probabilità.
+
+\begin{definition}
+    [Campione statistico] Si dice \strong{campione statistico} o \strong{aleatorio} una famiglia di $n$ variabili aleatorie indipendenti $X_1, \dots, X_n$ con la stessa funzione di ripartizione $F$.
+\end{definition}
+
+Diremo che $n$ è la \emph{taglia} del campione mentre la funzione di ripartizione $F$ sarà chiamata \emph{legge di probabilità} del campione.
+
+\begin{definition}
+    [Statistica campionaria] Una funzione $g(X_1, \dots, X_n)$ di un campione viene detta \strong{statistica campionaria}.
+\end{definition}
+
+Esempi di statistiche campionarie sono la \emph{media campionaria} e la \emph{varianza campionaria}, definite rispettivamente da \begin{align*}
+    \bar X \deq \frac{X_1 + \dots + X_n}{n},\\[3pt]
+    S^2 \deq \frac{\displaystyle \sum_{i = 1}^n \parens*{X_i - \bar X}}{n-1}.
+\end{align*}
+Una statistica campionaria viene detta \strong{stima corretta} se il suo valore atteso conincide con la quantità che si vuole stimare. Mostriamo che la media campionaria e la varianza campionaria sono stime corrette rispettivamente del valore atteso e della varianza delle variabili del campione.
+
+\begin{proposition}
+    [Correttezza delle stime della media e varianza campionaria]
+    Sia $X_1, \dots, X_n$ un campione statistico. Supponiamo che le variabili ammettano momento secondo e siano $\mu = \Expect[\big]{X_i}$ e $\sigma^2 = \Var[\big]{X_i}$. Allora si ha che \[
+        \Expect[\Big]{\bar X} = \mu, \qquad \Expect*{\frac{\sum_{i = 1}^n \parens[\big]{X_i^2 - \bar X}}{n - 1}} = \sigma^2.
+    \]
+\end{proposition}
+\begin{proof}
+    Innanzitutto ricordiamo che vale l'uguaglianza \[
+        \sum_{i = 1}^n \parens[\big]{X_i - \bar X}^2 = \parens*{\sum_{i = 1}^n X_i^2} - n\bar X^2.    
+    \]
+    \begin{itemize}
+        \item Per quanto riguarda il valore atteso di $\bar X$ si ha che \[
+            \Expect[\Big]{\bar X} 
+            = \Expect*{\frac{X_1 + \dots X_n}{n}} 
+            = \frac1n\parens[\Big]{\Expect[\big]{X_1} + \dots \Expect[\big]{X_n}}     
+            = \frac{n\mu}{n} = \mu.
+        \]
+        \item Osserviamo che la varianza di $\bar X$ è data da \[
+            \Expect[\Big]{\bar X} 
+            = \Var*{\frac{X_1 + \dots X_n}{n}} 
+            = \frac1{n^2}\parens[\Big]{\Var[\big]{X_1} + \dots + \Var[\big]{X_n}}     
+            = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}.  
+        \] Da ciò segue che \[
+            \Expect[\Big]{\bar X^2} = \Expect[\Big]{\bar X}^2 + \Var[\Big]{\bar X} = \mu^2 + \frac{\sigma^2}{n}.
+        \] Inoltre \[
+            \Expect[\Big]{X_i^2} = \Expect[\big]{X_i}^2 + \Var[\big]{X_i} = \mu^2 + \sigma^2.    
+        \] Quindi vale che \begin{align*}
+            \Expect*{\sum_{i = 1}^n \parens[\big]{X_i^2 - \bar X}}
+            &= \parens*{\sum_{i = 1}^n \Expect*{X_i^2}} - n\Expect[\Big]{\bar X^2}\\
+            &= n\parens*{\sigma^2 + \mu^2} - n\parens*{\frac{\sigma^2}{n} + \mu^2}\\
+            &= (n-1)\sigma^2,
+        \end{align*}
+        che è la tesi. \qedhere
+    \end{itemize}
+\end{proof}
+
+\section{Stime parametriche}
+
+In alcuni casi la distribuzione di probabilità nascosta che si vuole studiare è parzialmente specificata, nel senso che sappiamo che appartiene ad una famiglia di funzioni di ripartizione dipendenti da un opportuno parametro, usualmente indicato con $\theta$, che è incognito.
+
+Supponiamo quindi di avere un campione statistico la cui legge di probabilità dipende da un parametro $\theta \in \Theta$.
+\begin{definition}
+    [Verosimiglianza] Si dice \strong{verosimiglianza} del campione $X_1, \dots, X_n$ la funzione $L(\theta, x_1, \dots, x_n)$ definita da \[
+        L(\theta, x_1, \dots, x_n) = \begin{cases}
+            \displaystyle \prod_{i = 1}^n p_\theta(x_i), &\text{se le variabili sono discrete},\\[7pt]
+            \displaystyle \prod_{i = 1}^n f_\theta(x_i), &\text{se le variabili sono con densità.}\\[5pt]
+        \end{cases}  
+    \]
+\end{definition}
+
+\begin{definition}
+    [Stima di massima verosimiglianza] Sia $X_1, \dots, X_n$ un campione statistico la cui legge di probabilità dipende dal parametro $\theta \in \Theta$. Se esiste un valore $\hat\theta \in \Theta$ tale che \[
+        L\parens*{\hat\theta, x_1, \dots, x_n} = \max_{\theta \in \Theta} L(\theta, x_1, \dots, x_n),
+    \] esso si dice \strong{stima di massima verosimiglianza} del campione $X_1, \dots, X_n$.
+\end{definition}
+
+Un altro metodo di stima è la \strong{stima col metodo dei momenti}: l'idea è di uguagliare i momenti teorici con i momenti empirici per ricavare il valore di $\theta$, o più in generale dei parametri $\theta_1, \dots, \theta_h$. Calcoliamo quindi i momenti teorici mediante il modello: \[
+    \Expect*_{\theta_1, \dots, \theta_h}{X^k}        
+\] e li confrontiamo con i momenti empirici: \[
+    \sum_{i=1}^n \frac{x_i^k}{n}.    
+\] 
+
+Se esiste una scelta di $\theta_1, \dots, \theta_n$ tale che \[
+    \Expect*_{\theta_1, \dots, \theta_h}{X^k} = \sum_{i=1}^n \frac{x_i^k}{n}
+\] allora abbiamo stimato la legge di probabilità del campione tramite il metodo dei momenti. Useremo la notazione $\tilde\theta$ per indicare la stima di $\theta$ con il metodo dei momenti.
+
+\begin{example}
+    Supponiamo di avere un campione statistico di $n$ variabili con densità esponenziale di parametro $0 < \theta < +\infty$. Supponiamo inoltre di avere un campione di osservazioni $x_1, \dots, x_n$ \emph{positive}.
+
+    Siccome $\Expect_{\theta}[\big]{X_i} = \nicefrac{1}{\theta}$, la stima col metodo dei momenti si ottiene uguagliando \[
+        \sum_{i=1}^n \frac{x_i}{n} = \frac{1}{\theta} \;\implies\; \tilde\theta = \frac{1}{\bar x}.     
+    \]
+
+    Allo stesso modo la funzione di verosimiglianza è data da \[
+        L(\theta, x_1, \dots, x_n) = \prod_{i=1}^n f_\theta(x_i) = \prod_{i=1}^n \theta e^{-\theta x_i} = \theta^n e^{-\theta \sum_{i=1}^n x_i}.
+    \] Osserviamo che questa funzione tende a $0$ per $x \to 0$, $x \to +\infty$: siccome è una funzione positiva segue che ha massimo. La sua derivata rispetto a $\theta$ è \[
+        L'(\theta, x_1, \dots, x_n) = n\theta^{n-1}e^{-\theta\sum_{i=1}^n x_i} - \theta^n e^{-\theta\sum_{i=1}^n x_i} \cdot \parens*{\sum_{i=1}^n x_i};
+    \] ponendola uguale a $0$ otteniamo \begin{align*}
+        &n\theta^{n-1}e^{-\theta\sum_{i=1}^n x_i} - \theta^n e^{-\theta\sum_{i=1}^n x_i} \cdot \parens*{\sum_{i=1}^n x_i} = 0\\
+        \iff {}&\theta^{n-1}e^{-\theta\sum_{i=1}^n x_i} \cdot \parens*{n - \theta \cdot \parens*{\sum_{i=1}^n x_i}} = 0\\
+        \iff {}&n - \theta \cdot \parens*{\sum_{i=1}^n x_i} = 0\\
+        \iff {}&\theta = \frac{n}{\sum_{i=1} x_i} = \frac{1}{\bar x},
+    \end{align*}
+    da cui $\hat\theta = \tilde\theta = \nicefrac{1}{\bar x}$.
+\end{example}
+
+In generale non è detto che le stime per verosimiglianza e per momenti siano uguali. 
+
+\section{Statistica su variabili gaussiane}
+
+Se il campione statistico è formato da variabili gaussiane possiamo studiare meglio la distribuzione congiunta di $\bar X$ e di $S^2$, dove \[
+    \bar X \deq \frac{X_1 + \dots X_n}{n}, \qquad S^2 \deq \frac{\displaystyle \sum_{i=1}^n \parens[\big]{X_i - \bar X}^2}{n-1}    
+\] sono rispettivamente la media campionaria e la varianza campionaria.
+
+\begin{theorem}
+    Sia $X_1, \dots, X_n$ un campione statistico di variabili gaussiane standard indipendenti. Valgono i seguenti risultati.
+    \begin{enumerate}[label={(\roman*)}]
+        \item $\bar X$ e $\sum_{i=1}^n\parens[\big]{X_i - \bar X}^2$ sono indipendenti.
+        \item $\bar X$ ha densità $N(0, 1)$ e $\sum_{i=1}^n\parens[\big]{X_i - \bar X}^2$ ha densità $\chi^2(n-1)$.
+        \item La variabile $T \deq \sqrt{n} \dfrac{\bar X}{S}$ ha densità di Student con $n-1$ gradi di libertà. 
+    \end{enumerate}
+\end{theorem}
+
+Osseriamo che sappiamo già che $\bar X$ ha densità $N(0, 1)$; inoltre \[
+    T = \sqrt{n} \dfrac{\bar X}{S} = \sqrt{n-1} \frac{\sqrt{n} \bar X}{\sqrt{n-1} S} = \sqrt{n-1} \frac{\sqrt{n} \bar X}{\displaystyle \sqrt{\sum_{i=1}^n \parens[\big]{X_i - \bar X}^2}}
+\] dove l'ultima uguaglianza viene dal fatto che \[
+    S = \sqrt{S^2} = \sqrt{\frac{\displaystyle \sum_{i=1}^n \parens[\big]{X_i - \bar X}^2}{n-1}}.
+\] Notiamo quindi che il numeratore di $T$ è una variabile gaussiana standard, mentre il suo denominatore è una variabile $\chi^2{n-1}$, da cui $T$ è una variabile di Student ad $n-1$ gradi di libertà.
+
+Questo risultato può essere generalizzato a variabili gaussiane non necessariamente standard. Infatti vale il seguente teorema.
+
+\begin{theorem}
+    Sia $X_1, \dots, X_n$ un campione statistico di variabili gaussiane $N(m, \sigma^2)$ indipendenti. Valgono i seguenti risultati.
+    \begin{enumerate}[label={(\roman*)}]
+        \item $\bar X$ e $\sum_{i=1}^n\parens[\big]{X_i - \bar X}^2$ sono indipendenti.
+        \item $\bar X$ ha densità $N(m, \nicefrac{\sigma^2}{m})$ e $\dfrac{\parens[\big]{X_i - \bar X}^2}{\sigma^2}$ ha densità $\chi^2(n-1)$.
+        \item La variabile $T \deq \sqrt{n} \dfrac{\bar X - m}{S}$ ha densità di Student con $n-1$ gradi di libertà. 
+    \end{enumerate}
+\end{theorem}

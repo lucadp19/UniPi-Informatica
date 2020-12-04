@@ -1,0 +1,49 @@
+\section{Intervalli di fiducia}
+
+Consideriamo un campione statistico la cui distribuzione dipende da un parametro $\theta \in \Theta$, dove $\Theta$ è un sottoinsieme di $\R$.
+\begin{definition}
+    [Intervallo di fiducia]
+    Siano $0 < \alpha < 1$, $I$ un intervallo con $I \subseteq \Theta$. Si dice che $I$ è un \strong{intervallo di fiducia} per $\theta$ al livello $1 - \alpha$ se per ogni $\theta$ vale che \[
+        \Prob_\theta[\big]{\theta \in I} \geq 1 - \alpha.    
+    \]
+\end{definition}
+
+Osseriamo che talvolta può essere più comodo verificare che vale la proprietà complementare, ovvero \[
+    \Prob_\theta[\big]{\theta \notin I} \leq \alpha.    
+\]
+
+\subsection*{Caso con varianza nota}
+
+Supponiamo di avere un campione $X_1, \dots, X_n$ con varianza $\sigma^2$ nota: vogliamo trovare un intervallo di fiducia per la media. Siccome $\bar X$ è la stima della media, è naturale scegliere \[
+    I \deq \interval*[{\bar X - d, \bar X + d}],    
+\] dove $d$ è un'incognita da determinare. Osseriamo che $m \in I$ equivale a dire $\abs*{\bar X - m} \leq d$, dunque $d$ deve essere tale che \[
+    \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} \geq 1 - \alpha    
+\] con $d$ più piccolo possibile (poiché vogliamo avere un intervallo di fiducia molto preciso). Questo significa imporre che \[
+    \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} \approx 1 - \alpha.
+\] Osserviamo ora che la variabile $\frac{\sqrt{n}}{\sigma} \parens*{\bar X - d}$ è una gaussiana standard, dunque si ha \[
+    \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} = \Prob_m\set*{\frac{\sqrt{n}}{\sigma}\abs*{\bar X - m} \leq \frac{\sqrt{n}}{\sigma}d}
+\] è approssimativamente $1 - \alpha$ ponendo \[
+    \frac{d\sqrt{n}}{\sigma} = q_{1 - \nicefrac{\alpha}{2}}.
+\]
+L'intervallo di fiducia assume quindi la forma \[
+    \bar X \pm \frac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}.
+\] Il numero $\dfrac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}$ viene detto \emph{precisione della stima} e il numero \[
+    \frac{\frac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}}{\bar X}    
+\] viene detto \emph{precisione relativa}.
+
+\subsection*{Caso con varianza sconosciuta}
+
+In questo caso si sostituisce $\sigma^2$ (che è sconosciuto) con la sua stima corretta, ovvero $S^2$: otteniamo quindi che la variabile \[
+    \sqrt{n}\frac{\bar X - m}{S}    
+\] non è più gaussiana, ma è una variabile di Student con densità $T(n-1)$. L'intervallo di fiducia risulterà quindi della forma \[
+    \bar X \pm \frac{S}{\sqrt{n}}\tau_{1 - \nicefrac{\alpha}{2},\ n - 1}.    
+\] Quando $n$ è sufficientemente grande ($n \geq 60$) possiamo approssimare il quantile della variabile di Student $\tau$ con il quantile della variabile gaussiana.
+
+Il quantile più usato frequentemente è $0.05$.
+
+\subsection{Intervalli unilateri e bilateri}
+
+Finora gli intervalli studiati erano \emph{bilateri}: a volte può essere utile considerare intervalli unilateri, ad esempio della forma \[
+    \interval*({-\infty, \bar X + \frac{\sigma}{\sqrt{n}}q_{1-\alpha}}], \qquad
+    \interval*[{\bar X + \frac{\sigma}{\sqrt{n}}q_\alpha, +\infty}).
+\] I calcoli vengono seguendo direttamente lo stesso procedimento della parte precedente. Inoltre, nel caso di varianza sconosciuta basta sostituire $\sigma$ con $S$ e i quantili della variabile gaussiana con i quantili della variabile di Student $T(n-1)$.
