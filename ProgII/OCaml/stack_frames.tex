@@ -1,0 +1,211 @@
+\section{Chiamate a funzione}
+
+Nel nostro interprete non abbiamo ancora definito una sintassi e una semantica per la dichiarazione e l'applicazione di funzioni. La dichiarazione di funzione ci pone già diversi problemi:
+\begin{itemize}
+    \item come descrivo il passaggio dei parametri?
+    \item se nella funzione ci sono variabili dichiarate esternamente alla funzione (variabili \emph{non-locali}), dove trovo il loro valore?
+\end{itemize}
+
+Per questo conviene analizzare prima un costrutto più semplice, ovvero i \strong{blocchi}.
+
+\subsection{Blocchi}
+
+Un blocco è una procedura senza nome e senza parametri. Ad esempio nel C i blocchi vengono realizzati attraverso l'uso di parentesi graffe:
+\begin{minted}{C}
+    { // starting point of the first block
+        int x = 5;
+        { // starting point of the second block
+            int y = 2;
+            int z = x + y;
+        } // ending point of the second block
+        x = x + 2;
+    } // ending point of the second block
+\end{minted}
+
+Il sistema per gestire i blocchi (e, come vedremo in seguito, le funzioni) viene chiamato \strong{stack dei record di attivazione}.
+Un record di attivazione è semplicemente una porzione riservata di memoria che contiene spazio sufficiente per memorizzare delle variabili, più dello spazio aggiuntivo per ulteriori dati che esamineremo più avanti.
+
+I record di attivazione vengono gestiti tramite uno stack in quanto è la struttura dati più adatta allo scopo. Nel caso precedente, ad esempio, lo stack dei record di attivazione subisce le seguenti modifiche:
+\begin{enumerate}
+    \item All'inizio lo stack $S$ è vuoto.
+    \item Quando entriamo nel primo blocco viene creato un nuovo record di attivazione $R_1$, contenente lo spazio per la variabile intera $x$; questo record viene immediatamente inserito nello stack con un'operazione di \emph{push}.
+    \item All'entrata nel secondo blocco verrà creato un nuovo record di attivazione $R_2$ contenente lo spazio per $y$ e $z$; anch'esso viene immediatamente inserito nello stack con un'operazione di push.
+    \item Nell'inizializzare $z$ si usa il valore di $x$ contenuto nel record $R_1$: $x$ è un riferimento \emph{non-locale} nel record attuale.
+    \item Alla fine del blocco interno si rimuove il record di attivazione dallo stack con una \emph{pop}. Da questo punto in poi le variabili $y$ e $z$ non sono più allocate.
+    \item Alla fine del blocco esterno si rimuove il record $R_1$ tramite una \emph{pop}.
+\end{enumerate}
+
+Osserviamo che dobbiamo prevedere dello spazio in ogni record per memorizzare i risultati intermedi, altrimenti non potremmo svolgere calcoli complessi.
+Inoltre abbiamo bisogno di un meccanismo per risalire da un record ad un altro record posizionato \emph{più in alto} nella catena di record contenuti nello stack: questo meccanismo ci è dato dal \strong{control link}.
+
+Un record di attivazione per un blocco è quindi formato da $3$ parti:
+\begin{itemize}
+    \item un \strong{control link} (o \emph{puntatore di catena dinamica}) che rappresenta il puntatore dal blocco corrente al record appena precedente nello stack;
+    \item dello spazio per le variabili di istanza;
+    \item dello spazio per i risultati temporanei.
+\end{itemize}
+Ogni volta che facciamo una push di un record di attivazione sullo stack dobbiamo aggiornare il control link del blocco corrente per farlo puntare al blocco precedente; ogni volta che facciamo una push ci basterà distruggere questo puntatore. Inoltre il puntatore al record in cima allo stack viene chiamato \strong{environment pointer} o \strong{stack pointer} e viene aggiornato ogni volta che aggiungiamo o rimuoviamo un record dallo stack.
+
+\subsubsection*{Regole di scope nel caso dei blocchi}
+
+Nell'esempio precedente scritto in C abbiamo notato che abbiamo bisogno di un meccanismo per calcolare il valore di riferimenti non locali. I due meccanismi vengono chiamati \strong{scoping statico} o \strong{scoping dinamico}:
+\begin{itemize}
+    \item nel caso di scoping statico i riferimenti non locali vengono risolti nel blocco più vicino \emph{sintatticamente} nella struttura del programma;
+    \item nel caso di scoping dinamico i riferimenti non locali vengono risolti nel record di attivazione precedente nell'\emph{esecuzione} del programma.
+\end{itemize}
+
+Fortunatamente nel caso dei blocchi i due metodi sono equivalenti: possiamo considerare l'uno o l'altro senza distinzioni.
+
+\subsection{Funzioni e procedure}
+
+Anche nel caso di funzioni e procedure si usano i record di attivazione: in questo caso il record deve contenere spazio almeno per:
+\begin{itemize}
+    \item il control link;
+    \item i parametri della funzione;
+    \item l'indirizzo di ritorno;
+    \item le variabili locali;
+    \item i risultati intermedi;
+    \item il valore restituito (anche se possiamo considerarlo come un risultato intermedio);
+    \item indirizzo in cui inserire il valore restituito.
+\end{itemize}
+
+\subsubsection*{Passagio dei parametri}
+Sappiamo che esistono diverse modalità per il passaggio dei parametri:
+\begin{itemize}
+    \item nel caso del \emph{passaggio per valore}, implementato ad esempio dal C e dal Java, nel record di attivazione viene copiato il valore del parametro: la funzione non può modificare il contenuto del parametro e non vi è \emph{aliasing} (più variabili che si riferiscono alla stessa locazione di memoria).
+    \item nel caso del \emph{passaggio per riferimento} viene copiato nel record di attivazione l'\emph{indirizzo} del parametro attuale: si crea quindi una situazione di aliasing, da cui segue che la funzione può modificare il contenuto della variabile.
+\end{itemize}
+Bisogna prestare attenzione al fatto che nel caso del C e del Java l'unica modalità di passaggio dei parametri consentita è il passaggio per valore: infatti quando si passa un puntatore/riferimento ad un oggetto in realtà si sta copiando il valore della variabile, soltanto che questo valore è una locazione di memoria.
+
+\subsubsection*{Regole di scope nel caso di funzioni}
+
+Consideriamo ora il seguente esempio:
+\begin{minted}{js}
+    var x = 1;
+    function g(z) {
+        return x + z;
+    }
+    function f(y) {
+        x = y+1;
+        return g(y*x);
+    }
+    f(3);
+\end{minted}
+Qual è il valore di \mintinline{js}{f(3)} nel caso di scoping statico o dinamico?
+\begin{itemize}
+    \item Nel caso di scoping statico la variabile \mintinline{js}{x} contenuta nella funzione \mintinline{js}{g} si riferisce alla variabile dichiarata nella prima linea di codice. Dunque nell'esecuzione della funzione i passi di calcolo saranno:
+    \begin{itemize}
+        \item nel calcolo di \mintinline{js}{f(4)} si pone \mintinline{js}{x} uguale a \mintinline{js}{4} e si calcola \mintinline{js}{g(3*4)};
+        \item nel calcolo di \mintinline{js}{g(12)} si usa il valore di \mintinline{js}{x} definito staticamente, ovvero \mintinline{js}{x = 1}, e si restituisce quindi \mintinline{js}{13}, che è quindi il valore complessivo della chiamata a funzione \mintinline{js}{f(3)}.
+    \end{itemize}
+    \item Nel caso di scoping dinamico ogni riferimento non locale viene risolto \emph{dinamicamente}, durante l'esecuzione del programma. Dunque: \begin{itemize}
+        \item nel calcolo di \mintinline{js}{f(4)} si pone \mintinline{js}{x} uguale a \mintinline{js}{4} e si calcola \mintinline{js}{g(3*4)};
+        \item nel calcolo di \mintinline{js}{g(12)} si usa il valore di \mintinline{js}{x} contenuto nel record di attivazione precedente, che è il record che contiene la chiamata a \mintinline{js}{f(3)}: segue quindi che \mintinline{js}{x} vale $4$ e il risultato della funzione è \mintinline{js}{16}.
+    \end{itemize}
+\end{itemize}
+
+Nel caso delle chiamate a funzione quindi i due meccanismi sono diversi e portano a comportamenti diversi: i linguaggi di programmazione devono quindi scegliere se adottare lo scoping statico (scelta fatta dalla maggior parte dei linguaggi) o lo scoping dinamico (scelta fatta principalmente dal LISP e da alcuni linguaggi di scripting).
+
+\subsection*{Scoping statico}
+Analizziamo ora più nel dettaglio il funzionamento dello scoping statico: il record di attivazione di una funzione nel caso di scoping statico deve contenere, in aggiunta a quanto detto precedentemente, uno \strong{static link} che collega il blocco corrente al blocco padre nella gerarchia statica.
+
+I due \emph{link} (quello statico e quello dinamico) hanno quindi ruoli diversi: il primo viene usato per risolvere i riferimenti non locali ed è determinato staticamente, senza dover eseguire il codice, mentre il secondo è determinato solamente dall'ordine delle chiamate di funzione e quindi ha senso soltanto durante l'esecuzione del programma.
+
+\begin{example}
+    Supponiamo di aver a che fare con il seguente codice simil-C:
+    \begin{minted}{C}
+        {   // MAIN
+            int x;
+            void A() {
+                x = x+1;
+            }
+            void B () {
+                int x;
+                void C (int y) {
+                    int x;
+                    x = y+2;
+                    A ();
+                }
+                x = 0;
+                A();
+                C(3);
+            }
+            x = 10;
+            B();
+        }
+    \end{minted}
+
+    Siccome le funzioni \mintinline{C}{A} e \mintinline{C}{B} sono dichiarate nel blocco "main", ogni volta che verranno chiamate avremo che il loro \emph{static link} punterà al blocco main; invece la funzione \mintinline{C}{C} avrà uno static link che punterà al blocco della funzione \mintinline{C}{B} dove è stata dichiarata.
+
+    Il risultato dell'esecuzione del codice è dato dalla \autoref{fig:stack_frames_C_program} (le frecce tratteggiate sono i puntatori di catena statica):
+    \begin{itemize}
+        \item nel main $x$ viene inizializzato a $12$ e viene chiamata la funzione \mintinline{C}{B()};
+        \item la funzione dichiara una nuova variabile $x$, che viene inizializzata a $0$, dopo chiama la funzione \mintinline{C}{A()};
+        \item \mintinline{C}{A} deve calcolare \mintinline{C}{x = x+1}, ma siccome $x$ è un riferimento non locale deve cercarlo seguendo il puntatore di catena statica: la $x$ trovata è quella dichiarata nel main, che vale $12$. Il programma pone quindi la $x$ del main uguale a $13$ e ritorna;
+        \item continua l'esecuzione della funzione \mintinline{C}{B}, che chiama a questo punto \mintinline{C}{C(3)};
+        \item la funzione \mintinline{C}{C} dichiara una nuova variabile $x$ e la pone uguale a $y+2$; siccome $y$ è un riferimento locale il valore della $x$ locale diventa quindi $5$. Subito dopo \mintinline{C}{C} chiama la funzione \mintinline{C}{A};
+        \item ancora una volta \mintinline{C}{A} deve trovare il riferimento non locale $x$ seguendo il puntatore di catena statica e, come nel caso precedente, trova il valore dichiarato nel main e lo aggiorna a $14$;
+        \item si conclude l'esecuzione del programma.
+    \end{itemize}
+
+
+    \begin{figure}
+        \centering
+        \includestandalone{OCaml/Figures/stack_frames_C_program}
+        \caption{Struttura dei record di attivazione}
+        \label{fig:stack_frames_C_program}
+    \end{figure}
+\end{example}
+
+\subsection*{Funzioni come valori e chiusure}
+
+Nel caso dei linguaggi funzionali le funzioni tuttavia sono dei valori: possono essere passate ad altre funzioni e possono essere restituite come risultato di funzioni. Consideriamo ad esempio il seguente codice:
+\begin{minted}{ocaml}
+    let x = 4;
+    let f(y) = x*y;
+    let g(h) = let x = 7 in
+                h(3) + x;
+    g(f);
+\end{minted}
+La funzione \InlineOCaml{f} prende un parametro e lo moltiplica per $x$; la funzione \InlineOCaml{g} prende una funzione \InlineOCaml{h} come parametro, dichiara $x = 7$ e restituisce il valore della funzione \InlineOCaml{h} valutata nel punto $3$ più il valore di $x$.
+
+La domanda che possiamo porci è: quale definizione di $x$ deve essere usata nella chiamata \InlineOCaml{g(f)}?
+
+Assumendo regole di scoping statico la chiamata \InlineOCaml{h(3)} deve usare la definizione di \InlineOCaml{f} data poco sopra, quindi il valore della $x$ deve essere $4$, mentre quando sommiamo $x$ al risultato di \InlineOCaml{h(3)} la $x$ in questione è quella legata dal \InlineOCaml{let}, quindi deve essere uguale a $7$.
+
+Quindi nel chiamare la funzione $f$ dobbiamo tener traccia sia del suo codice (cioè ciò che la funzione fa) sia dell'ambiente in cui è stata dichiarata (memorizzato dal puntatore di catena statica), in modo da poter risolvere eventuali riferimenti non locali.
+
+Il valore di una funzione è quindi una coppia \[
+    \ang*{\text{codice funzione}, \text{ambiente di dichiarazione}}.    
+\] Una tale coppia si chiama \strong{chiusura} (o in inglese \strong{closure}).
+
+Quando una funzione viene invocata si allocal sullo stack il suo record di attivazione, si va a considerare la chiusura relativa alla funzione e si usa come \emph{puntatore di catena statica} il puntatore all'ambiente di dichiarazione, come possiamo vedere in \autoref{fig:stack_frames_closures} per quanto riguarda il programma precedente.
+
+\begin{figure}
+    \centering
+    
+    \includestandalone{OCaml/Figures/stack_frames_closures}
+    \caption{Struttura dei record di attivazione con le chiusure}
+    \label{fig:stack_frames_closures}
+\end{figure}
+
+\paragraph{Chiusure ricorsive}
+Nel caso di funzioni ricorsive l'ambiente di dichiarazione non è l'ambiente puntato dallo static link, ma è la funzione stessa: infatti se la funzione è ricorsiva il nome della funzione stessa deve essere nell'ambiente di dichiarazione.
+
+\paragraph{Chiusure come valori di ritorno}
+L'ultimo caso è quello in cui vogliamo restituire una funzione: in questo caso il valore restituito è una chiusura $\ang*{\code{env}, \code{code}}$, ma dobbiamo segnalare che l'ambiente di dichiarazione \code{env} non può essere distrutto fino a quando la funzione può essere usata. Questo meccanismo si chiama \strong{retention}. 
+
+\paragraph{Funzioni in ambiente dinamico}
+
+Se il linguaggio sfrutta lo scoping dinamico non è necessario usare i puntatori di catena statici (che non esistono), poiché le associazioni non locali vengono sempre risolte nel record di attivazione precedente in senso dinamico. In particolare non è neanche necessario usare le chiusure, poiché ci basta risalire la pila dei record di attivazione.
+
+\subsection*{Implementazione dei record di attivazione}
+
+L'implementazione effettiva dei record di attivazione varia da linguaggio a linguaggio, ma ci sono delle linee guida generali.
+
+Innanzitutto tutte le dichiarazioni vengono solitamente trasformate dal compilatore in una coppia $\ang*{\code{livello}, \code{offset}}$: \begin{itemize}
+    \item il \code{livello} indica il livello lessicale in cui è dichiarata la variabile, ovvero in quale blocco si trova;
+    \item l'\code{offset} ci permette di distinguere la variabile dalle altre variabili dichiarate nello stesso blocco.
+\end{itemize}
+
+Le variabili nel codice vengono poi trasformate in un'altra coppia di valori: il secondo è l'\code{offset} dichiarato prima, mentre il primo rappresenta la differenza tra il livello in cui la variabile viene usata e il livello in cui la variabile viene dichiarata; ci dice quindi di quanto dobbiamo risalire la catena statica per trovare la variabile.

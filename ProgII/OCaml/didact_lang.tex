@@ -1,0 +1,350 @@
+\section{Linguaggio didattico}
+
+In questa sezione ci occuperemo di implementare in OCaml un piccolo nucleo di un linguaggio funzionale con scoping statico, contenente
+\begin{itemize}
+    \item interi e booleani,
+    \item poche operazioni di base,
+    \item il costrutto \code{if-then-else},
+    \item il costrutto \code{let-in},
+    \item funzioni e funzioni ricorsive.
+\end{itemize}
+
+Definiamo innanzitutto la sintassi astratta e i tipi esprimibili a runtime dal linguaggio.
+
+\begin{OCaml}
+(* ide represents a variable identifier *)
+type ide = string
+
+(* expr is the Abstract Syntax Tree of the language*)
+type expr = 
+  (* base values *)
+  | LitTrue
+  | LitFalse
+  | LitInt of int
+  (* variables *)
+  | Den of ide 
+  (* basic operation *)
+  | Add     of expr * expr
+  | Sub     of expr * expr 
+  | Times   of expr * expr
+  | IsZero  of expr
+  | Equals  of expr * expr
+  (* if-then-else construct *)
+  | IfThenElse of expr * expr * expr
+  (* let-in construct *)
+  | Let of ide * expr * expr
+  (* anonymous function *)
+  | Fun of ide * expr
+  (* function application *)
+  | Apply of expr * expr
+
+(* Runtime values *)
+type evT =
+  | Int of int
+  | Bool of bool
+  | Unbound
+\end{OCaml}
+
+Ricordiamo inoltre che è necessario definire un ambiente di valutazione, altrimenti non possiamo memorizzare i valori delle variabili usate.
+
+\begin{OCaml}
+(* The polymorphic environment *)
+type 'v env = (string * 'v) list
+
+(* empty_env returns an empty environment *)
+let empty_env : evT env = [("", Unbound)]
+(* bind adds a new binding to a pre-existing environment *)
+let bind (env : evT env) (x : ide) (v : evT) = (x, v)::env
+(* lookup looks for the value of the variable identified by x in the environment *)
+let rec lookup (env : evT env) (x : ide) = 
+  match env with
+  | []                    -> Unbound
+  | (a, v)::_ when a = x  -> v
+  | _::e                  -> lookup e x
+\end{OCaml}
+
+Implementiamo anche una semplicissima forma di typechecking dinamico.
+
+\begin{OCaml}
+let typecheck (t : string) (v : evT) =
+  match t with
+  | "int" -> 
+    ( match v with
+    | Int(_) -> true
+    | _      -> false )
+  | "bool" -> 
+    ( match v with
+    | Bool(_) -> true
+    | _      -> false )
+  | _ -> failwith "not a valid type"
+\end{OCaml}
+
+Possiamo dunque iniziare a definire la funzione di valutazione: innanzitutto sappiamo che dovrà prendere in input un'espressione, un ambiente di valori e dovrà restituire un valore. Avrà quindi la seguente forma: 
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+\end{OCaml}
+
+Iniziamo ad aggiungere mano mano le varie espressioni possibili all'interprete.
+
+\subsection*{Valori letterali}
+
+Valutare letterali è ovvio.
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | LitInt(n) -> Int n
+  | LitTrue   -> Bool true
+  | LitFalse  -> Bool false
+\end{OCaml}
+
+\subsection*{Variabili}
+
+Per valutare una variabile è sufficiente prendere dall'ambiente il suo valore.
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | Den id          -> lookup env id
+\end{OCaml}
+
+\subsection*{Operazioni di base}
+
+Per valutare le operazioni di base usiamo delle funzioni ausiliarie.
+\begin{OCaml}
+let int_add (n : evT) (m : evT) : evT =
+  match typecheck IntTag n, typecheck IntTag m, n, m with
+  | true, true, Int a, Int b -> Int (a + b)
+  | _, _, _, _               -> raise TypeError
+
+let int_sub (n : evT) (m : evT) : evT =
+  match typecheck IntTag n, typecheck IntTag m, n, m with
+  | true, true, Int a, Int b -> Int (a - b)
+  | _, _, _, _               -> raise TypeError
+
+let int_times (n : evT) (m : evT) : evT =
+  match typecheck IntTag n, typecheck IntTag m, n, m with
+  | true, true, Int a, Int b -> Int (a * b)
+  | _, _, _, _               -> raise TypeError
+
+let is_zero (n : evT) : evT =
+  match typecheck IntTag n, n with
+  | true, Int a -> Bool (a = 0)
+  | _, _        -> raise TypeError
+
+let int_equals (v1 : evT) (v2 : evT) : evT =
+  match typecheck IntTag v1, typecheck IntTag v2, v1, v2 with
+  | true, true, Int n, Int m -> Bool (n = m)
+  | _, _, _, _               -> raise TypeError
+
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | Add (e1, e2)    -> int_add (eval e1 env) (eval e2 env)
+  | Sub (e1, e2)    -> int_sub (eval e1 env) (eval e2 env)
+  | Times (e1, e2)  -> int_times (eval e1 env) (eval e2 env)
+  | IsZero e        -> is_zero (eval e env)
+  | Equals (e1, e2) -> int_equals (eval e1 env) (eval e2 env)
+\end{OCaml}
+
+\subsection*{Costrutto condizionale}
+
+Per valutare il costrutto condizionale ci rifacciamo alle regole di semantica date nelle sezioni precedenti: in particolare le regole operazionali per l'\code{if-then-else} sono \begin{gather*}
+    \infer{
+        \code{env} \envTo \code{IfThenElse}(\code{cond}, e_1, e_2) \evaluatesTo v_1
+    }{
+        \code{env} \envTo \code{cond} \evaluatesTo \code{True}
+        & \code{env} \envTo e_1 \evaluatesTo v_1
+    } \\[3pt]
+    \infer{
+        \code{env} \envTo \code{IfThenElse}(\code{cond}, e_1, e_2) \evaluatesTo v_2
+    }{
+        \code{env} \envTo \code{cond} \evaluatesTo \code{False}
+        & \code{env} \envTo e_1 \evaluatesTo v_1
+    }
+\end{gather*}
+
+Possiamo quindi esprimere la regola in OCaml aggiungendo la seguente clausola:
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | IfThenElse (cond, e1, e2) -> 
+    ( let evalCond = eval cond env in
+        match typecheck "bool" evalCond, evalCond with 
+        | true, Bool true   -> eval e1 env 
+        | true, Bool false  -> eval e2 env 
+        | _                 -> raise TypeError )
+\end{OCaml}
+
+\subsection*{Costrutto \code{let}}
+
+Anche per quanto riguarda il \code{let} ci rifacciamo alla regola operazionale: \[
+    \infer{
+        \code{env} \envTo \code{Let}(x, e_1, e_2) \evaluatesTo v
+    }{
+          \code{env} \envTo e_1 \evaluatesTo v'
+        & \code{env}[x := v'] \envTo e_2 \evaluatesTo v
+    }    
+\] da cui la corrispondente regola dell'interprete è \begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | Let (id, e1, e2) -> 
+    let newEnv = (bind env id (eval e1 env)) in
+      eval e2 newEnv
+\end{OCaml}
+
+\subsection*{Astrazione funzionale}
+
+Vogliamo ora aggiungere al linguaggio un meccanismo per costruire funzioni anonime. Per semplicità consideriamo funzioni con un singolo parametro, dato che grazie al \emph{currying} possiamo ottenere gratuitamente le funzioni con più parametri.
+
+Come descritto nella sintassi astratta, il costruttore di una funzione anonima è \InlineOCaml{Fun of ide * expr}. I due parametri richiesti sono \begin{itemize}
+    \item il nome del parametro della funzione;
+    \item il corpo della funzione, che è un'altra espressione.
+\end{itemize}
+
+Come abbiamo visto precedentemente nel caso di linguaggi funzionali con scoping statico valutare una funzione equivale ad ottenere una \emph{chiusura}. Aggiungiamo quindi il tipo delle chiusure ai tipi esprimibili:
+\begin{OCaml}
+type evT =
+  | Int     of int
+  | Bool    of bool
+  | Closure of ide * expr * evT env
+  | Unbound
+\end{OCaml}
+Una chiusura è quindi data da \begin{itemize}
+    \item il nome del parametro formale (di tipo \InlineOCaml{ide});
+    \item il codice della funzione dichiarata (di tipo \InlineOCaml{expr});
+    \item l'ambiente di dichiarazione della funzione (di tipo \InlineOCaml{evT env}).
+\end{itemize}
+
+La regola operativa è quindi ovvia:
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | Fun (id, body) -> Closure (id, body, env)
+\end{OCaml}
+
+\subsection*{Applicazione di funzione}
+
+Avere la possibilità di dichiarare funzioni senza poterle valutare è inutile, quindi sfruttiamo il costrutto \InlineOCaml{Apply} per applicare le funzioni dichiarate con il costrutto \InlineOCaml{Fun}.
+
+La regola per l'applicazione di funzione è la seguente:
+\[
+    \infer{
+        \code{env} \envTo \code{Apply}(f, \code{arg}) \evaluatesTo v
+    }{ 
+        \begin{gathered}
+            \code{env} \envTo f \evaluatesTo \code{Closure}(\code{id}, \code{body}, \code{funDeclEnv}) 
+            \\
+            \code{env} \envTo \code{arg} \evaluatesTo v_{\code{arg}}
+            \\
+            \code{funDeclEnv}[\code{id} :=  v_{\code{arg}}] \envTo \code{body} \evaluatesTo v
+        \end{gathered}
+    }    
+\] Analizziamo un momento cosa ci dice la regola: supponiamo di voler valutare in un ambiente \code{env} l'espressione \InlineOCaml{Apply(f, arg)}. Allora dobbiamo \begin{enumerate}[(1)]
+    \item valutare $f$ e verificare che sia una chiusura, formata da \begin{itemize}
+        \item \code{id}: il nome del parametro formale,
+        \item \code{body}: il corpo della funzione,
+        \item \code{funDeclEnv}: l'ambiente di dichiarazione della funzione;
+    \end{itemize}
+    \item valutare il parametro attuale \code{arg}, ottenendo un valore $v_{\code{arg}}$;
+    \item valutare nell'ambiente di dichiarazione della funzione arricchito dal legame tra il parametro formale \code{id} e il valore del parametro attuale $v_{\code{arg}}$ il corpo della funzione (ovvero \code{body}).
+\end{enumerate}
+
+A questo punto è semplice tradurre la regola in codice OCaml:
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | Apply(f, arg) ->
+    ( match eval f env with
+      | Closure(id, body, funDeclEnv) ->
+        let valArg = eval arg env in
+        let newEnv = bind funDeclEnv id valArg in
+          eval body newEnv
+      | _ -> failwith "not a functional value" )
+\end{OCaml}
+
+\subsection*{Funzioni ricorsive}
+
+L'interprete definito finora non ci consente di dichiarare o valutare funzioni ricorsive: infatti come abbiamo visto precedentemente nelle chiusure ricorsive deve essere presente anche la funzione stessa. Per poter dichiarare funzioni ricorsive dobbiamo quindi estendere la sintassi del nostro linguaggio con un nuovo costrutto:
+\begin{OCaml}
+type expr =
+  | ...
+  | LetRec of ide * ide * expr * expr  
+\end{OCaml}
+Una dichiarazione di funzione ricorsiva è quindi una versione particolare del costrutto \code{let} formata da \begin{itemize}
+    \item il nome della funzione,
+    \item il nome del parametro,
+    \item il corpo della funzione,
+    \item l'espressione in cui applichiamo la funzione ricorsiva.
+\end{itemize}
+Abbiamo anche bisogno di estendere i tipi esprimibili per includere le chiusure ricorsive:
+\begin{OCaml}
+type evT =
+  | ...
+  | RecClosure of ide * ide * expr * evT env 
+\end{OCaml} 
+In questo caso i parametri sono sempre nome della funzione e del parametro, corpo della funzione e ambiente al momento della dichiarazione della funzione.
+
+La regola operazionale per valutare un \code{let rec} è equivalente a quella del \code{let}, soltanto che dobbiamo costruire la chiusura ricorsiva prima di valutare l'espressione principale. \[
+    \infer{
+        \code{env} \envTo \code{LetRec}(f, \code{id}, \code{funBody}, \code{letBody}) \evaluatesTo v
+    }{
+        \begin{aligned}
+            &\code{env}[f := r] \envTo \code{letBody} \evaluatesTo v \\
+            \text{dove } &r = \code{RecClosure}(f, \code{id}, \code{funBody}, \code{env})
+        \end{aligned}
+    }    
+\] La corrispondente regola in OCaml diventa
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | LetRec(f, id, funBody, letBody) ->
+    let r = RecClosure(f, id, funBody, env) in
+    let newEnv = bind env f r in
+      eval letBody newEnv
+\end{OCaml}
+
+Anche in questo caso dobbiamo permettere l'applicazione di una funzione ricorsiva ad un parametro: dobbiamo quindi espandere il costrutto \InlineOCaml{Apply} con una nuova regola operazionale.
+\[
+    \infer{
+        \code{env} \envTo \code{Apply}(f, \code{arg}) \evaluatesTo v
+    }{ 
+        \begin{aligned}
+            &\code{env} \envTo f \evaluatesTo \code{closure} \\
+            &\code{env} \envTo \code{arg} \evaluatesTo v_{\code{arg}} \\
+            &\code{newEnv} \envTo \code{body} \evaluatesTo v \\
+            \text{dove } 
+                &\code{closure} = \code{RecClosure}(\code{funId}, \code{id}, \code{body}, \code{funDeclEnv})\\
+                &\code{newEnv} = \code{funDeclEnv}[f := \code{closure},\ \code{id} :=  v_{\code{arg}}]
+        \end{aligned}
+    }      
+\] La regola ci dice che per valutare un'espressione della forma \InlineOCaml{Apply(f, arg)} dobbiamo \begin{itemize}
+    \item valutare $f$ e usare questa regola se il risultato è una chiusura ricorsiva;
+    \item valutare il parametro formale \code{arg}, ottenendo il valore $v_{\code{arg}}$;
+    \item calcolare l'ambiente in cui valuteremo il corpo della funzione, che è l'ambiente di dichiarazione (\code{funDeclEnv}) insieme al legame tra la funzione $f$ e la sua chiusura e a quello tra il nome del parametro formale (\code{id}) e il valore del parametro attuale ($v_{\code{arg}}$);
+    \item valutare il corpo della funzione in questo nuovo ambiente.
+\end{itemize}
+
+Possiamo quindi finalmente ampliare l'interprete:
+\begin{OCaml}
+let rec eval (e : expr) (env : evT env) : evT =
+  match e with
+  | ...
+  | Apply(f, arg) ->
+    ( match eval f env with
+      | Closure(id, body, funDeclEnv) -> ...
+      | RecClosure(funId, id, body, funDeclEnv) as funClosure ->
+        let actualVal = eval arg env in
+        (* bind between f and the closure *)
+        let recEnv = bind funDeclEnv funName funClosure in
+        (* bind between the formal parameter and the actual value *)
+        let actualEnv = bind recEnv param actualVal in
+          eval funBody actualEnv
+      | _ -> failwith "not a functional value" )
+\end{OCaml}

@@ -1,0 +1,153 @@
+\section{Tipi di dato}
+
+Finora il nostro semplice linguaggio può produrre soltanto valori di tipo intero, quindi non vi è la necessità di un sistema di tipi. Tuttavia quando i valori cominciano ad essere più complicati, un \strong{type system} può essere utile per diversi motivi:
+\begin{itemize}
+    \item i tipi sono utili a livello di \emph{progetto}: organizzano l'informazione e ci consentono di astrarre esplicitamente sui dati;
+    \item sono utili a livello di \emph{programma}: identificano e prevengono alcuni errori automaticamente;
+    \item sono anche utili a livello di \emph{implementazione}: tipi diversi richiedono risorse diverse (ad esempio un booleano richiede solo un bit, mentre un valore floating-point ad alta precisione ne richiede $64$) e quindi forniscono alcune informazioni necessarie alla macchina astratta per allocare lo spazio di memoria.
+\end{itemize}
+
+Distinguiamo innanzitutto tra diversi tipi di dati:
+\begin{itemize}
+    \item un dato si dice \emph{denotabile} se può essere associato ad un nome;
+    \item un dato si dice \emph{esprimibile} se può essere il risultato della valutazione di un'espressione;
+    \item un dato si dice \emph{memorizzabile} se può essere memorizzato in una variabile.
+\end{itemize}
+
+Ad esempio le funzioni in OCaml sono denotabili ed esprimibili ma non sono memorizzabili, mentre in C sono solamente denotabili.
+
+\subsubsection{Descrittori di dato}
+
+Quando studiamo i tipi di dato vogliamo studiare sia la loro semantica, sia la loro implementazione. Partendo da quest'ultima, sembra necessario che un tipo di dato nella sua rappresentazione concreta contenga una "descrizione del tipo": a run-time vogliamo infatti (ad esempio) essere certi che il tipo del dato che abbiamo sia quello previsto dall'operazione che stiamo effettuando.
+
+In OCaml potremmo rappresentare questo fatto nel seguente modo:
+\begin{OCaml}
+    (* Espressione sintattica *)
+    type exp =
+        | EInt of int
+        | EBool of bool
+    
+    (* Tipo a run-time *)
+    type evT =
+        | Int of int
+        | Bool of bool
+
+    (* Funzione per il typechecking *)
+    let typecheck descr x = 
+        match descr with
+        | "int" -> (match x with
+                    | Int n -> true
+                    | _     -> false)
+        | "bool" -> (match x with
+                     | Bool b -> true
+                     | _      -> false)
+\end{OCaml}
+
+Tuttavia l'uso dei descrittori di dato può essere superfluo a seconda del tipo di linguaggio considerato.
+\begin{itemize}
+    \item Se l'informazione sui tipi è conosciuta completamente a tempo di compilazione (come nel caso di OCaml) si possono eliminare i descrittori di dato, in quanto il typecheck è effettuato dal compilatore (\emph{typecheck statico}).
+    \item Se l'informazione sui tipi è conosciuta solamente a tempo di esecuzione (come ad esempio in Javascript) i descrittori sono necessari per tutti i tipi e il typechecking è completamente \emph{dinamico}.
+    \item Se l'informazione sui tipi è conosciuta parzialmente a tempo di compilazione (come nel caso di Java) i descrittori di dato devono contenere solo l'informazione "dinamica" e il typecheck è effettuato parzialmente a tempo di compilazione e parzialmente a tempo di esecuzione.
+\end{itemize}
+
+I tipi predefiniti vengono anche chiamati \emph{tipi scalari}. Tra essi vi sono:
+\begin{itemize}
+    \item gli interi,
+    \item i booleani,
+    \item i caratteri,
+    \item i numeri reali (floating point),
+    \item il tipo \mintinline{C}{void}, rappresentato in OCaml da \InlineOCaml{()}, con le seguenti caratteristiche:
+    \begin{itemize}
+        \item ha un solo valore,
+        \item non ha operazioni,
+        \item serve per implementare operazioni che modificano lo stato senza restituire un vero valore.
+    \end{itemize}
+\end{itemize}
+
+Tuttavia i linguaggi definiscono anche dei \strong{tipi composti}. Ve ne sono diversi:
+\begin{itemize}
+    \item i record (chiamati \mintinline{C}{struct} in C),
+    \item i record varianti, oppure \emph{sum types} (in cui solo un tipo è attivo in un dato istante di tempo, chiamati \mintinline{C}{union} in C),
+    \item gli array,
+    \item gli insiemi,
+    \item i puntatori.
+\end{itemize}
+
+\subsection*{Record}
+
+I record sono stati definiti per manipolare in modo unitario dati di tipo eterogeneo. Ad esempio il tipo
+\begin{minted}{C}
+    struct studente {
+        int matricola;
+        char nome[20];
+    }
+\end{minted}
+definisce un tipo di dato che rappresenta uno studente, con il suo nome e numero di matricola.
+
+L'implementazione di un record viene fatta \emph{sequenzialmente}: i vari campi occupano posti consecutivi in memoria. In particolare abbiamo due possibili strategie:
+\begin{itemize}
+    \item allineamento alla parola;
+    \item packed record.
+\end{itemize}
+
+Nel caso di \emph{allineamento alla parola} ogni campo del record deve occupare una o più parole intere, dunque se occupa meno spazio di una parola (tipicamente $4$ byte) allora viene lasciato dello spazio libero (chiamato \emph{padding}). Questo porta ad uno spreco di memoria, ma contemporaneamente permette di avere degli accessi molto semplici ai campi (si trovano tutti all'inizio di una parola di memoria).
+
+Nel caso di \emph{packed record} i campi vengono scritti consecutivamente, senza lasciare spazio tra un campo e l'altro e quindi senza rispettare l'allineamento alla parola. L'accesso ai campi si fa più complicato, tuttavia non vi è spreco di memoria.
+
+\subsubsection*{Simulazione dei record in OCaml}
+
+Per simulare il comportamento dei record, estendiamo la sintassi astratta del nostro linguaggio con i seguenti costruttori:
+\begin{OCaml}
+    type label = Lab of string
+    type expr = ...
+        | Record of (label * expr) list
+        | Select of label * expr
+\end{OCaml}
+
+Possiamo quindi dichiarare record della  seguente forma: \begin{OCaml}
+    Record [(Lab "size", Int 5), (Lab "weight", Int 255)]
+\end{OCaml}
+
+Per interpretare la creazione di un record e l'operazione di selezione dobbiamo innanzitutto estendere i tipi esprimibili a run-time dal linguaggio:
+\begin{OCaml}
+    type evT = ...
+        | RecordEv of (label * evT) list
+\end{OCaml}
+A questo punto introduciamo una funzione trovare un valore in un \InlineOCaml{RecordEv} data una \InlineOCaml{label}:
+\begin{OCaml}
+    let rec lookupRecord (body : (label * evT) list) (lab : label) : evT =
+        match body with
+        | [] -> raise FieldNotFound
+        | (lab', value)::rs -> if lab' = lab then value
+                                else lookupRecord rs lab 
+\end{OCaml}
+Possiamo quindi estendere la funzione di valutazione con la valutazione dei due nuovi campi:
+\begin{OCaml}
+    let rec eval (exp : expr) : evT =
+        match exp with
+        | ...
+        | Record recordBody -> RecordEv (evalRecord recordBody)
+        | Select(e, lab) -> (match eval e with
+                                | RecordEv body -> lookupRecord body lab
+                                | _ -> raise TypeMismatch)
+    and evalRecord (body : (label * expr) list) : (label * evT) list =
+        match body with
+        | [] -> []
+        | (lab, e)::rs -> (lab, eval e)::evalRecord rs
+\end{OCaml}
+
+\subsection*{Array}
+
+Un \strong{array} è una collezione di dati omogenei. In particolare, astrattamente un array è una funzione da un insieme di indici (solitamente di tipo intero) ad un insieme di elementi (di tipo qualunque, ma solitamente non funzionale).
+
+La principale operazione ammessa sugli array è la selezione di un elemento: la modifica infatti non è propriamente un'operazione sull'array ma piuttosto un'operazione sulla locazione di memoria che memorizza quel dato.
+
+Gli array vengono memorizzati in locazioni continue di memoria: nel caso degli array multidimensionali (le matrici) si può sfruttare sia un \emph{ordine di riga} in cui vengono memorizzate le righe in ordine, oppure un \emph{ordine di colonna}; solitamente il primo è più usato.
+
+Per accedere agli elementi di un array si può usare una semplice formula: dato l'indirizzo della base $b$ dell'array e un offset $i$, per selezionare l'elemento $i$-esimo basta calcolare \[
+    b + c \cdot i,
+\] dove $c$ è la dimensione in byte degli elementi contenuti nell'array. Esiste una formula analoga (ma più complicata) per gli array multidimensionali.
+
+\subsection*{Puntatori}
+
+I \strong{puntatori} sono dei riferimenti a delle locazioni di memoria, oppure la costante \mintinline{C}{NULL}.

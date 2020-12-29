@@ -87,24 +87,26 @@ Abbiamo quindi bisogno di introdurre una struttura di supporto per recuperare le
 Possiamo quindi esprimere completamente la condizione di correttezza di un programma del nostro linguaggio:
 \begin{gather*}
     \infer{\Gamma \proves \mt{Const : ok}}{} 
-    \qquad
+    \\[4pt]
     \infer{
-        \mt{\Gamma \proves (Times E1 E2) : ok}
+        \Gamma \proves \mt{(Times E1 E2) : ok}
     }{
-        \mt{\Gamma \proves E1 : ok} & \mt{\Gamma \proves E2 : ok}
+        \Gamma \proves \mt{E1 : ok} & 
+        \Gamma \proves \mt{E2 : ok}
     } 
-    \qquad
+    \\[4pt]
     \infer{
-        \mt{\Gamma \proves (Plus E1 E2) : ok}
+        \Gamma \proves \mt{(Plus E1 E2) : ok}
     }{
-        \mt{\Gamma \proves E1 : ok} & \mt{\Gamma \proves E2 : ok}
-    } \\
+        \Gamma \proves \mt{E1 : ok} & 
+        \Gamma \proves \mt{E2 : ok}
+    } \\[4pt]
     \infer{
         \Gamma \proves \mt{x : ok}
     }{
         \mt{x} \in \Gamma
     }
-    \qquad
+    \\[4pt]
     \infer{
         \Gamma \proves \mt{(Let x E1 E2)}
     }{
@@ -162,7 +164,7 @@ Si dice quindi \strong{sistema di transizione} una tupla $(S, I, F, \sstep)$ dov
     \item $S$ è l'insieme dei possibili stati della macchina astratta del linguaggio;
     \item $I$ è l'insieme degli stati iniziali;
     \item $F$ è l'insieme degli stati finali;
-    \item $\sstep \subseteq S \times S$ è la \emph{relazione di transizione}, che descrive l'effetto di un singolo passo di valutazione.
+    \item $\sstep {}\subseteq S \times S$ è la \emph{relazione di transizione}, che descrive l'effetto di un singolo passo di valutazione.
 \end{itemize}
 
 Nel caso del nostro semplice linguaggio possiamo definire:
@@ -171,7 +173,7 @@ Nel caso del nostro semplice linguaggio possiamo definire:
         S \deq \set*{\mt{e} \given \exists\Gamma \text{ tale che } \Gamma \proves \mt{e : ok}};    
     \]
     \item $I$ come l'insieme delle espressioni aritmetiche "chiuse", ovvero che non contengono variabili libere: \[
-        I \deq \set*{\mt{e} \given \varnothing \proves \mt{e : ok}};    
+        I \deq \set*{\mt{e} \given \varnothing \proves \mt{(e : ok)}};    
     \]
     \item $F$ come l'insieme dei valori interi: \[
         F \deq \set*{\mt{Int n} \given n \in \N}.
@@ -180,7 +182,7 @@ Nel caso del nostro semplice linguaggio possiamo definire:
 
 Iniziamo a studiare le regole di valutazione.
 \paragraph{Times} Facciamo l'esempio della regola del costrutto \mt{Times}:
-\begin{align*}
+\begin{gather*}
     \infer{
         \mt{(Times (Int n) (Int m))} \sstep \mt{Int (n * m)}
     }{}\\
@@ -194,7 +196,7 @@ Iniziamo a studiare le regole di valutazione.
     }{
         e2 \sstep e2'
     }
-\end{align*}
+\end{gather*}
 
 Questa regola composta ci dice che \begin{itemize}
     \item se stiamo cercando di calcolare il risultato di \mt{Times} applicato a due valori, il risultato è un valore (in particolare è \mt{Int (n * m)});
@@ -208,7 +210,7 @@ Facciamo alcune osservazioni:
 \end{itemize}
 
 \paragraph{Let} Studiamo ora la regola di valutazione del \mt{Let}:
-\begin{align*}
+\begin{gather*}
     \infer{
         \mt{(Let x (Int n) e2)} \sstep \mt{e2[x} \deq \mt{(Int n)]}
     }{}\\
@@ -217,7 +219,7 @@ Facciamo alcune osservazioni:
     }{
         e1 \sstep e1'
     }\\
-\end{align*}
+\end{gather*}
 
 Questa regola ci dice che \begin{itemize}
     \item se abbiamo valutato completamente \mt{e1} al valore \mt{(Int n)} allora lo step consiste nel restituire l'espressione \mt{e2} dove tutte le occorrenze di \mt{x} vengono sostituite da occorrenze di \mt{(Int n)};
@@ -230,17 +232,28 @@ Nel caso della semantica naturale non siamo più interessati a semplificare un'e
 \begin{itemize}
     \item un insieme $E$ di espressioni valutabili,
     \item un insieme $V$ di valori (che non è necessariamente un sottoinsieme di $E$),
-    \item una relazione $\evaluatesTo \subseteq E \times V$ (anche indicata con $\Downarrow$), detta \emph{relazione di valutazione}.
+    \item una relazione $\evaluatesTo {}\subseteq E \times V$ (anche indicata con $\Downarrow$), detta \emph{relazione di valutazione}.
 \end{itemize}
 
 Ad esempio nel caso del nostro semplice linguaggio possiamo dare una semantica naturale nel seguente modo:
 \begin{itemize}
-    \item $E$ è l'insieme di tutte le espressioni ben formate, ovvero $E = \set*{\mt{e} \given \Gamma \proves \mt{e : ok}}$,
+    \item $E$ è l'insieme di tutte le espressioni ben formate, ovvero \[
+        E = \set*{\mt{e} \given \Gamma \proves \mt{(e : ok)}};
+    \]
     \item $V$ è l'insieme dei valori interi,
     \item alcune regole di valutazione sono le seguenti: \begin{gather*}
-        \infer{\mt{Int n} \evaluatesTo \mt{Int n}}{}\\[5pt]
-        \infer{\mt{Times e1 e2} \evaluatesTo \mt{Int (n*m)}}{\mt{e1} \evaluatesTo \mt{Int n} & \mt{e2} \evaluatesTo \mt{Int m}}\\[5pt]
-        \infer{\mt{(Let x e1 e2)} \evaluatesTo \mt{Int m}}{\mt{e1} \evaluatesTo \mt{(Int n)} & \mt{e2[x := (Int n)]} \evaluatesTo \mt{(Int m)}}.
+        \infer{
+            \mt{Int n} \evaluatesTo \mt{Int n}
+        }{}\\[5pt]
+        \infer{
+            \mt{Times e1 e2} \evaluatesTo \mt{Int (n*m)}
+        }{
+            \mt{e1} \evaluatesTo \mt{Int n} & \mt{e2} \evaluatesTo \mt{Int m}
+        }\\[5pt]
+        \infer{
+            \mt{(Let x e1 e2)} \evaluatesTo \mt{Int m}
+        }{\mt{e1} \evaluatesTo \mt{(Int n)} & \mt{e2[x := (Int n)]} \evaluatesTo \mt{(Int m)}
+        }
     \end{gather*}
 \end{itemize}
 
@@ -251,8 +264,8 @@ Osserviamo che la regola data sopra per il \mt{Let} è una regola di valutazione
 Tuttavia per definire correttamente un interprete abbiamo bisogno di un metodo per recuperare a tempo di esecuzione le informazioni relative alle variabili legate dai \mt{Let} (e successivamente dalle funzioni): definiamo quindi il concetto di \emph{ambiente} e di \emph{binding}.
 
 Si dice \strong{binding} un'associazione tra un nome (di variabile) e un valore; si dice \strong{ambiente} una funzione \[
-    \env : \mt{Ide} \to \mt{Values} \union \mt{Unbound}    
-\] dove \mt{Ide} è l'insieme degli identificatori di variabili, \mt{Values} è l'insieme dei valori e \mt{Unbound} è il valore particolare assunto da una variabile che non è legata ad alcun valore. Per aggiungere un nuovo binding ad un ambiente useremo la notazione $\env\mt{[x := v]}$, che indica la funzione che si comporta esattamente come $\env$ per ogni $y \in \mt{Ide} \setminus \set{\mt{x}}$, mentre $\env{\mt{x}} = \mt{v}$.
+    \env : \mt{Ide} \to \mt{Values} {}\union{} \set*{\mt{Unbound}}
+\] dove \mt{Ide} è l'insieme degli identificatori di variabili, \mt{Values} è l'insieme dei valori e \mt{Unbound} è il valore particolare assunto da una variabile che non è legata ad alcun valore. Per aggiungere un nuovo binding ad un ambiente useremo la notazione $\env\mt{[|$x := v$|]}$, che indica la funzione che si comporta esattamente come $\env$ per ogni $y \in \mt{Ide} \setminus \set{\mt{x}}$, mentre $\env{\mt{x}} = \mt{v}$.
 
 Una possibile prima implementazione di questo tipo di ambiente in OCaml è la seguente:
 \begin{OCaml}
@@ -269,7 +282,7 @@ Una possibile prima implementazione di questo tipo di ambiente in OCaml è la se
 
 Possiamo quindi specificare meglio la nostra costruzione della semantica naturale: abbiamo bisogno di \begin{itemize}
     \item un insieme di stati \[
-        S = \set*{\rho \envTo \mt{e} \given \rho \in \mt{Env}, \mt{e} \in \mt{Exp}, \varnothing \proves \mt{e : ok}}.
+        S = \set*{\rho \envTo e \given \rho \in \mt{Env},\ e \in \mt{Exp},\ \varnothing \proves \mt{(|$e$| : ok)}}.
     \] Ogni stato rappresenta una coppia formata da un ambiente e da un'espressione da valutare in quell'ambiente.
     \item un insieme di valori, che nel nostro caso sono i numeri naturali,
     \item una relazione di valutazione $\evaluatesTo \subseteq S \times V$.
@@ -279,17 +292,17 @@ Le regole di valutazione dell'interprete diventano quindi ad esempio:
 \begin{gather*}
     \infer{\env \envTo \mt{(Den id)} \evaluatesTo v}{\env{\mt{id}} = v \in V}\\[5pt]
     \infer{
-        \env \envTo \mt{(Times e1 e2)} \evaluatesTo v
+        \env \envTo \mt{(Times |$e_1$| |$e_2$|)} \evaluatesTo v
     }{
-        \env \envTo \mt{e1} \evaluatesTo v_1 &
-        \env \envTo \mt{e2} \evaluatesTo v_2 &
+        \env \envTo e_1 \evaluatesTo v_1 &
+        \env \envTo e_2 \evaluatesTo v_2 &
         v_1 \cdot v_2 = v
     }\\[5pt]
     \infer{
-        \env \envTo \mt{(Let x e body)} \evaluatesTo v
+        \env \envTo \mt{(let |$x = e$| in body)} \evaluatesTo v
     }{
-        \env \envTo \mt{e} \evaluatesTo v' &
-        \env\mt{[x := }v'\mt{]} \envTo \mt{body} \evaluatesTo v 
+        \env \envTo e \evaluatesTo v' &
+        \env\mt{[|$x := v'$|]} \envTo \mt{body} \evaluatesTo v 
     }
 \end{gather*}
 

@@ -1,51 +1,182 @@
-\section{Type System}
+\section{Type-system}
 
-Finora il nostro semplice linguaggio può produrre soltanto valori di tipo intero, quindi non vi è la necessità di un sistema di tipi. Tuttavia quando i valori cominciano ad essere più complicati, un \strong{type system} può essere utile per diversi motivi:
-\begin{itemize}
-    \item i tipi sono utili a livello di \emph{progetto}: organizzano l'informazione e ci consentono di astrarre esplicitamente sui dati;
-    \item sono utili a livello di \emph{programma}: identificano e prevengono alcuni errori automaticamente;
-    \item sono anche utili a livello di \emph{implementazione}: tipi diversi richiedono risorse diverse (ad esempio un booleano richiede solo un bit, mentre un valore floating-point ad alta precisione ne richiede $64$) e quindi forniscono alcune informazioni necessarie alla macchina astratta per allocare lo spazio di memoria.
-\end{itemize}
+Cerchiamo ora di comprendere come deve essere implementato un \emph{type-system} per un linguaggio di programmazione.
 
-Distinguiamo innanzitutto tra diversi tipi di dati:
-\begin{itemize}
-    \item un dato si dice \emph{denotabile} se può essere associato ad un nome;
-    \item un dato si dice \emph{esprimibile} se può essere il risultato della valutazione di un'espressione;
-    \item un dato si dice \emph{memorizzabile} se può essere memorizzato in una variabile.
-\end{itemize}
+Un \strong{type system} è una funzione che associa ad ogni oggetto un \emph{tipo}. Esaminando il flusso dei valori calcolati, il sistema ci assicura che il programma non contenga errori di tipo.
 
-Ad esempio le funzioni in OCaml sono denotabili ed esprimibili ma non sono memorizzabili, mentre in C sono solamente denotabili.
+Per tenere traccia del tipo di ogni identificatore nel nostro programma dobbiamo usare un \strong{ambiente dei tipi}. Indicheremo con \[
+    \Gamma = x_1 : \tau_1,\ x_2 : \tau_2,\ \dots,\ x_n : \tau_n
+\] l'ambiente dei tipi che associa all'espressione $x_i$ il valore $\tau_i$. Inoltre useremo il simbolo \[
+    (\Gamma,\ x : \tau)    
+\] per indicare l'ambiente dei tipi che associa $x$ al tipo $\tau$ e associa ogni espressione $y$ diversa da $x$ il tipo ad essa associato precedentemente da $\Gamma$.
+Infine, il judgment \[
+    \Gamma \proves x : \tau    
+\] indica che nell'ambiente dei tipi $\Gamma$ l'espressione $x$ ha tipo $\tau$.
 
-\subsubsection{Descrittori di dato}
+Definiamo ora un semplice sistema dei tipi per le nostre espressioni.
+\begin{gather*}
+    \Gamma \proves n : \mt{int}\\
+    \Gamma \proves b : \mt{bool}\\
+    \infer{
+        \Gamma \proves x : \tau
+    }{
+        \Gamma(x) = \tau
+    }\\
+    \infer{
+        \Gamma \proves \mt{let x = e1 in e2} : \tau
+    }{
+        \Gamma \proves \mt{e1} : \tau' &
+        (\Gamma, x : \tau') \proves \mt{e2} : \tau
+    }\\[5pt]
+    \infer{
+        \Gamma \proves \mt{e1 |$\otimes$| e2} : \tau
+    }{
+        \Gamma \proves \mt{e1} : \tau_1 &
+        \Gamma \proves \mt{e2} : \tau_2 &
+        \Gamma \proves \otimes : \tau_1 \times \tau_2 \to \tau
+    }\\[5pt]
+    \infer{
+        \Gamma \proves \mt{(if cond then e1 else e2)} : \tau
+    }{
+        \Gamma \proves \mt{cond} : \mt{bool} &
+        \Gamma \proves \mt{e1} : \tau &
+        \Gamma \proves \mt{e2} : \tau
+    }
+\end{gather*}
 
-Quando studiamo i tipi di dato vogliamo studiare sia la loro semantica, sia la loro implementazione. Partendo da quest'ultima, sembra necessario che un tipo di dato nella sua rappresentazione concreta contenga una "descrizione del tipo": a run-time vogliamo infatti (ad esempio) essere certi che il tipo del dato che abbiamo sia quello previsto dall'operazione che stiamo effettuando.
+Nel caso delle funzioni il type system deve diventare necessariamente più complicato. Definiamo il tipo di una funzione come il \emph{tipo freccia} $\tau_1 \to \tau_2$, dove $\tau_1$, $\tau_2$ sono due tipi del nostro type system.
 
-In OCaml potremmo rappresentare questo fatto nel seguente modo:
+Abbiamo quindi le seguenti due regole di inferenza, una per le definizioni di funzione e una per le applicazioni:
+\begin{gather*}
+    \infer{
+        \Gamma \proves \mt{fun (|x : $\tau_1$|) = e} : \tau_1 \to \tau_2
+    }{
+        (\Gamma,\ x : \tau_1) \proves \mt{e} : \tau_2
+    }\\[5pt]
+    \infer{
+        \Gamma \proves \mt{App(e1, e2)} : \tau_2
+    }{
+        \Gamma \proves \mt{e1} : \tau_1 \to \tau_2 &
+        \Gamma \proves \mt{e2} : \tau_1
+    }
+\end{gather*}
+
+Queste due regole possono tuttavia risultare insufficienti nel caso di \emph{scoping dinamico}.
+Parleremo in seguito del concetto di scoping statico e dinamico, ma per il momento accontentiamoci di questo esempio.
+
 \begin{OCaml}
-    (* Espressione sintattica *)
-    type exp =
-        | EInt of int
-        | EBool of bool
-    
-    (* Tipo a run-time *)
-    type evT =
-        | Int of int
-        | Bool of bool
-
-    (* Funzione per il typechecking *)
-    let typecheck descr x = 
-        match descr with
-        | "int" -> (match x with
-                    | Int n -> true
-                    | _     -> false)
-        | "bool" -> (match x with
-                     | Bool b -> true
-                     | _      -> false)
+    let x = 10 in
+    let f = fun k -> k + x in
+    let x = 5 in
+        f 10;;
 \end{OCaml}
 
-Tuttavia l'uso dei descrittori di dato può essere superfluo a seconda del tipo di linguaggio considerato.
+Se analizziamo questo codice abbiamo due possibili interpretazioni:
 \begin{itemize}
-    \item Se l'informazione sui tipi è conosciuta completamente a tempo di compilazione (come nel caso di OCaml) si possono eliminare i descrittori di dato, in quanto il typecheck è effettuato dal compilatore (\emph{typecheck statico}).
-    \item Se l'informazione sui tipi è conosciuta solamente a tempo di esecuzione (come ad esempio in Javascript) i descrittori sono necessari per tutti i tipi e il typechecking è completamente \emph{dinamico}.
-    \item Se l'informazione sui tipi è conosciuta parzialmente a tempo di compilazione (come nel caso di Java) i descrittori di dato devono contenere solo l'informazione "dinamica" e il typecheck è effettuato parzialmente a tempo di compilazione e parzialmente a tempo di esecuzione.
+    \item la \InlineOCaml{x} contenuta nella chiamata a funzione \InlineOCaml{f x} si riferisce alla variabile \InlineOCaml{x} legata al valore $10$ dal primo operatore \InlineOCaml{let}: infatti essa è l'unica variabile chiamata \InlineOCaml{x} al momento della definizione della funzione;
+    \item la \InlineOCaml{x} contenuta nella chiamata a funzione \InlineOCaml{f x} si riferisce alla variabile \InlineOCaml{x} legata al valore $5$ dal terzo operatore \InlineOCaml{let}.
 \end{itemize}
+
+Nel primo caso (chiamato \emph{scoping statico}) il valore dell'espressione complessiva è $20$; nel secondo (chiamato \emph{scoping dinamico}) il valore è invece $15$. Tuttavia nel secondo caso le regole del nostro type-system non possono essere controllate staticamente: l'espressione \begin{OCaml}
+    let x = 10 in
+    let f = fun k -> k + x in
+    let x = false in
+        f 10;;
+\end{OCaml}
+conterrebbe un ovvio errore di tipo che non si manifesterebbe fino al momento dell'esecuzione.
+
+\subsection{Implementazione in OCaml di un type system}
+Innanzitutto dobbiamo decidere quali sono i tipi del nostro linguaggio:
+\begin{OCaml}
+    type tval =
+        | TInt
+        | TBool
+        | FunT of tval * tval
+\end{OCaml}
+A questo punto dobbiamo creare l'ambiente dei tipi:
+\begin{OCaml}
+    type tenv = ide -> tval
+\end{OCaml}
+
+Le funzioni \InlineOCaml{bind_t} e \InlineOCaml{empty_tenv} ci consentono rispettivamente di aggiungere un binding ad un ambiente dei tipi dato e di ottenere l'ambiente vuoto.
+\begin{OCaml}
+    let bind_t (env : tenv) (id : ide) (v : tval) : tenv =
+        fun x -> if x = id then v else env x
+    let empty_tenv : tenv = fun (x : ide) -> raise EmptyEnv
+\end{OCaml}
+
+Per poter sfruttare il typechecker dobbiamo modificare il tipo delle espressioni che usiamo, aggiungendo dove necessario i tipi dei parametri.
+\begin{OCaml}
+    type texp =
+        | EInt of int
+        | EBool of bool
+        | Den of ide
+        | Add of texp * texp
+        | ...
+        | Let of ide * texp * texp
+        | Fun of ide * tval * texp
+        | Apply of texp * texp
+\end{OCaml}
+
+Osserviamo che l'unica modifica fatta è al costruttore delle funzioni anonime: in questo caso dobbiamo sapere di che tipo è il parametro per poter dedurre il tipo della funzione.
+
+Il typechecker rispetta precisamente le regole semantiche date in precedenza:
+\begin{OCaml}
+    let rec teval (e : texp) (env : tenv) : tval =
+        match e with
+        | EInt a -> TInt
+        | EBool b -> TBool
+        | Den s -> env s
+        | Let (id, e1, e2) -> 
+            let t = teval e1 tenv in
+                teval e2 (bind tenv id t)
+        | Add (e1, e2) ->
+            let t1 = teval e1 tenv in
+            let t2 = teval e2 tenv in
+                ( match t1, t2 with
+                    | (TInt, TInt) -> TInt
+                    | _ -> raise WrongType)
+        | ...
+        | If (cond, e1, e2) ->
+            let tcond = teval cond tenv in
+                ( match tcond with 
+                    | TBool -> 
+                        let t1 = teval e1 tenv in
+                        let t2 = teval e2 tenv in
+                            ( match t1, t2 with
+                                | TInt, TInt -> TInt
+                                | TBool, TBool -> TBool
+                                | _ -> raise WrongType ))
+        | Fun (id, tpar, body) ->
+            let tenv1 = bind tenv id tpar in
+            let t2 = teval body tenv1 in
+                FunT (t1, t2)
+        | Apply (e1, e2) ->
+            let f = teval e1 tenv
+                ( match f with
+                    | Fun(t1, t2) -> 
+                        if (teval e2 tenv = t1) then t2
+                        else raise WrongType
+                    | _ -> raise WrongType )
+\end{OCaml}
+
+Possiamo anche estendere il type system definito in precedenza con il supporto ad altri tipi, ad esempio con il supporto alle funzioni ricorsive, oppure alle coppie di valori, eccetera.
+
+% TODO : do this
+
+% Ad esempio cerchiamo di estendere il linguaggio ed il typechecker con un costrutto per definire funzioni ricorsive. Il costrutto sarà \[
+%     \mt{rec}\ f\ (x : \tau_1) : \tau_2 = e
+% \] dove $e$ è un'espressione che può contenere la funzione $f$. La regola operazionale per descrivere il tipo di $f$ sarà quindi \[
+%     \infer {
+%         \Gamma \proves (\mt{rec}\ f\ (x : \tau_1) : \tau_2 = e) : \tau_1 \to \tau_2
+%     } {
+%         (\Gamma,\ f : \tau_1 \to \tau_2,\ x : \tau_1) \proves e : \tau_2
+%     }
+% \]
+
+% La corrispondente regola in OCaml è \begin{OCaml}
+%     let rec teval (e : texp) (env : tenv) : tval =
+%         match e with
+%         | ...
+%         | Rec(Den funName, Den x, )
+% \end{OCaml}

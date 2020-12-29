@@ -1,0 +1,33 @@
+\documentclass[crop,tikz,preview]{standalone}% 'crop' is the default for v1.0, before it was 'preview'
+%\usetikzlibrary{...}% tikz package already loaded by 'tikz' option
+\usepackage{drawstack}
+
+\begin{document}
+
+\begin{tikzpicture}[scale=.55]
+    \drawstruct{(0, 0)}
+    \structcell[freecell]{MAIN} \coordinate (main) at (currentcell.west);
+    \structcell[freecell]{$x = 12$} 
+
+    \drawstruct{(0, -3)}
+    \structcell[freecell]{B - SL} \coordinate (Bw) at (currentcell.west); \coordinate (Be) at (currentcell.east);
+    \structcell[freecell]{$x = 0$}
+
+    \drawstruct{(0, -6)}
+    \structcell[freecell]{A - SL} \coordinate (A1) at (currentcell.west);
+
+    \drawstruct{(0, -8)}
+    \structcell[freecell]{C - SL} \coordinate (C) at (currentcell.east);
+    \structcell[freecell]{$x = 5$}
+    \structcell[freecell]{$y = 3$}
+
+    \drawstruct{(0, -12)}
+    \structcell[freecell]{A - SL} \coordinate (A2) at (currentcell.west);
+
+    \draw[->, dashed, bend right] (Bw) to [out=120,in=20] (main);
+    \draw[->, dashed, bend right] (A1) to [out=120,in=20]  (main);
+    \draw[->, dashed, bend left] (C) to [out=-120,in=-20] (Be);
+    \draw[->, dashed, bend right] (A2)to [out=120,in=20] (main);
+\end{tikzpicture}
+
+\end{document}

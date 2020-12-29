@@ -3,7 +3,9 @@
     \usepackage[italian]{babel}
     \usepackage[T1]{fontenc}
     \usepackage{textcomp, microtype}
-    \usepackage{preamble}
+    % \usepackage{preamble}
+    \usepackage{base-preamble}
+    \usepackage{prog}
 
 \begin{document}
 
@@ -24,6 +26,9 @@
 \part{Linguaggi di Programmazione}
 \input{OCaml/ocaml}
 \input{OCaml/syntax}
+\input{OCaml/datatypes}
 \input{OCaml/type_system}
+\input{OCaml/stack_frames}
+\input{OCaml/didact_lang}
 
 \end{document}
