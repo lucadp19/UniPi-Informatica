@@ -68,7 +68,8 @@ Dalla curva operativa si possono ricavare il livello e la potenza, in quanto $\P
 
 \subsection*{p-value}
 
-Osserviamo che se il livello del test diminuisce deve diminuire anche la regione critica, dunque diventa più semplice accettare un'ipotesi.
+Osserviamo che se il livello del test diminuisce deve diminuire anche la regione critica, dunque diventa più semplice accettare un'ipotesi. È quindi intuitivo pensare ad una \emph{soglia} per il livello del test: per ogni $\alpha$ sotto il livello soglia l'ipotesi viene accettata al livello $\alpha$, mentre per ogni $\alpha$ sopra la soglia l'ipotesi viene rifiutata.
+
 \begin{definition}
     [p-value] Si dice \emph{p-value} il numero reale $\bar\alpha$ tale che
     \begin{itemize}
@@ -79,4 +80,46 @@ Osserviamo che se il livello del test diminuisce deve diminuire anche la regione
 
 Una definizione alternativa del p-value è la seguente: il p-value è la probabilità che il rifiuto dell'ipotesi sia dovuto al caso (ovvero ad un errore statistico).
 
+Il p-value ci dice quanto è plausibile il risultato del test: se il p-value è basso (cioè se l'ipotesi viene accettata solo quando la regione critica è molto piccola) allora l'ipotesi è molto poco plausibile; all'aumentare del p-value aumenta anche la plausibilità del risultato del test.
+
 Osserviamo inoltre che, mentre il livello e la regione critica vengono decisi prima di raccogliere i dati, il p-value dipende dai dati raccolti effettuando l'esperimento.
+
+\subsection*{Test sulla media di un campione gaussiano con varianza nota}
+
+Consideriamo un campione di $n$ variabili $X_i \sim \NormalDist*{m, \sigma^2}$ con $\sigma$ ignota. Supponiamo di voler realizzare un test sulla media della forma \[
+    \NullHp m = m_0 \qquad \text{contro} \qquad \AltHp m \neq m_0,
+\] dove $m_0$ è il valore che vogliamo dimostrare essere la media del campione gaussiano.
+
+Siccome $\bar X$ è la stima corretta della media l'idea è di rifiutare l'ipotesi se $\bar X$ si discosta troppo da $m_0$: la regione critica deve dunque essere della forma \[
+    C = \set[\Big]{\abs*{\bar X - m_0} > d}, 
+\] dove $d$ deve essere determinato in funzione del livello $\alpha$ scelto.
+
+Fissato un livello $\alpha$ dobbiamo quindi imporre che \[
+    \Prob_m\set[\Big]{\abs*{\bar X - m_0} > d} \leq \alpha.   
+\] Per aumentare la potenza del test (cioè per ottenere una regione critica il più grande possibile), poniamo in particolare \[
+    \Prob_m\set[\Big]{\abs*{\bar X - m_0} > d} = \alpha.   
+\] Sfruttando il fatto che $\frac{\sqrt{n}}{\sigma}\parens*{\bar X - m_0}$ è una gaussiana standard abbiamo quindi \begin{align*}
+    \alpha &= \Prob_m\set[\Big]{\abs*{\bar X - m_0} > d}\\ 
+    &= \Prob_m\set[\Big]{\frac{\sqrt{n}}{\sigma}\abs*{\bar X - m_0} > \frac{d\sqrt{n}}{\sigma}}\\
+    &= \Prob_m\set[\Big]{\abs*{Z} > \frac{d\sqrt{n}}{\sigma}},
+\end{align*}
+dove $Z$ è una gaussiana standard. Svolgendo i calcoli come per gli intervalli di fiducia otteniamo che $d = \frac{\sigma}{\sqrt n}q_{1 - \nicefrac{\alpha}{2}}$, ovvero la regione critica è della forma \[
+    C = \set[\Big]{\abs*{\bar X - m_0} > \frac{\sigma}{\sqrt n}q_{1 - \nicefrac{\alpha}{2}}},     
+\]
+
+Per verificare se un test è accettato o meno abbiamo bisogno di dati concreti: siano quindi $x_1, \dots, x_n$ i risultati dell'esperimento e sia $\mean{x}$ la loro media empirica. L'ipotesi viene quindi accettata se, sostituendo alla variabile $\bar X$ il valore $\mean x$, vale che \[
+    \abs*{\mean x - m_0} > \frac{\sigma}{\sqrt n}q_{1 - \nicefrac{\alpha}{2}};
+\] in caso contrario l'ipotesi viene rifiutata.
+
+Calcoliamo ora il p-value: dall'equazione sopra è evidente che lo \emph{spartiacque} tra l'accettabilità e la non-accettabilità si ottiene quando \[
+    \abs*{\mean x - m_0} = \frac{\sigma}{\sqrt n}q_{1 - \nicefrac{\alpha}{2}}.    
+\] Ricaviamo quindi il valore di $\bar\alpha$ per cui vale l'uguaglianza:
+\begin{align*}
+    &\abs*{\mean x - m_0} = \frac{\sigma}{\sqrt n}q_{1 - \nicefrac{\bar\alpha}{2}} \\
+    \iff {}& \frac{\sqrt n}{\sigma}\abs*{\mean x - m_0} = q_{1 - \nicefrac{\bar\alpha}{2}}\\
+    \iff {}& 1 - \frac{\bar\alpha}{2} = \Phi\parens*{\frac{\sqrt n}{\sigma}\abs*{\mean x - m_0}}\\
+    \iff {}& \frac{\bar\alpha}{2} = 1 - \Phi\parens*{\frac{\sqrt n}{\sigma}\abs*{\mean x - m_0}}
+\end{align*}
+da cui il p-value è \[
+    \bar\alpha = 2\squared[\bigg]{1 - \Phi\parens*{\frac{\sqrt n}{\sigma}\abs*{\mean x - m_0}}}.    
+\]

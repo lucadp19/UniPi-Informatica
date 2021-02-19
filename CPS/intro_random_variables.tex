@@ -16,7 +16,7 @@ Per introdurre il concetto di variabili aleatorie e la loro utilità useremo il 
     \]
     Usando la funzione $X$ possiamo \emph{trasportare} la probabilità da $\Omega$ a $\R$: la risposta alla prima domanda è dunque \[
         \Prob[\big]{\set{\omega \in \Omega \given X(\omega) > 10}} 
-        = \Prob*{X^{-1}\parens[\big]{\interval[{0, +\infty})}} 
+        = \Prob*{X^{-1}\parens[\big]{\interval({10, +\infty})}} 
         = \frac{1}{37};    
     \] la risposta alla seconda domanda è invece \[
         \Prob[\big]{\set{\omega \in \Omega \given X(\omega) < 0}} 
@@ -26,14 +26,24 @@ Per introdurre il concetto di variabili aleatorie e la loro utilità useremo il 
 \end{example}
 
 \begin{definition}
-    [Variabili aleatorie] Sia $(\Omega, \FF, \P)$ uno spazio di probabilità. Una funzione $X : \Omega \to \R$ si dice \emph{variabile aleatoria} e la funzione \[
-        \Prob_{X}{A} = \Prob{X\inv(A)}  
+    [Variabili aleatorie] Sia $(\Omega, \FF, \P)$ uno spazio di probabilità. Una funzione $X : \Omega \to \R$ si dice \emph{variabile aleatoria} e la funzione dall'insieme dei \emph{sottoinsiemi misurabili di $\R$} in $\interval[{0, 1}]$ definita da \[
+        \Prob_{X}{A} \deq \Prob*{X\inv(A)}  
     \] viene detta \emph{legge di probabilità} associata alla variabile aleatoria $X$.
 \end{definition}
+
+\begin{remark}
+    Non definiamo cosa sia un sottoinsieme misurabile di $\R$, ma la maggior parte degli insiemi "non patologici" sono misurabili.
+\end{remark}
 
 Dato $A \subseteq \R$, introduciamo la notazione $\set{X \in A}$ per indicare l'insieme di tutti i valori dello spazio fondamentale $\Omega$ la cui immagine cade in $A$, ovvero \[
     \set{X \in A} \deq \set{\omega \in \Omega \given X(\omega) \in A} = X\inv(A).    
 \] 
+
+\begin{example}
+    Nell'esempio precedente \[
+        \set*{X \in \interval*[{10, +\infty})} = \set*{36}    
+    \] poiché $36$ è l'unico risultato della roulotte per cui la vittoria netta (indicata da $X(36)$) è maggiore o uguale a $10$.
+\end{example}
 
 \begin{definition}
     [Variabili equidistribuite] Siano $X, Y : \Omega \to \R$. $X$ e $Y$ si dicono equidistribuite se hanno la stessa legge di probabilità.
@@ -58,12 +68,12 @@ Questi due tipi non sono tutti i tipi possibili di variabili aleatorie, tuttavia
     \end{description}
 \end{definition}
 
-In particolare $X$ assume valori in $A$ se e solo se la funzione di massa (o rispettivamente la densità) è \emph{maggiore o uguale} di $0$, poiché sono funzioni non-negative.
+In particolare $X$ assume valori in $A$ se e solo se la funzione di massa (o rispettivamente la densità) è \emph{maggiore} di $0$ per ogni $x \in A$, poiché sono la funzione di massa e la densità sono non-negative.
 
 \begin{definition}
     [Funzione di ripartizione]
     Data una variabile aleatoria $X : \Omega \to \R$ si dice \emph{funzione di ripartizione} di $X$ (o anche c.d.f., da \emph{cumulative distribution function}) la funzione $F_{X} : \R \to \interval[{0,1}]$ tale che \[
-        F_{X}(x) = \Prob\set[\big]{X \leq x} = \Prob\set[\big]{X \in \interval({-\infty, x}]}.   
+        F_{X}(x) \deq \Prob\set[\big]{X \leq x} = \Prob\set[\big]{X \in \interval({-\infty, x}]}.   
     \]
 \end{definition}
 
@@ -130,7 +140,7 @@ Nel caso con densità possiamo ricavare la legge di probabilità invertendo l'op
 Vediamo ora la definizione di quantile:
 \begin{definition}
     [Quantile]
-    Sia $X$ una variabile aleatoria con legge di probabilità $\Prob{}$. Sia inoltre $\beta \in \interval({0, 1})$. Si dice \emph{$\beta$-quantile} un numero $r_\beta$ tale che \begin{align*}
+    Sia $X$ una variabile aleatoria con legge di probabilità $\Prob$. Sia inoltre $\beta \in \interval({0, 1})$. Si dice \emph{$\beta$-quantile} un numero $r_\beta$ tale che \begin{align*}
         \Prob\set[\big]{X \leq r_\beta} \geq \beta,\quad &\Prob\set[\big]{X \geq r_\beta} \geq 1 - \beta.   
     \end{align*}
 \end{definition}
@@ -333,21 +343,21 @@ Consideriamo la funzione $f(x) = e^{-\frac{x^2}{2}}$: anche se non ha una primit
         \phi(x) = \frac{1}{\sqrt{2\pi}}e^{\frac{x^2}{2}}.    
     \] La funzione di ripartizione ad essa associata è \[
         \Phi(x) = \frac{1}{\sqrt{2\pi}}\int_{\infty}^x e^{\frac{t^2}{2}}dt.
-    \] La densità gaussiana standard si indica spesso con $N(0, 1)$; inoltre indicheremo con $q_\alpha$ lo $\alpha$-quantile della variabile $N(0, 1)$.
+    \] La densità gaussiana standard si indica spesso con $\NormalDist*{0, 1}$; inoltre indicheremo con $q_\alpha$ lo $\alpha$-quantile della variabile $\NormalDist*{0, 1}$.
 \end{definition}
 
 \begin{remark}
     La densità $\phi$ è una funzione pari: infatti \[
         \phi(-x) = \frac{1}{\sqrt{2\pi}}e^{\frac{(-x)^2}{2}} =  \frac{1}{\sqrt{2\pi}}e^{\frac{x^2}{2}} = \phi(x).
-    \] Da questo segue immediatamente che $\Phi(0) = \nicefrac{1}{2}$.
+    \]
 \end{remark}
 
 \begin{proposition}
-    Vale la seguente proprietà per la funzione di ripartizione della $N(0, 1)$: \[
+    Vale la seguente proprietà per la funzione di ripartizione della $\NormalDist*{0, 1}$: \[
         \Phi(-x) = 1 - \Phi(x).    
     \]
 \end{proposition}
-\begin{proof} Siccome $\Phi$ è pari:
+\begin{proof} Siccome $\phi$ è pari:
     \begin{align*}
         \Phi(-x) &= \int_{-\infty}^{-x} \phi(t)dt \\
         &= \int_x^{+\infty} \phi(t)dt \\
@@ -356,16 +366,20 @@ Consideriamo la funzione $f(x) = e^{-\frac{x^2}{2}}$: anche se non ha una primit
         &= 1 - \Phi(x). \qedhere
     \end{align*}
 \end{proof}
+\begin{remark}
+    Dalla proposizione precedente segue immediatamente che $\Phi(0) = \frac{1}{2}$.
+\end{remark}
+
 \begin{proposition}
     Vale la seguente proprietà per l'$\alpha$-quantile $q_\alpha$ della funzione di ripartizione della variabile gaussiana: \[
         q_{1-\alpha} = - q_{\alpha}.
     \]
 \end{proposition}
 
-La variabile $N(0, 1)$ può essere generalizzata (tramite una trasformazione) ad una variabile di parametri $m$ e $\sigma^2$, detta variabile $N(m, \sigma^2)$.
+La variabile $\NormalDist*{0, 1}$ può essere generalizzata (tramite una trasformazione) ad una variabile di parametri $m$ e $\sigma^2$, detta variabile $\NormalDist*{m, \sigma^2}$.
 
 \begin{definition}
-    [Variabile gaussiana $N(m, \sigma^2)$] Si dice variabile gaussiana $N(m, \sigma^2)$ la variabile $Y$ ottenuta a partire dalla variabile $X = N(0, 1)$ tramite la trasformazione \[
+    [Variabile gaussiana $\NormalDist*{m, \sigma^2}$] Si dice variabile gaussiana $\NormalDist*{m, \sigma^2}$ la variabile $Y$ ottenuta a partire dalla variabile $X = \NormalDist*{0, 1}$ tramite la trasformazione \[
         Y = \sigma X + m.     
     \]
 \end{definition}
@@ -390,5 +404,5 @@ Facciamo alcune osservazioni. \begin{itemize}
     \end{align*}
 \end{itemize}
 
-Il principio fondamentale per descrivere le variabili gaussiane non standard è il seguente: se $Y$ è una variabile $N(m, \sigma)$, allora la variabile $\frac{Y-m}{\sigma}$ è standard.
+Il principio fondamentale per descrivere le variabili gaussiane non standard è il seguente: se $Y$ è una variabile $\NormalDist*{m, \sigma^2}$, allora la variabile $\frac{Y-m}{\sigma}$ è standard.
 

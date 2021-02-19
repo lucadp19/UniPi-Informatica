@@ -112,28 +112,28 @@ Se il campione statistico è formato da variabili gaussiane possiamo studiare me
     \bar X \deq \frac{X_1 + \dots X_n}{n}, \qquad S^2 \deq \frac{\displaystyle \sum_{i=1}^n \parens[\big]{X_i - \bar X}^2}{n-1}    
 \] sono rispettivamente la media campionaria e la varianza campionaria.
 
-\begin{theorem}
+\begin{theorem}\label{th:campione_gaussiano_standard}
     Sia $X_1, \dots, X_n$ un campione statistico di variabili gaussiane standard indipendenti. Valgono i seguenti risultati.
     \begin{enumerate}[label={(\roman*)}]
         \item $\bar X$ e $\sum_{i=1}^n\parens[\big]{X_i - \bar X}^2$ sono indipendenti.
-        \item $\bar X$ ha densità $N(0, 1)$ e $\sum_{i=1}^n\parens[\big]{X_i - \bar X}^2$ ha densità $\chi^2(n-1)$.
+        \item $\bar X$ ha densità $\NormalDist*{0, 1}$ e $\sum_{i=1}^n\parens[\big]{X_i - \bar X}^2$ ha densità $\chi^2(n-1)$.
         \item La variabile $T \deq \sqrt{n} \dfrac{\bar X}{S}$ ha densità di Student con $n-1$ gradi di libertà. 
     \end{enumerate}
 \end{theorem}
 
-Osseriamo che sappiamo già che $\bar X$ ha densità $N(0, 1)$; inoltre \[
-    T = \sqrt{n} \dfrac{\bar X}{S} = \sqrt{n-1} \frac{\sqrt{n} \bar X}{\sqrt{n-1} S} = \sqrt{n-1} \frac{\sqrt{n} \bar X}{\displaystyle \sqrt{\sum_{i=1}^n \parens[\big]{X_i - \bar X}^2}}
+Osseriamo che sappiamo già che $\bar X$ ha densità $\NormalDist*{0, 1}$; inoltre \[
+    T = \sqrt{n} \dfrac{\bar X}{S} = \sqrt{n-1} \frac{\sqrt{n} \bar X}{\sqrt{n-1} S} = \sqrt{n-1} \frac{\sqrt{n} \bar X}{\sqrt{\sum_{i=1}^n \parens[\big]{X_i - \bar X}^2}}
 \] dove l'ultima uguaglianza viene dal fatto che \[
     S = \sqrt{S^2} = \sqrt{\frac{\displaystyle \sum_{i=1}^n \parens[\big]{X_i - \bar X}^2}{n-1}}.
-\] Notiamo quindi che il numeratore di $T$ è una variabile gaussiana standard, mentre il suo denominatore è una variabile $\chi^2{n-1}$, da cui $T$ è una variabile di Student ad $n-1$ gradi di libertà.
+\] Notiamo quindi che il numeratore di $T$ è una variabile gaussiana standard, mentre il suo denominatore è una variabile $\chi^2(n-1)$, da cui $T$ è una variabile di Student ad $n-1$ gradi di libertà.
 
 Questo risultato può essere generalizzato a variabili gaussiane non necessariamente standard. Infatti vale il seguente teorema.
 
-\begin{theorem}
-    Sia $X_1, \dots, X_n$ un campione statistico di variabili gaussiane $N(m, \sigma^2)$ indipendenti. Valgono i seguenti risultati.
+\begin{theorem}\label{th:campione_gaussiano}
+    Sia $X_1, \dots, X_n$ un campione statistico di variabili gaussiane $\NormalDist*{m, \sigma^2}$ indipendenti. Valgono i seguenti risultati.
     \begin{enumerate}[label={(\roman*)}]
         \item $\bar X$ e $\sum_{i=1}^n\parens[\big]{X_i - \bar X}^2$ sono indipendenti.
-        \item $\bar X$ ha densità $N(m, \nicefrac{\sigma^2}{m})$ e $\dfrac{\parens[\big]{X_i - \bar X}^2}{\sigma^2}$ ha densità $\chi^2(n-1)$.
+        \item $\bar X$ ha densità $\NormalDist*{m, \nicefrac{\sigma^2}{m}}$ e $\dfrac{\parens[\big]{X_i - \bar X}^2}{\sigma^2}$ ha densità $\chi^2(n-1)$.
         \item La variabile $T \deq \sqrt{n} \dfrac{\bar X - m}{S}$ ha densità di Student con $n-1$ gradi di libertà. 
     \end{enumerate}
 \end{theorem}

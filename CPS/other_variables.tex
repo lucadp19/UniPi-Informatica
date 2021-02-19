@@ -86,17 +86,17 @@ Come conseguenza immediata se $X \sim \Gamma(r, \lambda)$ e $Y \sim \Gamma(s, \l
     La densità $\chi^2(n)$ è uguale alla densità $\Gamma(\nicefrac{n}{2}, \nicefrac{1}{2})$.
 \end{proposition}
 \begin{proof}
-    È sufficiente dimostrare che se $X$ è gaussiana standard allora $X^2$ ha densità $\Gamma(\nicefrac{n}{2}, \nicefrac{1}{2})$.
+    È sufficiente dimostrare che se $X$ è gaussiana standard allora $X^2$ ha densità $\Gamma(\nicefrac{1}{2}, \nicefrac{1}{2})$.
 
     Consideriamo la funzione generatrice di $X^2$. Essa è uguale a \begin{align*}
-        G_{X^2}(t) &= \Expect*{e^{tX^2}}\\
-        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{tx^2}e^{-\frac{x^2}{2}} dx\\
-        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{-\frac{x^2}{2}(1 - 2t)} dx.\\
+        G_{X^2}(t) &= \Expect*{e^{tX^2}}\\[3pt]
+        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{tx^2}e^{-\frac{x^2}{2}} dx\\[3pt]
+        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{-\frac{x^2}{2}(1 - 2t)} dx.\\[3pt]
         \intertext{Siccome $\int_\R e^{-\frac{x^2}{2\sigma^2}} = \sqrt{2\pi} \cdot \sigma$, ponendo $\sigma \deq \parens*{1 - 2t}^{-\nicefrac12}$ si ottiene }
-        &= \frac{1}{\sqrt{2\pi}} \sqrt{\frac{2\pi}{1-2t}}\\
-        &= \sqrt{\frac{1}{1-2t}}\\
+        &= \frac{1}{\sqrt{2\pi}} \sqrt{\frac{2\pi}{1-2t}}\\[3pt]
+        &= \sqrt{\frac{1}{1-2t}}\\[3pt]
         &= \parens*{\frac{\nicefrac12}{\nicefrac12 - t}}^\frac12,
-    \end{align*} che è proprio la funzione generatrice della funzione $\Gamma(\nicefrac{n}{2}, \nicefrac12)$.
+    \end{align*} che è proprio la funzione generatrice della funzione $\Gamma(\nicefrac{1}{2}, \nicefrac12)$.
 \end{proof}
 
 Lo $\alpha$-quantile della variabile $\chi^2(n)$ è denotato con $\chi^2_{(\alpha, n)}$.
@@ -113,7 +113,7 @@ Inoltre se $C_n$ ha densità $\chi^2(n)$, allora possiamo pensarla come somma di
 \subsection{Densità di Student}
 
 \begin{definition}
-    [Densità di Student] Sia $X \sim N(0, 1)$, $C_n \sim \chi^2(n)$ e siano le due indipendenti. La densità della variabile \[
+    [Densità di Student] Sia $X \sim \NormalDist*{0, 1}$, $C_n \sim \chi^2(n)$ e siano le due indipendenti. La densità della variabile \[
         T_n \deq \frac{X}{\sqrt{\frac{C_n}{n}}} = \sqrt n \frac{X}{\sqrt{C_n}} 
     \] si dice \strong{densità di Student a $n$ gradi di libertà}.
 \end{definition}

@@ -3,7 +3,7 @@
 Consideriamo un campione statistico la cui distribuzione dipende da un parametro $\theta \in \Theta$, dove $\Theta$ è un sottoinsieme di $\R$.
 \begin{definition}
     [Intervallo di fiducia]
-    Siano $0 < \alpha < 1$, $I$ un intervallo con $I \subseteq \Theta$. Si dice che $I$ è un \strong{intervallo di fiducia} per $\theta$ al livello $1 - \alpha$ se per ogni $\theta$ vale che \[
+    Siano $\alpha \in \interval*({0, 1})$, $I \subseteq \Theta$ un intervallo. Si dice che $I$ è un \strong{intervallo di fiducia} per $\theta$ al livello $1 - \alpha$ se per ogni $\theta$ vale che \[
         \Prob_\theta[\big]{\theta \in I} \geq 1 - \alpha.    
     \]
 \end{definition}
@@ -12,38 +12,102 @@ Osseriamo che talvolta può essere più comodo verificare che vale la proprietà
     \Prob_\theta[\big]{\theta \notin I} \leq \alpha.    
 \]
 
-\subsection*{Caso con varianza nota}
+Studieremo gli intervalli di fiducia solo in casi particolari e non in generale.
 
-Supponiamo di avere un campione $X_1, \dots, X_n$ con varianza $\sigma^2$ nota: vogliamo trovare un intervallo di fiducia per la media. Siccome $\bar X$ è la stima della media, è naturale scegliere \[
-    I \deq \interval*[{\bar X - d, \bar X + d}],    
-\] dove $d$ è un'incognita da determinare. Osseriamo che $m \in I$ equivale a dire $\abs*{\bar X - m} \leq d$, dunque $d$ deve essere tale che \[
-    \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} \geq 1 - \alpha    
+\subsection*{Intervallo di fiducia per la media di un campione gaussiano con varianza nota}
+
+Supponiamo di avere un campione $X_1, \dots, X_n$ di variabili aleatorie gaussiane $\NormalDist*{m, \sigma^2}$ con varianza $\sigma^2$ nota: vogliamo trovare un intervallo di fiducia per la media $m$. 
+Siccome $\bar X$ è la stima corretta della media, è naturale scegliere come intervallo un sottoinsieme di $\R$ della forma \[
+    I \deq \interval*[{\bar X(\omega) - d, \bar X(\omega) + d}][\Big],    
+\] dove $d$ è un'incognita da determinare. 
+
+\begin{remark}
+    Con $\bar X(\omega)$ indichiamo il valore assunto dalla variabile aleatoria che rappresenta la media campionaria nell'esperimento compiuto: essa equivale quindi alla media dei dati $\mean{x} = \nicefrac{1}{n}\sum_{i=1}^n x_i$.
+\end{remark}
+
+Osseriamo che 
+\begin{align*}
+    &m \in I\\
+    \iff {}& m \in \interval[{\bar X - d, \bar X + d}][\Big]\\
+    \iff {}& \bar X - d \leq m \leq \bar X + d\\
+    \iff {}& -d \leq m - \bar X \leq d \\
+    \iff {}& \abs*{\bar X - m} \leq d.
+\end{align*}
+
+Imponiamo ora che $I$ sia un intervallo di fiducia al livello $1-\alpha$: deve valere che \[
+    \Prob\set*{m \in I} = \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} \geq 1 - \alpha    
 \] con $d$ più piccolo possibile (poiché vogliamo avere un intervallo di fiducia molto preciso). Questo significa imporre che \[
     \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} \approx 1 - \alpha.
-\] Osserviamo ora che la variabile $\frac{\sqrt{n}}{\sigma} \parens*{\bar X - d}$ è una gaussiana standard, dunque si ha \[
-    \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} = \Prob_m\set*{\frac{\sqrt{n}}{\sigma}\abs*{\bar X - m} \leq \frac{\sqrt{n}}{\sigma}d}
-\] è approssimativamente $1 - \alpha$ ponendo \[
-    \frac{d\sqrt{n}}{\sigma} = q_{1 - \nicefrac{\alpha}{2}}.
-\]
+\] 
+Osserviamo ora che per il \autoref{th:campione_gaussiano} la variabile aleatoria $\bar X$ è ha densità $N\parens*{m, \nicefrac{\sigma^2}{n}}$.
+Sottraendo a $\bar X$ la sua media e dividendo per la radice della varianza otteniamo quindi la variabile $\nicefrac{\sqrt{n}}{\sigma} \parens*{\bar X - d}$, che è una gaussiana standard. Siccome conosciamo i quantili della variabile gaussiana standard possiamo svolgere il seguente calcolo: \begin{align*}
+    \Prob_m\set[\Big]{\abs*{\bar X - m} \leq d} &= \Prob_m\set*{\frac{\sqrt{n}}{\sigma}\abs*{\bar X - m} \leq \frac{\sqrt{n}}{\sigma}d}\\
+    \intertext{Chiamando $Z$ la variabile gaussiana appena definita}
+    &= \Prob_m\set*{\abs*{Z} \leq \frac{\sqrt{n}}{\sigma}d}\\
+    &= \Prob_m\set*{-\frac{\sqrt{n}}{\sigma}d \leq Z \leq \frac{\sqrt{n}}{\sigma}d}\\[5pt]
+    &= \Phi\parens*{\frac{\sqrt{n}}{\sigma}d} - \Phi\parens*{-\frac{\sqrt{n}}{\sigma}d}\\[5pt]
+    &= 2\Phi\parens*{\frac{\sqrt{n}}{\sigma}d} - 1.
+\end{align*} Allora porre la probabilità uguale ad $1 - \alpha$ equivale a dire che \begin{align*}
+    &2\Phi\parens*{\frac{\sqrt{n}}{\sigma}d} - 1 = 1 - \alpha\\
+    \iff {}&\Phi\parens*{\frac{\sqrt{n}}{\sigma}d} = 1 - \frac{\alpha}{2}\\
+    \iff {}&\frac{d\sqrt{n}}{\sigma} = q_{1 - \nicefrac{\alpha}{2}}
+\end{align*} per definizione di quantile della variabile gaussiana.
+
 L'intervallo di fiducia assume quindi la forma \[
-    \bar X \pm \frac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}.
+    \interval*[{\bar X  - \frac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}, \bar X  + \frac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}}].
 \] Il numero $\dfrac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}$ viene detto \emph{precisione della stima} e il numero \[
     \frac{\frac{\sigma}{\sqrt{n}}q_{1-\nicefrac{\alpha}{2}}}{\bar X}    
 \] viene detto \emph{precisione relativa}.
 
-\subsection*{Caso con varianza sconosciuta}
+\subsection*{Intervallo di fiducia per la media di un campione gaussiano con varianza sconosciuta}
 
-In questo caso si sostituisce $\sigma^2$ (che è sconosciuto) con la sua stima corretta, ovvero $S^2$: otteniamo quindi che la variabile \[
+In questo caso si sostituisce $\sigma^2$ (che è sconosciuto) con la sua stima corretta, ovvero $S^2$. Tuttavia in questo caso la variabile \[
     \sqrt{n}\frac{\bar X - m}{S}    
-\] non è più gaussiana, ma è una variabile di Student con densità $T(n-1)$. L'intervallo di fiducia risulterà quindi della forma \[
-    \bar X \pm \frac{S}{\sqrt{n}}\tau_{1 - \nicefrac{\alpha}{2},\ n - 1}.    
+\] non è più gaussiana, ma è una variabile di Student con densità $T(n-1)$ per il \autoref{th:campione_gaussiano}. L'intervallo di fiducia risulterà quindi della forma \[
+    \interval*[{\bar X - \frac{S}{\sqrt{n}}\tau_{\parens*{1 - \nicefrac{\alpha}{2},\ n - 1}}, \bar X + \frac{S}{\sqrt{n}}\tau_{\parens*{1 - \nicefrac{\alpha}{2},\ n - 1}}}].    
 \] Quando $n$ è sufficientemente grande ($n \geq 60$) possiamo approssimare il quantile della variabile di Student $\tau$ con il quantile della variabile gaussiana.
 
 Il quantile più usato frequentemente è $0.05$.
 
 \subsection{Intervalli unilateri e bilateri}
 
-Finora gli intervalli studiati erano \emph{bilateri}: a volte può essere utile considerare intervalli unilateri, ad esempio della forma \[
+Finora gli intervalli studiati erano \emph{bilateri}: a volte può essere utile considerare intervalli unilateri che saranno della forma \[
     \interval*({-\infty, \bar X + \frac{\sigma}{\sqrt{n}}q_{1-\alpha}}], \qquad
-    \interval*[{\bar X + \frac{\sigma}{\sqrt{n}}q_\alpha, +\infty}).
-\] I calcoli vengono seguendo direttamente lo stesso procedimento della parte precedente. Inoltre, nel caso di varianza sconosciuta basta sostituire $\sigma$ con $S$ e i quantili della variabile gaussiana con i quantili della variabile di Student $T(n-1)$.
+    \interval*[{\bar X - \frac{\sigma}{\sqrt{n}}q_\alpha, +\infty}).
+\] I calcoli vengono seguendo direttamente lo stesso procedimento della parte precedente. Inoltre, nel caso di varianza sconosciuta basta sostituire $\sigma$ con la varianza campionaria $S$ e i quantili della variabile gaussiana con i quantili della variabile di Student $T(n-1)$: gli intervalli di fiducia unilateri saranno quindi
+\[
+    \interval*({-\infty, \bar X + \frac{S}{\sqrt{n}}\tau_{\parens*{1-\alpha,\ n-1}}}], \qquad
+    \interval*[{\bar X - \frac{S}{\sqrt{n}}\tau_{\parens*{\alpha,\ n-1}}, +\infty}).
+\]
+
+\subsection*{Intervallo di fiducia per la varianza}
+
+Consideriamo ancora una volta un campione di $n$ variabili aleatorie $X_1, \dots, X_n \sim \NormalDist*{m, \sigma^2}$: questa volta vogliamo trovare un intervallo di fiducia per la varianza $\sigma^2$. La media $m$ è sconosciuta: noteremo infatti che non ha alcuna rilevanza nel corso della costruzione dell'intervallo.
+
+Ricordiamo che per il \autoref{th:campione_gaussiano} la variabile \[
+    \frac{1}{\sigma^2} \sum_{i=1}^n \parens[\big]{X_i - \bar X}^2 = (n-1)\frac{S^2}{\sigma^2} 
+\] ha densità $\chi^2(n-1)$.
+
+Siccome costruire intervalli bilateri è complicato e poco utile, ci concentreremo direttamente su intervalli unilateri ed in particolare sull'unilatero sinistro: la costruzione dell'intervallo destro è equivalente.
+
+Innanzitutto l'intervallo deve essere della forma \[
+    I = \interval*({0, (n-1)\frac{S^2}{a}}],
+\] dove la costante $a$ determina l'ampiezza dell'intervallo. Osserviamo inoltre che la condizione $\sigma^2 \in I$ è equivalente a $\sigma^2 \leq (n-1)\frac{S^2}{a}$, in quanto la varianza sicuramente è positiva. Allora la condizione per il livello diventa:
+\begin{align*}
+    &\Prob\set*{\sigma^2 \in I} \\
+    = {}&\Prob_{\sigma^2}\set[\Big]{\sigma^2 \leq (n-1)\frac{S^2}{a}} \\ 
+    = {}&\Prob_{\sigma^2}\set[\Big]{a \leq (n-1)\frac{S^2}{\sigma^2}} \geq 1 - \alpha. \\
+\end{align*}
+Per avere l'intervallo più piccolo possibile poniamo la probabilità \emph{esattamente} uguale a $1 - \alpha$, ottenendo che \begin{align*}
+    &\Prob_{\sigma^2}\set[\Big]{a \leq (n-1)\frac{S^2}{\sigma^2}} = 1 - \alpha \\
+    \iff {}&1 - \Prob_{\sigma^2}\set[\Big]{(n-1)\frac{S^2}{\sigma^2} \leq a} = 1 - \alpha \\
+    \iff {}&\Prob_{\sigma^2}\set[\Big]{(n-1)\frac{S^2}{\sigma^2} \leq a} = \alpha \\
+    \iff {}&F_{\chi^2(n-1)}(a) = \alpha \\
+    \iff {}&a = \chi^2_{\parens*{\alpha, n-1}}, \\
+\end{align*} dove $\chi^2_{\parens*{\alpha, n-1}}$ indica l'$\alpha$-quantile della variabile $\chi^2(n-1)$.
+
+L'intervallo di fiducia unilatero sinistro è quindi della forma \[
+    \interval*({0, (n-1)\frac{S^2}{\chi^2_{\parens*{\alpha, n-1}}}}].
+\] L'intervallo destro si ricava analogamente al sinistro, ed è della forma \[
+    \interval*[{(n-1)\frac{S^2}{\chi^2_{\parens*{\alpha, n-1}}}, +\infty}).
+\]
