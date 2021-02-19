@@ -1,0 +1,58 @@
+\section{Java Virtual Machine}
+
+Studiamo ora i meccanismi di funzionamento del Java ed in particolare la Java Virtual Machine (JVM).
+
+Un'applicazione Java viene eseguita da un programma chiamato \strong{Java Run-Time}, contenente la JVM e la Java Class Library (JCL), che contiene tutte le librerie del Java.
+
+La Java Virtual Machine è la macchina astratta del Java: essa descrive il \emph{class file format}, ovvero il formato e i vincoli (strutturali e sintattici) che devono essere rispettati da tutti i file \code{.class} a prescindere dalla macchina su cui vengono compilati.
+
+I file prodotti dal compilatore \code{.javac} non sono quindi specifici per un solo tipo di macchina, ma sono universali: è la JVM che si occupa di compilarli nel linguaggio \strong{bytecode}, che è il linguaggio macchina usato dalla JVM. In particolare quindi la JVM è formata da \begin{itemize}
+    \item il \emph{loader}, usato per caricare i file;
+    \item il \emph{verifier}, usato per controllare che i file \code{.class} caricati rispettino le specifiche e non siano quindi malevoli/malformati;
+    \item in \emph{linker}, che collega le librerie e i vari file tra loro, restituendo il bytecode;
+    \item il \emph{bytecode interpreter}, che esegue il programma.
+\end{itemize}
+
+Perché il doppio livello di compilazione?
+\begin{itemize}
+    \item Innanzitutto perché la specifica della JVM non prescrive come deve essere implementata, quindi in questo modo possono essere implementate forme diverse della macchina virtuale.
+    \item Inoltre le macchine hardware non possono avere a che fare con alberi di sintassi astratta, ma operano direttamente sui registri: astraendo sulla macchina hardware possiamo generare un linguaggio vicino alla macchina che però opera su strutture superiori all'architettura.
+\end{itemize}
+
+In particolare il bytecode Java sfrutta uno stack invece dei registri: le operazioni sono fatte sullo stack e lo modificano in modo incrementale, nel senso che ogni operazione viene eseguita sugli elementi che si trovano in testa allo stack e il risultato viene messo in testa allo stack. Lo stack degli operandi viene utilizzato per \begin{itemize}
+    \item trasmettere i parametri ai metodi;
+    \item restituire il risultato di un metodo;
+    \item memorizzare i risultati intermedi delle operazioni;
+    \item memorizzare le variabili locali.
+\end{itemize}
+
+La JVM può quindi essere descritta come una macchina astratta, stack-based e multi-threaded. In particolare ogni thread della JVM contiene \begin{itemize}
+    \item un \strong{program counter}, contenente l'indirizzo dell'istruzione corrente del metodo in esecuzione;
+    \item uno stack chiamato \strong{ambiente}, contenente i record di attivazione (chiamati \strong{frame}) dei metodi. Ogni frame contiene \begin{itemize}
+        \item un array con le variabili locali (\strong{local variable array});
+        \item uno spazio per il valore di ritorno;
+        \item lo stack degli operandi;
+        \item un riferimento alle informazioni di runtime, contenute nella \strong{constant pool}.
+    \end{itemize}
+\end{itemize} In particolare il local variable array contiene tutte le variabili locali del metodo e tutti i parametri, incluso \InlineJava{this} nel caso di metodi non statici. Nel caso di metodi non statici quindi la posizione $0$ è riservata al puntatore \InlineJava{this}, mentre nel caso di metodi statici le variabili locali e i parametri partono dall'indice $0$.
+
+Ogni frame inoltre contiene un puntatore ad una struttura particolare, denominata \strong{constant pool}: essa contiene il descrittore di tipo associato alla classe dove è definito il metodo in esecuzione, e viene usato per fare il linking dinamico. Infatti quando una classe Java viene compilata, tutti i riferimenti a variabili e metodi nella classe sono memorizzati nella constant pool come riferimenti simbolici (nel senso che non indicano effettivamente una locazione fisica di memoria, ma solo logica).
+
+I riferimenti simbolici così introdotti possono essere risolti con le seguenti strategie:
+\begin{itemize}
+    \item possono essere risolti quando le classi vengono caricate, con una strategia \emph{eager};
+    \item possono essere risolti la prima volta che durante l'esecuzione si incontra il riferimento, con una strategia chiamata \emph{lazy resolution}; in particolare se il riferimento è per una classe che ancora non è stata caricata, il programma si occupa di caricarla con una strategia lazy (\strong{lazy class loading});
+    \item ogni riferimento risolto diventa un offset rispetto alla struttura di memorizzazione a runtime.
+\end{itemize}
+
+Lo spazio dedicato alle classi nella JVM viene chiamato \strong{Class Area}. Per ogni classe essa contiene:
+\begin{itemize}
+    \item riferimento al classloader;
+    \item la constant pool;
+    \item i dati relativi alle variabili di istanza;
+    \item i dati relativi ai metodi;
+    \item il codice dei metodi.
+\end{itemize}
+Il bytecode generato dal compilatore \code{javac} viene memorizzato in un file \code{.class} contenente il bytecode dei metodi della classe e la constant pool della classe: quest'ultima viene usata nel class loading per risolvere i riferimenti simbolici nominati precedentemente.
+
+Gli offset di accesso ai metodi non possono invece essere determinati staticamente: essi vengono determinati dinamicamente la prima volta che si trova un riferimento all'oggetto, mentre per eventuali accessi successivi si utilizza l'offset già calcolato. 

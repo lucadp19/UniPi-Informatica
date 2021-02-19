@@ -1,0 +1,41 @@
+\section{Passaggio dei parametri}
+
+Vogliamo ora studiare più in dettaglio le modalità di passaggio dei parametri nei vari linguaggi di programmazione.
+
+Innanzitutto lo scopo dell'\emph{astrazione parametrica} è quella di poter usare lo stesso frammento di codice con dati diversi a seconda della necessità: in particolare la \emph{funzione} viene dichiarata con una lista di \strong{parametri formali}, che rappresentano dei placeholder per i valori che verranno sostituiti in seguito. I valori passati alla funzione (chiamati \strong{parametri attuali}) sono nella forma di una lista di espressioni: ognuno di essi verrà sostituito al posto del corrispondente parametro formale.
+
+Il passaggio dei parametri è quindi una specie di \emph{dichiarazione dinamica}: al momento della chiamata di funzione viene fatto un binding tra il parametro formale e il valore ottenuto dalla valutazione del parametro attuale. Esistono quindi diverse modalitàdi passaggio di parametri:
+\begin{itemize}
+    \item passaggio per costante;
+    \item passaggio per riferimento;
+    \item passaggio di oggetti;
+    \item passaggio di funzioni o procedura.
+\end{itemize}
+
+\paragraph{Passaggio per costante} Nel caso di passaggio per costante il valore passato deve essere un valore \emph{immutable}: il sottoprogramma non può modificarlo. Questo tipo di passaggio è il tipo di tutti i linguaggi funzionali, ma è presente anche in alcuni linguaggi imperativi.
+
+\paragraph{Passaggio per riferimento} In questo caso il parametro formale ha come tipo un valore modificabile: viene passata una locazione di memoria, quindi possiamo direttamente modificare il suo contenuto e gli effetti si ripercuotono all'esterno della procedura (fenomeno dell'\strong{aliasing}). Spesso il passaggio per riferimento non è realizzato concretamente, ma simulato attraverso passaggio del \emph{valore} di puntatori (come nel caso del C).
+
+\paragraph{Passaggio di oggetti} In questo caso il parametro formale ha come tipo un \emph{puntatore ad un oggetto}: non possiamo modificare il puntatore, ma attraverso esso possiamo modificare l'oggetto puntato.
+
+\paragraph{Passaggio di funzioni} Il parametro formale ha come tipo una funzione, procedura o classe: l'espressione passata come parametro attuale deve essere il nome di una classe o anche un'espressione che ritorna una funzione, dunque la sua valutazione è una chiusura. Questo tipo particolare di parametro può essere solamente passato ulteriormente ad altre funzioni, oppure può essere attivato (la funzione può essere chiamata o la classe può essere istanziata tramite la \InlineJava{new}). Siccome nei linguaggi imperativi e object-oriented solitamente le funzioni non sono esprimibili, questo tipo di passaggio di parametri è presente principalmente nei linguaggi funzionali.
+
+Esistono anche altre tecniche di passaggio di parametri, come \begin{itemize}
+    \item \strong{passaggio per valore} o \strong{risultato}: in questi caso oltre all'ambiente si valuta anche la memoria;
+    \item \strong{passaggio per nome}: il parametro attuale non viene valutato.
+\end{itemize}
+
+\paragraph{Passaggio per valore} Questo meccanismo coinvolge valori modificabili e pertanto non esiste nei linguaggi funzionali puri: consiste nel creare una variabile con il nome del parametro formale ed assegnare ad essa il valore del parametro attuale. In questo modo dobbiamo quindi coinvolgere la memoria, in quanto scriviamo nella locazione occupata dal parametro formale il valore del parametro attuale.
+In particolare, se l'assegnamento è implementato correttamente l'ambiente non viene coinvolto, non viene creato aliasing e non si possono avere effetti laterali (cioè eventuali modifiche al parametro formale non si ripercuotono all'esterno della funzione).
+
+\paragraph{Passaggio per valore-risultato} Nel caso si voglia modificare anche il parametro attuale modificando il parametro formalem, ma senza ricorrere agli effetti laterali diretti del passaggio per riferimento, si può implementare un meccanismo di passaggio per valore-risultato: come nel caso precedente quando la funzione viene chiamata si assegna il valore del parametro attuale alla variabile che rappresenta il parametro formale, ma alla fine della funzione viene anche fatto l'assegnamento inverso, per cui la variabile del parametro attuale viene modificata.
+
+Esiste anche un passaggio per risultato, dove viene fatto solo il secondo assegnamento.
+
+Osserviamo che il passaggio per valore-risultato è diverso dal passaggio per riferimento: infatti nel primo caso si crea una copia del valore del parametro attuale, per cui durante l'esecuzione della funzione i due parametri si riferiscono a due variabili (e quindi a due locazioni di memoria) diverse che possono evolvere indipendentemente; invece nel secondo caso le due variabili si riferiscono alla stessa locazione di memoria (\emph{aliasing}) e quindi ogni modifica fatta al parametro formale si ripercuote immediatamente sul parametro attuale.
+
+\paragraph{Passaggio per nome} Nel caso del passaggio per nome l'espressione passata in corrispondenza del parametro attuale non viene valutata immediatamente: verrà valutata ogni volta che si incontra (eventualmente) un'occorrenza del parametro formale durante l'esecuzione della funzione. L'espressione non valutata diventa quindi una \emph{chiusura} contenente l'espressione e l'ambiente al momento della definizione: ogni volta che sarà necessario valutarla, dovremo farlo nell'ambiente di definizione.
+
+Un'espressione passata per nome è quindi equivalente ad una funzione senza parametri: ogni volta che vogliamo valutarla dobbiamo fare lo stesso procedimento che seguiamo nel caso di un'applicazione di funzione. Una peculiarità delle espressioni passate per nome è che vanno sempre valutate nell'ambiente di definizione, anche nel caso di linguaggi con scoping dinamico.
+
+Questo meccanismo di passaggio è presente in linguaggi come l'ALGOL e il LISP, è alla base del meccanismo di valutazione lazy di Haskell ed è simulabile in altri linguaggi funzionali (come OCaml) tramite funzioni senza parametri.

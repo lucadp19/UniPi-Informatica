@@ -114,27 +114,27 @@ let rec eval (e : expr) (env : evT env) : evT =
 Per valutare le operazioni di base usiamo delle funzioni ausiliarie.
 \begin{OCaml}
 let int_add (n : evT) (m : evT) : evT =
-  match typecheck IntTag n, typecheck IntTag m, n, m with
+  match typecheck "int" n, typecheck "int" m, n, m with
   | true, true, Int a, Int b -> Int (a + b)
   | _, _, _, _               -> raise TypeError
 
 let int_sub (n : evT) (m : evT) : evT =
-  match typecheck IntTag n, typecheck IntTag m, n, m with
+  match typecheck "int" n, typecheck "int" m, n, m with
   | true, true, Int a, Int b -> Int (a - b)
   | _, _, _, _               -> raise TypeError
 
 let int_times (n : evT) (m : evT) : evT =
-  match typecheck IntTag n, typecheck IntTag m, n, m with
+  match typecheck "int" n, typecheck "int" m, n, m with
   | true, true, Int a, Int b -> Int (a * b)
   | _, _, _, _               -> raise TypeError
 
 let is_zero (n : evT) : evT =
-  match typecheck IntTag n, n with
+  match typecheck "int" n, n with
   | true, Int a -> Bool (a = 0)
   | _, _        -> raise TypeError
 
 let int_equals (v1 : evT) (v2 : evT) : evT =
-  match typecheck IntTag v1, typecheck IntTag v2, v1, v2 with
+  match typecheck "int" v1, typecheck "int" v2, v1, v2 with
   | true, true, Int n, Int m -> Bool (n = m)
   | _, _, _, _               -> raise TypeError
 

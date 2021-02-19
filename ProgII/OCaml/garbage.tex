@@ -1,0 +1,62 @@
+\section{Garbage collection}
+
+Abbiamo visto studiando la JVM che durante l'esecuzione di un programma Java si usano tre tipi di memoria:
+\begin{itemize}
+    \item una \emph{static area} dove vengono allocati contenuti definiti a tempo di compilazione;
+    \item un \emph{run-time stack}, che è di dimensione variabile e viene usato per allocare i vari record di attivazione dei sottoprogrammi e dei blocchi;
+    \item uno \emph{heap}, di dimensione fissa o variabile, usato per allocare oggetti e strutture dati dinamiche tramite il costrutto \InlineJava{new}.
+\end{itemize}
+
+Nella prima area vi sono generalmente le variabili globali, le variabili locali dei sottoprogrammi (non ricorsivi), le costanti determinate a tempo di compilazione, le tabelle usate dal supporto a runtime per effettuare ad esempio il type checking e in generale tutte le entità che hanno un indirizzo di memoria assoluto che viene mantenuto per tutta l'esecuzione del programma.
+
+Nello stack, come abbiamo visto diverse volte, abbiamo un record di attivazione per ogni istanza di un sottoprogramma con le informazioni relative a quella determinata istanza.
+
+Lo \strong{heap} invece è la regione di memoria in cui possiamo allocare e deallocare blocchi di memoria in momenti arbitrari. Esso è necessario quando il linguaggio permette \begin{itemize}
+    \item allocazione esplicita di memoria a run-time (come con il costrutto \InlineJava{new} o con la primitiva \mintinline{C}{malloc} del C);
+    \item oggetti di dimensioni variabili;
+    \item oggetti con vita non esprimibile da una struttura dati LIFO come una pila.
+\end{itemize}
+Tuttavia una corretta gestione dello heap non è banale: vediamo innanzitutto delle possibili implementazioni.
+
+\paragraph{Implementazione con blocchi di dimensione fissa}
+La prima implementazione dello heap può essere la seguente: scegliamo un'area di memoria da usare come heap e suddividiamola in blocchi di dimensione fissa (abbastanza limitata). Questi blocchi vengono usati per formare una lista (detta \emph{lista libera}) contenente tutti i blocchi che non sono stati allocati dal programma. 
+
+Inizialmente la lista contiene tutti i blocchi dello heap, ma ogni volta che viene allocato un oggetto tramite la \InlineJava{new} alcuni di questi blocchi vengono rimossi dalla lista libera e usati per contenere le informazioni dell'oggetto creato. Quando la memoria occupata dall'oggetto viene liberata i corrispondenti blocchi vengono restituiti alla lista libera e possono essere riusati per successive allocazioni.
+
+Questo metodo è semplice, ma porta ad una grande frammentazione dello heap poiché la dimensione fissa dei blocchi non è necessariamente la più adatta in ogni circostanza.
+
+\paragraph{Heap con blocchi variabili} In questa seconda implementazione inizialmente lo heap è formato da un unico blocco. Ad ogni richiesta di allocazione si cerca il blocco di dimensione opportuna usando una delle seguenti due strategie:
+\begin{itemize}
+    \item \strong{first fit}: si sceglie il primo blocco grande abbastanza per contenere l'oggetto da allocare;
+    \item \strong{best fit}: tra i blocchi grandi a sufficienza per contenere l'oggetto da allocare si sceglie il blocco più piccolo (con il minor spreco di spazio quindi).
+\end{itemize}
+Se il blocco scelto è molto più grande del necessario viene diviso in due e la parte inutilizzata viene restituita alla lista libera; stessa cosa succede quando il contenuto di un blocco viene deallocato, ed in particolare se un blocco adiacente è libero i due vengono fusi in un unico blocco.
+
+\subsection*{Garbage collection}
+
+In alcuni linguaggi (come ad esempio il C/C++) la gestione della memoria viene lasciata interamente al programmatore: ogni blocco di memoria allocato dinamicamente va deallocato dinamicamente. Seppure questa scelta garantisca la massima flessibilità ed efficienza, un uso scorretto della memoria fa emergere diversi problemi, come ad esempio
+\begin{itemize}
+    \item memory leaks, che avvengono quando strutture vengono allocate e mai deallocate;
+    \item dangling reference, quando dei puntatori continuano a puntare ad aree di memoria deallocate;
+    \item heap fragmentation, che si ha quando la lista libera dello heap è molto frammentata a seguito di diverse allocazioni e deallocazioni.
+\end{itemize}
+In più, da un punto di vista più concettuale, la gestione esplicita della memoria viola il principio di astrazione: è necessario quindi che questo processo sia automatizzato.
+
+Il \strong{Garbage Collector} è un componente della macchina virtuale che esegue un programma di un dato linguaggio: ad esempio linguaggi come Lisp, Scheme, Java, Haskell contengono un garbage collector nella loro macchina virtuale, mentre le macchine virtuali del C e C++ generalmente no.
+
+Vediamo i principali problemi da risolvere.
+\paragraph{Frammentazione} Esistono due tipi di frammentazione: la \strong{frammentazione interna} e la \strong{frammentazione esterna}. 
+
+Si parla di \strong{frammentazione interna} quando viene allocato un blocco di dimensione maggiore di quella strettamente necessaria: una parte dello spazio allocato è sprecato.
+
+Si parla invece di \strong{frammentazione esterna} quando vogliamo allocare un blocco di una certa dimensione $x$ e la quantità di memoria libera ce lo consente, ma la memoria libera è frammentata e ognuno dei blocchi liberi non è abbastanza grande per allocare un blocco di dimensione $x$.
+
+\paragraph{Gestione dell'allocazione} Dobbiamo inoltre decidere quale tipo di strategia usare per allocare i blocchi: la strategia first fit è più veloce ma spreca più memoria, mentre la strategia best fit è più lenta ma più efficiente nella gestione della memoria.
+
+\paragraph{Identificazione dei blocchi da deallocare} Un'altra scelta che dobbiamo fare è come decidere quali blocchi vanno deallocati. Nel caso di una deallocazione esplicita è semplice, in quanto basta seguire il puntatore passato come parametro alla funzione \mintinline{C}{free} (nel caso del C): tuttavia questo meccanismo può causare i problemi visti precedentemente e quindi si preferisce avere una gestione automatica.
+
+Nel caso di deallocazione automatica diciamo che una porzione di memoria è recuperabile (nel senso che può essere deallocata) se non è più \emph{raggiungibile} dal resto del programma. Dobbiamo quindi capire come definire precisamente il concetto di raggiungibilità.
+
+\subsection*{Tecniche di garbage collection}
+
+Studiamo ora le principali tecniche di garbage collection.

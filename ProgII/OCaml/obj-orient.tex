@@ -1,0 +1,82 @@
+\chapter{Semantica dei linguaggi Object-Oriented}
+
+\section{Classi e metodi}
+
+Vogliamo quindi estendere lo studio dei blocchi e delle astrazioni procedurali in generale allo studio di classi e oggetti. La differenza principale con quanto studiato prima è che le classi ci forniscono un meccanismo per creare un ambiente e una memoria \emph{permanenti}, cioè che sopravvivono alla creazione dell'oggetto, e \emph{accessibili} e \emph{utilizzabili} da chiunque possieda il loro meccanismo di accesso.
+
+Sappiamo che un tale meccanismo di astrazione può essere utilizzato nella maggior parte dei linguaggi orientati agli oggetti attraverso la parola chiave \InlineJava{new}: essa viene usata per \emph{attivare} un nuovo oggetto e con esso il suo ambiente locale.
+
+\subsection*{Implementazione delle variabili di istanza}
+
+Nell'ambiente locale di un oggetto sono certamente contenute le sue variabili di istanza. La strategia che utilizziamo per implementare le variabili di istanza è un semplice ambiente locale statico contenente i legami tra i nomi delle variabili (e il loro descrittore di tipo) e i loro valori. Ad esempio se considerassimo il codice \begin{Java}
+    class A {
+        int a1;
+        int a2;
+    }
+    A obj = new A(4, 5);
+\end{Java}
+l'ambiente locale statico di \InlineJava{obj} è formato da due campi (uno per ogni variabile di istanza) che contengono i due binding, più dello spazio per il descrittore di tipo della classe \InlineJava{A}.
+
+Tuttavia sappiamo che il meccanismo dell'ereditarietà ci consente di avere variabili non dichiarate esplicitamente in una classe, ma ereditate dalla classe padre, come nel seguente esempio:
+\begin{Java}
+    class A {
+        int a1;
+        int a2;
+    }
+    class B extends A {
+        int b;
+    }
+\end{Java}
+Ogni oggetto di tipo \InlineJava{B} conterrà all'interno del suo ambiente locale (e in particolare all'inizio) i campi relativi alle variabili ereditate.
+
+In questo modo risolviamo molto semplicemente alcuni possibili problemi:
+\begin{itemize}
+    \item la gestione dell'ereditarietà singola è immediata;
+    \item la gestione dello \emph{shadowing} (la sottoclasse ha variabili con lo stesso nome della classe padre) è altrettanto immediata;
+    \item se sono previsti meccanismi di controllo statico è facile implementare un accesso diretto ai vari campi dell'oggetto tramite un \emph{indirizzo di base} e un \emph{offset}.
+\end{itemize}
+
+\subsection*{Metodi e dispatching}
+
+I metodi di una classe sono comuni a tutti gli oggetti di una data classe, quindi viene naturale memorizzarli in un'unica area di memoria a cui si può accedere conoscendo il tipo della variabile che stiamo considerando.
+
+Tuttavia, l'implementazione dei metodi non può essere così immediata. Infatti consideriamo il caso delle \emph{interfacce} in Java:
+\begin{Java}
+    List<String> l = ...
+    l.add("ciao");
+\end{Java}
+Essendo \InlineJava{List} solo un'interfaccia, essa non implementa direttamente il metodo \InlineJava{add}: esso viene implementato dalle varie classi che rispettano l'interfaccia \InlineJava{List} in modi diversi, quindi per eseguirlo dobbiamo conoscere la classe dell'oggetto \InlineJava{l}. 
+L'invocazione di un metodo deve quindi necessariamente \emph{passare per l'oggetto}: questa nozione viene chiamata \strong{dynamic dispatch}.
+
+La soluzione al problema delle interfacce è quindi quello di associare alla classe una tabella (detta \strong{tabella dei metodi} oppure \strong{dispatch table/vector}) che contiene il binding dei metodi e il descrittore di tipo della classe: ogni oggetto della classe contiene un riferimento alla tabella dei metodi, dunque possiamo eseguire ogni metodo della classe anche quando lavoriamo con le interfacce. 
+
+I metodi in sé sono implementati come normali funzioni, quindi quando sono invocati creano un record di attivazione sullo stack con i campi già visti in precedenza. Tuttavia ogni metodo deve poter accedere alle variabili di istanza dell'oggetto: l'oggetto diventa quindi un \emph{parametro implicito} del metodo, e il riferimento ad esso è dato dal puntatore \InlineJava{this}.
+
+Come risolviamo i problemi di ereditarietà per quanto riguarda i metodi? Esistono due soluzioni.
+
+\paragraph{Soluzione Smalltalk} Nel linguaggio Smalltalk i dispatch vector di classi in gerarchia formano una \emph{lista di tabelle}: la tabella dei metodi di una classe contiene solo i metodi effettivamente implementati dalla classe; per accedere ai metodi della classe padre bisogna risalire la lista di tabelle fino a trovare il metodo cercato. Questa soluzione è particolarmente semplice, ma porta ad un discreto overhead in run-time.
+
+\paragraph{Sharing Strutturale} La soluzione di \strong{sharing strutturale} è quella adottata da linguaggi come il C++ e il Java: ogni classe ha la sua tabella dei metodi contenente i nomi dei metodi e dei \emph{puntatori} al codice. In questo modo una classe che eredita un metodo deve semplicemente inizializzare il puntatore al codice già creato precedentemente. In particolare ogni metodo è identificabile staticamente attraverso il suo offset nella tabella dei metodi, quindi l'overhead a runtime della prima soluzione è azzerato.
+
+\subsection*{Metodi statici}
+
+I metodi statici vengono implementati come se fossero delle procedure dei linguaggi imperativi: non potendo accedere alle variabili di istanza non hanno bisogno del puntatore \InlineJava{this} all'oggetto, e quindi sono semplicemente delle funzioni nell'ambiente globale.
+
+% \subsection*{Ereditarietà multipla}
+
+% In alcuni linguaggi di programmazione (come ad esempio il C++) le classi possono ereditare da più di una classe. Si creano però alcuni problemi: consideriamo ad esempio il seguente codice.
+% \begin{minted}{cpp}
+%     class A { int m(); }
+%     class B { int m(); }
+%     class C extends A, B {
+%         ...
+%     }
+% \end{minted}
+
+% Quale metodo \mintinline{cpp}{m()} viene ereditato dalla classe \mintinline{cpp}{C}?
+
+\subsection*{Compilazione separata}
+
+Alcuni linguaggi (come il Java) implementano il meccanismo della \emph{compilazione separata delle classi}: la compilazione di una classe produce del codice che viene caricato dalla macchina astratta del linguaggio \emph{dinamicamente} quando il programma effettua un riferimento alla classe (\strong{class loading}).
+
+In questo caso gli offset non possono essere calcolati staticamente in quanto si possono fare modifiche non visibili alla struttura delle classi.
