@@ -1,0 +1,33 @@
+\section{Teoremi di contorno}
+
+\begin{proposition}
+    [$9$-periodico]
+    \label{prop:9_periodico}
+    In base $10$ i numeri $0.\bar{9}$ e $1$ sono uguali. 
+\end{proposition}
+Forniamo due diverse dimostrazioni di questa proposizione.
+\begin{proof}
+    [Prima dimostrazione]
+    Dalle formule per trasformare i numeri periodici in frazioni sappiamo che $0.\bar{9} = \nicefrac{9}{9} = 1$. 
+\end{proof}
+\begin{proof}
+    [Seconda dimostrazione]
+    Espandendo la definizione di numero periodico otteniamo che \[
+        0.\bar{9} = 0.999\dots = 9\cdot10\inv + 9\cdot10^{-2} + 9\cdot 10^{-3} + \dots = \sum_{i=1}^\infty 9\cdot10^{-i}.
+    \] Sfruttando la formula della serie geometrica si ottiene che \begin{align*}
+        \sum_{i=1}^\infty 9\cdot10^{-i} &= 9 \cdot \sum_{i=1}^\infty \parens*{\frac{1}{10}}^i\\
+        &= 9 \cdot \parens*{\parens*{\sum_{i=0}^\infty \parens*{\frac{1}{10}}^i} - \parens*{\frac{1}{10}}^0}\\
+        &= 9 \cdot \parens*{\frac{1}{1-\nicefrac{1}{10}} - 1}\\
+        &= 9 \cdot \parens*{\frac{10}{9} - 1}\\
+        &= 9 \cdot \frac{1}{9}\\
+        &= 1. \qedhere
+    \end{align*}
+\end{proof}
+
+La proposizione vale in generale in una base $\beta$ qualsiasi ($\beta \geq 2$).
+\begin{proposition}
+    In base $\beta$ ($\beta \geq 2$) vale che $0.\overline{(\beta-1)} = 1$.  
+\end{proposition}
+\begin{proof}
+    La dimostrazione è uguale alla seconda dimostrazione della \autoref{prop:9_periodico}.
+\end{proof}

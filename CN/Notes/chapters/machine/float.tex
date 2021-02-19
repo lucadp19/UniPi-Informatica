@@ -1,0 +1,141 @@
+\section{Rappresentazione dei numeri di macchina}
+
+Il primo problema da risolvere quando si vuole fare analisi numerica è scegliere un metodo per rappresentare i numeri reali su una macchina. Infatti un generico numero reale ha potenzialmente una scrittura decimale infinita, dunque essendo le risorse disponibili in una macchina \emph{finite} dobbiamo trovare un modo di approssimarlo. 
+
+\subsection{Virgola fissa}
+Il primo metodo è il metodo \strong{a virgola fissa}: in questo metodo si rappresentano tutti i numeri nella loro forma decimale normale e si considerano esattamente $k$ cifre dopo la virgola.
+
+Questo metodo è molto semplice e ci consente di fare operazioni elementari (come le somme o i prodotti) immediatamente ("in colonna"), tuttavia ha anche degli svantaggi evidenti, come \begin{itemize}
+    \item il range dei numeri rappresentabili su $n$ cifre/bit è piccolo;
+    \item siccome il numero di bit dedicato ai numeri dopo la virgola è basso, la precisione è molto bassa e assolutamente non adeguata ad applicazioni di analisi numerica.
+\end{itemize}
+Per questo è stata inventata la rappresentazione in virgola mobile.
+
+\subsection{Virgola mobile}
+Innanzitutto dobbiamo trovare un modo standard per rappresentare un qualsiasi numero reale. Per far ciò ci viene in aiuto il seguente teorema.
+
+\begin{theorem}
+    [Teorema di rappresentazione in base]
+    \label{th:rapp_base}\ \\
+    Sia $x \in \R$ e sia $\beta \geq 2$ una base di rappresentazione. 
+    
+    Allora esistono e sono unici un \strong{esponente} $p \in \Z$ e una successione di \strong{cifre} $\seqn[\big]{d_i}_{i \in \N}$ (con $d_i \in \Z$ per ogni $i$) tali che
+    \begin{enumerate}[(i)]
+        \item $d_1 \neq 0$;
+        \item per ogni $i$ vale che $0 \leq d_i \leq \beta - 1$;
+        \item la successione $d$ non è definitivamente uguale a $\beta - 1$, ovvero per ogni $k > 0$ esiste un $j \geq k$ tale che $d_j \neq \beta - 1$;
+        \item vale che \[
+            x = \sgn{x} \cdot \beta^p \cdot \parens*{\sum_{i=1}^\infty d_i\beta^{-i}}.
+        \] 
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    Consideriamo ad esempio il numero reale $123$. Per il \autoref{th:rapp_base} possiamo esprimere $123$ come \[
+        123 = +10^3 \cdot (0.123) = + 10^3 \cdot (1 \cdot 10\inv + 2 \cdot 10^{-2} + 3 \cdot 10^{-3}).
+    \] Questa rappresentazione è l'unica possibile se imponiamo che $d_1$ sia diverso da $0$ e che le cifre della rappresentazione siano tutte considerate come \emph{cifre decimali} moltiplicate per una certa potenza della base (in questo caso $3$).
+\end{example}
+
+La rappresentazione data dal \autoref{th:rapp_base} è essenzialmente il concetto di \emph{notazione scientifica}: in notazione scientifica portiamo il numero reale in modo che abbia una singola cifra diversa da zero prima della virgola, mentre nella notazione data dal Teorema quella cifra diventa la prima cifra dopo la virgola. 
+Inoltre, il Teorema ci garantisce che questa rappresentazione non è solamente valida in base $10$, ma lo è in qualsiasi base (noi lo useremo in particolare in base $2$).
+
+Il fattore $\beta^p$ viene detto \strong{esponente}, mentre la parte decimale (corrispondente alla sommatoria) viene detta \strong{mantissa}. 
+
+\begin{remark} 
+    Le ipotesi (i) e (iii) del \hyperref[th:rapp_base]{Teorema} sono fondamentali per l'unicità della rappresentazione. In effetti
+    \begin{itemize}
+        \item se venisse a mancare la prima condizione avremmo che \[
+            123 = +10^3 \cdot (0.123) = +10^4 \cdot (0.0123) = +10^5 \cdot (0.00123) = \dots;
+        \]
+        \item se venisse a mancare la terza condizione 
+        (che ci dice che la successione $d$ non può terminare con una sequenza infinita di $(\beta - 1)$, ovvero il numero non può finire con $\beta-1$ periodico) 
+        avremmo dei problemi più subdoli, che derivano dalla non esistenza del "\emph{$9$ periodico}" (dimostrata in appendice, \autoref{prop:9_periodico}). 
+        
+        Infatti in qualsiasi base $\beta$ il numero $0.\overline{(\beta-1)}$ è uguale a $1$, quindi se ammettessimo entrambe le rappresentazioni verrebbe meno l'unicità.
+    \end{itemize}
+\end{remark}
+
+\begin{notation}
+    Useremo la notazione $\parens{n}_\beta$ per riferirci al numero $n$ espresso in base $\beta$. 
+\end{notation}
+
+Ad esempio il numero $(1011)_2$ si riferisce al numero \[
+    1 \cdot 2^3 + 0 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 = 8 + 2 + 1 = 11 \text{ (in base $10$).}
+\]
+
+Per rappresentare i numeri reali in macchina dobbiamo quindi risolvere ancora due problemi:
+\begin{itemize}
+    \item la macchina usa (nella maggior parte dei casi) la base $2$, quindi dobbiamo poter trasformare da base $10$ in base $2$;
+    \item dobbiamo rappresentare i numeri infiniti in modo approssimato.
+\end{itemize}
+
+Per quanto riguarda il primo, l'algoritmo per trasformare un numero decimale (in base $10$) in un numero in base $2$ è il seguente:
+\begin{enumerate}
+    \item si trasforma la parte intera (le cifre prima della virgola) in base $2$ tramite divisioni successive per $2$;
+    \item si trasforma la parte decimale (le cifre dopo la virgola) in base $2$ tramite \emph{moltiplicazioni} successive per $2$.
+\end{enumerate}
+
+\begin{example}
+    Trasformiamo $3.15$ in base $2$: ovviamente $(3)_{10} = (11)_2$ e quindi rimane solo da trasformare la parte decimale. 
+    
+    L'algoritmo consiste nel prendere il numero decimale $0.15$ e moltiplicarlo per $2$ ripetutamente: se il risultato ha come cifra prima della virgola uno $0$ aggiungiamo uno $0$ alla rappresentazione in base $2$, altrimenti un $1$. Nella pratica:
+    \begin{align*}
+        0.15 \cdot 2 &= \boxed{0}.30 \\
+        0.30 \cdot 2 &= \boxed{0}.60 \\
+        0.60 \cdot 2 &= \boxed{1}.20 \\
+        0.20 \cdot 2 &= \boxed{0}.40 \\
+        0.40 \cdot 2 &= \boxed{0}.80 \\
+        0.80 \cdot 2 &= \boxed{1}.60 \\
+        0.60 \cdot 2 &= \boxed{1}.20 \\
+        &\vdotswithin{=} 
+    \end{align*} 
+
+    Osserviamo che ripetendo il procedimento la sequenza $(0.60, 0.20, 0.40, 0.80)$ si ripete all'infinito, dunque il numero in base $2$ termina con le cifre $1001$ ripetute periodicamente. La parte decimale in base $2$ corrisponde quindi a $(0.00\overline{1001})_2$.
+
+    Il numero completo è quindi \[
+        (11.00\overline{1001})_2 = 2^2 \cdot (0.1100\overline{1001})_2.
+    \]
+\end{example}
+
+Per rappresentare i numeri infiniti dobbiamo approssimare la parte decimale, considerando solo un numero finito $t$ di cifre dopo la virgola. Per far ciò esistono due metodi (che esamineremo più nel dettaglio nel seguito):
+\begin{itemize}
+    \item nel caso del \strong{troncamento} si considerano le prime $t$ cifre dopo la virgola e si scartano tutte le successive;
+    \item nel caso dell'\strong{arrotondamento} analizziamo la cifra decimale di posto $t+1$: \begin{itemize}
+        \item se $d_{t+1}$ appartiene all'intervallo $\interval*[{0, \frac{\beta}{2}})$ (dove $\beta$ è la base) consideriamo semplicemente le prime $t$ cifre;
+        \item altrimenti (se $d_{t+1} \in \interval*[{\frac{\beta}{2}, \beta}]$ aggiungiamo $1$ all'ultima cifra decimale (come riporto, quindi lo propaghiamo in caso sia necessario).
+    \end{itemize}
+\end{itemize}
+
+\begin{example}
+    Riprendiamo il numero considerato precedentemente, ovvero \[
+        (3.15)_{10} = 2^2 \cdot (0.1100\overline{1001})_2
+    \] e approssimiamolo a $t = 8$ cifre decimali.
+    
+    Nel caso del troncamento basta considerare le prime $8$ cifre decimali, quindi il numero troncato è \[
+        2^2 \cdot (0.11001001)_2.
+    \] Nel caso dell'arrotondamento invece dobbiamo considerare la nona cifra decimale: espandendo la rappresentazione decimale osserviamo che la nona cifra è \[
+        0.11001001\underline100\dots;
+    \] siccome $1 \in \interval*[{\frac{2}{2}, 2}] = \interval*[{1, 2}]$ dobbiamo \emph{approssimare per eccesso}, ottenendo \[
+        2^2 \cdot (0.11001010)_2.
+    \]
+\end{example}
+
+\subsection{Insieme dei numeri di macchina}
+
+Siccome un singolo numero può occupare una quantità fissa in memoria (tipicamente $32$ o $64$ bit) dobbiamo fissare dei limiti per l'esponente e per il numero di cifre decimali che possiamo usare per la rappresentazione. 
+Osserviamo inoltre che, se le nostre risorse sono limitate, aumentando il numero di cifre decimali disponibili dobbiamo necessariamente diminuire lo spazio dedicato a memorizzare l'esponente e viceversa.
+
+\begin{definition}
+    [Insieme dei numeri di macchina] 
+    Sia $\beta \geq 2$ una base, $t$ il numero di cifre decimali utilizzabili e siano $m,\ M \in \Z$ gli estremi per l'esponente (ovvero ogni esponente $p$ rappresentabile deve appartenere a $\interval[{-m, M}]$). Si dice allora \strong{insieme dei numeri di macchina} l'insieme\[
+        \FF(\beta, t, m, M) \deq \set{0} \union 
+        \begin{aligned}[t]
+            \big\{\; x \in \R \;:\; &x = \sgn{x}\cdot\beta^p\sum_{i=1}^\infty d_i\beta^{-i},\\[-1em]
+            &d_1 \neq 0,\\
+            &0 \leq d_i \leq \beta-1,\\ 
+            &-m \leq p \leq M \;\big\}.
+        \end{aligned}
+    \] 
+\end{definition}
+
+Chiamiamo $\Omega$ il più grande numero di macchina. 

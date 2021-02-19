@@ -1,0 +1,28 @@
+\documentclass[italian,oneside,headinclude,10pt]{scrbook}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp}
+    \usepackage{microtype}
+    \usepackage{base-preamble}
+    \usepackage{algebra}
+
+    \geometry{margin=1.4in}
+
+\setcounter{MaxMatrixCols}{20}
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Calcolo Numerico}
+\maketitle
+
+\tableofcontents
+
+\chapter{Aritmetica di macchina}
+\input{chapters/machine/float.tex}
+
+\appendix
+\chapter{Appendice A}
+\input{chapters/appendix/smallth.tex}
+\end{document}
