@@ -1,0 +1,151 @@
+\section{Struttura algebrica degli interi modulo m}
+
+\begin{definition}[Classe di resto]
+    Siano $a, n \in \Z$; allora si dice classe di resto $\eqcl{a}_n$ l'insieme 
+    \begin{equation}
+        \eqcl{a}_n = \set*{x \in \Z \given x \congr a \Mod{n}}.
+    \end{equation}
+    Il numero $a$ si dice rappresentante della classe $\eqcl{a}_n$.
+\end{definition}
+
+Quando il modulo è chiaro dal contesto si scrive anche $\eqcl{a}$ oppure $\eqcl+{a}$.
+
+Due classi di resto si dicono uguali se contengono gli stessi elementi.
+Il rappresentante di una classe non è unico, anzi per ogni classe ci sono infinite scelte che corrispondono a tutti i numeri appartenenti alla classe. Vale quindi la seguente osservazione:
+\begin{remark}
+    $a \congr b \Mod{m} \iff \eqcl{a}_n = \eqcl{b}_n$.
+\end{remark}
+
+Notiamo che per ogni numero $n$ ci sono esattamente $n$ classi di resto modulo $n$: infatti ce n'é una esattamente per ogni possibile resto della divisione per $n$, cioè per ogni numero tra $0$ e $n-1$ inclusi.
+
+\begin{definition}[Insieme degli interi modulo $n$]
+    Si dice insieme degli interi modulo $n$ l'insieme
+    \begin{equation}
+        \Zmod{n} = \set*{ \eqcl{0}_n, \eqcl{1}_n, \dots,\eqcl{n-1}_n}.
+    \end{equation}
+\end{definition}
+
+Possiamo definire due operazioni in $\Zmod{n}$ che sono le operazioni di somma ($+ : \Zmod{n} \times \Zmod{n} \to \Zmod{n}$) e prodotto ($\cdot : \Zmod{n} \times \Zmod{n} \to \Zmod{n}$) tali che:
+\begin{align}
+    &\eqcl{a}_n + \eqcl{b}_n = \eqcl{a+b}_n    &\forall \eqcl{a}_n, \eqcl{b}_n \in \Zmod{n}\\
+    &\eqcl{a}_n \cdot \eqcl{b}_n = \eqcl{ab}_n &\forall \eqcl{a}_n, \eqcl{b}_n \in \Zmod{n}
+\end{align}
+
+\begin{remark}
+    Le operazioni di somma e prodotto sono ben definite: il loro risultato non cambia a seconda dei rappresentanti scelti per le classi di congruenza.
+\end{remark}
+
+\begin{proposition}[$\Zmod{n}$ è un anello]\label{Z(n)_anello}
+    Per ogni $n \geq 2$ l'insieme $\Zmod{n}$ con le operazioni di somma e prodotto tra classi e con gli elementi $[0]_n, [1]_n$ che svolgono il ruolo di $0$ e $1$ è un anello commutativo.
+\end{proposition}
+\begin{proof}
+    è facile verificare che valgono gli assiomi degli anelli.
+\end{proof}
+
+\begin{proposition}[$\Zmod{p}$ è un anello]
+    Per ogni $p \geq 2$, $p$ primo, l'insieme $\Zmod{p}$ con le operazioni di somma e prodotto tra classi e con gli elementi $[0]_n, [1]_n$ che svolgono il ruolo di $0$ e $1$ è un campo.
+\end{proposition}
+\begin{proof}
+    Per la proposizione \ref{Z(n)_anello} sappiamo che $\Zmod{p}$ è un anello commutativo. Per la proposizione \ref{invertibilita_mod_m} un numero è invertibile modulo $p$ se e solo se è coprimo con $p$; ma tutti i numeri che non sono multipli di $p$ sono coprimi con $p$, dunque tutte le classi tranne $[0]_p$ sono invertibili, dunque esiste l'inverso per la moltiplicazione per ogni elemento non nullo, cioè $\Zmod{p}$ è un campo.
+\end{proof}
+
+\subsection*{Gruppo degli inversi modulo m}
+
+Gli elementi invertibili modulo $n$ formano un sottoinsieme molto importante degli interi modulo $n$.
+
+\begin{definition}[Insieme degli invertibili]
+    Sia $n \geq 2$. Allora si indica con $\units{\parens*{\Zmod{n}}}$ l'insieme delle classi resto invertibili modulo $n$, ovvero \begin{equation}
+        \units{\parens*{\Zmod{n}}} = \set*{\eqcl{a}_n \given \exists [a^{-1}]_n \in \Zmod{n}. \quad \eqcl{a}_n\eqcl*{a^{-1}}_n = \eqcl{1}_n}.
+    \end{equation} 
+\end{definition}
+
+\begin{proposition}[Il prodotto di classi invertibili è invertibile]\label{prodotto_invertibili_invertibile}
+    Sia $n \geq 2$. Allora se $\eqcl+{a}, \eqcl+{b} \in \units{\parens*{\Zmod{n}}}$ segue che $\eqcl+{ab} \in \units{\parens*{\Zmod{n}}}$.
+\end{proposition}
+\begin{proof}
+    Ci basta dimostrare che $\eqcl+{ab}$ è invertibile modulo $n$. Sia $[x]$ l'inverso, se esiste. Allora:
+    \begin{alignat*}{1}
+        &\eqcl+{ab}\cdot\eqcl+{x} = \eqcl+{1} \\
+        \iff &\eqcl+{a} \cdot \eqcl+{b} \cdot \eqcl+{x} = \eqcl+{1} \\
+        \iff &\eqcl+{a} \cdot \eqcl+{b} \cdot \eqcl+{x} \cdot \eqcl+*{a^{-1}} \cdot \eqcl+*{b^{-1}} = \eqcl+{a^{-1}} \cdot \eqcl+{b^{-1}} \\
+        \iff &\eqcl+{x} = \eqcl+{a^{-1}} \cdot \eqcl+{b^{-1}} = \eqcl+{a^{-1}b^{-1}}.
+    \end{alignat*}
+    ovvero $\eqcl+{ab}$ è invertibile e $\eqcl+{a^{-1}b^{-1}}$ è il suo inverso.
+\end{proof}
+
+\begin{proposition}[$\units{\parens*{\Zmod{n}}}$ è un gruppo]\label{Z(n)*_gruppo}
+    Per ogni $n \geq 2$ l'insieme $\units{\parens*{\Zmod{n}}}$ con l'operazione di prodotto tra classi e con l'elemento $\eqcl{1}_n$ che svolge il ruolo di $1$ è un gruppo commutativo.
+\end{proposition}
+
+\begin{definition}[Funzione di Eulero]
+    Sia $n \geq 2$. Allora si dice funzione di Eulero la funzione $\eulerphi : \N \to \N$ tale che \begin{equation}
+        \eulerphi(n) = \card*{\units{\parens*{\Zmod{n}}}}
+    \end{equation}
+    ovvero $\eulerphi(n)$ è il numero di elementi invertibili in $\Zmod{n}$.
+\end{definition}
+
+\begin{proposition}
+    Sia $p \in \Z$, $p$ primo. Allora $\eulerphi(p) = p - 1$. 
+\end{proposition}
+\begin{proof}
+    Tutti le classi resto in $\Zmod{p}$ tranne $[0]$ sono coprime con $p$, dunque ci sono $p-1$ classi invertibili.
+\end{proof}
+
+\begin{proposition}
+    Siano $n, p \in \Z$, $p$ primo. Allora $\eulerphi(p^n) = p^n - p^{n-1}$. 
+\end{proposition}
+\begin{proof}
+    Il numero di elementi in $\Zmod{p^n}$ è $p^n$. 
+    
+    Da essi dobbiamo escludere tutti i numeri che non sono coprimi con $p^n$, che sono tutti i numeri che contengono $p$ nella loro fattorizzazione in primi, cioè tutti i multipli di $p$.
+    In $\set{0, \dots, p^n - 1}$ ci sono esattamente $\frac{p^n}{p} = p^{n-1}$ multipli di $p$ (ve ne è uno ogni $p$ elementi).
+
+    Dunque $\eulerphi(p^n) = p^n - p^{n-1}$.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b \in \Z$, $\gcd{a, b} = 1$. Allora \begin{equation}
+        \eulerphi(ab) = \eulerphi(a)\eulerphi(b).
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per definizione di $\eulerphi$ la tesi è equivalente a \[
+        \abs{\units{\Zmod{ab}}} = \abs{\units{\Zmod{a}}}\abs{\units{\Zmod{b}}}.
+    \]
+    Dalla proposizione \ref{cardinalita_prodotto_cartesiano} del capitolo sulla combinatoria sappiamo che il prodotto tra le cardinalità è la cardinalità del prodotto cartesiano, dunque la tesi è equivalente a \[
+        \abs{\units{\Zmod{ab}}} = \abs{\units{\Zmod{a}}\times\units{\Zmod{b}}}.
+    \]
+
+    è sufficiente dunque dimostrare che esiste una corrisponenza biunivoca tra i due insiemi. Scelgo la funzione $f$ tale che \[
+        f([c]_{ab}) = \ang{[c]_a, [c]_b}    
+    \] e dimostro che $f$ è bigettiva.
+
+    \begin{description}
+        \item[Iniettività.] Siano $[h]_{ab}, [k]_{ab} \in \units{\parens*{\Zmod{ab}}}$ tali che $f([h]_{ab}) = f([k]_{ab})$, cioè equivalentemente $\ang{[h]_a, [h]_b} = \ang{[k]_a, [k]_b}$. Dimostriamo che segue che $[h]_{ab} = [k]_{ab}$.
+        
+        Per definizione di $f$ segue che \[
+            \left\{
+            \begin{alignedat}{1}
+                &h \congr k \Mod{a}\\
+                &h \congr k \Mod{b}
+            \end{alignedat}
+            \right.   
+        \] Dunque per il Teorema Cinese del Resto (\ref{th_cinese_2}) (dato che $\gcd{a, b} = 1$) segue che deve valere $h \congr k \Mod{ab}$, ovvero $[k]_{ab} = [h]_{ab}$, ovvero $f$ è iniettiva.
+        \item[Surgettività.] Sia $\ang{[r]_a, [s]_b} \in \units{\Zmod{a}}\times\units{\Zmod{b}}$. Dimostriamo che esiste un $[x]_{ab} \in \units{\Zmod{ab}}$ tale che $f([x]_{ab}) = \ang{[r]_a, [s]_b}$.
+        
+        Per il teorema cinese dei resti (\ref{th_cinese}), esiste ed è unico $[x]_{ab} \in \Zmod{ab}$ tale che \[
+            \left\{
+            \begin{alignedat}{1}
+                &x \congr r \Mod{a}\\
+                &x \congr s \Mod{b}
+            \end{alignedat}
+            \right.   
+        \] 
+        
+        Dimostriamo ora che $[x]_{ab}$ è invertibile.
+                
+        Dato che $[r]_a$ e $[s]_b$ sono invertibili segue che $x$ dovrà essere invertibile modulo $a$ e modulo $b$, dunque $\gcd{x}{a} = \gcd{x}{b} = 1$. Per la proposizione \ref{mcd_togliere_fattori_non_comuni}, dato che $\gcd{x}{a} = 1$ allora $\gcd{x}{ab} = \gcd{x}{b} = 1$, dunque $x$ è invertibile modulo $ab$, cioè $[x]_{ab} \in \units{\Zmod{ab}}$, ovvero $f$ è surgettiva.
+    \end{description}
+
+    Dunque $f$ è bigettiva e quindi segue la tesi.
+\end{proof}

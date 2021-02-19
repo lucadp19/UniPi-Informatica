@@ -1,0 +1,46 @@
+\documentclass[italian,oneside,headinclude,10pt]{scrbook}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp}
+    \usepackage{microtype}
+    \usepackage{base-preamble}
+    \usepackage{algebra}
+
+\renewcommand{\Zmod}[1]{\quot{\Z}{\ideal*{#1}}}
+
+\makeatletter
+\renewcommand{\gcdname@}{\operatorname{mcd}}
+\renewcommand{\lcmname@}{\operatorname{mcm}}
+\makeatother
+
+\let\oldgcd\gcd
+\let\oldlcm\lcm
+\renewcommand{\gcd}{\oldgcd+}
+\renewcommand{\lcm}{\oldlcm+}
+% \renewcommand{\Zmod}[1]{\Z/_{\ideal*{#1}}}
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Matematica Discreta}
+\maketitle
+
+\tableofcontents
+
+\include{number_sets}
+
+\input{Chapter_1/divisors}
+\input{Chapter_1/euclid-bezout}
+\input{Chapter_1/primes}
+\input{Chapter_1/diophantines}
+
+\input{Chapter_3/congr}
+\input{Chapter_3/Z_n}
+\input{Chapter_3/binomials}
+\input{Chapter_3/congr_exp}
+
+% \include{chapter_4_combinatoria}
+% \include{chapter_5_polinomi}
+
+\end{document}

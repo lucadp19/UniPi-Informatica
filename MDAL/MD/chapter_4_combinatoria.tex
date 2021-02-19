@@ -18,7 +18,7 @@ Notiamo che le coppie con gli stessi elementi ma diverso ordine sono diverse: pr
     A \times B = \left\{ (4, 3), (4, 4), (4, 5), (5, 3), (5, 4), (5, 5), (6, 3), (6, 4), (6, 5)\right\}   
 .\] Quindi $(4, 5) \neq (5, 4)$ ad esempio.
 
-Possiamo definire anche un prodotto cartesiano di tre o piu' insiemi nello stesso modo: gli elementi del prodotto cartesiano di $n$ insiemi si dicono $n$-uple oppure stringhe.
+Possiamo definire anche un prodotto cartesiano di tre o più insiemi nello stesso modo: gli elementi del prodotto cartesiano di $n$ insiemi si dicono $n$-uple oppure stringhe.
 
 \begin{proposition}[Cardinalità del prodotto cartesiano]\label{cardinalita_prodotto_cartesiano}
     Siano $A_1, \dots, A_n$ insiemi. Allora \begin{equation}
@@ -63,9 +63,9 @@ Dato che alcuni elementi si ripetono, scambiandoli di posto otterremmo una strin
 
 Per capire come ottenere il numero di anagrammi, consideriamo un esempio. Prendiamo la parola ASSASSINI e rendiamo le lettere distinte tra loro aggiungendo dei pedici, ottenendo A$_1$S$_1$S$_2$A$_2$S$_3$S$_4$I$_1$NI$_2$. A questo punto il numero di anagrammi di questa parola è esattamente il numero di permutazioni senza ripetizioni, dunque $9!$ stringhe. 
 
-Se torniamo alla parola originale pero' alcune possibilità sono contate piu' volte, in quanto si ottengono scambiando due lettere uguali (ad esempio A$_1$S$_1$S$_2$A$_2$S$_3$S$_4$I$_1$NI$_2$ e A$_1$S$_3$S$_2$A$_2$S$_1$S$_4$I$_1$NI$_2$ si ottengono l'una dall'altra scambiando una S, dunque contano come la stessa stringa). 
+Se torniamo alla parola originale pero' alcune possibilità sono contate più volte, in quanto si ottengono scambiando due lettere uguali (ad esempio A$_1$S$_1$S$_2$A$_2$S$_3$S$_4$I$_1$NI$_2$ e A$_1$S$_3$S$_2$A$_2$S$_1$S$_4$I$_1$NI$_2$ si ottengono l'una dall'altra scambiando una S, dunque contano come la stessa stringa). 
 
-Possiamo scambiare le $4$ S tra loro in $4!$ modi, le A in $2!$ modi e le I in $2!$ modi; il risultato sarà quindi ottenuto dividendo il numero totale delle permutazioni per ciascuno dei modi di permutare le lettere uguali (che sono il numero di possibilità che contiamo piu' volte), ottenendo in questo caso \[ 
+Possiamo scambiare le $4$ S tra loro in $4!$ modi, le A in $2!$ modi e le I in $2!$ modi; il risultato sarà quindi ottenuto dividendo il numero totale delle permutazioni per ciascuno dei modi di permutare le lettere uguali (che sono il numero di possibilità che contiamo più volte), ottenendo in questo caso \[ 
     \frac{9!}{4!2!2!}
 .\]
 
@@ -73,7 +73,7 @@ Possiamo scambiare le $4$ S tra loro in $4!$ modi, le A in $2!$ modi e le I in $
 
 Consideriamo un insieme di $n$ elementi distinti e cerchiamo di contare i modi di estrarre da questo insieme un sottoinsieme di $k$ elementi; dato che siamo interessati ai sottoinsiemi l'ordine degli elementi non è rilevante, dunque il numero che cerchiamo deve essere minore di $D_{n, k}$.
 
-Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni senza ripetizioni} e indichiamolo con $C_{n, k}$. Possiamo notare che ogni sottoinsieme ottenuto corrisponde ad una stringa di lunghezza $k$ che puo' essere permutata in $P_k$ modi per ottenere tutte le disposizioni possibili. Dunque \begin{alignat*}
+Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni senza ripetizioni} e indichiamolo con $C_{n, k}$. Possiamo notare che ogni sottoinsieme ottenuto corrisponde ad una stringa di lunghezza $k$ che può essere permutata in $P_k$ modi per ottenere tutte le disposizioni possibili. Dunque \begin{alignat*}
     {1}
     C_{n, k}P_k   &= D_{n, k}  \\
     \iff C_{n, k} &= \frac{D_{n,k}}{P_k}\\
@@ -96,7 +96,7 @@ Chiamiamo il numero di sottoinsiemi distinti \textbf{numero delle combinazioni s
     Quante sono le stringhe binarie di lunghezza $n$? Quante sono le stringhe binarie di lunghezza $10$ con $3$ cifre '$1$' e $7$ cifre '$0$'?
 \end{example}
 \begin{solution}
-    Ogni posizione di una stringa binaria puo' essere riempita con $2$ valori ('0' oppure '1') e ci sono $n$ posizioni, dunque il numero di stringhe possibili è il numero di disposizioni con ripetizione di $2$ elementi in $n$ posizioni, cioè $2^n$.
+    Ogni posizione di una stringa binaria può essere riempita con $2$ valori ('0' oppure '1') e ci sono $n$ posizioni, dunque il numero di stringhe possibili è il numero di disposizioni con ripetizione di $2$ elementi in $n$ posizioni, cioè $2^n$.
 
     Per risolvere il secondo punto possiamo scegliere due strade equivalenti.
     \begin{enumerate}[(i)]
@@ -142,7 +142,7 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
         \item Scelgo tre numeri pari. Allora il problema diventa equivalente a scegliere tre numeri tra i numeri pari da 1 a 100, che sono 50; abbiamo quindi \[
             \binom{50}{3} = \frac{50!}{3!47!} = \frac{50 * 49 * 48}{3 \cdot 2}   
         \] modi per scegliere tre numeri pari.
-        \item Scelgo due numeri dispari e un pari. I due numeri dispari vanno scelti in $\binom{50}{2}$ modi, in quanto non conta l'ordine; il pari puo' essere scelto tra uno qualsiasi dei 50 numeri pari, dunque abbiamo \[
+        \item Scelgo due numeri dispari e un pari. I due numeri dispari vanno scelti in $\binom{50}{2}$ modi, in quanto non conta l'ordine; il pari può essere scelto tra uno qualsiasi dei 50 numeri pari, dunque abbiamo \[
             50\binom{50}{2} = 50\frac{50!}{2!48!} = 50\frac{50 * 49}{2}
         \] modi.
     \end{enumerate}
@@ -160,11 +160,11 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
         \overbrace{1 \dots 1}^{x \text{ volte}} \mid   \overbrace{1 \dots 1}^{y \text{ volte}} \mid\overbrace{1 \dots 1}^{z \text{ volte}}
     \] dove le linee verticali fanno da separatori tra i gruppi di uni che vanno contate nelle $x$, nelle $y$ e nelle $z$. 
     
-    Dato che la somma deve fare $4$ devono esserci 4 uni e due separatori, cioè in totale 6 oggetti; allora il numero di soluzioni puo' essere ottenuto trovando il numero di permutazioni di questi oggetti, che è \[
+    Dato che la somma deve fare $4$ devono esserci 4 uni e due separatori, cioè in totale 6 oggetti; allora il numero di soluzioni può essere ottenuto trovando il numero di permutazioni di questi oggetti, che è \[
         \frac{6!}{2!4!} = \frac{6 \cdot 5}{2} = 15.
     \]
 
-    Alternativamente dopo aver rappresentato la soluzione come stringa di uni e separatori, potevamo equivalentemente scegliere 2 posizioni su 6 per mettere i separatori, e cio' si puo' fare in \[
+    Alternativamente dopo aver rappresentato la soluzione come stringa di uni e separatori, potevamo equivalentemente scegliere 2 posizioni su 6 per mettere i separatori, e cio' si può fare in \[
         \binom{6}{2} = \frac{6!}{2!4!} = 15    
     \] modi. A quel punto tutte le altre posizioni vengono occupate da uni, dunque la soluzione al problema non cambia.
 \end{solution}
@@ -209,7 +209,7 @@ Ad esempio se $A = \{1, 2, 3\}$ allora \[
         [(i)]
         \item Coloro la prima riga: dato che non ho ulteriori restrizioni lo posso fare in $2^3 = 8$ modi. Ora ho solo 7 modi per colorare la seconda riga, in quanto non posso ripetere la stessa colorazione della prima; e infine ho 6 modi per colorare l'ultima, in quanto non posso ripetere la prima o la seconda. In totale ho quindi $8\cdot 7\cdot 6$ modi di colorare la tabella.
         \item Ho $3$ possibilità per scegliere la riga bianca. Ora ho $7$ modi per colorare la prima riga non bianca e sempre 7 modi per colorare la seconda riga non bianca (devo escludere la colorazione formata da 3 quadratini bianchi). In totale ho dunque $3 \cdot 7\cdot 7$ modi di colorare la tabella.
-        \item Potrei pensare di ragionare in questo modo: scelgo una riga monocromatica tra 3; posso colorarla in due modi (tutta bianca o tutta nera); ora posso colorare le due righe rimanenti in 8 modi ciascuna. In realtà questo ragionamento non funziona, perché conterei piu' volte combinazioni in cui ci sono piu' righe monocromatiche.
+        \item Potrei pensare di ragionare in questo modo: scelgo una riga monocromatica tra 3; posso colorarla in due modi (tutta bianca o tutta nera); ora posso colorare le due righe rimanenti in 8 modi ciascuna. In realtà questo ragionamento non funziona, perché conterei più volte combinazioni in cui ci sono più righe monocromatiche.
         
         Abbiamo quindi due modi alternativi a disposizione. \begin{enumerate}[1.]
             \item Conto separatamente i casi in cui ci sono una, due o tre righe monocromatiche.
@@ -272,7 +272,7 @@ Forniamo ora una dimostrazione del teorema del Binomiale (\ref{binomiale}) usand
                 &= x^3 + 3x^2y + 3xy^2 + y^3.
     \end{alignat*}
 
-    Ognuno di questi monomi puo' essere semplificato alla forma $x^ky^h$, ma dato che il numero di $x$ e $y$ deve essere $n$ segue che $k + h = n$, cioè $h = n - k$, cioè ogni monomio puo' essere scritto nella forma $x^ky^{n-k}$. Dato che ogni monomio ha al minimo 0 fattori uguali a $x$ e al massimo $n$ fattori uguali a $x$, sommando i monomi uguali insieme otterremo:
+    Ognuno di questi monomi può essere semplificato alla forma $x^ky^h$, ma dato che il numero di $x$ e $y$ deve essere $n$ segue che $k + h = n$, cioè $h = n - k$, cioè ogni monomio può essere scritto nella forma $x^ky^{n-k}$. Dato che ogni monomio ha al minimo 0 fattori uguali a $x$ e al massimo $n$ fattori uguali a $x$, sommando i monomi uguali insieme otterremo:
     \begin{alignat*}
         {1}
         (x+y)^n &= c_0x^0y^n + c_1x^1y^{n-1} + \dots + c_{n-1}x_{n-1}y_1 + c_nx^ny^0\\
@@ -316,7 +316,7 @@ Ora calcoliamo il numero di possibilità per ogni combinazione che dà punteggio
     \item[\textbf{Scala reale.}] Ho 10 scale reali per seme: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che ho 4 semi, il numero totale di scale reali è $4 \cdot 10 = 40$. 
     \item[\textbf{Colore.}] Scegliamo un seme (4 possibilità). Allora il numero di colori che possiamo fare in un dato seme equivale al numero di modi in cui possiamo scegliere 5 carte di quel seme, che è $\binom{13}{5}$. Dunque in totale il numero di colori che non siano scale reali è $4\binom{13}{5}-40$.
     \item[\textbf{Scala.}] Ci sono 10 sequenze di valori possibili che formano una scala: infatti ne posso costruire una che parte da 1, una che parte da 2,..., una che parte da 10. Dato che posso scegliere liberamente il seme di ogni carta della scala, il numero totale di scale è $4^5 \cdot 10$. Sottraendo ad esse il numero di scale reali otteniamo il numero di scale non reali, che sono $4^5 \cdot 10 - 40$.
-    \item[\textbf{Poker.}] Scelgo innanzitutto la carta che si deve ripetere 4 volte, e dato che ho 13 valori diversi avro' 13 possibilità di sceglierla. Dopo devo scegliere l'ultima carta, che puo' essere una qualunque tra le $52 - 4 = 48$ rimanenti. Dunque in totale ho $13\cdot 48$ modi per fare poker.
+    \item[\textbf{Poker.}] Scelgo innanzitutto la carta che si deve ripetere 4 volte, e dato che ho 13 valori diversi avro' 13 possibilità di sceglierla. Dopo devo scegliere l'ultima carta, che può essere una qualunque tra le $52 - 4 = 48$ rimanenti. Dunque in totale ho $13\cdot 48$ modi per fare poker.
     \item[\textbf{Full.}] Scelgo il valore della carta che formerà il tris, e posso sceglierlo in 13 modi; poi scelgo il valore della carta che formerà la coppia, che posso scegliere in $13-1 = 12$ modi. 
     
     Ora devo scegliere i valori dei semi: per quanto riguarda il tris devo scegliere 3 semi su 4 (l'ordine non conta), e posso farlo in $\binom{4}{3} = 4$ modi; per quanto riguarda la coppia devo scegliere 2 semi su 4 e posso farlo in $\binom{4}{2} = 6$ modi. 
@@ -328,12 +328,12 @@ Ora calcoliamo il numero di possibilità per ogni combinazione che dà punteggio
     \item[\textbf{Doppia coppia.}] Scelgo il valore delle due coppie tra 13 valori possibili in $\binom{13}{2}$ modi; ora scelgo i semi delle due coppie, e posso farlo in $\binom{4}{2}$ per la prima e $\binom{4}{2}$ per la seconda. 
     
     Scelgo la quinta carta in modo che abbia un valore diverso dalle due coppie per non contare anche i full: dunque posso sceglierla in $13 - 2 = 11$ modi per 4 semi diversi. In totale ho quindi $4 \cdot 11\binom{13}{2}\binom{4}{2}^2$ modi di ottenere una doppia coppia.
-    \item[\textbf{Coppia.}] Scelgo il valore della coppia tra 13 valori possibili e i semi in $\binom{4}{2}$ modi. Scelgo le tre carte rimanenti diverse tra di loro e diverse dal valore della coppia per evitare doppie coppie, full e poker: dunque ho $\binom{12}{3}$ modi di sceglierle e, dato che ognuna di esse puo' avere un seme qualunque, ho $4$ possibilità per ciascuna. In totale ho quindi $4^3 \cdot 13 \binom{4}{2} \binom{12}{3}$ modi di fare coppia.
+    \item[\textbf{Coppia.}] Scelgo il valore della coppia tra 13 valori possibili e i semi in $\binom{4}{2}$ modi. Scelgo le tre carte rimanenti diverse tra di loro e diverse dal valore della coppia per evitare doppie coppie, full e poker: dunque ho $\binom{12}{3}$ modi di sceglierle e, dato che ognuna di esse può avere un seme qualunque, ho $4$ possibilità per ciascuna. In totale ho quindi $4^3 \cdot 13 \binom{4}{2} \binom{12}{3}$ modi di fare coppia.
 \end{itemize}
 
 \section{Principio di Inclusione-Esclusione}
 
-Il principio di inclusione-esclusione mette in relazione la cardinalità dell'unione di due o piu' insiemi con la cardinalità delle intersezioni e degli insiemi presi singolarmente. Per due insiemi vale che \begin{equation}
+Il principio di inclusione-esclusione mette in relazione la cardinalità dell'unione di due o più insiemi con la cardinalità delle intersezioni e degli insiemi presi singolarmente. Per due insiemi vale che \begin{equation}
     \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}.
 \end{equation}
 Per tre insiemi vale che \begin{alignat*}{1}
@@ -408,7 +408,7 @@ Dunque per $n$ insiemi si sommano le cardinalità degli insiemi, poi si sottragg
     Quante sono le funzioni $f : \N_n \to \N_k$ iniettive?
 \end{example}
 \begin{solution}
-    Dato che la funzione è iniettiva, i valori in output devono essere tutti diversi tra loro. Ovviamente se $k > n$ non puo' esserci una funzione iniettiva da $\N_n$ a $\N_k$, dunque il numero di funzioni iniettive è 0 in questo caso.
+    Dato che la funzione è iniettiva, i valori in output devono essere tutti diversi tra loro. Ovviamente se $k > n$ non può esserci una funzione iniettiva da $\N_n$ a $\N_k$, dunque il numero di funzioni iniettive è 0 in questo caso.
 
     Supponiamo $k \leq n$. Dunque scelgo il valore di $f(1)$ in $n$ modi, il valore di $f(2)$ in $n-1$ modi, eccetera. In totale il numero di funzioni iniettive che rispettano queste proprietà è \[
         n(n-1) \cdots (n-k+1) = \frac{n!}{(n-k)!} = D_{n, k}.    

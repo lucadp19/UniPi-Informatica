@@ -3,7 +3,7 @@
 \section{Strutture algebriche fondamentali}
 
 \begin{definition}[Gruppo]
-    Si dice \textbf{gruppo} una tripla ($G$, $\cdot$, $e$) formata da \begin{itemize}
+    Si dice \strong{gruppo} una tripla ($G$, $\cdot$, $e$) formata da \begin{itemize}
         \item un insieme di elementi $G$;
         \item un operazione $\cdot : A \times A \to A$ detta prodotto;
         \item un elemento $e \in G$
@@ -15,14 +15,14 @@
             &\text{(P2)}      &&(ab)c = a(bc)         &\text{(associatività di $\cdot$)}\\
             &\text{(P3)}      &&a \cdot e=e \cdot a=a &\text{($e$ el. neutro di $\cdot$)}\\
             &\text{(P4)}     &&\exists a^{-1} \in G. \quad aa^{-1} = e &\text{(inverso per $\cdot$)}
-            \intertext{Si dice \textbf{gruppo commutativo} un gruppo per cui vale inoltre il seguente assioma:}
+            \intertext{Si dice \strong{gruppo commutativo} un gruppo per cui vale inoltre il seguente assioma:}
             &\text{(P5)}     &&ab = ba               &\text{(commutatività di $\cdot$)}
         \end{align*}
     \end{description}
 \end{definition}
 
 \begin{definition}[Anello]
-    Si dice \textbf{anello} una quintupla ($A$, $+$, $\cdot$, $0$, $1$) formata da
+    Si dice \strong{anello} una quintupla ($A$, $+$, $\cdot$, $0$, $1$) formata da
     \begin{itemize}
         \item un insieme di elementi $A$;
         \item un operazione $+ : A \times A \to A$ detta somma;
@@ -43,7 +43,7 @@
             &\text{(P3)}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
             &\text{(P4)}      &&(a+b)c = ac + bc      &\text{(distributività 1)} \\
             &\text{(P5)}     &&a(b+c) = ab + ac      &\text{(distributività 2)}
-            \intertext{Si dice \textbf{anello commutativo} un anello per cui vale inoltre il seguente assioma:}
+            \intertext{Si dice \strong{anello commutativo} un anello per cui vale inoltre il seguente assioma:}
             &\text{(P6)}     &&ab = ba               &\text{(commutatività di $\cdot$)}
         \end{align*}
     \end{description} 
@@ -52,37 +52,37 @@
 Un tipico esempio di anello commutativo è $\Z$: infatti gli anelli generalizzano le operazioni che possiamo fare sui numeri interi e le loro proprietà fondamentali per estenderle ad altri insiemi con la stessa struttura algebrica.
 
 \begin{definition}[Campo]
-    Si dice \textbf{campo} una quintupla ($F$, $+$, $\cdot$, $0$, $1$) formata da
+    Si dice \strong{campo} una quintupla ($\K$, $+$, $\cdot$, $0$, $1$) formata da
     \begin{itemize}
-        \item un insieme di elementi $F$;
-        \item un operazione $+ : F \times F \to F$ detta somma;
-        \item un operazione $\cdot : F \times F \to F$ detta prodotto;
-        \item un elemento $0 \in F$;
-        \item un elemento $1 \in F$
+        \item un insieme di elementi $\K$;
+        \item un operazione $+ : \K \times \K \to \K$ detta somma;
+        \item un operazione $\cdot : \K \times \K \to \K$ detta prodotto;
+        \item un elemento $0 \in \K$;
+        \item un elemento $1 \in \K$
     \end{itemize}  per cui valgono i seguenti assiomi: 
     \begin{description}
-        \item[(Assiomi di campo)] Per ogni $a, b, c \in F$ vale che
+        \item[(Assiomi di campo)] Per ogni $a, b, c \in \K$ vale che
         \begin{align*}
-            &\text{(S1)}      &&(a+b) \in F           &\text{(chiusura rispetto a $+$)}\\
+            &\text{(S1)}      &&(a+b) \in \K           &\text{(chiusura rispetto a $+$)}\\
             &\text{(S2)}      &&a+b = b+a             &\text{(commutatività di $+$)}\\
             &\text{(S3)}      &&(a+b)+c = a+(b+c)     &\text{(associatività di $+$)}\\
             &\text{(S4)}      &&a+0=0+a=a             &\text{(0 el. neutro di $+$)}\\
-            &\text{(S5)}      &&\exists (-a) \in F. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
-            &\text{(P1)}      &&(ab) \in F            &\text{(chiusura rispetto a $\cdot$)}\\        
+            &\text{(S5)}      &&\exists (-a) \in \K. \quad a+(-a) = 0 &\text{(opposto per $+$)}\\
+            &\text{(P1)}      &&(ab) \in \K            &\text{(chiusura rispetto a $\cdot$)}\\        
             &\text{(P2)}      &&ab = ba               &\text{(commutatività di $\cdot$)}\\
             &\text{(P3)}      &&(ab)c = a(bc)         &\text{(associatività di $\cdot$)}\\
             &\text{(P4)}      &&a \cdot 1=1 \cdot a=a &\text{(1 el. neutro di $\cdot$)}\\
             &\text{(P5)}     &&(a+b)c = ac + bc      &\text{(distributività)} \\
-            &\text{(P6)}     &&a \neq 0 \implies \exists a^{-1} \in F. \quad aa^{-1} = 1 &\text{(inverso per $\cdot$)}
+            &\text{(P6)}     &&a \neq 0 \implies \exists a^{-1} \in \K. \quad aa^{-1} = 1 &\text{(inverso per $\cdot$)}
         \end{align*}
     \end{description} 
 
-    La definizione sopra è equivalente a dire che $F$ è un anello commutativo per cui ogni elemento non nullo ha un inverso moltiplicativo.
+    La definizione sopra è equivalente a dire che $\K$ è un anello commutativo per cui ogni elemento non nullo ha un inverso moltiplicativo.
 \end{definition}
 
 Tra gli insiemi numerici classici, gli insiemi $\Q, \R$ e $\C$ sono tutti esempi di campi: infatti le operazioni di addizione e moltiplicazione sono chiuse rispetto all'insieme, rispettano le proprietà commutativa, associativa e distributiva ed esistono gli inversi per la somma e per il prodotto (per ogni numero diverso da $0$). Il concetto di campo serve quindi a generalizzare la struttura algebrica dei numeri razionali/reali/complessi per altri insiemi numerici.
 
-Nei campi vale la seguente proposizione.
+Nei campi vale la seguente utile proposizione.
 \begin{proposition}
     [Regola di annullamento del prodotto] \label{annullamento_prodotto}
     Sia $\K$ un campo e siano $a, b \in \K$. Allora \[
@@ -112,7 +112,7 @@ Nei campi vale la seguente proposizione.
 
 \begin{definition}[Numeri complessi]
     L'insieme dei numeri complessi $\C$ è l'insieme dei numeri della forma $a+ib$ per qualche $a, b \in \R$, ovvero \[
-        \C = \{ a + ib \suchthat a, b \in \R, i^2 = -1\}.  
+        \C = \set*{ a + ib \given a, b \in \R, i^2 = -1}.  
     \]
 \end{definition}
 
@@ -159,7 +159,7 @@ Notiamo che i numeri complessi della forma $a + i0$ sono numeri reali, dunque $\
 Notiamo che $\abs{z} = 0$ se e solo se $a = b = 0$, ovvero se $z = 0$.
 
 \begin{proposition}\label{somma_prodotto_tra_coniugati}
-    Siano $z, w \in \C$ tali che $z = a+ib$, $w = c + id$. Allora \begin{enumerate}[(i)]
+    Siano $z, w \in \C$ tali che $z = a+ib$, $w = c + id$. Allora \begin{enumerate}[label={(\roman*)}]
         \item $\conj{z} + \conj{w} = \conj{z + w}$;
         \item $\conj{z}\cdot\conj{w} = \conj{zw}$;
         \item $(\conj{z})^n = \conj{z^n}$.
@@ -167,7 +167,7 @@ Notiamo che $\abs{z} = 0$ se e solo se $a = b = 0$, ovvero se $z = 0$.
 \end{proposition}
 \begin{proof}
     Dimostriamo i tre fatti.
-    \begin{enumerate}[(i)]
+    \begin{enumerate}[label={(\roman*)}]
         \item Per definizione di somma \begin{alignat*}
             {1}
             \conj{z} + \conj{w} &= (a-ib) + (c - id)\\
@@ -193,14 +193,14 @@ Notiamo che $\abs{z} = 0$ se e solo se $a = b = 0$, ovvero se $z = 0$.
 
 \begin{proposition}\label{somma_prodotto_col_coniugato}
     Sia $z = a+ib \in \C$. Allora valgono i seguenti fatti:
-    \begin{enumerate}[(i)]
+    \begin{enumerate}[label={(\roman*)}]
         \item $z + \conj{z} = 2\Re{z}$;
         \item $z\conj{z} = \abs{z}^2$.
     \end{enumerate}
 \end{proposition}
 \begin{proof}
     Dimostriamo i due fatti.
-    \begin{enumerate}[(i)]
+    \begin{enumerate}[label={(\roman*)}]
         \item Per definizione di somma $z + \conj{z} = (a + ib) + (a - ib) = 2a = 2\Re z$.
         \item Per definizione di prodotto \[
             z\conj{z} = (a + ib)(a - ib) = a^2 - iab + iab - i^2b^2 = a^2 + b^2 = \abs{z}^2.\qedhere
@@ -252,14 +252,18 @@ Sfruttando la definizione precedente possiamo scrivere ogni numero complesso nel
 
 \section{Successioni per ricorrenza}
 
+Introduciamo ora il concetto di successine.
+
 \begin{definition}[Successione]
     Si dice successione a valori in un insieme $A$ una funzione $(a_n) : \N \to A$.
 \end{definition}
 
-Solitamente analizzeremo successioni a valori reali, ovvero $(a_n) : \N \to \R$. Inoltre usiamo equivalentemente le notazioni $(a_n)_k$ o $a_k$ per riferirci alla funzione valutata nel punto $k \in \N$.
+Solitamente analizzeremo successioni a valori reali, ovvero $(a_n) : \N \to \R$. Inoltre usiamo equivalentemente le notazioni $(a_n)_k$ o $a_k$ per riferirci alla funzione valutata nel punto $k \in \N$, ovvero al $k$-esimo elemento della successione.
+
+Osserviamo che possiamo parlare di \emph{somma di successioni} e di \emph{prodotto di una successione per una costante}.
 
 \begin{definition}[Somma di successioni e prodotto per una costante]
-    Sia $S_{\R}$ l'insieme delle successioni a valori reali. Allora definisco una somma tra successioni $+ : S_{\R} \times S_{\R} \to S_{\R}$ tale che \[
+    Sia $S_{\R}$ l'insieme delle successioni a valori reali. Allora si può definire una somma tra successioni $+ : S_{\R} \times S_{\R} \to S_{\R}$ tale che \[
         (a_n) + (b_n) = (a_n + b_n)  
     \] e un prodotto per una costante $\cdot : \R \times S_{\R} \to S_{\R}$ tale che \[
         k(a_n) = (ka_n).    
@@ -290,14 +294,14 @@ Queste operazioni rispettano le solite proprietà (associativa, commutativa, dis
 \end{proposition}
 \begin{proof}
     Dobbiamo dimostrare tre fatti:
-    \begin{enumerate}[(i)]
+    \begin{enumerate}[label={(\roman*)}]
         \item $(0_n) \in A$;
         \item se $(a_n), (b_n) \in A$ allora $(c_n) = (a_n) + (b_n) \in A$;
         \item se $h \in \R$, $(a_n) \in A$ allora $(d_n) = h(a_n) \in A$.
     \end{enumerate}
 
     Sia $n \in \N$ qualsiasi.
-    \begin{enumerate}[(i)]
+    \begin{enumerate}[label={(\roman*)}]
         \item Verifichiamo che $(0_n)$ sia soluzione. La ricorrenza da verificare è \[
             0_{n+k} = r_{k-1}0_{n+k-1} + \dots + r_{1}0_{n+1} + r_00_n.
         \] Ma dato che $(0_n)$ è la successione identicamente nulla, allora questo equivale a dire $0 = 0r_{k-1} + \dots +  + 0r_0 = 0$, che è verificata e quindi $(0_n) \in A$.
@@ -332,7 +336,7 @@ Cerchiamo di risolvere una ricorrenza lineare omogenea.
     Proviamo a risolvere la ricorrenza con una soluzione esponenziale della forma $(\lambda^n)$ al variare di $n \in \N$. Sostituendo otteniamo \begin{alignat*}{1}
         &\lambda^{n+2} = 2\lambda^{n+1} + 3\lambda^{n} \\
         \iff &\lambda^2 = 2\lambda + 3 \\
-        \iff &\lambda^2 - 2\lambda - 3.
+        \iff &\lambda^2 - 2\lambda - 3 = 0.
     \end{alignat*}
     Dunque se $(\lambda^n)$ è una soluzione allora $\lambda$ deve essere radice di quel polinomio di secondo grado, detto polinomio caratteristico della ricorrenza.
     Risolvendolo segue che $\lambda_1 = 3$ e $\lambda_2 = -1$ sono soluzioni, dunque le successioni $(3^n)$ e $((-1)^n)$ sono soluzioni della ricorrenza.
@@ -356,6 +360,8 @@ Cerchiamo di risolvere una ricorrenza lineare omogenea.
     da cui segue $k_1 = \frac14$, $k_2 = -\frac14$. La successione che soddisfa le condizioni iniziali è dunque $a_n = \frac14(3)^n - \frac14(-1)^n$.
 \end{solution}
 
+La strategia del sostituire il termine generico $a_k$ della successione con $\lambda^k$ dà luogo alla seguente definizione.
+
 \begin{definition}
     [Polinomio caratteristico di una ricorrenza]
     Sia $a_{n+k} = r_{k-1}a_{n+k-1} +  \dots +  r_0a_n$ una ricorrenza lineare omogenea di ordine $k$. Allora si dice polinomio caratteristico associato alla ricorrenza il polinomio \[
@@ -371,22 +377,22 @@ Il polinomio caratteristico si ottiene sostituendo alla ricorrenza lineare la su
 \begin{solution}
     Il polinomio caratteristico di questa ricorrenza è \[
         p(\lambda) = \lambda^2 - \lambda - 1    
-    \] che ha come radici i numeri $\varphi = \frac12(1 + \sqrt5)$ e $\bar{\varphi} = \frac12(1 - \sqrt5)$.
+    \] che ha come radici i numeri $\phi = \frac12(1 + \sqrt5)$ e $\bar{\phi} = \frac12(1 - \sqrt5)$.
 
-    La soluzione generale della ricorrenza è dunque una successione della forma $(f_n) = k_1(\varphi^n) + k_2(\bar{\varphi}^n)$ al variare di $k_1, k_2 \in \R$.
+    La soluzione generale della ricorrenza è dunque una successione della forma $(f_n) = k_1(\phi^n) + k_2(\bar{\phi}^n)$ al variare di $k_1, k_2 \in \R$.
 
     Imponiamo ora che $f_0 = 0$ e $f_1 = 1$.
     \begin{equation*}
         \arraycolsep=1.2pt\def\arraystretch{1.3}
         \left\{
         \begin{array}{@{}roror }
-        \varphi^0k_1 & + & \bar{\varphi}^0k_2 & = & 0\\
-        \varphi^1k_1 & + & \bar{\varphi}^1k_2 & = & 1 \\
+        \phi^0k_1 & + & \bar{\phi}^0k_2 & = & 0\\
+        \phi^1k_1 & + & \bar{\phi}^1k_2 & = & 1 \\
         \end{array}
         \right. \iff \left\{
         \begin{array}{@{}roror }
         k_1 & + & k_2 & = & 0\\
-        \varphi k_1 & + & \bar{\varphi}k_2 & = & 1 \\
+        \phi k_1 & + & \bar{\phi}k_2 & = & 1 \\
         \end{array}
         \right. 
     \end{equation*}
@@ -397,15 +403,23 @@ Il polinomio caratteristico si ottiene sostituendo alla ricorrenza lineare la su
 
 Nel caso che una radice del polinomio caratteristico abbia una molteplicità maggiore di $1$ essa darà luogo a più di una soluzione della ricorrenza, come ci dice la seguente proposizione.
 \begin{proposition}
-    Sia $p(\lambda)$ il polinomio caratteristico di una ricorrenza lineare omogenea e sia $\lambda_0$ una radice di molteplicità $h$ (ovvero $h$ è il massimo intero per cui $(x - \lambda_0)^h$ compare nella fattorizzazione di $p(\lambda)$) con $h \geq 2$. 
+    Sia $p(\lambda)$ il polinomio caratteristico di una ricorrenza lineare omogenea e sia $\lambda_0$ una radice di molteplicità $h$ con $h \geq 2$. 
     
     Allora $(\lambda_0^n), (n\lambda_0^n), \dots, (n^{h-1}\lambda_0^n)$ sono tutte soluzioni della ricorrenza lineare omogenea.
 \end{proposition}
 
+\begin{remark}
+    Ricordiamo che una radice di un polinomio ha molteplicità $h$ se $h$ è il massimo intero per cui $(x - \lambda_0)^h$ compare nella fattorizzazione di $p(\lambda)$.
+
+    Ad esempio $1$ è una radice di molteplicità $2$ per il polinomio $p(x) = x^3 - 2x^2 + x$, in quanto \[
+        x^3 - 2x^2 + x = x(x^2 - 2x + 1) = x(x-1)^2,
+    \] dunque $(x-1)$ divide il polinomio $p(x)$ al massimo due volte.
+\end{remark}
+
 \begin{example}
     Sia $p(\lambda) = (\lambda - 3)^3(\lambda + 1)^2(\lambda - \sqrt2)^4$. Allora le seguenti sono tutte soluzioni indipendenti della ricorrenza lineare omogenea associata a $p(\lambda)$:
     \begin{multicols}{3}
-        \begin{enumerate}[(i)]
+        \begin{enumerate}[label={(\roman*)}]
         \item $(3^n)$;
         \item $(n3^n)$;
         \item $(n^23^n)$;

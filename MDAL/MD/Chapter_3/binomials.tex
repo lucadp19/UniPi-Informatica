@@ -1,0 +1,196 @@
+\section{Binomiale e Triangolo di Tartaglia}
+
+\begin{definition}[Coefficiente Binomiale]
+    Si dice \textbf{coefficiente binomiale} $\binom{n}{k}$ il numero intero tale che \begin{equation}
+        \binom{n}{k} = \frac{n!}{k!(n-k)!}.
+    \end{equation}    
+\end{definition}
+
+\begin{proposition}\label{simmetria_binomiale}
+    Sia $n \in \Z$, $k \in \Z$ tale che $0 \leq k \leq n$. Allora \begin{equation}
+        \binom{n}{k} = \binom{n}{n-k}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    \[\binom{n}{n - k} = \frac{n!}{(n-k)!(n-(n-k))!} = \frac{n!}{k!(n-k)!} = \binom{n}{k} \qedhere\]
+\end{proof}
+
+\begin{proposition}[Formula ricorsiva per il binomiale] \label{binomiale_ricorsivo}
+    Sia $n \in \Z$, $k \in \Z$ tale che $0 \leq k \leq n$. Allora \begin{equation}
+        \binom{n}{k} = \begin{cases}
+            1 &\text{se } k = 0 \text{ oppure } k = n \\
+            \binom{n - 1}{k - 1} + \binom{n - 1}{k} &\text{altrimenti}.
+        \end{cases}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Se $k = 0$ allora \[\binom{n}{0} = \frac{n!}{0!(n-0)!} = \frac{n!}{n!} = 1.\] 
+    Inoltre per la proposizione \ref{simmetria_binomiale} segue che \[\binom{n}{n} = \binom{n}{n - n} = \binom{n}{0} = 1.\]
+
+    Se $0 < k < n$ allora \begin{alignat*}
+        {1}
+        \binom{n - 1}{k - 1} + \binom{n - 1}{k} &= \frac{(n-1)!}{(k-1)!(n-1-(k-1))!} + \frac{(n-1)!}{(k)!(n-1-k)!} \\[1em]
+        &= \frac{(n-1)!}{(k-1)!(n-1-k)!(n-k)} + \frac{(n-1)!}{k(k-1)!(n-1-k)!} \\[1em]
+        &= \frac{(n-1)!k + (n-k)(n-1)!}{k(k-1)!(n-1-k)!(n-k)} \\[1em]
+        &= \frac{(n-1)!k + n(n-1)! - k(n-1)!}{k!(n-k)!} \\
+        &= \frac{n!}{k!(n-k)!} \\[1em]
+        &= \binom{n}{k}
+    \end{alignat*}
+    che è la tesi.
+\end{proof}
+
+\begin{theorem}[Teorema del binomiale] \label{binomiale}
+    Siano $x, y, n \in \Z$. Allora vale che
+    \begin{equation}
+        (x+y)^n = \binom{n}{0}x^0y^n + \binom{n}{1}x^1y^{n-1} + \dots + \binom{n}{n}x^ny^0 = \sum_{k=0}^n \binom{n}{k}x^{n-k}y^k.
+    \end{equation}
+\end{theorem}
+
+\begin{definition}[Triangolo di Tartaglia]
+    Si dice triangolo di Tartaglia un triangolo che ha le seguenti proprietà:
+    \begin{enumerate}
+        \item le righe sono numerate a partire da $0$;
+        \item ogni riga ha $n + 1$ elementi, che vengono numerati da $0$ a $n$;
+        \item l'elemento in riga $n$ e posizione $k$ si indica con $T_{n, k}$;
+        \item $T_{n, 0} = T_{n, n} = 1$;
+        \item per ogni $n \geq 0$, $0 < k \leq n$, $T_{n + 1, k} = T_{n, k - 1} + T_{n, k}$.
+    \end{enumerate}
+\end{definition}
+
+
+\begin{proposition}
+    Sia $n \in \Z$. Allora per ogni $k \in \Z$ tale che $0 \leq k \leq n$ segue che \begin{equation}
+        T_{n,k} = \binom{n}{k}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per induzione su $n$.
+    \begin{description}
+        \item[Caso base.]
+
+        Sia $n = 0$, allora dato che $0 \leq k \leq n$ segue che $k = 0$. Dunque
+        \[
+            T_{0, 0} = 1 = \binom{0}{0}.    
+        \]
+        \item[Passo induttivo.]
+        
+        Supponiamo che la tesi sia vera per $n$ e dimostriamola per $n+1$. 
+        \begin{itemize}
+            \item Se $k = 0$ oppure $k = n + 1$ allora per definizione del triangolo di Tartaglia $T_{n+1, 0} = T_{n+1, n+1} = 1$ che è esattamente $\binom{n+1}{0} = \binom{n+1}{n+1}$ (per la proposizione \ref{binomiale_ricorsivo}),
+            \item Se $0 < k < n+1$ allora per definizione del triangolo di Tartaglia segue che \[
+                T_{n+1, k} = T_{n, k-1} + T_{n, k} = \binom{n}{k-1} + \binom{n}{k} = \binom{n+1}{k}    
+            \] dove l'ultimo passaggio viene dalla proposizione \ref{binomiale_ricorsivo}.
+        \end{itemize}
+    \end{description}
+    Dunque la tesi è vera per ogni $n \in \Z$.
+\end{proof}
+
+\begin{proposition}[Proprietà del Triangolo di Tartaglia]
+    Il triangolo di Tartaglia gode delle seguenti proprietà:
+    \begin{enumerate}
+        \item la somma degli elementi della riga $n$ è $2^n$;
+        \item la somma a segni alterni degli elementi di ogni riga è $0$;
+        \item nella riga $n$, l'elemento al posto $k$ e l'elemento al posto $n-k$ hanno lo stesso valore.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Dimostriamo le tre proposizioni.
+    \begin{enumerate}
+        \item Dimostriamo che $2^n = \sum_{k=0}^n T_{n, k} = \sum_{k=0}^n \binom{n}{k}$.
+        \[2^n = (1+1)^n = \sum_k^0 \binom{n}{k}1^{n-k}1^k = \sum_{k=0}^n \binom{n}{k}\]
+        \item La somma a segni alterni della riga $n$-esima è \[\sum_{k=0}^n (-1)^kT_{n, k} = \sum_{k=0}^n (-1)^k\binom{n}{k} = \sum_{k=0}^n (-1)^k1^{n-k}\binom{n}{k} = (1-1)^k = 0^k = 0.\]
+        \item Dobbiamo dimostrare che $T_{n, k} = T_{n, n-k}$. Ma dato che $T_{n, k} = \binom{n}{k}$ e $T_{n, n-k} = \binom{n}{n-k}$, allora questo è equivalente a dimostrare che $\binom{n}{k} = \binom{n}{n-k}$, che è vero per la proposizione \ref{simmetria_binomiale}. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}\label{binomio_pk_divisibile_p}
+    Se $p$ è primo, allora per ogni $k$ tale che $0 < k < p$ vale che
+    \begin{equation}
+        \binom{p}{k} \congr 0 \Mod{p}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Consideriamo un $k$ generico tale che $0 < k < p$.
+    Allora \[
+        \binom{p}{k} = \frac{p!}{k!(p-k)!} \iff p! = \binom{p}{k}(p-k)!k!    
+    \]
+    Ma $p \divides p!$, dunque $p \divides \binom{p}{k}(p-k)!k!$, dunque per la proposizione \ref{primo_divide_prodotto} segue che \[
+        p \divides \binom{p}{k} \text{ oppure } p \divides (p-k)! \text{ oppure } p \divides k!
+    .\]
+
+    Notiamo che sia $k$ che $p-k$ sono numeri minori di $p$, dunque $k!$ e $(p-k)!$ sono un prodotto di numeri minori di $p$. Ma $p$ è primo, dunque è coprimo con tutti i numeri che non siano un multiplo di $p$ (e quindi è coprimo con tutti i numeri compresi tra $0$ e $p$ esclusi), dunque per la proposizione \ref{prodotto_coprimo_n} $p$ deve essere coprimo anche con $k!$ e con $(p-k)!$. 
+    
+    Da cio' segue che $p$ non può dividere $k!$ e $(p-k)!$.
+    L'ultima possibilità è che $p \divides \binom{p}{k}$, che è equivalente a dire che $\binom{p}{k} \congr 0 \Mod{p}$.
+\end{proof}
+
+\begin{proposition}\label{(x+y)^p_congr_x^p+y^p}
+    Siano $x, y, p \in \Z$, $p$ primo. Allora
+    \begin{equation}
+        (x+y)^p \congr x^p + y^p \Mod{p}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per il teorema del Binomiale (\ref{binomiale}) sappiamo che
+    \begin{alignat*}{1}
+        (x+y)^p &= \binom{p}{0}x^p + \binom{p}{1}x^{p-1}y^1 + \dots + \binom{p}{i}x^{p-i}y^i + \dots + \binom{p}{p}y^p \\
+        \intertext{Ma per la proposizione \ref{binomio_pk_divisibile_p} tutti i termini intermedi di questa somma sono congrui a $0$ modulo $p$, dunque:}
+        &\congr \binom{p}{0}x^p + \binom{p}{p}y^p \Mod{p}\\
+        &\congr x^p + y^p \Mod{p}
+    \end{alignat*}
+    come volevasi dimostrare.
+\end{proof}
+
+\begin{corollary}\label{(x_1+x_n)^p_congr_x_1^p+x_n^p}
+    Siano $x_1, x_2, \dots, x_n, p \in \Z$, $p$ primo. Allora
+    \begin{equation}
+        (x_1+x_2+\dots+x_n)^p \congr x_1^p + x_2^p + \dots + x_n^p \Mod{p}.
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    Per induzione su n.
+    \begin{description}
+        \item[Caso base.]
+
+        Sia $n = 1$. Allora $x_1^p \congr x_1^p \Mod{p}$ ovviamente.
+        \item[Passo induttivo.]
+        
+        Supponiamo che la tesi sia vera per $n-1$ e dimostriamola per $n$.
+        \begin{alignat*}{1}
+            (x_1+x_2+\dots+x_n)^p &\congr ((x_1+x_2+\dots+x_{n-1})+x_n)^p \Mod{p}\\
+            \intertext{(per la proposizione \ref{(x+y)^p_congr_x^p+y^p})}
+            &\congr (x_1+x_2+\dots+x_{n-1})^p+x_n^p\Mod{p}\\
+            \intertext{(per ipotesi induttiva)}
+            &\congr x_1^p + x_2^p + \dots + x_{n-1}^p + x_n^p\Mod{p}
+        \end{alignat*}
+        che è la tesi per $n$.
+    \end{description}
+    Dunque dal caso base e dal passo induttivo segue che la tesi vale per ogni $n$.
+\end{proof}
+
+\begin{theorem}
+    [Piccolo Teorema di Fermat] \label{th_fermat}
+    Se $p$ è primo, allora $x^p \congr x \Mod{p}$.
+\end{theorem}
+\begin{proof}
+    \begin{alignat*}{1}
+        x^p &\congr (\overbrace{1 +\dots+ 1}^{x \text{ volte}})^p \Mod{p}\\
+        \intertext{(per il corollario \ref{(x_1+x_n)^p_congr_x_1^p+x_n^p})}
+        &\congr \overbrace{1^p +\dots+ 1^p}^{x \text{ volte}} \Mod{p}\\
+        &\congr \overbrace{1 +\dots+ 1}^{x \text{ volte}} \Mod{p}\\
+        &\congr x \Mod{p}
+    \end{alignat*}
+    che è la tesi.
+\end{proof}
+
+\begin{corollary} \label{corollario_fermat}
+    Se $p$ è primo e $x \ncongr 0 \Mod{p}$ allora $x^{p-1} \congr 1 \Mod{p}$.
+\end{corollary}
+\begin{proof}
+    Per il piccolo teorema di Fermat (\ref{th_fermat}) vale che $x^p \congr x \Mod{p}$. Dato che $x \ncongr 0 \Mod{p}$ allora segue che $p$ e $x$ sono coprimi, dunque $x$ è invertibile modulo $p$. Moltiplicando entrambi i membri per l'inverso $x^{-1}$ otteniamo \begin{alignat*}
+        {1}
+        &x^px^{-1} \congr x\cdot x^{-1} \Mod{p}\\
+        \iff &x^{p-1} \congr 1 \Mod{p}
+    \end{alignat*}
+    che è la tesi.    
+\end{proof}

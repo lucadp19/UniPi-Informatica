@@ -1,0 +1,237 @@
+
+\section{Numeri primi}
+
+\begin{definition}[Numero primo]
+    Un numero $p \in \Z$ si dice primo se se gli unici interi che dividono $p$ sono $\pm 1$ e $\pm p$.
+\end{definition}
+
+Una caratterizzazione equivalente dei numeri primi è quella data dalla seguente proposizione.
+
+\begin{proposition}\label{primo_divide_prodotto}
+    Se $p$ è primo e $p \divides ab$, allora $p \divides a$ oppure $p \divides b$.
+\end{proposition}
+\begin{proof}
+    Supponiamo che $p$ non divida $a$. Dato che $p$ è primo, $\gcd{a, p} = 1$ oppure $p$.
+    Tuttavia se $\gcd{a, p} = p$ allora $p \divides a$, che va contro l'ipotesi, dunque 
+    $\gcd{a, p} = 1$. Per la \autoref{n_divides_product} allora $p \divides b$, che è la tesi.
+\end{proof}
+
+\begin{proposition} \label{prodotto_numeri_coprimi}
+    Siano $a, b \in \Z, c \in \Z$ tali che $\gcd{a, b} = 1$. Allora
+    \begin{equation}
+        a \divides c \;\land\; b \divides c \iff ab \divides c.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per il \hyperref[bezout]{Teorema di Bezout} esistono $x, y \in \Z$ tali che $\gcd{a, b} = 1 = ax+by$, da cui segue $n = nax + nby$.
+
+    Dato che $a \divides n$, $b \divides n$, allora $ab \divides na$ e $ab \divides nb$ per la \autoref{divides_sum_subtr_mult}, quindi per la stessa proposizione $ab$ dividerà una loro qualunque combinazione lineare $nak + nbh$, inclusa quella con $k = x, h = y$.
+
+    Dunque \[
+        ab \divides nax + nby = n(ax + by) = n
+    \] da cui la tesi.
+\end{proof}
+
+\begin{proposition} \label{prodotto_coprimo_2}
+    Siano $a, b, c \in \Z$. Allora
+    \begin{equation}
+        \gcd{ab}{c} = 1 \iff \gcd{a, c} = \gcd{b, c} = 1.
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Dimostrazione intuitiva: se $a$ e $b$ sono coprimi con $c$ significa che $a$ non ha nessun fattore in comune con $c$, e stessa cosa per $b$. Ma il loro prodotto $ab$ viene diviso dagli stessi primi che dividono $a$ e $b$ separatamente, quindi deve essere anch'esso coprimo con $c$.
+
+    Al contrario, se $ab$ non ha fattori primi in comune con $c$, allora naturalmente $a, b$ (essendo divisori di $ab$) non avranno fattori in comune con $c$.
+\end{intuition}
+
+\begin{corollary} \label{prodotto_coprimo_n}
+    Siano $a_1, a_2, \dots, a_n \in \Z, c \in \Z$ tali che $a_1, \dots, a_n$ siano coprimi con $c$. Allora anche il loro prodotto $\prod_{i = 1}^{n} a_i$ è coprimo con $c$.
+\end{corollary}
+\begin{intuition}
+    Stessa idea della dimostrazione della \autoref{prodotto_coprimo_2} ma estesa a $n$ numeri (per induzione).
+\end{intuition}
+
+\begin{proposition}
+    Siano $a_1, a_2, \dots, a_n \in \Z, c \in \Z$ tali che $a_1, \dots, a_n$ siano coprimi tra loro e che per ogni $i<n$ vale che $a_i \divides c$.
+    Allora \begin{equation}
+        a_1a_2\dots a_n = \parens*{ \prod_{i = 1}^n a_i } \divides c.
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Quest'ultima proposizione ci dice che se $a_1, \dots, a_n$ non hanno fattori primi in comune e ognuno di loro divide $c$, allora anche il loro prodotto dovrà dividere $c$, perché il loro prodotto è formato esattamente dai fattori primi che dividono $c$.
+\end{intuition}
+\begin{proof}
+    Dimostriamo la proposizione per induzione su $n$.
+    \begin{description}
+        \item[Caso base.] 
+        Sia $n = 0$, cioè $a_1\dots a_n = 1$. Allora banalmente $1 \divides c$.
+        \item[Passo induttivo.]         
+        Supponiamo che la tesi sia vera per $n-1$ e dimostriamola per $n$. Dunque per ipotesi $ \parens*{\prod_{i = 1}^{n - 1} a_i} \divides c$.
+        Ma per il \autoref{prodotto_coprimo_n} $a_n$ è coprimo con $\prod_{i = 1}^{n - 1} a_i$, dunque per la \autoref{prodotto_numeri_coprimi} segue che
+        \begin{equation*}
+            a_n \parens*{\prod_{i = 1}^{n - 1} a_i} = \parens*{ \prod_{i = 1}^{n} a_i } \divides c
+        \end{equation*}
+        che è la tesi per $n$.
+    \end{description}
+    Dunque la proposizione vale per ogni $n \in N$.
+\end{proof}
+
+\subsection{Divisori primi}
+
+La prossima proposizion serve a dimostrare che ogni numero può essere scomposto in un prodotto di fattori primi, ognuno di essi elevato ad una certa potenza.
+
+\begin{proposition} 
+    [Esistenza della scomposizione in primi]
+    \label{esistenza_scomposizione_primi}
+    Sia $n \in \Z, n > 1$. Allora $n$ può essere espresso come prodotto di potenze di numeri primi.
+\end{proposition}
+\begin{proof}
+    Per induzione forte su $n$.
+    \begin{description}
+        \item[Caso base.]
+        Sia $n = 2$. Dato che $2$ è primo, allora è esprimibile come prodotto di numeri primi (in particolare è il prodotto di un solo termine, se stesso).
+        \item[Passo induttivo.]
+        Supponiamo che la tesi sia vera per ogni $m < n$ (induzione forte) e dimostriamola per $n$.
+        Abbiamo due casi:
+        \begin{itemize}
+            \item se $n$ è primo, allora è un prodotto di primi e quindi la tesi vale;
+            \item se $n$ non è primo allora dovranno esistere due numeri $1 < a, b < n$ tali che $n = ab$ (infatti se non esistessero $n$ sarebbe primo). Ma per l'ipotesi induttiva forte sappiamo che tutti i numeri compresi tra $2$ e $n-1$ inclusi sono scomponibili in fattori primi, dunque anche $n = ab$ dovrà esserlo.
+        \end{itemize}
+    \end{description}
+    Dunque dal caso base e dal passo induttivo segue che la tesi vale per ogni $n \geq 2$.
+\end{proof}
+
+\begin{theorem}
+    [Teorema Fondamentale dell'Aritmetica]
+    Sia $n \in \Z$ e siano $p_1, p_2, \dots, p_k$ i primi che dividono $n$. Inoltre siano $e_1, e_2, \dots, e_k$ i massimi esponenti per cui vale che $p_i^{e_i} \divides n$ per ogni $1 \leq i \leq k$. Allora $n = p_1^{e_1}p_2^{e_2} \dots p_k^{e_k}$.
+\end{theorem}
+\begin{proof}
+    Per la \autoref{esistenza_scomposizione_primi} sappiamo che esistono i primi $p_1, \dots, p_n$. Per la \autoref{prodotto_coprimo_n} segue che \[
+        p_1^{e_1}p_2^{e_2} \dots p_k^{e_k} \divides n    
+    \]
+    in quanto $p_1^{e_1}, p_2^{e_2}, \dots, p_k^{e_k}$ sono coprimi tra loro.
+
+    Dunque $n = m \cdot p_1^{e_1}p_2^{e_2} \dots p_k^{e_k}$ per qualche $m \in \Z$.
+    Supponiamo per assurdo che $m \neq 1$. Allora per la \autoref{esistenza_scomposizione_primi} $m$ è scomponibile in numeri primi; ma dato che $m$ è un divisore di $n$ segue che i primi che dividono $m$ devono dividere anche $n$, dunque i primi che dividono $m$ devono essere tra $p_1, \dots, p_k$. 
+
+    Sia $p_i$ uno dei primi che divide $m$. Allora dato che $m \cdot p_1^{e_1}p_2^{e_2} \dots p_k^{e_k} = n$ deve valere che $m \cdot p_i^{e_i}$ divide $n$, ma siccome $p_i \divides m$ dovrà valere in particolare \[
+        p_i \cdot p_i^{e_i} = p_i^{e_i+1} \divides n
+    \] che è assurdo in quanto abbiamo supposto che $e_i$ fosse il massimo esponente per cui $p_i^{e_i} \divides n$. 
+    
+    Dunque deve essere $m = 1$, cioè \[
+        n = p_1^{e_1}p_2^{e_2} \dots p_k^{e_k}
+    \]
+    come volevasi dimostrare.
+\end{proof}
+
+Le prossime proposizioni ci danno alcuni legami tra i divisori primi e il massimo comun divisore/minimo comune multiplo.
+
+\begin{proposition}\label{gcd_mcm_in_termini_di_divisori_primi}
+    Siano $a, b, k \in \Z$, $p \in \Z$ primo. Allora
+    \begin{alignat}{1}
+        p^k \divides \gcd{a, b} &\iff p^k \divides a \;\land\; p^k \divides b \\ 
+        p^k \divides \lcm{a, b} &\iff p^k \divides a \;\lor\; p^k \divides b.
+    \end{alignat}
+\end{proposition}
+\begin{intuition}
+    Il massimo comun divisore di due numeri è un divisore comune ad entrambi, quindi se $p^k$ lo divide deve dividere entrambi i numeri.
+
+    Il minimo comune multiplo invece è formato da tutti i fattori primi comuni e non comuni col massimo esponente, quindi se $p^k$ divide il minimo comune multiplo dovrà dividere almeno uno dei due numeri di partenza.
+\end{intuition}
+
+\begin{proposition}\label{mcm_equals_product}
+    Siano $a, b \in \Z$. Allora se $\gcd{a, b} = 1$ segue che $\lcm{a, b} = \abs{ab}$.
+\end{proposition}
+\begin{intuition}
+    Se i due numeri sono coprimi, allora non hanno fattori primi in comune, dunque il loro minimo comune multiplo sarà formato precisamente da tutti i fattori di entrambi i numeri, cioè dal loro prodotto.
+\end{intuition}
+\begin{proof}
+    Sappiamo per definizione di mcm che $a \divides \lcm{a, b}$ e $b \divides \lcm{a, b}$. Dato che $\gcd{a, b} = 1$ per la \autoref{prodotto_numeri_coprimi} segue che $ab \divides \lcm{a, b}$, cioè $\abs{ab} \leq \lcm{a, b}$. Ma $ab$ è un multiplo di $a$ e di $b$, quindi dovrà valere che $\abs{ab} \geq \lcm{a, b}$ in quanto $\lcm{a, b}$ è il minimo multiplo comune ad $a$ e $b$. Da cio' segue che $\lcm{a, b} = \abs{ab}$, cioè la tesi.
+\end{proof}
+
+\begin{proposition} \label{gcd_togliere_fattori_non_comuni}
+    Siano $a, x, y \in \Z$. Allora 
+    \begin{equation}
+        \gcd{a, x} = 1 \implies \gcd{a, xy} = \gcd{a, y}.
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Se stiamo calcolando $\gcd{a, b}$ dove $b = xy$ e sappiamo che il fattore $x$ non è comune tra $b$ ed $a$, allora possiamo escluderlo dal massimo comun divisore.
+\end{intuition}
+\begin{proof}
+    Dato che $\gcd{a, x} = 1$, allora se un primo $p$ divide $a$ sicuramente $p$ non divide $x$. Per la \autoref{gcd_mcm_in_termini_di_divisori_primi} allora vale
+    \begin{alignat*}
+        {1}
+        &p^k \divides \gcd{a, xy} \\ 
+        \iff &p^k \divides a \land p^k \divides xy\\
+        \intertext{ma $p^k \ndivides x$ dunque per la \ref{n_divides_product}}
+        \iff &p^k \divides a \land p^k \divides y \\
+        \iff &p^k \divides \gcd{a, y}.
+    \end{alignat*}
+    Dato che $\gcd{a, xy}$ e $\gcd{a, y}$ vengono divisi dagli stessi primi, per il teorema fondamentale devono essere uguali.
+\end{proof}
+
+\begin{proposition} \label{distributivita_gcd_su_mcm}
+    Siano $a, x, y \in \Z$. Allora 
+    \begin{equation}
+        \gcd{a, \lcm{x}{y}} = \lcm{\gcd{a, x}}{\gcd{a, y}}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per la \autoref{gcd_mcm_in_termini_di_divisori_primi} allora vale
+    \begin{alignat*}
+        {1}
+        &p^k \divides \gcd{a, \lcm{x}{y}}\\ 
+        \iff &p^k \divides a \land (p^k \divides x \lor p^k \divides y)\\
+        \iff &(p^k \divides a \land p^k \divides x) \lor (p^k \divides a \land p^k \divides y) \\
+        \iff &p^k \divides \lcm{\gcd{a, x}}{\gcd{a, y}}.
+    \end{alignat*}
+    Dato che $\gcd{a, \lcm{x, y}}$ e $\lcm{\gcd{a, x}, \gcd{a, y}}$ vengono divisi dagli stessi primi, per il teorema fondamentale devono essere uguali.
+\end{proof}
+
+\begin{proposition}
+    Siano $a, x, y \in \Z$. Allora 
+    \begin{equation}
+        \gcd{x}{y} = 1 \implies \gcd{a, xy} = \gcd{a, x}\gcd{a, y}.
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Se $x$ e $y$ non hanno fattori in comune, i fattori che $a$ ha in comune con il loro prodotto sono o in $x$ o in $y$, quindi per ottenerli tutti possiamo dividere l'gcd in due e moltiplicare i due risultati.
+\end{intuition}
+\begin{proof}
+    Dato che $\gcd{x}{y} = 1$ allora per la proposizione \ref{mcm_equals_product} vale che $\lcm{x}{y} = \abs{xy}$.
+    Dunque $\gcd{a, xy} = \gcd{a, \abs{xy}} = \gcd{a, \lcm{x}{y}} = \lcm{\gcd{a, x}}{\gcd{a, y}}$ per la \autoref{distributivita_gcd_su_mcm}.
+
+    Verifichiamo ora che $\gcd{a, x}$ e $\gcd{a, y}$ sono coprimi. Per ipotesi sappiamo che $x, y$ sono coprimi; ma dato che $\gcd{a, x}$ e $\gcd{a, y}$ sono divisori di $x$ e $y$ rispettivamente, allora dovranno essere anche loro coprimi.
+
+    Dunque per la \autoref{mcm_equals_product} segue che \[
+        \gcd{a, xy} = \lcm{\gcd{a, x}}{\gcd{a, y}} = \gcd{a, x}\gcd{a, y}
+    \] che è la tesi.
+\end{proof}
+
+\begin{proposition}\label{a,b|c_iff_(ab/gcd)|c}
+    Siano $a, b, c \in \Z$. Allora \begin{equation}
+        a \divides c \land b \divides c \iff \frac{ab}{\gcd{a, b}} \divides c.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo l'implicazione in entrambi i versi.
+    \begin{itemize}
+        \item[($\implies$)] Supponiamo che $a \divides c$ e $b \divides c$. Sia $d = \gcd{a, b}$. Allora dato che $d \divides a$, $d \divides b$ per transitività $d \divides c$, dunque $\frac{a}{d} \divides \frac{c}{d}$ e $\frac{b}{d} \divides \frac{c}{d}$. Ma dato che per il corollario \ref{gcd_diviso_gcd} sappiamo che $\gcd{\frac{a}{d}, \frac{b}{d}} = 1$, dunque per la \ref{prodotto_numeri_coprimi} segue che il loro prodotto $\frac{ab}{d^2}$ dovrà dividere $\frac{c}{d}$, che è equivalente a dire che $\frac{ab}{d} \divides c$.
+        \item[($\impliedby$)] NON SO FARE QUEST'ALTRA DIMOSTRAZIONE \qedhere
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    \label{mcm*gcd=ab}
+    Siano $a, b \in \Z$. Allora
+    \begin{equation}
+        \gcd{a, b}\lcm{a, b} = \abs{ab}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Sia $c \in \Z$ tale che $a \divides c$, $b \divides c$. Allora per la \autoref{a,b|c_iff_(ab/gcd)|c} segue che $\frac{ab}{\gcd{a, b}} \divides c$. Inoltre per la \autoref{mcm|c_iff_a,b|c} segue che $\lcm{a, b} \divides c$.
+    Dunque i due numeri $\frac{ab}{\gcd{a, b}}$ e $\lcm{a, b}$ hanno gli stessi divisori, dunque devono essere uguali a meno del segno, da cui segue \[
+        \gcd{a, b}\lcm{a, b} = \abs{ab}. 
+    \]
+\end{proof}

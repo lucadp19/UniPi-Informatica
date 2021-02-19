@@ -1,0 +1,155 @@
+\section{Equazioni diofantee}
+
+In questa sezione studieremo un tipo particolare di equazioni lineari, dette equazioni diofantee.
+
+\begin{definition}[Equazione diofantea]
+    Siano $a, b, c \in \Z$ noti, $x, y \in \Z$ incognite. Allora un'equazione lineare della forma $ax + by = c$ si dice equazione diofantea.
+\end{definition}
+
+La prossima proposizione ci dà una semplice condizione necessaria e sufficiente per la risolubilità delle diofantee.
+
+\begin{theorem}[Condizione necessaria e sufficiente per le diofantee]
+    \label{th:cond_ris_diofantea}
+    Siano $a, b, c \in \Z$. Allora l'equazione diofantea $ax + by = c$ ammette soluzioni se e solo se $\gcd{a, b} \divides c$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo prima che se $\gcd{a, b} \divides c$ allora esistono soluzioni di $ax + by = c$ e poi dimostriamo che se $\gcd{a, b} \ndivides c$ allora l'equazione $ax + by = c$ non ha soluzioni.
+    \begin{itemize}
+        \item Supponiamo che $c = k\gcd{a, b}$ per qualche $k \in \Z$. Allora per il teorema di Bezout \ref{bezout} esistono $x', y^\prime \in \Z$ tali che $ax^\prime + by^\prime = \gcd{a, b}$. Moltiplicando  entrambi i membri per $k$ otteniamo
+        \begin{alignat*}{2} 
+            k\gcd{a, b} &= k(ax^\prime + by')
+                        &= akx^\prime + bky'
+                        &= a(kx') + b(ky')
+        \end{alignat*}
+        dunque $x = kx'$ e $y = ky'$ risolvono l'equazione diofantea.
+        \item Supponiamo ora che $c$ non sia un multiplo di $\gcd{a, b}$ e supponiamo per assurdo che l'equazione abbia soluzione, cioè che esistano $x, y \in \Z$ tali che $ax + by = c$. Sia $d = \gcd{a, b}$.
+        
+        Per definizione di $\gcd{a, b}$ e per la proposizione \ref{divides_sum_subtr_mult}, dato che $d \divides a$ e $d \divides b$ segue che $d \divides ax$, $d \divides by$ e dunque $d \divides ax + by$. Ma $ax + by = c$, quindi $d = \gcd{a, b} \divides c$, che va contro le ipotesi.
+
+        Dunque l'equazione diofantea non ha soluzione, cioè la tesi. \qedhere
+    \end{itemize}
+\end{proof}
+
+\subsection*{Risolvere una diofantea}
+
+Avendo dimostrato che una particolare equazione diofantea ha soluzione, per trovare tale soluzione si sfruttano i seguenti teoremi: si trovano prima le soluzioni della diofantea omogenea associata e una soluzione particolare della diofantea non omogenea e le si combinano insieme.
+
+\begin{theorem} [Soluzioni di una diofantea omogenea con coefficienti coprimi]\label{sol_diofantea_omogenea_coprimi}
+    Siano $a, b \in \Z$ coprimi. Allora le soluzioni dell'equazione diofantea omogenea $ax + by = 0$ sono tutte e solo della forma $x = -kb, y = ka$ al variare di $k \in \Z$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo innanzitutto che $x = -kb, y = ka$ è una soluzione.
+    \begin{alignat*}{1}
+        ax + by &= a(-kb) + b(ka)\\
+                &= -kab + kab\\
+                &= 0.
+    \end{alignat*}
+
+    Mostriamo ora che non vi possono essere altre soluzioni. 
+    
+    Dato che $ax + by = 0$, allora $ax = -by$.
+    Dato che $a \divides ax$ allora $a \divides -by$; inoltre per ipotesi $\gcd{a, -b} = \gcd{a, b} = 1$.
+    Dunque per il teorema \ref{n_divides_product} segue che $a \divides y$, cioè $y = ak$ per qualche $k \in \Z$. Sostituendo ottengo $x = -b\frac{y}{a} = -bk$, che è la tesi.
+\end{proof}
+
+\begin{corollary} [Soluzioni di una diofantea omogenea]\label{sol_diofantea_omogenea}
+    Se $a, b$ non sono coprimi, allora tutte le soluzioni dell'equazione $ax + by = 0$ saranno della forma $x = -kb^\prime, y = ka^\prime$ dove $a^\prime = \frac{a}{\gcd{a, b}}$ e $b^\prime = \frac{b^\prime}{\gcd{a, b}}.$
+\end{corollary}
+\begin{proof}
+    Dato che $a, b$ non sono coprimi, allora possiamo dividere entrambi i membri di $ax + by = 0$ per $\gcd{a, b}$ ottenendo l'equazione diofantea equivalente $a^\prime x + b^\prime y = 0$. 
+    
+    Ma per il teorema \ref{gcd_diviso_gcd} $\gcd{a^\prime}{b^\prime} = 1$, dunque per il teorema \ref{sol_diofantea_omogenea_coprimi} le sue soluzioni saranno tutte e solo della forma $x = -kb^\prime, y = ka^\prime$. 
+    
+    Ma questa equazione è equivalente all'originale, dunque anche le soluzioni di $ax + by = 0$ saranno tutte e solo della forma $x = -kb^\prime, y = ka^\prime$.
+\end{proof}
+
+\begin{theorem} [Soluzioni di una diofantea non omogenea] \label{sol_diofantea_non_omog}
+    Siano $a, b \in \Z$ e sia $(x, y)$ una soluzione particolare dell'equazione diofantea $ax + by = c$ (se esiste). Allora le soluzioni di quest'equazione sono tutte e solo della forma $(x + x_0, y + y_0)$ al variare di $(x_0, y_0)$ tra le soluzioni dell'equazione omogenea associata $ax + by = 0$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo innanzitutto che se $(x, y)$ è una soluzione della diofantea non omogenea e $(x_0, y_0)$ è una soluzione dell'omogenea, allora $(x+x_0, y+y_0)$ è ancora soluzione della non omogenea.
+    \begin{alignat*}{1}
+        a(x + x_0) + b(y + y_0) &= ax + ax_0 + by + by_0 \\
+                                &= (ax + by) + (ax_0 + by_0) \\
+                                &= c + 0\\
+                                &= c.
+    \end{alignat*}
+
+    Dimostriamo ora che tutte le soluzioni sono di questa forma. Sia $(\bar{x}, \bar{y})$ una soluzione particolare della diofantea non omogenea e $(x, y)$ un'altra soluzione qualsiasi, e mostriamo che la loro differenza è una soluzione dell'omogenea associata.
+    \begin{alignat*}
+        {1}
+        a(x - \bar{x}) + b(y - \bar{y}) &= ax - a\bar{x} + by - b\bar{y} \\
+                                        &= (ax + by) - (a\bar{x} + b\bar{y}) \\
+                                        &= c - c\\
+                                        &= 0
+    \end{alignat*}
+    che è la tesi.
+\end{proof}
+
+
+\begin{example}
+    Proviamo a risolvere l'equazione diofantea $1020x + 351y = 21$.
+
+    La prima cosa da fare è verificare se l'equazione ha soluzione tramite il \autoref{th:cond_ris_diofantea}: dobbiamo quindi verificare che $\gcd{1020, 351}$ divida $21$.
+
+    Per calcolare il massimo comun divisore dei coefficienti sfruttiamo l'algoritmo di Euclide e annotiamo accanto ai vari passi le sottrazioni effettuate per svolgere i passaggi: questo servirà più avanti per calcolare i coefficienti dell'identità di Bezout.
+    \begin{alignat*}{5}
+            &\gcd{1020, 351}  \qquad\qquad &318 &= {}&1020 {}&- \boxed{2} \cdot 351\\
+        = {}&\gcd{318, 351}   \qquad\qquad &33  &= {}&351  {}&- \boxed{1} \cdot 318\\
+        = {}&\gcd{318, 33}    \qquad\qquad &21  &= {}&318  {}&- \boxed{9} \cdot 33\\
+        = {}&\gcd{21, 33}     \qquad\qquad &12  &= {}&33   {}&- \boxed{1} \cdot 21\\
+        = {}&\gcd{21, 12}     \qquad\qquad &9   &= {}&21   {}&- \boxed{1} \cdot 12\\
+        = {}&\gcd{9, 12}      \qquad\qquad &3   &= {}&12   {}&- \boxed{1} \cdot 3\\
+        = {}&\gcd{9, 3}       \qquad\qquad &0   &= {}&9    {}&- \boxed{3} \cdot 3\\
+        = {}&\gcd{3, 0}       \\
+        = {}&3.
+    \end{alignat*}
+    Siccome $3$ divide $21$ l'equazione ha soluzione.
+
+    Troviamo innanzitutto la soluzione della diofantea omogenea associata \[
+        1020x + 351y = 0.    
+    \] Dato che i coefficienti non sono coprimi (abbiamo visto che il loro massimo comun divisore è $3$) possiamo ricondurci all'equazione equivalente \[
+        \frac{1020}{3}x + \frac{351}{3}y = 0 \iff 340x + 117y = 0.    
+    \] I coefficienti di quest'ultima equazione sono coprimi, dunque per il \autoref{sol_diofantea_omogenea_coprimi} le sue soluzioni sono tutte e sole della forma \[
+        x = -117k, \;\; y = 340k    
+    \] al variare di $k \in \Z$.
+
+    Dobbiamo trovare ora una soluzione particolare della diofantea non omogenea. Per far ciò sfruttiamo l'identità di Bezout, ovvero troviamo $x_0, y_0 \in \Z$ tali che \[
+        1020x_0 + 351y_0 = 3.    
+    \] A quel punto moltiplicando tutto per $\nicefrac{21}{3} = 7$ otteniamo \[
+        1020\cdot(7x_0) + 351\cdot(7y_0) = 21,    
+    \] da cui la soluzione particolare cercata è $\bar x = 7x_0$, $\bar y = 7y_0$.
+
+    Per trovare $x_0$ e $y_0$ usiamo i coefficienti trovati durante l'esecuzione dell'algoritmo di Euclide costruendo una tabella con due colonne e tante righe quanti sono i numeri trovati durante l'algoritmo: ogni riga contiene i coefficienti per cui devo moltiplicare $1020$ e $351$ per ottenere il numero che identifica la riga.
+    \begin{figure}[H]
+    % \begin{table}[]
+        \centering
+        \begin{tabular}{l|ll}
+                   & $1020$ & $351$ \\ \hline
+            $1020$ & $1$    & $0$   \\
+            $351$  & $0$    & $1$   \\
+            $318$  & $1$    & $-2$  \\
+            $33$   & $-1$   & $3$   \\
+            $21$   & $10$   & $-29$ \\
+            $12$   & $-11$  & $32$  \\
+            $9$    & $21$   & $-61$ \\
+            $3$    & $-32$  & $93$ 
+        \end{tabular}
+    % \end{table}
+    \end{figure}
+
+    Le prime due righe della tabella si ottengono facilmente: infatti è ovvio che \[
+        1020 = \boxed{1} \cdot 1020 + \boxed{0} \cdot 351, \quad 
+        351  = \boxed{0} \cdot 1020 + \boxed{1} \cdot 351.
+    \] Per ottenere le righe seguenti usiamo le uguaglianze calcolate durante l'algoritmo di Euclide: ad esempio siccome $318 = 1020 - 2 \cdot 351$ per calcolare i coefficiente sulla prima colonna prendiamo il coefficiente della prima colonna della riga di $1020$ (cioè $1$) e gli sottraiamo $2$ volte il coefficiente della prima colonna della riga di $351$; stesso procedimento per la seconda colonna e per le righe successive.
+
+    I coefficienti dell'ultima riga ci dicono che \[
+        3 = 1020 \cdot (-32) + 351 \cdot 93,     
+    \] come è facilmente verificabile con una calcolatrice. Questi due coefficienti sono quindi $x_0$ e $y_0$ dell'identità di Bezout, da cui per calcolare la soluzione particolare è sufficiente moltiplicarli per $7$, ovvero \[
+        \bar x = -32 \cdot 7 = -224, \quad \bar y = 93 \cdot 7 = 651.    
+    \]
+
+    Concludendo, per il \autoref{sol_diofantea_non_omog} le soluzioni di questa equazione diofantea non omogenea sono tutte e sole della forma \[
+        (x, y) = (-224 - 117k, 651 + 340k).    
+    \]
+\end{example}

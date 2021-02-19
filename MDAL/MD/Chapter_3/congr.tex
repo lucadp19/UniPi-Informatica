@@ -1,0 +1,368 @@
+\chapter{Congruenze}
+
+\section{Relazione di congruenza}
+
+\begin{definition} [Congruenza modulo $m$]\label{def_congr}
+    Siano $a, b, m \in \Z$, $m > 0$. Allora si dice che $a$ è congruo a $b$ modulo $m$ se e solo se $a - b$ è un multiplo di $m$, e si scrive
+    \begin{align*}
+        &a \congr b \pmod m.
+    \end{align*}
+\end{definition}
+
+\begin{theorem} [Congruenza come relazione di equivalenza]
+    Siano $a, b, m \in \Z$, $m > 0$. Allora la relazione di congruenza modulo $m$ è una relazione di equivalenza, e dunque soddisfa le proprietà:
+    \begin{align}
+        &\text{Riflessiva: } &&a \congr a \Mod{m} \label{congr_rifl}\\
+        &\text{Simmetrica: } &&a \congr b \Mod{m} \implies b \congr a \Mod{m} \label{congr_simm}\\
+        &\text{Transitiva: } &&a \congr b \Mod{m} \land b \congr c \Mod{m} \implies a \congr c \Mod{m}  \label{congr_trans}
+    \end{align}
+\end{theorem}
+\begin{proof} Dimostriamo le tre proprietà della congruenza come relazione di equivalenza.
+    \begin{enumerate}
+        \item $a - a = 0 = 0m$, dunque $a \congr a \Mod{m}$.
+        \item Se $a - b = km$ allora $b - a = -(a - b) = -km = (-k)m$, cioè $b \congr a \Mod{m}$.
+        \item Se $a - b = km$ e $b - c = hm$ allora $a - c = (a - b) + (b - c) = km + hm = (k + h)m$, 
+            cioè $a \congr c \Mod{m}$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem} [Relazione tra congruenza e resto della divisione euclidea] \label{equiv_congr_resto}
+    Siano $a, b, m \in \Z$, $m > 0$. Allora
+    \begin{equation}
+        a \congr b \Mod{m} \iff a \bmod m = b \bmod m.
+    \end{equation}
+    cioè $a$ è congruo a $b$ se e solo se $a$ e $b$ hanno lo stesso resto quando divisi per $m$.
+\end{theorem}
+\begin{proof}
+    Dimostriamo l'implicazione nei due versi.
+    \begin{itemize}
+        \item[($\implies$)]
+        Supponiamo che $a \congr b \Mod{m}$ e dimostriamo che i resti di $a$ e $b$ modulo $m$ siano uguali.
+        Per la proposizione \ref{esistenza_resto} esistono $q, r \in \Z$ tale che $b = mq + r$ e $0 \leq r < m$.
+        Allora per definizione di congruenza per qualche $k \in \Z$ avremo
+        \begin{alignat*}
+            {1}
+            a &= b + mk \\
+            &= mq + r + mk \\
+            &= m(q + k) + r
+        \end{alignat*}
+        ovvero $r$ è il resto di $a$ modulo $m$.
+        \item[($\impliedby$)] Supponiamo che $a \bmod m = b \bmod m = r$, cioè per divisione euclidea $a = cq + r$ e $b = cq' + r$ per qualche $q, q' \in \Z$.  Allora
+        \begin{alignat*}
+            {1}
+            a - b &= cq + r - cq' - r \\
+                &= c(q - q')
+        \end{alignat*}
+        cioè $a \congr b \Mod{m}$. \qedhere
+        \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b, c, d, m \in \Z$, $m > 0$. Allora valgono le seguenti
+    \begin{align}
+        &a \congr b \Mod{m} \;\land\; c \congr d \Mod{m}\implies a+c \congr b+d\Mod{m} \label{somma_congrui}\\
+        &a \congr b \Mod{m} \;\land\; c \congr d \Mod{m}\implies a-c \congr b-d\Mod{m} \label{differenza_congrui}\\
+        &a \congr b \Mod{m} \;\land\; c \congr d \Mod{m}\implies ac \congr bd\Mod{m} \label{prodotto_congrui}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item Per definizione di congruenza $m \divides a - b$ e $m \divides c - d$. Per la \autoref{divides_sum_subtr_mult} segue che $m \divides (a - b) + (c - d)$, cioè $m \divides (a + c) - (b + d)$, che è equivalente a $a+c \congr b+d\Mod{m}$.
+        \item Per definizione di congruenza $m \divides a - b$ e $m \divides c - d$. Per la \autoref{divides_sum_subtr_mult} segue che $m \divides (a - b) - (c - d)$, cioè $m \divides (a - c) - (b - d)$, che è equivalente a $a-c \congr b-d\Mod{m}$.
+        \item Per definizione di congruenza, scriviamo $a - b = km$ e $c - d = hm$, che è equivalente a $b = a - km$ e $d = c - hm$. Dunque
+        \begin{alignat*}
+            {1}
+            bd &= (a - km)(c - hm) \\
+                &= ac - ahm - c km + khm \\
+                &= ac - (ah + c k - kh)m \\
+        \end{alignat*}    
+        che è equivalente a
+        \begin{alignat*} {1}
+            ac - bd &= (ah + c k - kh)m \\
+            \iff ac &\congr bd \Mod{m}.
+        \end{alignat*} \qedhere
+    \end{enumerate}
+\end{proof}
+
+\section{Equazioni con congruenze lineari}
+
+Vogliamo ora risolvere congruenze lineari, ovvero della forma $ax \congr b \Mod{m}$, dove $a, c, m \in \Z$ e $m > 0$. La prima proposizione interessante è che ogni congruenza può essere trasformata in una diofantea equivalente e viceversa.
+
+\begin{proposition}[Equivalenza diofantea-congruenza]
+    Siano $a, b, c \in \Z$; sia $ax + by = c$ un'equazione diofantea. Allora tutte le soluzioni della diofantea sono soluzioni delle equazioni $ax \congr c \Mod{b}$ e $by \congr c \Mod{a}$.
+\end{proposition}
+\begin{proof}
+    Dimostriamo entrambi i versi dell'implicazione.
+    \begin{enumerate}
+        \item Siano $x, y \in \Z$ tali che $ax + by = c$. Dato che $ax + by$ è uguale a $c$ segue che $ax + by \congr c \Mod{b}$. Ma $b \congr 0 \Mod{b}$, dunque $x$ sarà anche soluzione di $ax \congr c \Mod{b}$. Analogo ragionamento considerando $ax + by \congr c \Mod{a}$.
+        \item Sia $x \in \Z$ tale che $ax \congr c \Mod{b}$. Allora per definizione di congruenza esiste $k \in \Z$ per cui $ax - c = bk$. Sia $y = -k$; l'equazione è quindi equivalente a $ax + by = c$, cioè la coppia $(x, y)$ è una soluzione dell'equazione diofantea. Analogo ragionamento se partiamo da $by \congr c \Mod{a}$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+Tramite questa proposizione possiamo risolvere ogni equazione contenente congruenze risolvendo l'equazione diofantea associata, o viceversa. Tuttavia per ottenere un risultato più velocemente è necessario sviluppare degli strumenti che ci permettano di risolvere direttamente le congruenze lineari.
+
+\begin{definition}[Invertibilità e inverso]
+    Siano $a \in \Z$; allora si dice che $a$ è invertibile modulo $m$ se esiste un numero $k \in \Z$ tale che \[
+        ak \congr 1 \Mod{m}
+    .\]
+    In particolare tra tutti gli interi che soddisfano la relazione precedente, il numero $k_0$ tale che $0 \leq k_0 < m$ si dice inverso di $a$ modulo $m$.
+\end{definition}
+
+Per calcolare gli inversi modulo $m$ basta fare una tabella $m \times m$ in cui le righe e le colonne contengono i numeri tra $0$ e $m-1$, e nella casella $ij$ c'è il prodotto tra i numeri $i$ e $j$ modulo $m$.
+
+\begin{figure}
+    \centering
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \captionof{figure}{Tabella dei prodotti mod $5$}
+        \label{fig:prod_mod_5}
+        \begin{tabular}{l|l|l|l|l|l|}
+            \cline{2-6}
+                                      & $0$ & $1$ & $2$ & $3$ & $4$ \\ \hline
+            \multicolumn{1}{|l|}{$0$} & $0$ & $0$ & $0$ & $0$ & $0$ \\ \hline
+            \multicolumn{1}{|l|}{$1$} & $0$ & $1$ & $2$ & $3$ & $4$ \\ \hline
+            \multicolumn{1}{|l|}{$2$} & $0$ & $2$ & $4$ & $1$ & $3$ \\ \hline
+            \multicolumn{1}{|l|}{$3$} & $0$ & $3$ & $1$ & $4$ & $2$ \\ \hline
+            \multicolumn{1}{|l|}{$4$} & $0$ & $4$ & $3$ & $2$ & $1$\\ \hline
+        \end{tabular}
+    \end{minipage}
+    
+
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \captionof{figure}{Tabella dei prodotti mod $6$}
+        \label{fig:prod_mod_6}
+
+        \begin{tabular}{l|l|l|l|l|l|l|}
+            \cline{2-7}
+                                      & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ \\ \hline
+            \multicolumn{1}{|l|}{$0$} & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\ \hline
+            \multicolumn{1}{|l|}{$1$} & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ \\ \hline
+            \multicolumn{1}{|l|}{$2$} & $0$ & $2$ & $4$ & $0$ & $2$ & $4$ \\ \hline
+            \multicolumn{1}{|l|}{$3$} & $0$ & $3$ & $0$ & $3$ & $0$ & $3$ \\ \hline
+            \multicolumn{1}{|l|}{$4$} & $0$ & $4$ & $2$ & $0$ & $4$ & $2$ \\ \hline
+            \multicolumn{1}{|l|}{$5$} & $0$ & $5$ & $4$ & $3$ & $2$ & $1$ \\ \hline
+        \end{tabular}
+    \end{minipage}
+\end{figure}
+
+Come possiamo notare dalle tabelle in \autoref{fig:prod_mod_6}, non sempre i numeri diversi da $0$ ammettono inverso modulo $m$: se il modulo è $6$ gli unici numeri che ammettono inverso sono $1$ e $5$.
+
+Vediamo ora il criterio generale per stabilire se un numero è invertibile.
+
+\begin{theorem}[Condizione necessaria e sufficiente per l'invertibilità]\label{invertibilita_mod_m}
+    Siano $a, m \in \Z$. Allora $a$ è invertibile modulo $m$ se e solo se $\gcd{a, m} = 1$. 
+\end{theorem}
+\begin{proof}
+    Dimostriamo l'implicazione nei due versi.
+    \begin{itemize}
+        \item[($\implies$)] Supponiamo che $a$ sia invertibile modulo $m$, cioè che $\exists x \in \Z$ tale che $ax \congr= 1 \Mod{m}$. Ma sappiamo che $ax + my$ è un multiplo di $\gcd{a, m}$, quindi anche $1$ dovrà essere un multiplo di $\gcd{a, m}$, cioè $\gcd{a, m} = 1$.
+        \item[($\impliedby$)] Supponiamo $\gcd{a, m} = 1$. Allora per il teorema di Bezout \ref{bezout} $\exists x, y \in \Z$ tali che
+        \begin{alignat*}{1}
+            &ax + my = 1 \\
+            \iff &ax - 1 = m(-y) \\
+            \iff &ax \congr 1 \Mod{m}
+        \end{alignat*}
+        dunque $x$ è l'inverso di $a$ modulo $m$. \qedhere
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}
+    Se $p$ è primo e $a \not\congr 0 \Mod{p}$, allora $a$ è invertibile modulo $p$.
+\end{corollary}
+\begin{proof}
+    Se $p$ è primo, allora necessariamente $p$ è coprimo con tutti i numeri che non sono suoi multipli, cioè con tutti gli $a$ tali che $a \congr 0 \Mod{p}$. Dunque se $a \congr 0 \Mod{p}$ allora $\gcd{a, [} = 1$, cioè per il teorema precedente $a$ è invertibile modulo $p$.
+\end{proof}
+
+\begin{proposition} \label{se_invertibile_allora_soluzione}
+    Siano $a, b, m \in \Z$; allora se $a$ è invertibile modulo $m$ esiste $x \in \Z$ tale che $ax \congr b \Mod{m}$.
+\end{proposition}
+\begin{proof}
+    Dato che $a$ è invertibile modulo $m$ esisterà $x^\prime \in \Z$ tale che $ax^\prime \congr 1 \Mod{m}$. Moltiplicando entrambi i membri per $b$ otteniamo $ax'b \congr b \Mod{m}$, dunque la $x \congr x'b \Mod{b}$ soddisfa $ax \congr b \Mod{m}$, cioè la tesi.
+\end{proof}
+
+Possiamo ora mostrare il criterio generale per la risoluzione delle congruenze lineari.
+
+\begin{proposition}[Condizione necessaria e sufficiente per la risoluzione di congruenze lineari] \label{cong_ha_soluzione_sse_mcd_div_b}
+    Siano $a, b, m, x \in \Z$; allora l'equazione $ax \congr b \Mod{m}$ ha soluzione se e solo se $\gcd{a, m} \divides b$.
+\end{proposition}
+\begin{proof}
+    Dimostriamo l'implicazione nei due versi.
+    \begin{itemize}
+        \item[($\implies$)] Supponiamo che $ax \congr b \Mod{m}$ ammetta soluzione. Allora esiste $y \in \Z$ tale che $ax - my = b$. Dato che $a$ e $m$ sono multipli di $\gcd{a, m}$, allora lo sarà anche la combinazione lineare $ax - my$ che è uguale a $b$, cioè $\gcd{a, m} \divides b$.
+        \item[($\impliedby$)] Supponiamo che $d = \gcd{a, m}$ divida $b$. Allora $d\divides a$, $d \divides b$, $d \divides m$. Siano $a^\prime = \frac{a}{d}, b^\prime = \frac{b}{d}, m^\prime = \frac{m}{d}$. Allora 
+        \begin{align*}
+            &ax \congr b \Mod{m}\\
+            \iff{} &ax - b = mk   &\text{per qualche $k \in \Z$} \\
+            \iff{} &a^\prime dx - b^\prime d = m^\prime dk &\text{per qualche $k \in \Z$} \\
+            \iff{} &a^\prime x - b^\prime = m^\prime k &\text{per qualche $k \in \Z$} \\
+            \iff{} &a^\prime x \congr b^\prime \Mod{m^\prime }.
+        \end{align*}
+        Ma per il \autoref{mcd_diviso_mcd} $\gcd{a^\prime}{m^\prime} = 1$, dunque $a^\prime$ è invertibile modulo $m^\prime$, dunque per la proposizione \ref{se_invertibile_allora_soluzione} segue che $a^\prime x \congr b^\prime \Mod{m^\prime}$ ha soluzione. Tuttavia $a^\prime x \congr b^\prime \Mod{m^\prime}$ è equivalente a $ax \congr b \Mod{m}$, dunque anche $ax \congr b \Mod{m}$ ha soluzione e in particolare ha le stesse soluzioni di $a^\prime x \congr b^\prime \Mod{m^\prime}$. \qedhere
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    Se vogliamo semplificare una congruenza possiamo sfruttare le seguenti regole:
+    \begin{alignat}{3}
+        A &\congr B \Mod{m} \quad &\iff      \quad &A + c \congr B + c \Mod{m} \\
+        A &\congr B \Mod{m} \quad &\implies  \quad &cA \congr cB \Mod{m} \\
+        A &\congr B \Mod{m} \quad &\iff      \quad &(A \bmod m) \congr (B \bmod m) \Mod{m} \\
+        Ad &\congr Bd \Mod{m} \quad &\implies\quad &A \congr B \Mod{m} \qquad \text{se }\gcd{d}{m} = 1\\
+        Ad &\congr Bd \Mod{md} \quad &\iff   \quad &A \congr B \Mod{m}
+    \end{alignat}
+\end{proposition}
+\begin{proof}
+    Dimostriamo le 5 proposizioni.
+    \begin{enumerate}
+        \item Dato che $c \congr c \Mod{m}$, si tratta di un caso particolare della \ref{somma_congrui}. Inoltre l'implicazione inversa si ricava dalla \ref{differenza_congrui}, dunque si tratta di un'equivalenza.
+        \item Dato che $c \congr c \Mod{m}$, si tratta di un caso particolare della \ref{prodotto_congrui}.
+        \item Dato che $A \congr (A \bmod m) \Mod{m}$ e $B \congr (B \bmod m) \Mod{m}$, per transitività otteniamo che $A \congr B \Mod{m}$ è equivalente a $(A \bmod m) \congr (B \bmod m) \Mod{m}$.
+        \item Se $\gcd{d}{m} = 1$ allora esiste l'inverso di $d$ modulo $m$. Chiamiamo $x$ questo inverso e moltiplichiamo entrambi i membri della congruenza per $x$, ottenendo
+        \begin{alignat*}
+            {1}
+            Ad &\congr Bd \Mod{m}  \\
+            \iff Adx &\congr Bdx \Mod{m} \\
+            \iff A \cdot 1 &\congr B \cdot 1 \Mod{m} \\
+            \iff A &\congr B \Mod{m}.
+        \end{alignat*}
+        \item Per definizione di congruenza esiste $y \in \Z$ tale che
+        \begin{alignat*}
+            {1}
+            Ad &= Bd + mdy \\
+            \iff A &= B + my \\
+            \iff A &\congr B \Mod{m}. \tag*{\qedhere}
+        \end{alignat*}
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}
+    Siano $a, b, m \in \Z$ noti, $x \in \Z$ non noto. Allora per risolvere l'equazione $ax \congr b \Mod{m}$ possiamo ricondurci ad uno dei seguenti tre casi:
+    \begin{enumerate}
+        \item se $\gcd{a, m} = 1$, allora l'equazione ha soluzione $x \congr by \Mod{m}$, dove $y$ è l'inverso di $a$ modulo $m$;
+        \item se $\gcd{a, m} \neq 1$, $d = \gcd{a, m} \divides b$, allora l'equazione è equivalente all'equazione $a^\prime x \congr b^\prime \Mod{m^\prime}$, con $a^\prime = \frac{a}{d}$, $b^\prime = \frac{b}{d}$, $m^\prime = \frac{m}{d}$, che ha soluzione;
+        \item se $\gcd{a, m} \neq 1$, $\gcd{a, m} \ndivides b$, allora l'equazione non ha soluzione.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    I tre casi sono conseguenza diretta della proposizione \ref{cong_ha_soluzione_sse_mcd_div_b}. Infatti
+    \begin{enumerate}
+        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione ha soluzione. Se $y$ è l'inverso di $a$, moltiplicando entrambi i membri per $y$ otteniamo la soluzione $x \congr by \Mod{m}$.
+        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione ha soluzione. 
+        Sia $d = \gcd{a, m}$. Allora la congruenza è equivalente a $ax - b = mk$ per qualche $k \in \Z$. Dato che $a, b, m$ sono divisibili per $d$, dividendo per $d$ otteniamo l'equazione equivalente
+        \begin{alignat*}
+            {1}
+            &\frac{a}{d}x - \frac{b}{d} = \frac{m}{d}k \\
+            \iff &\frac{a}{d}x \congr \frac{b}{d} \Mod{\frac{m}{d}}
+        \end{alignat*}
+        Ma per il corollario \ref{mcd_diviso_mcd} $\gcd{\frac{a}{d}}{\frac{m}{d}} = 1$, dunque possiamo trovare la soluzione sfruttando il primo caso.
+        \item Per la \ref{cong_ha_soluzione_sse_mcd_div_b} l'equazione non ha soluzione. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\section{Sistemi di congruenze}
+
+\begin{theorem}
+    [Teorema Cinese del Resto] \label{th_cinese}
+    Siano $a_1, a_2, m_1, m_2 \in \Z$ con $m_1, m_2$ coprimi. Allora esiste un $x \in \Z$ tale che
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            x&\congr a_1 \Mod{m_1}\\
+            x&\congr a_2 \Mod{m_2}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    e $x$ è unico modulo $(m_1m_2)$, ovvero se $x_0$ è un'altra soluzione del sistema segue che
+    \begin{equation}
+        x \congr x_0 \pmod{m_1 m_2}.
+    \end{equation} 
+\end{theorem}
+
+Possiamo esprimere il teorema cinese in questo modo equivalente.
+
+\begin{theorem}
+    [Teorema Cinese del Resto] \label{th_cinese_2}
+    Siano $x_0, m \in \Z$; siano inoltre $m_1, m_2$ coprimi tali che $m = m_1m_2$. Allora vale che \begin{equation}
+        x \congr x_0 \Mod{m} \iff \left\{
+            \begin{alignedat}{1}
+                x&\congr x_0 \Mod{m_1}\\
+                x&\congr x_0 \Mod{m_2}
+            \end{alignedat}      
+            \right .
+    \end{equation}
+\end{theorem}
+
+Dato che il Teorema Cinese del Resto ci permette di unire due equazioni con moduli $m_1$, $m_2$ coprimi in un'unica congurenza modulo $(m_1m_2)$, possiamo generalizzare il teorema ad un sistema di $n$ congruenze unendole due a due, come ci dice il prossimo corollario.
+
+\begin{corollary}
+    \label{th_cinese_n}
+    Siano $a_1, \dots, a_n, m_1, \dots, m_n \in \Z$ con $m_1, \dots, m_n$ coprimi a due a due. Allora esiste un $x \in \Z$ tale che
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            x&\congr a_1 \Mod{m_1}\\
+            x&\congr a_2 \Mod{m_2}\\
+            &\vdotswithin{\congr}\\
+            x&\congr a_n \Mod{m_n}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    e $x$ è unico modulo $(m_1\cdots m_n)$, ovvero se $x_0$ è un'altra soluzione del sistema segue che
+    \begin{equation}
+        x \congr x_0 \pmod{m_1 \cdots m_n}.
+    \end{equation} 
+\end{corollary}
+
+Vediamo come stabilire se esistono soluzioni di un sistema di congruenze con moduli non coprimi.
+
+\begin{proposition}[Condizione necessaria e sufficiente per la compatibilità di un sistema di congruenze]
+    Siano $a_1, a_2, m_1, m_2 \in \Z$. Allora esiste $x \in \Z$ tale che 
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            x&\congr a_1 \Mod{m_1}\\
+            x&\congr a_2 \Mod{m_2}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    se e solo se $a_1 \congr a_2 \pmod{\gcd{m_1}{m_2}}$.
+\end{proposition}
+\begin{proof}
+    Consideriamo il sistema di due equazioni. Dalla prima ricaviamo \[
+        x = a_1 + m_1y    
+    \] per qualche $y \in \Z$. Allora sostituendo nella seconda otteniamo \begin{alignat*}
+        {1}
+        &a_1+m_1y \congr a_2 \Mod{m_2}\\
+        \iff &m_1y \congr a_2 - a_1 \Mod{m_2}.
+    \end{alignat*}
+    Quest'ultima equazione (per la proposizione \ref{cong_ha_soluzione_sse_mcd_div_b}) ha soluzione se e solo se 
+    \begin{alignat*}
+        {1}
+        &\gcd{m_1}{m_2} \divides (a_2-a_1) \\
+        \iff &(a_2-a_1) \congr 0 \Mod{\gcd{m_1}{m_2}} \\
+        \iff &a_1 \congr a_2 \Mod{\gcd{m_1}{m_2}}. \tag*{\qedhere}
+    \end{alignat*}
+\end{proof}
+
+Se abbiamo un sistema con più di due equazioni basta risolverle due a due: ogni volta otteniamo una singola equazione, diminuendo di uno il numero di equazioni del sistema senza alterare il numero di soluzioni. Se a un certo punto troviamo una coppia di equazioni non compatibili allora il sistema non ha soluzione, altrimenti la ha ed è unica.
+
+\begin{proposition}
+    Dato un sistema di congruenze 
+    \begin{equation*}
+        \left\{
+        \begin{alignedat}{1}
+            a_1x &\congr b_1 \Mod{m_1}\\
+            a_2x &\congr b_2 \Mod{m_2}\\
+            &\vdotswithin{\congr} \\
+            a_nx &\congr b_n \Mod{m_n}
+        \end{alignedat}      
+        \right . 
+    \end{equation*}
+    se $x_0$ è una soluzione particolare, allora tutte le soluzioni del sistema si ottengono sommando a $x_0$ un multiplo di $\operatorname{mcm}(m_1, m_2, \dots, m_n)$; o equivalentemente la soluzione del sistema è una singola congruenza della forma
+    \begin{equation}
+        x \congr x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}
+    \end{equation}
+\end{proposition}
+
+Per quest'ultima proposizione possiamo risolvere un sistema cercando un numero intero $x_0$ minore del minimo comune multiplo dei moduli che sia soluzione di tutte le equazioni: a quel punto la congruenza che risolve il sistema sarà $x \congr x_0 \pmod{\operatorname{mcm}(m_1, m_2, \dots, m_n)}$.

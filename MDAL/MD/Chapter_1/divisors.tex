@@ -1,0 +1,97 @@
+\chapter{Divisori e gcd}
+
+\section{Divisori di un numero}
+
+Introduciamo ora formalmente i concetti intuitivi di multiplo e divisore.
+
+\begin{definition}[Divisore]
+    Siano $a, b \in \Z$. Si dice che $a$ divide $b$ se esiste $k \in \Z$ tale che $ak = b$. In tal caso si scrive $a \divides b$.
+\end{definition}
+
+\begin{definition}[Multiplo]
+    Siano $a, b \in \Z$. Allora si dice che $b$ è multiplo di $a$ se esiste $k \in \Z$ tale che $b = ak$.
+\end{definition}
+
+\begin{remark}
+    Ovviamente definizione di multiplo è speculare a quella di divisore: se $a$ è divisore di $b$ allora $b$ è multiplo di $a$.
+\end{remark}
+
+La relazione di divisibilità si comporta bene rispetto alla somma e al prodotto. 
+
+\begin{proposition} \label{divides_sum_subtr_mult}
+    Siano $a, b, n \in \Z$ tali che $n \divides a$ e $n \divides b$. Allora valgono le seguenti affermazioni:
+    \begin{enumerate}
+        \item $n \divides a + b$ \label{divides_sum}
+        \item $n \divides a - b$ \label{divides_subtr}
+        \item per ogni $x \in \Z$ vale che $n \divides ax$ \label{divides_mult}
+    \end{enumerate} 
+\end{proposition}
+\begin{proof}  
+    Per ipotesi, dato che $n \divides a$ e $n \divides b$, allora $\exists h, k \in \Z$ tali che
+    $nh = a$ e $nk = b$. Dunque:
+    \begin{alignat*}{2}
+        a + b = nh + nk = n(h + k) &\iff n \divides a + b \\
+        a - b = nh - nk = n(h - k) &\iff n \divides a - b \\
+        ax = nhx = n(hx) &\iff n \divides ax
+    \end{alignat*}
+    che è la tesi.
+\end{proof}
+
+\begin{definition}[Massimo comun divisore]
+    Siano $a, b \in \Z$; allora si dice $\gcd{a, b}$ il più grande intero positivo
+    tale che \[
+        \gcd{a, b} \divides a \qquad \text{e} \qquad \gcd{a, b} \divides b.
+    \]
+\end{definition}
+
+\begin{definition}[Minimo comune multiplo]
+    Siano $a, b \in \Z$. Allora si dice minimo comune multiplo di $a$ e $b$ il numero $d = \lcm{a, b}$ tale che $d$ è il più piccolo multiplo positivo sia di $a$ che di $b$.
+\end{definition}
+
+\begin{definition}[Coprimo]
+    Siano $a, b \in \Z$. Se $\gcd{a, b} = 1$ allora $a$ e $b$ si dicono coprimi.
+\end{definition}
+
+\begin{remark}
+    Siano $a, b \in \Z$. Allora valgono le seguenti proprietà per $\gcd{a, b}$:
+    \begin{enumerate}
+        \item $\gcd{a, b} = \gcd{\pm a, \pm b}$
+        \item $\gcd{a, 1} = \gcd{1, a} = 1$
+        \item $\gcd{a, 0} = \gcd{0, a} = 0$
+        \item $\gcd{0, 0}$ non esiste.
+    \end{enumerate}
+\end{remark}
+
+Il prossimo teorema ci fornisce la strategia della \emph{divisione euclidea tra interi}.
+
+\begin{theorem}[Esistenza e unicità del resto] \label{esistenza_resto}
+    Siano $a, b \in \Z$, con $b \neq 0$. Allora esistono e sono unici $q, r \in \Z$ tali che
+    \begin{align}
+        a = bq + r, \qquad0 \leq r < \abs{b}
+    \end{align}
+    Tale $r$ si dice resto della divisione di $a$ per $b$, e si indica anche con $r = a\bmod b$.
+\end{theorem}
+\begin{proof}
+    Notiamo che i numeri della forma $a - bq$ formano una progressione aritmetica di passo $b$ al variare di $q \in \Z$.
+    Il resto $r$ definito in questo modo è l'unico elemento di questa progressione compreso tra $0$ e $b - 1$.
+\end{proof}
+
+\begin{proposition}\label{mcm|c_iff_a,b|c}
+    Siano $a, b, c \in \Z$. Allora \begin{equation}
+        \lcm{a, b} \divides c \iff a \divides c \;\land\; b \divides c
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo separatamente i due versi dell'implicazione.
+    \begin{itemize}
+        \item[($\implies$)] Dato che $\lcm{a, b}$ è un multiplo di $a$ e di $b$ e per ipotesi $c$ è un multiplo di $\lcm{a, b}$, allora per transitività segue che $c$ è un multiplo di $a$ e di $b$.
+        \item[($\impliedby$)] Supponiamo che $c$ sia un multiplo di $a$ e di $b$. Allora per il \autoref{esistenza_resto} esistono $q, r \in \Z$ tali che \[
+            c = \lcm{a, b}q + r
+        \]
+        con $0 \leq r < \lcm{a, b}$.
+
+        Dato che $a$, $b$ dividono sia $c$ (per ipotesi) che $\lcm{a, b}$ (per definizione di mcm), allora segue che essi dividono anche $r$. 
+
+        Ma $0 \leq r < \lcm{a, b}$, dunque necessariamente $r = 0$, cioè $c = \lcm{a, b}q$ e quindi $\lcm{a, b} \divides c$. \qedhere
+    \end{itemize}
+\end{proof}

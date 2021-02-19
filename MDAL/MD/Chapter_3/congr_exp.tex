@@ -1,0 +1,172 @@
+
+\section{Congruenze esponenziali}
+
+Iniziamo con un esempio di congruenza esponenziale.
+\begin{example}
+    Trovare tutte le soluzioni di $3^x \congr 5 \Mod{7}$.
+
+    Proviamo per tentativi:
+    \begin{alignat*}
+        {2}
+        &x = 0 \implies &&3^0 \congr 1 \ncongr 5 \Mod{7}\\
+        &x = 1 \implies &&3^1 \congr 3 \ncongr 5 \Mod{7}\\
+        &x = 2 \implies &&3^2 \congr 9 \congr 2 \ncongr 5 \Mod{7}\\
+        &x = 3 \implies &&3^3 \congr 3^2 \cdot 3 \congr 2 \cdot 3 \congr 6 \ncongr 5 \Mod{7}\\
+        &x = 4 \implies &&3^4 \congr 3^2 \cdot 3^2 \congr 2 \cdot 2 \congr 4 \ncongr 5 \Mod{7}\\
+        &x = 5 \implies &&3^5 \congr 3^2 \cdot 3^3 \congr 2 \cdot 6 \congr 12 \congr 5 \Mod{7}\\
+        &x = 6 \implies &&3^6 \congr 3^3 \cdot 3^3 \congr 6 \cdot 6 \congr 36 \congr 1 \ncongr 5 \Mod{7}
+    \end{alignat*}
+    Dunque $x = 5$ è una soluzione. Non possiamo dire pero' che le soluzioni sono tutti i numeri della forma $x = 5 + 7k$, perché possiamo notiare che i numeri sembrano ripetersi con periodo $6$ e non $7$ (infatti $3^0 \congr 3^6 \congr 1 \Mod{7}$). 
+
+    Dimostriamo che se $x = 5$ è soluzione, allora anche $x = 5 +6k$ lo e'. Infatti \[
+        3^{5 + 6k} \congr 3^5 \cdot 3^{6k} \congr 3^5 \cdot 1^k \congr 5 \Mod{7}.
+    \]
+    Dunque le soluzioni sono tutte le $x$ tali che $x \congr 5 \Mod{6}$. Questo vale anche per $x$ negativi, ma dobbiamo definire $x^{-1}$ non come $\frac{1}{x}$ ma come l'inverso di $x$ modulo $m$.
+\end{example}
+
+\begin{definition}[Ordine moltiplicativo]
+    Siano $a, m \in \Z$, $a \ndivides m$. Allora si dice ordine di $a$ modulo $m$ il più piccolo intero positivo $\ord{a, m}$ tale che \begin{equation}
+        a^{\ord{a, m}} \congr 1 \Mod{m}.
+    \end{equation}
+\end{definition}
+
+\begin{remark}
+    Notiamo che $\ord{a, m}$ deve essere positivo, e dunque in particolare maggiore di $0$. Inoltre la condizione $a \ndivides m$, che equivale a $a \ncongr 0 \Mod{m}$ serve ad evitare la congruenza banale $0^x \congr b \Mod{m}$, che ha soluzione se e solo se $b \congr 0 \Mod{m}$.
+\end{remark}
+
+\begin{proposition}\label{multipli_ord_equiv_1}
+    Siano $a, m \in \Z$, $a \ndivides m$. Allora per ogni $k \in \Z$ vale che \begin{equation}
+        a^{k\ord{a, m}} \congr 1 \Mod{m}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    \[
+        a^{k\ord{a, m}} \congr (a^{\ord{a, m}})^k \congr 1^k \congr 1 \Mod{m}. \qedhere
+    \]
+\end{proof}
+
+\begin{proposition}\label{solo_multipli_ord_equiv_1}
+    Siano $a, m \in \Z$, $a \ndivides m$. Allora \begin{equation}
+        a^x \congr 1 \Mod{m} \iff x \congr 0 \Mod{\ord{a, m}}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Per definizione di congruenza 
+    \[x \congr 0 \Mod{\ord{a, m}} \iff x \divides \ord{a, m} \iff x = \ord{a, m}\cdot k\] 
+    per qualche $k \in \Z$.
+
+    Per l'unicità del resto della divisione euclidea (\ref{esistenza_resto}) possiamo scrivere che $x = q\ord{a, m} + r$ per qualche $q, r \in \Z$ con $0 \leq r < \ord{a, m}$. Questo è equivalente a dire \begin{alignat*}
+        {1}
+        &\begin{alignedat}
+            {1}
+            a^x &= a^{q\ord{a, m} + r}\\
+            &= a^{q\ord{a, m}}\cdot a^r
+        \end{alignedat} \\
+        \intertext{che equivale a}
+        &\begin{alignedat}
+            {1}
+            a^x &\congr a^{q\ord{a, m}}\cdot a^r \Mod{m} \\
+            &\congr 1 \cdot a^r \Mod{m}\\
+            &\congr a^r \Mod{m}
+        \end{alignedat}
+    \end{alignat*}
+    dove abbiamo sfruttato la proposizione \ref{multipli_ord_equiv_1} per dire che $a^{q\ord{a, m}}\congr 1 \Mod{m}$.
+
+    Dunque dato che $a^x \congr a^r \Mod{m}$ segue che $a^x \congr 1 \Mod{m}$ se e solo se $a^r \congr 1 \Mod{m}$. Ma $r < \ord{a, m}$, dunque se $r$ fosse maggiore di $0$ avremmo trovato un numero minore di $\ord{a, m}$ per cui $a^r \congr 1 \Mod{m}$, che è assurdo poiché va contro la minimalità di $\ord{a, m}$.
+
+    Segue che $r = 0$, cioè $x = q\ord{a, m}$, cioè equivalentemente $x \congr 0 \Mod{\ord{a, m}}$, come volevasi dimostrare.
+\end{proof}
+
+\begin{proposition}[Soluzione di una congruenza esponenziale]
+    Siano $a, b, m \in \Z$, $a \ndivides m$. Se $x_0 \in \Z$ è una soluzione di $a^x \congr b \Mod{m}$ allora le soluzioni sono tutte e solo della forma \begin{equation}
+        x \congr x_0 \Mod{\ord{a, m}}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo che se $x = x_0 + k\ord{a, m}$ allora $x$ è soluzione.
+    \begin{alignat*}
+        {1}
+        a^{x_0 + k\ord{a, m}} &\congr a^{x_0}a^{k\ord{a, m}} \Mod{m} \\
+        &\congr b \cdot 1 \Mod{m} \\
+        &\congr b \Mod{m}.
+    \end{alignat*}
+    Dimostriamo ora che se $x$ è soluzione, allora $x \congr x_0 \Mod{\ord{a, m}}$, cioè equivalentemente $x - x_0 = k\ord{a, m}$.
+    \begin{alignat*}
+        {1}
+        a^{x - x_0} &\congr a^{x}a^{-x_0} \Mod{m} \\
+        &\congr b \cdot b^{-1} \Mod{m} \\
+        &\congr 1 \Mod{m}.
+    \end{alignat*}
+    Ma per la proposizione \ref{solo_multipli_ord_equiv_1} $a^{x - x_0} \congr 1 \Mod{m}$ se e solo se $x - x_0 \congr 0 \Mod{\ord{a, m}}$, cioè se e solo se $x \congr x_0 \Mod{\ord{a, m}}$, che è la tesi.
+\end{proof}
+
+\begin{proposition}[L'ordine è un divisore di $p-1$]
+    Siano $a, p \in \Z$, $a \ndivides p$, $p$ primo. Allora vale che $\ord{a, [} \divides p-1$.
+\end{proposition}
+\begin{proof}
+    Per il corollario al piccolo teorema di Fermat (\ref{corollario_fermat}) sappiamo che $a^{p-1} \congr 1 \Mod{p}$, cioè $p-1$ è una soluzione dell'equazione $a^x \congr 1 \Mod{p}$. 
+    
+    Per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $p-1 \congr 0 \Mod{\ord{a, [}}$, cioè $\ord{a, [} \divides p-1$, che è la tesi.
+\end{proof}
+
+Dunque se dobbiamo trovare l'ordine di un numero $a$ modulo un primo $p$ ci basta provare tutti i divisori di $p - 1$ fino a quando non troviamo il minimo divisore che soddisfa la proprietà.
+
+\subsection{Congruenze esponenziali con modulo non primo}
+
+Per risolvere congruenze esponenziali modulo un numero $n \in \Z$ non primo sfruttiamo la funzione $\eulerphi$ di Eulero insieme al seguente teorema.
+
+\begin{theorem}
+    [Teorema di Eulero] \label{th_Eulero}
+    Siano $a, n \in \Z$ con $a$ invertibile modulo $n$. Allora $a^{\eulerphi(n)} \congr 1 \Mod{n}$.
+\end{theorem}
+\begin{proof}
+    Consideriamo l'insieme delle classi resto invertibili modulo $n$, chiamato $\units{\parens*{\Zmod{n}}}$ e sia $k = \eulerphi(n)$. Dato che $\eulerphi(n) = \abs{\units{\parens*{\Zmod{n}}}}$, questo insieme avrà esattamente $k$ elementi. Indichiamoli con \[
+        \units{\parens*{\Zmod{n}}} = \{[b_1]_n, \dots, [b_k]_n\}.   
+    \]
+    Inoltre dato che $a$ è invertibile modulo $n$ segue che $[a]_n \in \units{\parens*{\Zmod{n}}}$. 
+
+    Moltiplichiamo ora ogni elemento di $\units{\parens*{\Zmod{n}}}$ per $[a]_n$, ottenendo l'insieme \[
+        \units{a\Zmod{n}} = \set*{ [a]_n[b_1]_n, \dots, [a]_n[b_k]_n } = \set*{ [ab_1]_n, \dots, [ab_k]_n }.
+    \]
+    Per la proposizione \ref{prodotto_invertibili_invertibile} dato che $[a]_n$ e tutti i $[b_i]_n$ sono invertibili, allora anche i prodotti saranno invertibili. Dunque l'insieme $\units{a\Zmod{n}}$ contiene solo numeri invertibili modulo $n$, quindi deve essere un sottoinsieme di $\units{\parens*{\Zmod{n}}}$.
+
+    Se dimostriamo che tutti gli elementi di $\units{a\Zmod{n}}$ sono distinti, allora $\units{a\Zmod{n}}$ è un sottoinsieme di $\units{\parens*{\Zmod{n}}}$ con il suo stesso numero di elementi, cioè i due insiemi devono essere uguali.
+
+    \begin{description}
+        \item[Gli elementi di $\units{a\Zmod{n}}$ sono tutti distinti.] Supponiamo per assurdo che esistano $[b_i]_n, [b_j]_n \in \units{\parens*{\Zmod{n}}}$ con $[b_i]_n \neq [b_j]_n$ tali che \[
+            [ab_i]_n = [ab_j]_n.
+        \]
+        Dato che $[a]_n$ è invertibile, allora esisterà $[a^{-1}]_n$ che è l'inverso di $[a]_n$. Moltiplicando entrambi i membri per $[a^{-1}]_n$ otterremo: \begin{alignat*}
+            {1}
+            &[a^{-1}]_n[ab_i]_n = [a^{-1}]_n[ab_j]_n \\
+            \iff &[a^{-1}ab_i]_n = [a^{-1}ab_j]_n \\
+            \iff &[b_i]_n = [b_j]_n 
+        \end{alignat*}
+        che è assurdo in quanto abbiamo supposto $[b_i]_n \neq [b_j]_n$. Segue quindi che tutti gli elementi in $\units{a\Zmod{n}}$ sono distinti.
+    \end{description}
+
+    Dunque gli insiemi $\units{\parens*{\Zmod{n}}}$ e $\units{a\Zmod{n}}$ sono uguali, dunque anche il prodotto di tutti i loro elementi dovrà essere uguale.
+    \begin{alignat*}
+        {1}
+        &[ab_1]_n[ab_2]_n\cdots [ab_k]_n = [b_1]_n[b_2]_n\cdots [b_k]_n\\
+        \iff &[ab_1 \cdot ab_2 \cdots ab_k]_n = [b_1b_2\cdots b_k]_n\\
+        \intertext{Per definizione di uguaglianza tra classi di resto modulo $n$:}
+        \iff &ab_1 \cdot ab_2 \cdots ab_k \congr b_1b_2\cdots b_k \Mod{n} \\
+        \iff &(\overbrace{a\cdot a \cdots a}^{k \text{ volte}}) \cdot (b_1b_2\cdots b_k) \congr (b_1b_2\cdots b_k) \Mod{n}\\
+        \intertext{Per invertibilità di $b_1$, $b_2, \dots, b_k$:}
+        \iff &a^k \congr 1 \Mod{n}\\
+        \iff &a^{\eulerphi(n)} \congr 1 \Mod{n}
+    \end{alignat*}
+    che è la tesi.
+\end{proof}
+
+\begin{proposition}[L'ordine è un divisore di $\eulerphi(n)$]
+    Siano $a, n \in \Z$, $a$ invertibile modulo $m$. Allora vale che \[
+        \ord{a}{n} \divides \eulerphi(n).    
+    \]
+\end{proposition}
+\begin{proof}
+    Per il teorema di Eulero (\ref{th_Eulero}) sappiamo che $a^{\eulerphi(n)} \congr 1 \Mod{n}$, ovvero $\eulerphi(n)$ è una soluzione dell'equazione $a^x \congr 1 \Mod{n}$. 
+    
+    Dunque per la proposizione \ref{solo_multipli_ord_equiv_1} segue che $\eulerphi(n) \congr 0 \Mod{\ord{a}{n}}$, ovvero $\ord{a}{n} \divides \eulerphi(n)$.
+\end{proof}

@@ -1,0 +1,271 @@
+\section{Algoritmo di Euclide}
+
+Il metodo più efficiente per calcolare il massimo comun divisore tra due numeri è dato dall'algoritmo di Euclide, che si basa sul seguente teorema.
+
+\begin{theorem} \label{gcd_a_a-b}
+    Siano $a, b \in \Z$. Allora
+    \begin{equation}
+        \gcd{a, b} = \gcd{a, b - a} = \gcd{a - b, b}.
+    \end{equation} 
+\end{theorem}
+\begin{proof}  
+    Ovviamente $\gcd{a, b} = \gcd{b, a}$, dunque se vale la prima uguaglianza varrà anche la seconda,
+    in quanto 
+    \[
+       \gcd{a, b} = \gcd{b, a} = \gcd{b, a - b} = \gcd{a - b, b}.
+    \] 
+    Dunque è sufficiente
+    dimostrare che $\gcd{a, b} = \gcd{a, b - a}$.
+
+    Sia $\mathbb{D}_{x, y}$ l'insieme dei divisori comuni a $x$ e $y$, cioè
+    \[
+        \mathbb{D}_{x, y} = \set*{d \given d \divides x \;\land\; d \divides y }.
+    \]
+    Allora per dimostrare la tesi è sufficiente dimostrare che $\mathbb{D}_{a, b} = \mathbb{D}_{a, b - a}$, in quanto
+    se i due insiemi sono uguali necessariamente anche i loro massimi saranno uguali.
+
+    Dimostriamo che $\mathbb{D}_{a, b} \subseteq \mathbb{D}_{a, b - a}$. Sia $d \in \mathbb{D}_{a, b}$, 
+    cioè $d \divides a$ e $d \divides b$. Allora per la \autoref{divides_sum_subtr_mult} segue che
+    $d \divides b - a$, cioè $d \in \mathbb{D}_{a, b - a}$, 
+    cioè $\mathbb{D}_{a, b} \subseteq \mathbb{D}_{a, b - a}$.
+
+    Dimostriamo ora che $\mathbb{D}_{a, b - a} \subseteq \mathbb{D}_{a, b}$. 
+    Sia $d \in \mathbb{D}_{a, b - a}$, 
+    cioè $d \divides a$ e $d \divides b - a$. Allora per la \autoref{divides_sum_subtr_mult} segue che
+    $d \divides a + (b - a)$, cioè $d \divides b$, cioè $d \in \mathbb{D}_{a, b}$, 
+    cioè $\mathbb{D}_{a, b - a} \subseteq \mathbb{D}_{a, b}$.
+
+    Dunque dato che valgono sia $\mathbb{D}_{a, b} \subseteq \mathbb{D}_{a, b - a}$ e 
+    $\mathbb{D}_{a, b - a} \subseteq \mathbb{D}_{a, b}$, allora vale
+    $\mathbb{D}_{a, b} = \mathbb{D}_{a, b - a}$. 
+    
+    In particolare il massimo di questi due insiemi
+    dovrà essere lo stesso, quindi $\gcd{a, b} = \gcd{a, b - a}$, che è la tesi.
+\end{proof}
+
+Dunque per calcolare il massimo comun divisore si può sfruttare il seguente algoritmo, detto \strong{algoritmo di Euclide}, che si basa sul \autoref{gcd_a_a-b}:
+\begin{enumerate}
+    \item Se $a = 1$ oppure $b = 1$ allora $\gcd{a, b} = 1$.
+    \item Se $a = 0$ e $b \neq 0$ allora $\gcd{a, b} = b$.
+    \item Se $a \neq 0$ e $b = 0$ allora $\gcd{a, b} = a$.
+    \item Se $a \neq 0$ e $b \neq 0$, allora
+        \begin{itemize}
+            \item se $a \leq b$ segue che $\gcd{a, b} = \gcd{a - b, b}$;
+            \item se $a > b$ segue che $\gcd{a, b} = \gcd{a, b - a}$
+        \end{itemize}
+        dove i valori di $\gcd{a - b}{b}$ o $\gcd{a, b - a}$ vengono calcolati riapplicando l'algoritmo.
+\end{enumerate}
+Possiamo velocizzare il procedimento usando i resti della divisione invece che la sottrazione:
+\begin{enumerate}[start=4]
+    \item Se $a \neq 0$ e $b \neq 0$, allora
+    \begin{itemize}
+        \item se $a \leq b$ segue che $\gcd{a, b} = \gcd{a \bmod b, b}$;
+        \item se $a > b$ segue che $\gcd{a, b} = \gcd{a, b \bmod a}$
+    \end{itemize}
+    dove i valori di $\gcd{a \bmod b, b}$ o $\gcd{a, b \bmod a}$ vengono calcolati riapplicando l'algoritmo.
+\end{enumerate}
+
+I passaggi dell'algoritmo di Euclide ci consentono inoltre di calcolare un'identità molto importante, chiamata \strong{identità di Bézout}.
+
+\begin{theorem}
+    [Teorema di Bezout] \label{bezout}
+    Siano $a, b \in \Z$. Allora esistono $x, y \in \Z$ tali che
+    \begin{equation}
+        ax + by = \gcd{a, b}.
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Siano $r_0 = a$, $r_1 = b$. Definisco la successione $\seqn*(r_n)$ come la sequenza dei resti della divisione dati dall'algoritmo di Euclide per l'gcd:\begin{align*}
+        \gcd{a, b} &= \gcd{r_0, r_1} &&\text{sia } r_2 = r_0 \bmod{r_1}: \\
+        &= \gcd{r_1, r_2} &&\text{sia } r_3 = r_1 \bmod{r_2}: \\
+        &= \dots\\
+        &= \gcd{r_n, r_{n+1}} &&\text{sia } r_{n+2} = r_n \bmod{r_{n+1}}:\\
+        &= \dots
+    \end{align*}
+    Questo processo ha termine quando un resto $r_{m+1}$ è uguale a $0$: in quel caso $\gcd{r_m, r_{m+1}} = \gcd{r_m, 0}= r_m = \gcd{a, b}$.
+
+    Dimostriamo che per ogni $n$ possiamo scrivere $r_n$ come $ax_n + by_n$ per qualche $x_n, y_n \in \Z$.
+    \begin{description}
+        \item[Caso base] Per $r_0$ e $r_1$ è banale: \begin{align*}
+            r_0 = 1\cdot a + 0 \cdot b, &&r_1 = 0 \cdot a + 1 \cdot b.
+        \end{align*}
+        \item[Passo induttivo] Supponiamo di saper scrivere $r_n$ e $r_{n-1}$ come combinazione di $a$ e $b$ e dimostriamo che possiamo farlo anche per $r_{n+2}$.
+               
+        Per ipotesi induttiva esistono $x_n, y_n, x_{n+1}, y_{n+1} \in \Z$ tali che \begin{align*}
+            r_n = ax_n + by_n, && r_{n+1} = ax_{n+1} + by_{n+1}.
+        \end{align*}
+
+        Per definizione sappiamo che \[
+            r_{n+2} = r_n \bmod{r_{n+1}}, 
+        \] ovvero per definizione di resto \[
+            r_{n+2} = r_n - q_{n+1}r_{n+1}
+        \] per qualche $q_{n+1} \in \Z$. Sostituendo otteniamo \begin{align*}
+            r_{n+2} &= r_n - q_{n+1}r_{n+1}\\
+            &= ax_n + by_n - q_{n+1}(ax_{n+1} + by_{n+1})\\
+            &= a(x_n - q_{n+1}x_{n+1}) + b(y_n - q_{n+1}y_{n+1}).
+        \end{align*}
+        Dunque $x_{n+2} = x_n - q_{n+1}x_{n+1}$ e $y_{n+2} = y_n - q_{n+1}y_{n+1}$, cioè possiamo esprimere $r_{n+2}$ come combinazione lineare di $a, b$.
+    \end{description}
+
+    Dato che per induzione questo risultato vale per tutti gli $n \in \N$, varrà anche per $m$, ovvero esistono $x, y \in \Z$ tali che $r_m = ax + by$. Ma $r_m = \gcd{a, b}$, dunque la tesi.
+\end{proof}
+
+\begin{example}
+    Cerchiamo il massimo comun divisore tra $252$ e $198$ e i coefficienti del Teorema di Bezout con l'Algoritmo di Euclide.
+
+    I passi dell'algoritmo ci dicono di sottrarre dal più grande dei due numeri l'altro ripetutamente: il modo più veloce di far questa cosa è sottrarre un multiplo del numero più piccolo in modo da ottenere il più piccolo resto positivo. Scriviamo esattamente il multiplo usato a destra dei passaggi dell'algoritmo in quanto sarà utile più tardi.
+    \begin{alignat*}{5}
+            &\gcd{252, 198}   \qquad\qquad &54  &= {}&252  {}&- \boxed{1} \cdot 198\\
+        = {}&\gcd{54, 198}    \qquad\qquad &36  &= {}&198  {}&- \boxed{3} \cdot 54\\
+        = {}&\gcd{54, 36}     \qquad\qquad &18  &= {}&54   {}&- \boxed{1} \cdot 36\\
+        = {}&\gcd{18, 36}     \qquad\qquad &0   &= {}&36   {}&- \boxed{2} \cdot 18\\
+        = {}&\gcd{18, 0}      \\
+        = {}&18.
+    \end{alignat*}
+
+    Per il \nameref{bezout} dovranno quindi esistere $x_0, y_0 \in \Z$ tali che \[
+        252x_0 + 198y_0 = 18.    
+    \] Per trovarli seguiamo la catena di equazioni scritta sopra, ricavando i coefficienti della combinazione lineare per ognuno dei numeri che compare nello svolgimento dell'algoritmo.
+    
+    Innanzitutto ovviamente vale che \[
+        252 = 252 \cdot \boxed{1} + 198 \cdot \boxed{0}, \quad
+        198 = 252 \cdot \boxed{0} + 198 \cdot \boxed{1}.
+    \] La prima uguaglianza nell'algoritmo di Euclide ci dice inoltre che \[
+        54 = 252 \cdot \boxed{1} + 198 \cdot \boxed{-1}.
+    \] Per ricavare le decomposizioni successive sfruttiamo le precedenti: \begin{align*}
+        36  &= 198 - \boxed{3} \cdot 54\\
+            &= (252 \cdot \boxed{0} + 198 \cdot \boxed{1}) - \boxed{3} \cdot (252 \cdot \boxed{1} + 198 \cdot \boxed{-1}) \\
+            &= 252 \cdot \boxed{0} + 198 \cdot \boxed{1} + 252 \cdot \boxed{-3} + 198 \cdot \boxed{3}\\
+            &= 252 \cdot \boxed{-3} + 198 \cdot \boxed{4}.\\
+        18  &= 54 - \boxed{1} \cdot 36\\
+            &= (252 \cdot \boxed{1} + 198 \cdot \boxed{-1}) - \boxed{1} \cdot (252 \cdot \boxed{-3} + 198 \cdot \boxed{4}) \\
+            &= 252 \cdot \boxed{1} + 198 \cdot \boxed{-1} + 252 \cdot \boxed{3} + 198 \cdot \boxed{-4}\\
+            &= 252 \cdot \boxed{4} + 198 \cdot \boxed{-5}.
+    \end{align*}
+    Abbiamo quindi trovato i coefficienti del teorema di Bezout: scegliendo $x_0 = 4$, $y_0 = -5$ riusciamo a scrivere $18$ come combinazione lineare a coefficienti interi di $252$ e $198$.
+
+    Osserviamo che ogni volta svolgiamo i calcoli solo sui \emph{coefficienti} di $252$ e $198$: possiamo abbreviare il procedimento usando una semplice tabella con questa forma:
+    \begin{figure}[H]
+        % \begin{table}[]
+            \centering
+            \begin{tabular}{l|ll}
+                       & $252$  & $198$ \\ \hline
+                $252$  & $1$    & $0$   \\
+                $198$  & $0$    & $1$   \\
+                $54$   & $1$    & $-1$  \\
+                $36$   & $-3$   & $4$   \\
+                $18$   & $4$    & $-5$
+            \end{tabular}
+        % \end{table}
+    \end{figure}
+    Ogni riga ci dice i coefficienti della combinazione lineare, esattamente come prima. Le prime due righe sono quindi immediate, mentre le successive possono essere trovate semplicemente con questo procedimento:
+    \begin{itemize}
+        \item cerchiamo l'equazione dell'algoritmo di Euclide che definisce il numero che stiamo considerando (ad esempio la quarta riga ha come numero $36$, definito da $36 = 198 - \boxed 3 \cdot 54$);
+        \item ricaviamo il coefficiente della prima colonna prendendo i coefficienti della prima colonna dei numeri che compaiono nell'equazione (in questo caso $198$ e $54$) e sottraendoli come ci dice l'equazione (otteniamo quindi $0 - \boxed 3 \cdot 1 = -3$, che è il coefficiente della prima colonna della quarta riga);
+        \item ricaviamo il coefficiente della seconda colonna esattamente allo stesso modo.
+    \end{itemize}
+\end{example}
+
+\subsection{Conseguenze del teorema di Bezout}
+
+Elenchiamo in questa sezione alcune conseguenze del teorema di Bezout sulle proprietà dei divisori e sul loro rapporto con il massimo comun divisore di due numeri.
+
+\begin{proposition} \label{n_divides_product}
+    Siano $a, b, n \in \Z$. Allora \begin{equation}
+        n \divides ab \;\land\; \gcd{a, n} = 1 \implies n \divides b.
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Se $n$ divide $ab$, allora tutti i fattori primi che dividono $n$ dovranno essere contenuti in $ab$. Dato che $\gcd{n, a} = 1$, questi fattori non possono essere contenuti in $a$, dunque dovranno essere tutti contenuti in $b$.
+\end{intuition}
+\begin{proof}
+    Per il teorema di Bezout (\ref{bezout}) esistono $x, y \in \Z$ tali che 
+    \begin{align*}
+        ax + ny &= \gcd{a, n} = 1 \\
+        \intertext{Moltiplicando per $b$ otteniamo}
+        abx + nby &= b 
+    \end{align*}
+    Ma $n \divides abx$ (poiché $n \divides ab$) e $n \divides nby$, dunque $n$ divide la loro somma, ovvero \[
+        n \divides abx + nby = b(ax + ny) = b
+    \]
+    da cui la tesi.
+\end{proof}
+
+Cerchiamo ora di studiare come si relaziona il massimo comune divisore con gli altri divisori di due numeri dati. La prima proposizione ci dice che un divisore comune è sempre minore o uguale del mcd, mentre la seconda ci dice che un divisore comune è sempre \emph{un divisore} del mcd.
+
+\begin{proposition} \label{greatest_common_divisor}
+    Siano $a, b, t \in \Z$ tali che $t \divides a$, $t \divides b$. Allora $t \leq \gcd{a, b}$.
+\end{proposition}
+\begin{proof}
+    La proposizione deriva direttamente dalla definizione di massimo comun divisore: se $t$ è un divisore comune ad $a$ e $b$, allora $t$ sarà minore o uguale al massimo dei divisori comuni di $a$ e $b$, cioè $t \leq \gcd{a, b}$.
+\end{proof}
+
+\begin{proposition} \label{divisori_dividono_gcd}
+    Siano $a, b, t \in \Z$ tali che $t \divides a$, $t \divides b$. Allora $t \divides \gcd{a, b}$.
+\end{proposition}
+\begin{proof}
+    Per la proposizione \ref{divides_sum_subtr_mult}, se $t \divides a$ e $t \divides b$ allora $t \divides ax+by$ per ogni $x, y \in \Z$.
+
+    Per il teorema di Bezout (\ref{bezout}) esistono $\bar{x}, \bar{y} \in \Z$ tali che $a\bar{x}+b\bar{y} = \gcd{a, b}$. Ma quest'espressione è della forma $ax + by$, con $x = \bar{x}$, $y = \bar{y}$, dunque 
+    $t \divides a\bar{x} + b\bar{y}$, cioè $t \divides \gcd{a, b}$.
+\end{proof}
+
+Possiamo anche dare una condizione necessaria e sufficiente per cui un numero $t$ divide il massimo comun divisore di altri due numeri.
+
+\begin{proposition} \label{t_divides_gcd_lincomb}
+    Siano $a, b, t \in \Z$. Allora 
+    \begin{equation}
+        t \divides \gcd{a, b} \iff (\forall x, y \in \Z. \quad t \divides ax + by).
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Dimostriamo entrambi i versi dell'implicazione.
+    \begin{itemize}
+        \item[($\implies$)] Se $t \divides \gcd{a, b}$, allora $t \divides a$ e $t \divides b$, dunque per la proposizione \ref{divides_sum_subtr_mult} segue che $t$ dovrà dividere una qualsiasi combinazione lineare di $a$ e $b$, cioè $t \divides ax+by$ per ogni $x, y \in \Z$.
+        \item[($\impliedby$)] Viceversa supponiamo che $t \divides ax+by$ per ogni $x, y \in \Z$. Siano per il \hyperref[bezout]{Teorema di Bezout} $\bar{x}, \bar{y}$ i numeri tali che $a\bar{x} + b\bar{y} = \gcd{a, b}$. Allora $t$ dovrà dividere anche $a\bar{x} + b\bar{y}$, cioè $t \divides \gcd{a, b}$. \qedhere
+    \end{itemize}
+\end{proof}
+
+\begin{proposition} \label{gcd_of_multiples_of_n}
+    Siano $a, b, n \in \Z$. Allora \begin{equation}
+        \gcd{an, bn} = n\gcd{a, b}.
+    \end{equation}
+\end{proposition}
+\begin{intuition}
+    Se due numeri hanno $n$ come fattore comune, ovviamente il massimo comun divisore dovrà contenere $n$ e quindi dovrà essere un multiplo di $n$.
+\end{intuition}
+\begin{proof}
+    Osserviamo che se due numeri hanno gli stessi divisori allora sono uguali, a meno del segno.
+    Sia $t \in \Z$ tale che $t \divides an$ e $t \divides nb$. Per la \autoref{t_divides_gcd_lincomb} allora 
+    \begin{alignat*}
+        {2}
+        &t \divides \gcd{an, bn}\\
+        \iff &t \divides nax + nby      \qquad& \forall x, y \in \Z \\
+        \iff &t \divides n(ax + by)     \qquad& \forall x, y \in \Z \\
+        \intertext{dunque scegliendo $x, y$ tali che $ax+by = \gcd{a, b}$ per Bezout (\ref{bezout})}
+        \iff &t \divides n\gcd{a, b}. \tag*{\qedhere}
+    \end{alignat*}
+\end{proof}
+
+
+\begin{corollary} \label{gcd_diviso_gcd}
+    Siano $a, b \in \Z$ e sia $d = \gcd{a, b}$. Allora $\gcd{\nicefrac{a}{d}, \nicefrac{b}{d}} = 1$.
+\end{corollary}
+\begin{intuition}
+    Se dividiamo due numeri per il loro gcd stiamo eliminando dalla loro fattorizzazione tutti i primi comuni ad entrambi, quindi i due numeri risultanti dall'operazione non potranno avere primi in comune e quindi saranno coprimi.
+\end{intuition}
+\begin{proof}
+    Siano $a^\prime, b^\prime$ tali che $a = a^\prime d, b = b^\prime d$. Allora per la \autoref{gcd_of_multiples_of_n}
+    \begin{alignat*}{1}
+        \gcd{a, b} &= \gcd{a^\prime d, b^\prime d} \\
+                   &= d\gcd{a^\prime, b^\prime} \\
+                   &= \gcd{a, b} \gcd{a^\prime, b^\prime}.
+        \end{alignat*} 
+    Dividendo entrambi i membri per $\gcd{a, b}$ otteniamo \[
+        \gcd*{a^\prime, b^\prime} = 1 
+    \]
+    che, per definizione di $a^\prime, b^\prime$, è equivalente a \[
+        \gcd*{\frac{a}{d}, \frac{b}{d}} = 1
+    \]
+    che è la tesi.
+\end{proof}
