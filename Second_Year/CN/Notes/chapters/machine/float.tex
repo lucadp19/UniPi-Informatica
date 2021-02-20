@@ -16,10 +16,10 @@ Innanzitutto dobbiamo trovare un modo standard per rappresentare un qualsiasi nu
 
 \begin{theorem}
     [Teorema di rappresentazione in base]
-    \label{th:rapp_base}\ \\
+    \label{th:rapp_base}
     Sia $x \in \R$ e sia $\beta \geq 2$ una base di rappresentazione. 
     
-    Allora esistono e sono unici un \strong{esponente} $p \in \Z$ e una successione di \strong{cifre} $\seqn[\big]{d_i}_{i \in \N}$ (con $d_i \in \Z$ per ogni $i$) tali che
+    Allora esistono e sono univocamente determinati un \strong{esponente} $p \in \Z$ e una successione di \strong{cifre} $\seqn[\big]{d_i}_{i \in \N}$ (con $d_i \in \Z$ per ogni $i$) per cui vale che
     \begin{enumerate}[(i)]
         \item $d_1 \neq 0$;
         \item per ogni $i$ vale che $0 \leq d_i \leq \beta - 1$;
@@ -29,6 +29,8 @@ Innanzitutto dobbiamo trovare un modo standard per rappresentare un qualsiasi nu
         \] 
     \end{enumerate}
 \end{theorem}
+
+La rappresentazione di $x$ nella forma data dal \autoref{th:rapp_base} si dice \strong{rappresentazione normalizzata in virgola mobile}.
 
 \begin{example}
     Consideriamo ad esempio il numero reale $123$. Per il \autoref{th:rapp_base} possiamo esprimere $123$ come \[
@@ -128,7 +130,7 @@ Osserviamo inoltre che, se le nostre risorse sono limitate, aumentando il numero
 \begin{definition}
     [Insieme dei numeri di macchina] 
     Sia $\beta \geq 2$ una base, $t$ il numero di cifre decimali utilizzabili e siano $m,\ M \in \Z$ gli estremi per l'esponente (ovvero ogni esponente $p$ rappresentabile deve appartenere a $\interval[{-m, M}]$). Si dice allora \strong{insieme dei numeri di macchina} l'insieme\[
-        \FF(\beta, t, m, M) \deq \set{0} \union 
+        \MSet{\beta, t, m, M} \deq \set{0} \union
         \begin{aligned}[t]
             \big\{\; x \in \R \;:\; &x = \sgn{x}\cdot\beta^p\sum_{i=1}^\infty d_i\beta^{-i},\\[-1em]
             &d_1 \neq 0,\\
@@ -138,4 +140,93 @@ Osserviamo inoltre che, se le nostre risorse sono limitate, aumentando il numero
     \] 
 \end{definition}
 
-Chiamiamo $\Omega$ il più grande numero di macchina. 
+\begin{remark}
+    Nelle condizioni in cui specifichiamo quali numeri sono rappresentabili compaiono le ipotesi (i) e (ii) del \nameref{th:rapp_base}, ma non l'ipotesi (iii). Quest deriva dal fatto che i numeri di macchina hanno una precisione finita (ovvero hanno al più $t$ cifre decimali), dunque non è possibile avere un numero che termina in $\beta-1$ periodico.
+\end{remark}
+
+\paragraph{Omega grande} Chiamiamo $\Omega$ il più grande numero di macchina. Possiamo costruirlo in questo modo: \begin{itemize}
+    \item scegliamo come segno $+$;
+    \item scegliamo come esponente il massimo esponente possibile, ovvero $p = M$;
+    \item poniamo tutte le $t$ cifre decimali uguali al massimo possibile, che in base $\beta$ è $\beta-1$. 
+\end{itemize} Segue quindi che \[
+    \Omega \deq +\beta^M\sum_{i=1}^t (\beta-1)\beta^{-i}.
+\] Semplificando l'espressione di $\Omega$ tramite la formula per la serie geometrica si ottiene \begin{align*}
+    \Omega &= +\beta^M\sum_{i=1}^t (\beta-1)\beta^{-i}\\
+    &= \beta^M(\beta - 1) \sum_{i=1}^t \parens*{\nicefrac{1}{\beta}}^i \\
+    &= \beta^M(\beta - 1) \parens*{\sum_{i=0}^t \parens*{\nicefrac{1}{\beta}}^i - \parens*{\nicefrac{1}{\beta}}^0}\\
+    &= \beta^M(\beta - 1) \parens*{\frac{1 - (\nicefrac{1}{\beta})^{t+1}}{1 - \nicefrac{1}{\beta}} - 1}\\
+    \intertext{Moltiplicando numeratore e denominatore della frazione per $\beta$:}
+    &= \beta^M(\beta - 1) \parens*{\frac{\beta - (\nicefrac{1}{\beta})^{t}}{\beta - 1} - 1}\\
+    &= \beta^M(\beta - 1) \cdot \frac{\beta - (\nicefrac{1}{\beta})^{t} - \beta + 1}{\beta - 1}\\
+    &= \beta^M \parens*{1 - \beta^{-t}}.
+\end{align*}
+
+\begin{example}
+    Consideriamo l'insieme $\MSet{10, 3, 2, 2}$: in questo sistema possiamo rappresentare numeri in base $10$ con al massimo $3$ cifre decimali e con un esponente compreso tra $-2$ e $2$. 
+    
+    Il massimo numero rappresentabile in questo sistema è \[
+        \Omega = +10^2(0.999) = 10^2 (1 - 10^{-3}).
+    \]
+\end{example}
+
+\paragraph{Omega piccolo} Chiamiamo $\omega$ il più piccolo numero \emph{positivo} rappresentabile in un sistema. Possiamo costruirlo in questo modo: \begin{itemize}
+    \item siccome è positivo, il segno è necessariamente $+$;
+    \item come esponente scegliamo il più piccolo esponente possibile, ovvero $p = -m$;
+    \item siccome le cifre decimali non possono essere tutte uguali a $0$ poniamo $d_1 = 1$ e $d_i = 0$ per ogni $i > 1$.   
+\end{itemize} Segue quindi che \[
+    \omega = +\beta^{-m} \parens*{1 \cdot \beta\inv} = \beta^{-m}(0.1)_\beta.
+\]
+
+\paragraph{Cardinalità dell'insieme dei numeri di macchina} Dati $\beta,\ t,\ m,\ M$ calcoliamo $\card+{\StandMSet}$. Osserviamo che \begin{enumerate}
+    \item dalla definizione di $\StandMSet$, dobbiamo contare lo $0$ separatamente;
+    \item per quanto riguarda i numeri non-nulli, per ogni possibile combinazione di esponente/mantissa abbiamo $2$ scelte per il segno (segno positivo o negativo);
+    \item le scelte per i possibili esponenti corrispondono a tutti i numeri interi nell'intervallo $\interval[{-m, M}]$, che sono $M + m + 1$;
+    \item per quanto riguarda la mantissa dobbiamo scegliere $t$ cifre comprese tra $0$ e $\beta - 1$ (e lo possiamo fare in $\beta^t$ modi), ma dobbiamo escludere tutte quelle che iniziano per $0$, che sono $\beta^{t-1}$: abbiamo quindi $\beta^t - \beta^{t-1}$ scelte per la mantissa di un numero.
+\end{enumerate} 
+In totale si ha quindi che \[
+    \card+{\StandMSet} = 1 + 2(M + m + 1)\parens*{\beta^t - \beta^{t-1}}.
+\]
+
+\begin{example}
+    Ad esempio se $\beta = 2$, $t = 3$ e $m = M = 1$ si ha che \[
+        \card+{\MSet{2, 3, 1, 1}} = 1 + 2(1 + 1 + 1)\parens*{2^3 - 2^2} = 25.
+    \]
+\end{example}
+
+\subsection{Standard \IEEE}
+
+Lo standard usato al giorno d'oggi per implementare i numeri a virgola mobile è lo standard \IEEE. 
+Esso definisce due rappresentazioni distinte, una \emph{single precision}, dove ogni numero è rappresentato su $32$ bit, ovvero su $4$ byte, e una \emph{double precision}, dove ogni numero è rappresentato su $64$ bit (o equivalentemente $8$ byte). 
+In particolare noi analizzeremo solo il secondo.
+
+I $64$ bit vengono divisi nel seguente modo:
+\begin{itemize}
+    \item un singolo bit di segno ($0$ per i numeri positivi, $1$ per i negativi);
+    \item $11$ bit per rappresentare l'esponente;
+    \item i restanti $52$ bit vengono usati per rappresentare la mantissa.
+\end{itemize} Tuttavia possiamo ottimizzare un po' lo spazio usato facendo delle semplici osservazioni:
+\begin{enumerate}
+    \item siccome siamo in base $2$ la condizione $d_1 \neq 0$ ci dice che necessariamente $d_1 = 1$: ciò significa che rappresentare $d_1$ nella mantissa è inutile (ogni mantissa inizierebbe per $1$) e quindi possiamo rappresentare le cifre da $d_2$ in poi. Questo significa che abbiamo in realtà $t = 53$ cifre decimali a disposizione;
+    \item per evitare di usare un bit per il segno dell'esponente lo rappresentiamo in \emph{traslazione} (anche detto \emph{bias} o \emph{eccesso a}): invece di rappresentare il vero esponente $p$ rappresentiamo $p+1022$. Questo ci consente di indicare esponenti negativi senza dover usare strategie di complemento a $2$.  
+\end{enumerate}
+
+L'insieme dei numeri di macchina definito dallo standard \IEEE è quindi \[
+    \MSet{2, 53, 1021, 1024}.
+\] 
+Osserviamo che questa scelta per i limiti degli esponenti non copre tutte le combinazioni possibili su $11$ bit: in particolare possiamo rappresentare $1024 + 1021 + 1 = 2046$ esponenti diversi, mentre su $11$ bit potenzialmente potremmo rappresentarne fino a $2^{11} = 2048$.
+
+Questo ci permette di rappresentare dei numeri particolari.
+
+\paragraph{Zero} Abbiamo visto che (per il \autoref{th:rapp_base}) lo $0$ non ammette una rappresentazione normalizzata. Nello standard \IEEE esso viene realizzato ponendo a $0$ tutti i campi dell'esponente e della mantissa; tuttavia non viene specificato il segno, per cui esistono due rappresentazioni uguali per lo zero ($-0$ e $+0$). 
+
+Questa rappresentazione non va in conflitto con i numeri normalizzati, in quanto ponendo il campo dell'esponente uguale a undici $0$ otterrei un esponente effettivo uguale a $-1022$, mentre il minimo rappresentabile è $-1021$. 
+
+\paragraph{Infiniti e NaN} Ponendo il campo dell'esponente uguale a $(11111111111)_2$ (ovvero undici cifre $1$) ottengo una rappresentazione che non appartiene all'insieme definito prima (in quanto il massimo esponente rappresentabile è $1024$, che in eccesso a $1022$ diventa $2046 = (11111111110)_2$). Sfruttando questo fatto possiamo rappresentare tre "numeri" diversi:
+\begin{itemize}
+    \item se il campo della mantissa non è formato da tutti $0$ il risultato è NaN (\emph{Not a Number}): questa configurazione viene usata ad esempio per i risultati delle forme indeterminate, come $\nicefrac00$;
+    \item se il campo della mantissa è formato da tutti $0$ il numero viene interpretato come $\pm\infty$ (a seconda del bit di segno): ciò viene usato per rappresentare l'overflow, ovvero numeri che sono più grandi di $\Omega$ (o più piccoli di $-\Omega$). 
+\end{itemize} 
+
+\paragraph{Numeri denormalizzati} Se il campo dell'esponente contiene solo zeri ma la mantissa ha almeno un bit diverso da $0$ stiamo rappresentando numeri \emph{denormalizzati}. Un tale numero viene interpretato come se fosse $d_1 = 0$ e quindi ci consente di ottenere dei numeri in valore assoluto più piccoli di $\omega$, risolvendo parzialmente i problemi di \emph{underflow}. 
+
+Tuttavia questi numeri hanno una precisione minore dei numeri normalizzati, in quanto i primi $k$ bit della mantissa possono essere tutti uguali a $0$. Questo significa che invece di avere $53$ cifre di precisione ne abbiamo $53 - k$ (dove $k$ dipende dal numero denormalizzato scelto), dunque dobbiamo porre ancora più attenzione agli eventuali errori di precisione.
