@@ -1,4 +1,5 @@
 \section{Rappresentazione dei numeri di macchina}
+\label{sez:machine_nums}
 
 Il primo problema da risolvere quando si vuole fare analisi numerica è scegliere un metodo per rappresentare i numeri reali su una macchina. Infatti un generico numero reale ha potenzialmente una scrittura decimale infinita, dunque essendo le risorse disponibili in una macchina \emph{finite} dobbiamo trovare un modo di approssimarlo. 
 
@@ -16,15 +17,15 @@ Innanzitutto dobbiamo trovare un modo standard per rappresentare un qualsiasi nu
 
 \begin{theorem}
     [Teorema di rappresentazione in base]
-    \label{th:rapp_base}
-    Sia $x \in \R$ e sia $\beta \geq 2$ una base di rappresentazione. 
+    \label{th:rapp_base}\ \\
+    Sia $x \in \R$, $x \neq 0$ e sia $\beta \geq 2$ una base di rappresentazione. 
     
     Allora esistono e sono univocamente determinati un \strong{esponente} $p \in \Z$ e una successione di \strong{cifre} $\seqn[\big]{d_i}_{i \in \N}$ (con $d_i \in \Z$ per ogni $i$) per cui vale che
     \begin{enumerate}[(i)]
         \item $d_1 \neq 0$;
-        \item per ogni $i$ vale che $0 \leq d_i \leq \beta - 1$;
+        \item $0 \leq d_i \leq \beta - 1$ per ogni $i$;
         \item la successione $d$ non è definitivamente uguale a $\beta - 1$, ovvero per ogni $k > 0$ esiste un $j \geq k$ tale che $d_j \neq \beta - 1$;
-        \item vale che \[
+        \item si ha che \[
             x = \sgn{x} \cdot \beta^p \cdot \parens*{\sum_{i=1}^\infty d_i\beta^{-i}}.
         \] 
     \end{enumerate}
@@ -211,7 +212,7 @@ I $64$ bit vengono divisi nel seguente modo:
 \end{enumerate}
 
 L'insieme dei numeri di macchina definito dallo standard \IEEE è quindi \[
-    \MSet{2, 53, 1021, 1024}.
+    \MSetIEEE \deq \MSet{2, 53, 1021, 1024}.
 \] 
 Osserviamo che questa scelta per i limiti degli esponenti non copre tutte le combinazioni possibili su $11$ bit: in particolare possiamo rappresentare $1024 + 1021 + 1 = 2046$ esponenti diversi, mentre su $11$ bit potenzialmente potremmo rappresentarne fino a $2^{11} = 2048$.
 
@@ -221,12 +222,18 @@ Questo ci permette di rappresentare dei numeri particolari.
 
 Questa rappresentazione non va in conflitto con i numeri normalizzati, in quanto ponendo il campo dell'esponente uguale a undici $0$ otterrei un esponente effettivo uguale a $-1022$, mentre il minimo rappresentabile è $-1021$. 
 
+\paragraph{Numeri denormalizzati} Se il campo dell'esponente contiene solo zeri ma la mantissa ha almeno un bit diverso da $0$ stiamo rappresentando numeri \emph{denormalizzati}. Un tale numero viene interpretato come se fosse $d_1 = 0$ e quindi ci consente di ottenere dei numeri in valore assoluto più piccoli di $\omega$, risolvendo parzialmente i problemi di \emph{underflow}. 
+
+Tuttavia questi numeri hanno una precisione minore dei numeri normalizzati, in quanto i primi $k$ bit della mantissa possono essere tutti uguali a $0$. Questo significa che invece di avere $53$ cifre di precisione ne abbiamo $53 - k$ (dove $k$ dipende dal numero denormalizzato scelto), dunque dobbiamo porre ancora più attenzione agli eventuali errori di precisione.
+
+Il più grande numero denormalizzato è della forma \[
+    2^{-1021} (0.01\dots1)_2 = 2^{-1022} (0.\!\!\overbrace{1\dots1}^{52\text{ volte}})_2,
+\] mentre il più piccolo numero denormalizzato è il numero \[
+    2^{-1021} (0.0\dots01)_2.
+\]
+
 \paragraph{Infiniti e NaN} Ponendo il campo dell'esponente uguale a $(11111111111)_2$ (ovvero undici cifre $1$) ottengo una rappresentazione che non appartiene all'insieme definito prima (in quanto il massimo esponente rappresentabile è $1024$, che in eccesso a $1022$ diventa $2046 = (11111111110)_2$). Sfruttando questo fatto possiamo rappresentare tre "numeri" diversi:
 \begin{itemize}
     \item se il campo della mantissa non è formato da tutti $0$ il risultato è NaN (\emph{Not a Number}): questa configurazione viene usata ad esempio per i risultati delle forme indeterminate, come $\nicefrac00$;
     \item se il campo della mantissa è formato da tutti $0$ il numero viene interpretato come $\pm\infty$ (a seconda del bit di segno): ciò viene usato per rappresentare l'overflow, ovvero numeri che sono più grandi di $\Omega$ (o più piccoli di $-\Omega$). 
-\end{itemize} 
-
-\paragraph{Numeri denormalizzati} Se il campo dell'esponente contiene solo zeri ma la mantissa ha almeno un bit diverso da $0$ stiamo rappresentando numeri \emph{denormalizzati}. Un tale numero viene interpretato come se fosse $d_1 = 0$ e quindi ci consente di ottenere dei numeri in valore assoluto più piccoli di $\omega$, risolvendo parzialmente i problemi di \emph{underflow}. 
-
-Tuttavia questi numeri hanno una precisione minore dei numeri normalizzati, in quanto i primi $k$ bit della mantissa possono essere tutti uguali a $0$. Questo significa che invece di avere $53$ cifre di precisione ne abbiamo $53 - k$ (dove $k$ dipende dal numero denormalizzato scelto), dunque dobbiamo porre ancora più attenzione agli eventuali errori di precisione.
+\end{itemize}

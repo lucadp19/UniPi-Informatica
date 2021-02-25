@@ -8,9 +8,12 @@
     \usepackage{numerical}
     \usepackage{algebra}
 
-    \geometry{margin=1.4in}
+    \geometry{margin=1.3in}
 
 \setcounter{MaxMatrixCols}{20}
+
+\let\oldtilde\tilde
+\renewcommand{\tilde}[1]{\widetilde{#1}}
 
 \begin{document}
 
@@ -22,6 +25,7 @@
 
 \chapter{Aritmetica di macchina}
 \input{chapters/machine/float.tex}
+\input{chapters/machine/errors.tex}
 
 \appendix
 \chapter{Appendice A}

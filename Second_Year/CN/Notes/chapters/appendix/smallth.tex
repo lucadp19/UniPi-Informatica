@@ -1,4 +1,4 @@
-\section{Teoremi di contorno}
+\section{"$9$-periodico"}
 
 \begin{proposition}
     [$9$-periodico]
@@ -31,3 +31,32 @@ La proposizione vale in generale in una base $\beta$ qualsiasi ($\beta \geq 2$).
 \begin{proof}
     La dimostrazione è uguale alla seconda dimostrazione della \autoref{prop:9_periodico}.
 \end{proof}
+
+\section{La precisione di macchina è un limite superiore stretto}
+\label{sez:machine_prec_>}
+
+In questa sezione mostriamo che la precisione di macchina $\mathbold{u}$ è sempre strettamente maggiore all'errore relativo $\eps_x$ per ogni $x \in \R$ tale che $x \neq 0$ e $\omega \leq \abs x \leq \Omega$, anche usando l'arrotondamento come metodo di approssimazione.
+
+Dalla dimostrazione del \autoref{th:machine_prec} si ha che \[
+    \abs*{\eps_x} = \frac12\beta^{1-p} = \mathbold{u}
+\] se e solo se la disuguaglianza \[
+    \frac{\abs[\big]{\arr{x} - x}}{\abs x} 
+    \leq \frac{\nicefrac12\beta^{p-t}}{\beta^{p-1}}
+\] è in realtà un'uguaglianza, ovvero se e solo se valgono le seguenti due condizioni:
+\begin{itemize}
+    \item $\abs[\big]{\arr{x} - x} = \frac12\beta^{p-t}$
+    \item $\abs x = \beta^{p-1}$.
+\end{itemize}
+Tuttavia, come abbiamo notato nella \autoref{rem:abs_err_arr}, la prima condizione vale se e solo se \[
+    \abs x = \frac12(a+b) = \frac12(a + a + \beta^{p-t}) = a + \frac12\beta^{p-t}.
+\] È quindi necessario che \begin{align*}
+    &\beta^{p-1} 
+        \begin{aligned}[t] 
+            &= a + \frac12\beta^{p-t} \\
+            &= \beta^p \parens*{\sum_{i=1}^t d_i\beta^{-i}} + \frac12\beta^{p-t} \\
+            &= \beta^p \parens*{\sum_{i=1}^t d_i\beta^{-i} + \frac12\beta^{-t}}
+        \end{aligned} \\
+    \iff &\beta^{-1} = \sum_{i=1}^t d_i\beta^{-i} + \frac12\beta^{-t}.
+\end{align*} Tuttavia ciò è assurdo: infatti il termine al primo membro ha una singola cifra decimale diversa da zero, ovvero quella di $\beta^{-1}$, mentre il termine del secondo membro ha anche delle cifre non nulle nelle posizioni $\beta^{-t}$ e/o $\beta^{-t-1}$.  
+
+Segue quindi che $\abs{\eps_x} < u$ in qualsiasi caso.

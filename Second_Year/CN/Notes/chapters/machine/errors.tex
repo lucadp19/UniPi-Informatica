@@ -1,0 +1,200 @@
+\section{Errori di approssimazione}
+
+Abbiamo iniziato ad introdurre il concetto di approssimazione nella \autoref{sez:machine_nums}. Definiamolo ora formalmente.
+
+\begin{definition}
+    [Troncamento e arrotondamento] Sia $x \in \R$, $x \neq 0$, tale che $\omega < \abs{x} < \Omega$. Consideriamo inoltre la rappresentazione normalizzata di $x$: \[
+        x = \sgn{x}\beta^p\sum_{i=1}^{\infty} d_i\beta^{-i}.
+    \] 
+    Allora definiamo \begin{enumerate}[(1)]
+        \item il \strong{troncamento} di $x$ alla $t$-esima cifra, indicato con $\trun{x}$, dato da \[
+            \trun{x} \deq \sgn{x}\beta^p\sum_{i=1}^t d_i\beta^{-i};
+        \]
+        \item l'\strong{arrotondamento} di $x$, indicato con $\arr{x}$, dato da \[
+            \arr{x} \deq \begin{cases}
+                \trun{x}, &\text{se } 0 \leq d_{t+1} < \nicefrac{\beta}{2}\\
+                \trun{x} + \beta^{p-t}, &\text{se } d_{t+1} \geq \nicefrac{\beta}{2}.
+            \end{cases}
+        \] 
+    \end{enumerate} 
+\end{definition}
+
+\begin{remark}
+    Aggiungere $\beta^{p-t}$ ad un numero significa aggiungere $1$ alla sua $t$-esima cifra. Infatti (considerando lo stesso $x$ della definizione) si ha che \[
+        \beta^p\sum_{i=1}^\infty d_i\beta^{-i} + \beta^{p-t} = \beta^p\parens*{\sum_{i=1}^\infty d_i\beta^{-i} + \beta^{-t}}.    
+    \] 
+\end{remark}
+
+\begin{example}
+    Consideriamo il numero reale \[
+        \pi = 3.141592653\dots = 10^1 \cdot (0.3141592653\dots)_{10}.
+    \] Il suo troncamento alla quinta cifra sarà $3.1415$, mentre il suo arrotondamento alla stessa cifrà (siccome la sesta cifra è $9 \geq \nicefrac{10}{2}$) sarà \[
+        3.1415 + 10^{1 - 5} = 3.1415 + 0.0001 = 3.1416.
+    \]
+\end{example}
+
+D'ora in avanti quando parleremo dell'approssimazione di un numero reale $x$ senza voler necessariamente specificare il metodo (troncamento o arrotondamento) usato scriveremo $\fl{x}$ oppure $\tilde{x}$.  
+
+Approssimando numeri reali a numeri di macchina si genera un errore, detto \strong{errore di rappresentazione}.
+
+\begin{definition}
+    [Errore di rappresentazione] Sia $x \in \R$, $x \neq 0$ tale che $\omega \leq \abs{x} \leq \Omega$. Chiameremo \strong{errore assoluto} la quantità \[
+        \eta_x \deq \tilde{x} - x,
+    \] mentre chiameremo \strong{errore relativo} o \strong{errore di rappresentazione} la quantità \[
+        \eps_x \deq \frac{\tilde{x} - x}{x}.
+    \]
+\end{definition}
+
+La qualità più importante dell'errore relativo è il fatto che è sempre \strong{superiormente limitato}, come dimostreremo attraverso un lemma ed un teorema.
+
+\begin{lemma}
+    [Limite superiore all'errore assoluto] 
+    \label{lem:lim_sup_abserr} 
+    Sia $x \in \R$, $x \neq 0$, $\omega \leq x \leq \Omega$. Sia inoltre $x = \sgn{x}\beta^p\sum_{i=1}^\infty d_i\beta^{-i}$ la rappresentazione in base di $x$. Si ha che 
+    \begin{enumerate}[(i)]
+        \item $\abs[\big]{\trun{x} - x} < \beta^{p-t}$
+        \item $\abs[\big]{\arr{x} - x} \leq \frac12\beta^{p-t}$.  
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Se fosse $x = \Omega$ oppure $x = \omega$  allora $\trun{x} = \arr{x} = x$, da cui l'errore assoluto $\tilde x - x$ è nullo.  
+
+    Supponiamo quindi $\omega < x < \Omega$ (il caso $-\Omega < x < -\omega$ è speculare). Siccome valgono le ipotesi del \autoref{th:rapp_base} possiamo scrivere \[
+        x = \beta^p\sum_{i=1}^\infty d_i\beta^{-i}.
+    \] Esisteranno dunque due numeri di macchina $a, b \in \MSet$ tali che $a \leq x < b$ e $b$ è il numero di macchina successivo rispetto ad $a$, ovvero $a$ è il numero di macchina appena più piccolo di $x$ e $b$ è quello appena più grande.
+
+    Allora dovrà essere necessariamente \[
+        a = \beta^p\sum_{i=1}^t d_i\beta^{-i} = \trun{x},
+    \] mentre $b$ dovrà essere \[
+        b = \beta^p\parens*{\sum_{i=1}^t d_i\beta^{-i} + \beta^{-t}} = a + \beta^{p-t},
+    \] da cui segue anche che $b - a = \beta^{p-t}$. 
+
+    Si ha quindi \[
+        \abs[\big]{\trun{x} - x} 
+            = \abs*{a - x}
+            < \abs*{a - b} 
+            = \beta^{p-t},
+    \] dove il minore centrale deriva dal fatto che $x < b$.
+    
+    Per quanto riguarda l'arrotondamento, osserviamo invece che \begin{itemize}
+        \item se $d_{t+1} < \nicefrac{\beta}{2}$ (ovvero se $x < \nicefrac12(a + b)$) allora $\arr{x} = \trun{x} = a$;
+        \item altrimenti $\arr{x} = \trun{x} + \beta^{p-t} = a + \beta^{p-t} = b$.
+    \end{itemize}
+
+    Nel primo caso si ha \[
+        \abs[\big]{\arr{x} - x} 
+            =    \abs[\big]{x - a}
+            \leq \abs*{\frac{a+b}{2} - a} 
+            =    \frac12\abs*{b-a} 
+            =    \frac12\beta^{p-t},
+    \] mentre nel secondo si ha 
+    \[
+        \abs[\big]{\arr{x} - x} 
+            =    \abs[\big]{b - x}
+            \leq \abs*{b - \frac{a+b}{2}} 
+            =    \frac12\abs*{b - a} 
+            =    \frac12\beta^{p-t},
+    \] da cui la tesi.
+\end{proof} 
+
+\begin{remark}
+    \label{rem:abs_err_arr} Si ha l'uguaglianza $\abs[\big]{\arr x - x} = \frac12\beta^{p-t}$ se e solo se $x = \frac12(a + b)$, ovvero se e solo se $x$ è esattamente il punto medio dell'intervallo $\interval[{a, b}]$.
+\end{remark}
+
+\begin{theorem}
+    [Esistenza della precisione di macchina]
+    \label{th:machine_prec}
+    Esiste un numero $u \in \R$, detto \strong{precisione di macchina}, tale che per ogni $x \in \R$, $x \neq 0$, $\omega \leq \abs*{x}\leq \Omega$ vale che \[
+        \abs*{\eps_x} \leq u.
+    \] In particolare \begin{enumerate}[(i)]
+        \item se $\fl{x} = \trun{x}$ si ha $u = \beta^{1-t}$;
+        \item se $\fl{x} = \arr{x}$ si ha $u = \frac12\beta^{1-t}$. 
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Osserviamo che se $x = \pm\beta^p \sum_{i=1}^\infty d_i\beta^{-i}$ allora varrà sicuramente che \[
+        \abs*{x} \geq \beta^p (0.10\dots)_\beta = \beta^p \cdot (1 \beta^{-1}) = \beta^{p-1}.
+    \] Infatti scegliendo il numero di macchina con lo stesso esponente di $x$ ma la minima mantissa possibile otterremo necessariamente un numero più piccolo (o uguale) del valore assoluto di quello di partenza.
+
+    Consideriamo allora i due casi.
+    \begin{description}
+        \item[Troncamento] Per il \autoref{lem:lim_sup_abserr} sappiamo che $\abs[\big]{\trun{x} - x} < \beta^{p-t}$. Si ha quindi che \[
+                \abs*{\eps_x} 
+            = \frac{\abs[\big]{\trun{x} - x}}{\abs x} 
+            < \frac{\beta^{p-t}}{\beta^{p-1}}
+            = \beta^{1-p}.
+        \] 
+        \item[Arrotondamento] Per il \autoref{lem:lim_sup_abserr} sappiamo che $\abs[\big]{\arr{x} - x} \leq \frac12\beta^{p-t}$. Si ha quindi che \[
+                 \abs*{\eps_x} 
+            =    \frac{\abs[\big]{\arr{x} - x}}{\abs x} 
+            \leq \frac{\nicefrac12\beta^{p-t}}{\beta^{p-1}}
+            =    \frac12\beta^{1-p}. \qedhere
+        \]
+    \end{description}
+\end{proof}
+
+Osserviamo che il \autoref{th:machine_prec} ci dice che $u$ è un limite superiore \emph{debole} (nel senso che $\abs*{\eps_x} \leq u$ e non $\abs*{\eps_x} < u$), tuttavia almeno nel caso del troncamento si vede dalla dimostrazione che vale anche la disuguaglianza stretta. 
+
+In realtà la disuguaglianza stretta vale anche nel caso dell'arrotondamento: la dimostrazione completa è lasciata all'appendice (in particolare nella \autoref{sez:machine_prec_>}).
+ 
+\subsection{Operazioni tra numeri di macchina}
+
+Cerchiamo ora di estendere l'aritmetica tra numeri reali ad un'aritmetica per i numeri di macchina. Il primo tentativo è quello di usare semplicemente le solite operazioni definite tra numeri reali, tuttavia non è detto che il risultato di un'operazione tra numeri di macchina sia ancora un numero di macchina.
+
+\begin{example}
+    Consideriamo il sistema $\MSet{10, 3, -5, 5}$ e i due numeri di macchina \[
+        a \deq 123 = 10^3 (0.123)_{10}, \qquad b \deq 0.456 = 10^0 (0.456).
+    \] Si ha che $a,\ b \in \MSet{10, 3, -5, 5}$, tuttavia $a + b = 123.456 = 10^3 (0.123456)_{10}$ non è un numero di macchina poiché è rappresentato con $t = 6$ cifre di precisione.
+\end{example}
+
+Dobbiamo quindi definire delle nuove operazioni che siano \emph{interne} all'insieme dei numeri di macchina.
+
+\begin{definition}
+    [Aritmetica di macchina] Si definiscono quattro operazioni \[
+        \oplus,\ \otimes,\ \ominus,\ \oslash : \MSet \times \MSet \to \MSet
+    \] tali che per ogni coppia di numeri di macchina $a, b \in \MSet$ ($b \neq 0$ nel caso di $\oslash$) si ha che \begin{align*}
+        &a \oplus b \deq \fl{a + b} &&a \ominus b \deq \fl{a - b}\\
+        &a \otimes b \deq \fl{ab}   &&a \oslash b \deq \fl{\nicefrac{a}{b}}
+    \end{align*}
+\end{definition}
+
+Siamo ora interessati a studiare \emph{quanto errore} commettiamo nel considerare i numeri di macchina invece dei numeri reali non approssimati.
+
+\begin{definition}
+    [Errore locale]
+    Sia $\ast$ un'operazione tra numeri qualsiasi e sia $\circledast$ la corrispondente operazione su numeri di macchina. Dati $x, y \in \FF$ si dice \strong{errore locale} dell'operazione la quantità \[
+        \eps \deq \frac{(x \circledast y) - (x \ast y)}{x \ast y}.
+    \]
+\end{definition}
+
+Osserviamo che ogni operazione di macchina può essere scritta in termini della sua corrispondente operazione base e dell'errore locale: in effetti \[
+    x \circledast y = (x \ast y)(1 + \eps).
+\]
+
+\subsubsection{Errore totale della somma}
+
+Cerchiamo ora di calcolare l'\strong{errore totale} dato dall'approssimazione di un'operazione tra numeri reali (definiremo più avanti precisamente il concetto di errore totale). Prendiamo $a, b \in \R$ che approssimati non vadano in overflow (o underflow) e cerchiamo di calcolare $a + b$ in termini di numeri di macchina.
+
+Siccome i numeri $a,\ b$ non sono necessariamente già numeri di macchina, l'unico modo per svolgere il calcolo è calcolare la quantità \[
+    \tilde a \oplus \tilde b = (\tilde a + \tilde b)(1 + \eps).
+\] Siccome sappiamo che \begin{align*}
+    &\tilde a = a(1 + \eps_a), \quad \tilde b = b(1 + \eps_b)
+\end{align*} otteniamo che \begin{align*}
+    \tilde a \oplus \tilde b 
+        &= (a(1 + \eps_a) + b(1 + \eps_b))(1 + \eps)\\
+        &= a(1 + \eps_a)(1 + \eps) + b(1 + \eps_b)(1 + \eps).
+    \intertext{Nello svolgere il prossimo passaggio trascureremo gli addendi in cui compare il prodotto di due errori: effettueremo quindi un'\strong{analisi al primo ordine}, indicata dal simbolo $\doteq$.}
+        &\doteq a + b + a\eps_a + b\eps_b + (a+b)\eps.
+\end{align*}
+
+L'errore totale dell'operazione è dato quindi dalla differenza tra il risultato ottenuto ($\tilde a \oplus \tilde b)$ e il risultato non approssimato ($a + b$), dividendo per il risultato non approssimato in modo da ottenere un errore relativo: \begin{align*}
+    \frac{(\tilde a \oplus \tilde b) - (a + b)}{a + b} 
+    &\doteq \frac{a + b + a\eps_a + b\eps_b + (a+b)\eps - (a + b)}{a + b} \\
+    &= \frac{a}{a+b}\eps_a + \frac{b}{a + b}\eps_b + \eps.
+\end{align*}
+
+Notiamo che questo errore può essere diviso in due parti diverse:
+\begin{itemize}
+    \item la parte data da $\frac{a}{a+b}\eps_a + \frac{b}{a+b}\eps_b$ non dipende dal tipo di operazione che sto cercando di svolgere, ma dal fatto che devo approssimare i numeri: si chiama dunque \strong{errore inerente};
+    \item la parte data da $\eps$ dipende dalla sequenza di passi scelta per calcolare la somma: si chiama perciò \strong{errore algoritmico}.    
+\end{itemize}
