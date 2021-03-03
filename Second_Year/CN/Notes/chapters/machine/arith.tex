@@ -246,34 +246,35 @@ Per studiare l'errore algoritmico si usa la tecnica conosciuta come \emph{errore
     
     Per far ciò, costruiamo il seguente grafo.
     \begin{center}
-    \begin{tikzpicture}
-        [
-            scale=.5,auto=left,
-            important/.style={circle, draw=black, inner sep=1.5pt, minimum size=12pt},
-            arrow/.style={-{Stealth[]}}
-        ]
-        \node[important] 
-              (n1) at (1,0)  {$\tilde x$};
-        \node[important] 
-              (n2) at (1,2)  {$\tilde x$};
-        \node[important, label={$\eps_1$}] 
-              (n3) at (4,1)  {$\tilde x^2$};
-        \node[important] 
-              (n4) at (4,5)  {$\tilde x$};
-        \node[important, label={$\eps_2$}] 
-              (n5) at (7,3)  {$\tilde x^2 \oplus x$};
-        \node[important] 
-              (n6) at (7,7)  {$3$};
-        \node[important, label={$\eps_3$}] 
-              (n7) at (13.5,5) {$\tilde x^2 \oplus x \ominus 3$};
-      
-        \foreach \from/\to/\coeff in {n1/n3/{$1$},n3/n5/{$\frac{x^2}{x^2+x}$},n5/n7/{$\frac{x^2+x}{x^2+x-3}$}}
-            \draw [->] (\from) to node[below, scale=0.8] {\coeff} (\to);
+        \tikzsetnextfilename{algo_err_graph1}
+        \begin{tikzpicture}
+            [
+                scale=.5,auto=left,
+                important/.style={ellipse, draw=red, inner sep=2pt, minimum size=12pt}
+                % arrow/.style={-{Stealth[]}}
+            ]
+            \node[important] 
+                (n1) at (1,0)  {$\tilde x$};
+            \node[important] 
+                (n2) at (1,2)  {$\tilde x$};
+            \node[important, label={$\eps_1$}] 
+                (n3) at (4,1)  {$\tilde x^2$};
+            \node[important] 
+                (n4) at (4,5)  {$\tilde x$};
+            \node[important, label={$\eps_2$}] 
+                (n5) at (9,3)  {$\tilde x^2 \oplus x$};
+            \node[important] 
+                (n6) at (9,7)  {$3$};
+            \node[important, label={$\eps_3$}] 
+                (n7) at (15,5) {$\tilde x^2 \oplus x \ominus 3$};
         
-        \foreach \from/\to/\coeff in {n2/n3/{$1$},n4/n5/{$\frac{x}{x^2 + x}$},n6/n7/{$\frac{-3}{x^2 + x - 3}$}}
-            \draw [->] (\from) to node[above, scale=0.8] {\coeff} (\to);
-         
-    \end{tikzpicture}
+            \foreach \from/\to/\coeff in {n1/n3/{$1$},n3/n5/{$\frac{x^2}{x^2+x}$},n5/n7/{$\frac{x^2+x}{x^2+x-3}$}}
+                \draw [->] (\from) to node[below, sloped] {\coeff} (\to);
+            
+            \foreach \from/\to/\coeff in {n2/n3/{$1$},n4/n5/{$\frac{x}{x^2 + x}$},n6/n7/{$\frac{-3}{x^2 + x - 3}$}}
+                \draw [->] (\from) to node[above, sloped] {\coeff} (\to);
+            
+        \end{tikzpicture}
     \end{center}
 
     Il grafo è costruito nel seguente modo:
