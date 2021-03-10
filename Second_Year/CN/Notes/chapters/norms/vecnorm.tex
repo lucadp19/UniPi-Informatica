@@ -1,0 +1,123 @@
+\section{Norme vettoriali}
+
+Iniziamo ora lo studio dell'algebra lineare numerica: studieremo algoritmi e problemi numerici sugli spazi vettoriali $\F^n$ e $\Mat{\F, n, n}$, dove $\F$ è il campo dei numeri reali ($\R$) o quello dei numeri complessi ($\C$). 
+
+Uno dei nostri obiettivi sarà quello di risolvere sistemi lineari della forma $A\vec x = \vec b$ (con $A$ matrice e $\vec x$, $\vec b$ vettori) sfruttando algoritmi di macchina sufficientemente efficienti e con errori piccoli, quindi vogliamo avere delle quantità che descrivano l'errore commesso.
+
+Osserviamo innanzitutto che, dato che lavoriamo con l'aritmetica di macchina, non riusciremo ad ottenere la soluzione $\vec x$ esatta ma solamente una soluzione approssimata, che indicheremo come al solito con $\vec{\tilde x}$. L'errore commesso può quindi essere espresso come la differenza $\vec{\tilde x} - \vec x$, tuttavia questa quantità è ancora un vettore e pertanto è difficile confrontarlo con altri errori per vedere quanto è \emph{grande}.
+
+Vogliamo quindi associare ad ogni vettore un \emph{numero reale} non negativo in modo da poter esprimere il concetto di grandezza e di distanza tra vettori.
+
+\begin{definition}
+    [Norma vettoriale]
+    Si dice \strong{norma vettoriale} su $\F^n$ una funzione $f : \F^n \to \R$ che soddisfi le seguenti proprietà:
+    \begin{enumerate}[(1)]
+        \item $f(\vec v) \geq 0$ per ogni $\vec v \in \F^n$. Inoltre $f(\vec v) = 0$ se e solo se $\vec v = \vec 0$.
+        \item Per ogni $\alpha \in \F$, $\vec v \in \F^n$ si ha $f(\alpha\vec v) = \abs*{\alpha}f(\vec v)$.
+        \item Per ogni $\vec v, \vec w \in \F^n$ si ha $f(\vec v + \vec w) \leq f(\vec v) + f(\vec w)$ (\strong{disuguaglianza triangolare}).  
+    \end{enumerate} 
+    Una norma si indica spesso anche con il simbolo $\norm$. 
+\end{definition}
+
+Un esempio banale di norma è il valore assoluto su $\R$, considerando $\R$ come uno spazio vettoriale su se stesso. In effetti:
+\begin{enumerate}[(1)]
+    \item il valore assoluto di $x \in \R$ è sempre un numero non negativo, ed in particolare è $0$ se e solo se $x = 0$;
+    \item per ogni coppia di valori $x, y \in \R$ si ha che $\abs*{xy} = \abs x\cdot\abs y$;
+    \item vale la disuguaglianza triangolare, e quindi per ogni coppia di valori $x, y \in \R$ si ha $\abs*{x + y} = \abs x + \abs y$. 
+\end{enumerate}
+
+\begin{definition}
+    [Distanza]
+    Sia $X$ un insieme qualsiasi. Si dice \strong{distanza} su $X$ una funzione \[
+        d : X \times X \to \R
+    \] che soddisfi le seguenti proprietà:
+    \begin{enumerate}[(1)]
+        \item $d(x, y) \geq 0$ per ogni $x, y \in X$. Inoltre $d(x, y) = 0$ se e solo se $x = y$.
+        \item $d(x, y) = d(y, x)$ per ogni $x, y \in X$.
+        \item $d(x, z) \leq d(x, y) + d(y, z)$ per ogni $x, y, z \in X$.  
+    \end{enumerate}
+\end{definition}
+
+Queste proprietà sono abbastanza semplici se pensiamo al concetto di distanza nella vita di tutti i giorni. Infatti:
+\begin{enumerate}[(1)]
+    \item la distanza tra due punti è sempre un numero positivo, ed è $0$ se e solo se i due punti sono effettivamente lo stesso punto;
+    \item è indifferente andare dal primo punto al secondo o viceversa;
+    \item la distanza tra i punti $x$ e $z$ è necessariamente minore o uguale alla distanza che percorreremmo se andassimo da $x$ ad un terzo punto $y$ e poi da $y$ a $z$.
+\end{enumerate}
+
+Osserviamo inoltre che nel caso di $\F^n$ esiste una distanza particolarmente facile da ricavare, poiché è direttamente \strong{indotta da una norma}. Infatti se $\norm$ è una norma qualsiasi, la funzione $d : \F^n \times \F^n \to \R$ definita da \[
+    d(\vec v, \vec w) \deq \norm{\vec v - \vec w}
+\] è una distanza.
+\begin{proof}
+    Dobbiamo mostrare che la funzione $d$ definita sopra sia effettivamente una distanza.
+    \begin{enumerate}[(1)]
+        \item Per il primo punto della definizione di norma si ha che $d(\vec v, \vec w) = \norm{\vec v - \vec w} \geq 0$ per ogni $\vec v, \vec w \in \F^n$. Inoltre questa quantità è $0$ se e solo se $\vec v - \vec w = \vec 0$, ovvero se e solo se $\vec v = \vec w$.
+        \item Si ha che \[
+            d(\vec v, \vec w)
+            = \norm{\vec v - \vec w}
+            = \abs*{-1}\norm{\vec v - \vec w}
+            \stackrel{(!)}{=} \norm{\vec w - \vec v}
+            = d(\vec w, \vec v),
+        \] dove il passaggio contrassegnato con (!) deriva dalla seconda proprietà delle norme.
+        \item Per la disuguaglianza triangolare delle norme si ha che \[
+            d(\vec v, \vec u)
+            = \norm{\vec v - \vec u}
+            = \norm{(\vec v - \vec w) + (\vec w - \vec u)}
+            \leq \norm{\vec v - \vec w} + \norm{\vec w - \vec u}
+            = d(\vec v, \vec w) + d(\vec w, \vec u). \qedhere
+        \]
+    \end{enumerate}
+\end{proof}
+
+\subsection{Norme vettoriali principali}
+
+Introduciamo in questa sezione le principali norme vettoriali.
+
+\paragraph{Norma 2 o Euclidea} La norma più importante è chiamata \strong{norma 2} o \strong{norma euclidea} poiché dà origine alla distanza euclidea. È definita in questo modo: \[
+    \norm{\vec v}_2 \deq \sqrt{\sum_{i=1}^n \abs*{v_i}^2}.
+\] Nel caso in cui lo spazio vettoriale sia $\R^2$ la norma euclidea ci dà la lunghezza euclidea del vettore $\vec v$, o equivalentemente la distanza del punto $\vec v$ dall'origine degli assi: \[
+    \norm{\vec v}_2 = \sqrt{v_1^2 + v_2^2}.
+\] 
+
+Il valore assoluto presente nella formula è inutile se lo spazio vettoriale è $\R^n$ ma è necessario se lavoriamo sui complessi: ricordiamo infatti che se $z = a+ib$ è un numero complesso il suo modulo è il numero reale \[
+    \abs*{a+ib} = \sqrt{a^2 + b^2}
+\] ed è necessario in quanto il risultato della norma deve essere un numero reale.
+
+Osserviamo inoltre che in $\R^n$ si ha 
+$\norm{\vec x}_2 = \sqrt{\vec x\trans \vec x}$, 
+dove $\vec x\trans$ è il trasposto del vettore colonna $\vec x$, 
+mentre in $\C^n$ si ha $\norm{\vec x}_2 = \sqrt{\vec x\ctrans \vec x}$, 
+dove $\vec x\ctrans$ è il trasposto coniugato del vettore $\vec x$.
+
+\paragraph{Norma 1} La \strong{norma 1} è la norma definita da \[
+    \norm{\vec v}_1 = \sum_{i=1}^n \abs*{v_i}.
+\]
+
+\paragraph{Norma infinito} la \strong{norma infinito} è la norma definita da \[
+    \norm{\vec v}_\infty = \max_{i=1, \dots, n} \abs*{v_i}.
+\]
+
+\subsection{Equivalenza topologica tra le norme di $\F^n$}
+
+Come abbiamo detto all'inizio del capitolo, useremo le norme vettoriali per determinare \emph{quanto} errore abbiamo fatto nel fare un determinato calcolo. Tuttavia non esiste un'unica norma su $\F^n$ e ovviamente norme diverse danno risultati diversi.
+
+\begin{example}
+    Consideriamo il vettore $\vec x = (1, -1, 1)\trans \in \R^3$. Allora \[
+        \norm{\vec x}_2 = \sqrt 3, \qquad \norm{\vec x}_1 = 3, \qquad \norm{\vec x}_\infty = 1.
+    \]
+\end{example}
+
+In realtà le norme si comportano tutte \emph{più o meno} allo stesso modo, come ci viene garantito dal seguente Teorema.
+\begin{restatable}[Equivalenza topologica tra le norme]{theorem}{eqTopo}
+    \label{th:eq_topo}
+    Siano $f, g$ due norme su $\F^n$. Allora esistono due costanti $\alpha, \beta \in \interval[{0, +\infty})$ tali che per ogni $\vec v \in \F^n$ si ha  \[
+        \alpha g(\vec v) \leq f(\vec v) \leq \beta g(\vec v).
+    \]
+\end{restatable}
+\begin{proof}
+    Data nella \autoref{sez:eq_topo_norms} dell'Appendice.
+\end{proof}
+
+Questo Teorema è molto utile quando vogliamo ad esempio mostrare che un errore tende a $0$. Infatti se ad esempio $\vec \eps$ è un vettore che misura l'errore commesso e so che $\norm{\vec \eps}_2 \to 0$, allora per qualsiasi altra norma $p$ dovranno esistere due costanti $\alpha, \beta \in \R^+$ tali che \[
+    \alpha\norm{\vec \eps}_2 \leq p(\vec \eps) \leq \beta\norm{\vec \eps}_2.
+\] Ma il membro sinistro e il membro destro di questa disequazione tendono a $0$, dunque per il Teorema dei Carabinieri anche il membro centrale dovrà tendere a $0$, ovvero la norma dell'errore tende a $0$ \emph{a prescindere dalla norma scelta}.

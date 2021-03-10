@@ -154,7 +154,7 @@ Osserviamo che moltiplicando e dividendo per $x$ e per $\tilde x - x$ si ha \beg
     = \frac{f\parens[\big]{\tilde x} - f(x)}{\tilde x - x} \cdot \frac{x}{f(x)} \cdot \underbrace{\frac{\tilde x - x}{x}}_{\eps_x}.    
 \end{align*} Il primo termine del prodotto ricorda un rapporto incrementale: se la funzione è derivabile in $x$ possiamo semplificare l'espressione usando il Teorema di Taylor.
 
-Supponiamo quindi che $f \in \CC^2\interval[{a, b}]$ (ovvero che $f$ sia continua e derivabile due volte in un intervallo $\interval[{a, b}]$): per il Teorema di Taylor con il resto di Lagrange si ha che esiste un numero $\xi_x$ compreso tra $x$ e $\tilde x$ tale che \[
+Supponiamo quindi che $f$ sia continua e derivabile \emph{due volte} in un intervallo $\interval[{a, b}]$ contenente $x$ (ovvero $f \in \CC^2\interval[{a, b}]$): per il Teorema di Taylor con il resto di Lagrange si ha che esiste un numero $\xi_x$ compreso tra $x$ e $\tilde x$ tale che \[
     f\parens[\big]{\tilde x} = f(x) + f'(x)\parens[\big]{\tilde x - x} + f''\parens*{\xi_x}\frac{\parens[\big]{\tilde x - x}^2}{2!}
 \] con $\abs*{\eps_x - x} < \abs*{\tilde x - x}$. 
 
@@ -238,6 +238,26 @@ Il \autoref{cor:err_in_Rn} può essere molto comodo per calcolare i coefficienti
 L'errore algoritmico misura quanto è grande calcolare il risultato attraverso l'algoritmo di macchina $g$ invece della funzione non approssimata $f$ \emph{partendo da dati già approssimati}.
 
 Per studiare l'errore algoritmico si usa la tecnica conosciuta come \emph{errore in avanti} (\emph{forward error} in inglese), che può essere resa più compatta attraverso l'uso di grafi.
+
+Formalmente un algoritmo è una sequenza di passi \emph{finita} $z^{(1)}, z^{(2)}, z^{(3)}, \dots, z^{(n)}$, tale che ognuno dei passi calcola una singola operazione sfruttando solo i dati dei passi precedenti e i dati del problema (costanti e variabili) e l'ultimo passo calcola la funzione del problema.
+
+\begin{example}
+    L'algoritmo $g(x) = ((x \otimes x) \oplus x) \ominus 3$ può essere espresso dalla sequenza di passi \begin{enumerate}
+        \item $z^{(1)} = x \otimes x$ 
+        \item $z^{(2)} = z_1 \oplus x$
+        \item $z^{(3)} = z^{(2)} \ominus 3$
+    \end{enumerate} 
+\end{example}
+
+Ogni passo che calcola un'operazione può quindi essere scritto nella forma \[
+    z^{(i)} = z^{(h)} \circledast z^{(k)}
+\] con $h, k < i$ e $\circledast$ un'operazione qualunque di macchina. 
+
+% Sia $\eta_i$ l'errore locale del passo $z^{(i)}$: siamo interessati a ricavare l'errore algoritmico totale che deriva dal calcolo di $z^{(i)}$. Innanzitutto si ha \begin{align*}
+%     z^{(i)} 
+%     &= \parens[\big]{z^{(h)} \ast z^{(k)}}(1 + \eta_i).\\
+%     \intertext{}
+% \end{align*}
 
 \begin{example}
     Calcoliamo l'errore algoritmico della funzione $f(x) = x^2 + x - 3$ attraverso l'algoritmo di macchina \[

@@ -1,0 +1,22 @@
+\section{Norme matriciali}
+
+Come per i vettori (ovvero per lo spazio vettoriale $\F^n$) possiamo definire un concetto di norma anche per lo spazio di matrici quadrate $\Mat{\F, n, n}$.
+
+\begin{definition}
+    [Norma matriciale]
+    Si dice \strong{norma matriciale} su $\Mat{\F, n, n}$ una funzione $f : \Mat{\F, n, n} \to \R$ che soddisfi le seguenti proprietà: 
+    \begin{enumerate}[(1)]
+        \item $f(A) \geq 0$ per ogni $A \in \Mat{\F, n, n}$. Inoltre $f(A) = 0$ se e solo se $A = \vec 0$.
+        \item Per ogni $\alpha \in \F$, $A \in \Mat{\F, n, n}$ si ha $f(\alpha A) = \abs*{\alpha}f(A)$.
+        \item Per ogni $A, B \in \Mat{\F, n, n}$ si ha $f(A + B) \leq f(A) + f(B)$ (\strong{disuguaglianza triangolare}).
+        \item Per ogni $A, B \in \Mat{\F, n, n}$ si ha $f(AB) \leq f(A) \cdot f(B)$. 
+    \end{enumerate} 
+\end{definition}
+
+Una proprietà immediata delle norme matriciali è che per qualsiasi norma $\norm$ si ha che $\norm{I_n} \geq 1$ (dove $I_n \in \Mat{\F, n, n}$ è la matrice identità di taglia $n \times n$). Infatti \[
+    \norm{I_n} = \norm{I_n \cdot I_n} \leq \norm{I_n} \cdot \norm{I_n} \implies 1 \leq \norm{I_n},
+\] dove l'implicazione si ottiene dividendo entrambi i membri per $\norm{I_n}$, che è sicuramente non nullo grazie alla proprietà (1) delle norme.
+
+Osserviamo inoltre che, come nel caso delle norme vettoriali, ogni norma matriciale induce una distanza tra matrici $d : \Mat{\F, n, n} \to \Mat{\F, n, n} \to \R$, definita da \[
+    d(A, B) \deq \norm{A - B}.
+\]

@@ -1,0 +1,176 @@
+\section{Spazi vettoriali}
+
+Iniziamo rivedendo i concetti fondamentali sugli spazi vettoriali.
+
+\begin{definition}
+    [Campo] Si dice \strong{campo} un insieme $\F$ dotato di due operazioni, chiamate solitamente \emph{somma} e \emph{prodotto} e indicate con i simboli $+$ e $\cdot$, tali che \begin{enumerate}[(S1)]
+        \item la somma è associativa;
+        \item la somma è commutativa;
+        \item esiste un elemento $0_{\F} \in \F$ (indicato anche $0$ se il campo è sottointeso) che è elemento neutro per la somma;
+        \item ogni elemento ammette un opposto rispetto alla somma, ovvero per ogni $\alpha \in \F$ esiste $-\alpha \in \F$ tale che \[
+            \alpha + (-\alpha) = 0;
+        \]   
+    \end{enumerate}
+    \begin{enumerate}[(P1)]
+        \item il prodotto è associativo;
+        \item il prodotto è commutativo;
+        \item esiste un elemento $1_{\F} \in \F$ (indicato anche con $1$ se il campo è sottointeso) che è elemento neutro per il prodotto;
+        \item ogni elemento diverso da $0$ ammette un inverso rispetto al prodotto, ovvero per ogni $\alpha \in \F \setminus \set{0}$ esiste $\alpha\inv \in \F$ tale che \[
+            \alpha \cdot \alpha\inv = 1;
+        \]  
+    \end{enumerate}
+    \begin{enumerate}[(D)]
+        \item vale la proprietà distributiva del prodotto rispetto alla somma.
+    \end{enumerate}
+\end{definition}
+
+Esempi di campo sono i numeri reali $\R$, i numeri razionali $\Q$, i numeri complessi $\C$. D'ora in avanti indicheremo con $\F$ un generico campo (in particolare $\F$ nella pratica sarà uno tra $\R$ e $\C$).
+
+\begin{definition}
+    [Spazio vettoriale]
+    Si dice \strong{spazio vettoriale} sul campo $\F$ un insieme $V$ dotato di due operazioni, una somma $+ : V \times V \to V$ e un \emph{prodotto per scalare} $\cdot : \F \times V \to V$, che soddisfano le seguenti proprietà: \begin{enumerate}[(S1)]
+        \item la somma è associativa;
+        \item la somma è commutativa;
+        \item la somma ammette un elemento neutro, indicato con $\vec{0}$ o $0_V$;
+        \item ogni elemento di $V$ ammette un opposto rispetto alla somma, ovvero per ogni $\vec{v} \in V$ esiste $-\vec v \in V$ tale che \[
+            \vec v + (-\vec v) = \vec 0;
+        \]
+    \end{enumerate} \begin{enumerate}[(P1)]
+        \item il prodotto per scalare distribuisce sulla somma, ovvero per ogni $\vec v, \vec w \in V$ e per ogni $\alpha \in \F$ si ha \[
+            \alpha \cdot (\vec v + \vec w) = \alpha \vec v + \alpha \vec w;
+        \] 
+        \item la somma di scalari distribuisce sul prodotto per scalare, ovvero per ogni $\alpha, \beta \in \F$, $\vec v \in V$ si ha \[
+            (\alpha + \beta) \vec v = \alpha \vec v + \beta \vec v;
+        \] 
+        \item il prodotto per scalari è associativo, ovvero per ogni $\alpha, \beta \in \F$, $\vec v \in V$ si ha \[
+            \alpha(\beta\vec v) = (\alpha\beta)\vec v;
+        \] 
+        \item l'elemento neutro del prodotto (in $\F$) è neutrale rispetto al prodotto per scalare, ovvero per ogni $\vec v \in V$ si ha \[
+            1_\F \cdot \vec v = \vec v.
+        \]
+    \end{enumerate} 
+    Il campo $\F$ viene spesso detto \strong{campo degli scalari} di $V$.
+\end{definition}
+
+Indicheremo solitamente gli elementi del campo degli scalari con lettere greche minuscole ($\alpha, \beta, \dots$) e gli elementi dello spazio vettoriale con lettere in grassetto ($\vec v, \vec w, \dots$).
+
+Esempi di spazi vettoriali sono \begin{itemize}
+    \item l'insieme dei vettori colonna a componenti in $\F$ con $n$ elementi, indicato con $\F^n$; 
+    \item l'insieme dei polinomi a coefficienti in $\F$, indicato con $\F[x]$;
+    \item l'insieme delle matrici $m \times n$ a coefficienti in $\F$, indicate con $\Mat{\F, m, n}$.   
+\end{itemize}
+
+\begin{definition}
+    [Sottospazio]
+    Sia $V$ uno spazio vettoriale su $\F$. Un \strong{sottospazio} di $V$ è un insieme $U \subseteq V$ che sia anch'esso uno spazio vettoriale su $\F$. 
+\end{definition}
+
+\begin{definition}
+    [Span di un sottoinsieme]
+    Sia $V$ uno spazio vettoriale su $\F$ e sia $S \subseteq V$. Allora si dice \strong{span} di $S$ l'insieme \[
+        \Span S \deq \set*{\alpha_1 \vec v_1 + \dots + \alpha_k \vec v_k \given \alpha_i \in \F, \vec v_i \in V}.
+    \]  
+\end{definition}
+
+\begin{proposition}
+    Per ogni $S \subseteq V$ si ha che $\Span S$ è un sottospazio vettoriale di $V$.
+\end{proposition}
+
+\section{Indipendenza e basi}
+
+Assumeremo implicitamente che $V$ sia uno spazio vettoriale su $\F$.
+
+\begin{definition}
+    [Indipendenza lineare]
+    I vettori $\vec v_1, \dots, \vec v_n \in V$ formano un insieme di \strong{vettori linearmente indipendenti} se si ha che \[
+        \alpha_1\vec v_1 + \dots + \alpha_n\vec v_n = 0 \implies \alpha_1 = \dots = \alpha_n = 0_{\F}.
+    \]
+\end{definition}
+
+\begin{definition}
+    [Insieme di generatori]
+    I vettori $\vec v_1, \dots, \vec v_n \in V$ formano un insieme di \strong{generatori per $V$} se per ogni $\vec v \in V$ esistono $\alpha_1, \dots, \alpha_n \in \F$ tali che \[
+        \vec v = \alpha_1 \vec v_1 + \dots \alpha_n\vec v_n.
+    \] Equivalentemente $\vec v_1, \dots, \vec v_n$ sono generatori se \[
+        \Span+{\vec v_1, \dots, \vec v_n} = V.
+    \] 
+\end{definition}
+
+\begin{definition}
+    [Base]
+    L'insieme formato dai vettori $\vec v_1, \dots, \vec v_n$ forma una \strong{base} per $V$ se valgono entrambe le seguenti condizioni:
+    \begin{enumerate}
+        \item $\set*{\vec v_1, \dots, \vec v_n}$ è un insieme di vettori linearmente indipendenti;
+        \item $\set*{\vec v_1, \dots, \vec v_n}$ è un insieme di generatori per $V$.
+    \end{enumerate}
+\end{definition}
+
+Chiameremo \strong{base canonica} di $\F^n$ l'insieme formato dai vettori \[
+    \vec e_1 = \begin{pmatrix} 1\\0\\\vdots\\0 \end{pmatrix}, \quad
+    \vec e_2 = \begin{pmatrix} 0\\1\\\vdots\\0 \end{pmatrix}, \quad
+    \dots,                                                    \quad
+    \vec e_n = \begin{pmatrix} 0\\0\\\vdots\\1 \end{pmatrix}.
+\]
+
+Non tutti gli spazi vettoriali ammettono una base \emph{finita}: ad esempio nessun sottoinsieme finito di $\F[x]$ lo genera, e quindi non può esistere una base. 
+
+\begin{definition}
+    [Dimensione di uno spazio vettoriale]
+    Sia $V$ uno spazio vettoriale su $\F$ e sia $\BB$ una base di $V$. Si dice \strong{dimensione di $V$ su $\F$} la quantità \[
+        \dim_{\F} V \deq \card+{\BB}.
+    \] Quando il campo degli scalari è sottointeso scriveremo semplicemente $\dim V$.
+\end{definition}
+
+Ad esempio: \begin{itemize}
+    \item la dimensione di $\F^n$ è $\dim \F^n = n$ (basta considerare la base canonica);
+    \item la dimensione di $\Mat{\F, m, n}$ è $\dim \Mat{\F, m, n} = mn$.   
+\end{itemize}
+
+\begin{theorem}
+    [Teorema della dimesnione]
+    Sia $V$ uno spazio vettoriale su $\F$ di dimensione $n$. Allora ogni base di $V$ ha $n$ elementi.
+\end{theorem}
+
+\section{Applicazioni lineari}
+
+\begin{definition}
+    [Applicazione lineare]
+    Siano $U, V$ due spazi vettoriali su un campo $\F$. Si dice \strong{applicazione lineare} una funzione $f : U \to V$ tale che \begin{enumerate}
+        \item $f(\vec x + \vec y) = f(\vec x) + f(\vec y)$ per ogni $\vec x, \vec y \in U$;
+        \item $f(\alpha\vec x) = \alpha f(\vec x)$ per ogni $\vec x \in U, \alpha \in \F$.    
+    \end{enumerate} 
+\end{definition}
+
+Una volta fissate due basi $\BB_U$ e $\BB_V$ rispettivamente del dominio e del codominio, ad esempio \[
+    \BB_U = \set*{\vec u_1, \dots, \vec u_n}, \qquad \BB_V = \set*{\vec v_1, \dots, \vec v_m},
+\] riusciamo ad esprimere l'applicazione $f$ in modo univoco tramite una matrice $A_f \in \Mat{\F, m, n}$. 
+
+In effetti per ogni vettore $\vec u_j$ nella base $\BB_U$ l'immagine del vettore mediante $f$, ovvero $f(\vec u_j)$, è un elemento di $V$ e può pertanto essere espresso in termini degli elementi della base $\BB_V$ di $V$: esisteranno cioè degli scalari $\alpha_{1j}, \dots, \alpha_{mj}$ tali che \[
+    f(\vec u_j) = \alpha_{1j}\vec v_1 + \dots \alpha_{mj}\vec v_m.
+\] Questi scalari formeranno la $j$-esima colonna della matrice associata, che avrà quindi la forma \[
+    A_f = \begin{pmatrix}
+        \alpha_{11} &\alpha_{12} &\dots    &\alpha_{1n} \\
+        \alpha_{21} &\alpha_{22} &\dots    &\alpha_{2n} \\
+        \vdots      &\vdots      &\ddots   &\vdots      \\
+        \alpha_{m1} &\alpha_{m2} &\dots    &\alpha_{mn}
+    \end{pmatrix}
+\]
+
+\begin{definition}
+    [Immagine e nucleo di un'applicazione lineare]
+    Sia $f : U \to V$ un'applicazione lineare.
+    \begin{enumerate}[(1)]
+        \item Si dice \strong{kernel} (o \strong{nucleo}) di $f$ l'insieme \[
+            \ker f \deq \set*{\vec u \in U \given f(\vec u) = \vec 0_V}.
+        \]
+        \item Si dice \strong{immagine} di $f$ l'insieme \[
+            \Imm f \deq \set*{f(\vec u) \in V \given \vec u \in U}.
+        \]
+    \end{enumerate}
+\end{definition}
+
+Si ha che $\ker f$ è un sottospazio di $U$ e $\Imm f$ è un sottospazio di $V$. Inoltre vale il seguente teorema.
+
+\begin{theorem}
+    [Teorema della dimensione] $\dim V = \dim \Imm f + \dim \ker f$. 
+\end{theorem}

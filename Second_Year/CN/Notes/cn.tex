@@ -20,6 +20,16 @@
 \let\oldtilde\tilde
 \renewcommand{\tilde}[1]{\widetilde{#1}}
 
+\makeatletter
+\DeclareDocumentCommand{\Mat}{m}{
+    \Mat@Args{#1}
+}
+\DeclareDocumentCommand{\Mat@Args}{ >{\SplitArgument{2}{,}}m }{\Mat@Aux#1}
+\DeclareDocumentCommand{\Mat@Aux}{mmm}{
+    {#1}^{#2 \times #3}
+}
+\makeatother
+
 \begin{document}
 
 \author{Luca De Paulis}
@@ -29,11 +39,18 @@
 \tableofcontents
 
 \chapter{Aritmetica di macchina}
-\input{chapters/machine/float.tex}
-\input{chapters/machine/errors.tex}
-\input{chapters/machine/arith.tex}
+\input{chapters/machine/float}
+\input{chapters/machine/errors}
+\input{chapters/machine/arith}
+\input{chapters/machine/examples}
+
+\chapter{Algebra lineare numerica}
+\input{chapters/norms/vecnorm}
+\input{chapters/norms/matrixnorm}
 
 \appendix
 \chapter{Appendice A}
-\input{chapters/appendix/smallth.tex}
+\input{chapters/appendix/smallth}
+\chapter{Prerequisiti di Algebra Lineare}
+\input{chapters/appendix/linalg}
 \end{document}

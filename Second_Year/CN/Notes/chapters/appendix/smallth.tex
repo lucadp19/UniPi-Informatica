@@ -60,3 +60,39 @@ Tuttavia, come abbiamo notato nella \autoref{rem:abs_err_arr}, la prima condizio
 \end{align*} Tuttavia ciò è assurdo: infatti il termine al primo membro ha una singola cifra decimale diversa da zero, ovvero quella di $\beta^{-1}$, mentre il termine del secondo membro ha anche delle cifre non nulle nelle posizioni $\beta^{-t}$ e/o $\beta^{-t-1}$.  
 
 Segue quindi che $\abs{\eps_x} < u$ in qualsiasi caso.
+
+\section{Dimostrazione dell'equivalenza topologica tra norme}
+\label{sec:eq_topo_norm}
+
+In questa sezione dimostreremo il \autoref{th:eq_topo}, che per comodità enunciamo nuovamente.
+
+\eqTopo*
+
+Per dimostrare il Teorema sfruttiamo il seguente lemma.
+\begin{lemma}
+    Sia $\norm$ una norma su $\F^n$. Allora la funzione \[
+        \vec x \mapsto \norm{\vec x}
+    \] è una funzione continua.
+\end{lemma}
+\begin{proof}
+    Sia $\vec x_0 \in \F^n$ un punto qualsiasi e dimostriamo che la norma è continua in $\vec x_0$.
+
+    Sia quindi $\eps > 0$ qualsiasi: vogliamo determinare un $\delta > 0$ tale che per ogni $\vec x \in \F^n$ con $\norm{\vec x - \vec x_0} < \delta$ si ha $\abs[\big]{\norm{\vec x} - \norm{\vec x_0}} < \eps$.
+
+    Osserviamo che \[
+        \norm{\vec x} = \norm{\vec x - \vec x_0 + \vec x_0} \leq \norm{\vec x_0} + \norm{\vec x - \vec x_0},
+    \] da cui $\norm{\vec x} - \norm{\vec x_0} \leq \norm{\vec x - \vec x_0}$. Scambiando i ruoli di $\vec x$ e $\vec x_0$ otteniamo che $\norm{\vec x_0} - \norm{\vec x} \leq \norm{\vec x_0 - \vec x} = \norm{\vec x - \vec x_0}$, quindi combinando le due disuguaglianze si ha \[
+        \abs[\Big]{\norm{\vec x} - \norm{\vec x_0}} \leq \norm{\vec x - \vec x_0}.
+    \]
+    
+    Poniamo dunque $\delta = \eps$. Allora \[
+        \abs[\Big]{\norm{\vec x} - \norm{\vec x_0}} \leq \norm{\vec x - \vec x_0} < \delta = \eps,
+    \] cioè la norma è continua in $\vec x_0$, da cui segue (per generalità di $\vec x_0$) che la norma è una funzione continua.
+\end{proof}
+
+Possiamo quindi dimostrare il \autoref{th:eq_topo}.
+% \begin{proof}
+    % Consideriamo la funzione $h : \F^n \setminus \set{\vec 0} \to \R$ data da \[
+        % h(\vec x) = \frac{f(\vec x)}{g(\vec x)}.
+    % \]
+% \end{proof}

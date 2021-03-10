@@ -1,0 +1,133 @@
+\section{Esempi di condizionamento e stabilità}
+
+In questa sezione faremo alcuni esempi dello studio del condizionamento di problemi e della stabilità di algoritmi di macchina.
+
+\begin{example}
+    Consideriamo la funzione $f(x) = \frac{x-1}{x}$ e studiamone il condizionamento per $x \neq 0$.
+
+    Osserviamo che la funzione è derivabile (almeno) due volte nell'intervallo $\interval({0, +\infty})$, dunque possiamo calcolare il coefficiente di amplificazione di un dato $x \in \interval({0, +\infty})$. \[
+        c_x = \frac{x}{f(x)}f'(x) = \frac{1}{x-1}.
+    \]  
+
+    Il problema è ben condizionato se e solo se $\abs*{c_x}$ è limitato superiormente per ogni $x \in \interval*({0, +\infty})$: tuttavia possiamo osservare che \[
+        \lim_{x \to 1} \abs*{\frac1{x-1}} = +\infty,
+    \] dunque il problema è mal condizionato in un intorno di $1$.
+\end{example}
+
+\begin{example}
+    Consideriamo l'algoritmo $g_1(x) = (x \ominus 1) \oslash x$ e studiamone la stabilità. Il grafo di $g_1$ è
+    \begin{center}
+        \tikzsetnextfilename{algo_err_graph_es1}
+        \begin{tikzpicture}
+            [
+                scale=.5,auto=left,
+                important/.style={ellipse, draw=red, inner sep=2pt, minimum size=12pt}
+                % arrow/.style={-{Stealth[]}}
+            ]
+            \node[important] 
+                (n1) at (1,0)  {$x$};
+            \node[important] 
+                (n2) at (1,2)  {$x$};
+            \node[important, label={$\mu_1$}] 
+                (n3) at (4,1)  {$x - 1$};
+            \node[important] 
+                (n4) at (4,5)  {$x$};
+            \node[important, label={$\mu_2$}] 
+                (n5) at (9,3)  {$\frac{x-1}{x}$};
+        
+            \foreach \from/\to/\coeff in {n1/n3/{},n3/n5/{$1$}}
+                \draw [->] (\from) to node[below, sloped] {\coeff} (\to);
+            
+            \foreach \from/\to/\coeff in {n2/n3/{},n4/n5/{$-1$}}
+                \draw [->] (\from) to node[above, sloped] {\coeff} (\to);
+        \end{tikzpicture}
+    \end{center}
+
+    L'errore algoritmico totale è quindi dato da \[
+        \epsalg = \mu_2 + 1\cdot(\mu_1 + 0 + 0) + 0 = \mu_2 + \mu_1.
+    \] Dimostriamo ora formalmente che l'algoritmo è stabile, ovvero che $\abs*{\epsalg}$ è sempre limitato superiormente.
+
+    In effetti si ha
+    \begin{align*}
+        \abs*{\epsalg} = \abs*{\mu_1 + \mu_2} \stackrel{(1)}{\leq} \abs*{\mu_1} + \abs*{\mu_2} \stackrel{(2)}{<} 2u
+    \end{align*} dove la disuguaglianza (1) è la disuguaglianza triangolare dei moduli, mentre la (2) viene dal fatto che gli errori locali sono sempre minori della precisione di macchina $u$.
+\end{example}
+
+\subsection{Problema del calcolo della somma}
+
+Studiamo la funzione $f : \R^n_{> 0} \to \R$ data da \[
+    f(x_1, \dots, x_n) \deq \sum_{i=1}^n x_i.  
+\] Osserviamo che la funzione ha come dominio $\R^n_{>0}$, dunque tutti gli $x_i$ devono essere strettamente positivi. Inoltre per semplicità scriveremo $\vec x = \parens*{x_1, \dots, x_n}$.
+
+\paragraph{Condizionamento} Studiamo inizialmente il condizionamento del problema studiando l'errore inerente.
+
+\begin{align*}
+    \epsin &\doteq \sum_{i=1} c_{x_i}\eps_{x_i} \\
+    &= \sum_{i=1}^n \frac{x_i}{f(\vec{x})} \pdv{f}{x_i} \cdot \eps_{x_i}\\
+    &= \sum_{i=1}^n \frac{x_i}{f(\vec{x})} \cdot 1 \cdot \eps_{x_i}\\
+    &= \sum_{i=1}^n \frac{x_i}{f(\vec x)} \eps_{x_i}.
+\end{align*}
+
+Per mostrare che il problema è ben condizionato dimostriamo che il valore assoluto dell'errore inerente è limitato superiormente.
+In effetti si ha
+\begin{align*}
+    \abs*{\epsin} &\doteq \abs*{\sum_{i=1}^n \frac{x_i}{f(\vec x)}\eps_{x_i}}\\[1.2em]
+    &\stackrel{(1)}{\leq} \sum_{i=1}^n \frac{\abs{x_i}}{\abs*{f(\vec x)}}\abs*{\eps_{x_i}}\\
+    &\stackrel{(2)}{<} \frac{1}{\abs*{f(\vec x)}} \sum_{i=1}^n \abs{x_i}\cdot u\\
+    &= \frac{u}{\abs*{f(\vec x)}} \sum_{i=1}^n \abs*{x_i} \\
+    &\stackrel{(3)}{=} u,
+\end{align*} dove (1) è la disuguaglianza triangolare, (2) deriva dal fatto che $\abs*{\eps_{x_i}} < u$ per ogni $x_i$ e (3) segue dall'ipotesi che gli $x_i$ siano strettamente positivi: in questo caso infatti il modulo di $f(\vec x) = x_1 + \dots + x_n$ è uguale alla somma dei moduli degli $x_i$.
+
+Si ha quindi che il problema è ben condizionato.
+
+\paragraph{Stabilità} Consideriamo l'algoritmo che consiste nell'effettuare le somma da sinistra a destra, ovvero \[
+    g_1(\vec x) = ((((x_1 + x_2) + x_3) + \dots + x_{n-1}) + x_n).
+\]
+
+Nel caso (ad esempio) di $n = 4$ l'algoritmo può essere rappresentato col seguente grafo:    
+    \begin{center}
+        \tikzsetnextfilename{algo_err_graph_es2}
+        \begin{tikzpicture}
+            [
+                scale=.5,auto=left,
+                important/.style={ellipse, draw=red, inner sep=2pt, minimum size=12pt}
+                % arrow/.style={-{Stealth[]}}
+            ]
+            \node[important] 
+                (n1) at (1,0)  {$x_1$};
+            \node[important] 
+                (n2) at (1,2)  {$x_2$};
+            \node[important, label={$\mu_1$}] 
+                (n3) at (4,1)  {$s_2$};
+            \node[important] 
+                (n4) at (4,4)  {$x_3$};
+            \node[important, label={$\mu_2$}] 
+                (n5) at (8,2.5)  {$s_3$};
+            \node[important] 
+                (n6) at (8,6.5)  {$x_4$};
+            \node[important, label={$\mu_2$}] 
+                (n7) at (12,4.5)  {$s_4$};
+        
+            \foreach \from/\to/\coeff in {n1/n3/{},n3/n5/{$\frac{s_2}{s_2+x_3}$}, n5/n7/{$\frac{s_3}{s_3+x_4}$}}
+                \draw [->] (\from) to node[below, sloped] {\coeff} (\to);
+            
+            \foreach \from/\to/\coeff in {n2/n3/{},n4/n5/{}, n6/n7/{}}
+                \draw [->] (\from) to node[above, sloped] {\coeff} (\to);
+        \end{tikzpicture}
+    \end{center}
+dove $s_i = s_{i-1} + x_i = x_1 + \dots + x_i$. 
+
+Calcoliamo ad esempio l'errore accumulatosi sul nodo $s_3$: si ha \[
+    \eps_3 = \mu_3 + \frac{s_2}{s_2 + x_3}\underbrace{(\mu_2 + 0 + 0)}_{\eps_2}.
+\] Stessa cosa sul nodo $s_4$: infatti \[
+    \eps_4 = \mu_4 + \frac{s_3}{s_3 + x_4}\eps_3.
+\] Più in generale si avrà quindi \[
+    \eps_k = \mu_k + \frac{s_{k-1}}{s_{k-1}+ x_k}\eps_{k-1}.
+\] Osserviamo che per definizione di $s_i$ possiamo riscrivere $\frac{s_{k-1}}{s_{k-1} + x_k}$ come $\frac{s_{k-1}}{s_k}$ e questa frazione è sempre minore di $1$: in questo modo riusciamo a limitare superiormente il modulo dell'errore algoritmo. Infatti \begin{align*}
+    \abs*{\epsalg} = \abs*{\eps_n} &= \abs*{\mu_n + \frac{s_{n-1}}{s_n}\eps_{n-1}}\\
+    &\leq \abs*{\mu_n} + \abs*{\frac{s_{n-1}}{s_n}}\abs*{\eps_{n-1}}\\
+    &< u + 1 \cdot \abs*{\eps_{n-1}} \\
+    &< u + u + \abs*{\eps_{n-2}} \\
+    &< \dots \\
+    &< (n-1)u. 
+\end{align*}  L'algoritmo è dunque stabile, ma solo se $n$ non è troppo grande.
