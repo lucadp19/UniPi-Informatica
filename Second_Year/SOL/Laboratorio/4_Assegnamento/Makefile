@@ -5,7 +5,10 @@ CFLAGS	    += -Wall -pedantic -g -I "../Utils"
 .PHONY: clean
 .SUFFIXES: .c .h
 
-all : Mats/read_mats Mats/write_mats Passwd/passwd
+all : Wc/wc Mats/read_mats Mats/write_mats Passwd/passwd
+
+Wc/wc : Wc/wc.c Utils/utils.o
+	$(CC) $(CFLAGS) $^ -o $@
 
 Mats/read_mats : Mats/read_mats.c Utils/utils.o 
 	$(CC) $(CFLAGS) $^ -o $@
