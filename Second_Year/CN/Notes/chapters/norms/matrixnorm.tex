@@ -20,3 +20,110 @@ Una proprietà immediata delle norme matriciali è che per qualsiasi norma $\nor
 Osserviamo inoltre che, come nel caso delle norme vettoriali, ogni norma matriciale induce una distanza tra matrici $d : \Mat{\F, n, n} \to \Mat{\F, n, n} \to \R$, definita da \[
     d(A, B) \deq \norm{A - B}.
 \]
+
+Tratteremo in particolare un tipo di norme matriciali, dette \emph{norme matriciali indotte}.
+
+\begin{definition}
+    [Norma matriciale indotta]
+    Sia $\norm$ una norma vettoriale su $\F^n$. Si dice \strong{norma matriciale indotta da $\norm$} la funzione $\norm_M : \Mat{\F, n, n} \to \R$ data da \begin{align*}
+        \norm{A}_M = \max \set[\big]{\norm{A\vec{v}} \given \vec v \in \F^n, \norm{\vec v}= 1}.
+    \end{align*}
+\end{definition}
+
+Per comodità di notazione d'ora in avanti scriveremo $\norm$ per indicare una generica norma vettoriale e per la sua norma matriciale indotta: a seconda dell'argomento riusciremo a distinguere in quale dei due casi ci troviamo.
+
+Osserviamo ora che la definizione di norma matriciale indotta è ben posta, ovvero che effettivamente la funzione $\norm{A\vec x}$ ha massimo sull'insieme $S \deq \set{\vec x \in \F^n \given \norm{\vec x} = 1}$. 
+Possiamo infatti notare che l'insieme $S$ è chiuso e limitato e la funzione $\vec x \mapsto \norm{A\vec x}$ è continua (poiché la norma è una funzione continua), dunque per il Teorema di Weierstrass la funzione ammette un massimo, che sarà quindi il valore di $\norm{A}_M$.
+
+La dimostrazione del fatto che la funzione $\norm_M$ definisca effettivamente una norma matriciale è lasciata all'appendice.
+
+\begin{remark}
+    Non tutte le norme matriciali sono indotte: ad esempio si può dimostrare che la \strong{norma di Frobenius}, definita da \[
+        \norm{A}_F \deq \sqrt{\sum_{i=1}^n\sum_{j=1}^n \abs*{a_{ij}}^2}
+    \] non è indotta da alcuna norma vettoriale.
+\end{remark}
+
+La principale proprietà delle norme matriciali indotte è data dal prossimo Teorema.
+\begin{theorem}
+    [Compatibilità delle norme matriciali indotte]
+    \label{th:comp_matrix_norm}
+    Sia $\norm$ una norma matriciale indotta da una norma vettoriale. Allora per ogni $A \in \Mat{\F, n, n}$, $\vec x \in \F^n$ si ha \[
+        \norm{A\vec x} \leq \norm{A} \cdot \norm{\vec x}.
+    \] 
+\end{theorem}
+
+Osserviamo che $A\vec x$ e $\vec x$ sono vettori, e dunque $\norm{A\vec x}$, $\norm{\vec x}$ rappresenta la norma vettoriale dei due vettori, mentre $A$ è una matrice e quindi $\norm{A}$ rappresenta la norma matriciale di $A$. 
+
+Prima di dimostrare il Teorema mostriamo un semplice lemma che ci tornerà utile.
+\begin{lemma}
+    \label{lem:vec_over_norm}
+    Sia $\vec x \in \F^n$, $\vec x \neq 0$. Allora $\dfrac{\vec x}{\norm{\vec x}} = 1$.  
+\end{lemma}
+\begin{proof}
+    Per la proprietà (2) delle norme vettoriali \[
+        \norm*{\frac{\vec x}{\norm{\vec x}}} = \frac1{\norm{\vec x}} \norm{\vec x} = 1. \qedhere
+    \]
+\end{proof}
+
+Dimostriamo ora il \autoref{th:comp_matrix_norm}.
+\begin{proof}
+    Se $\vec x = \vec 0$ allora \[
+        \norm{A\vec x} = \norm{\vec 0} = 0 = \norm{A} \cdot \norm{\vec x}.
+    \] Se $\vec x \neq \vec 0$ si ha che $\norm{\vec x} \neq 0$, dunque la tesi è equivalente a dimostrare che \[
+        \frac1{\norm{\vec x}} \norm{A\vec x} \leq \norm{A} = \max_{\norm{\vec v} = 1} \norm{A\vec v}.
+    \] Osserviamo che $\frac1{\norm{\vec x}} \in \R$, dunque per la proprietà (2) delle norme vettoriali si ha quindi \[
+        \frac1{\norm{\vec x}} \norm{A\vec x} = \norm*{A\frac{\vec x}{\norm{\vec x}}}.
+    \] Per il \autoref{lem:vec_over_norm} sappiamo che $\vec{\bar x} \deq \frac{\vec x}{\norm{\vec x}}$ è un vettore di norma $1$, dunque sicuramente vale che \[
+        \norm*{A\vec{\bar x}} \leq \max_{\norm{\vec v} = 1} \norm{A\vec v} = \norm{A},
+    \] ovvero la tesi.
+\end{proof}
+
+Il prossimo Teorema ci dà delle formule per calcolare direttamente il valore della norma $1$/$2$/infinito di una matrice.
+
+\begin{theorem}
+    Sia $A \in \Mat{\F, n, n}$. Si ha che \begin{align*}
+        &\norm{A}_\infty \deq \max_{1 \leq i \leq n} \sum_{j=1}^n \abs{a_{ij}}\\
+        &\norm{A}_1 \deq \max_{1 \leq j \leq n} \sum_{i=1}^n \abs{a_{ij}}\\
+        &\norm{A}_2 \deq \sqrt{\rho(A\ctrans A)}
+    \end{align*} dove $\rho : \Mat{\F, n, n} \to \R$, dato da \begin{align*}
+        \rho(M) \deq \max \set{\abs*{\lambda} \given \lambda \in \C \text{ autovalore di } M}
+    \end{align*} è il \strong{raggio spettrale} di $M$.
+\end{theorem}
+
+\begin{remark}
+    La norma infinito corrisponde a considerare le \emph{righe} di $A$, calcolare per ognuna la somma dei moduli dei coefficienti e prendere il valore massimo; per calcolare la norma $1$ invece dobbiamo seguire lo stesso procedimento, ma sulle colonne.
+\end{remark}
+
+\begin{example}
+    Prendiamo ad esempio la matrice \[
+        A \deq \begin{pmatrix}
+            1 & 2\\
+            -1 & 3
+        \end{pmatrix}
+    \] e calcoliamone le varie norme.
+    \begin{description}
+        \item[Norma-$\infty$] $\norm{A}_\infty = \max\set{\abs{1} + \abs{2}, \abs{-1} + \abs{3}} = 4$.
+        \item[Norma-$1$] $\norm{A}_1 = \max\set{\abs{1} + \abs{-1}, \abs{2} + \abs{3}} = 5$.
+        \item[Norma-$2$] Per calcolare la norma $2$ dobbiamo prima calcolare $A\trans A$ (la matrice è a coefficienti reali, dunque la trasposta coniugata è semplicemente la trasposta) e poi calcolare gli autovalori di questa matrice. \begin{equation*}
+            M \deq A\trans A = \begin{pmatrix}
+                1 & -1\\ 2 & 3
+            \end{pmatrix}\begin{pmatrix}
+                1 & 2\\
+                -1 & 3
+            \end{pmatrix} = \begin{pmatrix}
+                2 & -1\\
+                -1 & 13
+            \end{pmatrix}.
+        \end{equation*} Per trovare gli autovalori consideriamo il polinomio caratteristico \[
+            p_M(\lambda) = \det (M - \lambda I) = \det \begin{pmatrix}
+                2-\lambda& -1\\
+                -1 & 13-\lambda
+            \end{pmatrix} = (2-\lambda)(13 -\lambda) - (-1)(-1) = \lambda^2 - 15\lambda + 25,
+        \] che ha come radici \[
+            \lambda_{1/2} = \frac{15 \pm \sqrt{125}}{2}.
+        \]
+        Si ha quindi \[
+            \norm{A}_2 = \rho(M) = \max \set*{\abs*{\frac{15 + \sqrt{125}}{2}}, \abs*{\frac{15 - \sqrt{125}}{2}}} = \frac{15 + \sqrt{125}}{2}.
+        \]
+    \end{description}
+\end{example}

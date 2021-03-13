@@ -1,0 +1,38 @@
+\section{Condizionamento della risoluzione di un sistema lineare}
+
+Consideriamo il problema della risoluzione di un sistema lineare della forma $A\vec x = \vec b$, con $A \in \Mat{\F, n, n}$ matrice dei coefficienti, $\vec b \in \F^n$ vettore dei termini noti e $\vec x \in \F^n$ vettore delle incognite.
+
+Siccome vogliamo studiare sistemi che hanno una e una sola soluzione considereremo sempre una matrice $A$ invertibile, il che ci assicura che la soluzione del sistema esista sempre e sia unica.
+
+Abbiamo già visto nell'\autoref{exmpl:mat_malcond} che una piccola perturbazione nei dati del problema può portare a grandi errori: tramite le norme matriciali e vettoriali possiamo esprimere questo errore tramite un numero reale.
+
+Come nel caso monodimensionale quindi l'errore commesso nell'approssimare la matrice $A$ con $\tilde A$ e il vettore $\vec b$ con $\vec{\tilde b}$ e quindi risolvere il sistema $\tilde{A}\vec{\tilde x} = \vec{\tilde b}$ rispetto al sistema $A\vec x = \vec b$ è dato da \[
+    \frac{\norm{\vec{\tilde x} - \vec x}}{\norm{\vec x}}.
+\]
+
+In particolare noi studieremo il caso in cui l'errore coinvolge solo il vettore dei termini noti (che da $\vec b$ diventa $\vec{\tilde b}$) e non la matrice dei coefficienti, che rimane invariata.
+
+Un modo per studiare questo errore, e quindi il condizionamento del problema della risoluzione di un sistema lineare, è tramite il limite superiore che ci è dato dal seguente Teorema.
+
+\begin{theorem}
+    Sia $A \in \Mat{\F, n, n}$ una matrice non singolare, $\vec b \in \F^n$ non nullo e sia $\vec{\tilde b}$ l'approssimazione del vettore dei termini noti. Data una norma vettoriale $\norm$ e la sua norma matriciale indotta si ha \[
+        \frac{\norm{\vec{\tilde x} - \vec x}}{\norm{\vec x}} \leq \mu(A) \cdot\frac{\norm{\vec{\tilde b} - \vec b}}{\norm{\vec b}} 
+    \] dove $\mu(A) \deq \norm{A} \cdot \norm{A\inv}$ è detto \strong{numero di condizionamento}. 
+\end{theorem}
+\begin{proof}
+    Siccome per definizione $\vec x$ e $\vec{\tilde x}$ sono rispettivamente soluzione di $A\vec x = \vec b$ e $A\vec{\tilde x} = \vec{\tilde b}$ e $A$ è invertibile si ha che \[
+        \vec{\tilde x} - \vec x = A\inv\vec{\tilde b} - A\inv\vec b = A\inv(\vec{\tilde b} - \vec b),
+    \] da cui otteniamo, passando alle norme \begin{equation}\label{eq:th_cond_linsys}
+        \norm{\vec{\tilde x} - \vec x} = \norm{A\inv(\vec{\tilde b} - \vec b)} \leq \norm{A\inv} \cdot \norm{\vec{\tilde b} - \vec b}.  \tag{$\ast$}
+    \end{equation} Vogliamo ora dividere per $\norm{\vec x}$ il primo membro, per ottenere l'espressione finale. Osserviamo quindi che \[
+        \norm{\vec b} = \norm{A\vec x} \leq \norm{A} \cdot \norm{\vec x}
+    \] da cui segue che \[
+        \frac{1}{\norm{\vec x}} \leq \norm{A} \cdot \norm{\vec b}.
+    \]
+
+    Moltiplicando entrambi i membri della \eqref{eq:th_cond_linsys} per $\frac{1}{\norm{\vec x}}$ otteniamo quindi \[
+        \frac{\norm{\vec{\tilde x} - \vec x}}{\norm{\vec x}} 
+        \leq \frac{1}{\norm{\vec x}} \cdot \norm{A\inv} \cdot \norm{\vec{\tilde b} - \vec b}
+        \leq \frac{\norm{A}}{\norm{\vec b}} \cdot \norm{A\inv} \cdot \norm{\vec{\tilde b} - \vec b},
+    \] come volevamo.
+\end{proof}

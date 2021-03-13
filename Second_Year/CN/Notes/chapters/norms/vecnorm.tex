@@ -2,9 +2,37 @@
 
 Iniziamo ora lo studio dell'algebra lineare numerica: studieremo algoritmi e problemi numerici sugli spazi vettoriali $\F^n$ e $\Mat{\F, n, n}$, dove $\F$ è il campo dei numeri reali ($\R$) o quello dei numeri complessi ($\C$). 
 
-Uno dei nostri obiettivi sarà quello di risolvere sistemi lineari della forma $A\vec x = \vec b$ (con $A$ matrice e $\vec x$, $\vec b$ vettori) sfruttando algoritmi di macchina sufficientemente efficienti e con errori piccoli, quindi vogliamo avere delle quantità che descrivano l'errore commesso.
+Uno dei nostri obiettivi sarà quello di risolvere sistemi lineari della forma $A\vec x = \vec b$ (con $A$ matrice e $\vec x$, $\vec b$ vettori) sfruttando algoritmi di macchina sufficientemente efficienti e con errori piccoli; tuttavia quello che abbiamo studiato finora non ci consente di analizzare formalmente il condizionamento e la stabilità di problemi e algoritmi su vettori e matrici.
 
-Osserviamo innanzitutto che, dato che lavoriamo con l'aritmetica di macchina, non riusciremo ad ottenere la soluzione $\vec x$ esatta ma solamente una soluzione approssimata, che indicheremo come al solito con $\vec{\tilde x}$. L'errore commesso può quindi essere espresso come la differenza $\vec{\tilde x} - \vec x$, tuttavia questa quantità è ancora un vettore e pertanto è difficile confrontarlo con altri errori per vedere quanto è \emph{grande}.
+\begin{example}\label{exmpl:mat_malcond}
+    Supponiamo ad esempio di voler risolvere il sistema lineare $A\vec x = \vec b$, dove \[
+        A \deq \begin{pmatrix}
+            1.01 & 1.02 \\ 0.99 & 1
+        \end{pmatrix}, \qquad \vec b \deq \begin{pmatrix}
+            2.03 \\ 1.99
+        \end{pmatrix}.
+    \] Risolvendo il sistema (ad esempio tramite il metodo di eliminazione gaussiana) otteniamo che la soluzione è il vettore \[
+        \vec x = \begin{pmatrix}
+            1 \\ 1
+        \end{pmatrix}.
+    \]
+
+    Supponiamo ora di \emph{perturbare} un singolo coefficiente della matrice $A$ di $10^{-2}$: questa perturbazione nella pratica potrebbe essere un errore di rappresentazione, oppure un errore algoritmico dovuto ai passi precedenti, eccetera. Scegliendo (ad esempio) di modificare il coefficiente in basso a sinistra otteniamo il sistema \[
+        \begin{pmatrix}
+            1.01 & 1.02 \\ 1 & 1
+        \end{pmatrix}\vec{\tilde x} = \begin{pmatrix}
+            2.03 \\ 1.99
+        \end{pmatrix}.
+    \] La soluzione di questo sistema è il vettore \[
+        \vec{\tilde x} = \begin{pmatrix}
+            -0.02... \\ 2.01...
+        \end{pmatrix}.
+    \]   
+\end{example}
+
+Perturbando una singola componente della matrice di $10^{-2}$ il risultato è stato completamente stravolto: una delle due componenti è raddoppiata, mentre l'altra è addirittura diventata negativa. 
+    Sembra ovvio quindi che il problema sia \emph{malcondizionato} (una "piccola" perturbazione dei dati in ingresso ha generato una "grande" perturbazione dei risultati), tuttavia non abbiamo nessuno strumento formale per misurare \emph{quanto} il problema sia malcondizionato, oppure confrontare questo errore con l'errore che otterremo perturbando un'altra componente.
+% Osserviamo innanzitutto che, dato che lavoriamo con l'aritmetica di macchina, non riusciremo ad ottenere la soluzione $\vec x$ esatta ma solamente una soluzione approssimata, che indicheremo come al solito con $\vec{\tilde x}$. L'errore commesso può quindi essere espresso come la differenza $\vec{\tilde x} - \vec x$, tuttavia questa quantità è ancora un vettore e pertanto è difficile confrontarlo con altri errori per vedere quanto è \emph{grande}.
 
 Vogliamo quindi associare ad ogni vettore un \emph{numero reale} non negativo in modo da poter esprimere il concetto di grandezza e di distanza tra vettori.
 
@@ -23,7 +51,7 @@ Un esempio banale di norma è il valore assoluto su $\R$, considerando $\R$ come
 \begin{enumerate}[(1)]
     \item il valore assoluto di $x \in \R$ è sempre un numero non negativo, ed in particolare è $0$ se e solo se $x = 0$;
     \item per ogni coppia di valori $x, y \in \R$ si ha che $\abs*{xy} = \abs x\cdot\abs y$;
-    \item vale la disuguaglianza triangolare, e quindi per ogni coppia di valori $x, y \in \R$ si ha $\abs*{x + y} = \abs x + \abs y$. 
+    \item vale la disuguaglianza triangolare, e quindi per ogni coppia di valori $x, y \in \R$ si ha $\abs*{x + y} \leq \abs x + \abs y$. 
 \end{enumerate}
 
 \begin{definition}
