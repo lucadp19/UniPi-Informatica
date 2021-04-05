@@ -16,8 +16,8 @@ Per questo è stata inventata la rappresentazione in virgola mobile.
 Innanzitutto dobbiamo trovare un modo standard per rappresentare un qualsiasi numero reale. Per far ciò ci viene in aiuto il seguente teorema.
 
 \begin{theorem}
-    [Teorema di rappresentazione in base]
-    \label{th:rapp_base}\ \\
+    {Teorema di rappresentazione in base}
+    {rapp_base}
     Sia $x \in \R$, $x \neq 0$ e sia $\beta \geq 2$ una base di rappresentazione. 
     
     Allora esistono e sono univocamente determinati un \strong{esponente} $p \in \Z$ e una successione di \strong{cifre} $\seqn[\big]{d_i}_{i \in \N}$ (con $d_i \in \Z$ per ogni $i$) per cui vale che
@@ -31,15 +31,15 @@ Innanzitutto dobbiamo trovare un modo standard per rappresentare un qualsiasi nu
     \end{enumerate}
 \end{theorem}
 
-La rappresentazione di $x$ nella forma data dal \autoref{th:rapp_base} si dice \strong{rappresentazione normalizzata in virgola mobile}.
+La rappresentazione di $x$ nella forma data dal \Cref{th:rapp_base} si dice \strong{rappresentazione normalizzata in virgola mobile}.
 
 \begin{example}
-    Consideriamo ad esempio il numero reale $123$. Per il \autoref{th:rapp_base} possiamo esprimere $123$ come \[
+    Consideriamo ad esempio il numero reale $123$. Per il \Cref{th:rapp_base} possiamo esprimere $123$ come \[
         123 = +10^3 \cdot (0.123) = + 10^3 \cdot (1 \cdot 10\inv + 2 \cdot 10^{-2} + 3 \cdot 10^{-3}).
     \] Questa rappresentazione è l'unica possibile se imponiamo che $d_1$ sia diverso da $0$ e che le cifre della rappresentazione siano tutte considerate come \emph{cifre decimali} moltiplicate per una certa potenza della base (in questo caso $3$).
 \end{example}
 
-La rappresentazione data dal \autoref{th:rapp_base} è essenzialmente il concetto di \emph{notazione scientifica}: in notazione scientifica portiamo il numero reale in modo che abbia una singola cifra diversa da zero prima della virgola, mentre nella notazione data dal Teorema quella cifra diventa la prima cifra dopo la virgola. 
+La rappresentazione data dal \Cref{th:rapp_base} è essenzialmente il concetto di \emph{notazione scientifica}: in notazione scientifica portiamo il numero reale in modo che abbia una singola cifra diversa da zero prima della virgola, mentre nella notazione data dal Teorema quella cifra diventa la prima cifra dopo la virgola. 
 Inoltre, il Teorema ci garantisce che questa rappresentazione non è solamente valida in base $10$, ma lo è in qualsiasi base (noi lo useremo in particolare in base $2$).
 
 Il fattore $\beta^p$ viene detto \strong{esponente}, mentre la parte decimale (corrispondente alla sommatoria) viene detta \strong{mantissa}. 
@@ -52,7 +52,7 @@ Il fattore $\beta^p$ viene detto \strong{esponente}, mentre la parte decimale (c
         \]
         \item se venisse a mancare la terza condizione 
         (che ci dice che la successione $d$ non può terminare con una sequenza infinita di $(\beta - 1)$, ovvero il numero non può finire con $\beta-1$ periodico) 
-        avremmo dei problemi più subdoli, che derivano dalla non esistenza del "\emph{$9$ periodico}" (dimostrata in appendice, \autoref{prop:9_periodico}). 
+        avremmo dei problemi più subdoli, che derivano dalla non esistenza del "\emph{$9$ periodico}" (dimostrata in appendice, \Cref{prop:9_periodico}). 
         
         Infatti in qualsiasi base $\beta$ il numero $0.\overline{(\beta-1)}$ è uguale a $1$, quindi se ammettessimo entrambe le rappresentazioni verrebbe meno l'unicità.
     \end{itemize}
@@ -129,7 +129,7 @@ Siccome un singolo numero può occupare una quantità fissa in memoria (tipicame
 Osserviamo inoltre che, se le nostre risorse sono limitate, aumentando il numero di cifre decimali disponibili dobbiamo necessariamente diminuire lo spazio dedicato a memorizzare l'esponente e viceversa.
 
 \begin{definition}
-    [Insieme dei numeri di macchina] 
+    {Insieme dei numeri di macchina}
     Sia $\beta \geq 2$ una base, $t$ il numero di cifre decimali utilizzabili e siano $m,\ M \in \Z$ gli estremi per l'esponente (ovvero ogni esponente $p$ rappresentabile deve appartenere a $\interval[{-m, M}]$). Si dice allora \strong{insieme dei numeri di macchina} l'insieme\[
         \MSet{\beta, t, m, M} \deq \set{0} \union
         \begin{aligned}[t]
@@ -218,7 +218,7 @@ Osserviamo che questa scelta per i limiti degli esponenti non copre tutte le com
 
 Questo ci permette di rappresentare dei numeri particolari.
 
-\paragraph{Zero} Abbiamo visto che (per il \autoref{th:rapp_base}) lo $0$ non ammette una rappresentazione normalizzata. Nello standard \IEEE esso viene realizzato ponendo a $0$ tutti i campi dell'esponente e della mantissa; tuttavia non viene specificato il segno, per cui esistono due rappresentazioni uguali per lo zero ($-0$ e $+0$). 
+\paragraph{Zero} Abbiamo visto che (per il \Cref{th:rapp_base}) lo $0$ non ammette una rappresentazione normalizzata. Nello standard \IEEE esso viene realizzato ponendo a $0$ tutti i campi dell'esponente e della mantissa; tuttavia non viene specificato il segno, per cui esistono due rappresentazioni uguali per lo zero ($-0$ e $+0$). 
 
 Questa rappresentazione non va in conflitto con i numeri normalizzati, in quanto ponendo il campo dell'esponente uguale a undici $0$ otterrei un esponente effettivo uguale a $-1022$, mentre il minimo rappresentabile è $-1021$. 
 

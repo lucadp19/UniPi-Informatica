@@ -3,7 +3,7 @@
 Come per i vettori (ovvero per lo spazio vettoriale $\F^n$) possiamo definire un concetto di norma anche per lo spazio di matrici quadrate $\Mat{\F, n, n}$.
 
 \begin{definition}
-    [Norma matriciale]
+    {Norma matriciale}{}
     Si dice \strong{norma matriciale} su $\Mat{\F, n, n}$ una funzione $f : \Mat{\F, n, n} \to \R$ che soddisfi le seguenti proprietà: 
     \begin{enumerate}[(1)]
         \item $f(A) \geq 0$ per ogni $A \in \Mat{\F, n, n}$. Inoltre $f(A) = 0$ se e solo se $A = \vec 0$.
@@ -24,7 +24,7 @@ Osserviamo inoltre che, come nel caso delle norme vettoriali, ogni norma matrici
 Tratteremo in particolare un tipo di norme matriciali, dette \emph{norme matriciali indotte}.
 
 \begin{definition}
-    [Norma matriciale indotta]
+    {Norma matriciale indotta}{}
     Sia $\norm$ una norma vettoriale su $\F^n$. Si dice \strong{norma matriciale indotta da $\norm$} la funzione $\norm_M : \Mat{\F, n, n} \to \R$ data da \begin{align*}
         \norm{A}_M = \max \set[\big]{\norm{A\vec{v}} \given \vec v \in \F^n, \norm{\vec v}= 1}.
     \end{align*}
@@ -45,8 +45,8 @@ La dimostrazione del fatto che la funzione $\norm_M$ definisca effettivamente un
 
 La principale proprietà delle norme matriciali indotte è data dal prossimo Teorema.
 \begin{theorem}
-    [Compatibilità delle norme matriciali indotte]
-    \label{th:comp_matrix_norm}
+    {Compatibilità delle norme matriciali indotte}
+    {comp_matrix_norm}
     Sia $\norm$ una norma matriciale indotta da una norma vettoriale. Allora per ogni $A \in \Mat{\F, n, n}$, $\vec x \in \F^n$ si ha \[
         \norm{A\vec x} \leq \norm{A} \cdot \norm{\vec x}.
     \] 
@@ -56,7 +56,7 @@ Osserviamo che $A\vec x$ e $\vec x$ sono vettori, e dunque $\norm{A\vec x}$, $\n
 
 Prima di dimostrare il Teorema mostriamo un semplice lemma che ci tornerà utile.
 \begin{lemma}
-    \label{lem:vec_over_norm}
+    {}{vec_over_norm}
     Sia $\vec x \in \F^n$, $\vec x \neq 0$. Allora $\dfrac{\vec x}{\norm{\vec x}} = 1$.  
 \end{lemma}
 \begin{proof}
@@ -65,7 +65,7 @@ Prima di dimostrare il Teorema mostriamo un semplice lemma che ci tornerà utile
     \]
 \end{proof}
 
-Dimostriamo ora il \autoref{th:comp_matrix_norm}.
+Dimostriamo ora il \Cref{th:comp_matrix_norm}.
 \begin{proof}
     Se $\vec x = \vec 0$ allora \[
         \norm{A\vec x} = \norm{\vec 0} = 0 = \norm{A} \cdot \norm{\vec x}.
@@ -73,14 +73,14 @@ Dimostriamo ora il \autoref{th:comp_matrix_norm}.
         \frac1{\norm{\vec x}} \norm{A\vec x} \leq \norm{A} = \max_{\norm{\vec v} = 1} \norm{A\vec v}.
     \] Osserviamo che $\frac1{\norm{\vec x}} \in \R$, dunque per la proprietà (2) delle norme vettoriali si ha quindi \[
         \frac1{\norm{\vec x}} \norm{A\vec x} = \norm*{A\frac{\vec x}{\norm{\vec x}}}.
-    \] Per il \autoref{lem:vec_over_norm} sappiamo che $\vec{\bar x} \deq \frac{\vec x}{\norm{\vec x}}$ è un vettore di norma $1$, dunque sicuramente vale che \[
+    \] Per il \Cref{lem:vec_over_norm} sappiamo che $\vec{\bar x} \deq \frac{\vec x}{\norm{\vec x}}$ è un vettore di norma $1$, dunque sicuramente vale che \[
         \norm*{A\vec{\bar x}} \leq \max_{\norm{\vec v} = 1} \norm{A\vec v} = \norm{A},
     \] ovvero la tesi.
 \end{proof}
 
 Il prossimo Teorema ci dà delle formule per calcolare direttamente il valore della norma $1$/$2$/infinito di una matrice.
 
-\begin{theorem}
+\begin{theorem}{}{}
     Sia $A \in \Mat{\F, n, n}$. Si ha che \begin{align*}
         &\norm{A}_\infty \deq \max_{1 \leq i \leq n} \sum_{j=1}^n \abs{a_{ij}}\\
         &\norm{A}_1 \deq \max_{1 \leq j \leq n} \sum_{i=1}^n \abs{a_{ij}}\\

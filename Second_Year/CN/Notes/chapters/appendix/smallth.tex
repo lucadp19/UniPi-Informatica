@@ -1,8 +1,8 @@
 \section{"$9$-periodico"}
 
 \begin{proposition}
-    [$9$-periodico]
-    \label{prop:9_periodico}
+    {$9$-periodico}
+    {9_periodico}
     In base $10$ i numeri $0.\bar{9}$ e $1$ sono uguali. 
 \end{proposition}
 Forniamo due diverse dimostrazioni di questa proposizione.
@@ -25,11 +25,11 @@ Forniamo due diverse dimostrazioni di questa proposizione.
 \end{proof}
 
 La proposizione vale in generale in una base $\beta$ qualsiasi ($\beta \geq 2$).
-\begin{proposition}
+\begin{proposition}{}{}
     In base $\beta$ ($\beta \geq 2$) vale che $0.\overline{(\beta-1)} = 1$.  
 \end{proposition}
 \begin{proof}
-    La dimostrazione è uguale alla seconda dimostrazione della \autoref{prop:9_periodico}.
+    La dimostrazione è uguale alla seconda dimostrazione della \Cref{prop:9_periodico}.
 \end{proof}
 
 \section{La precisione di macchina è un limite superiore stretto}
@@ -37,7 +37,7 @@ La proposizione vale in generale in una base $\beta$ qualsiasi ($\beta \geq 2$).
 
 In questa sezione mostriamo che la precisione di macchina $\mathbold{u}$ è sempre strettamente maggiore all'errore relativo $\eps_x$ per ogni $x \in \R$ tale che $x \neq 0$ e $\omega \leq \abs x \leq \Omega$, anche usando l'arrotondamento come metodo di approssimazione.
 
-Dalla dimostrazione del \autoref{th:machine_prec} si ha che \[
+Dalla dimostrazione del \Cref{th:machine_prec} si ha che \[
     \abs*{\eps_x} = \frac12\beta^{1-p} = \mathbold{u}
 \] se e solo se la disuguaglianza \[
     \frac{\abs[\big]{\arr{x} - x}}{\abs x} 
@@ -47,7 +47,7 @@ Dalla dimostrazione del \autoref{th:machine_prec} si ha che \[
     \item $\abs[\big]{\arr{x} - x} = \frac12\beta^{p-t}$
     \item $\abs x = \beta^{p-1}$.
 \end{itemize}
-Tuttavia, come abbiamo notato nella \autoref{rem:abs_err_arr}, la prima condizione vale se e solo se \[
+Tuttavia, come abbiamo notato nella \Cref{rem:abs_err_arr}, la prima condizione vale se e solo se \[
     \abs x = \frac12(a+b) = \frac12(a + a + \beta^{p-t}) = a + \frac12\beta^{p-t}.
 \] È quindi necessario che \begin{align*}
     &\beta^{p-1} 
@@ -64,12 +64,8 @@ Segue quindi che $\abs{\eps_x} < u$ in qualsiasi caso.
 \section{Dimostrazione dell'equivalenza topologica tra norme}
 \label{sec:eq_topo_norm}
 
-In questa sezione dimostreremo il \autoref{th:eq_topo}, che per comodità enunciamo nuovamente.
-
-\eqTopo*
-
-Per dimostrare il Teorema sfruttiamo il seguente lemma.
-\begin{lemma}
+In questa sezione dimostreremo il \Cref{th:eq_topo}: per far ciò sfrutteremo il seguente lemma.
+\begin{lemma}{}{}
     Sia $\norm$ una norma su $\F^n$. Allora la funzione \[
         \vec x \mapsto \norm{\vec x}
     \] è una funzione continua.
@@ -90,7 +86,7 @@ Per dimostrare il Teorema sfruttiamo il seguente lemma.
     \] cioè la norma è continua in $\vec x_0$, da cui segue (per generalità di $\vec x_0$) che la norma è una funzione continua.
 \end{proof}
 
-Possiamo quindi dimostrare il \autoref{th:eq_topo}.
+Possiamo quindi dimostrare il \Cref{th:eq_topo}.
 % \begin{proof}
     % Consideriamo la funzione $h : \F^n \setminus \set{\vec 0} \to \R$ data da \[
         % h(\vec x) = \frac{f(\vec x)}{g(\vec x)}.

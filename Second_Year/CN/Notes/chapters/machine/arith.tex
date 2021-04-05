@@ -11,7 +11,8 @@ Cerchiamo ora di estendere l'aritmetica tra numeri reali ad un'aritmetica per i 
 Dobbiamo quindi definire delle nuove operazioni che siano \emph{interne} all'insieme dei numeri di macchina.
 
 \begin{definition}
-    [Aritmetica di macchina] Si definiscono quattro operazioni \[
+    {Aritmetica di macchina}{}
+    Si definiscono quattro operazioni \[
         \oplus,\ \otimes,\ \ominus,\ \oslash : \MSet \times \MSet \to \MSet
     \] tali che per ogni coppia di numeri di macchina $a, b \in \MSet$ ($b \neq 0$ nel caso di $\oslash$) si ha che \begin{align*}
         &a \oplus b \deq \fl{a + b} &&a \ominus b \deq \fl{a - b}\\
@@ -22,7 +23,7 @@ Dobbiamo quindi definire delle nuove operazioni che siano \emph{interne} all'ins
 Siamo ora interessati a studiare \emph{quanto errore} commettiamo nel considerare i numeri di macchina invece dei numeri reali non approssimati.
 
 \begin{definition}
-    [Errore locale]
+    {Errore locale}{}
     Sia $\ast$ un'operazione tra numeri qualsiasi e sia $\circledast$ la corrispondente operazione su numeri di macchina. Dati $x, y \in \FF$ si dice \strong{errore locale} dell'operazione la quantità \[
         \eps \deq \frac{(x \circledast y) - (x \ast y)}{x \ast y}.
     \]
@@ -138,11 +139,10 @@ Consideriamo nel resto della sezione \begin{itemize}
 
 \subsection{Errore inerente}
 
-\begin{definition}
-    [Errore inerente]
-        Si dice \strong{errore inerente} del problema la quantità \[
-            \epsin \deq \frac{f\parens[\big]{\tilde x} - f(x)}{f(x)}.
-        \]
+\begin{definition}{Errore inerente}{}
+    Si dice \strong{errore inerente} del problema la quantità \[
+        \epsin \deq \frac{f\parens[\big]{\tilde x} - f(x)}{f(x)}.
+    \]
 \end{definition}
 
 Osserviamo che l'errore inerente misura quanto è grande l'errore nell'approssimare $x$ con il numero di macchina $\tilde x$: se l'errore inerente è grande in un intorno di $x$ nessun algoritmo ci consentirà di calcolare con una buona precisione il risultato della funzione $f$. In tal caso diremo che il problema è \strong{mal condizionato}, mentre se l'errore inerente è sempre limitato il problema verrà definito \strong{ben condizionato}.
@@ -175,8 +175,7 @@ Osserviamo ora che il secondo addendo contiene (nascosto) un errore al quadrato,
 
 Abbiamo quindi dimostrato il seguente Teorema.
 \begin{theorem}
-    [Caratterizzazione dell'errore inerente]
-    \label{th:err_in_R}
+    {Caratterizzazione dell'errore inerente}{err_in_R}
     Sia $f : A \subseteq \R \to \R$ e sia $x$ il punto di cui vogliamo calcolare l'immagine $f(x)$. Se $f \in \CC^2(A)$ si ha che \[
         \epsin \doteq f'(x)\frac{x}{f(x)} \cdot \eps_x,
     \] dove $\eps_x$ è l'errore di rappresentazione di $x$.
@@ -186,22 +185,22 @@ Abbiamo quindi dimostrato il seguente Teorema.
 
 Abbiamo quindi scoperto che l'errore inerente è sempre della forma $c_x\eps_x$: possiamo quindi definire formalmente il concetto di condizionamento.
 
-\begin{definition}
-    [Condizionamento di un problema] Sia $f : A \subseteq \R \to \R$ con $f \in \CC^2(A)$. Se esiste $x_0 \in A$ tale che \[
+\begin{definition}{Condizionamento di un problema}{}
+    Sia $f : A \subseteq \R \to \R$ con $f \in \CC^2(A)$. Se esiste $x_0 \in A$ tale che \[
         \lim_{x \to x_0} \abs*{c_x} = +\infty
     \] si dice che il problema è \strong{mal condizionato} in un intorno di $x_0$, altrimenti si dice che il problema è \strong{ben condizionato}.
 \end{definition}
 
 \begin{example}
-    Riprendiamo l'\autoref{exmpl:func_error}: il coefficiente di amplificazione è \[
+    Riprendiamo l'\Cref{exmpl:func_error}: il coefficiente di amplificazione è \[
         c_x = \frac{2x^2}{x^2 - 1}
     \] il cui valore assoluto tende a $+\infty$ per $x \to \pm 1$. Si ha quindi che il problema è mal condizionato in un intorno di $1$ e in un intorno di $-1$.  
 \end{example}
 
-Il \autoref{th:err_in_R} può essere generalizzato per funzioni $\R^n \to \R$.
+Il \Cref{th:err_in_R} può essere generalizzato per funzioni $\R^n \to \R$.
 \begin{corollary}
-    [Errore inerente su funzioni multivariate]
-    \label{cor:err_in_Rn}
+    {Errore inerente su funzioni multivariate}
+    {err_in_Rn}
     Sia $f : \Omega \to \R$ con $\Omega \subseteq \R^n$ aperto e $f$ differenziabile due volte su $\Omega$ (ovvero esistono la derivata parziale prima e seconda rispetto ad ogni variabile). 
     
     Sia inoltre $\vec{x} = (x_1, \dots, x_n)$ il punto di cui vogliamo calcolare $f(\vec{x})$. Si ha che \[
@@ -211,7 +210,7 @@ Il \autoref{th:err_in_R} può essere generalizzato per funzioni $\R^n \to \R$.
 
 \subsubsection{Coefficienti di amplificazione delle operazioni elementari}
 
-Il \autoref{cor:err_in_Rn} può essere molto comodo per calcolare i coefficienti di amplificazione delle operazioni elementari: ciò torna molto utile per il calcolo dell'errore totale.
+Il \Cref{cor:err_in_Rn} può essere molto comodo per calcolare i coefficienti di amplificazione delle operazioni elementari: ciò torna molto utile per il calcolo dell'errore totale.
 
 \paragraph{Somma} Consideriamo $f(x, y) = x + y$. Si ha che \[
     c_x = \frac{x}{x+y}\cdot 1 = \frac{x}{x+y}, \qquad c_y = \frac{y}{x+y} \cdot 1 = \frac{y}{x+y}.
@@ -228,8 +227,7 @@ Il \autoref{cor:err_in_Rn} può essere molto comodo per calcolare i coefficienti
 
 \subsection{Errore algoritmico}
 
-\begin{definition}
-    [Errore algoritmico]
+\begin{definition}{Errore algoritmico}{}
     Si dice \strong{errore algoritmico} la quantità \[
         \epsalg \deq \frac{g\parens[\big]{\tilde x} - f\parens[\big]{\tilde x}}{f\parens[\big]{\tilde x}}.
     \]
@@ -327,7 +325,7 @@ Ogni passo che calcola un'operazione può quindi essere scritto nella forma \[
 \subsection{Errore totale}
 
 \begin{definition}
-    [Errore totale]
+    {Errore totale}{}
         Si dice \strong{errore totale} del problema la quantità \[
             \epstot \deq \frac{g\parens[\big]{\tilde x} - f(x)}{f(x)}.
         \]
@@ -336,10 +334,9 @@ Ogni passo che calcola un'operazione può quindi essere scritto nella forma \[
 Osserviamo chel'errore totale combina i concetti di errore inerente e algoritmico e ci dice quanto è grande l'errore nel calcolare $g$ con il valore di $\tilde x$ rispetto al calcolo esatto di $f(x)$.
 
 
-Nell'\autoref{exmpl:func_error} abbiamo notato come l'errore totale fosse dato dalla somma dell'errore algoritmico e dell'errore inerente: questa relazione vale sempre, come dimostrato dal prossimo teorema.
+Nell'\Cref{exmpl:func_error} abbiamo notato come l'errore totale fosse dato dalla somma dell'errore algoritmico e dell'errore inerente: questa relazione vale sempre, come dimostrato dal prossimo teorema.
 
-\begin{theorem}
-    \label{th:relation_eps_tot/alg/in}
+\begin{theorem}{}{relation_eps_tot/alg/in}
     $\epstot \doteq \epsin + \epsalg$.
 \end{theorem}
 \begin{proof}
@@ -356,3 +353,29 @@ Nell'\autoref{exmpl:func_error} abbiamo notato come l'errore totale fosse dato d
     \end{align*}
 \end{proof}
 
+\subsection{Errore analitico}
+
+Finora abbiamo considerato solo funzioni razionali, ovvero contenenti le quattro operazioni aritmetiche fondamentali. È necessario tuttavia esprimere in macchina funzioni più complesse, come l'esponenziale, il logaritmo, le funzioni trigonometriche e così via.
+
+L'esempio classico è quello della funzione esponenziale $\exp$. La sua proprietà più importante (dal nostro punto di vista) è l'\emph{analiticità}: la funzione esponenziale è uguale in ogni punto alla sua serie di Taylor centrata in $0$, ovvero \[
+    \exp(x) = e^x = \sum_{n=0}^\infty \odv[n]{e^x}{x} \frac{x^n}{n!} = \sum_{n=0}^\infty e^x \frac{x^n}{n!}.
+\] Un modo per approssimarla è quindi sfruttare il Teorema di Taylor (con resto di Peano o Lagrange) \emph{troncando} la serie al $k$-esimo termine: \[
+    e^x \approx \sum_{n=0}^k e^x \frac{x^n}{n!}.
+\]
+
+Abbiamo quindi approssimato una funzione qualsiasi con una funzione razionale, generando un errore, chiamato \strong{errore analitico}.
+
+\begin{definition}
+    {Errore analitico}{}
+    Sia $f$ una funzione non razionale e $\tilde{f}$ la sua approssimazione razionale. Si dice \strong{errore analitico} la quantità \[
+        \epsan \deq \frac{\tilde{f}(x) - f(x)}{f(x)}.
+    \] 
+\end{definition}
+
+La sequenza di passaggi per calcolare in macchina il valore di una funzione non razionale $f$ in un punto $x \in \R$ diventa quindi \[
+    f(x) \xmapsto{\epsan} \tilde{f}(x) \xmapsto{\epsin} \tilde{f}(\tilde{x}) \xmapsto{\epsalg} g(\tilde x).
+\] Si può dimostrare il seguente teorema.
+
+\begin{theorem}{}{}
+    $\epstot \doteq \epsan + \epsin + \epsalg$.
+\end{theorem}

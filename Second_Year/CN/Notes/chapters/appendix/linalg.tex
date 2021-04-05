@@ -3,7 +3,7 @@
 Iniziamo rivedendo i concetti fondamentali sugli spazi vettoriali.
 
 \begin{definition}
-    [Campo] Si dice \strong{campo} un insieme $\F$ dotato di due operazioni, chiamate solitamente \emph{somma} e \emph{prodotto} e indicate con i simboli $+$ e $\cdot$, tali che \begin{enumerate}[(S1)]
+    {Campo}{} Si dice \strong{campo} un insieme $\F$ dotato di due operazioni, chiamate solitamente \emph{somma} e \emph{prodotto} e indicate con i simboli $+$ e $\cdot$, tali che \begin{enumerate}[(S1)]
         \item la somma è associativa;
         \item la somma è commutativa;
         \item esiste un elemento $0_{\F} \in \F$ (indicato anche $0$ se il campo è sottointeso) che è elemento neutro per la somma;
@@ -27,7 +27,7 @@ Iniziamo rivedendo i concetti fondamentali sugli spazi vettoriali.
 Esempi di campo sono i numeri reali $\R$, i numeri razionali $\Q$, i numeri complessi $\C$. D'ora in avanti indicheremo con $\F$ un generico campo (in particolare $\F$ nella pratica sarà uno tra $\R$ e $\C$).
 
 \begin{definition}
-    [Spazio vettoriale]
+    {Spazio vettoriale}{}
     Si dice \strong{spazio vettoriale} sul campo $\F$ un insieme $V$ dotato di due operazioni, una somma $+ : V \times V \to V$ e un \emph{prodotto per scalare} $\cdot : \F \times V \to V$, che soddisfano le seguenti proprietà: \begin{enumerate}[(S1)]
         \item la somma è associativa;
         \item la somma è commutativa;
@@ -61,18 +61,18 @@ Esempi di spazi vettoriali sono \begin{itemize}
 \end{itemize}
 
 \begin{definition}
-    [Sottospazio]
+    {Sottospazio}{}
     Sia $V$ uno spazio vettoriale su $\F$. Un \strong{sottospazio} di $V$ è un insieme $U \subseteq V$ che sia anch'esso uno spazio vettoriale su $\F$. 
 \end{definition}
 
 \begin{definition}
-    [Span di un sottoinsieme]
+    {Span di un sottoinsieme}{}
     Sia $V$ uno spazio vettoriale su $\F$ e sia $S \subseteq V$. Allora si dice \strong{span} di $S$ l'insieme \[
         \Span S \deq \set*{\alpha_1 \vec v_1 + \dots + \alpha_k \vec v_k \given \alpha_i \in \F, \vec v_i \in V}.
     \]  
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}{}{}
     Per ogni $S \subseteq V$ si ha che $\Span S$ è un sottospazio vettoriale di $V$.
 \end{proposition}
 
@@ -81,14 +81,14 @@ Esempi di spazi vettoriali sono \begin{itemize}
 Assumeremo implicitamente che $V$ sia uno spazio vettoriale su $\F$.
 
 \begin{definition}
-    [Indipendenza lineare]
+    {Indipendenza lineare}{}
     I vettori $\vec v_1, \dots, \vec v_n \in V$ formano un insieme di \strong{vettori linearmente indipendenti} se si ha che \[
         \alpha_1\vec v_1 + \dots + \alpha_n\vec v_n = 0 \implies \alpha_1 = \dots = \alpha_n = 0_{\F}.
     \]
 \end{definition}
 
 \begin{definition}
-    [Insieme di generatori]
+    {Insieme di generatori}{}
     I vettori $\vec v_1, \dots, \vec v_n \in V$ formano un insieme di \strong{generatori per $V$} se per ogni $\vec v \in V$ esistono $\alpha_1, \dots, \alpha_n \in \F$ tali che \[
         \vec v = \alpha_1 \vec v_1 + \dots \alpha_n\vec v_n.
     \] Equivalentemente $\vec v_1, \dots, \vec v_n$ sono generatori se \[
@@ -97,7 +97,7 @@ Assumeremo implicitamente che $V$ sia uno spazio vettoriale su $\F$.
 \end{definition}
 
 \begin{definition}
-    [Base]
+    {Base}{}
     L'insieme formato dai vettori $\vec v_1, \dots, \vec v_n$ forma una \strong{base} per $V$ se valgono entrambe le seguenti condizioni:
     \begin{enumerate}
         \item $\set*{\vec v_1, \dots, \vec v_n}$ è un insieme di vettori linearmente indipendenti;
@@ -115,7 +115,7 @@ Chiameremo \strong{base canonica} di $\F^n$ l'insieme formato dai vettori \[
 Non tutti gli spazi vettoriali ammettono una base \emph{finita}: ad esempio nessun sottoinsieme finito di $\F[x]$ lo genera, e quindi non può esistere una base. 
 
 \begin{definition}
-    [Dimensione di uno spazio vettoriale]
+    {Dimensione di uno spazio vettoriale}{}
     Sia $V$ uno spazio vettoriale su $\F$ e sia $\BB$ una base di $V$. Si dice \strong{dimensione di $V$ su $\F$} la quantità \[
         \dim_{\F} V \deq \card+{\BB}.
     \] Quando il campo degli scalari è sottointeso scriveremo semplicemente $\dim V$.
@@ -127,14 +127,14 @@ Ad esempio: \begin{itemize}
 \end{itemize}
 
 \begin{theorem}
-    [Teorema della dimesnione]
+    {Teorema della dimensione}{}
     Sia $V$ uno spazio vettoriale su $\F$ di dimensione $n$. Allora ogni base di $V$ ha $n$ elementi.
 \end{theorem}
 
 \section{Applicazioni lineari}
 
 \begin{definition}
-    [Applicazione lineare]
+    {Applicazione lineare}{}
     Siano $U, V$ due spazi vettoriali su un campo $\F$. Si dice \strong{applicazione lineare} una funzione $f : U \to V$ tale che \begin{enumerate}
         \item $f(\vec x + \vec y) = f(\vec x) + f(\vec y)$ per ogni $\vec x, \vec y \in U$;
         \item $f(\alpha\vec x) = \alpha f(\vec x)$ per ogni $\vec x \in U, \alpha \in \F$.    
@@ -157,7 +157,7 @@ In effetti per ogni vettore $\vec u_j$ nella base $\BB_U$ l'immagine del vettore
 \]
 
 \begin{definition}
-    [Immagine e nucleo di un'applicazione lineare]
+    {Immagine e nucleo di un'applicazione lineare}{}
     Sia $f : U \to V$ un'applicazione lineare.
     \begin{enumerate}[(1)]
         \item Si dice \strong{kernel} (o \strong{nucleo}) di $f$ l'insieme \[
@@ -172,5 +172,95 @@ In effetti per ogni vettore $\vec u_j$ nella base $\BB_U$ l'immagine del vettore
 Si ha che $\ker f$ è un sottospazio di $U$ e $\Imm f$ è un sottospazio di $V$. Inoltre vale il seguente teorema.
 
 \begin{theorem}
-    [Teorema della dimensione] $\dim V = \dim \Imm f + \dim \ker f$. 
+    {Teorema della dimensione}{} $\dim V = \dim \Imm f + \dim \ker f$. 
 \end{theorem}
+
+\section{Invertibilità}
+
+\begin{definition}
+    {Matrice invertibile}{}
+    Una matrice $A \in \Mat{\F, n, n}$ si dice invertibile se esiste $A\inv \in \Mat{\F, n, n}$ tale che \[
+        AA\inv = A\inv A = I_n
+    \] dove $I_n \in \Mat{\F, n, n}$ è l'identità. 
+\end{definition}
+
+Elenchiamo alcune condizioni equivalenti per l'invertibilità di una matrice: \begin{itemize}
+    \item $A$ è invertibile,
+    \item $\det A \neq 0$,
+    \item $\ker A = \set*{\vec 0}$,
+    \item $A$ è di rango massimo,
+    \item le colonne di $A$ sono linearmente indipendenti,
+    \item le righe di $A$ sono linearmente indipendenti,
+    \item $0 \in \F$ non è autovalore di $A$ (lo vedremo nella prossima sezione).   
+\end{itemize}
+
+\section{Autovettori e autovalori}
+
+\begin{definition}
+    {Autovettori e autovalori}{}
+    Sia $A \in \Mat{\F, n, n}$ una matrice. Un vettore $\vec x \in \F^n$, $\vec x \neq \vec 0$ si dice \strong{autovettore} di $A$ se esiste $\lambda \in \F$ tale che \[
+        A\vec x = \lambda\vec x.
+    \] Tale $\lambda$ si dice \strong{autovalore} relativo all'autovettore $\vec x$.
+\end{definition}
+
+Il modo più semplice per calcolare gli autovalori di una matrice è tramite il polinomio caratteristico.
+
+\begin{definition}
+    {Polinomio caratteristico}{}
+    Sia $A \in \Mat{\F, n, n}$ una matrice. Si dice \strong{polinomio caratteristico} di $A$ il polinomio \[
+        p_A(x) = \det (A - xI_n),  
+    \] dove $I_n \in \Mat{\F, n, n}$ è la matrice identità. 
+\end{definition}
+
+\begin{proposition}{}{}
+    Sia $A \in \Mat{\F, n, n}$ una matrice. Allora $\lambda \in \F$ è autovalore di $A$ (relativo a qualche autovettore) se e solo se $p_A(\lambda) = 0$, ovvero se e solo se $\lambda$ è radice del polinomio caratteristico. 
+\end{proposition}
+
+La strategia per trovare gli autovalori consiste quindi nel calcolare il polinomio caratteristico e trovarne tutte le radici.
+
+\begin{example}
+    Consideriamo ad esempio la matrice \[
+        A = \begin{pmatrix}
+            3 & -2\\
+            4 & -1
+        \end{pmatrix}
+    \] e calcoliamone gli autovalori.
+
+    \begin{align*}
+        p_A(x) &= \det (A - xI_n)\\
+        &= \det \parens*{
+            \begin{pmatrix}
+                3 & -2\\
+                4 & -1
+            \end{pmatrix} - x\begin{pmatrix}
+                1 & 0\\
+                0 & 1\\
+            \end{pmatrix}
+        } \\
+        &= \det \begin{pmatrix}
+            3-x & -2\\
+            4   & -1-x
+        \end{pmatrix} \\
+        &= (3-x)(-1-x) -(-2) \cdot 4\\
+        &= x^2 - 2x + 5.
+    \end{align*}
+
+    Le radici di questo polinomio sono \[
+        \lambda_{1/2} = 1 \pm \sqrt{1 - 5} = 1 \pm \sqrt{-4} = 1 \pm 2i
+    \] che corrispondono agli autovalori complessi di $A$.
+\end{example}
+
+Facciamo un po' di considerazioni sugli autovalori.
+\begin{enumerate}[(1)]
+    \item Ogni matrice reale o complessa \emph{ha esattamente $n$ autovalori complessi}: infatti per il Teorema Fondamentale dell'Algebra ogni polinomio ha esattamente $n$ radici complesse (non necessariamente tutte distinte).
+    \item Se la matrice è a coefficienti reali anche il polinomio caratteristico lo sarà. In tal caso se $\lambda \in \C$ è radice allora anche $\conj{\lambda} \in \C$ lo è (\emph{le radici sono a coppie}).
+    \item Se $n$ è dispari allora una matrice ha almeno una radice reale.
+    \item Una matrice è invertibile se e solo se $0$ è autovalore. Infatti: \begin{description}
+        \item[($\implies$)] Se $A$ è invertibile allora $\ker A = \set{\vec 0}$, ovvero per ogni vettore $\vec x \in \F^n$ si ha \[
+            A\vec x \neq \vec 0 = 0\vec x.
+        \]  Dunque in particolare nessun autovettore ha come autovalore $0$.
+        \item[($\impliedby$)] Se $0$ è autovalore allora esiste un vettore $\vec x \in \F^n$ tale che \[
+            A\vec x = 0\vec x = 0,
+        \] ovvero il kernel di $A$ non è banale, da cui $A$ non è invertibile.
+    \end{description} 
+\end{enumerate}

@@ -4,7 +4,7 @@ Consideriamo il problema della risoluzione di un sistema lineare della forma $A\
 
 Siccome vogliamo studiare sistemi che hanno una e una sola soluzione considereremo sempre una matrice $A$ invertibile, il che ci assicura che la soluzione del sistema esista sempre e sia unica.
 
-Abbiamo già visto nell'\autoref{exmpl:mat_malcond} che una piccola perturbazione nei dati del problema può portare a grandi errori: tramite le norme matriciali e vettoriali possiamo esprimere questo errore tramite un numero reale.
+Abbiamo già visto nell'\Cref{exmpl:mat_malcond} che una piccola perturbazione nei dati del problema può portare a grandi errori: tramite le norme matriciali e vettoriali possiamo esprimere questo errore tramite un numero reale.
 
 Come nel caso monodimensionale quindi l'errore commesso nell'approssimare la matrice $A$ con $\tilde A$ e il vettore $\vec b$ con $\vec{\tilde b}$ e quindi risolvere il sistema $\tilde{A}\vec{\tilde x} = \vec{\tilde b}$ rispetto al sistema $A\vec x = \vec b$ è dato da \[
     \frac{\norm{\vec{\tilde x} - \vec x}}{\norm{\vec x}}.
@@ -14,7 +14,7 @@ In particolare noi studieremo il caso in cui l'errore coinvolge solo il vettore 
 
 Un modo per studiare questo errore, e quindi il condizionamento del problema della risoluzione di un sistema lineare, è tramite il limite superiore che ci è dato dal seguente Teorema.
 
-\begin{theorem}
+\begin{theorem}{}{}
     Sia $A \in \Mat{\F, n, n}$ una matrice non singolare, $\vec b \in \F^n$ non nullo e sia $\vec{\tilde b}$ l'approssimazione del vettore dei termini noti. Data una norma vettoriale $\norm$ e la sua norma matriciale indotta si ha \[
         \frac{\norm{\vec{\tilde x} - \vec x}}{\norm{\vec x}} \leq \mu(A) \cdot\frac{\norm{\vec{\tilde b} - \vec b}}{\norm{\vec b}} 
     \] dove $\mu(A) \deq \norm{A} \cdot \norm{A\inv}$ è detto \strong{numero di condizionamento}. 

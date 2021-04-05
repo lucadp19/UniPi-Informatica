@@ -37,7 +37,7 @@ Perturbando una singola componente della matrice di $10^{-2}$ il risultato è st
 Vogliamo quindi associare ad ogni vettore un \emph{numero reale} non negativo in modo da poter esprimere il concetto di grandezza e di distanza tra vettori.
 
 \begin{definition}
-    [Norma vettoriale]
+    {Norma vettoriale}{}
     Si dice \strong{norma vettoriale} su $\F^n$ una funzione $f : \F^n \to \R$ che soddisfi le seguenti proprietà:
     \begin{enumerate}[(1)]
         \item $f(\vec v) \geq 0$ per ogni $\vec v \in \F^n$. Inoltre $f(\vec v) = 0$ se e solo se $\vec v = \vec 0$.
@@ -55,7 +55,7 @@ Un esempio banale di norma è il valore assoluto su $\R$, considerando $\R$ come
 \end{enumerate}
 
 \begin{definition}
-    [Distanza]
+    {Distanza}{}
     Sia $X$ un insieme qualsiasi. Si dice \strong{distanza} su $X$ una funzione \[
         d : X \times X \to \R
     \] che soddisfi le seguenti proprietà:
@@ -136,12 +136,11 @@ Come abbiamo detto all'inizio del capitolo, useremo le norme vettoriali per dete
 \end{example}
 
 In realtà le norme si comportano tutte \emph{più o meno} allo stesso modo, come ci viene garantito dal seguente Teorema.
-\begin{restatable}[Equivalenza topologica tra le norme]{theorem}{eqTopo}
-    \label{th:eq_topo}
+\begin{theorem}{Equivalenza topologica tra le norme}{eq_topo}
     Siano $f, g$ due norme su $\F^n$. Allora esistono due costanti $\alpha, \beta \in \interval[{0, +\infty})$ tali che per ogni $\vec v \in \F^n$ si ha  \[
         \alpha g(\vec v) \leq f(\vec v) \leq \beta g(\vec v).
     \]
-\end{restatable}
+\end{theorem}
 \begin{proof}
     Data nella \autoref{sez:eq_topo_norms} dell'Appendice.
 \end{proof}

@@ -5,7 +5,7 @@
     \usepackage{textcomp}
     \usepackage{microtype}
     % My packages
-    \usepackage{base-preamble}
+    \usepackage[newthmsty]{base-preamble}
     \usepackage{numerical}
     \usepackage{algebra}
     \usepackage{analysis}
@@ -16,6 +16,7 @@
 
 \usetikzlibrary{external}
 \tikzexternalize[prefix=chapters/figures/]
+\tcbsetforeverylayer{shield externalize}
 
 \let\oldtilde\tilde
 \renewcommand{\tilde}[1]{\widetilde{#1}}
@@ -48,9 +49,10 @@
 \input{chapters/norms/vecnorm}
 \input{chapters/norms/matrixnorm}
 \input{chapters/norms/linsys}
+\input{chapters/eigenval/eigenval}
 
 \appendix
-\chapter{Appendice A}
+\chapter{Teoremi secondari}
 \input{chapters/appendix/smallth}
 \chapter{Prerequisiti di Algebra Lineare}
 \input{chapters/appendix/linalg}

@@ -1,9 +1,10 @@
 \section{Errori di approssimazione}
 
-Abbiamo iniziato ad introdurre il concetto di approssimazione nella \autoref{sez:machine_nums}. Definiamolo ora formalmente.
+Abbiamo iniziato ad introdurre il concetto di approssimazione nella \Cref{sez:machine_nums}. Definiamolo ora formalmente.
 
 \begin{definition}
-    [Troncamento e arrotondamento] Sia $x \in \R$, $x \neq 0$, tale che $\omega < \abs{x} < \Omega$. Consideriamo inoltre la rappresentazione normalizzata di $x$: \[
+    {Troncamento e arrotondamento}{}
+    Sia $x \in \R$, $x \neq 0$, tale che $\omega < \abs{x} < \Omega$. Consideriamo inoltre la rappresentazione normalizzata di $x$: \[
         x = \sgn{x}\beta^p\sum_{i=1}^{\infty} d_i\beta^{-i}.
     \] 
     Allora definiamo \begin{enumerate}[(1)]
@@ -38,7 +39,8 @@ D'ora in avanti quando parleremo dell'approssimazione di un numero reale $x$ sen
 Approssimando numeri reali a numeri di macchina si genera un errore, detto \strong{errore di rappresentazione}.
 
 \begin{definition}
-    [Errore di rappresentazione] Sia $x \in \R$, $x \neq 0$ tale che $\omega \leq \abs{x} \leq \Omega$. Chiameremo \strong{errore assoluto} la quantità \[
+    {Errore di rappresentazione}{}
+    Sia $x \in \R$, $x \neq 0$ tale che $\omega \leq \abs{x} \leq \Omega$. Chiameremo \strong{errore assoluto} la quantità \[
         \eta_x \deq \tilde{x} - x,
     \] mentre chiameremo \strong{errore relativo} o \strong{errore di rappresentazione} la quantità \[
         \eps_x \deq \frac{\tilde{x} - x}{x}.
@@ -48,8 +50,7 @@ Approssimando numeri reali a numeri di macchina si genera un errore, detto \stro
 La qualità più importante dell'errore relativo è il fatto che è sempre \strong{superiormente limitato}, come dimostreremo attraverso un lemma ed un teorema.
 
 \begin{lemma}
-    [Limite superiore all'errore assoluto] 
-    \label{lem:lim_sup_abserr} 
+    {Limite superiore all'errore assoluto}{lim_sup_abserr} 
     Sia $x \in \R$, $x \neq 0$, $\omega \leq x \leq \Omega$. Sia inoltre $x = \sgn{x}\beta^p\sum_{i=1}^\infty d_i\beta^{-i}$ la rappresentazione in base di $x$. Si ha che 
     \begin{enumerate}[(i)]
         \item $\abs[\big]{\trun{x} - x} < \beta^{p-t}$
@@ -59,7 +60,7 @@ La qualità più importante dell'errore relativo è il fatto che è sempre \stro
 \begin{proof}
     Se fosse $x = \Omega$ oppure $x = \omega$  allora $\trun{x} = \arr{x} = x$, da cui l'errore assoluto $\tilde x - x$ è nullo.  
 
-    Supponiamo quindi $\omega < x < \Omega$ (il caso $-\Omega < x < -\omega$ è speculare). Siccome valgono le ipotesi del \autoref{th:rapp_base} possiamo scrivere \[
+    Supponiamo quindi $\omega < x < \Omega$ (il caso $-\Omega < x < -\omega$ è speculare). Siccome valgono le ipotesi del \Cref{th:rapp_base} possiamo scrivere \[
         x = \beta^p\sum_{i=1}^\infty d_i\beta^{-i}.
     \] Esisteranno dunque due numeri di macchina $a, b \in \MSet$ tali che $a \leq x < b$ e $b$ è il numero di macchina successivo rispetto ad $a$, ovvero $a$ è il numero di macchina appena più piccolo di $x$ e $b$ è quello appena più grande.
 
@@ -102,8 +103,7 @@ La qualità più importante dell'errore relativo è il fatto che è sempre \stro
 \end{remark}
 
 \begin{theorem}
-    [Esistenza della precisione di macchina]
-    \label{th:machine_prec}
+    {Esistenza della precisione di macchina}{machine_prec}
     Esiste un numero $u \in \R$, detto \strong{precisione di macchina}, tale che per ogni $x \in \R$, $x \neq 0$, $\omega \leq \abs*{x}\leq \Omega$ vale che \[
         \abs*{\eps_x} \leq u.
     \] In particolare \begin{enumerate}[(i)]
@@ -118,13 +118,13 @@ La qualità più importante dell'errore relativo è il fatto che è sempre \stro
 
     Consideriamo allora i due casi.
     \begin{description}
-        \item[Troncamento] Per il \autoref{lem:lim_sup_abserr} sappiamo che $\abs[\big]{\trun{x} - x} < \beta^{p-t}$. Si ha quindi che \[
+        \item[Troncamento] Per il \Cref{lem:lim_sup_abserr} sappiamo che $\abs[\big]{\trun{x} - x} < \beta^{p-t}$. Si ha quindi che \[
                 \abs*{\eps_x} 
             = \frac{\abs[\big]{\trun{x} - x}}{\abs x} 
             < \frac{\beta^{p-t}}{\beta^{p-1}}
             = \beta^{1-p}.
         \] 
-        \item[Arrotondamento] Per il \autoref{lem:lim_sup_abserr} sappiamo che $\abs[\big]{\arr{x} - x} \leq \frac12\beta^{p-t}$. Si ha quindi che \[
+        \item[Arrotondamento] Per il \Cref{lem:lim_sup_abserr} sappiamo che $\abs[\big]{\arr{x} - x} \leq \frac12\beta^{p-t}$. Si ha quindi che \[
                  \abs*{\eps_x} 
             =    \frac{\abs[\big]{\arr{x} - x}}{\abs x} 
             \leq \frac{\nicefrac12\beta^{p-t}}{\beta^{p-1}}
@@ -133,7 +133,7 @@ La qualità più importante dell'errore relativo è il fatto che è sempre \stro
     \end{description}
 \end{proof}
 
-Osserviamo che il \autoref{th:machine_prec} ci dice che $u$ è un limite superiore \emph{debole} (nel senso che $\abs*{\eps_x} \leq u$ e non $\abs*{\eps_x} < u$), tuttavia almeno nel caso del troncamento si vede dalla dimostrazione che vale anche la disuguaglianza stretta. 
+Osserviamo che il \Cref{th:machine_prec} ci dice che $u$ è un limite superiore \emph{debole} (nel senso che $\abs*{\eps_x} \leq u$ e non $\abs*{\eps_x} < u$), tuttavia almeno nel caso del troncamento si vede dalla dimostrazione che vale anche la disuguaglianza stretta. 
 
-In realtà la disuguaglianza stretta vale anche nel caso dell'arrotondamento: la dimostrazione completa è lasciata all'appendice (in particolare nella \autoref{sez:machine_prec_>}).
+In realtà la disuguaglianza stretta vale anche nel caso dell'arrotondamento: la dimostrazione completa è lasciata all'appendice (in particolare nella \Cref{sez:machine_prec_>}).
  
