@@ -1,0 +1,55 @@
+\section{Preprocessore}
+
+Il preprocessore è un programma invocato prima della compilazione di un file C. Il suo scopo è eseguire \strong{sostituzioni testuali} nel codice, e le \strong{direttive al preprocessore} iniziano tutte con il simbolo \inlinec{#}.
+
+\subsection*{Include files}
+Il primo scopo del preprocessore è quello di includere i cosiddetti \emph{include files} tramite la direttiva \inlinec{#include}: la direttiva \inlinec{#include <file.h>} copia il contenuto del file \inlinec{file.h} all'interno del file corrente.
+
+La forma vista sopra (\inlinec{#include <file.h>}) cerca il file \inlinec{file.h} nelle directory standard, come ad esempio \mintinline{shell-session}{/usr/bin}. Ne esiste anche un'altra (\inlinec{#include "file.h"}) che cerca il file header nella directory corrente inizialmente, e passa alle directory standard solo se non trova l'header nella cartella corrente.
+
+\subsection*{Macro}
+
+La direttiva \inlinec{#define} serve a definire delle macro. Ve ne sono di tre tipi: \begin{itemize}
+    \item \inlinec{#define DEBUG} definisce una macro (cioè un nome) che non ha nessun valore associato. Vedremo l'utilità di questa direttiva parlando di \emph{compilazione condizionale}.
+    \item \inlinec{#define SIZE 10} definisce una macro \inlinec{SIZE} che verrà sostituita dal preprocessore con il valore \inlinec{10}.
+    \item \inlinec{#define PROD(X, Y) (X)*(Y)} definisce una macro con \emph{parametri}: al momento della sostituzione testuale il preprocessore sostituirà ogni occorrenza di \inlinec{PROD(a, b)} con \inlinec{(a)*(b)} \emph{prima di compilare il programma}.
+\end{itemize}
+
+La sostituzione testuale è un procedimento potente, ma anche molto pericoloso: ad esempio se definissimo la macro \inlinec{#define PROD(X, Y) X*Y}, che sembra identica a quella di prima, commetteremmo un errore:
+\begin{minted}{c}
+    x = PROD(3 + 1, 5)
+    // is substituted with
+    x = 3 + 1 * 5   // = 8
+    // and not with
+    x = (3 + 1) * 5 // = 20
+\end{minted}
+
+\subsection*{Compilazione condizionale}
+
+Un uso molto comodo delle direttive al preprocessore è la \emph{compilazione condizionale} tramite le direttive \inlinec{#if}, \inlinec{#ifdef}, \inlinec{#ifndef} e \inlinec{#endif}.
+
+\begin{itemize}
+    \item Il codice tra \inlinec{#if} e \inlinec{#endif} è mantenuto se e solo se la condizione che segue \inlinec{#if} è vera (ovvero è non-zero), altrimenti il preprocessore lo cancella.
+    \item Il codice tra \inlinec{#ifdef} e \inlinec{#endif} è mantenuto se e solo se la macro che segue \inlinec{#ifdef} è definita, altrimenti il preprocessore lo cancella.
+    \item \inlinec{#ifndef} si comporta dualmente a \inlinec{#ifdef}: il codice viene cancellato quando la macro è definita. 
+\end{itemize}
+
+Questo è utile per il debug:
+\begin{minted}{c}
+    #ifdef DEBUG
+        // print statements or other debugging things
+    #endif
+
+    #if defined(DEBUG)
+        // exactly as above
+    #endif
+\end{minted}
+Quindi per debuggare il codice è sufficiente aggiungere \inlinec{#define DEBUG} all'inizio del programma, e cancellarlo quando non si vuole più eseguire il codice di debugging.
+
+\subsection*{Macro predefinite}
+
+Il C definisce alcune macro, come \begin{itemize}
+    \item \inlinec{__FILE__} che ci dà il nome del file;
+    \item \inlinec{__LINE__} che ci dà la linea corrente del file sorgente;
+    \item molte altre.
+\end{itemize}

@@ -1,0 +1,92 @@
+\section{Exec}
+
+Spesso quello che vogliamo fare quando creiamo un nuovo processo non è avere due copie dello stesso processo, ma eseguire un programma diverso. 
+Per far ciò sfruttiamo una sequenza di due funzioni:
+prima usiamo la \inlinec{fork} per creare un nuovo \textsf{PCB} e dopo usiamo una funzione della famiglia delle \inlinec{exec*} per \emph{cambiare eseguibile}.
+
+In generale una qualsiasi funzione della famiglia delle \inlinec{exec*} segue il seguente procedimento:
+\begin{itemize}
+    \item trova il file eseguibile da eseguire;
+    \item usa i contenuti di quel file per sovrascrivere lo spazio di indirizzamento del processo che ha invocato la \inlinec{exec};
+    \item carica nel program counter \textsf{PC} l'indirizzo iniziale.
+\end{itemize}
+
+Le funzioni della famiglia \inlinec{exec*} sono $6$ e sono \inlinec{execl}, \inlinec{execlp}, \inlinec{execle}, \inlinec{execv}, \inlinec{execvp}, \inlinec{execve}.
+
+\paragraph{\inlinec{execl}}
+Vediamo la \inlinec{execl}:
+\begin{minted}{c}
+    #include <unistd.h>
+
+    int execl(
+        char* path, // path to the executable
+        char* arg0, // first arg: name of the file
+        char* arg1, // second arg
+        |\dots|
+        char* argN, // Nth argument
+        (char*) NULL   // the list must be NULL-terminated! 
+    );
+\end{minted}
+
+Se la \inlinec{execl} fallisce ritorna $-1$ e setta \inlinec{errno}, invece se ha successo \strong{non ritorna}: infatti l'eseguibile è cambiato, quindi il vecchio eseguibile non esiste più e non potrebbe vedere il risultato restituito.
+
+La lista di argomenti di lunghezza variabile passata ad \inlinec{execl} deve essere terminata da un valore \inlinec{NULL} e potrà essere usata dal nuovo programma attraverso \inlinec{argv}.
+
+Infine, il \emph{path} specificato come primo argomento della \inlinec{execl} deve essere un file eseguibile e deve avere i permessi per l'esecuzione per l'effective-user-ID del processo che invoca la \inlinec{execl}.
+
+\paragraph{Altre exec}
+Le altre funzioni della famiglia delle \inlinec{exec*} possono essere distinte sulla base delle lettere che seguono "exec":
+\begin{itemize}
+    \item se vogliamo passare gli argomenti al nuovo programma come una lista \inlinec{NULL}-terminated usiamo la lettera \inlinec{l};
+    \item se vogliamo passarli come array di argomenti che rispetta il formato di \inlinec{argv} (ovvero l'ultimo argomento deve essere \inlinec{NULL}) possiamo usare la lettera \inlinec{v};
+    \item se vogliamo che la \inlinec{exec} cerchi il file nelle directory specificate dalla variabile di ambiente \textsf{PATH} possiamo usare la lettera \inlinec{p};
+    \item se vogliamo passare un array di stringhe che descrivono l'ambiente (\emph{environment}) possiamo usare la lettera \inlinec{e}; se non lo facciamo, l'ambiente viene preservato.
+\end{itemize}
+
+In generale il processo rimane lo stesso, quindi diversi attributi (come il \textsf{PID}, \textsf{PPID}, descrittori dei file aperti, ecc...) rimangono invariati. Gli attributi che possono cambiare sono \begin{itemize}
+    \item la gestione dei segnali (la vedremo più avanti);
+    \item effective-user-ID e effective-group-ID, se il nuovo eseguibile li ha settati;
+    \item le funzioni registrate in \inlinec{_atexit};
+    \item i segmenti di memoria condivisa;
+    \item i semafori POSIX (che vengono resettati).
+\end{itemize}
+
+\paragraph{Flush dei buffer}
+Osserviamo che se cambiamo eseguibile con la \inlinec{exec} non stiamo terminando il programma precedente, quindi non c'è il \emph{flush} automatico delle funzioni della libreria \inlinec{stdio.h}. 
+
+Ad esempio il programma \textsf{execl-test.c}:
+\begin{minted}{c}
+    int main () {
+        printf("The quick brown fox jumped over");
+        // calling "echo", the program that prints things
+        execl("/bin/echo", "echo", "the", "lazy", "dogs", (char*)NULL); 
+        // if execl returns then an error occurred!
+        perror("execl");
+        return 1;
+    }
+\end{minted}
+ha un effetto indesiderato:
+\begin{minted}{shell-session}
+    $ ./execl-test
+    the lazy dogs
+    $ 
+\end{minted}
+
+La chiamata a \inlinec{printf} non ha avuto alcun effetto.
+
+Infatti come abbiamo visto la \inlinec{printf} (come molte delle funzioni della libreria \inlinec{stdio.h}) è \emph{bufferizzata}: le stringhe da scrivere non vengono subito inviate allo \inlinec{stdout}, ma vengono memorizzate in un buffer e inviate quando il buffer è pieno oppure quando viene fatto un \emph{flush} del buffer.
+
+Generalmente il \emph{flush} viene fatto ogni volta che un programma termina, ovvero quando chiama la funzione \inlinec{exit}, tuttavia in questo caso a causa dell'\inlinec{execl} la \inlinec{exit} non viene chiamata.
+
+La soluzione è quindi fare un flush manuale tramite la funzione \inlinec{fflush}:
+\begin{minted}{c}
+    int main () {
+        printf("The quick brown fox jumped over");
+        fflush(stdout);
+        
+        execl("/bin/echo", "echo", "the", "lazy", "dogs", (char*)NULL); 
+        // if execl returns then an error occurred!
+        perror("execl");
+        return 1;
+    }
+\end{minted}

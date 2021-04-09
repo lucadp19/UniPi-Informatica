@@ -1,0 +1,45 @@
+\section{Fork}
+
+Per creare un nuovo processo si usa la funzione \inlinec{fork}: essa \strong{duplica} tutto il contenuto del processo corrente (che diventa il padre nel nuovo processo). I due processi hanno quindi due \textsf{PCB} distinti (anche se uguali) e anche due tabelle dei descrittori dei file diverse; tuttavia condividono la tabella dei file aperti e il puntatore alla posizione corrente di ciascun file.
+
+La funzione \inlinec{fork} ha la seguente \emph{signature}:
+\mint{c}{pid_t fork();}
+La \inlinec{fork} ritorna due valori diversi al processo padre e al processo figlio: 
+\begin{itemize}
+    \item al padre ritorna il \textsf{PID} del figlio;
+    \item al figlio ritorna $0$.
+\end{itemize} In questo modo possiamo distinguere tra il processo padre e il processo figlio e sfruttarli per cose diverse.
+
+Se invece la \inlinec{fork} fallisce ritorna $-1$ e setta \inlinec{errno}. 
+
+\begin{minted}{c}
+    #include <unistd.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(){
+        pid_t pid;
+        if( (pid = fork()) == -1){ // fork failed!
+            perror("fork failed, main");
+            exit(EXIT_FAILURE);
+        }
+
+        if(pid == 0){ // child process
+            printf("I'm the child! My PID is %d, whereas my father's is %d.\n", getpid(), getppid());
+            exit(EXIT_SUCCESS);
+        } else {      // father process
+            sleep(5); // sleeps for 5 seconds
+            printf("I'm the father process! My PID is %d, whereas my child's is %d.\n", getpid(), pid);
+        }
+    
+        return 0;
+    }
+\end{minted}
+
+La \inlinec{fork} è un'operazione costosa: 
+infatti l'unica parte dei due \textsf{PCB} che può essere conservata è il segmento \textsf{Text}, che corrisponde al codice, 
+mentre i segmenti \textsf{Data}, \text{Heap} e \textsf{Stack} devono essere duplicati poiché i due processi sono separati.
+
+Nelle versioni moderne di UNIX la \inlinec{fork} viene quindi implementata con un meccanismo \emph{copy-on-write}: la copia dei dati del \textsf{PCB} viene fatta solo quando il figlio cerca di scrivere dei dati (ad esempio una variabile).
+
+Questo meccanismo è molto conveniente poiché nella maggior parte dei casi non vogliamo avere due copie dello stesso processo in esecuzione, ma vogliamo eseguire un altro programma tramite le funzioni \inlinec{exec*} (che vedremo nella prossima sezione).

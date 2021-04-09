@@ -1,0 +1,27 @@
+\section{Funzioni con un numero variabile di argomenti}
+
+Alcune funzioni del C hanno un numero variabile di argomenti: ad esempio la \inlinec{printf} può accettare un singolo argomento (solo una stringa), ma anche $2$, $3$, $\dots$, a seconda di quanti placeholder (come \mintinline{c}{%d}, \mintinline{c}{%s}, eccetera) ci sono.
+
+\begin{minted}{c}
+    char* str = "Mario";
+    int a = 3;
+    int b = 5;
+
+    printf("Ciao!");
+    printf("Ciao %s!", str); // prints "Ciao Mario!"
+    printf("%d + %d = %d", a, b, a + b) // prints "3 + 5 = 8"
+\end{minted}
+
+Per dichiarare funzioni con un numero variabile di argomenti bisogna usare l'\emph{include file} \inlinec{stdarg.h}.
+
+Facciamo un esempio con una funzione che prende un intero \inlinec{count} che rappresenta il numero di argomenti passati alla funzione e fa la somma di tutti gli argomenti passati successivamente.
+
+\inputminted{c}{./c_files/va_sum.c}
+
+In questo programma abbiamo usato diverse funzionalità forniteci da \inlinec{stdarg.h}:
+\begin{itemize}
+    \item il tipo \inlinec{va_list} rappresenta la lista di tutti gli argomenti variabili;
+    \item la macro \inlinec{va_start} che serve ad inizializzare una lista e prende due argomenti: una lista di argomenti variabili (di tipo \inlinec{va_list}) e \strong{l'ultimo argomento non-variabile};
+    \item la macro \inlinec{va_arg} serve a ottenere il prossimo argomento: prende la \inlinec{va_list} e un \strong{tipo}, che deve essere conosciuto a tempo di compilazione;
+    \item la macro \inlinec{va_end} che serve a liberare la memoria usata dalla \inlinec{va_list}.
+\end{itemize}

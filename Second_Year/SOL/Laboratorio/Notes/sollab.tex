@@ -1,0 +1,58 @@
+\documentclass[
+    oneside,
+    10pt,
+    pagestyle=notes,
+    fontstyle=palaeuler,
+    thmstyle=boxedthm,
+    % article
+]{modernth}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp}
+    \usepackage{microtype}
+    \usepackage{minted}
+    % My packages
+
+\usemintedstyle{manni}
+\definecolor{bg}{rgb}{0.97,0.97,0.97}
+\setminted{
+    bgcolor=bg,
+    fontsize=\small,
+    breaklines=true,
+    escapeinside=||,
+    mathescape=true,
+    % frame=single
+}
+\newmintinline[inlinec]{c}{fontsize=\normalsize}
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=figures/]
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Laboratorio di Sistemi Operativi}
+\maketitle
+
+\frontmatter{}
+\tableofcontents
+
+\mainmatter{}
+
+\chapter{Lezione 1}
+\input{lectures/lec_01/varargs}
+
+\chapter{Lezione 2}
+\input{lectures/lec_02/func_pointers}
+\input{lectures/lec_02/void_star}
+\input{lectures/lec_02/reentrant}
+\input{lectures/lec_02/preprocessor}
+
+\chapter{Lezione 6}
+\input{lectures/lec_06/processes}
+\input{lectures/lec_06/forks}
+\input{lectures/lec_06/execs}
+\input{lectures/lec_06/termination}
+\input{lectures/lec_06/wait}
+\end{document}

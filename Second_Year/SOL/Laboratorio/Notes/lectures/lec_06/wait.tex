@@ -1,0 +1,35 @@
+\section{Attesa dei processi figli}
+
+Spesso vogliamo che dopo una \inlinec{fork} il processo padre si metta in pausa e aspetti la terminazione del figlio. La funzione per realizzare questa funzionalità è \inlinec{waitpid}:
+\begin{minted}{c}
+    #include <sys/types.h>
+    #include <sys/wait.h>
+
+    int waitpid(
+        pid_t pid,      // pid of the child, or process group id
+        int* statusp,   // pointer to the status, or NULL
+        int options     // options
+    );
+\end{minted}
+
+La funzione \inlinec{waitpid} fa in modo che il processo corrente si metta in attesa fintanto che il processo con \textsf{PID} \inlinec{pid} non è terminato. In particolare \inlinec{waitpid} restituisce $0$ oppure il \textsf{PID} del processo terminato, mentre se c'è un errore ritorna $-1$ e setta \inlinec{errno}.
+
+Il valore del parametro \inlinec{pid} può essere di diversi tipi, e per ogni tipo si ottiene un comportamento diverso:
+\begin{itemize}
+    \item se \inlinec{pid} $ > 0$ allora il processo corrente attende il figlio con \textsf{PID} \inlinec{pid};
+    \item se \inlinec{pid} $= -1$ attende un qualsiasi figlio (e come valore di ritorno restituisce il \textsf{PID} del figlio che ha cambiato stato);
+    \item se \inlinec{pid} $= 0$ attende un qualsiasi processo figlio nello stesso \emph{process group};
+    \item se \inlinec{pid} $< -1$ attende un qualsiasi processo figlio nel \emph{process group} dato dal \strong{valore assoluto} di \inlinec{pid}.
+\end{itemize}
+
+Il puntatore a \inlinec{status} serve a recuperare lo \emph{status} di uscita, settato dal processo figlio tramite la \inlinec{_exit} o tramite la \inlinec{exit}. Inoltre \inlinec{status} conterrà diverse altre informazioni, recuperabili con delle maschere particolari. Le più importanti sono:
+\begin{itemize}
+    \item \inlinec{WIFEXITED(status)} ritorna \inlinec{true} se il processo figlio è terminato tramite una \inlinec{exit}; 
+    in particolare se vale \inlinec{WIFEXITED(status)}, allora lo stato di uscita si recupera con \inlinec{WEXITSTATUS(status)};
+    \item \inlinec{WIFSIGNALED(status)} ritorna \inlinec{true} se il processo figlio è terminato tramite un segnale; 
+    in particolare se vale \inlinec{WIFSIGNALED(status)} lo stato di uscita si recupera con \inlinec{WTERMSIG(status)}.
+\end{itemize}
+
+Se almeno un figlio è già terminato e il suo stato non è ancora stato letto tramite una \inlinec{wait*}, \inlinec{waitpid} termina subito; in caso contrario mette il processo corrente (il padre) in attesa.
+
+L'ultimo parametro (\inlinec{options}) serve ad aggiungere alcuni flag, come ad esempio \inlinec{WNOHANG}, che permette al processo padre di non mettersi in attesa se non c'è nessuno stato di un figlio subito disponibile. Se si vogliono inserire più flag vanno messi in \emph{or bit-a-bit}.

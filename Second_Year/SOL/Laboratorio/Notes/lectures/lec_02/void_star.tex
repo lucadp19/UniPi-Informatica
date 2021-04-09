@@ -1,0 +1,36 @@
+\section{Puntatori generici}
+
+Tra tutti i tipi di puntatore ne esiste uno particolare, indicato dal C come \inlinec{void*}. Una variabile di tipo \inlinec{void*} è un \emph{puntatore a tipo generico}, nel senso che può contenere un puntatore a qualsiasi tipo.
+
+\begin{minted}{c}
+    void* ptr;
+    int a = 50;
+    char c = 'C';
+
+    // both allowed!
+    ptr = &a;
+    ptr = &c;
+
+    // not allowed!
+    printf("\%c", *ptr);
+    // a void* pointer must be cast before dereferenced!
+    printf("\%c", *(char*)ptr); // prints 'C'
+\end{minted}
+
+Un puntatore di tipo \inlinec{void*} non può essere dereferenziato: siccome non ne conosciamo il tipo non sappiamo quanto grande è l'area di memoria da esso puntata. Bisogna quindi prima convertirlo in un puntatore con un tipo ben definito e poi dereferenziarlo per accedere al contenuto del puntatore.
+
+I puntatori di tipo \inlinec{void*} possono quindi essere usati per creare funzioni e algoritmi che non dipendono dal tipo, degli elementi considerati. Un esempio classico di ciò è la funzione di libreria \inlinec{qsort} che implementa un \emph{quicksort generico}: la firma della funzione è infatti
+\begin{minted}{c}
+    void qsort(
+        void* base,                 // array to sort
+        size_t nmemb,               // number of elements in the array
+        size_t size,                // size of a single element of the array
+        int (*cmp) (void*, void*)   // auxiliary function that compares two elements
+    );
+\end{minted}
+
+La funzione \inlinec{qsort} prende quindi un puntatore \inlinec{void*}, ovvero un array di tipo generico, insieme al numero di elementi che contiene (\inlinec{size_t nmemb}) e alla grandezza in byte di ogni elemento (\inlinec{size_t size}) e ad un \strong{puntatore a funzione} che prende due elementi di tipo generico e restituisce un intero (che, come spiegato dal manuale, deve essere \inlinec{0} se i due elementi sono uguali, un numero positivo se il primo è più grande del secondo e un numero negativo altrimenti).
+
+Possiamo usare la \inlinec{qsort} in questo modo:
+
+\inputminted{c}{./c_files/qsort_exmpl.c}

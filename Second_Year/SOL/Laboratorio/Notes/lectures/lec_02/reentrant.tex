@@ -1,0 +1,63 @@
+\section{Funzioni rientranti}
+
+% \begin{definition}
+%     {Funzione rientrante}{reentrant}
+%     Una funzione si dice \strong{rientrante} se può essere interrotta in un punto e poi ripresa da quel punto senza che questo produca un risultato diverso all'esecuzione senza interruzione.
+% \end{definition}
+
+Ad esempio la seguente funzione non è rientrante:
+\begin{minted}{c}
+    int x = 5;
+
+    int func(){
+        printf("Beginning: x = %d\n", x);
+        x = x+2;
+        printf("End: x = %d\n", x);
+    }
+\end{minted}
+
+Infatti se interrompiamo la funzione dopo l'assegnamento \inlinec{x = x+2} ed eseguiamo qualche altra cosa, il contenuto della variabile globale \inlinec{x} può essere modificato e la funzione non stampa più il numero \inlinec{x+2}.
+
+Una funzione rientrante non può fare uso di variabili globali o statiche.
+
+Nel resto del corso varemo sempre e solo uso di funzioni rientranti, spesso indicate con il suffisso \inlinec{_r}.
+
+\subsection*{Tokenizzazione di stringhe}
+\emph{Tokenizzare} una stringa significa spezzarla ad ogni occorrenza di un determinato carattere. Per far ciò può essere utile usare le funzioni \inlinec{strtok} e la sua corrispondente versione rientrante, \inlinec{strtok_r}.
+
+La versione non rientrante è la seguente:
+\begin{minted}{c}
+    int main(){
+        char string[] = "Hello crazy world";
+        // token represents the single portion of the string
+        char* token = strtok(string, " ");
+                    /*          |     | - -> separator, here it's a space
+                                | - -> string to tokenize
+                    */
+        // keep reading single tokens
+        while(token){
+            printf("%s\n", token);
+            // calling strtok with NULL uses the string tokenized before,
+            // using a hidden global variabile
+            token = strtok(NULL, " ");
+        }
+    }
+\end{minted}
+
+Per renderla rientrante dobbiamo eliminare la variabile globale nascosta: la versione rientrante \inlinec{strtok_r} ha infatti un parametro aggiuntivo, usato nel seguente modo.
+\begin{minted}{c}
+    int main(){
+        char string[] = "Hello crazy world";
+        // save variable, used by strtok_r
+        char* save = NULL;
+        // token represents the single portion of the string
+        char* token = strtok_r(string, " ", &save);
+                    //                        | - -> local state!
+        // keep reading single tokens
+        while(token){
+            printf("%s\n", token);
+            // calling strtok with NULL uses the string tokenized with the state saved in "save"
+            token = strtok(NULL, " ", &save);
+        }
+    }
+\end{minted}

@@ -1,0 +1,65 @@
+\section{Terminazione}
+
+Un processo UNIX può terminare solo in $4$ modi:
+\begin{itemize}
+    \item chiamando \inlinec{exit()};
+    \item chiamando \inlinec{_exit()} (UNIX) oppure \inlinec{_Exit()} (standard C), che sono chiamate di livello più basso rispetto alla \inlinec{exit()};
+    \item ricevendo un segnale (li vedremo in seguito);
+    \item per un crash del sistema (spegnimento forzato del PC, bug dell'OS, ecc).
+\end{itemize}
+
+Le tre funzioni \inlinec{exit()}, \inlinec{_exit()} e \inlinec{_Exit()} sono molto simili, a partire dalla \emph{signature}:
+\begin{minted}{c}
+    #include <unistd.h>
+
+    void _exit(
+        int status  // exit status
+    );
+    
+    void _Exit(
+        int status  // exit status
+    );
+    
+    void exit(
+        int status  // exit status
+    );
+\end{minted}
+
+Nessuna delle $3$ funzioni ha un valore di ritorno, in quanto terminano il processo corrente.
+
+La \inlinec{exit()} fa tutto quello che fa la \inlinec{_exit()}, ma inoltre \begin{itemize}
+    \item chiama la funzione \inlinec{atexit()}, se esiste;
+    \item esegue il flush dei buffer di \textsf{I/O} tramite \inlinec{fflush} e \inlinec{fclose}.
+\end{itemize}
+
+La \inlinec{exit} viene chiamata automaticamente quando il programma termina con \inlinec{return} dal \inlinec{main}.
+
+\paragraph{Funzione \inlinec{atexit()}} La funzione \inlinec{atexit()} serve a \emph{registrare} le azioni da compiere alla chiusura del programma. Ha la seguente \emph{signature}:
+\begin{minted}{c}
+    #include <stdlib.h>
+
+    int atexit(
+        void *function (void); 
+    )
+\end{minted}
+
+Se la \inlinec{atexit} ha successo ritorna $0$, altrimenti ritorna un valore diverso da $0$ ma \strong{NON} setta \inlinec{errno}.
+
+La funzione \inlinec{function} deve essere una funzione che non prende argomenti e non restituisce alcun valore, il cui codice conterrà le operazioni da compiere alla chiusura del programma. Le tipiche operazioni che vengono inserite in questa funzione sono \begin{itemize}
+    \item cancellazione di file temporanei;
+    \item stampa di messaggi sull'esito della computazione;
+    \item \emph{pipes} (le vedremo più avanti);
+    \item eccetera.
+\end{itemize}
+
+Inoltre possiamo registrare più di una funzione, tramite chiamate multiple alla \inlinec{atexit}: alla terminazione del programma le funzioni registrate saranno chiamate in ordine \strong{inverso}.
+
+\paragraph{Funzione \inlinec{_exit()}} 
+La funzione \inlinec{_exit(status)} svolge le seguenti operazioni: \begin{itemize}
+    \item termina il processo;
+    \item chiude tutti i descrittori di file;
+    \item libera lo spazio di indirizzamento;
+    \item invia un segnale \textsf{SEGCHILD} al padre;
+    \item salva il byte meno significativo di \inlinec{status} nella tabella dei processi, in attesa che il padre lo accetti tramite le funzioni \inlinec{wait}/\inlinec{waitpid} (prossima sezione);
+    \item i figli, diventati a questo punto orfani (\emph{orphans}), vengono \emph{adottati} da \textsf{init}, ovvero il loro \textsf{PPID} diventa uguale a $1$. 
+\end{itemize}

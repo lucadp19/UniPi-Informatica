@@ -1,0 +1,49 @@
+\section{Puntatori a funzione}
+
+Il C permette di definire puntatori a diversi tipi di oggetti: puntatori a \inlinec{int}, a \inlinec{char}, puntatori a puntatori, ecc...
+In particolare, consente anche la definizione di \strong{puntatori a funzione}:
+
+\begin{minted}{c}
+    int somma (int a, int b) {
+        return a + b;
+    }
+    /*
+    - - - - > return type
+    |           - - - - -> parameter types
+    |           |    |     */
+    int (*fun) (int, int);
+    fun = somma;
+
+    int a = fun(3, 6); // a <- 9
+\end{minted}
+
+A cosa servono i puntatori a funzione? Dopotutto, il codice precedente poteva essere semplificato usando direttamente \inlinec{somma} invece di \inlinec{fun}.
+
+Un possibile caso d'uso dei puntatori a funzione è nel caso delle cosiddette \emph{funzioni di ordine superiore}, ovvero funzioni che prendono come argomento una funzione. Un classico esempio di funzione di ordine superiore è \inlinec{map}: matematicamente, data una collezione di dati $S$ (che sia un insieme, una lista, un array, ecc...) e una funzione $f$, l'applicazione \inlinec{map(|$f$|, |$S$|)} mi restituisce la collezione $S$ dove ad ogni elemento $x \in S$ sostituisco il numero $f(x)$.
+
+\begin{example}
+    Dato l'insieme $S = \{1, 2, 3, 4\}$ e la funzione $f(x) = 2x + 1$, il risultato di \inlinec{map(|$f$|, |$s$|)} è $\{3, 5, 7, 9\}$: ho \emph{mappato} la funzione $f$ su tutti gli elementi della collezione $S$.
+\end{example}
+
+Una possibile implementazione della \inlinec{map} (di funzioni \inlinec{int |$\to$| int} su array di interi) in C è la seguente.
+
+\begin{minted}{c}
+        /*    fun has type 
+                int -> int
+            ------------------  */
+    void map(int (*fun)(int), int arr[], size_t len){
+        for(int i = 0; i < len; i++)
+            arr[i] = fun(arr[i]);
+}
+\end{minted}
+
+Dato che i tipi di puntatori a funzione possono essere poco chiari è possibile definire degli \emph{alias} tramite la \inlinec{typedef}:
+\begin{minted}{c}
+    // defines a new type, called myFuncType
+    typedef int (*myFuncType)(int);
+    // now we can define map like this
+    void map(myFunctType fun, int arr[], size_t len){
+        for(int i = 0; i < len; i++)
+            arr[i] = fun(arr[i]);
+    }
+\end{minted}

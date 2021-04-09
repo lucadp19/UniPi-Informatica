@@ -1,0 +1,17 @@
+\section{Processi}
+
+Come visto nel modulo di Teoria, ogni volta che un programma viene eseguito il Sistema Operativo crea un \strong{processo}, cioè una struttura dati contenente i dati necessari all'esecuzione di quel determinato programma. 
+
+I dati di un processo, contenuti nel \textsf{PCB} (\emph{Process Control Block}), sono organizzati nel kernel dell'OS in una tabella, chiamata \emph{Process Table}: la posizione di un processo in questa tabella è il suo identificativo, chiamato \textsf{PID} (\emph{Process Identifier}).
+
+Inoltre i processi sono organizzati in una struttura gerarchica: ogni processo ha un processo \strong{padre} e può avere dei processi figli. Il primo processo, cioè il processo che non ha padre, si chiama \textsf{init}.
+
+Per ottenere il \textsf{PID} di un processo o del processo padre in C si possono usare le funzioni \inlinec{getpid()} e \inlinec{getppid()}:
+
+\begin{minted}{c}
+    #include <unistd.h>
+
+    // pid_t is a type alias for unsigned int
+    pid_t gitpid(); // returns process ID (no error return)
+    pid_t getppid(); // returns parent process ID (no error return)
+\end{minted}
