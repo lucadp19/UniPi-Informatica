@@ -1,16 +1,32 @@
-\documentclass[italian,oneside,headinclude,10pt]{scrbook}
+\documentclass[
+    oneside,
+    10pt,
+    pagestyle=notes,
+    fontstyle=palaeuler,
+    thmstyle=boxedthm
+]{modernth}
     \usepackage[utf8]{inputenc}
     \usepackage[italian]{babel}
     \usepackage[T1]{fontenc}
     \usepackage{textcomp}
     \usepackage{microtype}
     % My packages
-    \usepackage[newthmsty]{base-preamble}
+    % \usepackage{boxedthm}
     \usepackage{numerical}
     \usepackage{algebra}
     \usepackage{analysis}
-
-    \geometry{margin=1.3in}
+    \usepackage{nicematrix}
+    \usepackage{minted}
+    
+\usemintedstyle{manni}
+\setminted{
+    % bgcolor=lightgray,
+    fontsize=\small,
+    breaklines=true,
+    % escapeinside=||,
+    mathescape=true,
+    frame=single
+}
 
 \setcounter{MaxMatrixCols}{20}
 
@@ -31,13 +47,18 @@
 }
 \makeatother
 
+\newcommand{\smallvdots}{\vphantom{\int^0}\smash[t]{\vdots}}
+
 \begin{document}
 
 \author{Luca De Paulis}
 \title{Calcolo Numerico}
 \maketitle
 
+\frontmatter{}
 \tableofcontents
+
+\mainmatter{}
 
 \chapter{Aritmetica di macchina}
 \input{chapters/machine/float}
@@ -50,6 +71,8 @@
 \input{chapters/norms/matrixnorm}
 \input{chapters/norms/linsys}
 \input{chapters/eigenval/eigenval}
+\input{chapters/systems/LU-fact}
+\input{chapters/systems/gauss.tex}
 
 \appendix
 \chapter{Teoremi secondari}

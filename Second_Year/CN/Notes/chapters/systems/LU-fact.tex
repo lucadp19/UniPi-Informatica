@@ -1,0 +1,206 @@
+\section{Fattorizzazione LU}
+
+Abbiamo già iniziato a parlare di sistemi lineari e della loro risoluzione precedentemente. Dopo averne studiato il condizionamento studiamo degli algoritmi per trovare efficientemente le soluzioni di sistemi della forma $A\vec x = \vec b$, dove $A$ è una matrice, $\vec b$ è il vettore dei termini noti e $\vec x$ è il vettore delle incognite.
+
+\subsection{Risoluzione di un sistema triangolare}
+
+Se la matrice $A$ è triangolare superiore è particolarmente semplice risolvere il sistema, in quanto possiamo usare la tecnica di \strong{sostituzione all'indietro}.
+
+\[
+    \begin{pmatrix}
+        a_{11}  &\dots  &a_{1n} \\
+                &\ddots &\vdots \\
+                &       &a_{nn}
+    \end{pmatrix} \begin{pmatrix}
+        x_1 \\ \vdots \\ x_n
+    \end{pmatrix} = \begin{pmatrix}
+        b_1 \\ \vdots \\ b_n
+    \end{pmatrix}
+\]
+
+Infatti l'ultima riga ci fornisce l'equazione $a_{nn}x_n = b_n$, da cui ricaviamo $x_n = \dfrac{b_n}{a_{nn}}$ (a patto che $a_{nn}$ sia diverso da $0$); usando questo risultato possiamo risolvere l'equazione della penultima riga, cioè \[
+    a_{n-1, n-1}x_{n-1}+a_{n-1,n}x_n = b_{n-1},
+\] che diventa \[
+    x_{n-1} = \frac{b_{n-1} - a_{n-1,n}x_n}{a_{n-1,n-1}}.
+\]
+
+In generale, tramite questo metodo, la formula per calcolare $x_k$ è \[
+    x_k = \frac{\displaystyle b_k - \sum_{j=k+1}^n a_{kj}x_j}{a_{kk}}.
+\]
+
+Un programma MatLab che esprime questo algoritmo è il seguente:
+\begin{minted}{MatLab}
+    % given an upper triangular matrix A of order n
+    % and a n-dimensional vector b
+    % it calculates the solution of the system |$A\vec x = \vec b$|
+    function x = upp_triang_solve(A, b)
+        x(n) = b(n) / A(n, n)
+        for k = n-1 : -1 : 1
+            s = 0
+            for j = k+1 : n
+                s = s + A(k, j)*x(j)
+            end
+            x(k) = (b(k) - s) / A(k, k)
+        end
+    end
+\end{minted}
+
+Una veloce analisi del costo computazionale dell'algoritmo ci dice che esso ha costo, al caso pessimo, di $\OO(n^2)$: infatti il ciclo interno ha costo $\OO(n - k)$, e viene ripetuto per $k = 1, \dots, n-1$, da cui viene il costo \[
+    \sum_{k=1}^{n-1} \OO(n-k) = \OO(n^2).
+\] Questo costo non è migliorabile: infatti la matrice ha $\OO(n^2)$ elementi, da cui non è possibile diminuire il numero di operazioni fatte.
+
+Se la matrice è triangolare inferiore possiamo usare la stessa tecnica ma partendo dalla prima riga, tramite la \strong{sostituzione all'avanti}.
+
+\subsection{Mosse di Gauss e fattorizzazione LU}
+
+Se la matrice $A$ non è triangolare il metodo più usato per risolvere il sistema $A\vec x = \vec b$ è l'\strong{algoritmo di Gauss}, che sfrutta le cosiddette mosse di Gauss.
+
+\begin{definition}
+    {Mosse di Gauss}{mosse_gauss}
+    Sia $A \in \Mat{\F, n, n}$ una matrice. Una \strong{mossa di Gauss per riga} è un'operazione sulle righe della matrice con una delle seguenti forme:
+    \begin{enumerate}[(1)]
+        \item scambiare la riga $i$ con la riga $j$;
+        \item moltiplicare la riga $i$ per un coefficiente $\alpha \in \F$, $\alpha \neq 0$;
+        \item sottrarre alla riga $i$ la riga $j$ moltiplicata per un coefficiente $\alpha$.   
+    \end{enumerate} 
+\end{definition}
+
+La strategia è quindi quella di applicare ripetutamente le mosse di Gauss (secondo il cosiddetto \strong{algoritmo di Gauss}) per ridurre la matrice $A$ ad una matrice $U$ triangolare superiore: \[
+    [A | \vec b] = [A^{(0)} | \vec b^{(0)}] \leadsto [A^{(1)} | \vec b^{(1)}] \leadsto \dots \leadsto [A^{(n-1)} | \vec b^{(n-1)}] = [U | \vec y].
+\]
+
+Mostreremo nella prossima sezione che in alcuni casi particolari possiamo descrivere una singola mossa di Gauss come un prodotto tra matrici \[
+    A^{(k+1)} = E^{(k+1)}A^{(k)}
+\] dove $E^{(k+1)}$ sarà una matrice invertibile e triangolare inferiore.
+
+In tal caso segue quindi che \[
+    U = A^{(n-1)} = E^{(n-1)}A^{(n-2)} = E^{(n-1)}E^{(n-2)}A^{(n-3)} = \dots = E^{(n-1)}\cdots E^{(1)}A.
+\] Siccome abbiamo detto che tutte le matrici $E^{(i)}$ sono invertibili anche il loro prodotto lo sarà: chiamiamo dunque \[
+    L\inv \deq E^{(n-1)}\cdots E^{(1)},
+\] da cui segue che $U = L\inv A$, ovvero $A = LU$.
+
+Il sistema $A\vec x = \vec b$ diventa quindi $LU\vec x = \vec b$, che può essere risolto come \[
+    \left\{ 
+        \;
+        \begin{aligned}
+            &L\vec y = \vec b \\
+            &U\vec x = \vec y
+        \end{aligned}
+    \right.
+\] 
+Sappiamo che $U$ è triangolare superiore, dunque possiamo risolvere il sistema $U\vec x = \vec y$ usando i metodi studiati precedentemente.
+Allo stesso modo, dato che $L$ è data dal prodotto di matrici triangolari inferiori anch'essa è triangolare inferiore, dunque possiamo risolvere anche il sistema $L\vec y = \vec b$ efficientemente, trovando quindi una soluzione al sistema originale.
+% Tuttavia per ricavare $\vec y$ dobbiamo risolvere il primo sistema: mostrando che anche $L$ è triangolare riusciremmo a trovare molto velocemente una soluzione alla prima equazione, e quindi all'intero sistema.
+
+Siamo quindi interessati a studiare in che modo e in quali casi si può scrivere $A$ come prodotto di due matrici, di cui una è triangolare inferiore ($L$, da \emph{lower triangular}) e una è triangolare superiore ($U$, da \emph{upper triangular}). Diamo dunque la seguente definizione.
+
+\begin{definition}
+    {Fattorizzazione LU}{LU-fact}
+    Sia $A \in \Mat{\F, n, n}$ una matrice. Si dice che $A$ è \strong{fattorizzabile LU} se esistono due matrici $L, U \in \Mat{\F, n, n}$ tali che \begin{enumerate}[(1)]
+        \item $L$ è triangolare inferiore ed ha tutti $1$ sulla diagonale principale;
+        \item $U$ è triangolare superiore;
+        \item vale che \[
+            A = LU.
+        \]
+    \end{enumerate} 
+\end{definition}
+
+% Il nostro scopo sarà quindi quello di trovare condizioni per cui una matrice $A$ può essere fattorizzata in modo LU, fattorizzarla e risolvere il sistema separando la parte triangolare superiore e quella triangolare inferiore.
+
+Il seguente Teorema ci dà delle condizioni sufficienti sulla fattorizzabilità.
+
+\begin{theorem}
+    {Esistenza e unicità della fattorizzazione LU}{exist-unique-LU-fact}
+    Sia $A \in \Mat{\F, n, n}$. Se le sottomatrici principali di testa di $A$ di ordine $k$, con $k = 1, \dots, n-1$, sono invertibili, allora $A$ è fattorizzabile LU e tale fattorizzazione è unica.  
+\end{theorem}
+\begin{proof}
+    Dimostriamo la tesi per induzione su $n$.
+    \newthought{Caso base} Supponiamo $n = 1$. Allora la matrice $A = \begin{bmatrix}
+        a_{11}
+    \end{bmatrix}$ non ha sottomatrici, dunque la condizione è vacuamente verificata. Inoltre \begin{itemize}
+        \item una possibile fattorizzazione di $A$ è data da \[
+            L = \begin{bmatrix} 1 \end{bmatrix}, \qquad
+            U = \begin{bmatrix} a_{11} \end{bmatrix}
+        \]
+        \item tale fattorizzazione è unica: infatti $L$ deve essere la matrice con un singolo $1$ poiché sulla diagonale non può avere valori diversi, da cui segue che $U = A$.
+    \end{itemize}
+    La tesi è quindi verificata nel caso base.
+
+    \newthought{Passo induttivo} Supponiamo che la tesi sia vera per matrici di ordine $m$, per ogni $m < n$, e mostriamola per $n$.
+
+    Supponiamo quindi che $A$ abbia sottomatrici di testa non singolari. Per mostrare che $A$ sia fattorizzabile LU dobbiamo trovare due matrici $L, U$ che rispettano le condizioni sulla fattorizzazione. Scrivendole a blocchi, si ha \[
+        % A = \left( \begin{array}{@{}c|c@{}}
+        %     A_{n-1} & \vec z \\\hline
+        %     \vec x\trans & a_{nn}
+        % \end{array}\right)
+        % A = \begin{array}{@{}c@{}c@{}c|c@{}}
+        %     \hphantom{a_{ii}} &             &\hphantom{a_{ii}}   & \\
+        %     \hphantom{a_{ii}} &A_{n-1}      &\hphantom{a_{ii}}   &\vec z \\
+        %     \hphantom{a_{ii}} &             &\hphantom{a_{ii}}   & \\ 
+        %         \hline \rule{0pt}{1.1\normalbaselineskip}
+        %     \hphantom{a_{ii}} &\vec x\trans &\hphantom{a_{ii}}   &a_{nn}
+        % \end{array}
+        A = 
+        % \begin{pNiceArray}{ccc|c}
+        %     \Block{3-3}<\Large>{A_{n-1}} &             &   & \\
+        %      &      &   &\vec z \\
+        %      &             &   & \\ 
+        %         \hline \rule{0pt}{1.1\normalbaselineskip}
+        %      &\vec x\trans &   &a_{nn}
+        % \end{pNiceArray}
+        \left( \begin{array}{@{}ccc|c}
+            \; &             &\;   & \\
+            \; &A_{n-1}      &\;   &\vec z \\
+            \; &             &\;   & \\ 
+                \hline \rule{0pt}{1.1\normalbaselineskip}
+            \; &\vec x\trans &\;   &a_{nn}\;
+        \end{array}\right)
+        =
+        \left( \begin{array}{@{}ccc|c}
+            \; &             &\;   & \\
+            \; &\widehat{L}  &\;   &\vec 0 \\
+            \; &             &\;   & \\ 
+                \hline \rule{0pt}{1.1\normalbaselineskip}
+            \; &\vec w\trans &\;   &1\;
+        \end{array}\right)
+        \left( \begin{array}{@{}ccc|c}
+            \; &             &\;   & \\
+            \; &\widehat{U}  &\;   &\vec y \\
+            \; &             &\;   & \\ 
+                \hline \rule{0pt}{1.1\normalbaselineskip}
+            \; &\vec 0\trans &\;   &\beta\;
+        \end{array}\right)
+    \] dove $A_{n-1}, \vec z, \vec x\trans, a_{nn}$ sono noti, mentre $\widehat{L}, \widehat{U}, \vec w\trans, \vec y$ e $\beta$ sono incognite.  
+
+    Svolgendo il prodotto a blocchi devono quindi valere le seguenti condizioni: \[
+        \left\{
+            \!\!\!\!\!\!\!
+            \begin{aligned}
+                &&A_{n-1} &= \widehat{L}\widehat{U} + \vec 0\vec 0\trans = \widehat{L}\widehat{U} \\
+                &&\vec z &= \widehat{L}\vec y + \beta\vec 0 = \widehat{L}\vec y\\
+                &&\vec x\trans &= \vec w\trans \widehat{U} + 1\cdot \vec 0\trans = \vec w\trans \widehat{U}\\
+                &&a_{nn} &= \vec w\trans \vec y + \beta.
+            \end{aligned}
+        \right.
+    \]
+
+    \begin{enumerate}[(1)]
+        \item Osserviamo che la prima equazione corrisponde alla fattorizzazione LU di $A_{n-1}$. 
+        Siccome $A_{n-1}$ è la sottomatrice di testa di $A$ di ordine $n-1$ le sue sottomatrici di testa sono uguali alle sottomatrici di testa di $A$, dunque sono invertibili per ipotesi.   
+
+        Per l'ipotesi induttiva segue quindi che la fattorizzazione LU di $A_{n-1}$ esiste ed è unica, dunque $\widehat{L}, \widehat{U}$ esistono e sono uniche.
+        \item Siccome la matrice $\widehat{L}$ è triangolare inferiore segue che il suo determinante è il prodotto degli elementi della diagonale, ovvero $\det \widehat{L} = 1$. Segue quindi che il sistema $\widehat{L}\vec y = \vec z$ ammette una e una sola soluzione, dunque $\vec y$ è univocamente determinato.  
+        \item Applicando l'operatore di trasposizione ad entrambi i membri dell'equazione si ottiene il sistema equivalente \[
+            \widehat{U}\trans \vec w = \vec x.
+        \] La matrice $\widehat{U}\trans$ è invertibile: infatti $A_{n-1} = \widehat{L}\widehat{U}$ e $\widehat{L}$ invertibile implica che $\widehat{U} = \widehat{L}\inv A_{n-1}$. Per il Teorema di Binet segue quindi che \[
+            \det \widehat{U} = \det \widehat{L}\inv \cdot \det A_{n-1}.
+        \] $\widehat{L}\inv$ è certamente invertibile, mentre $A_{n-1}$ è invertibile in quanto è la sottomatrice di testa di $A$ di ordine $n-1$, e per ipotesi tutte le sottomatrici di testa di $A$ sono invertibili.
+
+        Segue quindi che $\widehat{U}$ è invertibile, da cui anche $\widehat{U}\trans$ è invertibile, dunque il vettore $\vec w$ esiste ed è unico.
+        \item L'ultima equazione è equivalente a \[
+            \beta = a_{nn} - \vec w\trans\vec y.
+        \] Abbiamo dimostrato che $\vec w$ e $\vec y$ esistono e sono unici, dunque anche $\beta$ esiste ed è univocamente determinato.
+    \end{enumerate}
+
+    Segue quindi che la matrice $A$ è fattorizzabile LU, da cui la tesi.
+\end{proof}

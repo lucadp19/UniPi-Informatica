@@ -1,0 +1,351 @@
+\section{Algoritmo di Gauss}
+
+Durante lo studio della fattorizzazione LU abbiamo fatto l'ipotesi che, in alcune condizioni, ogni mossa di Gauss può essere rappresentata dalla moltiplicazione a sinistra per una qualche matrice invertibile e triangolare inferiore.
+
+Vogliamo ora dare una formalizzazione dell'algoritmo di Gauss che ci spiega quali sono queste matrici, come sono fatte, perché funzionano e in quali condizioni esistono.
+
+Ricordiamo che l'algoritmo di Gauss per ridurre a scalini (cioè ad una matrice triangolare superiore) funziona così:
+\begin{enumerate}[1.]
+    \item sia $A \in \Mat{\R, n, n}$ una matrice invertibile, poniamo $k \deq 1$; 
+    \item consideriamo l'elemento in posizione $(k, k)$: se è nullo scambiamo la riga $k$ con una riga successiva;
+    \item per ogni riga $i$ successiva alla $k$-esima, sottraiamo da $R_i$ la riga $R_k$ moltiplicata per $\frac{a_{ik}}{a_{kk}}$: in questo modo annulliamo tutti gli elementi della colonna $k$-esima che sono dopo la riga $k$;
+    \item poniamo $k \deq k+1$ e torniamo al passo \texttt{2.} 
+\end{enumerate}
+
+Definiamo ora il tipo di matrici che sfrutteremo per trasformare questo calcolo sulle righe in un'operazione di prodotto matriciale.
+
+\begin{definition}
+    {Matrice elementare di Gauss}{matr_elem_Gauss}
+    Sia $E \in \Mat{\R, n, n}$. $E$ si dice \strong{matrice elementare di Gauss} se esistono $k \in \N$, $\vec v \in \R^n$ tali che 
+    \begin{enumerate}
+        \item $\vec v$ è nullo nelle prime $k$ posizioni, ovvero \[
+            v_1 = \dots = v_k = 0,
+        \]
+        \item si ha \[
+            E = I_n - \vec v\vec{e}\trans_k,
+        \] dove $\vec{e}_k$ è il $k$-esimo vettore della base canonica di $\R^n$. 
+    \end{enumerate}  
+\end{definition}
+
+\begin{example}
+    Se $k = 2$ ad esempio otteniamo \begin{align*}
+        E &= I_n - \vec v\vec{e}\trans_2 \\[1em]
+        &= I_n - \begin{psmallmatrix}
+            0 \\ 0 \\ v_3 \\ \vdots \\ v_k
+        \end{psmallmatrix}\begin{psmallmatrix}
+            0 & 1 & 0 & \dots & 0
+        \end{psmallmatrix} \\
+        &= 
+        % \begin{psmallmatrix}
+        %     1 &  &  &       &\\
+        %       &1 &  &       &\\
+        %       &  &1 &       &\\
+        %       &  &  &\ddots &\\
+        %       &  &  &       &1
+        % \end{psmallmatrix} 
+        \begin{bmatrix}
+            1 & &\\
+              &\ddots &\\
+              & &1
+        \end{bmatrix}
+        - \begin{bmatrix}
+            0 &         &       &       &\\
+              & 0       &       &       &\\
+              & -v_3    &0      &       &\\
+              & \vdots  &       &\ddots &\\
+              & -v_n    &       &       &0
+        \end{bmatrix} \\
+        &= \begin{bmatrix}
+            1 &         &       &       &\\
+              & 1       &       &       &\\
+              & -v_3    &1      &       &\\
+              & \vdots  &       &\ddots &\\
+              & -v_n    &       &       &1
+        \end{bmatrix}.
+    \end{align*}
+\end{example}
+
+\subsubsection{Proprietà delle matrici elementari di Gauss} 
+Le matrici elementari di Gauss hanno diverse proprietà che ci torneranno utili nel dimostrare che effettivamente modellano l'algoritmo di Gauss.
+
+\begin{proposition}
+    {Proprietà delle Matrici Elementari di Gauss}{matr_elem_Gauss_prop}
+    \begin{enumerate}[(1)]
+        \item Le matrici elementari di Gauss sono triangolari inferiori, e gli elementi della diagonale sono tutti uguali ad $1$.
+        \item Le matrici elementari di Gauss sono invertibili. Inoltre, se $E = I_n - \vec v\vec{e}\trans_k$ è una matrice elementare di Gauss, allora la sua inversa è ancora una matrice elementare di Gauss, data da \[
+            E\inv = I_n + \vec v\vec e\trans_k.
+        \]
+        \item Dato $x \in \R^n$ con $x_k \neq 0$ esiste una matrice elementare di Gauss $E$ tale che \[
+            E\vec x = (x_1, \dots, x_k, 0, \dots, 0)\trans.
+        \] La matrice è della forma $E = I_n - \vec v\vec e\trans_k$, dove \[
+            \vec v = \parens*{0, \dots, 0, \frac{x_{k+1}}{x_k}, \dots, \frac{x_n}{x_k}}\trans.
+        \]
+        \item Siano $E_k = I_n - \vec v\vec e\trans_k$, $E_h = I_n - \vec w\vec e_h\trans$ due matrici elementari di Gauss, con $h > k$. Allora \[
+            E_kE_h = I_n - \vec v\vec e_k\trans - \vec w\vec e_h\trans.
+        \]
+        \item Sia $\vec y \in \R^n$, $E_k$ una matrice elementare di Gauss. Allora il calcolo di $E_k\vec y$ ha un costo computazionale di $\OO(n - k)$ flops (\emph{floating point operations}). 
+    \end{enumerate}
+\end{proposition}
+
+Dimostriamo separatamente le varie proprietà.
+
+\begin{proof}[Dimostrazione della Proprietà (1)]
+    È sufficiente dimostrare che $\vec v\vec e_k\trans$ sia triangolare inferiore con gli zeri sulla diagonale, poiché da questo segue che $E = I_n - \vec v\vec e_k\trans$ è triangolare inferiore con $1$ sulla diagonale. 
+    
+    Siano quindi $i, j \in \N$ con $i \leq j \leq n$ due indici e mostriamo che $e_{ij}$, ovvero l'elemento della matrice $E$ in posizione $(i, j)$ (che osserviamo essere un elemento sulla diagonale o sopra la diagonale, in quanto abbiamo richiesto che $j \geq i$) è uguale a $0$.
+
+    Per definizione di prodotto tra matrici si ha che \[
+        e_{ij} = v_i \cdot \delta_{jk}
+    \] dove \[
+        \delta_{jk} \deq \begin{cases}
+            1, &\text{se } j = k \\
+            0, &\text{se } j \neq k 
+        \end{cases}
+    \] è l'elemento di posizione $j$-esima del vettore $\vec e_k$.
+
+    Consideriamo due casi: \begin{itemize}
+        \item se $i \leq k$ allora $v_i = 0$ per definizione di matrice elementare di Gauss, dunque $e_{ij} = 0$;
+        \item se $i > k$ allora $j \geq i > k$, dunque $\delta_{jk} = 0$ (poiché $j$ è strettamente maggiore di $k$), dunque $e_{ij} = 0$.   
+    \end{itemize}
+
+    Segue quindi la tesi.
+\end{proof}
+\begin{proof}[Dimostrazione della Proprietà (2)]
+    Dalla proprietà (1) segue che il determinante di una matrice elementare è il prodotto degli elementi sulla diagonale poiché è triangolare inferiore, cioè è $1$ e dunque le matrici elementari di Gauss sono invertibili.
+    
+    Mostriamo ora che l'inversa di $E = I_n - \vec v\vec e_k\trans$ è effettivamente $E\inv = I_n + \vec v\vec e_k\trans$.
+    \begin{align*}
+        EE\inv &= (I_n - \vec v\vec e_k\trans)(I_n + \vec v\vec e_k\trans) \\
+        &= I_n + \vec v\vec e_k\trans - \vec v\vec e_k\trans - \vec v\vec e_k\trans\vec v\vec e_k\trans \\
+        &= I_n - \vec v\vec e_k\trans\vec v\vec e_k\trans.
+    \end{align*}
+
+    Per mostrare che $EE\inv$ è l'identità basta quindi mostrare che $\vec v\vec e_k\trans\vec v\vec e_k\trans$ è la matrice nulla. Osserviamo innanzitutto che per associatività del prodotto tra matrici \[
+        \vec v\vec e_k\trans\vec v\vec e_k\trans = \vec v(\vec e_k\trans\vec v)\vec e_k\trans
+    \] e il termine tra parentesi è uno scalare, per cui commuta con il prodotto tra matrici, ottenendo \[
+        (\vec e_k\trans\vec v) \cdot \vec v\vec e_k\trans.
+    \]
+
+    Per definizione di prodotto tra vettori si ha che \[
+        \vec e_k\trans\vec v = \sum_{i=1}^n \delta_{ik}v_i.
+    \] Distinguiamo ora due casi:
+    \begin{itemize}
+        \item quando $i \neq k$ si ha che $\delta_{ik} = 0$, dunque $\delta_{ik}v_i = 0$;
+        \item quando $i = k$ si ha che $v_i = 0$ (poiché $\vec v$ è nullo nelle prime $k$ posizioni), dunque $\delta_{ik}v_i = 0$.    
+    \end{itemize}
+
+    Segue quindi che tutti i termini della somma sono nulli, da cui $\vec e_k\trans\vec v = 0$, dunque $EE\inv = I_n$ come volevamo.
+\end{proof}
+
+\begin{proof}
+    [Dimostrazione della Proprietà (3)]
+    \label{proof:prop_3_Gauss}
+    Poniamo $\vec v = (0, \dots, 0, v_{k+1}, \dots, v_n)$ e dimostriamo che per ogni $i > k$ si ha che \[
+        v_i = \frac{x_i}{x_k}.
+    \] Per definizione di matrice elementare di Gauss si ha che \[
+        E\vec x = \begin{bNiceMatrix}[columns-width = 0.4cm]
+            1 &         &         &  & &\\
+              &\Ddots   &         &  & &\\
+              &         &1         &  & &\\
+              &         &-v_{k+1} & & &\\
+              &         &\Vdots   &  & &\\
+              &         &-v_n     &  &       &1
+            % \CodeAfter \line[shorten=6pt]{3-3}{4-4}
+            \CodeAfter \line{3-3}{6-6}
+        \end{bNiceMatrix} \begin{pmatrix}
+            x_1 \\ \smallvdots \\ x_{k} \\ x_{k+1} \\ \smallvdots \\ x_n 
+        \end{pmatrix} \stackrel{!}{=} \begin{pmatrix}
+            x_1 \\ \smallvdots \\ x_{k} \\ 0 \\ \smallvdots \\ 0 
+        \end{pmatrix}.
+    \]
+    Considerando questo prodotto tra matrici come un sistema lineare (le cui incognite però sono i $v_i$), le prime $k$ righe corrispondono alle equazioni \[
+        1 \cdot x_i = x_i,
+    \] che sono banalmente verificate.
+
+    Sia quindi $i > k$. L'equazione codificata dalla riga $i$-esima è dunque \[
+        -v_ix_k + 1\cdot x_i = 0,
+    \] da cui ricaviamo che \[
+        v_i = \frac{x_i}{x_k},
+    \] come volevamo.
+\end{proof}
+
+% \begin{proof}
+%     [Dimostrazione della Proprietà (4)]
+% \end{proof}
+
+\begin{proof}
+    [Dimostrazione della Proprietà (5)]
+    Sia $\vec z \deq E_k \vec y$. Allora \[
+        \vec z = (I_n - \vec v \vec e_k\trans)\cdot \vec y = \vec y - \vec v \vec e_k\trans \vec y = \vec y - y_k \vec v,
+    \] dove $y_k$ è la $k$-esima coordinata del vettore $\vec y$, e l'ultima uguaglianza viene dal fatto che il prodotto del trasposto del $k$-esimo vettore della base canonica (cioè $\vec e_k\trans$) con un qualsiasi altro vettore $\vec w \in \R^n$ dà come risultato la $k$-esima coordinata di $\vec w$.
+    
+    Ma allora \[
+        z_i = \begin{cases}
+            y_i, &\text{se } i \leq k \\
+            y_i - y_kv_i, &\text{se } i > k.
+        \end{cases} 
+    \] Per calcolare la coordinata $i$-esima (con $i > k$) di $\vec z$ abbiamo quindi bisogno di $2$ operazioni floating point (un prodotto e una differenza) e le coordinate di indice maggiore di $k$ sono $n-k$, dunque in totale abbiamo bisogno di un numero di operazioni nell'ordine di $\OO(n - k)$. 
+\end{proof}
+
+\subsection{Algoritmo di Gauss tramite matrici elementari}
+
+Possiamo ora dimostrare che l'algoritmo di Gauss può essere espresso come una sequenza di moltiplicazioni a sinistra per delle matrici elementari di Gauss.
+
+Sia innanzitutto $A \in \Mat{\R, n, n}$ una matrice e definiamo $A^{(k)}$ come la matrice ottenuta al $k$-esimo passo dell'algoritmo di Gauss (in particolare quindi $A = A^{(0)}$).
+
+Dato che ad ogni passo azzeriamo tutti gli elementi della matrice sotto la diagonale, la matrice $A^{(k-1)}$ sarà della forma \[
+    A^{(k-1)} = \begin{bNiceMatrix}
+        a_{11}^{(k-1)} & &  &\Block{4-3}<\HUGE>{\ast}&&&\\
+        &\Ddots & &&&&\\
+        & &a_{k-1, k-1}^{(k-1)} & &&&\\
+        & & &a_{kk}^{(k-1)} & &&\\
+        \Block{3-3}<\HUGE>{0}& & &a_{k+1,k}^{(k-1)} &\Ddots & &\\
+        & & &\Vdots &\Block{2-2}<\Huge>{\ast} & & \\
+        & & &a_{nk}^{(k-1)} & &\hphantom{a_{nn}^{(k-1)}} &a_{nn}^{(k-1)}
+    \end{bNiceMatrix}
+\] dove l'area contrassegnata da $0$ contiene tutti zeri, mentre le aree contrassegnate da $\ast$ contengono gli altri elementi della matrice, che possono essere uguali o diversi da $0$. 
+
+Il nostro scopo è ottenere la matrice $A^{(k)}$, in cui sono azzerati anche tutti gli elementi della colonna $k$-esima che si trovano al di sotto dell'elemento della diagonale (ovvero di $a_{kk}$).
+
+Per far ciò sfruttiamo la Proprietà (3): supponendo che $a_{kk}^{(k-1)} \neq 0$ possiamo considerare la matrice elementare di Gauss \[
+    E_k \deq I_n - \vec m^{(k)}\vec e_k\trans,
+\] dove \[
+    m_i^{(k)} = \begin{cases}
+        0, &\text{se } i \leq k\\[1em]
+        \displaystyle \frac{a_{ik}^{(k-1)}}{a_{kk}^{(k-1)}}, &\text{se } i > k.
+    \end{cases}
+\] Tale matrice elementare (per la proprietà (3)) annulla tutti i valori sotto $a_{kk}^{(k-1)}$. 
+
+Consideriamo allora il prodotto $E_kA^{(k-1)}$: se $\vec A_1^{(k-1)}, \dots, \vec A_n^{(k-1)}$ sono le colonne di $A^{(k-1)}$ si ha che  
+\begin{align*}
+    E_kA^{(k-1)} &= E_k \cdot \begin{bNiceMatrix}[vlines]
+        \vec A_1^{(k-1)} & \dots & \vec A_k^{(k-1)} & \dots & \vec A_n^{(k-1)}   
+    \end{bNiceMatrix} \\
+    &= \begin{bNiceMatrix}[vlines]
+        E_k\vec A_1^{(k-1)} & \dots & E_k\vec A_k^{(k-1)} & \dots & E_k\vec A_n^{(k-1)}
+    \end{bNiceMatrix}.
+\end{align*}
+
+A questo punto possiamo notare che \begin{itemize}
+    \item se $i < k$ il prodotto $E_k\vec A_i^{(k-1)}$ è uguale a $A_i^{(k-1)}$, ovvero moltiplicare per $E_k$ \strong{non cambia le prime $k-1$ colonne di $A$}: 
+    infatti il calcolo fatto nella Dimostrazione della Proprietà (3) notiamo che i primi $k$ elementi vengono sempre mantenuti, mentre i successivi (gli elementi di posto $j = k+1, \dots, n$) vengono aggiornati tramite la legge \[
+        a_{ij}^{(k-1)} - m_{j}^{(k)}a_{ik}^{(k-1)}.
+    \] Tuttavia, siccome $a_{ik}^{(k-1)} = 0$ segue che anche gli elementi di posto successivo al $k$-esimo rimangono invariati;
+    \item se $i = k$ il prodotto $E_k\vec A_i^{(k-1)}$ \strong{azzera tutti gli elementi sotto} $a_{kk}^{(k-1)}$ (l'abbiamo definita proprio per questo scopo);
+    \item se $i > k$ il prodotto $E_k\vec A_i^{(k-1)}$ cambia solo gli elementi \strong{al di sotto della $k$-esima riga} (per lo stesso motivo delle prime $k$ colonne). 
+\end{itemize}
+Dunque la matrice $A^{(k)}$, che corrisponde al $k$-esimo passaggio dell'algoritmo di Gauss, è data da \[
+    A^{(k)} \deq E_kA^{(k-1)}.
+\] 
+
+Studiamo quindi come sono fatti gli elementi di $A^{(k)}$: essi sono \[
+    a_{ij}^{(k)} = \begin{cases}
+        a_{ij}^{(k-1)}, &\text{se } i = 1, \dots, k,\qquad j = 1, \dots, n \\[0.8em]
+        a_{ij}^{(k-1)} = 0, &\text{se } i = k+1, \dots, n,\; j = 1, \dots, k-1 \\[0.8em]
+        0, &\text{se } i = k+1, \dots, n,\; j = k \\[0.8em]
+        a_{ij}^{(k-1)} - m_i^{(k)}a_{kj}^{(k-1)}, &\text{se } i = k+1, \dots, n,\; j = k+1, \dots, n \\
+    \end{cases}
+\]
+
+Questo è effettivamente quello che si fa quando si calcola l'algoritmo di Gauss applicando le mosse per righe. Segue quindi che il metodo per risolvere un sistema lineare $A\vec x = \vec b$ consiste nel moltiplicare ripetutamente a sinistra per le matrici elementari definite sopra: \[
+    A\vec x = \vec b \leadsto E_1A\vec x = E_1\vec b \leadsto \dots \leadsto (E_{n-1}\cdots E_1A)\vec x = E_{n-1}\cdots E_1\vec b.
+\] 
+
+Notiamo che così facendo dobbiamo anche trasformare il vettore dei termini noti $\vec b$, che al passo $k$-esimo diventerà \[
+    b_i^{(k)} \deq \begin{cases}
+        b_i^{(k-1)}, &\text{se } i \leq k\\
+        b_i^{(k-1)} - m_i^{(k)}b_k^{(k-1)}, &\text{se } i > k.
+    \end{cases}
+\]
+
+La matrice $U \deq E_{n-1}\cdots E_1A = A^{(n-1)}$ ricavata all'ultimo passo è triangolare superiore, quindi possiamo risolvere il sistema \[
+    U\vec x = \vec b^{(n-1)}.
+\] Ancora meglio, possiamo sfruttare quanto fatto finora per fattorizzare la matrice $A$ in forma LU.
+
+Infatti, come abbiamo visto nella sezione precedente, possiamo considerare la matrice \[
+    L\inv \deq E_{n-1}\cdots E_2E_1,
+\] ovvero \[
+    L = E_1\inv E_2\inv \cdots E_{n-1}\inv.
+\] Per la proprietà (2), ognuna delle matrici $E_i\inv$ è una matrice elementare di Gauss; inoltre per la proprietà (4) le matrici sono moltiplicate nell'\emph{ordine corretto}, dunque possiamo calcolare $L$ senza svolgere i prodotti.
+Vale quindi la seguente
+
+\begin{proposition}
+    {}{}
+    Se l'algoritmo di Gauss è applicabile (ovvero se $a_{ii}^{(i-1)} \neq 0$ per ogni $i = 1, \dots, n-1$) allora $A$ è fattorizzabile LU e \[
+        L = \begin{pNiceMatrix}
+            1          &          &  &\\
+            m_1^{(1)}  &\Ddots    &  &\\
+            \Vdots     &m_2^{(2)} &  &\\
+                       &\Vdots    &\Ddots & &\\
+            m_n^{(1)}  &m_n^{(2)} &\Ldots &m_n^{(n-1)} &1
+        \end{pNiceMatrix}.
+    \]
+\end{proposition}
+
+In particolare la condizione su $A$ vista in questa sezione, ovvero che $a_{ii}^{(i-1)}$ sia non zero per ogni $i = 1, \dots, n-1$, e la condizione sufficiente per la fattorizzazione LU sono equivalenti, come confermato dal seguente Teorema (che non dimostreremo).
+
+\begin{proposition}
+    {}{}
+    Sia $A \in \Mat{\R, n, n}$ e sia $A_{(k)}$ la matrice ottenuta al $k$-esimo passo dell'algoritmo di Gauss. Vale che le sottomatrici principali di testa di $A$ di ordine $k$ (per $k = 1, \dots, n-1$) sono tutte invertibili se e solo se $a_{kk}^{(k-1)} \neq 0$ per ogni $k = 1, \dots, n-1$.  
+\end{proposition}
+
+\subsection{Costo computazionale dell'Algoritmo di Gauss}
+
+Calcoliamo il costo computazionale dell'algoritmo di Gauss. 
+
+Al passo $k$-esimo (in cui passiamo da $A^{(k-1)}$ a $A^{(k)} \deq E_kA^{(k-1)}$) dobbiamo calcolare:
+\begin{itemize}
+    \item il vettore dei moltiplicatori $m^{(k)}$,
+    %  di questo vettore dobbiamo calcolare le ultime $n-k$ componenti (il resto sono tutti $0$) e ogni componente si calcola tramite una singola divisione, quindi dobbiamo fare $n-k$ divisioni;
+    \item gli elementi di indice $(i, j)$ con $i = k+1, \dots, n$, $j = k+1, \dots, n$.
+\end{itemize}
+
+Per quanto riguarda il vettore dei moltiplicatori, esso ha $n-k$ componenti non nulle e ognuna di queste componenti è calcolabile con una singola divisione, dunque sono sufficienti $n-k$ operazioni.
+
+Invece per gli elementi che vengono modificati al passaggio $k$-esimo ricordiamo che \[
+    a_{ij}^{(k)} = a_{ij}^{(k-1)} - m_i^{k-1}a_{kj}^{k-1}.
+\] Dunque per ognuno di essi abbiamo bisogno di $2$ operazioni (un prodotto e una differenza), e vi sono $(n-k)^2$ elementi con indici nell'intervallo richiesto, dunque sono necessarie $2(n-k)^2$ operazioni.
+
+Per svolgere tutti i passi dell'algoritmo di Gauss avremo quindi bisogno di \[
+    \sum_{k=1}^{n-1} (n-k) + 2(n-k)^2
+\] operazioni floating point.
+Ponendo $i \deq n-k$ otteniamo quindi \begin{align*}
+    &\sum_{i=1}^{n-1} i + 2\sum_{i=1}^{n-1} i^2 \\
+    = {}&\frac{n(n-1)}{2} + 2\frac{n(n-1)(2n-1)}{6} \\
+    = {}&\frac{n^3}{3} + \OO(n^2),
+\end{align*} che è il costo computazionale dell'algoritmo di Gauss nel caso generale.
+
+\begin{remark}
+    Nell'ultima sequenza di uguaglianze abbiamo usato i fatti che \[
+        \sum_{i=1}^n i = \frac{n(n+1)}{2}, \qquad \sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}.
+    \]
+\end{remark}
+
+\subsection{Scambio di righe}
+
+Abbiamo visto che il metodo delle matrici elementari di Gauss funziona solo assumendo che $a_{kk}^{(k-1)} \neq 0$. Tuttavia, ciò non ci consente di risolvere semplici sistemi lineari, come ad esempio \[
+    \begin{pmatrix}
+        0 & 1 &-2\\
+        1 & 1 & 1\\
+        -3 & -1 &7\\
+    \end{pmatrix}\vec x = \begin{pmatrix}
+        1 \\ -1 \\ 0
+    \end{pmatrix}.
+\] Infatti $a_{11}^{0} = 0$, dunque non possiamo trovare una matrice elementare di Gauss che annulli gli altri coefficienti della prima riga. Abbiamo quindi bisogno di un metodo sistematico per poter \strong{scambiare} le righe della matrice $A$.
+
+\begin{definition}
+    {Matrice di permutazione}{perm_matrix}
+    Una matrice $P \in \Mat{\R, n, n}$ si dice \strong{matrice di permutazione} se esattamente un elemento di $P$ è uguale ad $1$ per ogni riga e per ogni colonna, ovvero se $P$ è una matrice ottenuta permutando le righe (o le colonne) della matrice identità $I_n$.   
+\end{definition}
+
+Si può dimostrare che moltiplicare a sinistra per una matrice di permutazione corrisponde a scambiare le righe di una matrice: in questo modo possiamo effettuare tutti gli scambi necessari a far avvenire con successo l'algoritmo di Gauss \emph{a priori}.
+
+Partendo dal sistema $A\vec x = \vec b$ andiamo quindi a risolvere il sistema $PA\vec x = P\vec b$.
+
+Vale in particolare il seguente risultato
+\begin{proposition}
+    {}{}
+    Sia $A \in \Mat{\R, n, n}$ una matrice invertibile. Allora esiste $P \in \Mat{\R, n, n}$ matrice di permutazione tale che $PA$ è fattorizzabile LU, ovvero tale che esistano uniche $L$ triangolare inferiore con $1$ sulla diagonale, $U$ triangolare superiore, tali che \[
+        PA = LU.
+    \]  
+\end{proposition}
