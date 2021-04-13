@@ -145,7 +145,7 @@ Osserviamo inoltre che, se le nostre risorse sono limitate, aumentando il numero
     Nelle condizioni in cui specifichiamo quali numeri sono rappresentabili compaiono le ipotesi (i) e (ii) del \nameref{th:rapp_base}, ma non l'ipotesi (iii). Quest deriva dal fatto che i numeri di macchina hanno una precisione finita (ovvero hanno al più $t$ cifre decimali), dunque non è possibile avere un numero che termina in $\beta-1$ periodico.
 \end{remark}
 
-\paragraph{Omega grande} Chiamiamo $\Omega$ il più grande numero di macchina. Possiamo costruirlo in questo modo: \begin{itemize}
+\newthought{Omega grande} Chiamiamo $\Omega$ il più grande numero di macchina. Possiamo costruirlo in questo modo: \begin{itemize}
     \item scegliamo come segno $+$;
     \item scegliamo come esponente il massimo esponente possibile, ovvero $p = M$;
     \item poniamo tutte le $t$ cifre decimali uguali al massimo possibile, che in base $\beta$ è $\beta-1$. 
@@ -170,7 +170,7 @@ Osserviamo inoltre che, se le nostre risorse sono limitate, aumentando il numero
     \]
 \end{example}
 
-\paragraph{Omega piccolo} Chiamiamo $\omega$ il più piccolo numero \emph{positivo} rappresentabile in un sistema. Possiamo costruirlo in questo modo: \begin{itemize}
+\newthought{Omega piccolo} Chiamiamo $\omega$ il più piccolo numero \emph{positivo} rappresentabile in un sistema. Possiamo costruirlo in questo modo: \begin{itemize}
     \item siccome è positivo, il segno è necessariamente $+$;
     \item come esponente scegliamo il più piccolo esponente possibile, ovvero $p = -m$;
     \item siccome le cifre decimali non possono essere tutte uguali a $0$ poniamo $d_1 = 1$ e $d_i = 0$ per ogni $i > 1$.   
@@ -178,7 +178,7 @@ Osserviamo inoltre che, se le nostre risorse sono limitate, aumentando il numero
     \omega = +\beta^{-m} \parens*{1 \cdot \beta\inv} = \beta^{-m}(0.1)_\beta.
 \]
 
-\paragraph{Cardinalità dell'insieme dei numeri di macchina} Dati $\beta,\ t,\ m,\ M$ calcoliamo $\card+{\StandMSet}$. Osserviamo che \begin{enumerate}
+\newthought{Cardinalità dell'insieme dei numeri di macchina} Dati $\beta,\ t,\ m,\ M$ calcoliamo $\card+{\StandMSet}$. Osserviamo che \begin{enumerate}
     \item dalla definizione di $\StandMSet$, dobbiamo contare lo $0$ separatamente;
     \item per quanto riguarda i numeri non-nulli, per ogni possibile combinazione di esponente/mantissa abbiamo $2$ scelte per il segno (segno positivo o negativo);
     \item le scelte per i possibili esponenti corrispondono a tutti i numeri interi nell'intervallo $\interval[{-m, M}]$, che sono $M + m + 1$;
@@ -218,11 +218,11 @@ Osserviamo che questa scelta per i limiti degli esponenti non copre tutte le com
 
 Questo ci permette di rappresentare dei numeri particolari.
 
-\paragraph{Zero} Abbiamo visto che (per il \Cref{th:rapp_base}) lo $0$ non ammette una rappresentazione normalizzata. Nello standard \IEEE esso viene realizzato ponendo a $0$ tutti i campi dell'esponente e della mantissa; tuttavia non viene specificato il segno, per cui esistono due rappresentazioni uguali per lo zero ($-0$ e $+0$). 
+\newthought{Zero} Abbiamo visto che (per il \Cref{th:rapp_base}) lo $0$ non ammette una rappresentazione normalizzata. Nello standard \IEEE esso viene realizzato ponendo a $0$ tutti i campi dell'esponente e della mantissa; tuttavia non viene specificato il segno, per cui esistono due rappresentazioni uguali per lo zero ($-0$ e $+0$). 
 
 Questa rappresentazione non va in conflitto con i numeri normalizzati, in quanto ponendo il campo dell'esponente uguale a undici $0$ otterrei un esponente effettivo uguale a $-1022$, mentre il minimo rappresentabile è $-1021$. 
 
-\paragraph{Numeri denormalizzati} Se il campo dell'esponente contiene solo zeri ma la mantissa ha almeno un bit diverso da $0$ stiamo rappresentando numeri \emph{denormalizzati}. Un tale numero viene interpretato come se fosse $d_1 = 0$ e quindi ci consente di ottenere dei numeri in valore assoluto più piccoli di $\omega$, risolvendo parzialmente i problemi di \emph{underflow}. 
+\newthought{Numeri denormalizzati} Se il campo dell'esponente contiene solo zeri ma la mantissa ha almeno un bit diverso da $0$ stiamo rappresentando numeri \emph{denormalizzati}. Un tale numero viene interpretato come se fosse $d_1 = 0$ e quindi ci consente di ottenere dei numeri in valore assoluto più piccoli di $\omega$, risolvendo parzialmente i problemi di \emph{underflow}. 
 
 Tuttavia questi numeri hanno una precisione minore dei numeri normalizzati, in quanto i primi $k$ bit della mantissa possono essere tutti uguali a $0$. Questo significa che invece di avere $53$ cifre di precisione ne abbiamo $53 - k$ (dove $k$ dipende dal numero denormalizzato scelto), dunque dobbiamo porre ancora più attenzione agli eventuali errori di precisione.
 
@@ -232,7 +232,7 @@ Il più grande numero denormalizzato è della forma \[
     2^{-1021} (0.0\dots01)_2.
 \]
 
-\paragraph{Infiniti e NaN} Ponendo il campo dell'esponente uguale a $(11111111111)_2$ (ovvero undici cifre $1$) ottengo una rappresentazione che non appartiene all'insieme definito prima (in quanto il massimo esponente rappresentabile è $1024$, che in eccesso a $1022$ diventa $2046 = (11111111110)_2$). Sfruttando questo fatto possiamo rappresentare tre "numeri" diversi:
+\newthought{Infiniti e NaN} Ponendo il campo dell'esponente uguale a $(11111111111)_2$ (ovvero undici cifre $1$) ottengo una rappresentazione che non appartiene all'insieme definito prima (in quanto il massimo esponente rappresentabile è $1024$, che in eccesso a $1022$ diventa $2046 = (11111111110)_2$). Sfruttando questo fatto possiamo rappresentare tre "numeri" diversi:
 \begin{itemize}
     \item se il campo della mantissa non è formato da tutti $0$ il risultato è NaN (\emph{Not a Number}): questa configurazione viene usata ad esempio per i risultati delle forme indeterminate, come $\nicefrac00$;
     \item se il campo della mantissa è formato da tutti $0$ il numero viene interpretato come $\pm\infty$ (a seconda del bit di segno): ciò viene usato per rappresentare l'overflow, ovvero numeri che sono più grandi di $\Omega$ (o più piccoli di $-\Omega$). 

@@ -171,7 +171,7 @@ Osserviamo ora che il secondo addendo contiene (nascosto) un errore al quadrato,
     = {}&f''\parens*{\xi_x}\frac{x^2}{2!f(x)} \cdot \frac{\tilde x - x}{x} \cdot \eps_x \\
     = {}&f''\parens*{\xi_x}\frac{x^2}{2!f(x)} \cdot \eps_x^2\\
     \doteq {}& 0.
-\end{align*}
+\end{align*}  
 
 Abbiamo quindi dimostrato il seguente Teorema.
 \begin{theorem}
@@ -212,16 +212,16 @@ Il \Cref{th:err_in_R} può essere generalizzato per funzioni $\R^n \to \R$.
 
 Il \Cref{cor:err_in_Rn} può essere molto comodo per calcolare i coefficienti di amplificazione delle operazioni elementari: ciò torna molto utile per il calcolo dell'errore totale.
 
-\paragraph{Somma} Consideriamo $f(x, y) = x + y$. Si ha che \[
+\newthought{Somma} Consideriamo $f(x, y) = x + y$. Si ha che \[
     c_x = \frac{x}{x+y}\cdot 1 = \frac{x}{x+y}, \qquad c_y = \frac{y}{x+y} \cdot 1 = \frac{y}{x+y}.
 \] 
-\paragraph{Sottrazione} Consideriamo $f(x, y) = x - y$. Si ha che \[
+\newthought{Sottrazione} Consideriamo $f(x, y) = x - y$. Si ha che \[
     c_x = \frac{x}{x-y}\cdot 1 = \frac{x}{x-y}, \qquad c_y = \frac{y}{x+y} \cdot (-1) = -\frac{y}{x-y}.
 \] 
-\paragraph{Prodotto} Consideriamo $f(x, y) = xy$. Si ha che \[
+\newthought{Prodotto} Consideriamo $f(x, y) = xy$. Si ha che \[
     c_x = \frac{x}{xy}\cdot y = 1, \qquad c_y = \frac{y}{xy} \cdot x = 1.
 \] 
-\paragraph{Divisione} Consideriamo $f(x, y) = \frac{x}{y}$. Si ha che \[
+\newthought{Divisione} Consideriamo $f(x, y) = \frac{x}{y}$. Si ha che \[
     c_x = \frac{x}{\nicefrac{x}{y}} \cdot \frac{1}{y} = 1, \qquad c_y = \frac{y}{\nicefrac{x}{y}} \cdot \parens*{-\frac{x}{y^2}} = -1.
 \] 
 
