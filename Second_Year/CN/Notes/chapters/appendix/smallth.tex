@@ -64,31 +64,81 @@ Segue quindi che $\abs{\eps_x} < u$ in qualsiasi caso.
 \section{Dimostrazione dell'equivalenza topologica tra norme}
 \label{sec:eq_topo_norm}
 
-In questa sezione dimostreremo il \Cref{th:eq_topo}: per far ciò sfrutteremo il seguente lemma.
-\begin{lemma}{}{}
+In questa sezione dimostreremo il \Cref{th:eq_topo}: per far ciò sfrutteremo due semplici lemmi.
+
+\begin{lemma}{}{norm_continuous}
     Sia $\norm$ una norma su $\F^n$. Allora la funzione \[
         \vec x \mapsto \norm{\vec x}
-    \] è una funzione continua.
+    \] è una funzione continua rispetto alla norma $\infty$.
 \end{lemma}
 \begin{proof}
-    Sia $\vec x_0 \in \F^n$ un punto qualsiasi e dimostriamo che la norma è continua in $\vec x_0$.
+    Sia $\vec x \in \F^n$ un punto qualsiasi e dimostriamo che la norma è continua in $\vec x$. 
+    Sia quindi $\eps > 0$ qualsiasi: vogliamo determinare un $\delta > 0$ tale che per ogni $\vec y \in \F^n$ con $\norm{\vec x - \vec y}_{\infty} < \delta$ si ha $\abs[\big]{\norm{\vec x} - \norm{\vec y}} < \eps$. Dimostriamo la tesi in due passi.
 
-    Sia quindi $\eps > 0$ qualsiasi: vogliamo determinare un $\delta > 0$ tale che per ogni $\vec x \in \F^n$ con $\norm{\vec x - \vec x_0} < \delta$ si ha $\abs[\big]{\norm{\vec x} - \norm{\vec x_0}} < \eps$.
+    \newthought{Primo step} Osserviamo che \[
+        \norm{\vec x} = \norm{\vec x - \vec y + \vec y} \leq \norm{\vec y} + \norm{\vec x - \vec y},
+    \] da cui \[
+        \norm{\vec x} - \norm{\vec y} \leq \norm{\vec x - \vec y}.
+    \] Scambiando i ruoli di $\vec x$ e $\vec y$ otteniamo che \[
+        \norm{\vec y} - \norm{\vec x} \leq \norm{\vec y - \vec x} = \norm{\vec x - \vec y},
+    \] quindi combinando le due disuguaglianze si ha \begin{equation*}
+        \abs[\Big]{\norm{\vec x} - \norm{\vec y}} \leq \norm{\vec x - \vec y}.
+    \end{equation*}
 
-    Osserviamo che \[
-        \norm{\vec x} = \norm{\vec x - \vec x_0 + \vec x_0} \leq \norm{\vec x_0} + \norm{\vec x - \vec x_0},
-    \] da cui $\norm{\vec x} - \norm{\vec x_0} \leq \norm{\vec x - \vec x_0}$. Scambiando i ruoli di $\vec x$ e $\vec x_0$ otteniamo che $\norm{\vec x_0} - \norm{\vec x} \leq \norm{\vec x_0 - \vec x} = \norm{\vec x - \vec x_0}$, quindi combinando le due disuguaglianze si ha \[
-        \abs[\Big]{\norm{\vec x} - \norm{\vec x_0}} \leq \norm{\vec x - \vec x_0}.
-    \]
+    \newthought{Secondo step} Scriviamo \[
+        \vec x = \sum_{i=1}^n x_i\vec e_i, \qquad \vec y = \sum_{i=1}^n y_i\vec e_i,
+    \] dove $\parens*{\vec e_i}_{i=1, \dots, n}$ è una base di $\F^n$ tale che $\norm{\vec e_i} = 1$: osserviamo che una tale base esiste sempre in quanto (per il \Cref{lem:vec_over_norm}) basta prendere una base qualsiasi $\BB \deq \parens*{\vec e_i}_{i=1, \dots, n}$ di $\F^n$ e considerare la base \[
+        \BB^{\prime} \deq \parens*{\frac{\vec e_i}{\norm{\vec e_1}}}_{i=1, \dots, n}.
+    \] Tale insieme di vettori è ancora una base e ogni vettore ha norma $1$ (rispetto alla norma che stiamo considerando).
     
-    Poniamo dunque $\delta = \eps$. Allora \[
-        \abs[\Big]{\norm{\vec x} - \norm{\vec x_0}} \leq \norm{\vec x - \vec x_0} < \delta = \eps,
-    \] cioè la norma è continua in $\vec x_0$, da cui segue (per generalità di $\vec x_0$) che la norma è una funzione continua.
+    Allora \begin{align*}
+        \norm{\vec x - \vec y} 
+        &=    \norm*{\sum_{i=1}^n (x_i - y_i)\vec e_i} \\
+        &\leq \sum_{i=1}^n \norm*{(x_i - y_i)\vec e_i}\\
+        &=    \sum_{i=1}^n \abs*{x_i - y_i}\norm{\vec e_i}\\
+        &=    \sum_{i=1}^n \abs*{x_i - y_i}\\
+        &\leq n\norm{\vec x - \vec y}_{\infty}.
+    \end{align*}
+
+    \newthought{Conclusione} Poniamo quindi $\delta = \nicefrac{\eps}{n}$ e supponiamo che $\norm{\vec x - \vec y}_\infty < \delta = \nicefrac{\eps}{n}$. Segue quindi che \[
+        \abs[\Big]{\norm{\vec x} - \norm{\vec y}} \leq \norm{\vec x - \vec y} \leq n\norm{\vec x - \vec y}_{\infty} < n\frac{\eps}{n} = \eps,
+    \] ovvero $\norm$ è continua.
+\end{proof}
+
+\begin{lemma}{}{norm_equiv_infty}
+    Siano $\norm_{a}, \norm_b$ due norme su $\F^n$. Se $\norm_{a}$ e $\norm_{b}$ sono entrambe equivalenti a $\norm_{\infty}$, allora $\norm_a$ e $\norm_b$ sono equivalenti.  
+\end{lemma}
+\begin{proof}
+    Sia $\vec x \in \R^n$. Per definizione di equivalenza tra norme, esistono $\alpha_1, \alpha_2, \beta_1, \beta_2 \in \interval[{0, +\infty})$ tali che \[
+        \alpha_1\norm{\vec x}_{\infty} \leq \norm{\vec x}_a \leq \beta_1\norm{\vec x}_\infty,
+        \qquad
+        \alpha_2\norm{\vec x}_{\infty} \leq \norm{\vec x}_b \leq \beta_2\norm{\vec x}_\infty.
+    \] Osserviamo che dalla prima disuguaglianza segue che \[
+        \norm{\vec x}_{\infty} \leq \frac{1}{\alpha_1} \norm{\vec x}_a, 
+        \qquad
+        \norm{\vec x}_{\infty} \geq \frac{1}{\beta_1} \norm{\vec x}_a,
+    \] dunque segue che \[
+        \frac{\alpha_2}{\beta_1} \norm{\vec x}_a \leq \alpha_2\norm{\vec x}_{\infty} \leq \norm{\vec x}_b \leq \beta_2\norm{\vec x}_\infty \leq \frac{\beta_2}{\alpha_1} \norm{\vec x}_a,
+    \] ovvero $\norm_a$ e $\norm_b$ sono equivalenti.  
 \end{proof}
 
 Possiamo quindi dimostrare il \Cref{th:eq_topo}.
-% \begin{proof}
-    % Consideriamo la funzione $h : \F^n \setminus \set{\vec 0} \to \R$ data da \[
-        % h(\vec x) = \frac{f(\vec x)}{g(\vec x)}.
-    % \]
-% \end{proof}
+\begin{proof}
+    Per il \Cref{lem:norm_equiv_infty} è sufficiente mostrare che la norma $\norm$ è equivalente alla norma infinito, ovvero che esistano $\alpha, \beta \in \interval[{0, +\infty})$ tali che \[
+        \alpha\norm{\vec x}_{\infty} \leq \norm{\vec x} \leq \beta \norm{\vec x}_{\infty}.
+    \] 
+    
+    Sicuramente la tesi vale per $\vec x = \vec 0$, dunque supponiamo $\vec x \neq \vec 0$. Allora dividendo i membri della disequazione per $\norm{\vec x}_{\infty}$ la tesi è equivalente a dimostrare che esistono $\alpha, \beta \in \interval[{0, +\infty})$ tali che \[
+        \alpha \leq \frac{\norm{\vec x}}{\norm{\vec x}_{\infty}} = \norm*{\frac{\vec x}{\norm{\vec x}_{\infty}}} = \norm*{\vec u} \leq \beta,
+    \] dove $\vec u \deq \frac{\vec x}{\norm{\vec x}_{\infty}}$ è un vettore tale che $\norm{\vec u}_{\infty} = 1$ (per il \Cref{lem:vec_over_norm}).
+
+    È quindi sufficiente mostrare che la norma $\norm$ di tutti i vettori con norma infinito uguale a $1$ è limitata superiormente e inferiormente.
+    
+    Consideriamo quindi la sfera unitaria rispetto alla norma infinito \[
+        S_\infty \deq \set*{\vec v \in \F^n \given \norm{\vec v}_{\infty} = 1}.
+    \] Siccome per il \Cref{lem:norm_continuous} la funzione $\norm$ è continua e $S_{\infty}$ è un compatto in $\F^n$ (poiché chiuso e limitato) vale il Teorema di Weierstrass: esistono dunque $\alpha, \beta \in \interval[{0, +\infty})$ tali che \[
+        \alpha \deq \min_{\vec v \in S_\infty} \norm{\vec v}, \qquad \beta \deq \max_{\vec v \in S_\infty} \norm{\vec v},
+    \] ovvero per ogni $\vec u \in \F^n$ tale che $\norm{\vec u}_{\infty} = 1$ si ha che \[
+        \alpha \leq \norm{\vec u} \leq \beta,
+    \] da cui la tesi.
+\end{proof}

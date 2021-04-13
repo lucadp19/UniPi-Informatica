@@ -255,12 +255,7 @@ Facciamo un po' di considerazioni sugli autovalori.
     \item Ogni matrice reale o complessa \emph{ha esattamente $n$ autovalori complessi}: infatti per il Teorema Fondamentale dell'Algebra ogni polinomio ha esattamente $n$ radici complesse (non necessariamente tutte distinte).
     \item Se la matrice è a coefficienti reali anche il polinomio caratteristico lo sarà. In tal caso se $\lambda \in \C$ è radice allora anche $\conj{\lambda} \in \C$ lo è (\emph{le radici sono a coppie}).
     \item Se $n$ è dispari allora una matrice ha almeno una radice reale.
-    \item Una matrice è invertibile se e solo se $0$ è autovalore. Infatti: \begin{description}
-        \item[($\implies$)] Se $A$ è invertibile allora $\ker A = \set{\vec 0}$, ovvero per ogni vettore $\vec x \in \F^n$ si ha \[
+    \item Una matrice è invertibile se e solo se $0$ non è autovalore. Infatti $A$ è  invertibile se e solo se $\ker A = \set{\vec 0}$, ovvero se per ogni vettore $\vec x \in \F^n$ non nullo si ha \[
             A\vec x \neq \vec 0 = 0\vec x.
-        \]  Dunque in particolare nessun autovettore ha come autovalore $0$.
-        \item[($\impliedby$)] Se $0$ è autovalore allora esiste un vettore $\vec x \in \F^n$ tale che \[
-            A\vec x = 0\vec x = 0,
-        \] ovvero il kernel di $A$ non è banale, da cui $A$ non è invertibile.
-    \end{description} 
+    \] Dunque in particolare $A$ è invertibile se e solo se non esiste un autovettore con autovalore $0$, cioè se e solo se $0$ non è autovalore. 
 \end{enumerate}
