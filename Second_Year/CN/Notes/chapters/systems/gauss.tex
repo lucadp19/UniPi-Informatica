@@ -140,7 +140,7 @@ Dimostriamo separatamente le varie proprietà.
 \begin{proof}
     [Dimostrazione della Proprietà (3)]
     \label{proof:prop_3_Gauss}
-    Poniamo $\vec v = (0, \dots, 0, v_{k+1}, \dots, v_n)$ e dimostriamo che per ogni $i > k$ si ha che \[
+    Poniamo $\vec v = (0, \dots, 0, v_{k+1}, \dots, v_n)\trans$ e dimostriamo che per ogni $i > k$ si ha che \[
         v_i = \frac{x_i}{x_k}.
     \] Per definizione di matrice elementare di Gauss si ha che \[
         E\vec x = \begin{bNiceMatrix}[columns-width = 0.4cm]
@@ -158,11 +158,18 @@ Dimostriamo separatamente le varie proprietà.
             x_1 \\ \smallvdots \\ x_{k} \\ 0 \\ \smallvdots \\ 0 
         \end{pmatrix}.
     \]
-    Considerando questo prodotto tra matrici come un sistema lineare (le cui incognite però sono i $v_i$), le prime $k$ righe corrispondono alle equazioni \[
+    Svolgendo il prodotto matrice-vettore otteniamo l´equazione vettoriale \[
+        \begin{pmatrix}
+            x_1 \\ \smallvdots \\ x_{k} \\ -v_{k+1}x_{k} + x_{k+1} \\ \smallvdots \\ -v_{n}x_{k} + x_{n}
+        \end{pmatrix} \stackrel{!}{=} \begin{pmatrix}
+            x_1 \\ \smallvdots \\ x_{k} \\ 0 \\ \smallvdots \\ 0 
+        \end{pmatrix}.
+    \]
+    
+    Le prime $k$ righe corrispondono alle condizioni \[
         1 \cdot x_i = x_i,
     \] che sono banalmente verificate.
-
-    Sia quindi $i > k$. L'equazione codificata dalla riga $i$-esima è dunque \[
+    Sia quindi $i > k$. La condizione codificata dalla riga $i$-esima è dunque \[
         -v_ix_k + 1\cdot x_i = 0,
     \] da cui ricaviamo che \[
         v_i = \frac{x_i}{x_k},
