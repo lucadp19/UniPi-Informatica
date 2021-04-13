@@ -1,0 +1,94 @@
+% \documentclass[italian,oneside,headinclude,10pt]{scrbook}
+\documentclass[
+    oneside,
+    10pt,
+    language=italian,
+    pagestyle=notes,
+    fontstyle=palaeuler,
+    thmstyle=margin-name
+]{modernth}
+    % Specific packages
+    \usepackage{listings}               % for formal grammars
+    \usepackage{minted}                 % for code
+    \usepackage{proof}                  % for inference rules
+    \usepackage{drawstack}              % for stack frames
+
+\usemintedstyle{manni}
+\setminted{
+    % bgcolor=lightgray,
+    fontsize=\small,
+    breaklines=true,
+    % escapeinside=||,
+    mathescape=true,
+    frame=single
+}
+\newmintinline[InlineJava]{java}{fontsize=\normalsize}
+\newminted[Java]{java}{}
+\newmintinline[InlineOCaml]{ocaml}{fontsize=\normalsize}
+\newminted[OCaml]{ocaml}{}
+
+\NewDocumentCommand{\env}{s o g}{
+    \operatorname{env}
+    \IfValueT{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        }{
+            \parens[#2]{#3}
+        }
+    }
+}
+\newcommand{\Eval}[1]{\operatorname{Eval}\parens*{#1}}
+\newcommand{\Subst}[1]{\operatorname{subst}\parens*{#1}}
+
+\lstnewenvironment{BNF}{
+    \lstset{
+        basicstyle=\footnotesize,
+        xleftmargin=3em,
+        literate={::=}{$\Coloneqq$}{3}
+    }
+}{}
+
+\newcommand{\code}{\texttt}
+
+\newmintinline[mtext]{text}{
+    fontsize=\normalsize,
+    escapeinside=||,
+    mathescape=true
+}
+\newcommand{\mt}[1]{\text{\mtext{#1}}}
+\newcommand{\proves}{\vdash}
+\newcommand{\sstep}{\shortrightarrow}
+\newcommand{\evaluatesTo}{\Rightarrow}
+\newcommand{\envTo}{\mathbin{\triangleright}}
+
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Programmazione II}
+\maketitle
+
+\tableofcontents
+
+% CAPITOLO 1
+\input{chapters/OOP/intro_java}
+\input{chapters/OOP/interfaces_inheritance}
+\input{chapters/OOP/exceptions}
+
+\chapter{ADT e Specifiche}
+\input{chapters/OOP/specifications}
+
+\part{Linguaggi di Programmazione}
+\input{chapters/OCaml/ocaml}
+\input{chapters/OCaml/syntax}
+\input{chapters/OCaml/datatypes}
+\input{chapters/OCaml/type_system}
+\input{chapters/OCaml/stack_frames}
+\input{chapters/OCaml/params}
+\input{chapters/OCaml/didact_lang}
+
+\input{chapters/OCaml/obj-orient}
+\input{chapters/OCaml/jvm}
+\input{chapters/OCaml/garbage}
+
+\end{document}
