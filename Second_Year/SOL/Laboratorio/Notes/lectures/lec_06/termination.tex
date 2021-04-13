@@ -34,7 +34,7 @@ La \inlinec{exit()} fa tutto quello che fa la \inlinec{_exit()}, ma inoltre \beg
 
 La \inlinec{exit} viene chiamata automaticamente quando il programma termina con \inlinec{return} dal \inlinec{main}.
 
-\paragraph{Funzione \inlinec{atexit()}} La funzione \inlinec{atexit()} serve a \emph{registrare} le azioni da compiere alla chiusura del programma. Ha la seguente \emph{signature}:
+\newthought{Funzione \inlinec{atexit()}} La funzione \inlinec{atexit()} serve a \emph{registrare} le azioni da compiere alla chiusura del programma. Ha la seguente \emph{signature}:
 \begin{minted}{c}
     #include <stdlib.h>
 
@@ -54,7 +54,7 @@ La funzione \inlinec{function} deve essere una funzione che non prende argomenti
 
 Inoltre possiamo registrare più di una funzione, tramite chiamate multiple alla \inlinec{atexit}: alla terminazione del programma le funzioni registrate saranno chiamate in ordine \strong{inverso}.
 
-\paragraph{Funzione \inlinec{_exit()}} 
+\newthought{Funzione \inlinec{_exit()}} 
 La funzione \inlinec{_exit(status)} svolge le seguenti operazioni: \begin{itemize}
     \item termina il processo;
     \item chiude tutti i descrittori di file;

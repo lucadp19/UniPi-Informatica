@@ -1,30 +1,15 @@
 \documentclass[
     oneside,
     10pt,
+    language=italian,
     pagestyle=notes,
     fontstyle=palaeuler,
-    thmstyle=boxedthm,
-    % article
+    thmstyle=boxed,
+    colors
 ]{modernth}
-    \usepackage[utf8]{inputenc}
-    \usepackage[italian]{babel}
-    \usepackage[T1]{fontenc}
-    \usepackage{textcomp}
-    \usepackage{microtype}
-    \usepackage{minted}
-    % My packages
-
-\usemintedstyle{manni}
-\definecolor{bg}{rgb}{0.97,0.97,0.97}
-\setminted{
-    bgcolor=bg,
-    fontsize=\small,
-    breaklines=true,
-    escapeinside=||,
-    mathescape=true,
-    % frame=single
-}
-\newmintinline[inlinec]{c}{fontsize=\normalsize}
+\usepackage{code}
+   
+\newmintinline[inlinec]{c}{}
 
 \usetikzlibrary{external}
 \tikzexternalize[prefix=figures/]

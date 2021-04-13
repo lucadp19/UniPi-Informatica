@@ -13,7 +13,7 @@ In generale una qualsiasi funzione della famiglia delle \inlinec{exec*} segue il
 
 Le funzioni della famiglia \inlinec{exec*} sono $6$ e sono \inlinec{execl}, \inlinec{execlp}, \inlinec{execle}, \inlinec{execv}, \inlinec{execvp}, \inlinec{execve}.
 
-\paragraph{\inlinec{execl}}
+\newthought{\inlinec{execl}}
 Vediamo la \inlinec{execl}:
 \begin{minted}{c}
     #include <unistd.h>
@@ -34,7 +34,7 @@ La lista di argomenti di lunghezza variabile passata ad \inlinec{execl} deve ess
 
 Infine, il \emph{path} specificato come primo argomento della \inlinec{execl} deve essere un file eseguibile e deve avere i permessi per l'esecuzione per l'effective-user-ID del processo che invoca la \inlinec{execl}.
 
-\paragraph{Altre exec}
+\newthought{Altre exec}
 Le altre funzioni della famiglia delle \inlinec{exec*} possono essere distinte sulla base delle lettere che seguono "exec":
 \begin{itemize}
     \item se vogliamo passare gli argomenti al nuovo programma come una lista \inlinec{NULL}-terminated usiamo la lettera \inlinec{l};
@@ -51,7 +51,7 @@ In generale il processo rimane lo stesso, quindi diversi attributi (come il \tex
     \item i semafori POSIX (che vengono resettati).
 \end{itemize}
 
-\paragraph{Flush dei buffer}
+\newthought{Flush dei buffer}
 Osserviamo che se cambiamo eseguibile con la \inlinec{exec} non stiamo terminando il programma precedente, quindi non c'è il \emph{flush} automatico delle funzioni della libreria \inlinec{stdio.h}. 
 
 Ad esempio il programma \textsf{execl-test.c}:
