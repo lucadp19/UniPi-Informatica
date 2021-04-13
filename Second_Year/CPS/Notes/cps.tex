@@ -1,21 +1,22 @@
-\documentclass[italian,oneside,headinclude,10pt]{scrbook}
-    \usepackage[utf8]{inputenc}
-    \usepackage[italian]{babel}
-    \usepackage[T1]{fontenc}
-    \usepackage{textcomp}
-    \usepackage{microtype}
-    \usepackage{base-preamble}
+\documentclass[
+    oneside,
+    10pt,
+    language=italian,
+    pagestyle=notes,
+    fontstyle=palaeuler,
+    thmstyle=margin-name
+]{modernth}
     \usepackage{probability}
-    \usepackage{standalone}
-    % \usepackage{../preamble}
     \usepackage{pgfplots}
 
-\pgfplotsset{every axis/.append style={
-    axis x line=middle,    % put the x axis in the middle
-    axis y line=middle,    % put the y axis in the middle
-    axis line style={->}, % arrows on the axis
-    xlabel={$x$},          % default put x on x-axis
-    ylabel={$y$},          % default put y on y-axis
+\pgfplotsset{
+    compat=1.17,
+    every axis/.append style={
+        axis x line=middle,    % put the x axis in the middle
+        axis y line=middle,    % put the y axis in the middle
+        axis line style={->}, % arrows on the axis
+        xlabel={$x$},          % default put x on x-axis
+        ylabel={$y$},          % default put y on y-axis
     },
     cmhplot/.style={color=red,mark=none,line width=1pt},
     soldot/.style={color=red,only marks,mark=*},
@@ -24,33 +25,40 @@
 
 \tikzset{>=stealth}
 
+\usetikzlibrary{external}
+\tikzexternalize[prefix=figures/]
+
 \begin{document}
 
 \author{Luca De Paulis}
 \title{Calcolo delle Probabilità e Statistica}
 \maketitle
 
+\frontmatter{}
 \tableofcontents
 
+\mainmatter{}
 % CAPITOLO 1
-\input{descr_stat}
+\chapter{Statistica descrittiva}
+\input{chapters/DescrStat/descr_stat}
 
 % CAPITOLO 2
-\input{intro_prob}
-\input{cond_prob}
-\input{prob_reals}
-\input{intro_random_variables}
-\input{random_variables_transf}
-\input{expectation}
-\input{gen_function}
-\input{other_variables}
+\chapter{Probabilità}
+\input{chapters/Prob/intro_prob}
+\input{chapters/Prob/cond_prob}
+\input{chapters/Prob/prob_reals}
+\input{chapters/Prob/intro_random_variables}
+\input{chapters/Prob/random_variables_transf}
+\input{chapters/Prob/expectation}
+\input{chapters/Prob/gen_function}
+\input{chapters/Prob/other_variables}
 
 \chapter{Inferenza statistica}
-\input{stat_infer}
-\input{confidence_intervals}
-\input{hypotesis}
+\input{chapters/InfStat/stat_infer}
+\input{chapters/InfStat/confidence_intervals}
+\input{chapters/InfStat/hypotesis}
 
 \appendix
-\input{prerequisiti}
+\input{chapters/Appendix/prerequisiti}
 
 \end{document}

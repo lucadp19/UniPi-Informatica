@@ -90,9 +90,9 @@ Come conseguenza immediata se $X \sim \Gamma(r, \lambda)$ e $Y \sim \Gamma(s, \l
 
     Consideriamo la funzione generatrice di $X^2$. Essa è uguale a \begin{align*}
         G_{X^2}(t) &= \Expect*{e^{tX^2}}\\[3pt]
-        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{tx^2}e^{-\frac{x^2}{2}} dx\\[3pt]
-        &= \frac{1}{\sqrt{2\pi}} \int_\R e^{-\frac{x^2}{2}(1 - 2t)} dx.\\[3pt]
-        \intertext{Siccome $\int_\R e^{-\frac{x^2}{2\sigma^2}} = \sqrt{2\pi} \cdot \sigma$, ponendo $\sigma \deq \parens*{1 - 2t}^{-\nicefrac12}$ si ottiene }
+        &= \frac{1}{\sqrt{2\pi}} \int_{\R} e^{tx^2}e^{-\frac{x^2}{2}} dx\\[3pt]
+        &= \frac{1}{\sqrt{2\pi}} \int_{\R} e^{-\frac{x^2}{2}(1 - 2t)} dx.\\[3pt]
+        \intertext{Siccome $\int_{\R} e^{-\frac{x^2}{2\sigma^2}} = \sqrt{2\pi} \cdot \sigma$, ponendo $\sigma \deq \parens*{1 - 2t}^{-\nicefrac12}$ si ottiene }
         &= \frac{1}{\sqrt{2\pi}} \sqrt{\frac{2\pi}{1-2t}}\\[3pt]
         &= \sqrt{\frac{1}{1-2t}}\\[3pt]
         &= \parens*{\frac{\nicefrac12}{\nicefrac12 - t}}^\frac12,

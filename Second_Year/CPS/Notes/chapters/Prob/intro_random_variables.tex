@@ -152,9 +152,58 @@ Nel caso in cui la variabile sia discreta ci sono due possibilità:
 
     \item La funzione assume il valore $\beta$ su tutto un intervallo. In questo caso per convenzione si sceglie $r_\beta$ come il punto medio dell'intervallo, anche se tutti i punti dell'intervallo andrebbero ugualmente bene.
 \end{enumerate}
+\tikzsetnextfilename{quantile_discr}
 \begin{figure}[H]
     \begin{center}
-        \includestandalone{Figures/quantile_discr}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=170pt,
+                ylabel=$F_X(x)$,
+                xlabel=$x$,
+                ymin=-0.3,ymax=1.3,
+                xmin=-0.5,xmax=3,
+                xtick = {1.3},
+                xticklabels = {$r_\beta$},
+                ytick = {0, 0.5, 1},
+                yticklabels = {$0$, $\beta$, $1$},
+            ] 
+            \addplot[dashed, domain=0:3]{0.5};
+            \addplot[cmhplot, domain=-0.5:1.3]{0.2};
+            \addplot[cmhplot, domain=1.3:3]{0.8};
+            
+            \addplot[holdot]coordinates{(1.3,0.2)};
+            \addplot[soldot]coordinates{(1.3,0.8)};
+
+                % \addplot[blue,smooth] {1/(1+exp(-x))};
+            % \addlegendentry{Caso 1.}
+            \end{axis}
+        % \end{tikzpicture}
+        % \begin{tikzpicture}
+            \begin{axis}[
+                xshift=170pt,
+                width=170pt,
+                ylabel=$F_X(x)$,
+                xlabel=$x$,
+                ymin=-0.3,ymax=1.3,
+                xmin=-0.5,xmax=3,
+                xtick = {1.8},
+                xticklabels = {$r_\beta$},
+                ytick = {0, 0.5, 1},
+                yticklabels = {$0$, $\beta$, $1$},
+            ] 
+            \addplot[dashed, domain=0:3]{0.5};
+            \addplot[cmhplot, domain=-0.5:1.3]{0.2};
+            \addplot[cmhplot, domain=1.3:2.3]{0.5};
+            \addplot[cmhplot, domain=2.3:3]{1};
+            
+            \addplot[holdot]coordinates{(1.3,0.2)(2.3,0.5)};
+            \addplot[soldot]coordinates{(1.3,0.5)(2.3,1)};
+
+                % \addplot[blue,smooth] {1/(1+exp(-x))};
+            % \addlegendentry{Caso 2.}
+            \end{axis}
+            
+        \end{tikzpicture}
     \end{center}
 \end{figure}
 
@@ -335,7 +384,7 @@ La variabile esponenziale è \emph{senza memoria}, esattamente come la variabile
 \subsection{Variabile gaussiana}
 
 Consideriamo la funzione $f(x) = e^{-\frac{x^2}{2}}$: anche se non ha una primitiva (esprimibile tramite funzioni elementari), si può calcolare il valore del suo integrale sulla retta reale, e si ha che \[
-    \int_\R f(x) = \int_{-\infty}^{+\infty} e^{-\frac{x^2}{2}} = \sqrt{2\pi}.    
+    \int_{\R} f(x) = \int_{-\infty}^{+\infty} e^{-\frac{x^2}{2}} = \sqrt{2\pi}.    
 \] La conseguenza immediata di questo fatto è che dividendo la funzione per $\sqrt{2\pi}$ si ottiene una densità.
 
 \begin{definition}
