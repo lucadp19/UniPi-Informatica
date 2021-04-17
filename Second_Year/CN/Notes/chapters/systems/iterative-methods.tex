@@ -1,0 +1,304 @@
+\section{Metodi iterativi per i sistemi lineari}
+
+Nelle sezioni precedenti abbiamo studiato come il metodo di Gauss possa essere usato per risolvere sistemi lineari, con un costo cubico rispetto alla dimensione della matrice. In alcuni casi specifici però l'algoritmo di Gauss può essere meno efficiente di altri metodi, oppure può operare \emph{senza accorgersi} della struttura particolare di alcune matrici.
+
+Consideriamo ad esempio una matrice con la seguente struttura: \[
+    \begin{bmatrix}
+        \ast & \ast &\dots &\ast \\
+        \ast & \ast &      &     \\
+        \vdots &    & \ddots &   \\
+        \ast &      &      &\ast
+    \end{bmatrix}
+\] Al primo passo del metodo di Gauss siamo costretti a sottrarre la prima riga (che è piena) a tutte le righe successive (che sono molto \emph{sparse}), ottenendo una matrice che è molto più piena della matrice iniziale.
+
+Questo fenomeno viene chiamato \strong{fill-in}: l'algoritmo di Gauss può trasformare matrici sparse (ovvero che hanno un numero di elementi non nulli nell'ordine di $\OO(n)$) in matrici piene.
+
+In alcuni di questi casi possono essere più efficienti i cosiddetti \strong{metodi iterativi}.
+
+Introduciamo alcuni concetti iniziali.
+
+\begin{definition}
+    {Successioni e convergenza in $\F^n$}{succ_conv_Fn}
+    Sia $\F$ il campo dei numeri reali o dei numeri complessi. Una \strong{successione} $\seqn*{\vec x^{(n)}}_{n \in \N}$ di vettori di $\F^n$ si dice \strong{convergente} se esiste un vettore $\vec x$ tale che \[
+        \lim_{n \to +\infty} \norm[\big]{\vec x - \vec x^{(n)}} = 0.
+    \] In tal caso si scrive $\vec x^{(n)} \to \vec x$ e si dice che la successione $\seqn*{\vec x^{(n)}}$ \strong{tende a} $\vec x$ (oppure \emph{converge a}).  
+\end{definition}
+
+La definizione di convergenza di una successione di vettori è quindi identica alla convergenza di numeri reali, con l'accortezza di sostituire il valore assoluto della differenza dei numeri (che corrisponde alla \emph{distanza} su $\R$) alla \emph{norma della differenza dei vettori} (che, come abbiamo visto, corrisponde alla distanza tra vettori).
+
+In particolare si può dimostrare che una successione $\seqn[\big]{\vec x^{(n)}}$ di vettori converge a $\vec x$ se e solo se tutte le successioni delle componenti convergono, ovvero se per ogni $i = 1, \dots, n$ vale che \[
+    \lim_{n \to +\infty} x_{i}^{(n)} = x_i,
+\] dove il pedice indica come al solito la coordinata $i$-esima del vettore.
+
+Osserviamo infine che non è importante quale norma scegliamo: se $\vec x^{(n)} \to \vec x$ per qualche norma vettoriale $\norm$, allora la successione convergerà ad $\vec x$ per ogni norma vettoriale.
+\begin{proof}
+    Per definizione di convergenza abbiamo che $\norm[\big]{\vec x^{(n)} - \vec x} \to 0$. Sia quindi $\norm'$ un'altra norma vettoriale: per il \Cref{th:eq_topo} esisteranno $\alpha, \beta \in \interval[{0, +\infty})$ tali che \[
+        \alpha \norm[\big]{\vec x^{(n)} - \vec x} \leq \norm[\big]{\vec x^{(n)} - \vec x}' \leq \beta \norm[\big]{\vec x^{(n)} - \vec x}.
+    \] Ma il membro sinistro e il membro destro di questa disequazione tendono a $0$ per $n \to +\infty$, dunque per il Teorema dei Carabinieri anche il membro centrale dovrà farlo: segue quindi che \[
+        \norm[\big]{\vec x^{(n)} - \vec x}' \to 0,
+    \] ovvero che la successione $\seqn{\vec x^{(n)}}$ tende a $\vec x$ anche secondo la norma $\norm'$.  
+\end{proof}  
+
+Come sfruttiamo la convergenza di successioni per risolvere un sistema lineare $A\vec x = \vec b$? Innanzitutto sfruttiamo una \strong{decomposizione additiva} di $A$: scriviamo cioè $A = M - N$ dove $M, N \in \Mat{\F, n, n}$ sono due matrici generiche, con il solo vincolo che $\det M \neq 0$. Allora \begin{align*}
+    A\vec x = \vec b &\iff (M - N)\vec x = \vec b \\
+    &\iff M\vec x - N\vec x = \vec b \\
+    &\iff M\vec x = N\vec x + \vec b\\
+    &\iff \vec x \begin{aligned}[t]
+        &= M\inv(N\vec x + \vec b)\\
+        &= (M\inv N)\vec x + M\inv\vec b.
+    \end{aligned}
+\end{align*} 
+
+Abbiamo quindi scritto il nostro sistema nella forma equivalente $\vec x = P\vec x + \vec q$, dove $P \deq M\inv N \in \Mat{\F, n, n}$ è la cosiddetta \strong{matrice di iterazione}, mentre $\vec q$ è il vettore $M\inv\vec b$.
+
+Chiamando $\Psi : \F^n \to \F^n$ la \strong{trasformazione affine} 
+% \footnote{Una trasformazione affine nel nostro contesto è una funzione \[T : \F^n \to \F^n\] della forma $T(\vec v) = A\vec v + \vec b$, dove $A \in \Mat{\F, n, n}$ è una matrice e $\vec b \in \F^n$ è un vettore.} 
+$\Psi(\vec v) = P\vec v + \vec q$, possiamo chiederci cosa succede se calcoliamo l'immagine mediante $\Psi$ di un vettore \emph{a caso} $\vec x \in \F^n$ (ovvero se calcoliamo $\Psi(\vec x)$). Ci sono due casi: \begin{itemize}
+    \item se $\Psi(\vec x) = \vec x$ allora $\vec x$ è soluzione dell'equazione $\vec x = P\vec x + \vec q$, dunque per la catena di equivalenze mostrata sopra dovrà essere soluzione del sistema $A\vec x = \vec b$;
+    \item altrimenti possiamo chiamare $\vec x^{(1)} \deq \Psi(\vec x)$ e riapplicare la trasformazione $\Psi$.   
+\end{itemize}
+
+Se, ripetendo costantemente il secondo passo, non arriviamo mai ad un punto $\vec x'$ tale che $\vec x' = \Psi(\vec x')$ otterremo una successione di vettori in $\F^n$: la nostra speranza è che se questa successione converge a qualche punto, questo punto sia una soluzione della ricorrenza e quindi del sistema lineare iniziale.
+
+\begin{theorem}
+    {Convergenza al punto fisso per trasformazioni affini}{conv_fixed_point_affine}
+    Sia $\vec x^{(0)} \in \R^n$ un vettore e sia \begin{gather*}
+        \Psi : \R^n \to \R^n\\
+        \Psi(\vec x) = P\vec x + \vec q 
+    \end{gather*} una trasformazione affine.
+    Sia inoltre $\seqn[\big]{\vec x^{(n)}}_{n \in \N}$ la successione generata da $\Psi$ con punto base $\vec x^{(0)}$, ovvero la successione definita per ricorrenza da \[
+        \vec x^{(k+1)} \deq \Psi\parens*{\vec x^{(k)}} = P\vec x^{(k)} + \vec q
+    \] per ogni $k > 0$. 
+
+    Se $\seqn*{\vec x^{(n)}}$ converge a $\vec x \in \R^n$, allora $\vec x$ è un punto fisso per $\Psi$, ovvero \[
+        \vec x = \Psi(\vec x) = P\vec x + \vec q.
+    \] 
+\end{theorem}
+\begin{proof}
+    Mostriamo che $\Psi$ è una funzione continua, ovvero che per ogni $\eps > 0$ esiste un $\delta > 0$ tale che per ogni $\vec v, \vec w \in \R^n$ tali che $\norm{\vec v - \vec w} < \delta$ si ha che $\norm[\big]{\Psi(\vec v) - \Psi(\vec w)} < \eps$. In effetti:
+    \begin{align*}
+        \norm[\big]{\Psi(\vec v) - \Psi(\vec w)}
+        &= \norm[\big]{P\vec v - \vec q - P\vec w + \vec q}\\
+        &= \norm[\big]{P(\vec v - \vec w)}\\
+        &\leq \norm{P} \cdot \norm{\vec v - \vec w}\\
+        &< \norm{P} \cdot \delta,
+    \end{align*} dove $\norm{P}$ indica la norma matriciale di $P$ indotta dalla norma vettoriale scelta precedentemente.
+    
+    Scegliendo quindi $\delta \deq \frac{\eps}{\norm{P}}$ otteniamo che \[
+        \norm[\big]{\Psi(\vec v) - \Psi(\vec w)} \leq \norm{P} \cdot \frac{\eps}{\norm{P}} = \eps,
+    \] ovvero $\Psi$ è continua.
+
+    Consideriamo quindi la successione generata da $\Psi$, che per ipotesi è convergente, e sia $\vec x$ il punto a cui la successione converge. Allora \[
+        \vec x 
+        = \lim_{n \to +\infty} \vec x^{(n)} 
+        = \lim_{n \to +\infty} \Psi\parens[\big]{\vec x^{(n-1)}}
+        = \Psi\parens[\Bigg]{\lim_{n \to +\infty} \vec x^{(n-1)}}
+        = \Psi(\vec x). \qedhere
+    \]
+\end{proof}
+
+Abbiamo quindi dimostrato che, anche se non riusciamo mai a trovare un punto che soddisfi $\vec x = P\vec x + \vec q$ iterando il processo, se la successione dei tentativi converge allora il suo limite soddisfa la ricorrenza, e quindi soddisfa anche il sistema lineare $A\vec x = \vec b$ iniziale.
+
+\begin{remark}
+    Nella pratica nel risolvere un sistema lineare tramite un metodo iterativo non calcoliamo effettivamente il punto limite, ma ci fermiamo quando ci siamo avvicinati abbastanza al limite. Sfruttiamo quindi due criteri di arresto: \begin{enumerate}[(1)]
+        \item il primo ci dice di arrestarci quando la differenza tra due passi successivi è \emph{sufficientemente piccola}, ovvero \[
+            \norm[\big]{\vec x^{(k+1)} - \vec x^{(k)}} < \mathrm{tol},
+        \] dove $\mathrm{tol}$ è una costante che indica l'\emph{errore tollerato};
+        \item il \strong{criterio del residuo} ci impone di fermarci quando \[
+            \norm*{A\vec x^{(k)} - \vec b} < \mathrm{res}
+        \] dove ancora una volta $\mathrm{res}$ è una costante che indica il \emph{residuo tollerato}. 
+    \end{enumerate}
+
+    Osserviamo inoltre che il primo criterio non sempre è sufficiente da solo: magari siamo ad una distanza sufficientemente bassa dalla soluzione effettiva del sistema, ma la successione \emph{converge lentamente} per cui la distanza tra due iterazioni successive è superiore alla tolleranza anche per grandi valori di $k$.
+\end{remark}
+
+La convergenza di una ricorrenza del tipo $\vec x = \Psi(\vec x)$ dipende però dal punto base $\vec x^{(0)}$ scelto, mentre noi vorremmo dei teoremi e degli algoritmi indipendenti dal punto iniziale.
+
+\begin{definition}
+    {Metodi iterativi e convergenza}{}
+    Data una trasformazione $\Psi : \R^n \to \R^n$, si dice \strong{metodo iterativo} l'insieme di tutte le successioni generate da $\Psi$ con punto base qualsiasi, ovvero l'insieme di tutte le ricorrenze della forma \[
+        \left\{
+        \begin{aligned}
+            &\vec x^{(0)} \in \R^n\\
+            &\vec x^{(k+1)} \deq \Psi\parens[\Big]{\vec x^{(k)}}
+        \end{aligned}
+        \right.
+    \] Un metodo iterativo si dice \strong{convergente} se ogni successione che appartiene al metodo è convergente.
+\end{definition}
+
+In questa parte del corso studieremo metodi iterativi su trasformazioni \emph{affini}, ovvero della forma \begin{gather*}
+    \Psi : \R^n \to \R^n\\
+    \Psi(\vec x) = P\vec x + \vec q,
+\end{gather*} con $P \in \Mat{\R, n, n}$ e $\vec q \in \R^n$. 
+
+Per il \Cref{th:conv_fixed_point_affine} sappiamo che se una successione generata da $\Psi$ converge, allora converge ad un punto fisso di $\Psi$ e quindi ad una soluzione del sistema lineare che stavamo considerando inizialmente. 
+Dunque se il metodo converge ogni sua successione converge ad una soluzione del sistema, e siccome stiamo considerando sistemi lineari in cui la matrice dei coefficienti è invertibile, segue che la soluzione del sistema è unica e tutte le successioni convergono allo stesso punto.
+
+\subsection{Studio della convergenza}
+
+Vogliamo quindi studiare dei criteri che ci dicano se un metodo iterativo converge oppure no. Facciamo degli esempi.
+
+\begin{example}
+    Consideriamo il metodo dato da $\vec x^{(k+1)} = P\vec x^{(k)}$, quindi senza termine noto, e studiamone la convergenza se \[
+        P = \begin{bmatrix}
+            \nicefrac12 & & \\
+            & \nicefrac12 & \\
+            & & -2
+        \end{bmatrix}.
+    \] 
+
+    Osserviamo che, siccome il termine noto è $\vec 0$ la soluzione della ricorrenza è il vettore $\vec 0$: infatti \[
+        \vec x = P\vec x \iff P\vec x - \vec x = (P - I)\vec x = 0,
+    \] dunque $\vec x = \vec 0$.    
+    Osserviamo inoltre che, per lo stesso motivo, la ricorrenza può essere portata molto semplicemente in una forma chiusa: \[
+        \vec x^{(k)} = P\vec x^{(k-1)} = P^2\vec x^{(k-2)} = \dots = P^k\vec x^{(0)}.
+    \] Inoltre, dato che $P$ è una matrice diagonale, vale che \[
+        P^k = \begin{bmatrix}
+            (\nicefrac12)^k & & \\
+            & (\nicefrac12)^k & \\
+            & & (-2)^k
+        \end{bmatrix}.
+    \]
+
+    Vediamo quindi che succede per due diverse scelte di $\vec x^{(0)}$.
+    \begin{itemize}
+        \item Poniamo $\vec x^{(0)} \deq (1, 0, 0)\trans$. Allora \[
+            \vec x^{(k)} = P^k\vec x^{(0)} = \begin{pmatrix}
+                (\nicefrac12)^k \\ 0 \\0
+            \end{pmatrix},
+        \] e notiamo che ogni componente di questo vettore tende a $0$ per $k \to +\infty$, dunque la successione converge a $\vec 0$.
+        \item Poniamo $\vec x^{(0)} \deq (0, 0, 1)\trans$. Allora \[
+            \vec x^{(k)} = P^k\vec x^{(0)} = \begin{pmatrix}
+                0 \\ 0\\ (-2)^k
+            \end{pmatrix}.
+        \] Questa successione però non converge, poiché l'ultima coordinata cambia costantemente segno.
+    \end{itemize} 
+
+    Segue quindi che questo metodo non converge.
+\end{example}
+
+\begin{example}
+    Consideriamo come prima il metodo dato da $\vec x^{(k+1)} = P\vec x^{(k)}$, dove \[
+        P = \begin{bmatrix}
+            \nicefrac12 & \\
+            & \nicefrac12
+        \end{bmatrix}.
+    \] Per lo stesso motivo dell'esempio precedente si ricava che \[
+        \vec x^{(k)} = P^k\vec x^{(0)}.
+    \] Sia allora $\vec x^{(0)} \deq (\alpha, \beta)\trans \in \R^2$ qualsiasi. Segue che \[
+        x^{(k)} = P^k\vec x^{(0)} = \begin{psmallmatrix}
+            (\nicefrac12)^k & \\
+            & (\nicefrac12)^k
+        \end{psmallmatrix}\begin{psmallmatrix}
+            \alpha \\ \beta
+        \end{psmallmatrix} = \begin{psmallmatrix}
+            \frac{1}{2^k}\cdot \alpha \\
+            \frac{1}{2^k}\cdot \beta
+        \end{psmallmatrix} \xrightarrow{k \to +\infty} \begin{psmallmatrix}
+            0 \\ 0
+        \end{psmallmatrix},
+    \] dunque la successione è convergente per ogni scelta di $\alpha, \beta$, dunque il metodo è convergente. 
+\end{example}
+
+Consideriamo allora un sistema lineare $A\vec x = \vec b$ con $A$ invertibile e la sua forma iterativa $\vec x = \Psi(\vec x) \deq P\vec x + \vec q$. Sia infine $\vec x$ l'unica soluzione del sistema dato.
+
+\begin{definition}
+    {Successione degli errori}{}
+    Dato un metodo iterativo per un sistema lineare con soluzione $\vec x \in \R^n$, e data una successione del metodo (quindi una particolare scelta del punto base $\vec x^{(0)}$) si dice \strong{successione degli errori} la successione $\seqn*{\vec \eps^{(k)}}_{k \in \N}$ a valori in $\R^n$ data da \[
+        \vec \eps^{(k)} \deq \vec x^{(k)} - \vec x.
+    \]
+\end{definition}
+
+Osserviamo che $\vec x^{(k)} \to \vec x$ se e solo se \[
+    \vec x^{(k)} - \vec x = \vec \eps^{(k)} \to \vec 0.
+\] Dunque per studiare la convergenza di una successione possiamo studiare la convergenza della relativa successione degli errori, che può anche essere descritta in termini della norma: la successione degli errori tende a $\vec 0$ se e solo se \[
+    \norm[\big]{\vec \eps^{(k)}} = \norm[\big]{\vec x^{(k)} - \vec x} \to 0.
+\]
+
+\begin{lemma}{}{upper_bound_error_seqn}
+    Se $\seqn*{\vec \eps^{(n)}}$ è la successione degli errori relativa a qualche metodo iterativo $\vec x = \Psi(\vec x)$ allora \[
+        \vec \eps^{(k)} = P^k \cdot \vec \eps^{(0)}.
+    \] In particolare segue che \[
+        \norm[\big]{\vec \eps^{(k)}} \leq \norm*{P}^k \cdot \norm[\big]{\vec \eps^{(0)}}.
+    \]
+\end{lemma}
+\begin{proof}
+    Sia $\Psi(\vec v) = P\vec v + \vec q$ e sia $\vec x$ la soluzione del sistema lineare, ovvero $\vec x = \Psi(\vec x)$.
+    
+    Osserviamo che \[
+        \vec \eps^{(k)} = \vec x^{(k)} - \vec x = (P\vec x^{(k-1)} + \vec q) - (P\vec x + \vec q) = P(\vec x^{(k-1)} - \vec x) = P\vec \eps^{(k-1)}.
+    \] Reiterando la costruzione (per induzione) si ottiene che \[
+        \vec \eps^{(k)} = P^k \vec \eps^{(0)}.
+    \] Calcolando la norma di entrambi i membri: \begin{align*}
+        \norm[\big]{\vec \eps^{(k)}} 
+        &= \norm*{P^k \vec \eps^{(0)}} \\
+        &\leq \norm*{P^k} \cdot \norm[\big]{\vec \eps^{(0)}}\\
+        \intertext{Sfruttando la \strong{submoltiplicatività} delle norme matriciali, ovvero del fatto che $\norm{AB} \leq \norm{A}\norm{B}$, si ottiene quindi} 
+        &< \norm{P}^k \cdot \norm[\big]{\vec \eps^{(0)}}. \qedhere
+    \end{align*}
+\end{proof}
+
+Diamo ora i criteri di convergenza.
+
+\begin{theorem}
+    {Criterio sufficiente per la convergenza}{crit_suff_conv_affine_method}
+    Il metodo iterativo generato dalla trasformazione affine \begin{gather*}
+        \Psi : \R^n \to \R^n \\
+        \Psi(\vec v) = P\vec v + \vec q,
+    \end{gather*} converge se esiste una norma matriciale indotta tale che \[
+        \norm{P} < 1.
+    \]
+\end{theorem}
+
+\begin{remark}
+    Questa condizione è solamente \strong{sufficiente}: se $\norm{P} < 1$ sicuramente il metodo converge, ma potrebbe convergere anche se $\norm{P} \geq 1$.  
+\end{remark}
+
+\begin{proof}
+    Basta mostrare che se $\norm{P} < 1$ allora il metodo converge, ovvero che qualsiasi successione di errore relativa al metodo tende a $0$. Per il \Cref{lem:upper_bound_error_seqn} sappiamo che \[
+        0 \leq \norm[\big]{\vec \eps^{(k)}} \leq \norm{P}^k \norm[\big]{\vec \eps^{0}}.
+    \] Osserviamo che, qualsiasi sia $\vec \eps^{(0)}$, si ha che $\norm{P}^k \xrightarrow{k \to +\infty} 0$, in quanto $\norm{P} < 1$. Per il Teorema dei Carabinieri segue quindi che \[
+        \norm[\big]{\vec \eps^{(k)}} \to 0
+    \] per qualsiasi scelta di $\vec \eps^{(0)}$, dunque il metodo converge. 
+\end{proof}
+
+\begin{theorem}
+    {Condizione necessaria per la convergenza}{}
+    Se il metodo iterativo generato dalla trasformazione affine 
+    \begin{gather*}
+        \Psi : \R^n \to \R^n\\
+        \Psi(\vec v) = P\vec v + \vec q
+    \end{gather*} è convergente allora \[
+        \rho(P) < 1.
+    \]
+\end{theorem}
+
+La condizione che il raggio spettrale di $P$ sia minore di $1$ è equivalente a dire che \emph{ogni autovalore} di $P$ è in modulo minore di $1$ (in quanto $\rho(P)$ è il massimo tra i moduli degli autovalori).
+
+Altre condizioni necessarie per la convergenza sono quindi \begin{itemize}
+    \item $\abs{\det P} < 1$: siccome $\det P = \prod_{\lambda_i \text{ autov.}} \lambda_i$, se il modulo fosse maggiore o uguale a $1$ allora almeno un autovalore sarebbe in modulo maggiore o uguale a $1$, dunque il metodo non convergerebbe;
+    \item $\abs{\tr P} < n$: siccome $\tr P = \sum_{\lambda_i \text{ autov.}} \lambda_i$, se la traccia fosse in modulo maggiore o uguale a $n$ allora almeno un autovalore sarebbe in modulo maggiore o uguale a $1$, dunque il metodo non convergerebbe.    
+\end{itemize}
+
+\begin{proof}
+    Sia $\lambda$ l'autovalore di $P$ di modulo massimo (dunque $\abs{\lambda} = \rho(P)$) e sia $\vec v \neq \vec 0$ il corrispondente autovettore ($P\vec v = \lambda\vec v$).
+
+    Siccome per ipotesi il metodo è convergente, segue che la successione generata converge per qualsiasi scelta del punto base. Sia quindi \[
+        \vec x^{(0)} \deq \vec x + \vec v,
+    \] dove $\vec x$ è la soluzione del sistema lineare.
+
+    Siccome la successione converge, segue che $\vec \eps^{(k)} \to \vec 0$, dunque per il \Cref{lem:upper_bound_error_seqn} \[
+        P^k \vec \eps^{(0)} \to \vec 0.
+    \]
+    
+    Osserviamo inoltre che \[
+        \eps^{(0)} = \vec x^{(0)} - \vec x = (\vec x + \vec v) - \vec x = \vec v.
+    \] Dunque, ricordando che se $\vec v$ è autovettore di $P$ con autovalore $\lambda$ allora sarà autovettore anche di $P^k$ con autovalore $\lambda^k$, segue che \[
+        P^k \vec v = \lambda^k\vec v \to \vec 0. 
+    \] Per definizione di convergenza allora \[
+        0 
+        = \lim_{k \to +\infty} \norm*{\lambda^k\vec v}
+        = \lim_{k \to +\infty} \abs*{\lambda^k} \cdot \norm{\vec v} 
+        = \norm{\vec v} \cdot \lim_{k \to +\infty} \abs*{\lambda}^k.
+    \] Dato che $\vec v \neq \vec 0$ segue che $\abs*{\lambda}^k \to +\infty$, da cui segue che $\rho(P) = \abs{\lambda} < 1$, come volevamo.
+\end{proof}

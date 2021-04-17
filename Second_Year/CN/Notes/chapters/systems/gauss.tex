@@ -158,7 +158,7 @@ Dimostriamo separatamente le varie proprietà.
             x_1 \\ \smallvdots \\ x_{k} \\ 0 \\ \smallvdots \\ 0 
         \end{pmatrix}.
     \]
-    Svolgendo il prodotto matrice-vettore otteniamo l´equazione vettoriale \[
+    Svolgendo il prodotto matrice-vettore otteniamo l'equazione vettoriale \[
         \begin{pmatrix}
             x_1 \\ \smallvdots \\ x_{k} \\ -v_{k+1}x_{k} + x_{k+1} \\ \smallvdots \\ -v_{n}x_{k} + x_{n}
         \end{pmatrix} \stackrel{!}{=} \begin{pmatrix}
@@ -277,7 +277,7 @@ Infatti, come abbiamo visto nella sezione precedente, possiamo considerare la ma
 Vale quindi la seguente
 
 \begin{proposition}
-    {}{}
+    {}{form_L_matrix}
     Se l'algoritmo di Gauss è applicabile (ovvero se $a_{ii}^{(i-1)} \neq 0$ per ogni $i = 1, \dots, n-1$) allora $A$ è fattorizzabile LU e \[
         L = \begin{pNiceMatrix}
             1          &          &  &\\
@@ -328,7 +328,7 @@ Ponendo $i \deq n-k$ otteniamo quindi \begin{align*}
     \]
 \end{remark}
 
-\subsection{Scambio di righe}
+\subsection{Scambio di righe e pivoting}
 
 Abbiamo visto che il metodo delle matrici elementari di Gauss funziona solo assumendo che $a_{kk}^{(k-1)} \neq 0$. Tuttavia, ciò non ci consente di risolvere semplici sistemi lineari, come ad esempio \[
     \begin{pmatrix}
@@ -338,7 +338,7 @@ Abbiamo visto che il metodo delle matrici elementari di Gauss funziona solo assu
     \end{pmatrix}\vec x = \begin{pmatrix}
         1 \\ -1 \\ 0
     \end{pmatrix}.
-\] Infatti $a_{11}^{0} = 0$, dunque non possiamo trovare una matrice elementare di Gauss che annulli gli altri coefficienti della prima riga. Abbiamo quindi bisogno di un metodo sistematico per poter \strong{scambiare} le righe della matrice $A$.
+\] Infatti $a_{11}^{(0)} = 0$, dunque non possiamo trovare una matrice elementare di Gauss che annulli gli altri coefficienti della prima riga. Abbiamo quindi bisogno di un metodo sistematico per poter \strong{scambiare} le righe della matrice $A$.
 
 \begin{definition}
     {Matrice di permutazione}{perm_matrix}
@@ -349,10 +349,49 @@ Si può dimostrare che moltiplicare a sinistra per una matrice di permutazione c
 
 Partendo dal sistema $A\vec x = \vec b$ andiamo quindi a risolvere il sistema $PA\vec x = P\vec b$.
 
-Vale in particolare il seguente risultato
+Vale in particolare il seguente risultato.
 \begin{proposition}
-    {}{}
+    {Esistenza e unicità della fattorizzazione PLU}{PLU_decomposition}
     Sia $A \in \Mat{\R, n, n}$ una matrice invertibile. Allora esiste $P \in \Mat{\R, n, n}$ matrice di permutazione tale che $PA$ è fattorizzabile LU, ovvero tale che esistano uniche $L$ triangolare inferiore con $1$ sulla diagonale, $U$ triangolare superiore, tali che \[
         PA = LU.
     \]  
+    Una tale fattorizzazione spesso è chiamata \strong{fattorizzazione PLU}. 
 \end{proposition}
+
+\begin{remark}
+    Osserviamo che la matrice $P$ è una matrice ortogonale (ovvero $P\inv = P\trans$), dunque se vogliamo fattorizzare $A$ come $P\inv LU$ non è necessario calcolare $P\inv$ ma basta trasporre la matrice.
+\end{remark}
+
+Non dimostriamo la \Cref{prop:PLU_decomposition}, tuttavia possiamo ragionare sul perché è sempre possibile effettuare uno scambio di righe che faccia progredire l'Algoritmo di Gauss. Consideriamo la matrice $A^{(k-1)}$ ottenuta al $(k-1)$-esimo passaggio dell'algoritmo: essa avrà la seguente forma \[
+    A^{(k-1)} = \begin{bNiceMatrix}
+        a_{11}^{(k-1)} & &  &\Block{4-3}<\HUGE>{\ast}&&&\\
+        &\Ddots & &&&&\\
+        & &a_{k-1, k-1}^{(k-1)} & &&&\\
+        & & &a_{kk}^{(k-1)} & &&\\
+        \Block{3-3}<\HUGE>{0}& & &a_{k+1,k}^{(k-1)} &\Ddots & &\\
+        & & &\Vdots &\Block{2-2}<\Huge>{\ast} & & \\
+        & & &a_{nk}^{(k-1)} & &\hphantom{a_{nn}^{(k-1)}} &a_{nn}^{(k-1)}
+    \end{bNiceMatrix}
+\] Supponiamo che $a_{kk}^{(k-1)} = 0$ e mostriamo che deve esserci almeno una riga $i$ tra le successive il cui elemento nella colonna $k$ è diverso da $0$ ($a_{ik}^{(k-1)} \neq 0$ con $i > k$). Ricordiamo che abbiamo supposto $A$ invertibile, dunque $\det A \neq 0$ e ogni passo dell'algoritmo di Gauss consiste nel moltiplicare per una matrice elementare, che ha determinante uguale ad $1$: per il Teorema di Binet segue quindi che \[
+    \det A^{(k-1)} = \det (E_{k-1} \cdots E_{1}A) = \det E_{k-1} \cdots \det E_1 \cdot \det A = \det A \neq 0,  
+\] cioè $A^{(k-1)}$ è invertibile.
+
+Inoltre calcolando il determinante di $A$ tramite sviluppi di Laplace ripetuti sulla prima colonna, si ha che \[
+    \det A^{(k-1)} = a_{11}^{(k-1)}\cdots a_{k-1,k-1}^{(k-1)} \cdot \det \MM,
+\] dove $\MM$ è il minore di $A$ costruito usando le ultime $k$ righe e $k$ colonne (dunque la sua prima colonna è formata dagli elementi $a_{kk}^{(k-1)}, \dots, a_{nk}^{(k-1)}$).
+
+Supponiamo ora per assurdo che per ogni $i \geq k$ valga che $a_{ik}^{(k-1)} = 0$. Allora la prima colonna di $\MM$ è nulla, dunque segue che $\det \MM = 0$, da cui $\det A^{(k-1)} = 0$. Tuttavia ciò è assurdo poiché abbiamo già mostrato che $A^{(k-1)}$ è invertibile, dunque deve esserci almeno un elemento non nullo tra $a_{kk}^{(k-1)}, \dots, a_{nk}^{(k-1)}$ e quindi possiamo effettuare lo scambio di righe.
+
+\subsubsection{Maximum pivoting}
+
+Un metodo particolare per fare il \emph{pivoting} (ovvero per scegliere quali righe scambiare) è tramite la tecnica del \strong{maximum pivoting}: invece di effettuare scambi di righe solamente quando necessario, ad ogni passo $k$ calcoliamo l'indice di riga $p_k$ tale che \[
+    \abs*{a_{p_kk}^{(k-1)}} = \max \set*{\abs*{a_{ik}^{(k-1)}} \given i \geq k},
+\] ovvero facciamo in modo che il pivot abbia sempre modulo massimo. Questo metodo è particolarmente importante in quanto aumenta la stabilità dell'algoritmo di Gauss.
+
+Infatti osserviamo che i moltiplicatori calcolati tramite la tecnica di max-pivoting hanno tutte le coordinate minori o uguali a $1$, poiché \[
+    m_{i}^{(k)} = \frac{a_{ik}^{(k-1)}}{a_{kk}^{(k-1)}}
+\] e dopo l'operazione di scambio tra righe $a_{kk}^{(k-1)}$ è il massimo tra gli $a_{ik}^{(k-1)}$. Inoltre nel calcolare effettivamente in macchina la fattorizzazione LU di una matrice introdurremo sicuramente un errore, dunque otterremo due matrici $\widetilde{L}, \widetilde{U}$ tali che $\widetilde{L}\widetilde{U} = A + \delta A$, dove $\delta A$ è una matrice di errore. Si può dimostrare che \[
+    \norm{\delta A} = \OO(u) \cdot \norm{L} \cdot \norm{U},
+\] dunque la norma dell'errore $\delta A$ dipende in particolare dalla norma di $L$. 
+
+Ma per la \Cref{prop:form_L_matrix} sappiamo che la matrice $L$ ha come elementi i vari moltiplicatori, dunque avendoli fatti diventare più piccoli necessariamente diminuirà anche la norma della matrice. Allo stesso modo si può dimostrare che, tramite il max-pivoting, anche la norma di $U$ viene limitata, dunque l'errore complessivo sarà minore e quindi l'algoritmo sarà più stabile.
