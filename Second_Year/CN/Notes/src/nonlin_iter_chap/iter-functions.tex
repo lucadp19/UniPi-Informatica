@@ -1,0 +1,159 @@
+\section{Primi metodi iterativi per gli zeri di una funzione}
+
+Nel capitolo sui metodi iterativi per sistemi lineari abbiamo studiato come trovare le soluzioni di un sistema cercando il \emph{punto fisso} di un determinato metodo iterativo. Ora vogliamo fare la stessa cosa con il problema di trovare gli \emph{zeri} di una funzione $f : \interval[{a, b}] \subseteq \R \to \R$: vogliamo dunque determinare un $\alpha \in \interval({a, b})$ tale che $f(\alpha) = 0$.
+
+La prima domanda da porci è: come facciamo ad essere sicuri che un tale $\alpha$ esista? Se esiste, è unico? Questo quesito viene risolto tramite il Teorema degli Zeri.
+
+\begin{theorem}
+    {Teorema degli Zeri}{zeroes}
+    Sia $f : [a, b] \to \R$ tale che \begin{enumerate}
+        \item $f(a)f(b) < 0$, ovvero $f$ assume valori discordi agli estremi del dominio;
+        \item $f \in \CC^0\parens*[\big]{[a, b]}$. 
+    \end{enumerate} Allora esiste almeno un $\alpha \in (a, b)$ tale che $f(\alpha) = 0$. Inoltre se $f$ è monotona $\alpha$ è unico. 
+\end{theorem}
+
+Il \nameref{th:zeroes} ci fornisce un semplice metodo per approssimare gli zeri di una funzione, chiamato \strong{metodo di bisezione}, basato sul seguente algoritmo.
+
+\begin{enumerate}[(1)]
+    \item Pongo $a_0 \deq a$, $b_0 \deq b$, $k = 0$. 
+    \item Calcolo $c_k \deq \frac12(a + b)$ (dunque $c_k$ è il punto medio di $a_k, b_k$.
+    \item Considero $3$ casi: 
+    \begin{itemize}
+        \item se $f(c_k) = 0$ segue che $c_0$ è uno zero di $f$, dunque termino;
+        \item se $f(c_k)f(b_k) < 0$ (ovvero $f$ assume valori discordi agli estremi dell'intervallo $[c_k, b_k]$) riapplico il metodo su questo intervallo ponendo $a_{k+1} \deq c_k$, $b_{k+1} \deq b_k$;
+        \item se $f(c_k)f(a_k) < 0$ (ovvero $f$ assume valori discordi agli estremi dell'intervallo $[a_k, c_k]$) riapplico il metodo su questo intervallo ponendo $a_{k+1} \deq a_k$, $b_{k+1} \deq c_k$.
+    \end{itemize}
+    \item Pongo $k \deq k+1$ e torno al passo (2).
+\end{enumerate}
+
+% Vediamolo in azione su un esempio grafico:
+% \begin{center}
+% \begin{tikzpicture}[
+%         declare function={cbrt(\x)=x/(abs(x))*(abs(x))^(1/2)}
+%     ]
+%     \begin{axis}
+%         % [
+%         %     xmin=-0.5, xmax=6,
+%         %     ymin=-4, ymax=3
+%         % ]
+%         % \addplot[domain=1:4.5, color=blue, very thick]{x/abs(x)*abs(x)^(1/3)}
+%         \addplot[domain=1:4.5, blue]{x}
+%     \end{axis}
+% \end{tikzpicture}
+% \end{center}
+
+Osserviamo che ad ogni passaggio del metodo di bisezione dimezziamo la lunghezza dell'intervallo di interesse, dunque \[
+    b_k - a_k = \frac{b - a}{2^k}.
+\] Il metodo quindi può approssimare quanto vogliamo lo zero della funzione, ma non è detto che riusciremo a trovarlo precisamente. Quindi, come con i metodi per i sistemi lineari, fissiamo una tolleranza $\tau$ e fermiamo l'algoritmo quando \[
+    b_k - a_k \leq \tau.
+\] Al contrario dei metodi iterativi per i sistemi lineari in questo caso possiamo calcolare esplicitamente quante iterazioni saranno necessarie per scendere al di sotto della tolleranza richiesta. Infatti \[
+    b_k - a_k = \frac{b - a}{2^k} \leq \tau 
+    \iff 2^k \geq \frac{b - a}{\tau} 
+    \iff k \geq \ceil*{\log_2\parens*{\frac{b-a}{\tau}}}. 
+\] Tuttavia in molte applicazioni pratiche questo valore di $k$ è più grande di quanto vorremmo: per questo motivo studieremo altri tipi di metodi iterativi, come il \emph{metodo di Newton}.
+
+\section{Metodi di iterazione funzionali}
+
+Prima di studiare il metodo di Newton studieremo un altro metodo per approssimare gli zeri di una funzione, che si basa in questo caso nel trasformare il problema dato in un \emph{problema di punto fisso.}
+
+Consideriamo quindi il problema di determinare gli zeri di $f : [a, b] \to \R$: data un'altra funzione $g : [a, b] \to \R$ diremo che le equazioni $f(x) = 0$ e $g(x) = x$ sono equivalenti quando per ogni $\alpha \in [a, b]$ vale che \[
+    f(\alpha) = 0 \;\iff\; g(\alpha) = \alpha,
+\] ovvero $\alpha$ è uno zero per $f$ se e solo se $\alpha$ è un punto fisso per $g$.
+
+Una volta trovata una $g$ il cui problema del punto fisso è equivalente al problema di determinare gli zeri di $f$ possiamo costruire il metodo iterativo \begin{equation}\label{eq:iter_nonlinear}
+    \begin{cases}
+        x_0 \in [a, b]\\
+        x_{k+1} \deq g(x_k)
+    \end{cases}
+\end{equation} per approssimare, al limite, il punto fisso di $g$. 
+Infatti vale una versione equivalente del \Cref{th:conv_fixed_point_affine} per le funzioni non lineari:
+\begin{theorem}
+    {Convergenza al punto fisso per funzioni non lineari continue}{conv_fixed_nonlinear}
+    Sia $g : [a, b] \to \R$, $g \in \CC^0\parens[\big]{[a, b]}$ e consideriamo il metodo iterativo della \eqref{eq:iter_nonlinear}. 
+    
+    Se $x_k \in [a, b]$ per ogni $k > 0$ e $x_k \to \alpha \in \R$ allora \begin{itemize}
+        \item $\alpha \in [a, b]$,
+        \item $\alpha$ è punto fisso di $g$, ovvero \[
+            \alpha = g(\alpha).
+        \]
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    Se il limite esiste, certamente appartiene all'intervallo $[a, b]$ in quanto la successione $\seqn[\big]{x_n}$ è tutta contenuta in $[a, b]$ e $[a, b]$ è chiuso. Inoltre \[
+        \alpha = \lim_{k \to +\infty} x_{k+1} = \lim_{k \to +\infty} g(x_k) = g\parens*{\lim_{k \to +\infty} x_k} = g(\alpha),
+    \] come volevamo.
+\end{proof}
+
+Rispetto al caso lineare dobbiamo quindi assicurarci che la successione sia tutta contenuta in $[a, b]$. Inoltre trovare metodi \emph{globalmente convergenti}, ovvero che convergono per ogni scelta di $x_0 \in [a, b]$ è molto più difficile. Conviene quindi introdurre il concetto di \emph{convergenza locale}.
+
+\begin{definition}
+    {Metodo localmente convergente}{}
+    Sia $g : [a, b] \to \R$ e sia $\alpha \in [a, b]$ un punto fisso di $g$, ovvero $\alpha = g(\alpha)$. Il metodo \[
+        \begin{cases}
+            x_0 \in [a, b]\\
+            x_{k+1} \deq g(x_k)
+        \end{cases}
+    \] si dice \strong{localmente convergente} se esiste $\rho > 0$ tale che per ogni $x_0 \in I_\rho \deq [\alpha - \rho, \alpha + \rho]$ si ha che \begin{enumerate}
+        \item $x_k \in I_\rho$ per ogni $k \geq 0$;
+        \item $x_k \to \alpha$.  
+    \end{enumerate} 
+\end{definition} 
+
+\begin{remark}
+    Nel caso di metodi convergenti vogliamo che la convergenza valga per ogni scelta di $x_0$, mentre per i metodi localmente convergenti ci basta che il metodo converga se $x_0$ è \emph{sufficientemente vicino} ad $\alpha$.  
+\end{remark}
+
+Il risultato sufficiente a dimostrare la convergenza di un metodo è il seguente.
+\begin{theorem}
+    {Teorema del Punto Fisso}{fixed_point}
+    Sia $g : [a, b] \to \R$, $g \in \CC^1\parens[\big]{[a, b]}$ e sia $\alpha \in (a, b)$ un punto fisso di $g$, ovvero $\alpha = g(\alpha)$. Se esiste un $\rho > 0$ tale che \[
+        \abs*{g'(x)} < 1 \quad \text{ per ogni } x \in I_\rho \deq [\alpha - \rho, \alpha + \rho]
+    \] allora il metodo generato da $g$ è localmente convergente, ovvero per ogni $x_0 \in I_\rho$ si ha che \begin{enumerate}
+        \item $x_k \in I_\rho$ per ogni $k \geq 0$;
+        \item $x_k \to \alpha$.  
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Siccome $g$ è $\CC^1\parens[\big]{[a, b]}$ la sua derivata $g'$ è continua, e dunque anche $\abs*{g(x)}$ è continua per ogni $x \in [a, b]$. Dato che l'intervallo $[\alpha - \rho, \alpha + \rho]$ è chiuso e limitato, per il Teorema di Weierstrass esiste il massimo di $\abs*{g'(\cdot)}$ su $I_\rho$, ovvero esiste \[
+        \lambda \deq \max_{x \in I_\rho} \abs*{g'(x)}.
+    \] Dato che per ipotesi $g'(x) < 1$ per ogni $x \in I_\rho$ segue che $\lambda < 1$.
+    
+    È sufficiente mostrare ora che per ogni $k \geq 0$ valga \[
+        \abs*{x_k - \alpha} \leq \lambda^k \rho.
+    \] Infatti in tal caso seguirebbe che \begin{enumerate}
+        \item per ogni $k \geq 0$ \[
+            \abs*{x_k - \alpha} \leq \lambda^k\rho \leq 1 \cdot \rho = \rho,
+        \] e quindi $x_k \in [\alpha-\rho, \alpha+\rho]$;
+        \item $x_k \to \alpha$: infatti per ogni $k \geq 0$ varrebbe che \[
+            0 \leq \abs*{x_k - \alpha} \leq \lambda^k \rho,
+        \] ma dato che $\lambda < 1$ segue che $\lambda^k\rho \to 0$, dunque per il Teorema dei Carabinieri $\abs*{x_k - \alpha} \to 0$ e quindi la tesi.   
+    \end{enumerate}
+
+    Dimostriamo quindi che $\abs*{x_k - \alpha} \leq \lambda^k\rho$ per ogni $k \geq 0$ per induzione su $k$.
+    \newthought{Caso base} Se $k = 0$ allora $\abs*{x_0 - \alpha} \leq \lambda^0\rho = \rho$ è vero per ipotesi, in quanto $x_0 \in I_\rho = [\alpha - \rho, \alpha + \rho]$.
+    \newthought{Passo induttivo} Supponiamo che la tesi valga per $k$ e mostriamola per $k+1$. Osserviamo che \begin{equation} \label{eq:fixed_point_1}
+        \abs*{x_{k+1} - \alpha} = \abs*{g(x_k) - g(\alpha)}.
+    \end{equation} Allora per il Teorema di Lagrange dovrà esistere $\xi_k$ compreso tra $x_k$ e $\alpha$ tale che \[
+        g'(\xi_k) = \frac{g(x_k) - g(\alpha)}{x_k - \alpha},
+    \] ovvero $g(x_k) - g(\alpha) = g'(\xi_k)\cdot (x_k - \alpha)$. Sostituendolo nella \eqref{eq:fixed_point_1} otteniamo \begin{equation} \label{eq:fixed_point_2}
+        \abs*{g(x_k) - g(\alpha)} = \abs*{g'(\xi_k)} \cdot \abs*{x_k - \alpha}.
+    \end{equation} Per ipotesi induttiva $x_k - \alpha \leq \lambda^k\rho$. Inoltre dire che $\xi_k$ è compreso tra $x_k$ e $\alpha$ significa che la sua distanza da $\alpha$ è minore della distanza di $x_k$ da $\alpha$, ovvero \[
+        \abs*{\xi_k - \alpha} \leq \abs*{x_k - \alpha} \leq \lambda^k\rho \leq 1\cdot\rho = \rho.
+    \] Dunque $\abs*{\xi_k - \alpha} \leq \rho$, ovvero $\xi_k \in I_\rho$. Pertanto $\abs*{g'(\xi_k)} < \lambda$ in quanto $\lambda$ è il valore massimo della funzione $\abs*{g'(\cdot)}$ su $I_\rho$.
+
+    Sostituendo questi due ultimi fatti nella \eqref{eq:fixed_point_2} otteniamo \[
+        \abs*{x_{k+1} - \alpha} = \abs*{g'(\xi_k)} \cdot \abs*{x_k - \alpha} \leq \lambda \cdot \lambda^k\rho = \lambda^{k+1}\rho,
+    \] che è la tesi.
+\end{proof}
+
+\begin{corollary}
+    {}{}
+    Sia $g : [a, b] \to \R$, $g \in \CC^1\parens[\big]{[a, b]}$ e sia $\alpha \in (a, b)$ tale che $\alpha = g(\alpha)$. Se $\abs*{g(\alpha)} < 1$ allora il metodo è localmente convergente.  
+\end{corollary}
+\begin{proof}
+    Consideriamo la funzione $h : [a, b] \to \R$ definita da $h(x) \deq \abs*{g'(x)} - 1$. Sicuramente $h \in \CC^0\parens[\big]{[a, b]}$: infatti $g'$ è continua su $[a, b]$, dunque $\abs*{g'(\cdot)}$ è continua e quindi anche $h$ lo è. Per ipotesi allora \[
+        h(\alpha) = \abs*{g'(\alpha)} - 1 < 0,
+    \] dunque per il Teorema della Permanenza del Segno esisterà un intorno di $\alpha$ per cui $h$ è negativa, ovvero esisterà $\rho > 0$ tale che per ogni $x \in [\alpha - \rho, \alpha + \rho]:\; h(x) < 0$. Ma allora per definizione di $h$ vale che \[
+        \abs*{g'(x)} < 1
+    \] per ogni $x \in [\alpha - \rho, \alpha + \rho]$. Quindi siamo nelle ipotesi del \nameref{th:fixed_point} e quindi segue la tesi. 
+\end{proof}
