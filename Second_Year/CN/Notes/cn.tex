@@ -34,7 +34,7 @@
 \setcounter{MaxMatrixCols}{20}
 
 \usetikzlibrary{external}
-\tikzexternalize[prefix=chapters/figures/]
+\tikzexternalize[prefix=figures/]
 \tcbsetforeverylayer{shield externalize}
 
 \let\oldtilde\tilde
@@ -63,24 +63,11 @@
 
 \mainmatter{}
 
-\chapter{Aritmetica di macchina}
-\input{chapters/machine/float}
-\input{chapters/machine/errors}
-\input{chapters/machine/arith}
-\input{chapters/machine/examples}
-
-\chapter{Algebra lineare numerica}
-\input{chapters/norms/vecnorm}
-\input{chapters/norms/matrixnorm}
-\input{chapters/norms/linsys}
-\input{chapters/eigenval/eigenval}
-\input{chapters/systems/LU-fact}
-\input{chapters/systems/gauss}
-\input{chapters/systems/iterative-methods}
+\include{chapters/machine_chap}
+\include{chapters/norms_chap}
+\include{chapters/linsys_chap}
 
 \appendix
-\chapter{Teoremi secondari}
-\input{chapters/appendix/smallth}
-\chapter{Prerequisiti di Algebra Lineare}
-\input{chapters/appendix/linalg}
+\include{chapters/appendix_other_chap}
+\include{chapters/appendix_linalg_chap}
 \end{document}
