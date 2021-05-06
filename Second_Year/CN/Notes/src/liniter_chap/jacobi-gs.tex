@@ -1,0 +1,234 @@
+\section{Metodi di Jacobi e Gauss-Seidel}
+
+Studiamo ora due metodi iterativi particolari, chiamati \strong{metodo di Jacobi} e \strong{metodo di Gauss-Seidel}.
+
+I due metodi differiscono sulla decomposizione additiva della matrice dei coefficienti $A$. In entrambi i casi dividiamo la matrice in $3$ parti: \begin{gather*}
+    A = \begin{bNiceMatrix}
+        a_{11} &a_{12} &\Ldots & &a_{1n}\\
+        a_{21} &\Ddots &\Ddots & &\Vdots\\
+        \Vdots &\Ddots &       & &\Vdots\\
+               &       &       & &a_{n-1,n}\\
+        a_{n1} &\Ldots &       &a_{n,n-1} &a_{nn}      
+    \end{bNiceMatrix} \\
+    = \underbrace{\begin{bNiceMatrix}[nullify-dots]
+        a_{11} & & & &\\
+               &\Ddots & & &\\
+               & & & &\\
+               & & & &\\
+               & & & &a_{nn}      
+    \end{bNiceMatrix}}_{D} 
+    - \underbrace{\begin{bNiceMatrix}[nullify-dots]
+        0       & & &\hphantom{a_{1}}\\
+        -a_{21} & & &\\
+        \Vdots  & & &\\
+        -a_{n1} &\Ldots &-a_{n,n-1} &0  
+        \CodeAfter \line{1-1}{4-4}
+        \CodeAfter \line{2-1}{4-3}    
+    \end{bNiceMatrix}}_{L} - \underbrace{\begin{bNiceMatrix}[nullify-dots]
+        0 &-a_{12}  &\Ldots &-a_{1n}\\
+          &         &       &\Vdots\\
+          &         &       &-a_{n-1,n}\\
+        \hphantom{a_{11}}\vphantom{a_{11}}  &         &       &0
+        \CodeAfter \line{1-1}{4-4}
+        \CodeAfter \line{1-2}{3-4}
+    \end{bNiceMatrix}}_{U},
+\end{gather*} dove i nomi $D$, $L$, $U$ indicano quindi la diagonale, la parte strettamente sotto la diagonale (cambiata di segno) e la parte strettamente sopra la diagonale (cambiata di segno).
+
+\subsection{Metodo di Jacobi}
+Nel metodo di Jacobi si decompone la matrice $A$ in \[
+    A = D - (L + U).
+\] Il metodo iterativo assume quindi la forma \[
+    \vec x^{(k-1)} = J\vec x^{(k)} + D\inv\vec b
+\] dove $J = D\inv(L + U)$. Affinché il metodo sia applicabile è necessario quindi che $D$ sia invertibile, dunque è necessario che $a_{ii} \neq 0$ per ogni $i = 1, \dots, n$.
+
+Cerchiamo ora di trovare delle formule chiuse per \emph{aggiornare} il vettore dell'iterazione. \begin{align*}
+    &\vec x^{(k+1)} = D\inv(L + U)\vec x^{(k)} + D\inv\vec b\\
+    \iff {}&\vec x^{(k+1)} = D\inv \cdot \parens[\Big]{(L+U)\vec x + \vec b}\\
+    \iff {}&D\vec x^{(k+1)} = (L+U)\vec x + \vec b.
+\end{align*}
+
+Rappresentiamo le varie matrici e i vettori che compaiono nell'equazione:
+\[
+    \begin{bNiceMatrix}[nullify-dots]
+        a_{11} & & & &\\
+               &\Ddots & & &\\
+               & & & &\\
+               & & & &\\
+               & & & &a_{nn}      
+    \end{bNiceMatrix} \begin{bNiceMatrix}[nullify-dots]
+        x^{(k+1)}_1 \\ \Vdots \\ \\ \\x^{(k+1)}_n
+    \end{bNiceMatrix}
+    = -\begin{bNiceMatrix}[nullify-dots,columns-width=auto]
+        0       &a_{12} &\Ldots &           &a_{1n}\\
+        a_{21}  &\Ddots &\Ddots &           &\Vdots\\
+        \Vdots  &\Ddots &       &           &\Vdots\\
+                &       &       &           &a_{n-1,n}\\
+        a_{n1} &\Ldots  &       &a_{n,n-1}  &0      
+    \end{bNiceMatrix}\begin{bNiceMatrix}[nullify-dots]
+        x^{(k)}_1 \\ \Vdots \\ \\ \\x^{(k)}_n
+    \end{bNiceMatrix} + \begin{bNiceMatrix}[nullify-dots]
+        b_1 \\ \Vdots \\ \\ \\b_n
+    \end{bNiceMatrix}.
+\]
+
+Svolgendo i conti otteniamo quindi \begin{align*}
+    &a_{ii}x^{(k+1)}_i = b_i - \sum_{j=1}^{i-1} a_{ij}x^{(k)}_j - \sum_{j=1+i}^n a_{ij}x^{(k)}_j\\
+    \iff {}&x^{(k+1)}_i = \frac{1}{a_{ii}} \parens*{b_i - \sum_{j=1}^{i-1} a_{ij}x^{(k)}_j - \sum_{j=1+i}^n a_{ij}x^{(k)}_j},
+\end{align*} che è la formula chiusa per il calcolo di $\vec x^{(k+1)}$ nel metodo di Jacobi.
+
+\subsection{Metodo di Gauss-Seidel}
+Nel caso del metodo di Gauss-Seidel (abbreviato da qui in poi con GS) si decompone la matrice $A$ in \[
+    A = (D - L) - U.
+\] Il metodo iterativo assume quindi la forma \[
+    \vec x^{(k+1)} = G\vec x^{(k)} + (D - L)\inv\vec b,
+\] dove la matrice di iterazione è $G \deq (D-L)\inv U$. Anche in questo caso il metodo è applicabile se e solo se $D-L$ è invertibile, ovvero (essendo $D-L$ la parte triangolare inferiore di $A$, diagonale inclusa) $a_{ii} \neq 0$ per ogni $i = 1, \dots, n$.
+
+Per trovare una formula chiusa seguiamo gli stessi passaggi seguiti in precedenza:
+\begin{align*}
+    &\vec x^{(k+1)} = (D - L)\inv U\vec x^{(k)} + (D - L)\inv\vec b\\
+    \iff {}&\vec x^{(k+1)} = (D - L)\inv \parens[\Big]{U\vec x^{(k)} - \vec b}\\
+    \iff {}&(D - L)\vec x^{(k+1)} = U\vec x^{(k)} - \vec b.
+\end{align*}
+Rappresentando le varie matrici e i vettori che compaiono nell'equazione otteniamo: \[
+    \begin{bNiceMatrix}[nullify-dots]
+        a_{11} & & &\\
+        a_{21} &\Ddots & &\\
+        \Vdots &\Ddots & &\\
+        a_{n1} &\Ldots &a_{n-1,n} &a_{nn}      
+    \end{bNiceMatrix} \begin{bNiceMatrix}[nullify-dots]
+        x^{(k+1)}_1 \\ \Vdots \\ \\ \\x^{(k+1)}_n
+    \end{bNiceMatrix}
+    = -\begin{bNiceMatrix}[nullify-dots]
+        0 &a_{12}   &\Ldots &a_{1n}\\
+          &\Ddots   &\Ddots &\Vdots\\
+          &         &       &a_{n-1,n}\\
+        \phantom{a_{12}}  &         &       &0      
+    \end{bNiceMatrix}\begin{bNiceMatrix}[nullify-dots]
+        x^{(k)}_1 \\ \Vdots \\ \\ \\x^{(k)}_n
+    \end{bNiceMatrix} + \begin{bNiceMatrix}[nullify-dots]
+        b_1 \\ \Vdots \\ \\ \\b_n
+    \end{bNiceMatrix}.
+\]
+
+Per trovare una formula chiusa svolgiamo i prodotti.
+\begin{align*}
+    &\sum_{j=1}^{i} a_{ij}x^{(k+1)}_j = b_i - \sum_{j=i+1}^n a_{ij}x^{(k)}_j \\
+    \iff {}&a_{ii}x^{(k+1)}_i + \sum_{j=1}^{i-1} a_{ij}x^{(k+1)}_j = b_i - \sum_{j=i+1}^n a_{ij}x^{(k)}_j\\
+    \iff {}&a_{ii}x^{(k+1)}_i = b_i - \sum_{j=1}^{i-1} a_{ij}x^{(k+1)}_j - \sum_{j=i+1}^n a_{ij}x^{(k)}_j\\
+    \iff {}&x^{(k+1)}_i = \frac{1}{a_{ii}}\parens*{b_i - \sum_{j=1}^{i-1} a_{ij}x^{(k+1)}_j - \sum_{j=i+1}^n a_{ij}x^{(k)}_j}.
+\end{align*}
+
+La formula per calcolare il vettore $\vec x^{(k+1)}$ nel metodo di Gauss-Seidel sembra quindi molto simile a quella del metodo di Jacobi, ma ha una sostanziale differenza: 
+nel caso di Jacobi per calcolare ogni componente di $\vec x^{(k+1)}$ abbiamo bisogno dell'intero vettore $\vec x^{(k)}$, mentre nel caso di Gauss-Seidel per calcolare la componente $i$-esima di $\vec x^{(k+1)}$ sfruttiamo le prime $i$ componenti di $\vec x^{(k)}$ e le componenti $x^{(k)}_{i+1}, \dots, x^{(k)}_n$ di $\vec x^{(k)}$. 
+
+Questa differenza è fondamentale nell'implementazione dei due metodi. \begin{itemize}
+    \item Nel metodo di Jacobi è necessario mantenere in memoria l'intero vettore $\vec x^{(k)}$, ma possiamo calcolare le varie componenti del vettore $\vec x^{(k+1)}$ nell'ordine che preferiamo.
+    \item Nel metodo di Gauss-Seidel dobbiamo calcolare le componenti in ordine (in quanto la componente $i$-esima di $\vec x^{(k+1)}$ ha bisogno delle componenti precedenti del \emph{nuovo vettore}) ma possiamo mantenere in memoria un singolo vettore, poiché una volta che abbiamo calcolato $x^{(k+1)}_{i-1}$ la componente $x^{(k)}_i$ non è più necessaria e possiamo sovrascriverla con $x^{(k+1)}_i$. 
+\end{itemize}
+
+\subsection{Condizioni di terminazione}
+
+Vogliamo ora studiare quali condizioni sono necessarie per interrompere il metodo iterativo con una \emph{buona} approssimazione della soluzione. Ovviamente fare un numero fisso di iterazioni è un'idea poco sensata: qualunque numero fissiamo per alcuni sistemi sarà troppo grande (e quindi potrerebbe ad uno spreco di tempo) e per altri sarà troppo piccolo (e quindi porterebbe ad un'approssimazione molto lontana dalla soluzione effettiva). 
+
+Il miglior criterio di arresto è quindi il seguente: fissata una tolleranza $\tau > 0$ arrestiamo il metodo iterativo quando \[
+    \norm[\big]{\vec x^{(k+1)} - \vec x} \leq \tau,
+\] ovvero quando la distanza tra $\vec x^{(k+1)}$ e la vera soluzione del sistema, cioè $\vec x$, è minore o uguale alla tolleranza $\tau$. Sfortunatamente, questo criterio non è applicabile poiché non conosciamo a priori la soluzione del sistema.
+
+Possiamo quindi sfruttare questi altri criteri:
+\begin{multicols}{2}
+\begin{enumerate}[label={(\arabic*)}, ref={Criterio (\arabic*)}]
+    \item \label{eq:termination_crit_1} $\norm[\big]{\vec x^{(k+1)} - \vec x^{(k)}} \leq \tau_1$,
+    \item \label{eq:termination_crit_2} $\displaystyle \frac{\norm[\big]{\vec x^{(k+1)} - \vec x^{(k)}}}{\norm[\big]{\vec x^{(k)}}} \leq \tau_2$,
+    \item \label{eq:termination_crit_3} $\norm[\big]{A\vec x^{(k+1)} - \vec b} \leq \tau_3$,
+    \item \label{eq:termination_crit_4} $\displaystyle \frac{\norm[\big]{A\vec x^{(k+1)} - \vec b}}{\norm[\big]{\vec x^{(k+1)}}} \leq \tau_4$, 
+\end{enumerate} 
+\end{multicols}
+dove i vari $\tau_i$ indicano le tolleranze scelte nei vari casi (che non devono essere necessariamente uguali).
+
+Tuttavia in generale nessuno di questi criteri implica che $\norm[\big]{x^{(k+1)} - \vec x}$ sia limitato superiormente: potremmo soddisfare uno dei criteri (1)-(4) ma ottenere una soluzione approssimata molto lontana dalla soluzione effettiva.
+
+\begin{example}
+    Proviamo a vedere perché succede quanto detto sopra nel caso particolare del \labelcref{eq:termination_crit_1}. Consideriamo la successione degli errori, che per il \Cref{lem:upper_bound_error_seqn} sarà della forma \[
+        \vec \eps^{(k+1)} = \vec x^{(k+1)} - \vec x = P\vec\eps^{(k)}.
+    \] Allora aggiungendo e sottraendo $\vec x$ al membro sinistro del \labelcref{eq:termination_crit_1} otteniamo \[
+        \vec x^{(k+1)} - \vec x^(k) 
+        = \vec x^{(k+1)} - \vec x - \parens[\big]{\vec x^{(k)} - \vec x} 
+        = \vec\eps^{(k+1)} - \vec\eps^{(k)} 
+        = P\vec\eps^{(k)} - \vec\eps^{(k)} 
+        = (P - I_n)\vec \eps^{(k)}.
+    \] Se il metodo è convergente per il \Cref{th:crit_necess_conv_affine_method} segue che $\rho(P) < 1$, dunque $P - I_n$ è invertibile: infatti dato che $\rho(P)$ è il massimo degli autovalori di $P$ segue che ogni autovalore $\lambda$ di $P$ è tale che \[
+        \abs*{\lambda} < 1,
+    \] ovvero tutti gli autovalori di $P$ sono nella \emph{parte interna} del cerchio del piano complesso centrato in $0$ e di raggio $1$. Gli autovalori di $P - I_N$ sono dunque della forma $\lambda - 1$, al variare di $\lambda$ tra gli autovalori di $P$, e quindi si trovano nella parte interna del cerchio complesso centrato in $-1$ e di raggio $1$: siccome $0$ è nel bordo del cerchio, ogni autovalore è non nullo e quindi $P - I_n$ è invertibile.
+    
+    Dunque $\vec \eps^{(k)} = (P - I_n)\inv \cdot \parens[\big]{\vec x^{(k+1)} - \vec x^{(k)}}$, da cui \begin{align*}
+        \norm[\big]{\vec \eps^{(k)}} 
+        \leq \norm[\big]{(P - I_n)\inv} \cdot \norm[\big]{\vec x^{(k+1)} - \vec x^{(k)}} 
+        \leq \norm[\big]{(P - I_n)\inv} \cdot \tau.
+    \end{align*} Tuttavia se $P - I_n$ è \emph{quasi singolare}, ovvero ha un autovalore molto vicino a $0$ (il che, per il ragionamento di sopra, significa che $\rho(P) \approx 1$) allora $\norm[\big]{(P - I_n)\inv}$ tende a $+\infty$ e quindi la norma della successione degli errori potrebbe essere arbitrariamente grande, anche nelle ipotesi che il \labelcref{eq:termination_crit_1} si sia verificato.
+\end{example}
+
+\subsection{Predominanza diagonale e metodi iterativi}
+
+Dimostriamo ora una Proposizione che ci garantisce l'applicabilità e la convergenza dei metodi di Jacobi e di Gauss-Seidel nel caso in cui la matrice dei coefficienti del sistema sia a predominanza diagonale.
+
+\begin{proposition}
+    {}{}
+    Sia $A \in \Mat{\R, n, n}$ a predominanza diagonale (per righe o per colonne). Allora dato un sistema lineare $A\vec x = \vec b$, con $\vec b \in \R^n$, si ha che \begin{enumerate}[(1)]
+        \item $A$ è invertibile,
+        \item i metodi di Jacobi e di Gauss-Seidel sono applicabili,
+        \item i metodi di Jacobi e di Gauss-Seidel sono convergenti.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Il primo punto segue dalla \Cref{prop:pred_diag=>invert}; per quanto riguarda il secondo invece basta osservare che siccome $\abs*{a_{ii}} \geq \sum_{j \neq i} \abs*{a_{ij}} \geq 0$ segue che $\abs*{a_{ii}} > 0$ e quindi tutti gli elementi della diagonale di $A$ sono non nulli Segue quindi per quanto visto in precedenza che i due metodi sono applicabili.
+
+    Mostriamo ora il terzo punto: sia $P$ la matrice di iterazione (quindi $P \deq J$ oppure $P \deq G$ a seconda del metodo). Per il \Cref{th:crit_necess_suff_affine_method} il metodo è convergente se e solo se $\rho(P) < 1$, ovvero se e solo se per ogni autovalore $\lambda \in \C$ di $P$ si ha che \[
+        \abs*{\lambda} < 1.
+    \] Ricordiamo che $\lambda$ è autovalore se e solo se è radice del polinomio caratteristico, ossia se e solo se $\det \parens*{P - \lambda I_n} = 0$. Osserviamo che \begin{align*}
+        \det \parens*{P - \lambda I_n} = \det \parens*{M\inv N - \lambda M\inv M} = \det \parens[big]{- M\inv \cdot \parens*{\lambda M - N}} = \det \parens[\big]{-M\inv} \cdot \det \parens*{\lambda M - N},
+    \end{align*} dunque $\det\parens*{P - \lambda I_n} = 0$ se e solo se $\det \parens[\big]{-M\inv} \cdot \det \parens*{\lambda M - N} = 0$. Tuttavia $M$ è invertibile, dunque $\det \parens*{-M\inv} \neq 0$, quindi deve essere $\det\parens*{\lambda M - N} = 0$ per ogni $\lambda$ autovalore di $P$, ovvero per ogni $\lambda$ autovalore di $P$ la matrice $H_\lambda \deq \lambda M - N$ deve essere singolare.
+    
+    Supponiamo ora per assurdo che esista un autovalore $\lambda$ di $P$ di modulo superiore a $1$ e discutiamo dei due metodi separatamente: mostreremo che in entrambi i casi sotto le ipotesi che $A$ sia a predominanza diagonale e $\abs*{\lambda} > 1$ si ha che $H_\lambda$ è invertibile, il che è assurdo per quanto dimostrato sopra.
+
+    \newthought{Metodo di Gauss-Seidel}
+    Siccome $A$ è a predominanza diagonale per ogni $i = 1, \dots, n$ si ha \[
+        \abs*{a_{ii}} > \sum_{j \neq i} \abs*{a_{ij}} = \sum_{j = 1}^{i-1} \abs*{a_{ij}} + \sum_{j = i+1}^n \abs*{a_{ij}},
+    \] dunque moltiplicando entrambi i membri per $\abs*{\lambda}$ (e ricordando che $\abs*{\lambda} > 1$)
+    \begin{align}
+        \abs*{\lambda}\abs*{a_{ii}} = \abs*{\lambda a_{ii}}
+        &> \abs*{\lambda}\sum_{j=1}^{i-1} \abs*{a_{ij}} + \abs*{\lambda}\sum_{j=i+1}^n \abs*{a_{ij}} \label{eq:gs_ref_pred_diag}\\
+        &\geq \abs*{\lambda}\sum_{j=1}^{i-1} \abs*{a_{ij}} + 1\sum_{j=i+1}^n \abs*{a_{ij}}\nonumber\\
+        &= \sum_{j=1}^{i-1} \abs*{\lambda a_{ij}} + \sum_{j=i+1}^n \abs*{a_{ij}}. \nonumber
+    \end{align} 
+
+    Tuttavia nel metodo di Gauss-Seidel la matrice $M$ è formata dalla parte triangolare inferiore di $A$ (diagonale inclusa), mentre $M$ è la parte triangolare superiore (diagonale esclusa), dunque \[
+        H_\lambda = \lambda M - N = 
+        \begin{bNiceMatrix}
+            \lambda a_{11} &        &  & \\
+                           &\Ddots  & \Block{1-2}<\large>{a_{ij}}& \\
+            \Block{1-2}<\large>{\lambda a_{ij}} & & &\\
+            & & &\lambda a_{nn}
+            % \CodeAfter \line{2-2}{3-3}
+        \end{bNiceMatrix}.
+    \] Allora, per quanto dimostrato prima, confrontando l'elemento diagonale di ogni riga con il resto della riga otteniamo che \[
+        \abs*{\lambda a_{ii}} > \sum_{j=1}^{i-1} \abs*{\lambda a_{ij}} + \sum_{j=i+1}^n \abs*{a_{ij}}
+    \] cioè $H_\lambda$ è a predominanza diagonale. Ma allora $H_\lambda$ è invertibile e ciò è assurdo poiché abbiamo supposto che $\det H_\lambda = 0$.
+
+    \newthought{Metodo di Jacobi} Seguiamo lo stesso ragionamento fatto per il metodo di Gauss-Seidel fino al punto segnato da \eqref{eq:gs_ref_pred_diag}: a quel punto \begin{align*}
+        \abs*{\lambda a_{ii}} &> \abs*{\lambda}\sum_{j=1}^{i-1} \abs*{a_{ij}} + \abs*{\lambda}\sum_{j=i+1}^n \abs*{a_{ij}} \\
+        &\geq \sum_{j=1}^{i-1} \abs*{a_{ij}} + \sum_{j=i+1}^n \abs*{a_{ij}}.
+    \end{align*} Nel metodo di Jacobi $M$ è formata dalla sola diagonale di $A$, mentre $N$ è il resto della matrice, dunque \[
+        H_\lambda = \lambda M - N = 
+        \begin{bNiceMatrix}
+            \lambda a_{11} & & & \\
+                &\Ddots  & \Block{1-2}<\large>{a_{ij}} & \\
+            \Block{1-2}<\large>{a_{ij}} & & &\\
+                & & &\lambda a_{nn}
+            % \CodeAfter \line{2-2}{3-3}
+        \end{bNiceMatrix}.
+    \] Analogamente a prima, siccome \[
+        \lambda a_{ii} > \sum_{j=1}^{i-1} \abs*{a_{ij}} + \sum_{j=i+1}^n \abs*{a_{ij}}
+    \] la matrice $H_\lambda$ è a predominanza diagonale, e quindi è invertibile e otteniamo ancora una volta un assurdo.
+
+    Segue quindi che in entrambi i casi ogni autovalore di $P$ è tale che $\abs*{\lambda} < 1$. In particolare $\rho(P) = \max_{\lambda} \abs*{\lambda} < 1$ e quindi entrambi i metodi convergono.  
+\end{proof}
