@@ -1,0 +1,11 @@
+\section{Threads}
+
+Abbiamo visto che possiamo eseguire contemporaneamente più programmi separati sfruttando il meccanismo dei processi e le varie \emph{system call} relative ad essi. In alcuni casi tuttavia vorremmo suddividere il flusso di esecuzione di un singolo programma in più parti separate ed indipendenti, anche se \emph{interne} al programma scelto.
+
+Un \strong{thread} è un modo per eseguire parte di un programma indipendentemente e parallelamente al resto. Ogni thread ha un suo program counter: in questo modo può svolgere operazioni "parallelamente" al resto del programma. 
+
+Questo "parallelamente" può essere inteso in diversi modi: se abbiamo più processori (come nella stragrande maggioranza dei computer moderni) il Sistema Operativo può far eseguire più thread dello stesso processo a processori diversi nello stesso momento, con un'esecuzione davvero parallela.
+
+Invece se il nostro computer ha un solo processore possiamo eseguire un singolo thread alla volta: il Sistema Operativo farà eseguire un pezzo di uno e un pezzo di un altro per dare l'impressione che siano tutti contemporanei, anche se sono in \strong{esecuzione concorrente}.
+
+Per far ciò sfrutteremo la libreria POSIX \inlinec{pthread.h}, che contiene tutte le funzioni necessarie per la creazione e il funzionamento di thread. Attenzione però: la libreria \inlinec{pthread.h} non è linkata di default dal compilatore GCC, quindi dobbiamo linkarla noi manualmente aggiungendo al comando l'opzione \mintinline{shell-session}{-lpthread}.

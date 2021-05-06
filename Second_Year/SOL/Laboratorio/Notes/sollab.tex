@@ -8,13 +8,19 @@
     colors
 ]{modernth}
 \usepackage{code}
-   
+
+\renewcommand\listingscaption{Code-Snippet}
+
 \newmintinline[inlinec]{c}{}
 
 \usetikzlibrary{external}
 \tikzexternalize[prefix=figures/]
 
 \begin{document}
+
+% cleveref is loaded at end of prelude
+\crefname{listing}{code-snippet}{code-snippets}
+\Crefname{listing}{Code-Snippet}{Code-Snippets}
 
 \author{Luca De Paulis}
 \title{Laboratorio di Sistemi Operativi}
@@ -40,4 +46,17 @@
 \input{lectures/lec_06/execs}
 \input{lectures/lec_06/termination}
 \input{lectures/lec_06/wait}
+
+\chapter{Lezione 7}
+\input{lectures/lec_07/threads}
+\input{lectures/lec_07/creation}
+\input{lectures/lec_07/wait}
+\input{lectures/lec_07/exit}
+\input{lectures/lec_07/races}
+\input{lectures/lec_07/cond}
+\input{lectures/lec_07/cancel}
+
+\appendix
+\chapter{Vari frammenti di codice}
+\input{lectures/code}
 \end{document}

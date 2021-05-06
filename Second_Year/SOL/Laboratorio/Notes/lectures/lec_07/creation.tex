@@ -1,0 +1,38 @@
+\section{Creazione di un nuovo thread}
+
+Per creare un nuovo thread relativo ad un determinato processo possiamo usare la funzione \inlinec{pthread_create}:
+
+\begin{minted}{c}
+    #include <pthread.h>
+
+    int pthread_create(
+        pthread_t* thread_id,       // new thread's ID
+        const pthread_attr_t *attr, // attributes
+        void* (*start_fcn) (void*), // starting function
+        void* arg                   // args to the starting function
+    );
+\end{minted}
+
+Esaminiamo ora gli argomenti e il valore di ritorno di questa funzione:
+\begin{itemize}
+    \item \inlinec{thread_id} è un puntatore ad un valore di tipo \inlinec{pthread_t}: se \inlinec{pthread_create} ha successo la funzione restituirà l'ID del nuovo thread all'interno della variabile \inlinec{thread_id};
+    \item \inlinec{attr} serve a specificare degli attributi per il nuovo thread: noi non useremo questa funzionalità e pertanto metteremo sempre questo argomento a \inlinec{NULL};
+    \item \inlinec{start_fcn} è un puntatore ad una funzione che prende un singolo argomento di tipo \inlinec{void*} e ritorna un \inlinec{void*}, che sarà l'\emph{exit status}: questa funzione è la funzione da cui il thread inizierà la sua esecuzione;
+    \item \inlinec{arg} è l'argomento passato alla funzione \inlinec{start_fcn};
+    \item il valore di ritorno di \inlinec{pthread_create} è $0$ se la funzione ha successo, mentre negli altri casi restituisce il codice di errore. In particolare \inlinec{pthread_create} non setta \inlinec{errno}, poiché il nuovo thread ha una sua copia della variabile e non può modificare l'\inlinec{errno} del chiamante, quindi dobbiamo sfruttare il codice di errore per capire quale tipo di problema ha portato alla terminazione del thread.
+\end{itemize}
+
+Osserviamo quindi che, al contrario della \inlinec{fork}, un thread non parte dall'istruzione che segue la sua creazione, ma da una specifica funzione di partenza: questo ci conferma ancora una volta che i thread hanno lo scopo di eseguire particolari funzionalità, e non devono rieseguire tutto il programma principale.
+
+Facciamo un esempio: il codice è in \Cref{lst:threads_1}. Eseguendo il programma otterremo un risultato del genere:
+\begin{minted}{shell-session}
+    $ ./threadtest
+    First thread: x = 1
+    Second thread: x = 2
+    First thread: x = 3
+    First thread: x = 4
+    Second thread: x = 5
+    |...|
+\end{minted}
+
+I due thread non si alternano in un modo predefinito, ma vengono eseguiti e sospesi dallo \emph{scheduler}, che opera al di fuori del nostro controllo.

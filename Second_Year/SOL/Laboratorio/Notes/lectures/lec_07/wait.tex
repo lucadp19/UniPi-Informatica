@@ -1,0 +1,20 @@
+\section{Attesa di un thread}
+
+Per attendere un thread, analogamente al caso dei processi, possiamo usare la funzione \inlinec{pthread_join}:
+
+\begin{minted}{c}
+    #include <pthread.h>
+
+    int pthread_join(
+        pthread_t thread_id,
+        void** status_ptr
+    );
+\end{minted}
+
+Come la \inlinec{pthread_create} la funzione ritorna $0$ in caso di successo, altrimenti ritorna il codice dell'errore. La semantica è la seguente: la funzione \inlinec{pthread_join(tid, &status)}
+\begin{itemize}
+    \item sospende il processo che la invoca finché il thread identificato da \inlinec{tid} termina;
+    \item se \inlinec{&status |$\neq$| NULL} salviamo in \inlinec{status} lo stato di terminazione;
+    \item quando un thread termina la memoria occupata da suo stack privato e la posizione nella tabella dei thread non vengono rilasciate fino a quando qualcuno non chiama la \inlinec{pthread_join()} su quel thread: non chiamandola causiamo \strong{memory leak}!
+    \item per liberare le risorse senza la \inlinec{pthread_join} possiamo usare la \inlinec{pthread_detach}, ma dopo aver chiamato quest'ultima non possiamo più chiamare la \inlinec{pthread_join}.
+\end{itemize}

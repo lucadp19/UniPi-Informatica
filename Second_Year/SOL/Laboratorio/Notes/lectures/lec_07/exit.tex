@@ -1,0 +1,19 @@
+\section{Terminare un thread}
+
+Per terminare un thread possiamo:
+\begin{itemize}
+    \item usare la \inlinec{return} nella funzione iniziale del thread;
+    \item usare la funzione \inlinec{pthread_exit}.
+\end{itemize}
+
+\begin{minted}{c}
+    #include <pthread.h>
+
+    void pthread_exit(
+        void* retval    // return value
+    );
+\end{minted}
+
+Questa funzione non restituisce mai un valore, in quanto termina il thread corrente e restituisce lo status al thread che ha chiamato la funzione \inlinec{pthread_join}.
+
+Osserviamo che chiamando la funzione \inlinec{exit} chiudiamo l'intero processo, e non solo il thread che la chiama.

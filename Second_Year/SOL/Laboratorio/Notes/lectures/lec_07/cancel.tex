@@ -1,0 +1,33 @@
+\section{Cancellazione di un thread}
+
+Introduciamo ora un'ulteriore funzione utile per gestire i thread, chiamata \inlinec{pthreaad_cancel}.
+
+\begin{minted}{c}
+    #include <pthread.h>
+
+    int pthread_cancel(
+        pthread_t *tid, // thread id
+    );
+    // 0 on success, error value otherwise
+\end{minted}
+
+Questa funzione fa terminare un thread appena raggiunge un \emph{punto di cancellazione}, che in genere è una chiamata di funzione \emph{safe}, nel senso che la funzione chiamata non è una mutex, malloc, o cose simili.
+
+Tuttavia la cancellazione esplicita dei thread deve essere vista come un'ultima spiaggia: nella maggior parte dei casi va evitata in quanto termina brutalmente il thread.
+
+Per renderla più \emph{pulita} possiamo usare i \strong{cleanup handlers}, che sono una versione specifica per i thread della funzione \inlinec{atexit}: servono a chiamare delle funzioni specifiche alla terminazione di un thread, che sia per \inlinec{pthread_exit} o \inlinec{return} dalla funzione principale o per cancellazione.
+
+\begin{minted}{c}
+    #include <pthread.h>
+    void pthread_cleanup_push(
+        void (*handler) (void*), // cleanup function
+        void *arg, // arguments to the handler
+    );
+\end{minted}
+
+Come nel caso di \inlinec{atexit} possiamo registrare più funzioni, e queste vengono messe \emph{in pila} e quindi eseguite in ordine inverso di registrazione. Per rimuovere funzioni dalla pila possiamo usare la seguente funzione:
+\begin{minted}{c}
+    void pthread_cleanup_pop(
+        int execute, // do we want to execute the function?
+    );
+\end{minted}

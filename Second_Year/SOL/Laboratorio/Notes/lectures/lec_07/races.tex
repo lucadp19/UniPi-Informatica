@@ -1,0 +1,114 @@
+\section{Interferenze tra thread}
+
+Abbiamo già detto che non abbiamo alcun controllo sull'ordine di esecuzione dei thread: questo può portare a dei problemi di \emph{concorrenza} tra thread chiamati \strong{race conditions}.
+
+Consideriamo il \Cref{lst:threads_1}. I due thread di quel programma operano sulla variabile condivisa \inlinec{x} contemporaneamente, sommando $1$ e poi stampando il risultato.
+
+Tuttavia in alcuni casi sfortunati il comportamento potrebbe non essere quello che ci aspettiamo. Immaginiamo ad esempio la seguente sequenza di operazioni (chiamando i due thread $T_1$ e $T_2$): \begin{enumerate}
+    \item \inlinec{x} è inizialmente uguale a $5$; 
+    \item il thread $T_1$ legge \inlinec{x}, ma prima di poterla incrementare viene \emph{deschedulato};
+    \item $T_2$ legge \inlinec{x}, che è ancora uguale a $5$, incrementa la variabile e la scrive (stampando $6$), poi viene sospeso;
+    \item $T_1$ viene rieseguito e scrive anche lui $6$ in \inlinec{x}.     
+\end{enumerate}
+
+In questo caso abbiamo solamente perso un incremento, ma in problemi più seri possiamo causare grandi danni a causa di problemi di concorrenza di questo tipo.
+
+Vogliamo quindi fare in modo che un thread abbia momentaneamente un accesso esclusivo a dei dati condivisi: in questo modo non possono esserci problemi di concorrenza tra thread.
+
+Introduciamo quindi alcuni concetti fondamentali:
+\begin{itemize}
+    \item si usa il termine \strong{regione critica} per riferirci al frammento di codice che contiene la lettura/scrittura/modifica della risorsa condivisa;
+    \item vogliamo fare in modo che l'accesso alla regione critica sia sempre \strong{mutuamente esclusivo}: due thread diversi non possono accedere ad una regione critica contemporaneamente. 
+\end{itemize}
+
+Il meccanismo base per risolvere il problema delle \emph{race conditions} è il meccanismo delle \strong{lock} (in italiano \emph{lucchetti}): creiamo una variabile speciale, condivisa dai thread, che ha lo scopo di bloccare l'accesso ad una regione critica se qualche altro thread sta già usando la risorsa condivisa.
+
+La libreria \inlinec{pthread.h} usa il tipo \inlinec{pthread_mutex_t} per rappresentare un \strong{mutex} (che è un modo per implementare le lock) insieme alle seguenti due funzioni: 
+\begin{minted}{c}
+    #include <pthread.h>
+
+    int pthread_mutex_lock(
+        pthread_mutex_t *mutex  // mutex to lock
+    );
+
+    int pthread_mutex_unlock(
+        pthread_mutex_t *mutex  // mutex to unlock
+    );
+\end{minted}
+
+Le due funzioni servono ovviamente a richiedere l'uso di un lucchetto (tramite la \inlinec{pthread_mutex_lock}) o a rilasciarlo (tramite la \inlinec{pthread_mutex_unlock}) e ritornano $0$ in caso di successo, il codice dell'errore altrimenti.
+
+\subsection{Uso dei mutex}
+
+Per usare correttamente i mutex bisogna seguire questo schema:
+\begin{itemize}
+    \item si crea un mutex per ogni risorsa condivisa a cui vogliamo accedere in mutua esclusione;
+    \item prima di accedere ai dati gestiti dal mutex \inlinec{mutex_data} si chiama la funzione \inlinec{pthread_mutex_lock(&mutex_data)};
+    \item alla fine della sezione critica si chiama \inlinec{pthread_mutex_unlock(&mutex_data)}. 
+\end{itemize} La \inlinec{pthread_mutex_lock} controlla se il lucchetto è occupato da qualche altro thread: se è libero lo prende, lo setta e il thread è libero di entrare nella zona in mutua esclusione; invece se è occupato il thread si \strong{sospende} fino a quando il thread che ha bloccato il mutex non lo rilascia.
+
+\newthought{Inizializzazione} Bisogna sempre inizializzare i mutex quando li dichiariamo! Se sono globali possiamo usare una macro: 
+\begin{minted}{c}
+    pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+\end{minted}
+mentre se non sono globali dobbiamo usare la funzione 
+\begin{minted}{c}
+    int pthread_mutex_init(
+        pthread_mutex_t *mtx, // mutex to initialize
+        const pthread_mutexattr_t *attr // attributes (NULL is default)
+    ); // always returns 0
+\end{minted}
+Noi useremo sempre la macro.
+
+
+Il \Cref{lst:threads_1} può dunque essere migliorato come si vede in \Cref{lst:mtx_exmp}: abbiamo circondato la linea di codice che si occupa di interagire con \inlinec{x} con il mutex. In questo modo otteniamo la mutua esclusione e impediamo le race conditions che erano presenti nella prima versione.
+
+Osserviamo che abbiamo incluso nella regione critica \emph{soltanto} il codice strettamente necessario: se avessimo incluso, ad esempio, anche \inlinec{sleep(1)} avremmo rallentato il programma inavvertitamente. Infatti in tal caso mentre $T_1$ è in possesso del lock $T_2$ è bloccato, anche se $T_1$ è in \inlinec{sleep}: abbiamo eliminato il parallelismo fra i thread e il programma viene eseguito esattamente come se fosse un singolo thread.
+
+\subsection{Versioni "safe" di lock/unlock}
+
+Inoltre come al solito le funzioni \inlinec{pthread_mutex_lock} e \inlinec{pthread_mutex_unlock} possono restituire degli errori che vanno sempre controllati: è buona pratica quindi creare delle funzioni ausiliarie per farlo automaticamente.
+
+\begin{minted}{c}
+    void safe_pthread_mutex_lock(pthread_mutex_t *mtx){
+        int err;
+        if( (err = pthread_mutex_lock(&mtx)) != 0) {
+            errno = err;
+            perror("lock");
+            pthread_exit((void*) errno); // can be changed
+        } else {
+            printf("locked\n"); // can be commented when the program is finished
+        }
+    }
+
+    void safe_pthread_mutex_unlock(pthread_mutex_t *mtx){
+        int err;
+        if( (err = pthread_mutex_unlock(&mtx)) != 0) {
+            errno = err;
+            perror("unlock");
+            pthread_exit((void*) errno); // can be changed
+        } else {
+            printf("unlocked\n"); // can be commented when the program is finished
+        }
+    }
+\end{minted}
+
+\subsection{Restringere l'area d'uso}
+
+A questo punto possiamo evitare la duplicazione del codice creando una funzione che incrementi il valore di \inlinec{x}: in questo modo non serve gestire in due punti diversi il mutex ma basta chiamare la funzione appena definita.
+
+\begin{minted}{c}
+    static int atomic_incr_x(int incr){
+        static int x = 0; // the shared variable
+        static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+        int res;
+
+        safe_pthread_mutex_lock(&mtx);
+        res = (x += incr);
+        safe_pthread_mutex_unlock(&mtx);
+
+        return res;
+    }
+\end{minted}
+
+Notiamo come abbiamo dovuto usare un'altra variabile \inlinec{res}, in quanto altrimenti staremmo accedendo a $x$ al di fuori dell'area delimitata dal mutex: se restituissimo il valore di \inlinec{x} direttamente lo scheduler potrebbe toglierci il controllo del processore appena prima della \inlinec{return}, dunque qualche altro thread potrebbe modificare $x$ e il valore restituito sarebbe scorretto.

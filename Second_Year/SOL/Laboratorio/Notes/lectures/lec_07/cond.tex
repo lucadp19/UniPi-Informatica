@@ -1,0 +1,71 @@
+\section{Condition variables}
+
+Supponiamo ora di voler scrivere un programma simile ai precedenti, soltanto che uno dei due thread deve iniziare ad incrementare la variabile condivisa $x$ solo quando sono già stati fatti $10$ incrementi.
+
+Una possibile soluzione per la funzione del secondo thread sarebbe la seguente:
+\begin{minted}{c}
+    void* second_thread(void* arg){
+        while(atomic_incr_x(0) < 10);
+
+        while (true){
+            printf("Second thread: x=%d\n", atomic_incr_x(1));
+            sleep(1);
+        }
+    }
+\end{minted}
+
+Infatti chiamando \inlinec{atomic_incr_x(0)} stiamo incrementando \inlinec{x} di $0$ e restituiamo il risultato dell'incremento, cioè il valore corrente di \inlinec{x}. In questo modo possiamo controllare se è minore o maggiore di $10$ e nel secondo caso possiamo iniziare ad operare effettivamente su \inlinec{x}.
+
+Tuttavia questo pattern di programmazione, chiamato \emph{busy wait}, è assolutamente da evitare: mentre siamo in attesa prendiamo costantemente il controllo della mutex per leggere il valore di \inlinec{x} ma senza dover effettivamente operare sulla variabile condivisa.
+
+Per risolvere questo problema possiamo sfruttare le \strong{condition variables}: ogni variabile di condizione rappresenta un evento relativo ad un dato condiviso e associato ad una mutex, come in questo caso il raggiungimento del valore $10$ da parte della variabile \inlinec{x}. Possiamo operare in due soli modi su una variabile di condizione: possiamo metterci in \emph{attesa} che si verifichi un evento oppure possiamo \emph{segnalare} che l'evento si è verificato.
+
+\paragraph{Inizializzazione}
+Per inizializzare una variabile di condizione possiamo usare una macro fornitaci da \inlinec{pthread.h}:
+\begin{minted}{c}
+    #include <pthread.h>
+
+    pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+\end{minted}
+
+Questa macro può essere usata solamente se la variabile \inlinec{cond} è globale.
+
+\paragraph{Segnalazione}
+\begin{minted}{c}
+    #include <pthread.h>
+
+    int pthread_cond_signal(
+        pthread_cond_t *cond, // condition variable
+    );
+    // 0 on success, error value otherwise
+\end{minted}
+
+La chiamata a \inlinec{pthread_cond_signal} prende un puntatore ad un oggetto di tipo \inlinec{pthread_cond_t} (cioè ad una condition variable) e segnala agli altri thread che l'evento indicato dalla variabile \inlinec{cond} si è verificato, svegliando \strong{uno} dei thread in attesa. Se nessuno è in attesa la \emph{signal} viene persa!
+
+\paragraph{Attesa}
+\begin{minted}{c}
+    #include <pthread.h>
+
+    int pthread_cond_wait(
+        pthread_cond_t *cond, // condition variable
+        pthread_mutex_t *mtx, // mutex linked to CV
+    );
+    // 0 on success, error value otherwise
+\end{minted}
+La \inlinec{pthread_cond_wait} viene usata da un thread per mettersi in attesa che una certa condizione si verifichi. In particolare questa funzione deve essere usata mentre il thread è in possesso del mutex relativo alla variabile condivisa: se il thread deve mettersi in attesa la \inlinec{pthread_cond_wait} rilascia automaticamente il mutex e fa in modo di andare in attesa \emph{passiva} (ovvero senza occupare il processore e il mutex). Tuttavia se qualcuno ha inviato il segnale relativo alla variabile di condizione \emph{prima} che il thread si mettesse in attesa, questo thread non verrà mai svegliato da quella segnalazione: dobbiamo essere attenti alla progrettazione.
+
+Un modo per risolvere questo problema è il seguente: la \inlinec{pthread_cond_wait} viene messa all'interno di un ciclo \inlinec{while} la cui guardia serve a controllare la condizione. 
+\begin{minted}{c}
+    pthread_mutex_lock(&mtx);
+    while(condition is false)
+        pthread_cond_wait(&cond, &mtx);
+    // now the condition is true!
+    pthread_mutex_unlock(&mtx);
+\end{minted}
+
+In questo modo se la condizione è già realizzata quando stiamo per accedere alla sezione critica non è necessario mettersi in \emph{wait}, e quindi non dobbiamo attendere in eterno un segnale che non arriverà mai.
+
+Inoltre questo risolve un altro problema: se non mettessimo il \inlinec{while} potremmo essere deschedulati appena dopo esserci svegliati dalla \emph{wait}; prima di essere riattivati un altro thread potrebbe modificare la variabile condivisa e far sì che la condizione non sia più verificata, ma dato che ormai abbiamo superato la \emph{wait} non avremmo più modo di controllare la condizione.
+Sfruttando il ciclo \inlinec{while} invece se venissimo deschedulati in quel momento rientreremmo esattamente nel punto di controllare la condizione del \inlinec{while}, e quindi proseguiremmo solo se la condizione è ancora vera.
+
+Possiamo quindi realizzare il programma descritto all'inizio di questa sezione tramite le condition variables: il codice si trova nel \Cref{lst:cond_1}.
