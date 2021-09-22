@@ -1,0 +1,47 @@
+\documentclass[
+    oneside,
+    10pt,
+    language=italian,
+    pagestyle=notes,
+    fontstyle=palaeuler,
+    thmstyle=boxed,
+    colors
+    % thmstyle=boxedthm
+]{modernth}
+    \usepackage[utf8]{inputenc}
+    \usepackage[italian]{babel}
+    \usepackage[T1]{fontenc}
+    \usepackage{textcomp}
+    \usepackage{microtype}
+    % My packages
+    % \usepackage{boxedthm}
+    \usepackage{code}
+    \usepackage{minted}
+    \usepackage{ecc}
+
+\usemintedstyle{manni}
+\setminted{
+    % bgcolor=lightgray,
+    fontsize=\small,
+    breaklines=true,
+    % escapeinside=||,
+    mathescape=true,
+    frame=single
+}
+
+\let\oldtilde\tilde
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+
+\begin{document}
+
+\author{Luca De Paulis}
+\title{Elementi di Calcolabilità e Complessità}
+\maketitle
+
+\frontmatter{}
+\tableofcontents
+
+\mainmatter{}
+\include{chapters/intro-calcolability.tex}
+
+\end{document}

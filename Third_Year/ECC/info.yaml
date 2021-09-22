@@ -1,0 +1,20 @@
+name: "Elementi di Calcolabilit\xE0 e Complessit\xE0"
+short: ECC
+website: null
+lectures:
+- name: 21-09-13
+  title: Introduzione
+  date: 21-09-13
+  path: .
+- name: 21-09-14
+  title: Configurazioni e Transizioni
+  date: 21-09-14
+  path: .
+- title: 21-09-20
+  date: 21-09-20
+  path: .
+  name: 21-09-20
+- title: 21-09-21
+  date: 21-09-21
+  path: .
+  name: 21-09-21

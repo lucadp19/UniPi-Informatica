@@ -1,0 +1,122 @@
+Nella prima parte del corso, dedicata alla \sstrong{Teoria della Calcolabilità}, cercheremo di studiare cosa significhi \emph{calcolare} qualcosa e quali siano i limiti delle \emph{procedure} a disposizione degli esseri umani per calcolare.
+
+Per far ciò bisogna innanzitutto definire il concetto di \sstrong{algoritmo} oppure procedura: lo faremo definendo dei vincoli che ogni algoritmo deve soddisfare per esser ritenuto tale.
+
+\begin{enumerate}
+    \item Dato che gli uomini possono calcolare solo seguendo procedure finite, un algoritmo deve essere \strong{finito}, ovvero deve essere costituito da un numero finito di istruzioni.
+    \item Inoltre devono esserci un numero \strong{finito} di istruzioni distinte, e ognuna deve avere un \strong{effetto limitato} su \strong{dati discreti} (nel senso di non continui).
+    \item Una \strong{computazione} è quindi una sequenza finita di passi discreti con durata finita, né analogici né continui.
+    \item Ogni passo dipende solo dai \strong{passi precedenti} e viene scelto in modo \strong{deterministico}: se ripetiamo due volte la stessa esatta computazione nelle stesse condizioni dobbiamo ottenere lo stesso risultato e la stessa sequenza di passi.
+    \item Non imponiamo un limite al numero di passi e alla memoria a disposizione.
+\end{enumerate}
+
+Questi vincoli non definiscono precisamente cosa sia un algoritmo, anzi, vedremo che vi sono diversi modelli di computazione che soddisfano questi 5 requisiti. Le domande a cui vogliamo rispondere sono: \begin{itemize}
+    \item Modelli diversi che rispettano questi vincoli risolvono gli stessi problemi?
+    \item Un tale modello risolve necessariamente tutti i problemi?
+\end{itemize}
+
+\section{Macchine di Turing}
+
+Il primo modello di computazione che vedremo è stato proposto da Alan Turing nel 1936, ed è pertanto chiamato in suo nome.
+
+\begin{definition}{Macchina di Turing}{mdt}
+    Una \sstrong{Macchina di Turing} (MdT per gli amici) è una quadrupla $(Q, \Sigma, \delta, q_0)$ dove
+    \begin{itemize}
+        \item $Q$ è un insieme finito, detto \strong{insieme degli stati}. In particolare assumiamo che esista uno stato $h \notin Q$, detto stato terminatore o \strong{halting state}.
+        \item $\Sigma$ è un insieme finito, detto \strong{insieme dei simboli}. In particolare \begin{itemize}
+            \item esiste $\# \in \Sigma$ e lo chiameremo \strong{simbolo vuoto};
+            \item esiste $\resp \in \Sigma$ e lo chiameremo \strong{respingente}.
+        \end{itemize}
+        \item $\delta$ è una funzione \[
+            \delta : Q \times \Sigma \to (Q \union \set{h}) \times \Sigma \times \set{\Left, \Right, -}
+        \] detta \strong{funzione di transizione}. È soggetta al vincolo \[
+            \forall q \in Q: \exists q' \in Q : \quad \delta(q, \resp) = (q', \resp, \Right).
+        \]
+        \item $q_0$ è un elemento di $Q$ detto \strong{stato iniziale}.
+    \end{itemize}
+\end{definition}
+
+La definizione formale di Macchina di Turing può sembrare complicata, ma l'idea alla base è molto semplice: 
+abbiamo una macchina che opera su un \strong{nastro illimitato} (a destra) su cui sono scritti simboli (ovvero elementi di $\Sigma$).
+In ogni istante di tempo, la \emph{testa} della macchina legge una casella del nastro, contenente il \strong{simbolo corrente}. 
+La macchina mantiene inoltre al suo interno uno stato (ovvero un elemento di $Q$), inizialmente settato allo stato iniziale $q_0$.
+
+Un singolo passo di computazione è il seguente: \begin{itemize}
+    \item la macchina legge il simbolo corrente $\sigma$;
+    \item la macchina usa la funzione di transizione $\delta$ per effettuare la mossa: in particolare calcola $\delta(q, \sigma)$, dove $q$ è lo stato corrente, e ne ottiene una tripla $(q', \sigma', \texttt{M})$;
+    \item la macchina cambia stato da $q$ a $q'$;
+    \item la macchina scrive al posto di $\sigma$ il simbolo $\sigma'$;
+    \item la macchina si sposta nella direzione indicata da $\texttt{M}$: se $\texttt{M} = \Left$ si sposta di un posto a sinistra, se $\texttt{M} = \Right$ si sposta di un posto a destra, se $\texttt{M} = -$ rimane ferma.           
+\end{itemize}
+
+Per formalizzare questi concetti abbiamo bisogno di altre definizioni.
+
+\begin{definition}
+    {Monoide libero, o Parole su un Alfabeto}{free_monoid}
+    Dato un insieme finito $\Sigma$, il \sstrong{monoide libero} su $\Sigma$, anche chiamato \sstrong{insieme delle parole su $\Sigma$}, è l'insieme $\Sigma^\ast$ così definito: \[
+        \Sigma^\ast \deq \bigunion_{n \in \N} \Sigma^n
+    \] dove \begin{itemize}
+        \item $\Sigma^0 \deq \set*{\eps}$, dove $\eps$ è la parola vuota;
+        \item $\Sigma^{n+1} \deq \set*{\sigma \cdot w \given \sigma \in \Sigma, w \in \Sigma^n}$ è l'insieme delle parole di lunghezza $n+1$, ottenute preponendo ad una parola di lunghezza $n$ (ovvero $w \in \Sigma^n$) un simbolo $\sigma \in \Sigma$. 
+    \end{itemize}
+    Tale insieme ammette un'operazione, ovvero la \strong{concatenazione} di parole, e la parola vuota $\eps$ è l'identità destra e sinistra di tale operazione. 
+\end{definition}
+
+\begin{remark}
+    Un elemento di $\Sigma^\ast$ è una stringa di caratteri di $\Sigma$ di lunghezza arbitraria, ma sempre finita, in quanto ogni elemento di $\Sigma^\ast$ deve essere contenuto in un qualche $\Sigma^n$.
+\end{remark}
+
+Il nastro di una MdT può quindi essere formalizzato come un elemento di $\Sigma^\ast$. Questo tuttavia ancora non ci soddisfa per alcuni motivi:
+\begin{itemize}
+    \item gli elementi di $\Sigma^\ast$ sono illimitati a destra, ma non a sinistra, dunque la MdT potrebbe muoversi a sinistra ripetutamente fino a "cadere fuori dal nastro";
+    \item non stiamo memorizzando da alcuna parte la posizione del cursore della MdT.
+\end{itemize}
+
+Per risolvere il primo problema possiamo assumere che ogni nastro inizi con il simbolo speciale $\resp$:
+per il vincolo sulla funzione di transizione ogni volta che la MdT si troverà nella casella più a sinistra (contenente $\resp$) sarà costretta a muoversi verso destra lasciando scritto il respingente.
+
+Per quanto riguarda il secondo invece possiamo dividere il nastro infinito in tre parti: \begin{itemize}
+    \item la porzione a sinistra del simbolo corrente, che è una stringa di lunghezza arbitraria che inizia per $\resp$ e quindi un elemento di $\resp\Sigma^\ast$;
+    \item il simbolo corrente, che è un elemento di $\Sigma$;
+    \item la porzione a destra del simbolo corrente, che è una stringa e quindi un elemento di $\Sigma^\ast$.   
+\end{itemize}
+
+Quest'ultima porzione è una stringa che potrebbe terminare con un numero infinito di caratteri vuoti ($\#$): dato che non siamo interessati (per il momento) a tenere tutti i simboli vuoti a destra dell'ultimo simbolo non-vuoto del nastro, considereremo la porzione a destra "eliminando" tutti i \emph{blank} superflui.
+
+In particolare indicando sempre con $\eps \in \Sigma^\ast$ la stringa vuota e convenendo che \begin{itemize}
+    \item $\#\eps = \eps\# = \eps$ (la concatenazione della stringa vuota con il \emph{blank} dà ancora la stringa vuota);
+    \item $\sigma\eps = \eps\sigma = \sigma$ per ogni $\sigma \neq \#$ (la concatenazione della stringa vuota con un simbolo non-\emph{blank} dà il simbolo) 
+\end{itemize}
+possiamo considerare l'insieme \[
+    \Sigma^{F} \deq \parens[\Big]{\Sigma^\ast \cdot (\Sigma \setminus \set{\#})} \union \set{\eps},
+\] ovvero l'insieme delle stringhe in $\Sigma$ che finiscono con un carattere non-\emph{blank}, più la stringa vuota.
+
+Usando queste convenzioni, la stringa che definisce il nastro è finita: siamo pronti a definire la \emph{configurazione} di una MdT in un dato istante.
+
+\begin{definition}
+    {Configurazione di una MdT}{configuration}
+    Sia $M = (Q, \Sigma, \delta, q_0)$ una MdT. Una \sstrong{configurazione} è una quadrupla \[
+        (q, u, \sigma, v) \in Q \times \resp\Sigma^\ast \times \Sigma \times \Sigma^F.
+    \] Più nel dettaglio:
+    \begin{itemize}
+        \item $q$ è lo stato corrente,
+        \item $u$ è la porzione del nastro che precede il simbolo corrente, ed inizia per $\resp$,
+        \item $\sigma$ è il simbolo corrente,
+        \item $v$ è la porzione del nastro che segue il simbolo corrente, ed è vuota oppure termina per un simbolo diverso da $\#$. 
+    \end{itemize}
+\end{definition}
+
+Osserviamo che:
+\begin{itemize}
+    \item il simbolo corrente può essere $\#$;
+    \item è possibile che il simbolo corrente sia $\#$ e $v = \eps$ (cioè vuota),
+    \item è possibile che $u$ sia vuota solo nel caso in cui il simbolo corrente è $\resp$, poiché significherebbe trovarsi all'inizio del nastro.    
+\end{itemize}
+
+Spesso indicheremo la quadrupla $(q, u, \sigma, v)$ con $(q, u\ul{\sigma}v)$: la sottolineatura ci indicherà il simbolo corrente. In contesti in cui non sia necessario sapere la posizione del cursore scriveremo semplicemente $(q, w)$ per risparmiare tempo.
+
+\begin{example}
+    Ad esempio la configurazione \[
+        (q_0, \resp ab\#\#b\#a\ul{\#}b\#a)
+    \] indica che la MdT è nello stato $q_0$, sta leggendo il carattere $\#$, a sinistra del simbolo letto ha la stringa $\resp ab\#\#b\#a$ e a destra $b\#a$.
+\end{example}

@@ -1,0 +1,90 @@
+\section{Calcolabilità di funzioni}
+
+Dopo aver definito le computazioni per le MdT e per i linguaggi \code{FOR} e \code{WHILE}, vogliamo spiegare cosa significa che una MdT o un comando \emph{calcola} una funzione. 
+
+\subsection*{Funzioni}
+
+Prima di tutto, ricordiamo le definizioni di base sulle funzioni.
+
+\begin{definition}
+    {Funzione}{func}
+    Dati $A, B$ insiemi, una \sstrong{funzione} $f$ da $A$ in $B$ è un sottoinsieme di $A \times B$ tale che \[
+        (a, b), (a, b') \in f \;\implies\; b = b'.
+    \] Scriveremo \begin{itemize}
+        \item $f : A \to B$ per indicare una funzione da $A$ in $B$
+        \item $b = f(a)$ per dire $(a, b) \in f$.
+    \end{itemize}
+\end{definition}
+
+ Notiamo inoltre che non abbiamo fatto assunzioni sulla \strong{totalità} di $f$: per qualche valore di $a \in A$ potrebbe non esistere un valore $b \in B$ tale che $f(a)$, cioè $f$ potrebbe \emph{non essere definita} in $a$.
+
+\begin{definition}
+    {Funzioni totali e parziali}{total_partial_func}
+    Sia $f : A \to B$. \begin{itemize}
+        \item $f$ \sstrong{converge su} $a \in A$ (e lo si indica con $f(a)\conv$) se esiste $b \in B$ tale che $f(a) = b$;
+        \item $f$ \sstrong{diverge su} $a \in A$ (e lo si indica con $f(a)\divg$) se $f$ non converge su $a$;
+        \item $f$ è \sstrong{totale} se $f(a)\conv$ per ogni $a \in A$;
+        \item $f$ è \sstrong{parziale} se non è totale.     
+    \end{itemize}   
+\end{definition}
+
+In generale le nostre funzioni saranno parziali.
+
+\begin{definition}
+    {Dominio ed immagine}{dom_im_func}
+    Sia $f : A \to B$. Si dice \sstrong{dominio} di $f$ l'insieme \[
+        \dom f \deq \set*{a \in A \given f(a)\conv}.
+    \]  Si dice \sstrong{immagine} di $f$ l'insieme \[
+        \Imm f \deq \set*{b \in B \given b = f(a) \text{ per qualche} a \in A}.
+    \]
+\end{definition}
+
+\begin{definition}
+    {Iniettività/surgettività/bigettività}{}
+    Sia $f : A \to B$ una funzione. 
+    \begin{itemize}
+        \item $f$ è \sstrong{iniettiva} se per ogni $a, a' \in A$, $a \neq a'$, allora $f(a) \neq f(a')$.
+        \item $f$ è \sstrong{surgettiva} se $\Imm f = B$.
+        \item $f$ è \sstrong{bigettiva} se è iniettiva e surgettiva.     
+    \end{itemize}
+\end{definition}
+
+\subsection*{Calcolare funzioni}
+
+Definiamo ora quando una macchina/un comando \emph{implementa} una funzione.
+
+\begin{definition}
+    {Turing-calcolabilità}{t-calc}
+    Siano $\Sigma, \Sigma_0, \Sigma_1$ alfabeti, $\resp, \# \notin \Sigma_0 \union \Sigma_1 \subsetneq \Sigma$.
+
+    Sia inoltre $f : \Sigma_0 \to \Sigma_1$, $M = (Q, \Sigma, \delta, q_0)$ una MdT.
+
+    Si dice allora che $M$ \sstrong{calcola} $f$ (e che $f$ è \sstrong{Turing-calcolabile}) se per ogni $v \in \Sigma_0$ \[
+        w = f(v) \;\;\text{se e solo se}\;\; (q_0, \ul{\resp}v) \to^\ast (h, \resp w \ul{\#}).
+    \]
+\end{definition}
+
+Indicando con $M(v)$ il risultato della computazione della macchina $M$ sulla configurazione iniziale $(q_0, \ul{\resp}v)$, questa definizione ci dice che gli output della funzione e della MdT sono esattamente gli stessi. 
+In particolare, dato che le funzioni possono essere \emph{parziali} e le macchine di Turing possono \emph{divergere}, $M(v)\conv$ se e solo se $f$ è definita su $v$, cioè se esiste $w$ tale che $f(v) = w$.
+
+\begin{definition}
+    {\code{WHILE}-calcolabilità}{w-calc}
+    Sia $C$ un comando \code{WHILE}, $g : \code{Var} \to \N$. 
+    Si dice allora che $C$ \sstrong{calcola} $g$ (e che $g$ è \sstrong{\code{WHILE}-calcolabile}) se per ogni $\sigma \in \code{Var}$ \[
+        y = f(x) \;\;\text{se e solo se}\;\; (C, \sigma) \to^\ast \sigma^\ast \text{ e } \sigma^\ast(x) = n.
+    \]   
+\end{definition}
+
+Analogamente possiamo definire il concetto di funzione \code{FOR}-calcolabile.
+
+È vero che le funzioni \code{WHILE}-calcolabili sono tutte e sole le funzioni \code{FOR}-calcolabili? \strong{No}: infatti dato che non abbiamo fatto assunzioni sulla totalità di $g$, essa può essere \code{WHILE}-calcolabile ma non \code{FOR}-calcolabile.
+
+Un possibile problema nella definizione di calcolabilità data è che abbiamo supposto che le funzioni abbiano una specifica forma: sono funzioni $\Sigma_0^\ast \to \Sigma_1^\ast$ nel caso delle MdT, $\code{Var} \to \N$ nel caso dei comandi. Scegliendo altri insiemi con le stesse caratteristiche (quindi di cardinalità numerabile) cambiano le funzioni calcolabili?
+
+Fortunatamente la risposta è \strong{no}. Consideriamo una funzione $f : A \to B$: se gli insiemi $A, B$ sono numerabili possiamo scegliere delle \sstrong{codifiche} $A \to \N$, $\N \to B$. A questo punto possiamo \begin{itemize}
+    \item trasformare l'input $a \in A$ in un naturale tramite la prima codifica;
+    \item fare il calcolo tramite una funzione $\N \to \N$,
+    \item trasformare l'output in un elemento di $B$ tramite la seconda codifica. 
+\end{itemize}
+
+In questo modo possiamo limitarci a solo funzioni $\N \to \N$, a patto che la codifica sia \strong{effettiva}, cioè sia calcolabile anch'essa.

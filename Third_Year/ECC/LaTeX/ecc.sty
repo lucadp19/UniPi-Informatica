@@ -1,0 +1,20 @@
+\newcommand{\resp}{{\vartriangleright}}
+\newcommand{\Left}{\texttt{L}}
+\newcommand{\Right}{\texttt{R}}
+\newcommand{\ul}{\underline}
+
+\NewDocumentCommand{\dom}{sog}{ % norm (with automatic \cdot inside if empty)
+    \operatorname{dom}              
+    \IfValueTF{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        }{
+            \parens[#2]{#3}
+        }
+    }
+}
+\newcommand{\conv}{\!\!\downarrow}
+\newcommand{\divg}{\!\!\uparrow}
+
+\newcommand{\PR}{\mathcal{PR}}
+\newcommand{\Rec}{\mathcal{R}}

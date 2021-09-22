@@ -1,0 +1,27 @@
+\section{Funzioni ricorsive}
+
+Introduciamo ora un ultimo formalismo per rappresentare un modello di calcolo, ovvero quello delle funzioni ricorsive.
+
+Per semplificare la notazione useremo la $\lambda$-notazione per le funzioni anonime: la funzione $\lambda x.\ f(x)$ è la funzione che prende un unico parametro di ingresso $x$ e restituisce $f(x)$.   
+
+\begin{definition}
+    {Funzioni primitive ricorsive}{prim_rec}
+    La classe delle \sstrong{funzioni primitive ricorsive} $\PR$ è la minima classe di funzioni che contenga
+    \newthought{Zero} $\lambda x_1, \dots, x_n.\ 0$ \quad per ogni $n \in \N$ 
+    \newthought{Successore} $\lambda x.\ x+1$
+    \newthought{Proiezione} $\lambda x_1, \dots, x_n.\ x_i$ \quad per ogni $n \in \N$, $i = 1, \dots, n$
+
+    \medskip
+    e che sia chiusa per le seguenti operazioni:
+    \newthought{Composizione} se $g_1, \dots, g_k : \N^n \to \N$, $h : \N^k \to \N$ appartengono a $\PR$, allora \[
+        \lambda x_1, \dots, x_n.\ h\parens[\Big]{g_1(x_1, \dots, x_n), \dots, g_k(x_1, \dots, x_n)}
+    \] appartiene ancora a $\PR$;
+    \newthought{Ricorsione Primitiva} se $h : \N^{n+1} \to \N$, $g : \N^{n-1} \to \N$ appartengono a $\PR$, allora \begin{gather*}
+        f : \N^n \to \N \\
+        f(x_1, \dots, x_n) \deq \begin{cases}
+            f(0, x_2, \dots, x_n) = g(x_2, \dots, x_n)\\
+            f(n+1, x_2, \dots, x_n) = h(n, f(n, x_2, \dots, x_n), x_2, \dots, x_n)
+        \end{cases}
+    \end{gather*}   
+    appartiene ancora a $\PR$. 
+\end{definition}
