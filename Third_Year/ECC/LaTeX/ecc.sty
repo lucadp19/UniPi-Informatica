@@ -1,7 +1,29 @@
+\usepackage{proof}
+
 \newcommand{\resp}{{\vartriangleright}}
 \newcommand{\Left}{\texttt{L}}
 \newcommand{\Right}{\texttt{R}}
 \newcommand{\ul}{\underline}
+
+\newcommand{\FOR}{\texttt{FOR}}
+\newcommand{\WHILE}{\texttt{WHILE}}
+
+\newcommand{\blank}{{-}}
+
+\NewDocumentCommand{\eval}{g}{
+    \mathcal{E}
+    \IfValueT{#1}{\@evalaux{#1}}
+}
+\NewDocumentCommand{\bval}{g}{
+    \mathcal{B}
+    \IfValueT{#1}{\@evalaux{#1}}
+}
+\NewDocumentCommand{\@evalaux}{>{\SplitArgument{1}{,}}m}{
+    \@evalauxaux#1
+}
+\NewDocumentCommand{\@evalauxaux}{mm}{
+        \dbracket*{#1}#2
+}
 
 \NewDocumentCommand{\dom}{sog}{ % norm (with automatic \cdot inside if empty)
     \operatorname{dom}              

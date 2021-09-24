@@ -1,0 +1,143 @@
+\section{Linguaggi FOR e WHILE}
+
+Introduciamo ora un secondo paradigma per il calcolo di algoritmi, ovvero quello dato dai linguaggi \texttt{FOR} e \texttt{WHILE}. In effetti anche se le MdT rispondono ai nostri requisiti formali per un algoritmo e sono il modello teorico delle \strong{macchine di Von Neumann}, al giorno d'oggi non costruiamo una nuova macchina per ogni algoritmo che dobbiamo risolvere: usiamo dei \strong{linguaggi di programmazione} che verranno interpretati o compilati e restituiranno il risultato del calcolo.
+
+I linguaggi \texttt{FOR} e \texttt{WHILE} sono quindi la base teorica dei moderni linguaggi imperativi, e anche se sembrano mancare di espressività rispetto ad essi, vedremo che in realtà il linguaggio \texttt{WHILE} riesce a risolvere tutti e soli i problemi risolvibili da un linguaggio moderno.
+
+\subsection*{Sintassi astratta}
+
+\begin{definition}
+    {Sintassi astratta di \texttt{FOR} e \texttt{WHILE}}{}
+    \begin{align}
+        \code{EXPR} &\Coloneqq n \mid x \mid E_1 + E_2 \mid E_1 \cdot E_2 \mid E_1 - E_2 \tag*{Espr. aritmetiche}\\
+        \code{BEXPR} &\Coloneqq b \mid E_1 < E_2 \mid \neg b \mid B_1 \lor B_2 \tag*{Espr. booleane} \\
+        \code{CMD} &\Coloneqq \code{skip} \mid x \deq E \mid C_1;C_2 \mid \code{if}\ B\ \code{then}\ C_1\ \code{else}\ C_2 \tag*{Comandi} \\
+        &\;\;\mid \code{for}\ x = E_1\ \code{to}\ E_2\ \code{do}\ C \mid \code{while}\ B\ \code{do}\ C \tag*{}
+    \end{align}
+    dove $n \in \N$, $x \in \code{Var}$ (che è un insieme \emph{numerabile} di variabili), $b \in \B \deq \set{\TT, \FF}$. 
+
+    Il linguaggio \texttt{FOR} contiene solo il comando \code{for}, il linguaggio \texttt{WHILE} contiene solo il comando \code{while}.
+\end{definition}
+
+\subsection*{Semantica}
+
+Per definire la \sstrong{semantica} dei linguaggi \texttt{FOR} e \texttt{WHILE} abbiamo bisogno di alcuni costrutti ausiliari. In particolare ogni nostro programma conterrà delle variabili che possono essere valutate oppure aggiornate (tramite il comando di assegnamento): dobbiamo \emph{memorizzare} il loro valore.
+
+\begin{definition}
+    {Funzione memoria e funzione di aggiornamento}{}
+    La funzione \sstrong{memoria} è una funzione \[
+        \sigma : \code{Var} \to \N
+    \] definita solo per un sottoinsieme finito di \code{Var}.
+
+    La funzione di \sstrong{aggiornamento} è una funzione \[
+        \blank[\blank/\blank] : (\code{Var} \times \N) \times \N \times \code{Var} \to (\code{Var} \times \N)
+    \] definita da \[
+        \sigma[n/x](y) \deq \begin{cases}
+            n &\text{se } y = x,\\
+            \sigma(y) &\text{altrimenti.}
+        \end{cases}
+    \]
+\end{definition}
+
+\begin{remark}
+    La funzione di aggiornamento prende una memoria ($\sigma : \code{Var} \to \N$), un valore intero ($n \in \N$) e una variabile ($x \in \code{Var}$) e produce una nuova memoria $\sigma[n/x] : \code{Var} \to \N$ che si comporta come $\sigma$ su tutte le variabili diverse da $x$, ma restituisce $n$ quando l'input è $x$. 
+\end{remark}
+
+Tramite la memoria possiamo definire la funzione di valutazione delle espressioni aritmetiche, ovvero la loro \sstrong{semantica}.
+
+\begin{definition}
+    {Funzione di valutazione semantica (aritmetica)}{}
+    La \sstrong{funzione di valutazione semantica (aritmetica)} è una funzione \[
+        \eval{\blank, \blank} : \code{EXPR} \times (\code{Var} \to \N) \to \N 
+    \]
+    definita per induzione strutturale a partire da 
+    \begin{alignat*}{2}
+        &\eval{n, \sigma} &&\;\;\deq{}\;\; n \tag{val. dei naturali}\\
+        &\eval{x, \sigma} &&\;\;\deq{}\;\; \sigma(x) \tag{val. delle variabili}\\
+        &\eval{E_1 + E_2, \sigma} &&\;\;\deq{}\;\; \eval{E_1, \sigma} + \eval{E_2, \sigma} \tag{val. della somma}\\
+        &\eval{E_1 \cdot E_2, \sigma} &&\;\;\deq{}\;\; \eval{E_1, \sigma} \cdot \eval{E_2, \sigma}  \tag{val. del prodotto}\\
+        &\eval{E_1 - E_2, \sigma} &&\;\;\deq{}\;\; \eval{E_1, \sigma} - \eval{E_2, \sigma} \tag{val. della sottrazione}
+    \end{alignat*}
+\end{definition}
+
+Dato che il nostro linguaggio modella solo numeri naturali (quindi positivi), l'operazione di sottrazione sarà quella data dal \strong{meno limitato}: \[
+    a - b \deq \begin{cases}
+        a - b, \text{se } a > b\\
+        0, \text{altrimenti.}
+    \end{cases}
+\]
+
+Analogamente possiamo definire la semantica delle espressioni booleane.
+
+\begin{definition}
+    {Funzione di valutazione semantica (booleana)}{}
+    La \sstrong{funzione di valutazione semantica (booleana)} è una funzione \[
+        \bval{\blank, \blank} : \code{BEXPR} \times (\code{Var} \to \N) \to \N
+    \] definita per induzione strutturale a partire da
+    \begin{alignat*}{2}
+        &\bval{t, \sigma} &&\;\;\deq{}\;\; \TT \tag{val. del \texttt{true}}\\
+        &\bval{f, \sigma} &&\;\;\deq{}\;\; \FF \tag{val. del \texttt{false}}\\
+        &\bval{E_1 < E_2, \sigma} &&\;\;\deq{}\;\; \eval{E_1, \sigma} < \eval{E_2, \sigma} \tag{val. del minore}\\
+        &\bval{\neg B, \sigma} &&\;\;\deq{}\;\; \neg \bval{B, \sigma}  \tag{val. del \texttt{not}}\\
+        &\bval{B_1 \lor B_2, \sigma} &&\;\;\deq{}\;\; \bval{B_1, \sigma} \lor \bval{B_2, \sigma} \tag{val. della sottrazione}
+    \end{alignat*}
+\end{definition}
+
+Osserviamo che i simboli usati nel linguaggio (come $+, <, \neg$, ed altri) sono solo \strong{simboli formali}: per essere più precisi dovremmo differenziarli dalle funzioni effettive (ovvero quelle che compaiono a destra del $\deq$).
+
+\begin{remark}
+    Le funzioni $\eval$ e $\bval$ si comportano come un \sstrong{interprete}: ad esempio $\eval$ prende un'espressione aritmetica, una memoria e restituisce la valutazione dell'espressione nella memoria data.
+
+    Tuttavia tramite il \sstrong{currying} possiamo esprimere $\eval$ come una funzione \[
+        \eval{\blank, \blank} : \code{EXPR} \to \parens[\Big]{(\code{Var} \to \N) \to \N}
+    \] ovvero come una funzione che prende un'espressione aritmetica e restituisce una \emph{funzione} che a sua volta prenderà una memoria per restituire finalmente la valutazione dell'espressione nella memoria.
+
+    Anche se le due modalità in pratica ci portano allo stesso risultato, la seconda modella più l'azione di un \sstrong{compilatore}: infatti nella seconda versione $\eval$ prende un'espressione, cioè del codice, e restituisce un \emph{eseguibile} che avrà bisogno dei dati (cioè della memoria) per dare il suo risultato. 
+\end{remark}
+
+Lo stile usato per definire la semantica delle espressioni viene chiamato \sstrong{semantica denotazionale}: in questo stile cerchiamo di associare ad ogni costrutto del linguaggio una funzione che ne dà la semantica (ad esempio abbiamo associato al $+$ del linguaggio la funzione che somma due naturali).
+
+Per quanto riguarda i comandi adopereremo un altro stile, detto \sstrong{semantica operazionale}. Come si evince dal nome, cercheremo di definire una \emph{macchina astratta} che modifica il proprio \emph{stato interno} valutando a piccoli passi il comando da eseguire.
+
+\begin{definition}
+    {Sistema di transizioni}{}
+    Si dice \sstrong{sistema di transizioni} una coppia $(\Gamma, \to)$ dove \begin{itemize}
+        \item $\Gamma$ è l'insieme delle \sstrong{configurazioni} oppure stati;
+        \item $\to : \Gamma \to \Gamma$ è una funzione, detta \sstrong{funzione di transizione}. 
+    \end{itemize} 
+\end{definition}
+
+Nel caso della nostra macchina astratta, le configurazioni saranno delle coppie \[
+    \ang{c, \sigma} \in \code{CMD} \times (\code{Var} \to \N)
+\] ovvero delle coppie "comando da valutare", "memoria".
+
+Per definire la semantica operazionale dei comandi useremo un approccio \sstrong{small-step}, in cui ogni transizione \[
+    \ang{c, \sigma} \to \ang*{c', \sigma'}
+\] rappresenta un singolo passo dell'esecuzione del programma. Una \sstrong{computazione} diventa allora una sequenza di passi, ovvero un elemento della chiusura transitiva e riflessiva di $\to$, che indicheremo come al solito come $\to^\ast$.
+
+Analogamente alle MdT, una computazione \sstrong{termina con successo} se \[
+    \ang{c, \sigma} \to^\ast \sigma',
+\] ovvero se esauriamo la valutazione del comando $c$ in un numero finito (anche se arbitrario) di passi.
+
+La semantica operazionale dei comandi è dunque data attraverso una serie di assiomi e regole di inferenza, che insieme ci permettono di valutare ogni comando per induzione strutturale.
+
+\begin{align*}
+    &\infer{\ang{\code{skip}, \sigma} \to \sigma}{\blank} \tag*{Assioma dello \code{skip}}\\[8pt]
+    &\infer{\ang{x \deq E, \sigma} \to \sigma[n/x]}{\blank} \quad \text{ se } \eval{E, \sigma} = n \tag*{Assioma dell'assegnamento}\\[5pt]
+    &\infer{\ang{C_1;C_2, \sigma} \to \ang{C_1';C_2, \sigma'}}{\ang{C_1, \sigma} \to \ang{C_1', \sigma'}} \tag*{Regola della sequenza 1}\\[8pt]
+    &\infer{\ang{C_1;C_2, \sigma}\to \sigma'}{\ang{C_1, \sigma}  \to \ang{C_2, \sigma'}} \tag*{Regola della sequenza 2}\\[8pt]
+    &\infer{\ang{\code{if}\ B\ \code{then}\ C_1\ \code{else}\ C_2, \sigma} \to \ang{C_1, \sigma}}{\blank} \quad \text{se } \bval{B, \sigma} = \TT \tag*{Assioma cond. 1}\\[8pt]
+    &\infer{\ang{\code{if}\ B\ \code{then}\ C_1\ \code{else}\ C_2, \sigma} \to \ang{C_2, \sigma}}{\blank} \quad \text{se } \bval{B, \sigma} = \FF \tag*{Assioma cond. 2}\\[8pt]
+    &\infer{\ang{\code{for}\ i = E_1\ \code{to}\ E_2\ \code{do}\ C, \sigma} \to \ang{i \deq n; C; \code{for}\ i = n_1 + 1\ \code{to}\ n_2\ \code{do}\ C, \sigma}}{\blank} \tag*{Assioma del \code{for}\ 1}\\
+    & \qquad\qquad\text{se } \bval{E_2 < E_1, \sigma} = \FF, \eval{E_1, \sigma} = n_1, \eval{E_2, \sigma} = n_2\\[8pt]
+    &\infer{\ang{\code{for}\ i = E_1\ \code{to}\ E_2\ \code{do}\ C, \sigma} \to \sigma}{\blank} \qquad \text{se } \bval{E_2 < E_1, \sigma} = \TT \tag*{Assioma del \code{for}\ 2}\\[8pt]
+    &\infer{\ang{\code{while}\ B\ \code{do}\ C, \sigma} \to \ang{\code{if}\ B\ \code{then}\ (C; \code{while}\ B\ \code{do}\ C)\ \code{else skip}, \sigma}}{\blank} \tag*{Assioma del \code{while}}
+\end{align*}
+
+Dalla regola di transizione del \texttt{for} segue una proprietà fondamentale del linguaggio \texttt{FOR}: ogni suo programma termina in tempo finito. Infatti prima della prima iterazione la semantica ci impone di valutare le espressioni $E_1$ ed $E_2$, che verranno valutate a dei naturali $n_1, n_2$. A questo punto il ciclo \texttt{for} verrà eseguito esattamente $n_2 - n_1$ volte (dove il $-$ è sempre limitato, per cui se $n_1 > n_2$ non eseguiremo mai il ciclo) in quanto gli estremi di iterazione non possono essere modificati dai comandi del corpo del \texttt{for}.
+
+Questo ci dimostra immediatamente che il linguaggio \texttt{FOR} \strong{non è equivalente} alle macchine di Turing, ovvero esistono macchine di Turing che codificano algoritmi non risolvibili dal linguaggio \texttt{FOR}. (Studieremo in seguito cosa significa \emph{codificare algoritmi}.)
+
+Il linguaggio \texttt{WHILE} invece può codificare algoritmi che non terminano. Ad esempio si vede subito che la configurazione \[
+    \ang*{\code{while}\ \TT\ \code{do skip}, \sigma}
+\] diverge a prescindere da $\sigma$. 
