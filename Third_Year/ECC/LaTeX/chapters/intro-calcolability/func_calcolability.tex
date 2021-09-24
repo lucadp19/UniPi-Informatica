@@ -70,8 +70,8 @@ In particolare, dato che le funzioni possono essere \emph{parziali} e le macchin
 \begin{definition}
     {\code{WHILE}-calcolabilità}{w-calc}
     Sia $C$ un comando \code{WHILE}, $g : \code{Var} \to \N$. 
-    Si dice allora che $C$ \sstrong{calcola} $g$ (e che $g$ è \sstrong{\code{WHILE}-calcolabile}) se per ogni $\sigma \in \code{Var}$ \[
-        y = f(x) \;\;\text{se e solo se}\;\; (C, \sigma) \to^\ast \sigma^\ast \text{ e } \sigma^\ast(x) = n.
+    Si dice allora che $C$ \sstrong{calcola} $g$ (e che $g$ è \sstrong{\code{WHILE}-calcolabile}) se per ogni $\sigma : \code{Var} \to \N$ \[
+        n = g(x) \;\;\text{se e solo se}\;\; (C, \sigma) \to^\ast \sigma^\ast \text{ e } \sigma^\ast(x) = n.
     \]   
 \end{definition}
 
