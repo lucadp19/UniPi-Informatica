@@ -1,0 +1,99 @@
+\section{Primi teoremi sulle funzioni calcolabili}
+
+Avendo stabilito il \emph{framework} in cui lavoreremo, possiamo finalmente iniziare a dimostrare alcune proprietà delle funzioni calcolabili.
+
+\begin{theorem}
+    {Esistenza di funzioni non calcolabili}{num-funct-calc}
+    Le funzioni calcolabili sono in quantità numerabile. In particolare esistono funzioni non calcolabili.
+\end{theorem}
+
+Per dimostrare questo teorema useremo il fatto che le funzioni $\N \to \N$ sono in quantità più che numerabile, quindi dimostriamolo.
+
+\begin{theorem}
+    {Diagonalizzazione di Cantor}{diag-cantor}
+    Siano $A, B$ insiemi con $\card{A} \geq \card{\N}$, $\card{B} \geq 2$. Allora \[
+        \card[\big]{\set*{f : A \to B}} > \card*{\N}.
+    \]  
+\end{theorem}
+\begin{proof}
+    È sufficiente dimostrare il Teorema nel caso in cui $A$ sia numerabile e $B$ abbia esattamente due elementi. Allora senza perdita di generalità sia $A = \N$, $B = \set*{0, 1}$.
+    
+    Sia $\FF \deq \card[\big]{\set[\big]{f : \N \to \set{0, 1}}}$ e supponiamo per assurdo $\card*{\FF} = \card*{\N}$. Allora esiste una numerazione bigettiva degli elementi di $\FF$, ovvero una funzione $n \mapsto f_n \in \FF$.
+    
+    Consideriamo allora $g : \N \to \set*{0, 1}$ (e quindi $g \in \FF$) definita da \[
+        g(n) \deq \begin{cases}
+            0 &\text{se } f_n(n) = 1,\\
+            1 &\text{altrimenti}.
+        \end{cases}
+    \] 
+
+    Ma allora $g(n) \neq f_n(n)$ per ogni $n$, dunque $g \neq f_n$ per ogni $n$. Ma gli elementi di $\FF$ sono tutti e soli della forma $f_n$ al variare di $n \in \N$, dunque $g \notin \FF$, che è assurdo.   
+\end{proof}
+
+Possiamo dimostrare il \Cref{th:num-funct-calc}.
+
+\begin{proof}[Dimostrazione del \Cref{th:num-funct-calc}]
+    Sia $\CC$ l'insieme delle funzioni calcolabili. Mostriamo che $\card{\CC} \geq \card{\N}$ e $\card{\CC} \leq \card{\N}$.
+    
+    \newthought{$\card{\CC} \geq \card{\N}$} Le funzioni $\lam{x}{n}$ al variare di $n \in \N$ sono in quantità numerabile e sono tutte calcolabili.
+    
+    \newthought{$\card{\CC} \leq \card{\N}$} Ogni funzione calcolabile è calcolata da una macchina di Turing, dunque $\card{\CC} \leq \card{\MM}$ dove $\MM$ è l'insieme delle MdT; inoltre $\card{\MM} \leq \card{\N}$ poiché possiamo numerarle tramite l'enumerazione di G\"odel, dunque $\card{\CC} \leq \card{\N}$.
+
+    \medskip
+    Segue che $\card{\CC} = \card{\N}$.
+    
+    Per dimostrare che esistono funzioni non calcolabili osserviamo che $\CC$ è un sottoinsieme di tutte le funzioni $\N \to \N$. Tuttavia per il \Cref{th:diag-cantor} le funzioni $\N \to \N$ sono in quantità più che numerabile, dunque $\CC$ deve essere un sottoinsieme proprio delle funzioni $\N \to \N$: in particolare devono esistere funzioni che non sono in $\CC$.   
+\end{proof}
+
+\subsection{Enumerazioni effettive}
+
+Dato che abbiamo dimostrato che le funzioni calcolabili sono numerabili possiamo porci il problema di come \emph{enumerarle}. Per far ciò non enumereremo direttamente le funzioni, ma solo le macchine di Turing.
+
+In particolare considereremo sono \sstrong{enumerazioni effettive}, ovvero enumerazioni che dipendono solo dalla \strong{sintassi} della macchina di Turing, cioè soltanto dai simboli che compaiono al suo interno, e non dal comportamento. \footnote{In realtà una enumerazione si dice effettiva se è ottenuta post-componendo l'enumerazione di G\"odel con una bigezione $\N \biject \N$.}
+
+Si può dimostrare che tutti i teoremi che vedremo sono indipendenti dal formalismo e dall'enumerazione scelta, purché quest'ultima sia effettiva: fissiamo quindi una enumerazione effettiva $n \mapsto M_n$.
+Tale enumerazione induce un'enumerazione sulle funzioni calcolabili: indicheremo con $\phi_i$ la funzione calcolata dalla macchina $M_i$.
+
+Osserviamo però che dati due indici $i, j$ diversi sicuramente vale che $M_i \neq M_j$ ma è possibile che $\phi_i = \phi_j$, ovvero è possibile che due macchine diverse calcolino la stessa funzione.
+
+In realtà vale un teorema molto più forte, solitamente conosciuto come \sstrong{Padding Lemma}.
+
+\begin{theorem}
+    {Padding Lemma}{padding-lemma}
+    Per ogni indice $i$ esiste un insieme numerabile $A_i$ di indici tale che per ogni $j \in A_i$ \[
+        \phi_j = \phi_i,
+    \] ovvero ogni funzione calcolabile è calcolata da infinite MdT.
+\end{theorem}
+\begin{proof}
+    Consideriamo l'algoritmo che calcola $\phi_i$: aggiungendo uno \texttt{skip} alla fine si ottiene un algoritmo diverso (e quindi una macchina di Turing diversa) che calcola la stessa funzione. Aggiungendo altri \texttt{skip} otteniamo una quantità numerabile di algoritmi che calcolano $\phi_i$.  
+\end{proof}
+
+\subsection{Equivalenza tra MdT e funzioni generali ricorsive}
+
+Ora mostriamo che ogni funzione calcolabile può essere scritta in una forma standard, detta \sstrong{Forma Normale di Kleene}.
+
+\begin{theorem}
+    {Forma Normale di Kleene}{kleene-norm-form}
+    Esistono un predicato $T : \N^3 \to \set{0, 1}$ (detto \sstrong{predicato di Kleene}) e una funzione $U : \N \to \N$ entrambi calcolabili totali tali che \[
+        \forall i, x: \phi_i(x) = U\parens[\big]{\mi{y}{T(i, x, y)}}.
+    \] Inoltre $T$ e $U$ sono primitivi ricorsivi. 
+\end{theorem}
+\begin{proof}
+    Definiamo $T(i, x, y) = 1$ se e solo se la \emph{computazione} $M_i(x)$ converge ad una configurazione $(h, \resp z)$ e $y$ è la codifica di tale computazione.
+    
+    $T$ è calcolabile: in effetti basta recuperare la macchina $M_i$ dalla lista (che è un'operazione calcolabile), decodificare $y$ come una computazione $c_1\dots c_n$ (dove tutte queste sono configurazioni) e verificare che $M_i(x)$ converga effettivamente ad una configurazione $c_n = (h, \resp z)$ tramite la computazione codificata da $y$.\footnote{Osserviamo che questo procedimento termina sempre poiché le computazioni sono di lunghezza finita, dunque possiamo verificare in tempo finito se il calcolo di $M_i(x)$ corrisponde alla computazione cercata oppure no.}
+    
+    Allora possiamo definire $U$ in modo che $U(y) = \text{ "la codifica di } z$"++. La computazione del membro destro procede quindi in questo modo: si scorrono i valori di $y$ e si trova il primo valore di $y$ che corrisponde alla computazione di $M_i(x)$. Se esiste, ritorniamo la codifica di $z$, altrimenti il procedimento non termina.
+    
+    È facile vedere che ciò è uguale a $\phi_i(x)$ per ogni $x$: distinguiamo due casi.
+    \begin{itemize}
+        \item Se $\phi_i(x) = n$ la computazione di $M_i(x)$ termina e dà come configurazione finale $(h, \resp z)$, dove $n$ codifica $z$. Ma allora esiste un $y \in \N$ che codifica la computazione terminante di $M_i(x)$ (e tale $y$ è anche unico, poiché la computazione è unica) e dunque $y$ è il minimo valore del terzo parametro per cui vale che $T(i, x, y) = 1$. Per definizione di $U$, $U(y)$ è la codifica di $z$ e dunque è $n$.
+        \item Se $\phi_i(x)$ diverge, allora non esiste una codifica della computazione di $M_i(x)$ (poiché la computazione diverge) e pertanto non esiste un $y$ per cui $T(i, x, y) = 1$. In particolare $U(y)$ diverge.      
+    \end{itemize}  
+
+    Infine $T$ ed $U$ sono primitivi ricorsivi in quanto lo sono le codifiche e i controlli effettuati, e composizione di funzioni primitive ricorsive è ancora primitiva ricorsiva.
+\end{proof}
+
+\begin{remark}
+    Il teorema ci dice che ogni funzione calcolabile $\phi_i$ è esprimibile come composizione di due funzioni primitive ricorsive ($T, U$) e una funzione generale ricorsiva (data dalla minimizzazione), o equivalentemente da due comandi \FOR{} e un comando \WHILE. 
+\end{remark}

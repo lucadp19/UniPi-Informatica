@@ -1,0 +1,48 @@
+\section{Funzioni generali ricorsive}
+
+Il problema messo in luce dal \Cref{th:form-calc-tot} ci impedisce di creare un formalismo che esprima solo funzioni totali: per risolverlo dobbiamo estendere la classe di funzioni di nostro interesse alle \emph{funzioni parziali}. 
+Questo non è assurdo: molte funzioni di nostro interesse (anche aritmetiche) sono non definite su alcuni input, e abbiamo anche visto che esistono MdT e funzioni \WHILE\ che non convergono.
+
+Per farlo, introduciamo un ultimo formalismo.
+
+\begin{definition}
+    {Operatore di minimizzazione}{}
+    Dato un predicato $P$, ovvero una funzione $P : \N \to \set{0, 1}$, possiamo costruire l'\sstrong{operatore di minimizzazione} $\mu$ tale che \[
+        \mi{y}{P(y)} \deq \min \set*{y \given P(y) = 1}.
+    \]
+\end{definition}
+
+Osserviamo che $\mi{y}{P(y)}$ potrebbe non essere definito: se $P$ è il predicato sempre falso, non esiste un minimo $y$ che lo renda vero.
+
+\begin{definition}
+    {Funzioni generali ricorsive}{gen-rec}
+    L'insieme delle funzioni \sstrong{generali ricorsive} $\Rec$ è il minimo insieme di funzioni contenenti gli schemi I, II, III delle funzioni primitive ricorsive, chiuso per gli schemi IV e V e per lo schema \begin{enumerate}[I., start=6]
+        \item \sstrong{Minimizzazione:} se $\phi : \N^{n+1} \to \N \in \Rec$, allora la funzione $\psi : \N^n \to \N$ definita da \[
+            \psi(x_1, \dots, x_n) \deq \mi{y}{\parens[\Big]{\phi(\vec x, y) = 0 \text{ e } \parens[\big]{\forall z \leq y.\ \phi(\vec x, z)\conv}}}
+        \] appartiene ancora a $\Rec$. 
+    \end{enumerate} 
+\end{definition}
+
+Una funzione ottenuta per minimizzazione è intuitivamente calcolabile: si calcola $\phi(\vec x, y)$ per $y = 0, 1, 2, \dots$ e ci si ferma al primo valore che soddisfi entrambe le proprietà. Osserviamo che una $\psi$ ottenuta in tale modo \emph{può essere parziale} in due casi: \begin{itemize}
+    \item se $\phi(\vec x, y) \neq 0$ per ogni $y$ allora non c'è minimo, e quindi la computazione non termina;
+    \item se $\phi(\vec x, z)\divg$ per qualche valore $z$ precedente al primo zero, nel calcolare $\phi(\vec x, z)$ non ci fermeremo mai, e quindi il calcolo di $\psi$ non termina.  
+\end{itemize}
+
+\begin{example}
+    Sia $\phi \deq \lam{x, y}{3}$. $\phi$ è primitiva ricorsiva, e quindi è anche totale, ma $\psi$ ottenuta per minimizzazione su $\phi$ è \strong{sempre indefinita}.
+    
+    Infatti $\psi(x)$ è il minimo $y$ per cui $\phi(x, y) = 0$ (e l'altra condizione) ma questo non accade mai.   
+\end{example}
+
+\subsection{Tesi di Church-Turing}
+
+Abbiamo quindi visto diversi formalismi capaci di esprimere funzioni intuitivamente calcolabili, ovvero algoritmi. In che relazione sono?
+
+Negli anni '20 e '30 i principali ideatori di questi formalismi (come Church, Turing, G\"odel) dimostrarono l'equivalenza di tutti i formalisti che abbiamo visto: in particolare Turing e Church congetturarono che tutti i modelli capaci di esprimere funzioni calcolabili fossero \sstrong{Turing-equivalenti}.
+
+\begin{theorem}
+    {Tesi di Church-Turing}{}
+    Le funzioni (intuitivamente) calcolabili sono tutte e sole le funzioni Turing-calcolabili.
+\end{theorem}
+
+Dato che le funzioni Turing-calcolabili sono tutte e sole quelle \WHILE-calcolabili oppure tutte e sole le funzioni generali ricorsive, da questo momento in poi non specificheremo più il formalismo usato (tanto sono tutti equivalenti!) e parleremo semplicemente di \sstrong{funzioni calcolabili}.

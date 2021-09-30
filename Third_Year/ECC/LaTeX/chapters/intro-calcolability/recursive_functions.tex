@@ -6,22 +6,188 @@ Per semplificare la notazione useremo la $\lambda$-notazione per le funzioni ano
 
 \begin{definition}
     {Funzioni primitive ricorsive}{prim_rec}
-    La classe delle \sstrong{funzioni primitive ricorsive} $\PR$ è la minima classe di funzioni che contenga
-    \newthought{Zero} $\lambda x_1, \dots, x_n.\ 0$ \quad per ogni $n \in \N$ 
-    \newthought{Successore} $\lambda x.\ x+1$
-    \newthought{Proiezione} $\lambda x_1, \dots, x_n.\ x_i$ \quad per ogni $n \in \N$, $i = 1, \dots, n$
-
-    \medskip
-    e che sia chiusa per le seguenti operazioni:
-    \newthought{Composizione} se $g_1, \dots, g_k : \N^n \to \N$, $h : \N^k \to \N$ appartengono a $\PR$, allora \[
-        \lambda x_1, \dots, x_n.\ h\parens[\Big]{g_1(x_1, \dots, x_n), \dots, g_k(x_1, \dots, x_n)}
-    \] appartiene ancora a $\PR$;
-    \newthought{Ricorsione Primitiva} se $h : \N^{n+1} \to \N$, $g : \N^{n-1} \to \N$ appartengono a $\PR$, allora \begin{gather*}
-        f : \N^n \to \N \\
-        f(x_1, \dots, x_n) \deq \begin{cases}
-            f(0, x_2, \dots, x_n) = g(x_2, \dots, x_n)\\
-            f(n+1, x_2, \dots, x_n) = h(n, f(n, x_2, \dots, x_n), x_2, \dots, x_n)
-        \end{cases}
-    \end{gather*}   
-    appartiene ancora a $\PR$. 
+    La classe delle \sstrong{funzioni primitive ricorsive} $\PR$ è la minima classe di funzioni che contenga gli schemi
+    \begin{enumerate}[I.]
+        \item \sstrong{Zero:} \qquad\qquad $\lambda x_1, \dots, x_n.\ 0$ \quad per ogni $n \in \N$ 
+        \item \sstrong{Successore:} \quad\, $\lambda x.\ x+1$
+        \item \sstrong{Proiezione:} \quad\, $\lambda x_1, \dots, x_n.\ x_i$ \quad per ogni $n \in \N$, $i = 1, \dots, n$
+    \end{enumerate}
+    e che sia chiusa per gli schemi
+    \begin{enumerate}[I., start=4]
+        \item \sstrong{Composizione:} se $g_1, \dots, g_k : \N^n \to \N$, $h : \N^k \to \N$ appartengono a $\PR$, allora \[
+            \lambda x_1, \dots, x_n.\ h\parens[\Big]{g_1(x_1, \dots, x_n), \dots, g_k(x_1, \dots, x_n)}
+        \] appartiene ancora a $\PR$;
+        \item \sstrong{Ricorsione Primitiva:} se $h : \N^{n+1} \to \N$, $g : \N^{n-1} \to \N$ appartengono a $\PR$, allora \begin{gather*}
+            f : \N^n \to \N \\
+            \begin{cases}
+                f(0, x_2, \dots, x_n) = g(x_2, \dots, x_n)\\
+                f(n+1, x_2, \dots, x_n) = h(n, f(n, x_2, \dots, x_n), x_2, \dots, x_n)
+            \end{cases}
+        \end{gather*}   
+        appartiene ancora a $\PR$. 
+    \end{enumerate}
 \end{definition}
+
+Una funzione è quindi primitiva ricorsiva se può essere costruita dagli schemi della definizione, ovvero se esiste una successione di funzioni $f_1, \dots, f_n$ tale che \begin{itemize}
+    \item $f_n = f$,
+    \item per ogni $i = 1, \dots, n$, $f_i$ è definita come uno dei casi base (ovvero è la funzione zero, successore o proiezione) oppure è ottenuta dagli schemi induttivi (composizione e ricorsione primitiva) e \emph{solamente} dalle funzioni $f_1, \dots, f_{i-1}$.    
+\end{itemize} 
+
+Osserviamo che il calcolo di ogni funzione ricorsiva primitiva \emph{termina sempre}: infatti i casi base (I, II e III) terminano in un singolo passo e per induzione strutturale si vede che anche i casi IV e V terminano in tempo finito, poiché la ricorsione si fa sempre diminuendo il valore di $x_1$ nello schema V. 
+
+Facciamo degli esempi di funzioni ricorsive primitive.
+
+\begin{example}
+    Consideriamo la seguente sequenza di funzioni: \begin{gather*}
+        f_1 = \lam{x}{x}, \qquad f_2 = \lam{x}{x+1}, \qquad f_3 = \lam{x_1, x_2, x_3}{x_2},\\
+        f_4 = f_2(f_3(x_1, x_2, x_3)), \qquad f_5 = \begin{cases}
+            f_5(0, x_2) = f_1(x_2)\\
+            f_5(n+1, x_2) = f_4(n, f_5(n, x_2), x_2)
+        \end{cases}
+    \end{gather*}
+
+    Ognuna delle funzioni è primitiva ricorsiva: infatti \begin{enumerate}
+        \item la prima corrisponde alla proiezione per $i = n = 1$;
+        \item la seconda corrisponde al successore;
+        \item la terza corrisponde alla proiezione con $n = 3, i = 2$;
+        \item la quarta è la composizione di $f_2$ ed $f_3$;
+        \item l'ultima è ottenuta per ricorsione primitiva dalle prime quattro funzioni.    
+    \end{enumerate}
+\end{example}
+
+Possiamo porci il problema di come si effettui il calcolo di una funzione primitiva ricorsiva quando ci vengono forniti degli argomenti.
+
+Consideriamo due \sstrong{regole di valutazione}.
+
+\newthoughtpar{Call by value} Nel \sstrong{call by value} si valutano prima gli operandi di una funzione e poi la funzione esterna: la \sstrong{redex} (ovvero la prossima espressione da valutare) è la funzione più interna più a sinistra.
+
+\begin{align*}
+    \ul{f_5(2, 3)} 
+        &= f_4(1, \ul{f_5(1, 3)}, 3) \\
+        &= f_4(1, f_4(0, \ul{f_5(0, 3)}, 3), 3)\\
+        &= f_4(1, f_4(0, \ul{f_1(3)}, 3), 3)\\
+        &= f_4(1, \ul{f_4(0, 3, 3), 3)}\\
+        &= f_4(1, f_2(\ul{f_3(0, 3, 3)}), 3)\\
+        &= f_4(1, \ul{f_2(3)}, 3)\\
+        &= \ul{f_4(1, 4, 3)}\\
+        &= f_2(\ul{f_3(1, 4, 3)})\\
+        &= \ul{f_2(4)}\\
+        &= 5.
+\end{align*}
+
+\newthoughtpar{Call by need} Nel \sstrong{call by need} valutiamo un'espressione \emph{solo quando è necessario}: questa regola ci impone di valutare sempre l'espressione più esterna per prima. Per far ciò eviteremo di essere eccessivamente pignoli nella sintassi delle funzioni primitive ricorsive.
+
+\begin{align*}
+    \ul{f_5(2, 3)} 
+        &= \ul{f_4(1, f_5(1, 3), 3)}\\
+        &= \ul{f_2(f_3(1, f_5(1, 3), 3))}\\
+        &= \ul{f_3(1, f_5(1, 3), 3)} + 1\\
+        &= \ul{f_5(1, 3)} + 1\\
+        &= \ul{f_4(0, f_5(0, 3), 3)} + 1\\
+        &= \ul{f_2(f_3(0, f_5(0, 3), 3))} + 1\\
+        &= \ul{f_3(0, f_5(0, 3), 3)} + 1 + 1\\
+        &= \ul{f_5(0, 3)} + 1 + 1\\
+        &= \ul{f_1(3)} + 1 + 1\\
+        &= 3 + 1 + 1 = 5.
+\end{align*}
+
+In entrambi i casi è chiaro che la funzione $f_5$ così definita è la somma.
+
+\subsection{Enumerazione di G\"odel}
+
+Vogliamo ora mostrare che le macchine di Turing sono numerabili e esiste una loro enumerazione fatta da funzioni ricorsive primitive.
+
+\begin{definition}
+    {Relazione primitiva ricorsiva}{}
+    Una relazione $P \subseteq \N^k$ è detta \sstrong{primitiva ricorsiva} se lo è la sua funzione caratteristica $\chi_P : \N^k \to \set{0, 1}$, definita da \[
+        \chi_P(x_1, \dots, x_k) \deq \begin{cases}
+            1 &\text{se } (x_1, \dots, x_k) \in P\\
+            0 &\text{altrimenti}.
+        \end{cases}
+    \]
+\end{definition}
+
+La funzione caratteristica di un sottoinsieme di $\N^k$ è quindi una funzione a valori booleani (ovvero è un predicato) che restituisce $1$ sugli elementi che appartengono al sottoinsieme e $0$ altrimenti. In futuro confonderemo senza porci troppi problemi le relazioni e le loro funzioni caratteristiche.
+
+Per costruire l'enumerazione delle MdT ci serve un predicato molto importante, che è il predicato $\monoP : \N \to \set{0, 1}$ definito da \[
+    \monoP(p) = 1 \text{ se e solo se } p \text{ è un numero primo.} 
+\] È possibile dimostrare che tale predicato è primitivo ricorsivo: i numeri primi saranno quindi una parte fondamentale dell'enumerazione.
+
+Gli altri due ingredienti della ricetta sono i seguenti. \begin{itemize}
+    \item Il \strong{Teorema di Esistenza e Unicità della Fattorizzazione in Primi}, che dice che se $\monoP = {p_0, p_1, \dots}$ è l'insieme dei numeri primi (considerato questa volta come relazione unaria!) allora per ogni $n \in \N$ esiste un numero finito di esponenti $e_i \neq 0$ tali che \[
+        n = \prod_{i \in \N} p_i^{e_i}.
+    \]   
+    \item La funzione che prende un $n = \prod_{i \in \N} p_i^{e_i}$ e restituisce l'esponente $e_k$ del $k$-esimo fattore della fattorizzazione è primitiva ricorsiva.  
+\end{itemize}
+
+In particolare se considerando una sequenza finita di naturali $(n_0, \dots, n_k)$ essa può essere codificata in modo \emph{unico} come il numero \[
+    N \deq p_0^{n_0 + 1} \cdot p_k^{n_k+1}
+\] e dalla codifica possiamo ricavare la sequenza originale grazie alle funzioni che danno gli esponenti della fattorizzazione.
+
+Possiamo vedere finalmente una \emph{quasi-}codifica delle macchine di Turing: in particolare delineeremo una funzione iniettiva che mappa le macchine di Turing ai naturali. La codifica vera e propria, chiamata \sstrong{enumerazione di G\"odel}, è in realtà una funzione bigettiva e primitiva ricorsiva.
+
+Data una macchina $M \deq (Q, \Sigma, \delta, q_0)$, siccome $Q$ e $\Sigma$ sono finiti possiamo numerare i loro elementi: \[
+    Q = \set*{q_0, \dots, q_n}, \qquad \Sigma = \set*{\sigma_0, \dots, \sigma_m}.
+\] Ogni transizione specificata da $\delta$ può essere rappresentata come una quintupla \[
+    (q_i, \sigma_j, q_k, \sigma_l, D) \in Q \times \Sigma \times Q \times \Sigma \times \set*{\Left, \Right, \blank}
+\] e pertanto possiamo codificarla come il naturale \[
+    p_0^{i+1} \cdot p_1^{j+1} \cdot p_2^{k+1} \cdot p_3^{l+1} \cdot p_4^{m_D}.
+\] Dobbiamo risolvere alcune piccole inesattezze: \begin{itemize}
+    \item $q_k$ potrebbe essere lo stato terminatore $h$, dunque numereremo $h$ come lo stato $q_{k+1}$;
+    \item non abbiamo definito come numerare i simboli $\Left, \Right, \blank$, ma possiamo semplicemente considerarli come ulteriori simboli rispetto a quelli di $\Sigma$, dunque numereremo \[
+        \Left \mapsto \sigma_{m+2}, \quad \Right \mapsto \sigma_{m+3}, \quad \blank \mapsto \sigma_{m+4}.
+    \]       
+\end{itemize}
+
+Abbiamo quindi associato un numero ad ogni quintupla. Ma una macchina di Turing è semplicemente un insieme di quintuple: ordiniamole lessicograficamente (ovvero prima le ordiniamo per $i$, poi per $j$, ecc) e quindi abbiamo una sequenza finita di numeri naturali $g_0, \dots, g_r$, ognuno dei quali codifica una quintupla. 
+
+Definiremo quindi \sstrong{numero di G\"odel} della macchina $M$ il numero $N_M \deq p_0^{g_0+1} \cdots p_r^{g_r + 1}$. Questa pseudo-codifica è sicuramente iniettiva grazie al Teorema di Fattorizzazione Unica, ma non è detto che sia surgettiva: l'idea della vera enumerazione di G\"odel è simile ma la realizzazione è molto più complessa.
+
+Osserviamo che una volta numerate le quintuple possiamo anche enumerare intere computazioni con un singolo numero: infatti una computazione (terminante) è una successione finita di configurazioni $\gamma = (q_i, w_j) \in Q \times \Sigma^\ast$ e le configurazioni possono certamente essere enumerate.
+
+Infine ogni passaggio fatto finora è primitivo ricorsivo, dunque il procedimento di enumerazione delle MdT e delle computazioni è primitivo ricorsivo.
+
+\subsection{Funzione di Ackermann}
+
+La maggior parte delle funzioni che usiamo comunemente è primitiva ricorsiva: i logici di inizio '900 si chiesero perciò se le funzioni primitive ricorsive potessero modellare \emph{tutti} gli algoritmi che \emph{terminano sempre}, ovvero tutte le funzioni totali.
+
+La risposta purtroppo è \strong{no} e ci è data dalla \sstrong{funzione di Ackermann}, definita da \[
+    A(z, x, y) \deq \begin{cases}
+        A(0, 0, y)      &= y\\
+        A(0, x+1, y)    &= A(0, x, y) + 1\\
+        A(1, 0, y)      &= 0\\
+        A(z+2, 0, y)    &= 1\\
+        A(z+1, x+1, y)  &= A(z, A(z+1, x, y), y). 
+    \end{cases}
+\]
+
+Questa funzione è totale: basta mostrarlo per induzione sui casi ricorsivi, che sono il secondo e il quinto. Il primo termina in tempo finito poiché il secondo parametro decresce ad ogni applicazione; il quinto termina poiché l'applicazione interna avviene col secondo parametro diminuito di uno, mentre nell'applicazione esterna il primo parametro decresce.
+
+Tuttavia l'ultimo caso non può essere espresso in termini di funzioni ricorsive primitive: la doppia ricorsione innestata non rientra nei cinque schemi e non è neanche ricavabile dagli schemi.
+Inoltre questa funzione è \emph{intuitivamente calcolabile}: ad ogni passo restituiamo un risultato oppure calcoliamo ricorsivamente la funzione diminuendo il valore degli argomenti, quindi è certamente scrivere un programma che la calcola.
+
+Segue che le funzioni primitive ricorsive \strong{non sono tutte le funzioni calcolabili totali}.
+
+\subsection{Non esiste un formalismo capace di esprimere tutte e sole le funzioni calcolabili totali}
+
+La speranza è quindi che esista un formalismo, diverso dalle funzioni primitive ricorsive, capace di esprimere \emph{tutte e sole} le funzioni calcolabili totali. 
+
+\begin{theorem}
+    {}{form-calc-tot}
+    Non esiste un formalismo capace di esprimere tutte e soli le funzioni calcolabili totali.
+\end{theorem}
+\begin{proof}
+    Supponiamo per assurdo che esista un formalismo $\FF$ capace di esprimere tutte e sole le funzioni calcolabili totali. Sicuramente $\card{\FF} = \card{\N}$: infatti sono al più numerabili poiché ogni funzione calcolabile è un algoritmo, e quindi è una stringa su un alfabeto finito; d'altro canto sono almeno $\card{\N}$ poiché le funzioni costanti sono certamente calcolabili totali.
+    
+    Consideriamo allora una numerazione $\N \to \FF$, $n \mapsto f_n$ che sia \emph{bigettiva e calcolabile}.\footnote{Dovremmo dimostrare che ne esiste una, ma faremo finta di niente.}
+    
+    Costruiamo la funzione $g : \N \to \N$, $g(n) = f_n(n) + 1$. Tale funzione è \begin{itemize}
+        \item calcolabile, in quanto è la composizione della numerazione di $\FF$ che è calcolabile, del calcolo di $f_n(n)$ (che si può fare in quanto $f_n$ è calcolabile) e del successore;
+        \item totale, in quanto composizione di funzioni totali.    
+    \end{itemize}  
+    Segue che $g$ è una funzione calcolabile totale, e quindi $g \in \FF$.
+    
+    Tuttavia per ogni $n \in \N$ vale che $g(n) = f_n(n) + 1 \neq f_n(n)$, e dunque in particolare $g \neq f_n$ per ogni $n \in \N$. Ma le funzioni di $\FF$ sono tutte e sole della forma $f_n$ per qualche $n \in \N$, da cui segue che $g \notin \FF$, che è assurdo.     
+\end{proof}
+
+La tecnica usata nella dimostrazione di questo teorema viene chiamata \sstrong{diagonalizzazione} ed è una tecnica usata molto frequentemente nella logica e nella teoria della calcolabilità.
