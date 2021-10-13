@@ -1,5 +1,7 @@
 \usepackage{proof}
 
+\DeclareMathAlphabet{\matheucal}{U}{eus}{m}{n}
+
 \newcommand{\resp}{{\vartriangleright}}
 \newcommand{\Left}{\texttt{L}}
 \newcommand{\Right}{\texttt{R}}
@@ -25,9 +27,9 @@
         \dbracket*{#1}#2
 }
 
-\NewDocumentCommand{\dom}{sog}{ % norm (with automatic \cdot inside if empty)
+\DeclareDocumentCommand{\dom}{sog}{ % domain (with automatic \cdot inside if empty)
     \operatorname{dom}              
-    \IfValueTF{#3}{
+    \IfValueT{#3}{
         \IfBooleanTF{#1}{
             \parens*{#3}
         }{
@@ -38,9 +40,19 @@
 \newcommand{\conv}{\!\!\downarrow}
 \newcommand{\divg}{\!\!\uparrow}
 
-\newcommand{\PR}{\mathcal{PR}}
-\newcommand{\Rec}{\mathcal{R}}
+\newcommand{\PR}{\matheucal{PR}}
+\newcommand{\Rec}{\matheucal{R}}
 \newcommand{\lam}[2]{\lambda{#1}.\ {#2}}
 \newcommand{\mi}[2]{\mu{#1}.\ {#2}}
 \newcommand{\monoP}{\mathtt{P}}
 \renewcommand{\vec}[1]{\overline{#1}}
+
+\newcommand{\charf}[1]{\chi_{#1}}
+\newcommand{\scharf}[1]{\tilde{\chi}_{#1}}
+\DeclareDocumentCommand{\compl}{m}{\overline{#1}}
+\renewcommand{\R}{\matheucal{R}}
+\newcommand{\RE}{\matheucal{RE}}
+\newcommand{\coRE}{\texttt{co-}\matheucal{RE}}
+
+\newcommand{\rec}{\texttt{rec}}
+\newcommand{\TOT}{\texttt{TOT}}

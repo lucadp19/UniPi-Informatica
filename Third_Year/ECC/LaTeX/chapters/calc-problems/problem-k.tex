@@ -1,0 +1,72 @@
+\section{Separazione di $\R$ e $\RE$}
+
+Dai risultati ottenuti nella sezione precedente potremmo essere indotti a sperare che tutti i problemi semidecidibili siano anche decidibili. Purtoppo ciò non è vero, e lo dimostriamo attraverso un particolare insieme, chiamato tradizionalmente $K$:
+
+\begin{equation}
+    \boxed{K \deq \set[\Big]{n \given \phi_n(n)\conv}}
+\end{equation}
+
+\begin{theorem}
+    {}{}
+    $K$ è r.e. ma non è ricorsivo.
+\end{theorem}
+
+Per chiarezza dividiamo in due parti la dimostrazione.
+
+\begin{proof}[Dimostrazione che $K$ è r.e.]
+    Per quanto detto precedentemente, per mostrare che $K$ è r.e. basta far vedere che la sua funzione semicaratteristica \[
+        \scharf{K} \deq n \mapsto \begin{cases}
+            1, &\text{se } \phi_n(n)\conv \\
+            \bot, &\text{altrimenti}
+        \end{cases}
+    \] è calcolabile. Ma questa funzione è intuitivamente calcolabile: \begin{itemize}
+        \item si esegue un passo del calolo di $\phi_0(0)$: se converge allora $\scharf{K}(0)$ vale $1$, altrimenti si continua;
+        \item si esegue un passo del calcolo di $\phi_1(1)$: se converge allora $\scharf{K}(0)$ vale $1$, altrimenti si continua;
+        \item si eseguono due passi del calcolo di $\phi_0(0)$...       
+    \end{itemize} e così via. Questo procedimento ad un certo punto termina per tutti i valori di $n$ che sono in $K$, e per gli altri invece non termina mai.
+\end{proof}
+
+\begin{proof}[Dimostrazione che $K$ non è ricorsivo]
+    Supponiamo per assurdo che $K$ sia ricorsivo: per definizione allora $\charf{K}$ è calcolabile totale. Definiamo allora $f : \N \to \N$ data da \[
+        f(n) \deq \begin{cases}
+            \phi_n(n) + 1, &\text{se } \charf{K}(n) = 1\\
+            0, &\text{altrimenti.}
+        \end{cases}
+    \] Dato che $\charf{K}$ è calcolabile totale possiamo calcolare $\charf{K}(n)$; inoltre se $\charf{K}(n) = 1$ (ovvero $n \in K$) per definizione di $K$ si ha che $\phi_n(n)$ converge.
+    
+    Per la Tesi di Church-Turing allora esiste un indice $i$ tale che $\phi_i = f$,e quindi in particolare $\phi_i(i) = f(i)$. Ma ciò è assurdo: \begin{itemize}
+        \item se $\phi_i(i)$ converge allora $f(i) = \phi_i(i) + 1 \neq \phi_i(i)$;
+        \item se $\phi_i(i)$ diverge allora $f(i)$ converge (a $0$).   
+    \end{itemize}
+    Segue in particolare che $K$ non può essere ricorsivo. 
+\end{proof}
+
+\newthoughtpar{Piccola parentesi sul \emph{bootstrapping}} L'insieme $K$ può risultare abbastanza contorto e quindi è facile farsi venire l'idea che la dimostrazione funzioni solo perché abbiamo scelto un insieme "innaturale". In realtà l'auto-applicazione non è strana, e compare anche nel mondo reale, ad esempio quando si parla di compilatori.
+
+Infatti dato un compilatore $C_L^{L \to A}$ scritto nel linguaggio $L$ e che compila codice $L$ (alto livello) in codice scritto nel linguaggio $A$ (più a basso livello), potrebbe essere necessario dover usare il compilatore in una macchina che nativamente non sa far girare il codice $L$, ma sa far girare solo codice nel linguaggio $A$. Vogliamo perciò un modo efficiente per ottenere un compilatore $L \to A$ scritto in $A$.
+
+Il metodo più semplice è detto \strong{bootstrapping}: in pratica si dà in pasto al compilatore $C_L^{L \to A}$ il suo stesso codice, ovvero si dà il comando $C_L^{L\to A}\parens[\bigg]{C_L^{L \to A}}$. Il risultato è un codice scritto in $A$ che mantiene la semantica originale, ovvero è un compilatore $C_A^{L \to A}$.
+
+\bigskip
+\bigskip
+
+Tuttavia il bootstrapping non è l'unico motivo per cui il problema $K$ è importante anche da un punto di vista applicativo: $K$ è strettamente legato al \sstrong{problema della fermata}, che ora definiremo formalmente.
+
+\begin{definition}
+    {Problema della fermata}{}
+    Dato un indice $i$ e un input $x$, dire se $\phi_i(x)$ converge.   
+\end{definition}
+
+Come ogni problema decisionale, il problema della fermata può essere rappresentato tramite un insieme. In questo caso l'insieme è indicato con \[
+    \boxed{K_0 \deq \set[\Big]{(i, x) \given \phi_i(x)\conv}}. 
+\]
+
+Questo problema è intuitivamente molto importante: se fosse decidibile, potremmo decidere in tempo finito se una funzione $\phi_i$ si arresta sull'input $x$ oppure continua in eterno.
+
+\begin{theorem}
+    {$K_0$ non è ricorsivo}{K_0-not-R}
+    L'insieme $K_0$ non è ricorsivo.
+\end{theorem}
+\begin{proof}
+    Osserviamo che $(x, x) \in K_0$ se e solo se $x \in K$: se $K_0$ fosse decidibile lo sarebbe anche $K$, ma ciò è assurdo.    
+\end{proof}

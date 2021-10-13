@@ -1,0 +1,105 @@
+\section{Studio di $\R$ e $\RE$ tramite riduzioni}
+
+Vogliamo studiare ora le classi di problemi $\R$ e $\RE$ tramite riduzioni: come prima cosa dobbiamo identificare una classe di funzioni. 
+
+\begin{definition}
+    {Classe \rec}{}
+    Indicheremo con \[
+        \rec \deq \set*{\phi_i \given \dom{\phi_i} = \N}
+    \] la classe di tutte le funzioni calcolabili totali, che quindi chiameremo (per motivi storici) \sstrong{ricorsive}.
+\end{definition}
+
+\begin{proposition}
+    {}{}
+    $\leq_\rec$ classifica $\R \subseteq \RE$. 
+\end{proposition}
+\begin{proof}
+    Basta mostrare le quattro condizioni date dalla definizione. In particolare lo faremo attraverso le condizioni algebriche equivalenti.
+    \begin{enumerate}
+        \item L'identità è ricorsiva.
+        \item Se $f, g$ sono ricorsive, allora anche la loro composizione $gf$ lo è.
+        \item Supponiamo $A \leq_\rec B$ con $B \in \R$ (cioè $\charf{B}$ è ricorsiva). Vogliamo dimostrare che $A \in \R$, cioè che $\charf{A}$ è ricorsiva.
+        
+        Per definizione di $\leq_\rec$ esiste una funzione $f \in \rec$ con $A \leq_f B$, cioè $x \in A$ se e solo se $f(x) \in B$, ovvero $\charf{A}(x) = 1$ se e solo se $\charf{B}(f(x)) = \charf{B} \circ f(x) = 1$. Ma allora $\charf{A} = \charf{B}f$ e dunque $\charf{A}$ è ricorsiva poiché composizione di funzioni ricorsive.
+        \item Supponiamo $A \leq_\rec B$ con $B \in \RE$, ovvero con $\scharf{B}$ calcolabile. Vogliamo dimostrare che $A$ è r.e., cioè che $\scharf{A}$ è calcolabile.
+        
+        Per definizione di $\leq_\rec$ esiste una funzione $f \in \rec$ con $A \leq_f B$, ovvero $x \in A$ se e solo se $f(x) \in B$.
+        Mostriamo che $\scharf{A} = \scharf{B}f$:
+        \begin{itemize}
+            \item se $x \in A$ (e quindi $\scharf{A}(x) = 1$) allora $f(x) \in B$ e quindi $\scharf{B}(f(x)) = \scharf{B}f(x) = 1$;
+            \item se $x \notin A$ (cioè $\scharf{A}(x)$ diverge) allora $f(x) \notin B$, e quindi $\scharf{B}(f(x)) = \scharf{B} \circ f(x)$ diverge.
+        \end{itemize}
+        
+        Segue che $\scharf{A} = \scharf{B}f$. In particolare $\scharf{A}$ è calcolabile, poiché composizione di funzioni calcolabili.  \qedhere
+    \end{enumerate}
+\end{proof}
+
+Dunque in questa sezione diremo che un problema è arduo/completo per $\RE$ sottointendendo la relazione $\leq_\rec$.   
+
+\begin{remark} 
+    Osserviamo che $\compl{K} \nleq_\rec K$ e $K \nleq_\rec \compl{K}$: \begin{itemize}
+        \item se per assurdo $\compl{K} \leq_\rec K$, allora $\compl{K}$ sarebbe r.e. (perché $K$ lo è), ma questo implicherebbe (per la \Cref{prop:I_complI_re=>both_rec}) che sia $K$ che $\compl{K}$ sono ricorisvi, il che è assurdo (poiché $K$ non è ricorsivo);
+        \item come osservato in precedenza, $A \leq_\FF B$ se e solo se $\compl{A} \leq_\FF \compl{B}$, dunque $K \leq_\rec \compl{K}$ se e solo se $\compl{K} \leq_\rec K$, che abbiamo dimostrato essere falso.   
+    \end{itemize}  
+\end{remark}
+
+\newthought{Problemi $\coRE$} 
+I problemi tali che i loro complementari sono in $\RE$ formano una classe chiamata $\coRE$. Dato che ogni problema ricorsivo ha anche un complementare ricorsivo, $\R \subseteq \coRE$; tuttavia esistono anche problemi al di fuori di $\coRE$.   
+
+\medskip
+
+Per studiare le relazioni tra gli insiemi $\R$ e $\RE$ vorremo trovare un problema completo per $\RE$.
+
+\begin{theorem}
+    {}{}
+    $K$ è completo per $\RE$. 
+\end{theorem}
+\begin{proof}
+    Dato che $K$ è r.e., basta dimostrare che $K$ è arduo per $\RE$. Sia allora $A \in \RE$, ovvero tale che esista un indice $i$ tale che $\dom{\phi_i} = A$, ovvero $A = \set*{x \given \phi_i(x)\conv}$.
+    
+    Definiamo allora la funzione $\psi : \N^2 \to \N$ data da $\psi(x, y) \deq \phi_i(x)$. (Il parametro $y$ non fa niente.)
+    Dato che $\psi$ è calcolabile dovrà esistere un indice $j$ con $\psi = \phi_j$. In particolare $A = \set*{x \given \phi_j(x, y)\conv}$.
+    
+    Per il \nameref{th:s-1-1} e l'\Cref{rem:s-1-1-one-var}, possiamo considerare la funzione $f \deq \lam{x}{s(j, x)}$: il Teorema ci garantisce che $\phi_j(x, y) = \phi_{f(x)}(y)$ per ogni $x, y$. Osserviamo in particolare che $f$ è calcolabile totale.
+
+    Ma $y$ non ha un effetto sulla computazione ($\phi_j(x, y) = \phi_j(x, y')$ per ogni $y, y'$), ovvero $\phi_{f(x)}$ è \strong{costante}. Segue che \[
+        A = \set*{x \given \phi_{f(x)}(y)\conv} = \set*{x \given \phi_{f(x)}(f(x))\conv} = \set*{x \given f(x) \in K},
+    \] ovvero $A \leq_f K$. Dato che $f \in \rec$, segue la tesi.
+\end{proof}
+
+\subsection{Altri problemi completi per $\RE$}
+
+Il fatto che $K \leq_\rec K_0$ mostra (per il \Cref{prop:A-hard=>B-hard}) che anche $K_0$ è completo per $\RE$. Cerchiamo altri problemi completi per $\RE$.
+
+\newthoughtpar{\TOT{} è completo per $\RE$} 
+
+Consideriamo il problema \[
+    \boxed{\TOT \deq \set*{i \given \dom{\phi_i} = \N} = \set*{i \given \phi_i \in \rec}}.
+\]
+
+\begin{proposition}{}{TOT-is-RE-complete}
+    Vale la riduzione \[
+        K \leq_\rec \TOT.
+    \] In particolare $\TOT$ è completo per $\RE$. 
+\end{proposition}
+\begin{proof}
+    Consideriamo la funzione $\psi : \N^2 \to \N$ definita da \[
+        \psi(x, y) \deq \begin{cases}
+            1, &\text{se } x \in K \\
+            \bot, &\text{se } x \notin K.
+        \end{cases}
+    \] Dato che $K$ è semidecidibile $\psi$ è calcolabile: basta calcolare $\scharf{K}(x)$ (che è calcolabile); se la computazione termina (resitutendo $1$) poniamo $\psi(x, y) = 1$, altrimenti la computazione di $\scharf{K}(x)$ non termina e quindi anche $\psi(x, y)$ diverge.
+
+    Siccome $\psi$ è calcolabile esisterà un indice $i$ tale che $\phi_i = \psi$. Per il \nameref{th:s-1-1} (insieme all'\Cref{rem:s-1-1-one-var}) esisterà $f$ calcolabile totale, $f \deq \lam{x}{s(i, x)}$ tale che \[
+        \phi_i(x, y) = \phi_{f(x)}(y).
+    \] Ora abbiamo due casi: \begin{itemize}
+        \item se $x \in K$ allora per ogni $y$ si ha \[
+            \phi_{f(x)}(y) = \psi(x, y) = 1,
+        \] dunque $f(x)$ è indice di una funzione calcolabile totale, ovvero $f(x) \in \TOT$;
+        \item se $x \notin K$ allora per ogni $y$ si ha \[
+            \phi_{f(x)}(y) = \psi(x, y) = \bot,
+        \] dunque $f(x)$ è non è indice di una funzione calcolabile totale (è sempre indefinita!) e quindi $f(x) \notin \TOT$.   
+    \end{itemize}
+
+    Segue che $x \in K$ se e solo se $f(x) \in \TOT$, ovvero (dato che $f$ è calcolabile totale) $K \leq_\rec \TOT$.  
+\end{proof}

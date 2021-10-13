@@ -1,0 +1,94 @@
+\section{Problemi di decisione}
+
+Finora abbiamo studiato i vari formalismi per esprimere algoritmi e le loro caratteristiche principali, insieme ai diversi teoremi che ne seguono. Vogliamo ora studiare i \emph{problemi} che possono essere risolti da una determinata classe di funzioni.
+
+I nostri problemi sono \sstrong{problemi di decisione}: dato un insieme $I \subseteq \N^k$ vogliamo stabilire se un dato elemento $x \in \N^k$ appartenga o no a $I$. In particolare ogni problema è identificato da un insieme.
+
+Per parlare di \emph{appartenenza} ad un insieme conviene definire due funzioni che saranno di grande rilevanza in seguito.
+
+\begin{definition}
+    {Funzione caratteristica e semicaratteristica di un insieme}{}
+    Sia $I \subseteq \N^k$. 
+    Si dice \sstrong{funzione caratteristica} di $I$ la funzione 
+    $\charf{I} : \N^k \to \set*{0,1}$ definita da \[
+        \charf{I}(x) \deq \begin{cases}
+            1, &\text{se } x \in I,\\
+            0, &\text{se } x \notin I.
+        \end{cases}
+    \] Si dice inoltre \sstrong{funzione semicaratteristica} di $I$ la funzione parziale $\scharf{I} : \N_k \to \set*{0, 1}$ definita da \[
+        \scharf{I}(x) \deq \begin{cases}
+            1, &\text{se } x \in I,\\
+            \bot, &\text{se } x \notin I.
+        \end{cases}
+    \]
+\end{definition}
+
+Possiamo ora definire le due principali classi di problemi che analizzeremo.
+
+\begin{definition}
+    {Insiemi ricorsivi e ricorsivamente enumerabili}{}
+    Sia $I \subseteq \N^k$. \begin{itemize}
+        \item $I$ si dice \sstrong{ricorsivo} oppure \sstrong{decidibile} se $\charf{I}$ è calcolabile totale.
+        \item $I$ si dice \sstrong{ricorsivamente enumerabile} (in breve r.e.) oppure \sstrong{semidecidibile} se esiste un indice $i$ tale che $I = \dom{\phi_i}$.   
+    \end{itemize}
+    Chiameremo $\R$ la classe degli insiemi ricorsivi, $\RE$ la classe degli insiemi ricorsivamente enumerabili.
+\end{definition}
+
+Intuitivamente $I$ è decidibile se è possibile \emph{decidere} in tempo finito se un elemento appartiene o meno all'insieme. Per quanto riguarda gli insiemi semidecidibili, facciamo un'osservazione iniziale.
+
+\begin{remark}
+    $I$ è r.e. se e solo se $\scharf{I}$ è calcolabile (parziale).
+    \begin{proof}
+        Se $\scharf{I}$ è calcolabile, allora esiste un indice $i$ con $\phi_i = \scharf{I}$. In particolare $\dom{\phi_i} = \dom{\scharf{I}} = I$, dunque $I$ è r.e.
+        
+        Viceversa, se $I$ è r.e. esiste un indice $i$ tale che $\dom{\phi_i} = I$. Allora la funzione $\scharf{I}$ è calcolabile: dato $x$ iniziamo a calcolare $\phi_{i}(x)$; se il procedimento termina poniamo $\scharf{I}(x) = 1$, altrimenti continueremo all'infinto e quindi la computazione di $\scharf{I}$ non terminerà.   
+    \end{proof} 
+\end{remark}
+
+Quindi un insieme $I$ è semidecidibile se per ogni elemento $x \in I$ possiamo controllare in tempo finito l'appartenenza, mentre per gli elementi $x \notin I$ il procedimento non termina mai.
+
+Il fatto che gli insiemi r.e. si chiamano proprio in questo modo deriva da un'altra particolare caratterizzazione.
+
+\begin{proposition}{}{}
+    $I$ è r.e. se e solo se $I$ è vuoto oppure esiste una funzione $f$ calcolabile totale tale che $I = \Imm{f}$.  
+\end{proposition}
+\begin{proof}
+    % TODO: proof
+\end{proof}
+
+Quali sono le relazioni tra insiemi ricorsivi e insiemi r.e.? Vediamone alcune che seguono immediatamente dalle definizioni.
+
+\begin{proposition}
+    {$\R \subseteq \RE$}{}
+    Se $I$ è ricorsivo, allora $I$ è ricorsivamente enumerabile.
+\end{proposition}
+\begin{proof}
+    Infatti se $I$ è ricorsivo la funzione $\scharf{I}$ è calcolabile: in effetti dato $x$, se $\charf{I}(x) = 1$ allora $\scharf{I}(x) = 1$, altrimenti $\scharf{I}(x)$ è indefinito. 
+    Segue che $I$ è r.e. poiché $I = \dom*{\scharf{I}}$. 
+\end{proof}
+
+Per la prossima proposizione abbiamo bisogno di definire il \sstrong{complementare} di un problema.
+
+\begin{definition}
+    {Complementare di un problema}{}
+    Dato un insieme $I$, il suo complementare $\compl{I}$ è definito da \[
+        \compl{I} \deq \set*{x \given x \notin I}.
+    \] 
+\end{definition}
+
+\begin{proposition}{}{I_complI_re=>both_rec}
+    Se $I$ e $\compl{I}$ sono entrambi r.e., allora sono entrambi ricorsivi.
+\end{proposition}
+\begin{proof}
+    Osserviamo che basta mostrare che $I$ sia ricorsivo: a questo punto replicando il ragionamento su $\compl{I}$ e $\compl{\compl{I}} = I$ si ottiene che anche $\compl{I}$ è ricorsivo.
+    
+    Per definizione di insieme r.e., esistono due indici $i, j$ tali che \[
+        I = \dom{\phi_i}, \qquad \compl{I} = \dom{\phi_j}. 
+    \] Per calcolare $\charf{I}$, dato $x$ eseguiamo questa seguenza di passi:
+    \begin{itemize}
+        \item eseguiamo un passo di computazione di $\phi_i(x)$: se converge (cioè $x \in \dom{\phi_i} = I$) allora $\charf{I}(x) = 1$, altrimenti continuiamo;
+        \item eseguiamo un passo di computazione di $\phi_j(x)$: se converge (cioè $x \in \dom{\phi_j} = \compl{I}$ allora $\charf{I}(x) = 0$, altrimenti continuiamo;    
+        \item eseguiamo due passi di computazione di $\phi_i(x)$... 
+    \end{itemize}
+    e così via. Ma $x$ deve appartenere ad uno tra $I$ e $\compl{I}$, dunque questo procedimento ad un certo punto termina. Segue che $\charf{I}$ è calcolabile.  
+\end{proof}
