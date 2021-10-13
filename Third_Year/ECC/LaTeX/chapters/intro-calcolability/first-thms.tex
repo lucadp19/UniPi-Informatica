@@ -73,7 +73,7 @@ In realtà vale un teorema molto più forte, solitamente conosciuto come \sstron
 Ora mostriamo che ogni funzione calcolabile può essere scritta in una forma standard, detta \sstrong{Forma Normale di Kleene}.
 
 \begin{theorem}
-    {Forma Normale di Kleene}{kleene-norm-form}
+    {Forma Normale di Kleene}{kleene-normal-form}
     Esistono un predicato $T : \N^3 \to \set{0, 1}$ (detto \sstrong{predicato di Kleene}) e una funzione $U : \N \to \N$ entrambi calcolabili totali tali che \[
         \forall i, x: \phi_i(x) = U\parens[\big]{\mi{y}{T(i, x, y)}}.
     \] Inoltre $T$ e $U$ sono primitivi ricorsivi. 
@@ -83,7 +83,7 @@ Ora mostriamo che ogni funzione calcolabile può essere scritta in una forma sta
     
     $T$ è calcolabile: in effetti basta recuperare la macchina $M_i$ dalla lista (che è un'operazione calcolabile), decodificare $y$ come una computazione $c_1\dots c_n$ (dove tutte queste sono configurazioni) e verificare che $M_i(x)$ converga effettivamente ad una configurazione $c_n = (h, \resp z)$ tramite la computazione codificata da $y$.\footnote{Osserviamo che questo procedimento termina sempre poiché le computazioni sono di lunghezza finita, dunque possiamo verificare in tempo finito se il calcolo di $M_i(x)$ corrisponde alla computazione cercata oppure no.}
     
-    Allora possiamo definire $U$ in modo che $U(y) = \text{ "la codifica di } z$"++. La computazione del membro destro procede quindi in questo modo: si scorrono i valori di $y$ e si trova il primo valore di $y$ che corrisponde alla computazione di $M_i(x)$. Se esiste, ritorniamo la codifica di $z$, altrimenti il procedimento non termina.
+    Allora possiamo definire $U$ in modo che $U(y) = \text{ "la codifica di } z$". La computazione del membro destro procede quindi in questo modo: si scorrono i valori di $y$ e si trova il primo valore di $y$ che corrisponde alla computazione di $M_i(x)$. Se esiste, ritorniamo la codifica di $z$, altrimenti il procedimento non termina.
     
     È facile vedere che ciò è uguale a $\phi_i(x)$ per ogni $x$: distinguiamo due casi.
     \begin{itemize}
@@ -97,3 +97,101 @@ Ora mostriamo che ogni funzione calcolabile può essere scritta in una forma sta
 \begin{remark}
     Il teorema ci dice che ogni funzione calcolabile $\phi_i$ è esprimibile come composizione di due funzioni primitive ricorsive ($T, U$) e una funzione generale ricorsiva (data dalla minimizzazione), o equivalentemente da due comandi \FOR{} e un comando \WHILE. 
 \end{remark}
+
+Il Teorema di Forma Normale è uno strumento molto potente e lo useremo per dimostrare uno dei risultati fondamentali della Teoria della Calcolabilità.
+
+\begin{theorem}
+    {Teorema di Enumerazione}{enum}
+    Esiste un indice $z$ tale che per ogni indice $i$, input $x$ si ha \[
+        \phi_z(i, x) = \phi_i(x).
+    \]  
+\end{theorem}
+
+Il Teorema di Enumerazione ci garantisce l'esistenza di una MdT particolare, chiamata \sstrong{Macchina Universale}, capace di simulare tutte le altre macchine di Turing. Osserviamo che per il \nameref{th:padding-lemma} in realtà esistono infinite macchine universali.
+
+\begin{proof}   
+    Siano $U$, $T$ i predicati dati dal \Cref{th:kleene-normal-form} e definiamo \[
+        \phi_z \deq \lam{i, x}{U(\mu{y}{T(i, x, y)})}.
+    \] Tale funzione è ben definita e calcolabile (poiché composizione di funzioni calcolabili), inoltre per il \Cref{th:kleene-normal-form} si ha che $\phi_i(x) = \phi_z(i, x)$, come voluto. 
+\end{proof}
+
+Per quanto il Teorema di Enumerazione possa sembrare eccessivamente potente (abbiamo costruito un algoritmo che può simulare tutti gli algoritmi!) in realtà la macchina Universale svolge esattamente il ruolo di un interprete: prende in input un altro programma e dei dati ed esegue il programma su quei dati.
+
+Osserviamo inoltre che ciò funziona solo perché possiamo trasformare una funzione, cioè un programma, in dati, e ciò è possibile solo perché le funzioni calcolabili sono numerabili.
+
+Abbiamo quindi un metodo per trasformare un indice in un argomento. È possibile fare il contrario?
+
+\begin{theorem}
+    {Teorema del Parametro}{s-1-1}
+    Esiste una funzione calcolabile totale ed iniettiva $s : \N^2 \to \N$ tale che per ogni $i, x$ \[
+        \phi_{s(i, x)} = \lam{z}{\phi_i(x, z)}.
+    \] 
+\end{theorem}
+
+Il senso intuitivo del Teorema del Parametro (anche chiamato Teorema $s$-$1$-$1$ per un motivo che vedremo definendo la sua forma generale) è che se un algoritmo dipende da due input e uno dei due è costante/conosciuto, allora possiamo riscrivere l'algoritmo in modo da \emph{elimiare} il parametro.
+
+\begin{proof}
+    [Dimostrazione "intuitiva"]
+    Dato l'indice $i$ e fissato $x$, la funzione $\lam{z}{\phi_i(x, z)}$ è certamente calcolabile (si prende la macchina $i$-esima e le si danno in input $x$ e $z$). Per la Tesi di Church-Turing esiste allora un indice $s_{(i, x)}$ tale che \[
+        \phi_{s_{(i, x)}} = \lam{z}{\phi_i(x, z)}.
+    \] 
+
+    Consideriamo allora la funzione $s : \N^2 \to \N$ definita da $(i, x) \mapsto s_{(i, x)}$: tale funzione è calcolabile totale poiché la procedura delineata è un algoritmo per ottenere $s_{(i, x)}$ a partire dagli input e tale algoritmo termina sempre.
+
+    Per rendere $s$ iniettiva, scegliamo un ordinamento degli input (ad esempio l'ordinamento lessicografico) e per ogni input $(i, x)$ controlliamo che $s(i, x) > s(i', x')$ per ogni $(i', x') < (i, x)$, ovvero che $s$ sia strettamente crescente almeno fino a $(i, x)$.
+    
+    Se così non fosse, sostituiamo il valore di $s(i, x)$ con uno degli altri indici che calcola la stessa funzione e che sia maggiore di tutti gli $s(i', x')$: tale indice esiste sempre per il \nameref{th:padding-lemma}.\footnote{Infatti esistono solo un numero finito di coppie $(i', x')$ che siano \emph{lessicograficamente minori} di $(i, x)$, mentre esistono un numero infinito di indici che calcolano la stessa macchina dell'indice $s(i, x)$, dunque tra tutti questi infiniti indici ce ne sarà almeno uno più grande di tutti gli $s(i', x')$.}
+    
+    Segue che la $s$ costruita in questo modo è strettamente crescente e dunque iniettiva.
+\end{proof}
+
+\begin{remark}\label{rem:s-1-1-one-var}
+    Il \nameref{th:s-1-1} ci dice che esiste una funzione calcolabile totale iniettiva a due variabili $s$ tale che $\phi_{s(i, x)} = \lam{y}{\phi_i(x, y)}$ per ogni $i, x$. Allora fissato un indice $i$ possiamo considerare direttamente la funzione ad una variabile \[
+        f \deq \lam{x}{s(i, x)},
+    \] che è ancora calcolabile totale, iniettiva, e tale che \[
+        \phi_{f(x)}(y) = \phi_i(x, y).
+    \]
+\end{remark}
+
+Il \nameref{th:s-1-1} ci permette di dimostrare il seguente teorema.
+
+\begin{theorem}
+    {Teorema di Ricorsione di Kleene}{kleene-rec}
+    Per ogni $f$ calcolabile totale esiste un indice $n$ tale che \[
+        \phi_n = \phi_{f(n)}.
+    \]
+\end{theorem}
+\begin{proof}
+    Sia $f$ una funzione calcolabile totale e costruiamo $n$ tale che $\phi_n = \phi_{f(n)}$.
+
+    Consideriamo la funzione $\psi : \N^2 \to \N$ definita da \begin{equation}\label{eq:kleene-rec-1}
+        \psi(u, z) \deq \begin{cases}
+            \phi_{\phi_u(u)}(z), &\text{se } \phi_{u}(u)\conv,\\
+            \bot, &\text{altrimenti.}
+        \end{cases}
+    \end{equation} Tale funzione è intuitivamente calcolabile: si prova a calcolare $\phi_u(u)$; se non converge allora anche $\psi(u, z)$ non converge, mentre se converge possiamo recuperare la macchina di indice $\phi_u(u)$ e calcolarla su $z$.
+    
+    Segue quindi che esiste un indice $i$ tale che $\phi_i = \psi$. Per il \nameref{th:s-1-1} insieme all'\Cref{rem:s-1-1-one-var} possiamo considerare la funzione $d \deq \lam{u}{s(i, u)}$ calcolabile totale, iniettiva e tale che \begin{equation}\label{eq:kleene-rec-2}
+        \phi_{d(u)}(z) = \phi_i(u, z) = \psi(u, z).
+    \end{equation}
+
+    Dato che $f$ e $d$ sono entrambe calcolabili totali, lo sarà anche la loro composizione $f \circ d$. In particolare $f \circ d$ sarà ancora iniettiva, ed esisterà un indice $v$ tale che \begin{equation*}\label{eq:kleene-rec-3}
+        \phi_v = f \circ d.
+    \end{equation*}
+
+    Per totalità di $\phi_v$, $\phi_v(v)$ converge: segue che \begin{equation}\label{eq:kleene-rec-4}
+        \phi_{d(v)} 
+            \stackrel{\eqref{eq:kleene-rec-2}}{=} \lam{z}{\psi(v,z)} 
+            \stackrel{\eqref{eq:kleene-rec-1}\footnotemark}{=} \lam{z}{\phi_{\phi_v(v)}(z)}
+            = \phi_{\phi_v(v)}.
+    \end{equation}
+    \footnotetext{Qui usiamo la definizione di $\psi$ insieme al fatto che $\phi_{v}(v)$ converge.}
+    
+    Sia allora $n \deq d(v)$ e mostriamo che vale la tesi. In effetti \[
+        \phi_n 
+            = \phi_{d(v)} 
+            \stackrel{\eqref{eq:kleene-rec-4}}{=} \phi_{\phi_v(v)}
+            \stackrel{\eqref{eq:kleene-rec-4}}{=} \phi_{f(d(v))}
+            = \phi_{f(n)},
+    \] come volevamo.
+\end{proof}
