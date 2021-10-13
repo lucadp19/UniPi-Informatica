@@ -175,9 +175,9 @@ Il \nameref{th:s-1-1} ci permette di dimostrare il seguente teorema.
         \phi_{d(u)}(z) = \phi_i(u, z) = \psi(u, z).
     \end{equation}
 
-    Dato che $f$ e $d$ sono entrambe calcolabili totali, lo sarà anche la loro composizione $f \circ d$. In particolare $f \circ d$ sarà ancora iniettiva, ed esisterà un indice $v$ tale che \begin{equation*}\label{eq:kleene-rec-3}
+    Dato che $f$ e $d$ sono entrambe calcolabili totali, lo sarà anche la loro composizione $f \circ d$. In particolare $f \circ d$ sarà ancora iniettiva, ed esisterà un indice $v$ tale che \begin{equation}\label{eq:kleene-rec-3}
         \phi_v = f \circ d.
-    \end{equation*}
+    \end{equation}
 
     Per totalità di $\phi_v$, $\phi_v(v)$ converge: segue che \begin{equation}\label{eq:kleene-rec-4}
         \phi_{d(v)} 
@@ -191,7 +191,7 @@ Il \nameref{th:s-1-1} ci permette di dimostrare il seguente teorema.
         \phi_n 
             = \phi_{d(v)} 
             \stackrel{\eqref{eq:kleene-rec-4}}{=} \phi_{\phi_v(v)}
-            \stackrel{\eqref{eq:kleene-rec-4}}{=} \phi_{f(d(v))}
+            \stackrel{\eqref{eq:kleene-rec-3}}{=} \phi_{f(d(v))}
             = \phi_{f(n)},
     \] come volevamo.
 \end{proof}
