@@ -1,0 +1,125 @@
+\section{Il Teorema di Rice}
+
+Alla fine dell'ultima sezione abbiamo mostrato come $\TOT$ sia un altro esempio di insieme non ricorsivo. Per costruire $\TOT$ abbiamo sfruttato un'idea particolarmente semplice: abbiamo preso tutti e soli gli \emph{indici} di tutte le funzioni calcolabili totali. Questo approccio ci consente di definire diversi altri insiemi interessanti:
+\begin{align}\label{eq:interesting-index-sets}
+\begin{split}
+    &\texttt{FIN} \deq \set*{i \given \dom{\phi_i} \text{ è finito }}\\
+    &\texttt{INF} \deq \set*{i \given \dom{\phi_i} \text{ è infinito }} = \compl{\texttt{FIN}} \\
+    &\texttt{REC} \deq \set*{i \given \dom{\phi_i} \text{ è ricorsivo }}\\
+    &\texttt{CONST} \deq \set*{i \given \phi_i \text{ è costante e totale }}\\
+    &\texttt{EXT} \deq \set*{i \given \phi_i \text{ è estendibile ad una funzione calc. tot.}}
+\end{split}
+\end{align}  
+
+Possiamo studiare più velocemente tali insiemi?
+
+\begin{definition}
+    {Insiemi di indici che rappresentano funzioni}{iirf}
+    Sia $I \subseteq \N$ un insieme di indici. $I$ si dice \sstrong{insieme di indici che rappresentano funzioni} (\sstrong{iirf} per gli amici) se per ogni $x, y$ vale che \[
+        x \in I \;\text{ e }\; \phi_y = \phi_x \implies y \in I.
+    \]  
+\end{definition}
+
+In pratica un insieme di indici è un iirf se quando contiene un indice $i$ allora contiene tutti gli indici che rappresentano $\phi_i$ (che sappiamo essere infiniti per il \nameref{th:padding-lemma}). 
+
+L'importanza di questo tipo di insiemi di indici è che ci consentono di collegare sintassi e semantica: se riusciamo a dimostrare che un iirf gode di una determinata proprietà, allora le \emph{funzioni rappresentate dall'insieme} godono di tale proprietà.
+
+\begin{proposition}
+    {}{I-iirf=>complI-iirf}
+    Se $I$ è un iirf, allora $\compl{I}$ è un iirf. 
+\end{proposition}
+\begin{proof}
+    Supponiamo per assurdo che $\compl{I}$ non sia un iirf: dovranno esistere $x, y$ tali che $x \in \compl{I}$, $\phi_x = \phi_y$ ma $y \notin \compl{I}$, ovvero $y \in I$. Ma $I$ è un iirf, dunque anche $x$ deve appartenere ad $I$: questo è assurdo poiché abbiamo supposto appartenesse al suo complementare. Segue la tesi.
+\end{proof}
+
+\begin{theorem}
+    {Index Set Theorem}{index-set-theorem}
+    Sia $I$ un iirf, $I \neq \varnothing$, $I \neq \N$. Allora $K \leq_\rec I$ oppure $K \leq_\rec \compl{I}$.   
+\end{theorem}
+\begin{proof}
+    Sia $i_0$ tale che $\phi_{i_0}$ sia la funzione sempre indefinita e supponiamo senza perdita di generalità $i_0 \in \compl{I}$.\footnote{Se $i_0$ appartenesse a $I$ potremmo scambiare $I$ e $\compl{I}$ e alla fine dimostreremmo che $K \leq_\rec \compl{I}$.} Siccome $I$ è non vuoto dovrà esistere un $i_1 \in I$; inoltre dato che $I$ è un iirf certamente $\phi_{i_1} \neq \phi_{i_0}$ (altrimenti $i_0 \in I$), dunque $\phi_{i_1}$ non è ovunque indefinita.  
+
+    Definiamo allora la seguente funzione: \[
+        \psi(x, y) \deq \begin{cases}
+            \phi_{i_1}(y),  &\text{se } x \in K\\
+            \bot,           &\text{altrimenti.}
+        \end{cases}
+    \] Questa funzione è intuitivamente calcolabile: se $x \in K$ (possiamo verificarlo in tempo finito siccome $K$ è semidecidibile) allora basta prendere la funzione $i_1$-esima della numerazione e calcolarla su $y$; altrimenti non riusciremo mai a verificare che $x \notin K$ e dunque $\psi$ sarà indefinita.
+    
+    Per la Tesi di Church-Turing, insieme al \nameref{th:s-1-1} e l'\Cref{rem:s-1-1-one-var} possiamo allora considerare la funzione $f$ calcolabile totale tale che \[
+        \phi_{f(x)}(y) = \psi(x, y).
+    \]
+
+    Mostriamo che $K \leq_f I$: \begin{itemize}
+        \item se $x \in K$ allora $\phi_{f(x)} = \phi_{i_1}$, ma dato che $i_1 \in I$ e quest'ultimo è un iirf segue che $f(x) \in I$;
+        \item se $x \notin K$ allora $\phi_{f(x)}$ è sempre indefinita, ovvero $\phi_{f(x)} = \phi_{i_0}$. Ma dato che per la \Cref{prop:I-iirf=>complI-iirf} anche $\compl{I}$ è un iirf segue che $f(x) \in \compl{I}$, ovvero $f(x)$ non appartiene ad $I$.   
+    \end{itemize} 
+    Segue la tesi.
+\end{proof}
+
+L'\nameref{th:index-set-theorem} ci permette di dimostrare uno dei risultati più importanti della Teoria della Calcolabilità, che è il \sstrong{Teorema di Rice}.
+
+\begin{theorem}
+    {Teorema di Rice}{rice}
+    Sia $\FF$ un insieme di funzioni calcolabili, $I_\FF \deq \set*{i \given \phi_i \in \FF}$ l'insieme degli indici delle funzioni di $\FF$.
+    
+    Allora $I_\FF$ è ricorsivo se e solo se $\FF$ è vuoto oppure contiene tutte le funzioni calcolabili. 
+\end{theorem}
+\begin{proof}
+    Mostriamo entrambi i versi dell'implicazione.
+
+    \begin{description}
+        \item[\boximplby] Ovvio: se $\FF$ è vuoto allora $I_\FF$ è vuoto, se contiene tutte le funzioni calcolabili allora $I_\FF = \N$ e entrambi questi insiemi sono ricorsivi.\footnote{Le loro funzioni caratteristiche sono rispettivamente la funzione costante $0$ e la funzione costante $1$, che sono ovviamente calcolabili.}
+        \item[\boximpl] Se $\FF$ è non vuoto e non contiene tutte le funzioni calcolabili, allora $I_\FF$ è un insiemi di indici strettamente compreso tra $\varnothing$ e $\N$. Per l'\nameref{th:index-set-theorem} segue che $K \leq_\rec I_\FF$ o al suo complemento, e dunque $I_\FF$ non è ricorsivo.\footnote{Se $K \leq_\rec \compl{I_\FF}$ allora $\compl{I_\FF}$ è non ricorsivo, ma un insieme è ricorsivo se e solo se lo è il suo complemento, dunque neanche $I_\FF$ lo è.}   
+    \end{description}
+\end{proof}
+
+Il Teorema di Rice ci dice in breve che, data una \strong{qualsiasi proprietà semantica} non banale di un programma, il problema di decidere se una funzione soddisfi o no quella proprietà \strong{non è decidibile}. In particolare tutti gli insiemi definiti in \eqref{eq:interesting-index-sets} non sono ricorsivi.
+
+In realtà \strong{nessuno} di quegli insiemi è ricorsivamente enumerabile: possiamo mostrare che $\compl{K}$ si riduce ad ognuno di essi, e sappiamo già che $\compl{K}$ non è r.e. Vediamolo per esercizio su \texttt{FIN} e \texttt{INF}.
+
+\newthoughtpar{\texttt{FIN} non è ricorsivamente enumerabile}
+Mostriamo che $\compl{K} \leq_\rec \texttt{FIN}$.
+
+\begin{proof}
+    Consideriamo la funzione \[
+        \psi(x, y) \deq \begin{cases}
+            1, &\text{se } x \in K\\
+            \bot, &\text{altrimenti.}
+        \end{cases}
+    \] Questa funzione è intuitivamente calcolabile: siccome $K$ è semidecidibile possiamo decidere in tempo finito che $x$ appartiene a $K$, e in tal caso poniamo $\psi(x, y) = 1$; altrimenti non sapremo mai se $x$ appartiene a $K$ e la funzione $\psi$ divergerà.
+    
+    Per la Tesi di Church-Turing, il \nameref{th:s-1-1} e l'\Cref{rem:s-1-1-one-var} esiste una funzione $f$ calcolabile totale tale che \[
+        \phi_{f(x)}(y) = \psi(x, y).
+    \] Mostriamo che $\compl{K} \leq_f \texttt{FIN}$: \begin{itemize}
+        \item se $x \in \compl{K}$, ovvero $x$ non appartiene a $K$, allora $\phi_{f(x)}$ è sempre indefinita. In particolare il suo dominio è vuoto e quindi è finito, dunque $f(x) \in \texttt{FIN}$;
+        \item se $x \notin \compl{K}$ si ha che $x \in K$, dunque $\phi_{f(x)}$ è costantemente $1$, dunque il suo dominio è tutto $\N$ e quindi $f(x)$ non appartiene a \texttt{FIN}.       
+    \end{itemize}
+    Segue la tesi.
+\end{proof}
+
+\newthoughtpar{\texttt{INF} non è ricorsivamente enumerabile}
+Mostriamo che $\compl{K} \leq_\rec \texttt{INF}$.
+
+\begin{proof}
+    Consideriamo la funzione \[
+        \psi(x, y) \deq \begin{cases}
+            1, &\text{se } \phi_x(x) \text{ non converge in meno di $y$ passi}\\
+            \bot, &\text{altrimenti.}
+        \end{cases}
+    \] Questa funzione è intuitivamente calcolabile: proviamo a calcolare $\phi_x(x)$; se in $y$ passi ancora non ha terminato la sua computazione poniamo $\psi(x, y) = 1$, altrimenti la poniamo indefinita.   
+    
+    Per la Tesi di Church-Turing, il \nameref{th:s-1-1} e l'\Cref{rem:s-1-1-one-var} esiste una funzione $f$ calcolabile totale tale che \[
+        \phi_{f(x)}(y) = \psi(x, y).
+    \] Mostriamo che $\compl{K} \leq_f \texttt{INF}$: \begin{itemize}
+        \item se $x \in \compl{K}$, ovvero $x$ non appartiene a $K$, allora $\phi_x(x)$ non convergerà mai e dunque $\psi(x, y)$ sarà $1$ per ogni $y$. In particolare $\phi_{f(x)}$ è costantemente $1$, dunque il suo dominio è tutto $\N$, dunque $f(x) \in \texttt{INF}$;
+        \item se $x \notin \compl{K}$ si ha che $x \in K$, dunque dovrà esistere un $\bar{y} \in \N$ tale che $\phi_x(x)$ converge in $\bar{y}$ passi. Ma allora \[
+            \psi(x, y) = \phi_{f(x)}(y) \text{ diverge per ogni } y \geq \bar{y}
+        \] dunque il dominio di $\psi(x, y)$ è al più l'insieme $\set*{0, \dots, \bar{y}}$, dunque è finito. Segue che $f(x)$ non appartiene a \texttt{INF}.    
+    \end{itemize}
+    Segue la tesi.
+\end{proof}
+
+\begin{remark}
+    Siccome \texttt{FIN} e \texttt{INF} sono l'uno il complementare dell'altro e sono entrambi non r.e., sono anche \strong{non $\coRE$}.
+\end{remark}

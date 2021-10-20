@@ -1,0 +1,106 @@
+\section{Esercizi di calcolabilità}
+
+In questa sezione raccogliamo alcuni esercizi sulla parte di Calcolabilità.
+
+\subsection*{Nessun limite al tempo}
+
+Esiste una $t$ calcolabile totale tale che $t(i, n)$ maggiora il tempo di calcolo di $\phi_i(n)$?
+
+\begin{proof}[Soluzione]
+    Supponiamo per assurdo esista una tale $t$ calcolabile totale. Essa dovrà essere necessariamente della forma \[
+        t(i, n) \deq \begin{cases}
+            k_{i, n}, &\text{se } \phi_i(n) \text{ converge}\\
+            0, &\text{se } \phi_i(n) \text{ diverge.} 
+        \end{cases}
+    \] dove $k_{i, n}$ è maggiore o uguale del numero di passi di computazione effettuati nel calcolo di $\phi_i(n)$. Indicheremo il numero di passi esatti con $T_i(n)$.\footnote{Questa funzione non è necessariamente calcolabile!}
+    
+    Dato che $t$ è calcolabile possiamo definire \[
+        f(x) \deq \begin{cases}
+            \phi_x(x) + 1, &\text{se } T_x(x) \leq t(x, x)\\
+            0, &\text{altrimenti}.
+        \end{cases}
+    \] Osserviamo che questa definizione ci dice che $f(x)$ è $\phi_x(x) + 1$ se $\phi_x(x)$ converge, $0$ altrimenti.
+    
+    Per la Tesi di Church-Turing esiste $i$ tale che $\phi_i = f$. Mostriamo che ciò è assurdo: in effetti $\phi_i(i) \neq f(i)$ in quanto \begin{itemize}
+        \item se $\phi_i(i)$ converge, allora $f(i) = \phi_i(i) + 1 \neq \phi_i(i)$;
+        \item se $\phi_i(i)$ diverge, allora $f(i) = 0$.    
+    \end{itemize}
+    Segue che $t$ non può essere calcolabile.  
+\end{proof}
+
+Osserviamo che la seconda parte della dimostrazione è identica alla dimostrazione della non-ricorsività di $K$: in alternativa possiamo quindi mostrare che se $t$ fosse calcolabile allora $K$ sarebbe ricorsivo.
+
+\begin{proof}
+    [Soluzione alternativa]
+    Supponiamo come sopra che esista una $t$ calcolabile e della forma vista. Allora definiamo \[
+        f(x) \deq \begin{cases}
+            1, &\text{se } t(x, x) > 0\\
+            0, &\text{se } t(x, x) = 0.
+        \end{cases}
+    \] Tale $f$ è certamente calcolabile, in quanto $t$ lo è.
+    
+    Ma $f$ è esattamente la funzione caratteristica di $K$: se $t(i, i)$ è diverso da $0$ allora la macchina $\phi_i$ calcolata su $i$ termina la sua computazione, e quindi $i \in K$; viceversa se $t(i, i)$ è $0$ allora $\phi_i(i)$ diverge, e quindi $i$ non appartiene a $K$.
+    
+    Tuttavia $K$ non è ricorsivo, dunque segue l'assurdo.
+\end{proof}
+
+\subsection*{Calcolatori con memoria finita in ciclo}
+
+Esiste una funzione calcolabile totale che determina se $\phi_i(x)$ se uno specifico calcolatore $C$ con memoria finita è in ciclo?
+
+% \begin{remark}
+    
+% \end{remark}
+
+\begin{proof}
+    [Soluzione]
+    La risposta è sì: siano $Q_C$, $\Sigma_C$, $\delta_C$, $q_0$ le caratteristiche della MdT che modella $C$.
+    
+    Siano inoltre $m - 1 \deq \card{Q_C}$, $n \deq \card{\Sigma_C}$, $k$ la lunghezza del nastro di $C$. Allora il numero totale di configurazioni è \[
+        l \deq k^n \cdot m \cdot k.\footnote{$k^n$ è il numero di possibili nastri, $m$ è il numero di possibiltà per lo stato (incluso il terminatore $h$), $k$ è il numero di possibilità per la testina.}
+    \]
+
+    Costruiamo allora una macchina universale $U$ che calcola la macchina $M_i$ su $x$ a partire dallo stato $q_0$ e con un campo aggiuntivo inizialmente inizializzato a $l$: ad ogni passo di $M_i$ diminuiamo di $1$ il valore di $l$.
+    
+    Alla fine del calcolo possiamo controllare il valore finale di $l$: se è maggiore di $0$ allora ci sono ancora degli stati non visitati, dunque $M_i$ non è in ciclo; altrimenti lo è. 
+\end{proof}
+
+\subsection*{Esercizio su insiemi non ricorsivi}
+
+L'insieme $I \deq \set*{i \given \dom{\phi_i} = \set*{3}}$ è ricorsivo?
+
+\begin{proof}
+    [Soluzione 1]
+    Applichiamo l'\nameref{th:index-set-theorem}: abbiamo bisogno di mostrare che $\varnothing \neq I \neq \N$ e che $I$ è un iirf.
+    \begin{enumerate}[(1)]
+        \item $I$ non è vuoto perché la funzione \[
+            \lam{x}{
+                \begin{cases}
+                    1, &\text{se } x = 3\\
+                    \bot, &\text{alrimenti}
+                \end{cases}
+            }
+        \] è calcolabile (ad esempio è facile scrivere un programma \WHILE{} che la calcola) ed ha come dominio esattamente $\set*{3}$.
+        \item $I$ non è tutto $\N$ in quanto ad esempio la funzione costantemente uguale a $1$ è calcolabile ma non ha dominio $\set*{3}$.
+        \item $I$ è un iirf: supponiamo che $x \in I$ e $y$ sia un altro indice tale che $\phi_x = \phi_y$. Ma allora \[
+            \dom{\phi_y} = \dom{\phi_x} = \set*{3}
+        \] e dunque $y \in I$. 
+    \end{enumerate}
+
+    Per l'\nameref{th:index-set-theorem} segue la tesi.
+\end{proof}
+
+\begin{proof}
+    [Soluzione 2]
+    Mostriamo che $K \leq_\rec I$: definiamo \[
+        \psi(x, y) \deq \begin{cases}
+            1, &\text{se } x \in K \text{ e } y = 3\\
+            \bot, &\text{altrimenti.}
+        \end{cases}
+    \] Per la Tesi di Church-Turing insieme al \nameref{th:s-1-1} e all'\Cref{rem:s-1-1-one-var} esiste una funzione $f$ calcolabile totale tale che $\phi_{f(x)}(y) = \psi(x, y)$.
+    
+    Allora $K \leq_f I$: in effetti \begin{itemize}
+        \item se $x \in K$ allora $\phi_{f(x)}$ vale $1$ quando l'input è $3$ ed è indefinita altrimenti, dunque $\dom{\phi_{f(x)}} = \set*{3}$, ovvero $f(x)$ appartiene ad $I$;
+        \item se $x \notin K$ allora $\phi_{f(x)}$ è sempre indefinita e dunque ha dominio vuoto, ovvero $f(x)$ non appartiene a $I$.        
+    \end{itemize} 
+\end{proof}

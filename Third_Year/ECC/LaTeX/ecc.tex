@@ -31,6 +31,11 @@
 
 \let\oldtilde\tilde
 % \renewcommand{\tilde}[1]{\widetilde{#1}}
+\includeonly{
+    chapters/intro-calcolability.tex, 
+    chapters/calc-problems.tex,
+    chapters/appendices.tex
+}
 
 \begin{document}
 
@@ -44,5 +49,8 @@
 \mainmatter{}
 \include{chapters/intro-calcolability.tex}
 \include{chapters/calc-problems.tex}
+
+\appendix
+\include{chapters/appendices.tex}
 
 \end{document}
