@@ -1,0 +1,95 @@
+name: Programmazione di Interfacce
+short: PI
+drive: gdrive-unipi:Informatica/TerzoAnno/PI
+website: https://classroom.google.com/u/1/c/Mzg4Mzc1NjUwOTY3
+lectures:
+- title: Introduzione
+  name: '2021-09-14'
+  date: 2021-09-14
+  path: .
+  descr:
+  - Introduzione al HCI
+  - Design di UI e UX
+- title: UI/UX
+  name: '2021-09-15'
+  date: 2021-09-15
+  path: .
+  descr:
+  - User eXperience (UX) e User Interface (UI)
+  - Differenze tra i due concetti
+- title: Human Centered Design
+  name: '2021-09-21'
+  date: '2021-09-21'
+  path: .
+  descr:
+  - Concetto di Human Centered Design
+- title: Human Centered Design 2
+  name: '2021-09-22'
+  date: '2021-09-22'
+  path: .
+  descr:
+  - Diagramma per l'HCD
+  - Come progettare l'interazione
+  - Concetti di discoverability e understanding
+  - Affordances
+- title: Significanti, Mapping e Feedback
+  name: '2021-09-28'
+  date: '2021-09-28'
+  path: .
+  descr:
+  - Concetto di signifier
+  - Differenza tra affordance e signifier
+  - Mapping
+  - Feedback
+- title: Modello Concettuale e Immagine di Sistema
+  name: '2021-09-29'
+  date: '2021-09-29'
+  path: .
+  descr:
+  - Modello Concettuale
+  - Modello Mentale
+  - Immagine di Sistema
+- title: Constraints
+  name: '2021-10-05'
+  date: '2021-10-05'
+  path: .
+  descr:
+  - Concetto di Constraint
+  - Forcing Functions
+  - Activity-Centered Design
+- title: Teoria dei 2 Golfi
+  name: '2021-10-06'
+  date: '2021-10-06'
+  path: .
+  descr:
+  - Golfo dell'esecuzione
+  - Golfo della valutazione
+  - 7 principi del design
+  - Azioni opportunistiche (cont.)
+- title: Azioni Opportunistiche
+  name: '2021-10-12'
+  date: '2021-10-12'
+  path: .
+  descr:
+  - Azioni Opportunistiche
+  - Processing
+- title: Errori Utente e Strategie di Mitigazione
+  name: '2021-10-13'
+  date: '2021-10-13'
+  path: .
+  descr:
+  - Root Cause Analysis
+  - Tecnica dei 'five whys'
+  - 'Errori: slips e mistakes'
+  - Gestione degli errori
+- title: '2021-10-19'
+  name: '2021-10-19'
+  date: '2021-10-19'
+  path: .
+  descr: []
+- title: '2021-10-20'
+  name: '2021-10-20'
+  date: '2021-10-20'
+  path: .
+  descr: []
+assignments: []

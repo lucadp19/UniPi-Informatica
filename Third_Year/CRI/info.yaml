@@ -1,0 +1,111 @@
+name: Crittografia
+short: CRI
+drive: gdrive-unipi:Informatica/TerzoAnno/CRI
+website: http://pages.di.unipi.it/bernasconi/CRI/Cri.html
+lectures:
+- title: Introduzione
+  name: '2021-09-16'
+  date: 2021-09-16
+  path: .
+  descr:
+  - Funzioni di cifratura e decifrazione
+  - Tecniche del crittoanalista
+  - Sicurezza di un cifrario
+- title: "Fine intro e Calcolabilit\xE0"
+  name: '2021-09-20'
+  date: 2021-09-20
+  path: .
+  descr:
+  - Cifrari simmetrici e asimmetrici
+  - Vantaggi e svantaggi della critto. a chiave pubblica
+  - "Ripasso di nozioni base di Calcolabilit\xE0"
+  - Esistenza di funzioni non calcolabili
+  - "Indecidibilit\xE0 dell'Halting Problem"
+- title: "Teoria della Complessit\xE0"
+  name: '2021-09-23'
+  date: '2021-09-23'
+  path: .
+  descr:
+  - "Classi di complessit\xE0 intuitive"
+  - Classi generiche TIME(t(n)), SPACE(s(n))
+  - Definizione delle classi P, P-SPACE, EXP-TIME e confronto
+  - Classe NP (definizione per certificati)
+  - Riduzioni polinomiali
+- title: Sequenze casuali
+  name: '2021-09-27'
+  date: '2021-09-27'
+  path: .
+  descr:
+  - Ancora su NP
+  - Classi complementari (co-NP)
+  - "Definizione di complessit\xE0 secondo Kolmogorov"
+  - Definizione di sequenza casuale
+  - Esistenza di sequenze casuali (dim)
+  - "Il problema di decidere se una sequenza \xE8 casuale \xE8 indecidibile (dim)"
+- title: Generatori di sequenze casuali
+  name: '2021-09-30'
+  date: '2021-09-30'
+  path: .
+  descr:
+  - Definizione di una sorgente casuale binaria
+  - Definizione di generatore di num. pseudocasuali
+  - Generatore lineare e polinomiale
+  - Test statistici per lo studio di un generatore
+  - Test di prossimo bit
+  - Funzioni one-way e predicati hard-core
+  - Generatore BBS
+  - Generatore tramite cifrari simmetrici
+- title: 'Primi: generazione e test'
+  name: '2021-10-04'
+  date: '2021-10-04'
+  path: .
+  descr:
+  - "Test di primalit\xE0 banale"
+  - Algoritmi randomizzati di tipo MonteCarlo e LasVegas
+  - 'Test di Miller Rabin: procedimento e costo'
+  - Generazione di numeri primi
+  - Classe RP degli alg. polinomiali randomizzati
+- title: Cifrari Storici
+  name: '2021-10-07'
+  date: '2021-10-07'
+  path: .
+  descr:
+  - Cifrario di Cesare
+  - Tipologie di cifrario storico
+  - Cifrario affine e completo
+  - Archivio cifrato di Augusto
+  - Cifrario di Leon Battista Alberti
+  - "Cifrario di De Vigen\xE9re"
+  - Cifrario a permutazione semplice/di colonne/a griglia
+- title: Crittoanalisi statistica, Enigma
+  name: '2021-10-11'
+  date: '2021-10-11'
+  path: .
+  descr:
+  - Crittoanalisi statistica
+  - Macchina enigma
+  - Esercizi
+- title: Cifrari perfetti e One-Time Pad
+  name: '2021-10-14'
+  date: '2021-10-14'
+  path: .
+  descr:
+  - Definizione di cifrario perfetto
+  - 'Teorema di Shannon (#chiavi >= #msg possibili) (dim)'
+  - Definizione del One-Time Pad
+  - "Il cifrario One-Time Pad \xE8 perfetto (sotto certe ipotesi) (dim)"
+  - Non possiamo alleggerire le ipotesi della prop. precedente
+- title: Cifrario DES e attacchi al DES
+  name: '2021-10-18'
+  date: '2021-10-18'
+  path: .
+  descr:
+  - Principi di Shannon
+  - Funzionamento del cifrario DES
+  - Tipi di attacchi al DES
+- title: '2021-10-21'
+  name: '2021-10-21'
+  date: '2021-10-21'
+  path: .
+  descr: []
+assignments: []
