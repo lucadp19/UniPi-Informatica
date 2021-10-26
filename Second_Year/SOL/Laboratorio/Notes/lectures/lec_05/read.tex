@@ -1,0 +1,45 @@
+\section{Leggere il contenuto di un file}
+
+Per leggere il contenuto di un file possiamo usare la syscall \inlinec{read}:
+\begin{minted}{c}
+    #include <unistd.h>
+
+    int read(
+        int fd,     // file descriptor
+        void *buffer,   // where to put what is being read
+        size_t nbytes   // no. of bytes to read
+    )
+    // returns number of bytes read (>0) on success
+    // 0 if end of file was reached
+    // -1 on error and sets errno
+\end{minted}
+
+Il metodo standard per usare la \inlinec{read} è quindi 
+\begin{minted}{c}
+    lung = read(fd, buffer, N);
+\end{minted}
+dove \inlinec{fd} è il file descriptor del file da cui vogliamo leggere, \inlinec{buffer} è un \inlinec{void*} che punta all'area di memoria dove scriveremo i dati letti, \inlinec{N} è quanti bytes al massimo vogliamo leggere e \inlinec{lung} ci dice \begin{itemize}
+    \item il numero di byte letti (che può essere minore di \inlinec{N}) se la \inlinec{read} ha avuto successo;
+    \item $0$ se abbiamo raggiunto la fine del file;
+    \item $-1$ se c'è stato un errore.
+\end{itemize}
+
+In particolare se vogliamo aprire un file e leggerlo per intero il programma sarà circa il seguente:
+\begin{minted}{c}
+    int fd, lung;
+    char buffer[N];
+    // opening file
+    if( (fd = open("path/to/file", O_RDONLY)) == -1) {
+        perror("opening file"); exit(EXIT_FAILURE);
+    }
+
+    // file was opened, let's start reading it
+    while( (lung = read(fd, buffer, N)) > 0){
+        // do things
+    }
+    // lung == 0 => EOF
+    // lung == -1 => error
+    if(lung == -1){
+        perror ("reading file"); exit(EXIT_FAILURE);
+    }
+\end{minted}

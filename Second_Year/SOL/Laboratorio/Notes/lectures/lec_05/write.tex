@@ -1,0 +1,14 @@
+\section{Scrivere su un file}
+
+Ovviamente esiste una versione duale della \inlinec{read} per scrivere su un file:
+\begin{minted}{c}
+    #include <unistd.h>
+
+    int write(
+        int fd,             // file descriptor
+        const void* buffer, // data to write
+        size_t nbytes,      // number of bytes to write
+    );
+    // returns the number of bytes written (>0) on success
+    // -1 on error and sets errno
+\end{minted}

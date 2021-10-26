@@ -1,0 +1,23 @@
+\section{File in UNIX}
+Per studiare le syscall che operano sui file è necessario innanzitutto sapere cosa sia un \emph{file} in UNIX e come è implementato il filesystem UNIX.
+
+La caratteristica principale di UNIX è l'\strong{uniformità}: ogni cosa è rappresentata da un file, e un file è rappresentato da \strong{i-node}, ovvero una struttura dati contenente alcune informazioni, come \begin{itemize}
+    \item tipo di file: può essere \begin{itemize}
+        \item \strong{-} per i file normali,
+        \item \strong{d} per le directory,
+        \item \strong{l} per i link,
+        \item \strong{s} per i socket,
+        \item \strong{p} per le pipe,
+        \item \strong{c} per i file speciali a caratteri,
+        \item \strong{b} per i file speciali a blocchi;
+    \end{itemize}
+    \item modo di accesso al file da parte dell'utente: dice se l'utente può accedere in lettura (\strong{r}), scrittura (\strong{w}) e può lanciare il file come eseguibile (\strong{x});
+    \item modo di accesso al file da parte degli utenti che appartengono allo stesso \emph{gruppo} dell'utente corrente, come le stesse tre possibilità di prima;
+    \item modo di accesso al file da parte di tutti gli altri utenti;
+    \item \texttt{uid}, \texttt{gid}, che sono l'identificativo dell'utente e del gruppo a cui l'utente appartiene;
+    \item dimensione, tempo di creazione, altri metadati.
+\end{itemize}
+
+Infine l'\emph{i-node} contiene altri dati, che sono puntatori alla posizione nel disco dei dati effettivi del file. Questi puntatori possono essere ad \emph{indirezione multipla}: un puntatore può puntare ad un altro puntatore che infine punta ai dati; oppure possiamo avere tre puntatori in catena, eccetera. 
+
+Una \emph{directory} è quindi un \emph{i-node} che contiene al suo interno i puntatori ai vari \emph{i-node} dei file contenuti nella directory. Inoltre ogni directory contiene due file speciali, chiamati \emph{.} e \emph{..}, che puntano alla directory corrente e alla directory padre.

@@ -1,0 +1,6 @@
+\section{System Calls}
+Iniziamo ora a parlare di \strong{system calls}, ovvero di funzioni che invocano il kernel del sistema operativo per eseguire per noi delle operazioni. 
+Le system calls sono chiamate di basso livello e per questo dobbiamo essere particolarmente attenti quando le invochiamo: ogni chiamata ha la sua semantica e i suoi modi per comunicarci se qualcosa è andato storto (solitamente ritornando valori particolari, come ad esempio \inlinec{-1}, ma anche \inlinec{NULL} o altri, e settando la variabile globale \inlinec{errno}). 
+Per sapere esattamente quale sia il meccanismo di segnalazione di un errore specifico di una syscall bisogna leggere il manuale \inlinec{man}!
+
+Inoltre bisogna stare attenti a controllare \emph{subito} se la system call è andata a buon fine: infatti \inlinec{errno} può essere sovrascritto da altre funzioni e quindi dobbiamo testarlo appena dopo la chiamata di sistema. Un modo di default per gestire un errore è ad esempio chiamare la funzione \inlinec{perror}, che prende una stringa e stampa il nostro messaggio d'errore, più informazioni sul tipo di errore segnato in \inlinec{errno}.

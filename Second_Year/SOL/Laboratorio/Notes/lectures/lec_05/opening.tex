@@ -1,0 +1,37 @@
+\section{Apertura di file}
+
+Per aprire un file con una system call dobbiamo usare la syscall \inlinec{open}:
+\begin{minted}{c}
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <fcntl.h>
+
+    int open(
+        const char* pathname,
+        int flags,
+        mode_p permission
+    );
+\end{minted}
+
+\inlinec{pathname} è il pathname relativo o assoluto del file che voglio aprire, mentre \inlinec{flags} serve per settare con quali permessi voglio accedere al file. I flag possibili sono \begin{itemize}
+    \item \inlinec{O_RDONLY} per la sola lettura;
+    \item \inlinec{O_WRONLY} per la sola scrittura;
+    \item \inlinec{O_RDWR} per lettura e scrittura.
+\end{itemize}
+Inoltre i flag possono essere messi in or bit-a-bit con una o più delle seguenti maschere: \begin{itemize}
+    \item \inlinec{O_APPEND} che ci permette di scrivere in fondo al file;
+    \item \inlinec{O_CREAT} per creare il file se non esiste;
+    \item \inlinec{O_TRUNC} per sovrascrivere il file se esiste già;
+    \item \inlinec{O_EXCL} per dare errore se il file esiste già.
+\end{itemize} Il terzo parametro (\inlinec{permission}) serve a specificare i permessi da dare al file se lo stiamo creando, ma in generale non lo useremo e potremo chiamare la \inlinec{open} solamente con i primi due parametri.
+
+La \inlinec{open} restituisce un intero, che corrisponde ad un \strong{descrittore di file} se è maggiore o uguale a $0$, oppure \inlinec{-1} se c'è stato un errore (e setta \inlinec{errno}). Questo descrittore di file rappresenta l'indice del file aperto nella \emph{tabella dei descrittori dei file}, che contiene tutti i file correntemente in uso dal processo.
+
+In particolare quindi il comportamento della \inlinec{open} è il seguente:
+\begin{itemize}
+    \item segue il path del file per recuperare l'i-node;
+    \item controlla i diritti di accesso e verifica che i flag che abbiamo passato siano validi;
+    \item se l'accesso è consentito assegna al file l'indice di una posizione libera nella tabella dei descrittori e copia in memoria l'i-node;
+    \item se si è verificato un errore ritorna -1;
+    \item altrimenti ritorna \inlinec{fd}, il descrittore relativo al file appena aperto, che sarà usato per tutti gli accessi successivi al file.
+\end{itemize}
