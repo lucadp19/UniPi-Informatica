@@ -1,6 +1,10 @@
 \usepackage{proof}
 
+\ifpdf
 \DeclareMathAlphabet{\matheucal}{U}{eus}{m}{n}
+\fi \ifxetex
+\newcommand{\matheucal}{\mathcal}
+\fi
 
 \newcommand{\resp}{{\vartriangleright}}
 \newcommand{\Left}{\texttt{L}}
@@ -41,7 +45,7 @@
 \newcommand{\divg}{\!\!\uparrow}
 
 \newcommand{\PR}{\matheucal{PR}}
-\newcommand{\Rec}{\matheucal{R}}
+\newcommand{\Rec}{\matheucal{GR}}
 \newcommand{\lam}[2]{\lambda{#1}.\ {#2}}
 \newcommand{\mi}[2]{\mu{#1}.\ {#2}}
 \newcommand{\monoP}{\mathtt{P}}

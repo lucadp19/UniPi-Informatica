@@ -2,17 +2,8 @@
     oneside,
     10pt,
     language=italian,
-    pagestyle=notes,
-    fontstyle=palaeuler,
-    thmstyle=boxed,
-    colors
-    % thmstyle=boxedthm
-]{modernth}
-    \usepackage[utf8]{inputenc}
-    \usepackage[italian]{babel}
-    \usepackage[T1]{fontenc}
-    \usepackage{textcomp}
-    \usepackage{microtype}
+    a4paper
+]{notes}
     % My packages
     % \usepackage{boxedthm}
     \usepackage{code}
@@ -40,11 +31,21 @@
 \begin{document}
 
 \author{Luca De Paulis}
-\title{Elementi di Calcolabilità e Complessità}
+\title{Elementi di Calcolabilità e Complessità \\
+    \normalsize Appunti del corso di ECC del Professor Pierpaolo Degano, A.A. 2021/2022
+}
 \maketitle
 
 \frontmatter{}
-\tableofcontents
+\section*{Introduzione}
+Questo file contiene i miei appunti (rielaborati) del corso di \textsf{Elementi di Calcolabilità e Complessità} tenuto dal Professor Pierpaolo Degano nell'anno 2021/2022.
+Dato che questi appunti sono stati scritti per me stesso, potrebbero essere pieni di errori o ragionamenti incomprensibili a tutti tranne che a me: in ogni caso ogni segnalazione è ben accetta!
+\begin{flushright}
+    Luca De Paulis
+\end{flushright}
+
+\newpage
+\tableofcontents*
 
 \mainmatter{}
 \include{chapters/intro-calcolability.tex}

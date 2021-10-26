@@ -71,7 +71,7 @@ L'insieme $I \deq \set*{i \given \dom{\phi_i} = \set*{3}}$ è ricorsivo?
 
 \begin{proof}
     [Soluzione 1]
-    Applichiamo l'\nameref{th:index-set-theorem}: abbiamo bisogno di mostrare che $\varnothing \neq I \neq \N$ e che $I$ è un iirf.
+    Dimostriamo che $I$ non è ricorsivo applicando l'\nameref{th:index-set-theorem}: abbiamo bisogno di mostrare che $\varnothing \neq I \neq \N$ e che $I$ è un iirf.
     \begin{enumerate}[(1)]
         \item $I$ non è vuoto perché la funzione \[
             \lam{x}{
@@ -92,7 +92,7 @@ L'insieme $I \deq \set*{i \given \dom{\phi_i} = \set*{3}}$ è ricorsivo?
 
 \begin{proof}
     [Soluzione 2]
-    Mostriamo che $K \leq_\rec I$: definiamo \[
+    Mostriamo che $K \leq_{\rec} I$: definiamo \[
         \psi(x, y) \deq \begin{cases}
             1, &\text{se } x \in K \text{ e } y = 3\\
             \bot, &\text{altrimenti.}
@@ -102,5 +102,7 @@ L'insieme $I \deq \set*{i \given \dom{\phi_i} = \set*{3}}$ è ricorsivo?
     Allora $K \leq_f I$: in effetti \begin{itemize}
         \item se $x \in K$ allora $\phi_{f(x)}$ vale $1$ quando l'input è $3$ ed è indefinita altrimenti, dunque $\dom{\phi_{f(x)}} = \set*{3}$, ovvero $f(x)$ appartiene ad $I$;
         \item se $x \notin K$ allora $\phi_{f(x)}$ è sempre indefinita e dunque ha dominio vuoto, ovvero $f(x)$ non appartiene a $I$.        
-    \end{itemize} 
+    \end{itemize}
+
+    Segue quindi che $I$ non è ricorsivo.
 \end{proof}

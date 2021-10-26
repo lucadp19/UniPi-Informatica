@@ -2,13 +2,14 @@
 
 Alla fine dell'ultima sezione abbiamo mostrato come $\TOT$ sia un altro esempio di insieme non ricorsivo. Per costruire $\TOT$ abbiamo sfruttato un'idea particolarmente semplice: abbiamo preso tutti e soli gli \emph{indici} di tutte le funzioni calcolabili totali. Questo approccio ci consente di definire diversi altri insiemi interessanti:
 \begin{align}\label{eq:interesting-index-sets}
+\tcboxmath[colback=White, colframe=Green!70!White]{
 \begin{split}
     &\texttt{FIN} \deq \set*{i \given \dom{\phi_i} \text{ è finito }}\\
     &\texttt{INF} \deq \set*{i \given \dom{\phi_i} \text{ è infinito }} = \compl{\texttt{FIN}} \\
     &\texttt{REC} \deq \set*{i \given \dom{\phi_i} \text{ è ricorsivo }}\\
     &\texttt{CONST} \deq \set*{i \given \phi_i \text{ è costante e totale }}\\
     &\texttt{EXT} \deq \set*{i \given \phi_i \text{ è estendibile ad una funzione calc. tot.}}
-\end{split}
+\end{split}}
 \end{align}  
 
 Possiamo studiare più velocemente tali insiemi?
@@ -34,10 +35,10 @@ L'importanza di questo tipo di insiemi di indici è che ci consentono di collega
 
 \begin{theorem}
     {Index Set Theorem}{index-set-theorem}
-    Sia $I$ un iirf, $I \neq \varnothing$, $I \neq \N$. Allora $K \leq_\rec I$ oppure $K \leq_\rec \compl{I}$.   
+    Sia $I$ un iirf, $I \neq \varnothing$, $I \neq \N$. Allora $K \leq_{\rec} I$ oppure $K \leq_{\rec} \compl{I}$.   
 \end{theorem}
 \begin{proof}
-    Sia $i_0$ tale che $\phi_{i_0}$ sia la funzione sempre indefinita e supponiamo senza perdita di generalità $i_0 \in \compl{I}$.\footnote{Se $i_0$ appartenesse a $I$ potremmo scambiare $I$ e $\compl{I}$ e alla fine dimostreremmo che $K \leq_\rec \compl{I}$.} Siccome $I$ è non vuoto dovrà esistere un $i_1 \in I$; inoltre dato che $I$ è un iirf certamente $\phi_{i_1} \neq \phi_{i_0}$ (altrimenti $i_0 \in I$), dunque $\phi_{i_1}$ non è ovunque indefinita.  
+    Sia $i_0$ tale che $\phi_{i_0}$ sia la funzione sempre indefinita e supponiamo senza perdita di generalità $i_0 \in \compl{I}$.\footnote{Se $i_0$ appartenesse a $I$ potremmo scambiare $I$ e $\compl{I}$ e alla fine dimostreremmo che $K \leq_{\rec} \compl{I}$.} Siccome $I$ è non vuoto dovrà esistere un $i_1 \in I$; inoltre dato che $I$ è un iirf certamente $\phi_{i_1} \neq \phi_{i_0}$ (altrimenti $i_0 \in I$), dunque $\phi_{i_1}$ non è ovunque indefinita.  
 
     Definiamo allora la seguente funzione: \[
         \psi(x, y) \deq \begin{cases}
@@ -61,16 +62,16 @@ L'\nameref{th:index-set-theorem} ci permette di dimostrare uno dei risultati pi�
 
 \begin{theorem}
     {Teorema di Rice}{rice}
-    Sia $\FF$ un insieme di funzioni calcolabili, $I_\FF \deq \set*{i \given \phi_i \in \FF}$ l'insieme degli indici delle funzioni di $\FF$.
+    Sia $\FF$ un insieme di funzioni calcolabili, $I_{\FF} \deq \set*{i \given \phi_i \in \FF}$ l'insieme degli indici delle funzioni di $\FF$.
     
-    Allora $I_\FF$ è ricorsivo se e solo se $\FF$ è vuoto oppure contiene tutte le funzioni calcolabili. 
+    Allora $I_{\FF}$ è ricorsivo se e solo se $\FF$ è vuoto oppure contiene tutte le funzioni calcolabili. 
 \end{theorem}
 \begin{proof}
     Mostriamo entrambi i versi dell'implicazione.
 
     \begin{description}
-        \item[\boximplby] Ovvio: se $\FF$ è vuoto allora $I_\FF$ è vuoto, se contiene tutte le funzioni calcolabili allora $I_\FF = \N$ e entrambi questi insiemi sono ricorsivi.\footnote{Le loro funzioni caratteristiche sono rispettivamente la funzione costante $0$ e la funzione costante $1$, che sono ovviamente calcolabili.}
-        \item[\boximpl] Se $\FF$ è non vuoto e non contiene tutte le funzioni calcolabili, allora $I_\FF$ è un insiemi di indici strettamente compreso tra $\varnothing$ e $\N$. Per l'\nameref{th:index-set-theorem} segue che $K \leq_\rec I_\FF$ o al suo complemento, e dunque $I_\FF$ non è ricorsivo.\footnote{Se $K \leq_\rec \compl{I_\FF}$ allora $\compl{I_\FF}$ è non ricorsivo, ma un insieme è ricorsivo se e solo se lo è il suo complemento, dunque neanche $I_\FF$ lo è.}   
+        \item[\boximplby] Ovvio: se $\FF$ è vuoto allora $I_{\FF}$ è vuoto, se contiene tutte le funzioni calcolabili allora $I_{\FF} = \N$ e entrambi questi insiemi sono ricorsivi.\footnote{Le loro funzioni caratteristiche sono rispettivamente la funzione costante $0$ e la funzione costante $1$, che sono ovviamente calcolabili.}
+        \item[\boximpl] Se $\FF$ è non vuoto e non contiene tutte le funzioni calcolabili, allora $I_{\FF}$ è un insiemi di indici strettamente compreso tra $\varnothing$ e $\N$. Per l'\nameref{th:index-set-theorem} segue che $K \leq_{\rec} I_{\FF}$ o al suo complemento, e dunque $I_{\FF}$ non è ricorsivo.\footnote{Se $K \leq_{\rec} \compl{I_{\FF}}$ allora $\compl{I_{\FF}}$ è non ricorsivo, ma un insieme è ricorsivo se e solo se lo è il suo complemento, dunque neanche $I_{\FF}$ lo è.}  \qedhere 
     \end{description}
 \end{proof}
 
@@ -79,7 +80,7 @@ Il Teorema di Rice ci dice in breve che, data una \strong{qualsiasi proprietà s
 In realtà \strong{nessuno} di quegli insiemi è ricorsivamente enumerabile: possiamo mostrare che $\compl{K}$ si riduce ad ognuno di essi, e sappiamo già che $\compl{K}$ non è r.e. Vediamolo per esercizio su \texttt{FIN} e \texttt{INF}.
 
 \newthoughtpar{\texttt{FIN} non è ricorsivamente enumerabile}
-Mostriamo che $\compl{K} \leq_\rec \texttt{FIN}$.
+Mostriamo che $\compl{K} \leq_{\rec} \texttt{FIN}$.
 
 \begin{proof}
     Consideriamo la funzione \[
@@ -99,7 +100,7 @@ Mostriamo che $\compl{K} \leq_\rec \texttt{FIN}$.
 \end{proof}
 
 \newthoughtpar{\texttt{INF} non è ricorsivamente enumerabile}
-Mostriamo che $\compl{K} \leq_\rec \texttt{INF}$.
+Mostriamo che $\compl{K} \leq_{\rec} \texttt{INF}$.
 
 \begin{proof}
     Consideriamo la funzione \[
