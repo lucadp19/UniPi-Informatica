@@ -1,0 +1,147 @@
+name: Reti di Calcolatori e Laboratorio
+short: RCL
+drive: gdrive-unipi:Informatica/TerzoAnno/RCL
+website: null
+lectures:
+- title: Introduzione
+  name: '2021-09-13'
+  date: 2021-09-13
+  path: Teoria
+  descr:
+  - Introduzione
+  - Definizione di rete e host
+  - LAN e WAN
+- title: Circuit/Packet Switching e Internet
+  name: '2021-09-15'
+  date: 2021-09-15
+  path: Teoria
+  descr:
+  - Commutazione di circuito
+  - Commutazione di pacchetto
+  - Enti di controllo di Internet
+  - Internet come rete di reti
+  - Metriche per la prestazione della rete
+- title: Thread Pools
+  name: '2021-09-21'
+  date: 2021-09-21
+  path: Lab
+  descr:
+  - BlockingQueue (ArrayBQ e LinkedBQ)
+  - Thread Pools (FixedTP, CachedTP)
+  - "ThreadPoolExecutor per Pools pi\xF9 flessibili"
+  - Callable e Future
+- title: Metriche e intro a ISO/OSI
+  name: '2021-09-20'
+  date: '2021-09-20'
+  path: Teoria
+  descr:
+  - Ulteriori metriche
+  - Introduzione al modello stratificato
+  - Modello ISO/OSI
+- title: TCP/IP e intro a App-Level
+  name: '2021-09-22'
+  date: '2021-09-22'
+  path: Teoria
+  descr:
+  - Flusso dell'informazione nell'ISO/OSI
+  - Introduzione al TCP/IP
+  - Livello Applicativo
+- title: URI, URL e HTTP
+  name: '2021-09-27'
+  date: '2021-09-27'
+  path: Teoria
+  descr:
+  - URI in generale
+  - Sintassi delle URL
+  - Schema HTTP per le URL
+  - Protocollo HTTP
+  - devo rivederla lol
+- title: Lock e CV
+  name: '2021-09-28'
+  date: '2021-09-28'
+  path: Lab
+  descr:
+  - ReentrantLock
+  - ReadWriteLock
+  - Condition Variables
+- title: HTTP Request Message
+  name: '2021-09-29'
+  date: '2021-09-29'
+  path: Teoria
+  descr:
+  - Formato del Request Message
+  - Request Methods
+  - Metodi safe-idempotenti
+  - Web caching
+  - Cookies
+- title: Email e protocollo SMTP
+  name: '2021-10-04'
+  date: '2021-10-04'
+  path: Teoria
+  descr:
+  - Esercizi (non fatti)
+  - Posta elettronica
+  - Protocollo SMTP
+- title: Monitors e synchronized
+  name: '2021-10-05'
+  date: '2021-10-05'
+  path: Lab
+  descr:
+  - Modificatore volatile
+  - Monitor
+  - Blocchi sincronizzati con synchronized
+- title: MIME e DNS
+  name: '2021-10-06'
+  date: '2021-10-06'
+  path: Teoria
+  descr:
+  - Protocollo MIME per inviare file attraverso la posta elettronica
+  - DNS
+  - Spazio dei nomi
+  - Query iterative/ricorsive
+- title: DNS e FTP
+  name: '2021-10-11'
+  date: '2021-10-11'
+  path: Teoria
+  descr:
+  - Query iterative/ricorsive
+  - Resource records nei DNS
+  - FTP per il trasferimento di dati
+  - "Creazione della connessione TCP in modalit\xE0 attiva/passiva"
+- title: Concurrent Collections e IO
+  name: '2021-10-12'
+  date: '2021-10-12'
+  path: Lab
+  descr:
+  - Concurrent Collections
+  - ConcurrentHashMap
+  - Iteratori e concurrent collections
+  - Java IO, streams
+- title: Transport Level
+  name: '2021-10-13'
+  date: '2021-10-13'
+  path: Teoria
+  descr:
+  - Introduzione al livello di trasporto
+  - TCP vs UDP
+  - Multiplexing/demultiplexing
+  - Concetto di socket address
+  - Concetto di porta e indirizzo IP
+  - TCP orientato allo Stream/Connessione
+  - Sintassi di un segmento TCP
+- title: '2021-10-18'
+  name: '2021-10-18'
+  date: '2021-10-18'
+  path: Teoria
+  descr: []
+- title: '2021-10-19'
+  name: '2021-10-19'
+  date: '2021-10-19'
+  path: Lab
+  descr: []
+- title: '2021-10-20'
+  name: '2021-10-20'
+  date: '2021-10-20'
+  path: .
+  descr: []
+assignments: []
