@@ -1,20 +1,161 @@
 name: "Elementi di Calcolabilit\xE0 e Complessit\xE0"
 short: ECC
+drive: gdrive-unipi:Informatica/TerzoAnno/ECC
 website: null
 lectures:
-- name: 21-09-13
-  title: Introduzione
-  date: 21-09-13
+- title: Introduzione
+  name: '2021-09-13'
+  date: 2021-09-13
   path: .
-- name: 21-09-14
-  title: Configurazioni e Transizioni
-  date: 21-09-14
+  descr:
+  - Introduzione storica
+  - Concetto di algoritmo e assiomi
+  - Definizione di MdT
+- title: Configurazioni e Transizioni
+  name: '2021-09-14'
+  date: 2021-09-14
   path: .
-- title: 21-09-20
-  date: 21-09-20
+  descr:
+  - Descrizione fisica della MdT
+  - Definizione di configurazione
+  - Definizione di computazione
+  - Esempi di MdT
+- title: Linguaggi FOR/WHILE
+  name: '2021-09-20'
+  date: 2021-09-20
   path: .
-  name: 21-09-20
-- title: 21-09-21
-  date: 21-09-21
+  descr:
+  - Sintassi astratta dei linguaggi FOR/WHILE
+  - Funz. di valutazione semantica aritmetica e booleana
+  - Semantica operazionale dei comandi
+  - Definizione di computazione
+- title: "Calcolabilit\xE0 di funzioni e Funzioni Primitive Ricorsive"
+  name: '2021-09-21'
+  date: 2021-09-21
   path: .
-  name: 21-09-21
+  descr:
+  - Funzioni Turing/While-calcolabili
+  - Ripasso di concetti sulle funzioni
+  - Funzioni primitive ricorsive
+- title: Funzioni Primitive Ricorsive (cont.)
+  name: '2021-09-27'
+  date: '2021-09-27'
+  path: .
+  descr:
+  - Funzione primitiva ricorsiva come sequenza di applicazione degli schemi
+  - Esempi di funzioni p.r.
+  - "Numerazione di G\xF6del"
+  - 'Esistenza di funzioni calcolabili non p.r.: esempio della funzione di Ackermann'
+- title: Funzioni calcolabili
+  name: '2021-09-28'
+  date: '2021-09-28'
+  path: .
+  descr:
+  - Nessun formalismo esprime tutte e sole le funzioni calcolabili totali (dim)
+  - Definizione di funzioni generali ricorsive
+  - Tesi di Church-Turing
+  - "Numerabilit\xE0 delle funzioni calcolabili, esistenza di funzioni non calcolabili\
+    \ (dim)"
+  - Numerazioni effettive
+  - Padding Lemma (dim)
+  - Teorema di Forma Normale di Kleene (dim)
+- title: Teorema di Enumerazione e Teorema del Parametro
+  name: '2021-10-04'
+  date: '2021-10-04'
+  path: .
+  descr:
+  - Teorema di Enumerazione (dim)
+  - Teorema del Parametro s-1-1 (dim)
+  - Teorema del Parametro s-n-m
+  - Esempio di valutazione parziale
+- title: "Teorema del Punto Fisso e Decidibilit\xE0"
+  name: '2021-10-11'
+  date: '2021-10-11'
+  path: .
+  descr:
+  - Teorema del Punto Fisso di Kleene (dim)
+  - Insiemi ricorsivi e r.e.
+  - Ricorsivo => r.e. (dim)
+  - r.e. con complementare r.e. => ricorsivo (dim)
+  - Caratterizzazione degli insiemi r.e. come immagini di funzioni calc. tot. (dim)
+  - Definizione di $K$
+  - "$K$ \xE8 r.e. ma non ricorsivo"
+- title: Riduzioni
+  name: '2021-10-12'
+  date: '2021-10-12'
+  path: .
+  descr:
+  - "$K_0$ \xE8 r.e. ma non ricorsivo (dim)"
+  - Definizione di riduzione
+  - Riduzioni che classificano classi di problemi
+  - Problemi ardui e completi
+  - "Propriet\xE0 dei problemi ardui e completi (dim)"
+  - $\leq_\rec$ classifica R, RE (dim)
+  - "$K$ \xE8 RE-completo (dim)"
+  - $K \leq_\rec TOT$ (dim)
+- title: '2021-10-18'
+  name: '2021-10-18'
+  date: '2021-10-18'
+  path: .
+  descr: []
+- title: '2021-10-19'
+  name: '2021-10-19'
+  date: '2021-10-19'
+  path: .
+  descr: []
+- title: Prima Verifica Intermedia
+  name: first-partial
+  date: '2021-10-20'
+  path: exercises
+  descr: []
+- title: '2021-11-02'
+  name: '2021-11-02'
+  date: '2021-11-02'
+  path: .
+  descr: []
+- title: '2021-11-04'
+  name: '2021-11-04'
+  date: '2021-11-04'
+  path: exercises
+  descr: []
+- title: Compito 2019-09-03
+  name: 2019-09-03_test
+  date: '2020-09-03'
+  path: exercises
+  descr: []
+- title: "EXT non \xE8 r.e."
+  name: EXT-not-re
+  date: '2021-11-06'
+  path: exercises
+  descr: []
+- title: '2021-11-08'
+  name: '2021-11-08'
+  date: '2021-11-08'
+  path: .
+  descr: []
+- title: '2021-11-09'
+  name: '2021-11-09'
+  date: '2021-11-09'
+  path: .
+  descr: []
+- title: '2021-11-15'
+  name: '2021-11-15'
+  date: '2021-11-15'
+  path: .
+  descr: []
+- title: '2021-11-16'
+  name: '2021-11-16'
+  date: '2021-11-16'
+  path: .
+  descr: []
+- title: '2021-11-22'
+  name: '2021-11-22'
+  date: '2021-11-22'
+  path: .
+  descr: []
+- title: '2021-11-23'
+  name: '2021-11-23'
+  date: '2021-11-23'
+  path: .
+  descr: []
+assignments: []

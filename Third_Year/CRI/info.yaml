@@ -103,9 +103,73 @@ lectures:
   - Principi di Shannon
   - Funzionamento del cifrario DES
   - Tipi di attacchi al DES
-- title: '2021-10-21'
+- title: Evoluzioni del DES e AES
   name: '2021-10-21'
   date: '2021-10-21'
   path: .
-  descr: []
+  descr:
+  - 'Evoluzioni del DES: 2/3TDEA'
+  - 'Attacchi Meet in the Middle'
+  - 'AES: funzionamento'
+  - Esercizi
+- title: Crittografia a Chiave Pubblica
+  name: '2021-11-04'
+  date: '2021-11-04'
+  path: .
+  descr:
+  - Requisiti
+  - Ripasso di algebra modulare
+- title: Cifrario RSA
+  name: '2021-11-08'
+  date: '2021-11-08'
+  path: .
+  descr:
+  - Confronto tra chiave pubblica e cifrari simmetrici
+  - Funzionamento del RSA
+  - Correttezza del RSA
+  - Sicurezza del RSA
+  - Vincoli sulle variabili del RSA
+- title: Attacchi al RSA
+  name: '2021-11-11'
+  date: '2021-11-11'
+  path: .
+  descr:
+  - Attacchi al RSA
+  - Attacco del modulo comune
+  - Esercizi su RSA
+- title: DH, ElGamal e intro alle curve ellittiche
+  name: '2021-11-15'
+  date: '2021-11-15'
+  path: .
+  descr:
+  - Protocollo Diffie-Hellman ~ funzionamento e correttezza
+  - Attacchi al Protocollo DH
+  - Cifrario di ElGamal ~ funzionamento e correttezza
+  - Introduzione alle curve ellittiche
+  - Somma di punti
+- title: Curve Ellittiche e Crittografia
+  name: '2021-11-22'
+  date: '2021-11-22'
+  path: .
+  descr:
+  - Calcolo esplicito della somma di punti
+  - Curve ellittiche prime
+  - Teorema di Hasse
+  - Funzioni One-Way Trap Door sulle curve ellittiche
+  - Algoritmo dei raddoppi successivi
+  - Protocollo DH su curve ellittiche
+  - Introduzione al cifrario di ElGamal su curve ellittiche
+- title: ElGamal su c.e. e Protocolli Crittografici
+  name: '2021-11-25'
+  date: '2021-11-25'
+  path: .
+  descr:
+  - Algoritmo di Koblitz
+  - 'Cifrario di ElGamal: funzionamento e correttezza'
+  - Sicurezza della crittografia sulle c.e.
+  - Protocolli crittografici ~ definizioni generali
+  - Funzioni hash crittografiche
+  - Identificazione su canali sicuri e insicuri
+  - Autenticazione e MAC
+  - Introduzione alle firme digitali ~ proprietà necessarie
 assignments: []

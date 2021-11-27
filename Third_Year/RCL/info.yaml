@@ -144,4 +144,39 @@ lectures:
   date: '2021-10-20'
   path: .
   descr: []
+- title: '2021-11-02'
+  name: '2021-11-02'
+  date: '2021-11-02'
+  path: Lab
+  descr: []
+- title: '2021-11-08'
+  name: '2021-11-08'
+  date: '2021-11-08'
+  path: Teoria
+  descr: []
+- title: '2021-11-09'
+  name: '2021-11-09'
+  date: '2021-11-09'
+  path: Lab
+  descr: []
+- title: '2021-11-15'
+  name: '2021-11-15'
+  date: '2021-11-15'
+  path: Teoria
+  descr: []
+- title: '2021-11-16'
+  name: '2021-11-16'
+  date: '2021-11-16'
+  path: Lab
+  descr: []
+- title: '2021-11-22'
+  name: '2021-11-22'
+  date: '2021-11-22'
+  path: Teoria
+  descr: []
+- title: '2021-11-23'
+  name: '2021-11-23'
+  date: '2021-11-23'
+  path: Lab
+  descr: []
 assignments: []
