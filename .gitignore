@@ -9,9 +9,17 @@
 *.synctex.gz
 *.toc
 *.class
+*.xdv
 _minted*
+.material
 IllegalMaterial
 Appunti
 LezioniRossini
+Handwritten
+Analisi
+Fisica
+Ricerca_Operativa
+BD
+IS
 ## *.pdf
 .vscode
