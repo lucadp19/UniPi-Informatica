@@ -1,0 +1,153 @@
+\section{Funzioni di misura appropriata}
+
+Finora abbiamo studiato le classi $\TIME$ e $\SPACE$ (e le corrispettive
+non deterministiche $\NTIME$, $\NSPACE$) con funzioni di misura $f$ qualsiasi.
+In realtà per ottenere risultati significativi abbiamo bisogno di alcuni
+vincoli in più sulla funzione di misura.
+
+\begin{definition}
+  [Funzione di misura appropriata]
+  Una funzione $f : \N \to \N$ si dice \sstrong{di misura appropriata} se
+  \begin{enumerate}[(1)]
+    \item è (debolmente) monotona crescente,
+    \item è calcolabile ed esiste una macchina $M$ che calcola $f$ sull'input
+      $x$ in \begin{itemize}
+        \item tempo $\OO\parens[\big]{f(\abs x) + \abs x}$,
+        \item spazio $\OO\parens[\big]{f(\abs x)}$. 
+      \end{itemize}  
+  \end{enumerate} 
+\end{definition}
+
+Fortunatamente i polinomi e le funzioni esponenziali/logaritmiche rispettano
+queste condizioni; inoltre si può dimostrare che somma/prodotto/composizione di
+funzioni appropriate è ancora appropriata, dunque la teoria delle funzioni di
+misura appropriate include i casi a cui siamo davvero interessati.
+
+\begin{theorem}
+  [Teorema di Gerarchia][hierarchy]
+  Se $f$ è appropriata allora \begin{enumerate}[(1)]
+    \item $\TIME{f(n)}  \subsetneq \TIME*{f(2n+1)^3}$,\footnotemark
+    \item $\SPACE{f(n)} \subsetneq \SPACE{f(x) \cdot \log(f(x))}$.
+  \end{enumerate}
+\end{theorem}
+
+\footnotetext{
+Sorprendentemente, questo fatto si dimostra facendo vedere che
+il sottoinsieme $\set*{x \given \phi_x(x)\conv 
+\text{ in al più } f(\abs x) \text{ passi}}$ di $K$ appartiene 
+a $\TIME*{f(2n+3)^3}$ ma non a $\TIME{f(n)}$.
+} 
+
+Come conseguenza otteniamo i seguenti due teoremi.
+
+\begin{theorem}
+  \[
+    \P \subsetneq \EXP \deq \bigunion_{k \in \N} \TIME{2^{n^k}}.
+  \]
+\end{theorem}
+\begin{proof}
+  Innanzitutto $\P \subseteq \TIME*{2^n}$ poiché i polinomi sono sempre limitati
+  superiormente dalle funzioni esponenziali (definitivamente). Per il \nameref{th:hierarchy} segue che $\TIME*{2^n} \subsetneq \TIME*{2^{(2n + 1)^3}}$, che
+  è a sua volta un sottoinsieme di $\EXP$. Segue dunque la tesi.  
+\end{proof}
+
+\begin{theorem}
+  \[
+      \P \subseteq \NP \subseteq \EXP.
+  \]
+\end{theorem}
+\begin{proof}
+  Il fatto che $\P \subseteq \NP$ è già stato dimostrato; l'inclusione di $\NP$
+  in $\EXP$ deriva dal \Cref{th:NTIME-subset-TIME-exp}.
+\end{proof}
+
+Le funzioni di misura appropriate ci consentono finalmente di descrivere la
+gerarchia di cui parliamo dall'inizio del capitolo.
+
+\begin{theorem}
+  Sia $f$ appropriata, $k$ costante. Allora \begin{enumerate}[(1)]
+    \item $\TIME{f} \subseteq \NTIME{f}$,
+    \item $\SPACE{f} \subseteq \NSPACE{f}$,
+    \item $\NTIME{f} \subseteq \TIME*{k^{\log n + f(n)}}$,
+    \item vale la gerarchia \[
+        \LOGSPACE \subseteq \P \subseteq \NP \subseteq \PSPACE = \NPSPACE.
+    \] Inoltre $\NP \subseteq \EXP$. 
+  \end{enumerate}
+\end{theorem}
+
+La gerarchia definita sopra tuttavia non è superiormente limitata, ovvero
+non esiste una classe che include tutti i problemi. In effetti una tale classe
+non può esistere, come garantito dal seguente teorema.
+
+\begin{theorem}
+  [Illimitatezza della gerarchia di complessità]
+  Per ogni funzione $g : \N \to \N$ calcolabile totale\footnote{non 
+  necessariamente appropriata} esiste una funzione $f : \N \to \N$ calc. tot.
+  tale che \begin{enumerate}[(1)]
+    \item esiste un problema $I$ tale che $I \in \TIME{f}$ ma 
+      $I \notin \TIME{g}$,
+    \item $f \geq g$ definitivamente, ovvero $f(n) \geq g(n)$ per tutti gli
+      $n \in \N$ eccetto un numero finito.   
+  \end{enumerate} 
+\end{theorem}
+
+Concludiamo la discussione delle funzioni di misura appropriate mostrando
+quale è il prezzo da pagare se volessimo considerare tutte le funzioni
+calcolabili totali, e non solo quelle appropriate. Lo facciamo enunciando
+due teoremi, ma senza dimostrarli.
+
+\begin{theorem}
+  [Teorema di Accelerazione, Blum]
+  Per ogni funzione $h : \N \to \N$ calcolabile totale, ma non appropriata,
+  esiste un problema $I$ tale che, per ogni macchina $M$ che decide $I$ 
+  in tempo $f$, esiste una macchina $M'$ che decide $I$ in tempo $f'$ con \[
+      f \geq h \circ f'
+  \] quasi ovunque.
+\end{theorem}
+
+Il Teorema di Accelerazione di Blum ci dice che data una funzione non appropriata
+$h$ possiamo costruire un problema $I$ che \emph{non ammette algoritmo ottimo}:
+il suo tempo di esecuzione può essere ridotto all'infinito seguendo la
+successione di macchine $M, M', M'', \dots$ descritto nell'enunciato.
+
+\begin{theorem}
+  [Teorema della Lacuna, Borodin][borodin]
+  Esiste una funzione calcolabile totale $f$ (non appropriata) tale che \[
+      \TIME{f} = \TIME{2^f}.
+  \]
+\end{theorem}
+
+Se il Teorema della Lacuna fosse ammissibile la gerarchia delineata verrebbe
+distrutta: le classi $\P$ ed $\EXP$ collasserebbero e studiare la complessità
+sarebbe inutile.
+
+Un ultimo tentativo è quello di condensare le definizioni di complessità
+in spazio e tempo usando il cosiddetto \sstrong{approccio assiomatico alla
+complessità}, dovuto ancora una volta a Blum.
+
+\begin{definition}
+  [Funzioni che misurano la complessità]
+  Una funzione $\phi$ \sstrong{misura la complessità} se è della forma \[
+      \phi : \parens[\big]{(\N \to \N) \times \N} \to \N
+      \footnote{
+        Ovvero prende in input una funzione $\N \to \N$ 
+        e un numero naturale e restituisce in output un altro numero naturale.
+      }
+  \] e soddisfa le seguenti due condizioni:
+  \begin{enumerate}[(1)]
+    \item per ogni $\psi : \N \to \N$, $x \in \N$ si ha che 
+      $\phi(\psi, x)$ converge se e solo se $\psi(x)$ converge,
+    \item per ogni $\psi : \N \to \N$, $x, k \in \N$ è possibile decidere 
+      se $\phi(\psi, x) = k$.  
+  \end{enumerate}
+\end{definition}
+
+Il primo assioma ci dice che $\phi$ misura la complessità del calcolo di $\psi$,
+il secondo ci assicura che è possibile calcolare la complessità usando $\phi$.
+Se $\phi$ contasse il numero di passi per calcolare $\psi(x)$ 
+otterremmo la misura di complessità in tempo; se contasse lo spazio otterremmo
+la complessità in spazio.
+
+Le funzioni di misura appropriata soddisfano gli assiomi, tuttavia esistono
+anche funzioni non appropriate che misurano la complessità e ancora una volta
+ci portano a situazioni controintuitive (come il \Cref{th:borodin}).

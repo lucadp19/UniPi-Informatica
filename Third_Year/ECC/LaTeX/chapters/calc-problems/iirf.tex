@@ -15,7 +15,7 @@ Alla fine dell'ultima sezione abbiamo mostrato come $\TOT$ sia un altro esempio 
 Possiamo studiare più velocemente tali insiemi?
 
 \begin{definition}
-    {Insiemi di indici che rappresentano funzioni}{iirf}
+    [Insiemi di indici che rappresentano funzioni][iirf]
     Sia $I \subseteq \N$ un insieme di indici. $I$ si dice \sstrong{insieme di indici che rappresentano funzioni} (\sstrong{iirf} per gli amici) se per ogni $x, y$ vale che \[
         x \in I \;\text{ e }\; \phi_y = \phi_x \implies y \in I.
     \]  
@@ -26,7 +26,7 @@ In pratica un insieme di indici è un iirf se quando contiene un indice $i$ allo
 L'importanza di questo tipo di insiemi di indici è che ci consentono di collegare sintassi e semantica: se riusciamo a dimostrare che un iirf gode di una determinata proprietà, allora le \emph{funzioni rappresentate dall'insieme} godono di tale proprietà.
 
 \begin{proposition}
-    {}{I-iirf=>complI-iirf}
+    [ ][I-iirf=>complI-iirf]
     Se $I$ è un iirf, allora $\compl{I}$ è un iirf. 
 \end{proposition}
 \begin{proof}
@@ -34,7 +34,7 @@ L'importanza di questo tipo di insiemi di indici è che ci consentono di collega
 \end{proof}
 
 \begin{theorem}
-    {Index Set Theorem}{index-set-theorem}
+    [Index Set Theorem][index-set-theorem]
     Sia $I$ un iirf, $I \neq \varnothing$, $I \neq \N$. Allora $K \leq_{\rec} I$ oppure $K \leq_{\rec} \compl{I}$.   
 \end{theorem}
 \begin{proof}
@@ -61,7 +61,7 @@ L'importanza di questo tipo di insiemi di indici è che ci consentono di collega
 L'\nameref{th:index-set-theorem} ci permette di dimostrare uno dei risultati più importanti della Teoria della Calcolabilità, che è il \sstrong{Teorema di Rice}.
 
 \begin{theorem}
-    {Teorema di Rice}{rice}
+    [Teorema di Rice][rice]
     Sia $\FF$ un insieme di funzioni calcolabili, $I_{\FF} \deq \set*{i \given \phi_i \in \FF}$ l'insieme degli indici delle funzioni di $\FF$.
     
     Allora $I_{\FF}$ è ricorsivo se e solo se $\FF$ è vuoto oppure contiene tutte le funzioni calcolabili. 

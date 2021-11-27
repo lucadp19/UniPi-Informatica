@@ -3,14 +3,14 @@
 Avendo stabilito il \emph{framework} in cui lavoreremo, possiamo finalmente iniziare a dimostrare alcune proprietà delle funzioni calcolabili.
 
 \begin{theorem}
-    {Esistenza di funzioni non calcolabili}{num-funct-calc}
+    [Esistenza di funzioni non calcolabili][num-funct-calc]
     Le funzioni calcolabili sono in quantità numerabile. In particolare esistono funzioni non calcolabili.
 \end{theorem}
 
 Per dimostrare questo teorema useremo il fatto che le funzioni $\N \to \N$ sono in quantità più che numerabile, quindi dimostriamolo.
 
 \begin{theorem}
-    {Diagonalizzazione di Cantor}{diag-cantor}
+    [Diagonalizzazione di Cantor][diag-cantor]
     Siano $A, B$ insiemi con $\card{A} \geq \card{\N}$, $\card{B} \geq 2$. Allora \[
         \card[\big]{\set*{f : A \to B}} > \card*{\N}.
     \]  
@@ -59,7 +59,7 @@ Osserviamo però che dati due indici $i, j$ diversi sicuramente vale che $M_i \n
 In realtà vale un teorema molto più forte, solitamente conosciuto come \sstrong{Padding Lemma}.
 
 \begin{theorem}
-    {Padding Lemma}{padding-lemma}
+    [Padding Lemma][padding-lemma]
     Per ogni indice $i$ esiste un insieme numerabile $A_i$ di indici tale che per ogni $j \in A_i$ \[
         \phi_j = \phi_i,
     \] ovvero ogni funzione calcolabile è calcolata da infinite MdT.
@@ -73,7 +73,7 @@ In realtà vale un teorema molto più forte, solitamente conosciuto come \sstron
 Ora mostriamo che ogni funzione calcolabile può essere scritta in una forma standard, detta \sstrong{Forma Normale di Kleene}.
 
 \begin{theorem}
-    {Forma Normale di Kleene}{kleene-normal-form}
+    [Forma Normale di Kleene][kleene-normal-form]
     Esistono un predicato $T : \N^3 \to \set{0, 1}$ (detto \sstrong{predicato di Kleene}) e una funzione $U : \N \to \N$ entrambi calcolabili totali tali che \[
         \forall i, x: \phi_i(x) = U\parens[\big]{\mi{y}{T(i, x, y)}}.
     \] Inoltre $T$ e $U$ sono primitivi ricorsivi. 
@@ -101,7 +101,7 @@ Ora mostriamo che ogni funzione calcolabile può essere scritta in una forma sta
 Il Teorema di Forma Normale è uno strumento molto potente e lo useremo per dimostrare uno dei risultati fondamentali della Teoria della Calcolabilità.
 
 \begin{theorem}
-    {Teorema di Enumerazione}{enum}
+    [Teorema di Enumerazione][enum]
     Esiste un indice $z$ tale che per ogni indice $i$, input $x$ si ha \[
         \phi_z(i, x) = \phi_i(x).
     \]  
@@ -122,7 +122,7 @@ Osserviamo inoltre che ciò funziona solo perché possiamo trasformare una funzi
 Abbiamo quindi un metodo per trasformare un indice in un argomento. È possibile fare il contrario?
 
 \begin{theorem}
-    {Teorema del Parametro}{s-1-1}
+    [Teorema del Parametro][s-1-1]
     Esiste una funzione calcolabile totale ed iniettiva $s : \N^2 \to \N$ tale che per ogni $i, x$ \[
         \phi_{s(i, x)} = \lam{z}{\phi_i(x, z)}.
     \] 
@@ -145,7 +145,7 @@ Il senso intuitivo del Teorema del Parametro (anche chiamato Teorema $s$-$1$-$1$
     Segue che la $s$ costruita in questo modo è strettamente crescente e dunque iniettiva.
 \end{proof}
 
-\begin{remark}\label{rem:s-1-1-one-var}
+\begin{remark}[][s-1-1-one-var]
     Il \nameref{th:s-1-1} ci dice che esiste una funzione calcolabile totale iniettiva a due variabili $s$ tale che $\phi_{s(i, x)} = \lam{y}{\phi_i(x, y)}$ per ogni $i, x$. Allora fissato un indice $i$ possiamo considerare direttamente la funzione ad una variabile \[
         f \deq \lam{x}{s(i, x)},
     \] che è ancora calcolabile totale, iniettiva, e tale che \[
@@ -156,7 +156,7 @@ Il senso intuitivo del Teorema del Parametro (anche chiamato Teorema $s$-$1$-$1$
 Il \nameref{th:s-1-1} ci permette di dimostrare il seguente teorema.
 
 \begin{theorem}
-    {Teorema di Ricorsione di Kleene}{kleene-rec}
+    [Teorema di Ricorsione di Kleene][kleene-rec]
     Per ogni $f$ calcolabile totale esiste un indice $n$ tale che \[
         \phi_n = \phi_{f(n)}.
     \]

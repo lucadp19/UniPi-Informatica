@@ -7,7 +7,7 @@ Dopo aver definito le computazioni per le MdT e per i linguaggi \code{FOR} e \co
 Prima di tutto, ricordiamo le definizioni di base sulle funzioni.
 
 \begin{definition}
-    {Funzione}{func}
+    [Funzione][func]
     Dati $A, B$ insiemi, una \sstrong{funzione} $f$ da $A$ in $B$ è un sottoinsieme di $A \times B$ tale che \[
         (a, b), (a, b') \in f \;\implies\; b = b'.
     \] Scriveremo \begin{itemize}
@@ -19,7 +19,7 @@ Prima di tutto, ricordiamo le definizioni di base sulle funzioni.
  Notiamo inoltre che non abbiamo fatto assunzioni sulla \strong{totalità} di $f$: per qualche valore di $a \in A$ potrebbe non esistere un valore $b \in B$ tale che $f(a)$, cioè $f$ potrebbe \emph{non essere definita} in $a$.
 
 \begin{definition}
-    {Funzioni totali e parziali}{total_partial_func}
+    [Funzioni totali e parziali][total_partial_func]
     Sia $f : A \to B$. \begin{itemize}
         \item $f$ \sstrong{converge su} $a \in A$ (e lo si indica con $f(a)\conv$) se esiste $b \in B$ tale che $f(a) = b$;
         \item $f$ \sstrong{diverge su} $a \in A$ (e lo si indica con $f(a)\divg$, o con $f(a) = \bot$) se $f$ non converge su $a$;
@@ -31,7 +31,7 @@ Prima di tutto, ricordiamo le definizioni di base sulle funzioni.
 In generale le nostre funzioni saranno parziali.
 
 \begin{definition}
-    {Dominio ed immagine}{dom_im_func}
+    [Dominio ed immagine][dom_im_func]
     Sia $f : A \to B$. Si dice \sstrong{dominio} di $f$ l'insieme \[
         \dom f \deq \set*{a \in A \given f(a)\conv}.
     \]  Si dice \sstrong{immagine} di $f$ l'insieme \[
@@ -40,7 +40,7 @@ In generale le nostre funzioni saranno parziali.
 \end{definition}
 
 \begin{definition}
-    {Iniettività/surgettività/bigettività}{}
+    [Iniettività/surgettività/bigettività]
     Sia $f : A \to B$ una funzione. 
     \begin{itemize}
         \item $f$ è \sstrong{iniettiva} se per ogni $a, a' \in A$, $a \neq a'$, allora $f(a) \neq f(a')$.
@@ -54,7 +54,7 @@ In generale le nostre funzioni saranno parziali.
 Definiamo ora quando una macchina/un comando \emph{implementa} una funzione.
 
 \begin{definition}
-    {Turing-calcolabilità}{t-calc}
+    [Turing-calcolabilità][t-calc]
     Siano $\Sigma, \Sigma_0, \Sigma_1$ alfabeti, $\resp, \# \notin \Sigma_0 \union \Sigma_1 \subsetneq \Sigma$.
 
     Sia inoltre $f : \Sigma_0 \to \Sigma_1$, $M = (Q, \Sigma, \delta, q_0)$ una MdT.
@@ -68,7 +68,7 @@ Indicando con $M(v)$ il risultato della computazione della macchina $M$ sulla co
 In particolare, dato che le funzioni possono essere \emph{parziali} e le macchine di Turing possono \emph{divergere}, $M(v)\conv$ se e solo se $f$ è definita su $v$, cioè se esiste $w$ tale che $f(v) = w$.
 
 \begin{definition}
-    {\code{WHILE}-calcolabilità}{w-calc}
+    [\code{WHILE}-calcolabilità][w-calc]
     Sia $C$ un comando \code{WHILE}, $g : \code{Var} \to \N$. 
     Si dice allora che $C$ \sstrong{calcola} $g$ (e che $g$ è \sstrong{\code{WHILE}-calcolabile}) se per ogni $\sigma : \code{Var} \to \N$ \[
         n = g(x) \;\;\text{se e solo se}\;\; (C, \sigma) \to^\ast \sigma^\ast \text{ e } \sigma^\ast(x) = n.

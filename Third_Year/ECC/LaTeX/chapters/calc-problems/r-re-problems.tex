@@ -7,7 +7,7 @@ I nostri problemi sono \sstrong{problemi di decisione}: dato un insieme $I \subs
 Per parlare di \emph{appartenenza} ad un insieme conviene definire due funzioni che saranno di grande rilevanza in seguito.
 
 \begin{definition}
-    {Funzione caratteristica e semicaratteristica di un insieme}{}
+    [Funzione caratteristica e semicaratteristica di un insieme]
     Sia $I \subseteq \N^k$. 
     Si dice \sstrong{funzione caratteristica} di $I$ la funzione 
     $\charf{I} : \N^k \to \set*{0,1}$ definita da \[
@@ -26,7 +26,7 @@ Per parlare di \emph{appartenenza} ad un insieme conviene definire due funzioni 
 Possiamo ora definire le due principali classi di problemi che analizzeremo.
 
 \begin{definition}
-    {Insiemi ricorsivi e ricorsivamente enumerabili}{}
+    [Insiemi ricorsivi e ricorsivamente enumerabili]
     Sia $I \subseteq \N^k$. \begin{itemize}
         \item $I$ si dice \sstrong{ricorsivo} oppure \sstrong{decidibile} se $\charf{I}$ è calcolabile totale.
         \item $I$ si dice \sstrong{ricorsivamente enumerabile} (in breve r.e.) oppure \sstrong{semidecidibile} se esiste un indice $i$ tale che $I = \dom{\phi_i}$.   
@@ -49,7 +49,7 @@ Quindi un insieme $I$ è semidecidibile se per ogni elemento $x \in I$ possiamo 
 
 Il fatto che gli insiemi r.e. si chiamano proprio in questo modo deriva da un'altra particolare caratterizzazione.
 
-\begin{proposition}{}{}
+\begin{proposition}
     $I$ è r.e. se e solo se $I$ è vuoto oppure esiste una funzione $f$ calcolabile totale tale che $I = \Imm{f}$.  
 \end{proposition}
 \begin{proof}
@@ -59,7 +59,7 @@ Il fatto che gli insiemi r.e. si chiamano proprio in questo modo deriva da un'al
 Quali sono le relazioni tra insiemi ricorsivi e insiemi r.e.? Vediamone alcune che seguono immediatamente dalle definizioni.
 
 \begin{proposition}
-    {$\R \subseteq \RE$}{}
+    [$\R \subseteq \RE$]
     Se $I$ è ricorsivo, allora $I$ è ricorsivamente enumerabile.
 \end{proposition}
 \begin{proof}
@@ -70,13 +70,13 @@ Quali sono le relazioni tra insiemi ricorsivi e insiemi r.e.? Vediamone alcune c
 Per la prossima proposizione abbiamo bisogno di definire il \sstrong{complementare} di un problema.
 
 \begin{definition}
-    {Complementare di un problema}{}
+    [Complementare di un problema]
     Dato un insieme $I$, il suo complementare $\compl{I}$ è definito da \[
         \compl{I} \deq \set*{x \given x \notin I}.
     \] 
 \end{definition}
 
-\begin{proposition}{}{I_complI_re=>both_rec}
+\begin{proposition}[ ][I_complI_re=>both_rec]
     Se $I$ e $\compl{I}$ sono entrambi r.e., allora sono entrambi ricorsivi.
 \end{proposition}
 \begin{proof}

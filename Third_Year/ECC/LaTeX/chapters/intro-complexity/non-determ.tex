@@ -1,0 +1,133 @@
+\section{Non-Determinismo e Complessità non-deterministica}
+
+Studiamo infine un'ultima estensione delle macchine di Turing.
+
+\begin{definition}
+    [Macchine di Turing non deterministiche]
+    Una \sstrong{macchina di Turing non deterministica} è una quadrupla 
+    $N = (Q, \Sigma, \Delta, q_0)$ definita allo stesso modo di una macchina di Turing
+    solita tranne per il fatto che \[
+        \Delta  \subseteq 
+            \parens[\big]{Q \times \Sigma} \times
+            \parens[\big]{(Q \union \set*{h}) \times \Sigma \times \set*{\Left, \Right, \blank}}
+    \] è una relazione, detta \sstrong{relazione di transizione}.
+\end{definition}
+
+La differenza è quindi che a partire da una configurazione vi sono più configurazioni
+raggiungibili in output, e la macchina ogni volta ne sceglie una in modo arbitrario
+e quindi \emph{non deterministico}.
+
+Questa definizione può sembrare fuori dal mondo, ma è collegata strettamente a due tipi
+di strategie di risoluzione dei problemi molto usate.
+
+\newthought{Forza bruta}
+Dato un problema, un possibile modo di risolverlo è sempre quello di generare tutte le
+possibili soluzioni e controllarle una ad una: tale metodo viene detto \emph{bruteforce} o
+metodo del \emph{forza bruta}, in quanto brutalmente tentiamo ogni possibilità.
+Generando lo spazio delle soluzioni esplicitamente, ogni volta che ne tentiamo una stiamo in
+realtà percorrendo un cammino su tale albero: la scelta della prossima soluzione da tentare
+corrisponde alla \emph{scelta non deterministica} da compiere.
+
+% \newthought{Guess and Try}
+
+\begin{definition}
+    [Decisione non deterministica e tempo richiesto]
+    Una macchina di Turing non deterministica $N$ \sstrong{decide} un problema $I$ 
+    se per ogni $x$ vale che $x \in I$ se e solo se esiste una computazione terminante \[
+        N(x) \to^{\ast}_N (\SI, w).
+    \] $N$ \sstrong{decide $I$ in tempo non deterministico $f$} se decide $I$ e per ogni
+    $x \in I$ esiste una computazione terminante \[
+        N(x) \to^t_N (\SI, w)
+    \] con $t \leq f(\abs x)$. Infine denotiamo con $\NTIME{f}$ la classe di problemi \[
+        \NTIME{f} \deq \set*{I \given \exists N \text{ non det. che decide $I$ in tempo non det. $f$}}.
+    \]  
+\end{definition}
+
+Avendo definito $\NTIME$, vorremmo sapere in che relazione è con la classe
+$\TIME$ definita in precedenza.   
+
+\begin{theorem}[Relazione tra $\NTIME$ e $\TIME$][NTIME-subset-TIME-exp]
+    $\NTIME{f} \subseteq \TIME*{c^f}$ per qualche costante $c$.  
+\end{theorem}
+\begin{proof}
+    Sia $I$ un problema in $\NTIME{f}$ e sia $M$ una macchina che lo risolve
+    in tempo non det. $f$: vogliamo trovare una macchina $M'$ che lo risolve in
+    tempo $c^f$ per qualche costante $c$.
+    
+    Data la relazione di transizione $\Delta$, consideriamo una coppia 
+    $(q, \sigma) \in Q \times \Sigma$ e definiamo \begin{gather*}
+        \deg (q, \sigma) \deq \card*{\set*{(q', \sigma', D')} \given
+            (q, \sigma, q', \sigma', D') \in \Delta} \\
+        \deg \Delta \deq \max \set*{ \deg(q, \sigma) \given (q, \sigma) \in
+            Q \times \Sigma }.
+    \end{gather*} Intuitivamente, $\deg (q, \sigma)$ è il numero di possibili scelte
+    che la macchina non deterministica può fare quando legge $\sigma$ nello stato
+    $q$, cioè è il fattore di ramificazione dell'albero delle computazioni
+    quando ci troviamo in $(q, \sigma)$, mentre $\deg \Delta$ è il massimo tra
+    tutti i fattori di ramificazione.
+    
+    Per semplicità, chiamiamo $d \deq \deg \Delta$. Ordiniamo lessicograficamente
+    le quintuple di $\Delta$: a questo punto ogni computazione consiste in una
+    sequenza di scelte $(c_1, \dots, c_t)$ dove ognuna delle scelte è necessariamente
+    compresa tra $0$ e $d - 1$.
+    
+    Per simulare la computazione di $M$ attraverso una macchina deterministica, 
+    adottiamo una strategia di visita dell'albero delle computazioni a 
+    \emph{profondità limitata}: fissiamo inizialmente $t = 1$, $c_1 = 0$ e
+    controlliamo se la computazione codificata da $(c_1)$ termina. Se sì bene,
+    altrimenti incrementiamo $c_1$ di $1$ e eseguiamo il controllo.
+    Arrivati al punto in cui $c_1 = d - 1$ (e quindi non possiamo incrementarlo
+    ulteriormente) aumentiamo $t$ e controlliamo tutte le computazioni lunghe $2$.
+    
+    Dato che $M$ decide $I$ in tempo non deterministico $f$, per ogni input $x$ 
+    avremo che il tempo $t$ richiesto per decidere il caso $x \in I$ è al più
+    $f(\abs x)$. In particolare ogni sequenza che rappresenta una computazione
+    è al più lunga $f(\abs x)$.    
+    Segue che la macchina $M'$ deve fare al più $d^{f(\abs x)}$ scelte, da cui
+    $I \in \TIME{d^f}$.
+\end{proof}
+
+Introduciamo finalmente la classe dei problemi $\NP$ e la sua analoga versione
+per lo spazio, $\NPSPACE$. 
+
+\begin{definition}
+    [Classe $\NP$]
+    Definiamo la classe $\NP$ come \[
+        \NP \deq \bigunion_{k \in \N} \NTIME{n^k}.
+    \]
+\end{definition}
+
+Osserviamo che ovviamente \[
+    \P \subseteq \NP
+\] in quanto ogni problema risolvibile in tempo polinomiale deterministico
+può anche essere risolto non deterministicamente.
+La domanda da \emph{un miliardo di dollari}\footnote{Letteralmente.} è se il
+contenimento è stretto, ovvero esiste un problema in $\NP$ che non appartiene a
+$P$, o se le due classi sono in realtà le stesse.  
+
+\begin{definition}
+    [Classe $\NPSPACE$]
+    Un problema $I$ si dice \sstrong{decidibile in spazio non deterministico $f$}
+    se esiste una macchina di Turing I/O non deterministica $N$ tale che per ogni
+    $x$ \emph{esista} una computazione \[
+        N(x, \resp, \dots, \resp) \longrightarrow^{\ast}_N (\SI, w_1, \dots, w_k)
+    \] tale che \[
+        \sum_{i = 2}^{n-1} \abs*{w_i} \leq f(\abs x).
+    \] Chiamiamo $\NSPACE{f}$ la classe \[
+        \NSPACE{f} \deq \set*{I \given \exists N \text{ non det. che decide } 
+        I \text{ in spazio non det. } f}.
+    \] Infine, definiamo la classe $\NPSPACE$ come \[
+        \NPSPACE \deq \bigunion_{k \in \N} \NSPACE{n^k}.
+    \] 
+\end{definition}
+
+Analogamente al caso temporale, $\PSPACE \subseteq \NPSPACE$: potremmo dunque
+porci lo stesso problema riguardo al contenimento dei due insiemi.
+Tuttavia, al contrario del problema $\P \iseq \NP$, il problema $\PSPACE \iseq
+\NPSPACE$ è stato risolto.
+
+\begin{theorem}[Teorema di Savitch]
+    \[
+        \PSPACE = \NPSPACE.
+    \]
+\end{theorem}

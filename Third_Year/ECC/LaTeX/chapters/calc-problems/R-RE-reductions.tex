@@ -3,14 +3,13 @@
 Vogliamo studiare ora le classi di problemi $\R$ e $\RE$ tramite riduzioni: come prima cosa dobbiamo identificare una classe di funzioni. 
 
 \begin{definition}
-    {Classe \rec}{}
+    [Classe \rec]
     Indicheremo con \[
         \rec \deq \set*{\phi_i \given \dom{\phi_i} = \N}
     \] la classe di tutte le funzioni calcolabili totali, che quindi chiameremo (per motivi storici) \sstrong{ricorsive}.
 \end{definition}
 
 \begin{proposition}
-    {}{}
     $\leq_{\rec}$ classifica $\R \subseteq \RE$. 
 \end{proposition}
 \begin{proof}
@@ -51,7 +50,6 @@ I problemi tali che i loro complementari sono in $\RE$ formano una classe chiama
 Per studiare le relazioni tra gli insiemi $\R$ e $\RE$ vorremo trovare un problema completo per $\RE$.
 
 \begin{theorem}
-    {}{}
     $K$ è completo per $\RE$. 
 \end{theorem}
 \begin{proof}
@@ -77,7 +75,7 @@ Consideriamo il problema \[
     \tcboxmath[colback=White, colframe=Green!70!White]{\TOT \deq \set*{i \given \dom{\phi_i} = \N} = \set*{i \given \phi_i \in \rec}}.
 \]
 
-\begin{proposition}{}{TOT-is-RE-complete}
+\begin{proposition}[ ][TOT-is-RE-complete]
     Vale la riduzione \[
         K \leq_{\rec} \TOT.
     \] In particolare $\TOT$ è completo per $\RE$. 

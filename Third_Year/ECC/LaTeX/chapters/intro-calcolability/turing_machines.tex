@@ -19,7 +19,7 @@ Questi vincoli non definiscono precisamente cosa sia un algoritmo, anzi, vedremo
 
 Il primo modello di computazione che vedremo è stato proposto da Alan Turing nel 1936, ed è pertanto chiamato in suo nome.
 
-\begin{definition}{Macchina di Turing}{mdt}
+\begin{definition}[Macchina di Turing][mdt]
     Una \sstrong{Macchina di Turing} (MdT per gli amici) è una quadrupla $(Q, \Sigma, \delta, q_0)$ dove
     \begin{itemize}
         \item $Q$ è un insieme finito, detto \strong{insieme degli stati}. In particolare assumiamo che esista uno stato $h \notin Q$, detto stato terminatore o \strong{halting state}.
@@ -52,7 +52,7 @@ Un singolo passo di computazione è il seguente: \begin{itemize}
 Per formalizzare questi concetti abbiamo bisogno di altre definizioni.
 
 \begin{definition}
-    {Monoide libero, o Parole su un Alfabeto}{free_monoid}
+    [Monoide libero, o Parole su un Alfabeto][free_monoid]
     Dato un insieme finito $\Sigma$, il \sstrong{monoide libero} su $\Sigma$, anche chiamato \sstrong{insieme delle parole su $\Sigma$}, è l'insieme $\Sigma^\ast$ così definito: \[
         \Sigma^\ast \deq \bigunion_{n \in \N} \Sigma^n
     \] dove \begin{itemize}
@@ -94,7 +94,7 @@ possiamo considerare l'insieme \[
 Usando queste convenzioni, la stringa che definisce il nastro è finita: siamo pronti a definire la \emph{configurazione} di una MdT in un dato istante.
 
 \begin{definition}
-    {Configurazione di una MdT}{configuration}
+    [Configurazione di una MdT][configuration]
     Sia $M = (Q, \Sigma, \delta, q_0)$ una MdT. Una \sstrong{configurazione} è una quadrupla \[
         (q, u, \sigma, v) \in Q \times \resp\Sigma^\ast \times \Sigma \times \Sigma^F.
     \] Più nel dettaglio:

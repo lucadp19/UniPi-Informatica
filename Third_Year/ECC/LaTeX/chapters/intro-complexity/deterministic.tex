@@ -1,0 +1,164 @@
+\section{Complessità deterministica}
+
+Vogliamo studiare la complessità in tempo e spazio usando come modello
+base di \emph{calcolatore} le Macchine di Turing.
+Come prima cosa, facciamo una piccola estensione delle MdT normali.
+
+\begin{definition}
+    [Macchina di Turing a $k$ nastri]
+    Una \sstrong{Macchina di Turing a $k$ nastri} è una quintupla 
+    $M = (Q, \Sigma, \delta, q_0)$ tale che \begin{enumerate}[(1)]
+        \item $\#, \resp \in \Sigma$, mentre $\Left, \Right, \blank \notin \Sigma$,
+        \item $\SI, \NO$ sono due stati speciali che non appartengono a $Q$,
+        \item la funzione di transizione ha la forma \[
+            \delta : Q \times \Sigma^k \to 
+                (Q \union \set*{\SI, \NO}) \times 
+                    \parens*{\Sigma \times \set*{\Left, \Right, \blank}}^k
+        \]   
+    \end{enumerate} e inoltre valgono le altre condizioni delle MdT, 
+    opportunamente riscritte.
+\end{definition}
+
+Una MdT a $k$ nastri quindi è una normale MdT che può leggere
+contemporaneamente $k$ simboli diversi e la cui funzione di transizione
+lavora considerando lo stato corrente e tutti i $k$ simboli letti.
+
+In particolare una configurazione ha la forma \[
+    (q, u_1\ul{\sigma}_1v_1, u_2\ul{\sigma}_2v_2, \dots, u_k\ul{\sigma}_kv_k).
+\] Una macchina a $k$ nastri può essere quindi pensata come 
+una macchina a \emph{$k$ processori}: ogni nastro contiene dell'informazione,
+e i vari nastri possono eseguire calcoli aiutandosi l'un l'altro oppure
+ognuno per i fatti suoi.
+
+Perché non abbiamo diviso lo stato in $k$-uple? 
+Perché in generale non cambia niente: possiamo immaginare l'insieme $Q$ 
+composto da $k$-uple e ogni coordinata della $k$-upla rappresenta lo stato
+del singolo nastro.
+
+Introduciamo le macchine a $k$ nastri formalmente solo ora perché da un
+punto di vista della calcolabilità non apportano nessun miglioramento:
+un problema è decidibile/semidecidibile da una macchina a $k$ nastri se e
+solo se è decidibile/semidecidibile da una macchina standard ad $1$ nastro.
+
+\begin{definition}
+    [Tempo deterministico richiesto]
+    Sia $M$ una MdT a $k$ nastri che risolve il problema $I$. 
+    Diremo che $t \in \N$ è \sstrong{tempo deterministico richiesto} per
+    decidere l'istanza $x \in I$ se \[
+        (q_0, \ul{\resp}x, \ul{\resp}, \dots, \ul{\resp}) \to^t 
+        (h, u_1, u_2, \dots, u_t)
+    \] 
+    con $h \in \set*{\SI, \NO}$. 
+\end{definition}
+
+Il \emph{deterministico} nella definizione precedente evidenzia il fatto
+che la MdT considerata è deterministica, ovvero che la sua $\delta$ è una
+funzione di transizione e non semplicemente una relazione.
+Questa differenza, finora immateriale, sarà fondamentale nello studio della
+Teoria della Complessità.
+
+Questo ci dà un modo per misurare il tempo richiesto per la decisione di
+ogni istanza, ma noi vorremmo una funzione che varia in base alla taglia
+$\abs*{x}$ del caso $x \in I$.
+
+\begin{definition}
+    [Tempo per la decisione]
+    Sia $M$ una MdT a $k$ nastri che risolve il problema $I$.
+    Sia inoltre $f : \N \to \N$ una funzione crescente.
+
+    Diremo che $M$ \sstrong{decide $I$ in tempo deterministico $f$} se
+    per ogni $x \in I$ il tempo deterministico $t_x$ richiesto da $M$ per
+    decidere l'istanza $x \in I$ è tale che \[
+        t \leq f\parens[\big]{\abs{x}}.
+    \]  
+\end{definition}
+
+\begin{definition}
+    [Classe delle funzioni decidibili in tempo det. $f$]
+    Sia $f : \N \to \N$ monotona crescente. 
+    La \sstrong{classe di complessità di tempo deterministico $f$} è la classe \[
+        \TIME{f} \deq \set*{I \given \exists M \text{ che decide } I \text{in tempo det. } f}.
+    \]
+\end{definition}
+
+Spesso ci converrà ragionare in termini di ordini di grandezza:
+ricordiamo che date due funzioni $f, g : A \to \R$ diremo che $f$ è \sstrong{$\OO$-grande} di $g$
+(e lo indichiamo impropriamente con $f = \OO(g)$) se esiste $c \in [0, +\infty]$ tale che \[
+    f(x) \leq c \cdot g(x) \qquad \text{definitivamente},
+\] o equivalentemente se \[
+    \lim_{x \to +\infty} \frac{f(x)}{g(x)} \leq c.
+\] Scriveremo quindi spesso $\TIME{f}$ per indicare in realtà $\TIME[\big]{\OO(f)}$, 
+ovvero la classe di tutti gli algoritmi decidibili in tempo deterministico \emph{ordine di $f$}.
+
+Vogliamo ora dimostrare che l'aggiunta di nastri è un procedimento \emph{effettivo},
+ovvero che non altera in modo non-algoritmico la capacità di computazione delle macchine di Turing.
+
+\begin{theorem}
+    [Riduzione del numero di nastri]
+    Sia $M$ a $k$ nastri che decide $I$ in tempo deterministico $f$. 
+    Allora esiste $M'$ ad un nastro che decide $I$ in tempo deterministico $\OO(f^2)$. 
+\end{theorem}
+\begin{proof}
+    Consideriamo una configurazione della macchina a $k$ nastri \[
+        (q, \ul{\resp}w_1, \dots, \ul{resp}w_k)_M.
+    \] Per farla diventare ad un nastro la rappresentiamo come \[
+        (q', \resp\resp'w_1\eresp'\resp'w_2\eresp'\dots\resp'w_k\eresp')_{M'}.
+    \] Per memorizzare il simbolo corrente, aggiungiamo a $\Sigma$ un simbolo $\overline{\sigma}$
+    per ogni $\sigma \in \Sigma$.
+    
+    Il primo passo da fare è prendere l'input della macchina $M$ 
+    e trasformarlo nel relativo input della macchina $M'$. L'input di $M$ sarà della forma \[
+        (q, \resp x, \resp, \dots, \resp);
+    \] per scriverlo in $M'$ eseguiamo i seguenti passi: 
+    \begin{align*}
+        (q, \resp x) 
+        &\to^{\abs*{x} + 1} (q, \resp\resp' x) \\
+        &\to^{\OO(\abs x)} (q, \ul{\resp}\resp'x\eresp'\resp'\eresp'\dots\resp'\eresp').
+    \end{align*} Dunque per scrivere l'input su $M'$ abbiamo bisogno (al caso pessimo) 
+    di $\OO(\abs x)$ passi.
+    
+    Vogliamo studiare ora il tempo (massimo) necessario per l'esecuzione di un passo di computazione: 
+    data una configurazione di $M'$ \[
+        (q, \ul{\resp} 
+            \resp' u_1\overline{\sigma_1}v_1 \eresp' \cdots 
+            \resp' u_k\overline{\sigma_k}v_k \eresp')
+    \] con il cursore nel respingente "vero", per eseguire tutti i passi ci basta 
+    \begin{enumerate}[(1)]
+        \item scorrere il nastro verso destra per leggere tutti i caratteri correnti,
+        \item tornare al respingente a sinistra,
+        \item scorrere il nastro ed eseguire le computazioni,
+        \item tornare al respingente.
+    \end{enumerate} Dunque sono sufficienti $4$ letture complete del nastro di $M'$.
+    
+    Osserviamo che ogni \emph{sottonastro} di $M'$, ovvero ogni stringa 
+    $u_i\overline{\sigma_i}v_i$, è lunga al più $f(\abs x)$: in effetti la macchina $M$ esegue
+    al più $f(\abs x)$ passi, e in un passo può scrivere al più una casella del nastro.
+    
+    Segue che il nastro di $M'$ in totale è lungo al più \[
+        \ell \deq k\parens[\big]{f(\abs x) + 2} + 1.\footnotemark
+    \]
+    \footnotetext{Il $+2$ è dovuto ai due respingenti finti $\resp'$ e $\eresp'$,
+    mentre il $+1$ è dovuto al respingente vero $\resp$ di $M'$.}
+
+    Segue che per ogni passo di computazione eseguiamo $\OO(\ell) = \OO(f)$ operazioni;
+    dato che eseguiamo al più $f(\abs x)$ passi di computazione segue che $M'$
+    decide $I$ in al più \[
+        f \cdot \OO(f) = \OO(f^2)
+    \] passi.
+\end{proof}
+
+\begin{theorem}
+    [Teorema di Accelerazione Lineare][linear-accel]
+    Se $I \in \TIME{f}$, allora per ogni $\eps > 0$ si ha che \[
+        I \in \TIME{\eps \cdot f(n) + n + 2}.
+    \] 
+\end{theorem}
+
+Possiamo finalmente definire una delle più importanti classi di complessità studiate.
+
+\begin{definition}
+    [Classe $\P$]
+    La \sstrong{classe di complessità $\P$} è definita come \[
+        \P \deq \bigunion_{k \in \N} \TIME[\big]{n^k},
+    \] considerando gli ordini di grandezza.
+\end{definition}

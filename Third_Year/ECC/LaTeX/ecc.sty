@@ -7,6 +7,7 @@
 \fi
 
 \newcommand{\resp}{{\vartriangleright}}
+\newcommand{\eresp}{{\vartriangleleft}}
 \newcommand{\Left}{\texttt{L}}
 \newcommand{\Right}{\texttt{R}}
 \newcommand{\ul}{\underline}
@@ -60,3 +61,26 @@
 
 \newcommand{\rec}{\texttt{rec}}
 \newcommand{\TOT}{\texttt{TOT}}
+
+%%% Complexity theory
+
+\newcommand{\LOGSPACE}{\texttt{LOGSPACE}}
+\renewcommand{\P}{\matheucal{P}}
+\newcommand{\NP}{\matheucal{NP}}
+\newcommand{\PSPACE}{\matheucal{P}\texttt{SPACE}}
+\newcommand{\NPSPACE}{\matheucal{NP}\texttt{SPACE}}
+\newcommand{\EXP}{\texttt{EXP}}
+
+\newcommand{\SI}{\texttt{SÌ}}
+\newcommand{\NO}{\texttt{NO}}
+
+\NewDocumentCommand{\TIME}{}
+    { \texttt{TIME}\@parens }
+\NewDocumentCommand{\NTIME}{}
+    { \texttt{NTIME}\@parens }
+\NewDocumentCommand{\SPACE}{}
+    { \texttt{SPACE}\@parens }
+\NewDocumentCommand{\NSPACE}{}
+    { \texttt{NSPACE}\@parens }
+
+\endinput

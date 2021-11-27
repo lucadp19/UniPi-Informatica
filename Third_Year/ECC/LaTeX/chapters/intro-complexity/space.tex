@@ -1,0 +1,143 @@
+\section{Complessità in spazio}
+
+Vogliamo ora definire le misure di complessità in spazio per i problemi decidibili.
+Iniziamo discutendo una nuova estensione delle Macchine di Turing.
+
+\begin{definition}
+    [Macchina di Turing I/O]
+    Una \sstrong{Macchina di Turing I/O} è una macchina di Turing a $k$ nastri ($k \geq 3$)
+    $M = (Q, \Sigma, \delta, q_0)$ con i seguenti vincoli aggiuntivi: \begin{enumerate}[(1)]
+        \item Se \[
+            \delta(q, \sigma_1, \dots, \sigma_k) = 
+            \parens[\big]{q', (\sigma_1', D_1), \dots, (\sigma_k', D_k)}
+        \] allora $\sigma_1' = \sigma_1$ e $D_k \in \set*{\Right, \blank}$. 
+        Inoltre se $D_k = \blank$ allora $\sigma_k' = \sigma_k$.
+        \item Se $\sigma_1 = \#$ allora $D_1 \in \set*{\blank, \Left}$.      
+    \end{enumerate}
+\end{definition}
+
+L'idea delle macchine I/O è che il primo e l'ultimo nastro hanno i ruoli privilegiati di 
+\emph{lettore} e \emph{scrittore}. Infatti il primo nastro non può essere modificato 
+grazie alla prima condizione, e inoltre arrivati alla fine (cioè alla porzione vuota) non possiamo
+proseguire verso destra. Analogamente l'ultimo nastro può essere solo scritto: 
+infatti non si può riscrivere un carattere già scritto e ci si può solo muovere verso destra.
+
+Anche questa estensione delle MdT è effettiva, come mostrato dal seguente Teorema.
+
+\begin{theorem}
+    Per ogni MdT a $k$ nastri che decide $I$ in tempo deterministico $f$,
+    esiste una MdT I/O a $(k+2)$-nastri che decide $I$ in tempo deterministico $c \cdot f$
+    per qualche $c \in [0, +\infty]$.        
+\end{theorem}
+\begin{proof}
+    Basta copiare il contenuto del nastro di input nei nastri $2, \dots, k+1$,
+    eseguire gli stessi passi della macchina di partenza sui nastri \emph{di lavoro}
+    e infine copiare l'output sul nastro $k+2$.  
+\end{proof}
+
+Il nostro scopo è misurare lo spazio necessario ad una macchina I/O per risolvere un'istanza
+di un problema. Per farlo potremmo eseguire la macchina e infine contare il numero di caselle 
+non bianche, ma questo non funzionerebbe poiché la macchina può cancellare pezzi scritti durante
+la computazione.
+
+Introduciamo quindi un'altra banale estensione, ovvero il simbolo di fine stringa $\eresp$:
+ogni volta che abbiamo necessità di più spazio ci basterà spostare tale simbolo a destra,
+ma avremo cura di non spostarlo mai verso sinistra o cancellarlo in modo da memorizzare la
+quantità \emph{massima} di memoria usata.
+
+\begin{definition}
+    [Spazio richiesto per la decisione e classe $\SPACE$]
+    Sia $M$ una MdT a $k$ nastri I/O che decide il problema $I$. 
+
+    Data un'istanza $x \in I$ e la computazione di decisione \[
+        (q_0, \ul{\resp} x\eresp, \ul{\resp}\eresp, \dots, \ul{\resp}\eresp)
+        \to^{\ast} (\SI, w_1, \dots, w_k)
+    \] diremo che lo \sstrong{spazio richiesto} per la decisione dell'istanza $x$ è \[
+        \sum_{i = 2}^{k-1} \abs*{w_i}.
+        \footnote{Qui $\abs{w_i}$ indica la lunghezza della stringa $w_i$.}
+    \]
+
+    Diremo inoltre che $M$ \sstrong{decide $I$ in spazio deterministico $f$} se per ogni $x \in I$
+    lo spazio richiesto per la decisione di $x$ è minore o uguale a $f(\abs*{x})$.
+
+    Infine la \sstrong{classe $\SPACE{f}$} è la classe \[
+        \SPACE{f} \deq \set*{I \given \exists M 
+            \text{ a $k$ nastri I/O che decide $I$ in spazio det. } f
+        }.
+    \]
+\end{definition}
+
+\begin{remark}[Alcune osservazioni sulle definizioni date] \leavevmode
+    \begin{itemize}
+        \item Lo "spazio richiesto" è dato dalla somma delle lunghezze di tutti i nastri di lavoro,
+        ma non del nastro di lettura né di quello di scrittura. 
+        
+        In effetti il nastro di scrittura 
+        non ha molto peso, in quanto contiene solamente la risposta $\SI$ oppure $\NO$. 
+        Invece se includessimo il nastro di lettura otterremo che lo spazio è sempre almeno lineare
+        nella dimensione dell'input, e questo \emph{appiattirebbe} la gerarchia che cercheremo di
+        delineare.
+        \item Talvolta lo spazio richiesto viene definito come \[
+            \max \set*{\abs*{w_i} \given i = 2, \dots, k-1}.
+        \] Siccome \[
+            \sum_{i=2}^{k-1} \abs*{w_i} \leq (k-2) \cdot \max_{i=2, \dots, k-2} \abs{w_i}
+        \] e noi siamo interessati solamente all'ordine di grandezza, 
+        queste definizioni sono equivalenti. 
+    \end{itemize}
+\end{remark}
+
+Enunciamo un analogo del \Cref{th:linear-accel}.
+
+\begin{theorem}
+    [Compressione lineare dello spazio]
+    Sia $I \in \SPACE{f}$: allora per ogni $\eps \in [0, +\infty]$ si ha che \[
+        I \in \SPACE{2 + \eps\cdot f}.
+    \]  
+\end{theorem}
+
+Definiamo ora le classi di complessità in spazio che studieremo in questo corso.
+
+\begin{definition}
+    Le classi \sstrong{$\PSPACE$} e \sstrong{$\LOGSPACE$} sono definite come segue: \[
+        \PSPACE \deq \bigunion_{k \in \N} \SPACE[big]{n^k} \qquad \quad
+        \LOGSPACE \deq \bigunion_{k \in \N} \SPACE[\big]{k\log(n)}.
+    \]
+\end{definition}
+
+Uno dei risultati fondamentali della Teoria della Complessità (che noi non dimostreremo) 
+è il seguente: \begin{theorem}
+    \[ \LOGSPACE \subsetneq \PSPACE\]
+    ovvero esiste un problema risolvibile in spazio lineare che non può essere risolto
+    in spazio logaritmico.
+\end{theorem}
+
+Per costruire la gerarchia vogliamo scoprire in che relazione è $\P$ con le classi $\LOGSPACE$ e $\PSPACE$.
+
+\begin{theorem}
+    \[
+        \LOGSPACE \subseteq \P \subseteq \PSPACE.
+    \]
+\end{theorem}
+\begin{proof}
+    Il fatto che $\P$ sia un sottoinsieme di $\PSPACE$ è una conseguenza del principio
+    generale che in $t$ unità di tempo una MdT può scrivere al più $t$ caselle del suo nastro,
+    dunque in tempo polinomiale una MdT può scrivere al più un numero polinomiale di caselle.
+
+    Dimostriamo che $\LOGSPACE \subseteq \P$: sia allora $M$ una MdT a $3$ nastri
+    \footnote{Se fossero più nastri basterebbe dividere ad un certo punto per un'opportuna costante.}
+    che risolve un problema $I$ in spazio logaritmico, ovvero la lunghezza massima del
+    singolo nastro di lavoro è al più $k\log n$, dove $n$ è la taglia dell'input.
+    
+    Segue che il numero massimo di configurazioni attraversabili da $M$ è al più \[
+        N \deq \abs*{\Sigma}^{k\log n} \cdot k\log n \cdot \abs*{Q} \cdot n;
+    \] infatti ${\Sigma}^{k\log n}$ è il numero massimo di possibili stringhe scritte sul nastro,
+    $k\log n$ è il numero massimo di posizioni del cursore,
+    $\abs*{Q}$ è il numero massimo di stati e 
+    $n$ è il numero massimo di posizioni del cursore nel nastro di input.
+
+    Vogliamo dimostrare che esiste $t$ tale che $N \leq n^t$, ovvero tale che $\log{N} \leq t \log n$. Per definizione di $N$ però \begin{align*}
+        \log N 
+        &= \log \parens[\Big]{\abs*{\Sigma}^{k\log n} \cdot k\log n \cdot \abs*{Q} \cdot n}\\
+        &= k\log n\log \abs*{\Sigma} + \log (k\log n) + \log \abs*{Q} + \log n,
+    \end{align*} dunque dividendo per $\log n$ otteniamo un possibile valore di $t$.
+\end{proof}

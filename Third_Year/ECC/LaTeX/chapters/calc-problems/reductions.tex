@@ -5,7 +5,7 @@ Nella dimostrazione del \Cref{th:K_0-not-R} abbiamo sfruttato una tecnica comune
 Vogliamo ora generalizzare questo concetto.
 
 \begin{definition}
-    {Riduzione secondo una funzione}{}
+    [Riduzione secondo una funzione]
     Dati due problemi $A$, $B$, si dice che $A$ \sstrong{si riduce secondo $f$} a $B$ (e si scrive $A \leq_f B$) se \[
         x \in A \;\iff\; f(x) \in B.
     \] 
@@ -22,14 +22,14 @@ Vogliamo ora generalizzare questo concetto.
 Spesso non ci interessa quale sia la funzione che permette la riduzione di $A$ a $B$, ma solo a quale classe di funzioni appartiene.
 
 \begin{definition}
-    {Riduzione secondo una classe di funzioni}{}
+    [Riduzione secondo una classe di funzioni]
     Siano $A$, $B$ problemi, $\FF$ insieme di funzioni. Allora si dice che $A$ \sstrong{si riduce secondo $\FF$} a $B$ (e si scrive $A \leq_{\FF} B$, o anche $A \leq B$ se l'insieme $\FF$ è deducibile dal contesto) se esiste una $f \in \FF$ tale che $A \leq_f B$.   
 \end{definition}
 
 Come scegliamo l'insieme $\FF$? In generale dipende dalle classi di problemi che vogliamo confrontare: infatti per poter studiare queste classi è importante che la riduzione rispetti alcune proprietà.
 
 \begin{definition}
-    {RIduzione che classifica due classi}{}
+    [RIduzione che classifica due classi]
     Date $\DD, \EE$ classi di problemi con $\DD \subseteq \EE$, $\FF$ insieme di funzioni, si dice che la relazione $\leq_{\FF}$ \sstrong{classifica} le classi $\DD$, $\EE$ se \begin{enumerate}
         \item $A \leq_{\FF} A$,
         \item se $A \leq_{\FF} B$ e $B \leq_{\FF} C$, allora $A \leq_{\FF} C$,
@@ -59,14 +59,14 @@ Come scegliamo l'insieme $\FF$? In generale dipende dalle classi di problemi che
 Fissiamo ora due classi $\DD$, $\EE$ con $\DD \subseteq \EE$ e una classe di funzioni $\FF$.    
 
 \begin{definition}
-    {Grado di un problema}{}
+    [Grado di un problema]
     Definiamo il \sstrong{grado} di un problema $A$ è \[
         \deg A \deq \set*{B \given A \leq_{\FF} B \text{ e } B \leq_{\FF} A},
     \] ovvero è l'insieme di tutti i problemi con la stessa difficoltà di $A$. 
 \end{definition}
 
 \begin{definition}
-    {Problemi ardui e completi}{}
+    [Problemi ardui e completi]
     Sia $H$ un problema. \begin{itemize}
         \item $H$ si dice \sstrong{$\leq_{\FF}$-arduo per $\EE$} se per ogni $A \in \EE$ si ha $A \leq_{\FF} H$, ovvero se $H$ è almeno difficile quanto tutti i problemi di $\EE$.
         \item $H$ si dice \sstrong{$\leq_{\FF}$-completo per $\EE$} se è $\leq_{\FF}$-arduo per $\EE$ e $H \in \EE$.    
@@ -76,14 +76,13 @@ Fissiamo ora due classi $\DD$, $\EE$ con $\DD \subseteq \EE$ e una classe di fun
 In particolare possiamo studiare la relazioni tra $\DD$ e $\EE$ tramite i problemi $\leq_{\FF}$-ardui/completi per $\EE$.
 
 \begin{proposition}
-    {}{}
     Se $C$ è $\leq_{\FF}$-completo per $\EE$ e $C \in \DD$, allora $\EE = \DD$.    
 \end{proposition}
 \begin{proof}
     Dato che $\DD \subseteq \EE$, basta mostrare che $\EE \subseteq \DD$. Sia allora $B \in \EE$: dato che $C$ è $\leq_{\FF}$-completo per $\EE$ segue che $B \leq_{\FF} C$. Ma $C \in \DD$, dunque anche $B \in \DD$.      
 \end{proof}
 
-\begin{proposition}{}{A-hard=>B-hard}
+\begin{proposition}[ ][A-hard=>B-hard]
     Se $A$ è $\leq_{\FF}$-arduo per $\EE$ e $A \leq_{\FF} B$, allora $B$ è $\leq_{\FF}$-arduo per $\EE$. In particolare se $B \in \E$ allora $A$, $B$ sono $\leq_{\FF}$-completi per $\EE$.          
 \end{proposition}
 \begin{proof}

@@ -1,0 +1,72 @@
+Nella prima parte del corso abbiamo studiato la risolubilità di problemi:
+in particolare abbiamo studiato come, sotto determinate ipotesi,
+esistono problemi decidibili, problemi semidecidibili e problemi ancora più
+difficili. 
+Abbiamo visto che esiste una gerarchia rispetto alla \emph{difficoltà} 
+e abbiamo studiato una parte di questa gerarchia, ovvero le classi $\R$ e $\RE$.
+
+Vogliamo ora chiederci \emph{come} si calcola e \emph{quante risorse} siano necessarie:
+nella realtà non abbiamo a disposizione memoria infinita o tempo illimitato, 
+e perciò vogliamo sapere quali problemi possono essere risolti data la quantità di risorse che
+abbiamo a disposizione.
+
+Iniziamo a introdurre dei vincoli sulla nostra teoria. 
+Innanzitutto considereremo come risorse solamente il \emph{tempo} e lo \emph{spazio},
+anche se queste non sono le uniche risorse esistenti. Potremmo infatti studiare anche 
+il numero di messaggi scambiati, la banda di rete utilizzata, l'energia consumata, eccetera.
+
+Nel far ciò ci scontriamo immediatamente con una difficoltà: 
+per i problemi non decidibili è possibile che la valutazione di un'istanza del problema
+(ovvero, decidere se un elemento appartiene o no all'insieme che codifica il problema)
+diverga, e quindi nessuna quantità finita di risorse è sufficiente. 
+Per questo motivo ci limiteremo da ora in poi a studiare \emph{problemi decidibili}.
+
+A questo punto siamo interessati a calcolare quante risorse sono necessarie in termini 
+della \emph{grandezza dell'input}. Per far ciò insieme ad ogni problema $P$ e al suo
+insieme di input $I \supseteq P$\footnotemark consideriamo 
+una funzione \[
+    \abs{\cdot} : I \to \N
+\] detta \sstrong{taglia}, che associa ad ogni $x \in I$ la sua "grandezza", 
+indicata con $\abs*{x}$. 
+
+\footnotetext{Un problema $P$ può essere considerato come un insieme, 
+e la domanda è stabilire se un dato elemento di input $x \in I$ appartenga o no a $P$: 
+in particolare ogni elemento di $P$ può essere scelto come input, e quindi $P \subseteq I$.}
+
+Tipici esempi di taglie sono il numero di bit nei problemi che hanno come input numeri,
+oppure il numero di elementi del vettore in input se il problema ha come input vettori,
+o il numero di nodi se l'input è un grafo, eccetera.
+Non ci occuperemo di studiare le taglie associate a problemi classici, 
+anche perché spesso sono molto intuitive.
+
+Dato un problema $P$ vogliamo quindi misurare la complessità di 
+ogni singola \emph{istanza} del problema, ed in particolare vogliamo misurare la complessità
+del \sstrong{caso pessimo}. Per far ciò possiamo cercare una funzione \[
+    f : \N \to \N
+\] che, data la taglia di un input $x \in I$, maggiora il numero di risorse necessarie 
+alla macchina scelta per risolvere l'istanza.
+Siccome siamo interessati principalmente a stime asintotiche e ai casi pessimi, 
+vogliamo inoltre che se $\abs*{x} < \abs*{y}$ allora $f(\abs{x}) \leq f(\abs{y})$.
+In casi particolarmente fortunati riusciremo a trovare la \emph{minima} funzione 
+che maggiora la quantità di risorse necessarie.
+
+Osserviamo ora che se un problema richiede al più $k$ risorse, allora qualsiasi sistema 
+con $k' \geq k$ risorse può risolvere il problema dato: possiamo quindi creare una gerarchia
+di classi di problemi, e per studiare queste classi useremo gli stessi strumenti visti
+nella prima parte, ovvero le riduzioni e i problemi completi.
+
+Tuttavia la gerarchia tra classi dipende a priori dal contesto, ovvero 
+da come misuriamo il consumo di risorse e anche dal modello di computazione scelto. 
+Per questo richiediamo infine che la nostra teoria sia \emph{invariante} rispetto sia 
+ai modelli di calcolo, sia rispetto alla rappresentazione dei dati.
+
+Sotto tutte queste ipotesi in questa parte del corso riusciremo a descrivere 
+un piccolo frammento della gerarchia delle classi di complessità: \[
+    \LOGSPACE \subseteq \P \subseteq \NP \subseteq \PSPACE = \NPSPACE \subseteq \R \subseteq \RE.
+\]
+
+L'interesse moderno per questa gerarchia è che abbiamo dimostrato che 
+$\LOGSPACE \subsetneq \PSPACE$, ovvero abbiamo trovato un problema in $\PSPACE$ 
+che non è in $\LOGSPACE$. Questo significa che almeno una delle inclusioni \[
+    \LOGSPACE \subseteq \P, \qquad \P \subseteq \NP, \qquad \NP \subseteq \PSPACE
+\] deve essere stretta, tuttavia ancora non sappiamo quale.

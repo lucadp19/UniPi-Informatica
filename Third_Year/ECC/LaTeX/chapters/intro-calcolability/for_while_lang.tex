@@ -7,7 +7,7 @@ I linguaggi \texttt{FOR} e \texttt{WHILE} sono quindi la base teorica dei modern
 \subsection*{Sintassi astratta}
 
 \begin{definition}
-    {Sintassi astratta di \texttt{FOR} e \texttt{WHILE}}{}
+    [Sintassi astratta di \texttt{FOR} e \texttt{WHILE}]
     \begin{align}
         \code{EXPR} &\Coloneqq n \mid x \mid E_1 + E_2 \mid E_1 \cdot E_2 \mid E_1 - E_2 \tag*{Espr. aritmetiche}\\
         \code{BEXPR} &\Coloneqq b \mid E_1 < E_2 \mid \neg b \mid B_1 \lor B_2 \tag*{Espr. booleane} \\
@@ -24,7 +24,7 @@ I linguaggi \texttt{FOR} e \texttt{WHILE} sono quindi la base teorica dei modern
 Per definire la \sstrong{semantica} dei linguaggi \texttt{FOR} e \texttt{WHILE} abbiamo bisogno di alcuni costrutti ausiliari. In particolare ogni nostro programma conterrà delle variabili che possono essere valutate oppure aggiornate (tramite il comando di assegnamento): dobbiamo \emph{memorizzare} il loro valore.
 
 \begin{definition}
-    {Funzione memoria e funzione di aggiornamento}{}
+    [Funzione memoria e funzione di aggiornamento]
     La funzione \sstrong{memoria} è una funzione \[
         \sigma : \code{Var} \to \N
     \] definita solo per un sottoinsieme finito di \code{Var}.
@@ -46,7 +46,7 @@ Per definire la \sstrong{semantica} dei linguaggi \texttt{FOR} e \texttt{WHILE} 
 Tramite la memoria possiamo definire la funzione di valutazione delle espressioni aritmetiche, ovvero la loro \sstrong{semantica}.
 
 \begin{definition}
-    {Funzione di valutazione semantica (aritmetica)}{}
+    [Funzione di valutazione semantica (aritmetica)]
     La \sstrong{funzione di valutazione semantica (aritmetica)} è una funzione \[
         \eval{\blank, \blank} : \code{EXPR} \times (\code{Var} \to \N) \to \N 
     \]
@@ -70,7 +70,7 @@ Dato che il nostro linguaggio modella solo numeri naturali (quindi positivi), l'
 Analogamente possiamo definire la semantica delle espressioni booleane.
 
 \begin{definition}
-    {Funzione di valutazione semantica (booleana)}{}
+    [Funzione di valutazione semantica (booleana)]
     La \sstrong{funzione di valutazione semantica (booleana)} è una funzione \[
         \bval{\blank, \blank} : \code{BEXPR} \times (\code{Var} \to \N) \to \N
     \] definita per induzione strutturale a partire da
@@ -100,7 +100,7 @@ Lo stile usato per definire la semantica delle espressioni viene chiamato \sstro
 Per quanto riguarda i comandi adopereremo un altro stile, detto \sstrong{semantica operazionale}. Come si evince dal nome, cercheremo di definire una \emph{macchina astratta} che modifica il proprio \emph{stato interno} valutando a piccoli passi il comando da eseguire.
 
 \begin{definition}
-    {Sistema di transizioni}{}
+    [Sistema di transizioni]
     Si dice \sstrong{sistema di transizioni} una coppia $(\Gamma, \to)$ dove \begin{itemize}
         \item $\Gamma$ è l'insieme delle \sstrong{configurazioni} oppure stati;
         \item $\to : \Gamma \to \Gamma$ è una funzione, detta \sstrong{funzione di transizione}. 

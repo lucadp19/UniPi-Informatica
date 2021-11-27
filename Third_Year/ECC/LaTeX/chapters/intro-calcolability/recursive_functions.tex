@@ -5,7 +5,7 @@ Introduciamo ora un ultimo formalismo per rappresentare un modello di calcolo, o
 Per semplificare la notazione useremo la $\lambda$-notazione per le funzioni anonime: la funzione $\lambda x.\ f(x)$ è la funzione che prende un unico parametro di ingresso $x$ e restituisce $f(x)$.   
 
 \begin{definition}
-    {Funzioni primitive ricorsive}{prim_rec}
+    [Funzioni primitive ricorsive][prim_rec]
     La classe delle \sstrong{funzioni primitive ricorsive} $\PR$ è la minima classe di funzioni che contenga gli schemi
     \begin{enumerate}[I.]
         \item \sstrong{Zero:} \qquad\qquad $\lambda x_1, \dots, x_n.\ 0$ \quad per ogni $n \in \N$ 
@@ -98,7 +98,7 @@ In entrambi i casi è chiaro che la funzione $f_5$ così definita è la somma.
 Vogliamo ora mostrare che le macchine di Turing sono numerabili e esiste una loro enumerazione fatta da funzioni ricorsive primitive.
 
 \begin{definition}
-    {Relazione primitiva ricorsiva}{}
+    [Relazione primitiva ricorsiva]
     Una relazione $P \subseteq \N^k$ è detta \sstrong{primitiva ricorsiva} se lo è la sua funzione caratteristica $\chi_P : \N^k \to \set{0, 1}$, definita da \[
         \chi_P(x_1, \dots, x_k) \deq \begin{cases}
             1 &\text{se } (x_1, \dots, x_k) \in P\\
@@ -173,7 +173,7 @@ Segue che le funzioni primitive ricorsive \strong{non sono tutte le funzioni cal
 La speranza è quindi che esista un formalismo, diverso dalle funzioni primitive ricorsive, capace di esprimere \emph{tutte e sole} le funzioni calcolabili totali. 
 
 \begin{theorem}
-    {}{form-calc-tot}
+    [ ][form-calc-tot]
     Non esiste un formalismo capace di esprimere tutte e soli le funzioni calcolabili totali.
 \end{theorem}
 \begin{proof}
