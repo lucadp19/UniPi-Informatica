@@ -1,0 +1,154 @@
+\documentclass[
+    a4paper,
+    language=italian,
+    oneside,
+    10pt,
+    article,
+    thmstyle=professional
+]{notes}
+\counterwithout{section}{chapter}
+\counterwithout{theorem}{section}
+
+\renewcommand{\compl}[1]{\overline{#1}}
+\renewcommand{\K}{\normalfont\textsf{K}}
+\NewDocumentCommand{\red}{g}{
+    \leq
+    \IfValueTF{#1}
+        { _{#1} }
+        { _{\rec} }
+}
+\newcommand{\rec}{\normalfont\texttt{rec}}
+\newcommand{\EXT}{\normalfont\textsf{EXT}}
+
+\newcommand{\indef}{\text{indef.}}
+\newcommand{\altr}{\text{altrimenti}}
+
+\title{Riduzioni di $K$ e $\compl{K}$ a \EXT}
+\author{Luca De Paulis}
+
+\begin{document}
+    \maketitle
+
+    \section{Risultati preliminari}
+
+    Prima di mostrare le riduzioni $K \red \EXT$ e $\compl{K} \red \EXT$
+    introduciamo per comodità la funzione $\nu : \N \to \N$ tale che 
+    \begin{itemize}[label={\tiny\raisebox{0.4ex}{\textbullet}}]
+        \item se $n \in K$, $\nu(n)$ è il minimo numero intero positivo
+            tale che la computazione $\phi_n(n)$ converge 
+            in $\nu(n)$ passi,
+        \item se $n \notin K$, $\nu(n)$ è indefinito. 
+    \end{itemize}
+
+    La funzione $\nu$ è calcolabile: si esegue il calcolo di $\phi_n(n)$;
+    se converge in un numero finito di passi si prende come risultato
+    il numero minimo di passi per cui la funzione converge,
+    altrimenti si continua all'infinito e quindi $\nu(n)$ diverge.
+
+    \begin{lemma}[label=lem:not-ext]
+        La funzione $\psi : \N \to \N$ definita da \[
+            \psi(n) \deq \begin{cases}
+                \nu(n), &n \in K\\
+                \indef, &\altr
+            \end{cases}
+        \] non è estendibile ad una funzione calcolabile totale.
+    \end{lemma}
+    \begin{proof}
+        Supponiamo per assurdo che esista $g : \N \to \N$ calcolabile
+        totale tale che $g(n) = \nu(n)$ per ogni $n \in K$.
+        Dato che $g$ è totale, per ogni $n \notin K$ 
+        il calcolo di $g(n)$ dovrà convergere ad un numero naturale,
+        e dunque necessariamente $g \neq \nu$ al di fuori di $K$.   
+        
+        Possiamo allora costruire la funzione $f : \N \to \set{0,1}$
+        definita da \begin{align*}
+            f(n) 
+            \deq \begin{cases}
+                1, &\text{se $\phi_n(n)$ converge in $g(n)$ passi}\\
+                0, &\text{se $\phi_n(n)$ non converge in $g(n)$ passi}.
+            \end{cases}
+        \end{align*}
+        Tale funzione è certamente calcolabile: basta eseguire il calcolo
+        di $\phi_n(n)$ per $g(n)$ passi e controllare se si è arrivati
+        alla convergenza oppure no.
+        Notiamo inoltre che la prima condizione equivale a chiedere 
+        che $g(n)$ sia uguale a $\nu(n)$, 
+        la seconda invece equivale a chiedere che siano diversi.
+        
+        Tuttavia $g(n) = \nu(n)$ se e solo se $n \in K$, dunque $f$ vale
+        $1$ se $n \in K$ e $0$ altrimenti, cioè $f$ è la funzione caratteristica di $K$, che però non è calcolabile. Segue l'assurdo.
+    \end{proof}
+
+    \section{Riduzioni}
+    Usando il \Cref{lem:not-ext} possiamo mostrare l'esistenza di riduzioni
+    di $K$ e $\compl{K}$ a $\EXT$.
+    
+    \begin{proof}[Riduzione di $K$ a $\EXT$]
+        Consideriamo la funzione $\psi : \N^2 \to \N$ definita da \[
+            \psi(x, y) \deq \begin{cases}
+                \min\set{\nu(x), \nu(y)}, &\text{se $x \in K$ oppure $y \in K$}\\
+                \indef &\altr
+            \end{cases}
+        \] dove $\min\set{\nu(x), \nu(y)}$ è $\nu(x)$ se $\nu(y)$ è indefinito, e viceversa.
+
+        Tale funzione è intuitivamente calcolabile: eseguiamo
+        contemporaneamente la computazione di $\phi_x(x)$ e $\phi_y(y)$.
+        Se una delle due si ferma prima dell'altra diamo come 
+        risultato il numero di passi impiegati per il calcolo della
+        computazione terminante; altrimenti il calcolo di $\psi$ non termina.
+        
+        Per la Tesi di Church-Turing insieme al Teorema del Parametro
+        segue che esiste una funzione calcolabile totale $f : \N \to \N$
+        tale che \[
+            \phi_{f(x)}(y) = \psi(x, y)
+        \] per ogni $y \in \N$. Mostriamo che $K \red{f} \EXT$.
+        \begin{itemize}[label={\tiny\raisebox{1ex}{\textbullet}}]
+            \item Se $x \in K$ allora \[
+                \phi_{f(x)}(y) = \min\set{\nu(x), \nu(y)}
+            \] e dunque è quantomeno totale. In particolare è banalmente
+            estendibile ad una funzione calcolabile totale, 
+            e quindi $f(x) \in \EXT$. 
+            \item Se $x \notin K$ allora \[
+                \phi_{f(x)}(y) = \begin{cases}
+                    \nu(y), &\text{se $y \in K$}\\
+                    \indef  &\altr.
+                \end{cases}
+            \] Per il \Cref{lem:not-ext} questa funzione non è estendibile
+            ad una funzione calcolabile totale, e dunque $f(x) \notin \EXT$. \qedhere
+        \end{itemize}  
+    \end{proof}
+
+    \medskip
+
+    \begin{proof}[Riduzione di $\compl{K}$ a $\EXT$]
+        Consideriamo la funzione $\psi : \N^2 \to \N$ definita da \[
+            \psi(x, y) \deq \begin{cases}
+                \nu(y), &\text{se $x \in K$ e $y \in K$}\\
+                \indef &\altr.
+            \end{cases}
+        \]
+        Tale funzione è intuitivamente calcolabile: eseguiamo in sequenza
+        il calcolo di $\phi_x(x)$ e poi quello di $\phi_y(y)$, misurando
+        il numero di passi necessari per la terminazione del calcolo della
+        seconda. Se entrambe le computazioni terminano restituiamo come
+        risultato $\nu(y)$, altrimenti $\psi$ è indefinita.   
+        
+        Per la Tesi di Church-Turing insieme al Teorema del Parametro
+        segue che esiste una funzione calcolabile totale $f : \N \to \N$
+        tale che \[
+            \phi_{f(x)}(y) = \psi(x, y)
+        \] per ogni $y \in \N$. Mostriamo che $\compl{K} \red{f} \EXT$.
+        \begin{itemize}[label={\tiny\raisebox{1ex}{\textbullet}}]
+            \item Se $x \in \compl{K}$ allora $\phi_{f(x)}(y)$ è la
+            funzione costantemente indefinita, che è estendibile ad esempio
+            ad una qualunque funzione costante.
+            \item Se $x \notin \compl{K}$ allora \[
+                \phi_{f(x)}(y) = \begin{cases}
+                    \nu(y), &\text{se $y \in K$}\\
+                    \indef  &\altr.
+                \end{cases}
+            \] Per il \Cref{lem:not-ext} questa funzione non è estendibile
+            ad una funzione calcolabile totale, e dunque $f(x) \notin \EXT$. \qedhere
+        \end{itemize}  
+    \end{proof}
+\end{document}
