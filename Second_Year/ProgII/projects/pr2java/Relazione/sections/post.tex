@@ -1,0 +1,35 @@
+\section{Interfaccia e implementazione dei Post}
+\label{sec:posts}
+
+In questa implementazione del social network MicroBlog, un \emph{post} rappresenta un qualsiasi tipo di interazione tra utenti. In particolare i post implementano il concetto di \emph{post testuale}, di \emph{like} e di \emph{segnalazione}, da cui segue la necessità di una struttura gerarchica composta da diverse classi.
+
+\subsubsection*{Interfaccia \InlineJava{Post}}
+L'interfaccia \InlineJava{Post} definisce le funzionalità di base di ogni tipo di post. Siccome il tipo di dato \InlineJava{Post} è immutabile ,come descritto nella clausola overview, l'interfaccia contiene solamente metodi osservatori, che verranno implementati in vari modi dalle classi \InlineJava{TextPost}, \InlineJava{LikePost} e \InlineJava{ReportPost}.
+
+In particolare, oltre ai metodi richiesti dalla specifica, l'interfaccia \InlineJava{Post} definisce anche un metodo \InlineJava{getPostType()} che restituisce un oggetto di tipo \InlineJava{PostType}: questo tipo di dato è una semplice enumerazione che ci permette di distinguere i vari tipi di post.
+
+Inoltre l'interfaccia definisce una costante intera \InlineJava{Post.MAX_POST_LENGTH}, che indica la lunghezza massima del contenuto testuale di un post e, come da specifica, è fissata a $140$ caratteri. Questo ci permette di poter modificare la massima lunghezza ammessa per un post senza dover modificare il resto dell'implementazione.
+
+\subsubsection*{Classe astratta \InlineJava{AbstractPost}}
+La classe astratta \InlineJava{AbstractPost} ha lo scopo di dare una implementazione generica dei metodi dell'interfaccia \InlineJava{Post} che sia valida per un qualsiasi post del social network. Infatti la maggior parte dei metodi richiesti da \InlineJava{Post} è realizzato allo stesso modo nei tre tipi di post, ma essi vengono costruiti a partire da dati diversi, quindi per favorire il riutilizzo del codice è stato necessario introdurre una \emph{classe intermedia} che potesse dare un'implementazione di default per i vari metodi standard.
+
+\subsubsection*{Classe \InlineJava{TextPost}}
+La classe \InlineJava{TextPost} si occupa di definire un post di natura testuale. Gli unici metodi da essa implementati sono i due costruttori, che si occupano di costruire un nuovo post testuale rispettivamente con un \emph{timestamp} passato come parametro oppure fissato di default all'istante corrente (ottenuto usando il metodo \InlineJava{LocalDateTime.now()} definito dalla libreria standard).
+
+I due costruttori si assicurano (in stile \emph{defensive programming}) che la variabile di istanza \InlineJava{postType} sia sempre inizializzata a \InlineJava{PostType.TEXT} e che i parametri usati per creare il post rispettino alcune condizioni: in particolare l'autore del post, il timestamp e il contenuto non possono essere \InlineJava{null} e il contenuto del post deve avere lunghezza compresa tra $0$ (escluso) e \InlineJava{Post.MAX_POST_LENGTH} (di default $140$ caratteri).
+
+\subsubsection*{Classe \InlineJava{LikePost}}
+La classe \InlineJava{LikePost} si occupa di definire un post che rappresenti un \emph{like}. Come la classe \InlineJava{TextPost} essa definisce solamente due costruttori, che si comportano analogamente ai costruttori della classe per i post testuali (dunque in particolare inizializzano il parametro \InlineJava{postType} a \InlineJava{PostType.LIKE} automaticamente). 
+
+La differenza principale è nei parametri: la classe \InlineJava{LikePost} prende come \emph{contenuto del post} un intero che rappresenta l'identificatore del post a cui l'utente vuole mettere un like. Questo identificatore viene trasformato in una stringa, ma può essere trasformato nuovamente in un intero in totale sicurezza tramite il metodo della libreria standard \InlineJava{Integer.parseInt()}.
+
+\subsubsection*{Classe \InlineJava{ReportPost}}
+La classe \InlineJava{ReportPost} si occupa di rappresentare una segnalazione. In questo caso i costruttori (che come nei casi precedenti inizializzano il parametro \InlineJava{postType} al valore corretto, cioè \InlineJava{PostType.REPORT}) prendono due parametri che rappresentano il contenuto del post: uno è l'identificatore del post da segnalare, l'altro è il contenuto effettivo della segnalazione. 
+
+Quest'ultimo è soggetto alle stesse limitazioni del contenuto dei post testuali: in particolare non può essere né vuoto né di lunghezza superiore ai $140$ caratteri.
+
+\subsubsection*{Osservazioni generali}
+
+In generale i vari tipi di dato che rappresentano i post non si occupano di verificare alcune condizioni, come ad esempio l'unicità dell'identificatore o l'esistenza del post a cui mettere un like: queste condizioni sono tutte controllate al livello del social network.
+
+Inoltre la struttura ramificata delle varie classi ci permette di ampliare con pochissima fatica i tipi di post che si hanno a disposizione in quanto basta estendere l'enumerazione \InlineJava{PostType} e dichiarare una nuova classe che estende \InlineJava{AbstractPost}, reimplementandone alcuni metodi se necessario.

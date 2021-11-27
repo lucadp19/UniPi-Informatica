@@ -1,0 +1,27 @@
+\section{Struttura dell'interprete}
+
+L'interprete \InlineOCaml{eval} lavora sull'albero di sintassi astratta dato dal tipo \InlineOCaml{expr} e, dato un ambiente con tipo \InlineOCaml{evT env}, restituisce un valore esprimibile \InlineOCaml{evT} oppure un errore. Similmente il typechecker statico \InlineOCaml{typeof} prende un'espressione di tipo \InlineOCaml{expr} e un ambiente dei tipi con tipo \InlineOCaml{typ env} e restituisce un errore oppure un tipo del linguaggio (\InlineOCaml{typ}).
+
+Entrambe le funzioni hanno una versione che usa come ambiente di default l'ambiente vuoto, chiamate rispettivamente \InlineOCaml{eval'} e \InlineOCaml{typeof'}. Inoltre viene definita la funzione \InlineOCaml{check_eval} che prende un'espressione, ne calcola il tipo nell'ambiente vuoto e se non vi sono errori restituisce la valutazione dell'espressione nell'ambiente vuoto.
+
+\subsection*{Estensioni all'interprete didattico}
+
+Rispetto alla versione studiata a lezione, le espressioni \InlineOCaml{Fun} e \InlineOCaml{LetRec} necessitano anche del tipo del parametro e del tipo di ritorno della funzione. Questi tipi vengono controllati dal typechecker statico e in caso non combacino con i tipi effettivi viene sollevata un'eccezione.
+
+Inoltre il tipo del parametro e il tipo di ritorno vengono inclusi nelle chiusure e nelle chiusure ricorsive: in questo modo vengono mantenute delle informazioni utili al typechecker dinamico per la valutazione degli operatori funzionali sugli insiemi.
+
+\subsection*{Estensione agli insiemi}
+
+Un insieme è un valore esprimibile caratterizzato da un tipo (il tipo degli elementi) e da una lista di valori costruita con un il tipo di dato algebrico \InlineOCaml{set_val}.
+
+Un insieme può essere costruito tramite le espressioni \InlineOCaml{EmptySet}, \InlineOCaml{Singleton} e \InlineOCaml{Of}. La lista di espressioni da passare a \InlineOCaml{Of} (di tipo \InlineOCaml{set_expr}) può essere creata con i costruttori \InlineOCaml{Empty} e \InlineOCaml{Cons}, oppure con l'operatore \InlineOCaml{( @: )} che è semplicemente zucchero sintattico per \InlineOCaml{Cons}. 
+
+Il typechecker statico si assicura che le espressioni passate a \InlineOCaml{Singleton} e a \InlineOCaml{Of} siano del tipo corretto; l'interprete fa lo stesso controllo con un typechecker dinamico ed inoltre fa in modo che ogni valore contenuto nell'insieme compaia al più una volta.
+
+Nel caso delle operazioni di base sugli insiemi (come ad esempio \InlineOCaml{Union} oppure \InlineOCaml{Inters}) viene svolto sempre un controllo (statico nel caso della \InlineOCaml{typeof}, dinamico nel caso della \InlineOCaml{eval}) sui tipi dei parametri; inoltre viene sempre mantenuto l'invariante dell'assenza di ripetizioni di elementi. Le espressioni \InlineOCaml{MinOf} e \InlineOCaml{MaxOf} sollevano un'eccezione nel caso in cui l'insieme sia vuoto.
+
+Gli operatori funzionali sfruttano le informazioni sul tipo della funzione contenute nella chiusura per controllare dinamicamente che i tipi delle funzioni siano corretti e, nel caso della \InlineOCaml{Map}, anche per determinare il tipo dell'insieme restituito.
+
+\subsection*{Semantica operazionale}
+
+Le regole della semantica operazionale sono definite nel file \code{semantics.pdf}. Ogni espressione valutabile viene descritta da una regola principale, data in semantica naturale, che rappresenta come calcolare il valore a partire dall'espressione in sintassi astratta, e da alcune regole ausiliarie che formalizzano il calcolo delle operazioni di base (come ad esempio l'unione insiemistica) sui valori di tipo \InlineOCaml{set_val}.

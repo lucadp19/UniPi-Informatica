@@ -1,0 +1,43 @@
+\section{Interfaccia ed implementazione del Social Network}
+\label{sec:sn}
+
+\subsection{Interfaccia \InlineJava{SocialNetwork}}
+
+L'interfaccia \InlineJava{SocialNetwork} definisce i metodi per operare su un social network con la loro specifica: essi sono realizzati con il duplice scopo di permettere la \emph{simulazione} e l'\emph{analisi} dei contenuti di un social network.
+
+I metodi \InlineJava{signUp}, \InlineJava{submitPost} e \InlineJava{addLike} servono a creare nuovi utenti e post nel social network. In particolare ci consentono di garantire alcune condizioni fondamentali:
+\begin{itemize}
+    \item l'autore di un post deve essere sempre un utente registrato;
+    \item non esistono due utenti con lo stesso \emph{username} (e quindi ogni utente può essere identificato con il suo \emph{username});
+    \item un utente non può mettere \emph{like} ad un post che non è già contenuto nel social network, oppure ad un suo post, oppure ad un post a cui ha già messo \emph{like}.
+\end{itemize}
+
+Per garantire queste ed altre condizioni (come l'unicità dell'identificatore dei post) l'interfaccia \InlineJava{SocialNetwork} obbliga il cliente a creare post attraverso il social network: questo consente di avere invarianti di rappresentazione molto più forti, che semplificano il lavoro di implementazione.
+
+Gli altri metodi servono invece per analizzare l'evoluzione del social network (come ad esempio i metodi \InlineJava{getUserSet}, che restituisce l'insieme degli utenti iscritti al social network, oppure \InlineJava{influencers}, che restituisce gli utenti iscritti in ordine \emph{decrescente} di followers) oppure per ricavare dati sui post pubblicati (come nel caso di \InlineJava{containing}).
+
+\subsection{Classe \InlineJava{SocialNetworkImpl}}
+
+La classe \InlineJava{SocialNetworkImpl} rappresenta l'implementazione dell'interfaccia \InlineJava{SocialNetwork}. 
+Essa si basa su due strutture dati: 
+\begin{itemize}
+    \item una \InlineJava{Map<String, Set<String>>} chiamata \InlineJava{following} che, dato un utente $u$ del social network (identificato attraverso il suo username), restituisce l'insieme degli utenti seguiti da $u$;
+    \item una \InlineJava{Map<Post, Set<String>>} chiamata \InlineJava{postToLikes} che, dato un post $p$, restituisce l'insieme degli utenti che hanno messo like al post $p$.
+\end{itemize}
+L'insieme degli utenti e dei post è dato semplicemente dal dominio di queste funzioni, ovvero dal \InlineJava{keySet()} delle due mappe: in questo modo non è necessario duplicare l'informazione relativa agli utenti iscritti nel social network e ai post creati. Inoltre la variabile di istanza \InlineJava{idGenerator} ci permette di definire un identificatore unico per tutti i post creati all'interno del social network tramite il metodo \InlineJava{getAndIncrement()}.
+
+\subsubsection*{Dettagli implementativi dei metodi}
+
+Il metodo \InlineJava{influencers} è degno di nota in quanto sfrutta una struttura dati di supporto (chiamata \InlineJava{StringIntegerPair}) per ordinare i vari utenti del social network per il numero di \emph{followers}. 
+
+Altri metodi interessanti sono i metodi \InlineJava{writtenBy} e \InlineJava{getMentionedUsers}: entrambi hanno due varianti che consentono di operare rispettivamente sui post del social network e su un insieme di post forniti dall'esterno. Tuttavia, in entrambi i casi questi metodi richiedono che i dati siano relativi all'istanza di \InlineJava{SocialNetworkImpl} utilizzata:
+\begin{itemize}
+    \item nel caso di \InlineJava{writtenBy} si richiede in ogni caso che l'utente passato come parametro sia un utente del social network;
+    \item nel caso di \InlineJava{getMentionedUsers} i \emph{tag} restituiti sono della forma \texttt{@<user>}, dove \texttt{<user>} è un utente del social network considerato.
+\end{itemize}
+
+L'unico metodo che non sfrutta i dati dell'istanza corrente è \InlineJava{guessFollowers}: esso prende una lista di post (contenente quindi post di tipo testuale e likes) come parametro e ne deduce la rete sociale formata dai vari utenti.
+
+Per ottenere l'insieme degli utenti e l'insieme dei post pubblicati la classe mette a disposizione quattro metodi, due di essi restituiscono un \InlineJava{Set}, gli altri due una \InlineJava{List}: questi metodi effettuano un \emph{copy-out} dei dati dell'oggetto per non esporre la rappresentazione interna e quindi per impedire la modifica indesiderata dello stato.
+
+Infine la classe \InlineJava{SocialNetworkImpl} contiene alcuni metodi protetti per astrarre alcune funzionalità usate frequentemente, come il controllo dell'esistenza di un utente oppure la ricerca di un post tra quelli pubblicati dato il suo identificatore.

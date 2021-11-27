@@ -1,0 +1,16 @@
+\section{Struttura generale del progetto}
+
+La specifica del progetto Microblog richiede di progettare dei tipi di dato astratti in grado di simulare un social network. In particolare, la specifica si divide in tre punti:
+\begin{itemize}
+    \item definire un tipo di dato in grado di rappresentare un post;
+    \item definire un tipo di dato per rappresentare il social network;
+    \item estendere il social network per implementare un meccanismo di segnalazione dei post.
+\end{itemize}
+
+La descrizione dei dettagli implementativi dei tre punti sono rispettivamente nella \autoref{sec:posts}, nella \autoref{sec:sn} e nella \autoref{sec:reports} di questa relazione. Un'ultima sezione (la \autoref{sec:exceptions}) sarà dedicata a spiegare brevemente i tipi di eccezioni dichiarate.
+
+Ogni interfaccia o classe dichiarata in questa implementazione è corredata da una \emph{overview}, che spiega lo scopo del tipo di dato astratto, e da un \emph{typical element}, che descrive un generico elemento tipico dell'interfaccia (o classe).
+
+Inoltre ogni classe ha associato un invariante di rappresentazione (per distinguere gli elementi ben formati da quelli che non lo sono) e una funzione di astrazione (per ottenere il significato astratto di un elemento ben formato).
+
+Infine, i vari metodi sono tutti dotati di un contratto d'uso, descritto attraverso commenti in stile \texttt{Javadocs} contenenti le clausole \texttt{requires}, \texttt{throws}, \texttt{modifies} e \texttt{effects}: il chiamante deve rispettare le precondizioni per esser certo che il metodo funzioni correttamente.

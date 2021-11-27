@@ -1,0 +1,15 @@
+\section{Eccezioni usate}
+\label{sec:exceptions}
+
+Per imporre il rispetto dei contratti d'uso (in stile \emph{defensive programming}) sono state dichiarate diverse eccezioni, ognuna con un significato ed uno scopo diverso.
+\begin{itemize}
+    \item Una \InlineJava{EmptyTextException} è sollevata quando il testo di un post è vuoto.
+    \item Una \InlineJava{TextTooLongException} è sollevata quando il testo di un post supera il massimo consentito.
+    \item Una \InlineJava{UserAlreadyExistsException} è sollevata quando si cerca di registrare un utente che è già registrato nel social network.
+    \item Una \InlineJava{IllegalUsernameException} è sollevata quando si cerca di registrare un utente con un nome contenente caratteri diversi da numeri, lettere o \emph{underscores}.
+    \item Una \InlineJava{UserNotFoundException} è sollevata quando si cerca di compiere un'operazione con un utente non registrato.
+    \item Una \InlineJava{IllegalLikeException} è sollevata quando un utente cerca di mettere like ad un suo post, oppure cerca di mettere like ad un post a cui ha già messo like.
+    \item Una \InlineJava{IdNotFoundException} è sollevata quando si cerca un post tramite un identificatore \InlineJava{id}, ma nessun post nel social network ha come identificatore \InlineJava{id}.
+\end{itemize}
+
+Tutte le eccezioni dichiarate sono \emph{checked} e incluse nella firma dei metodi, per permettere al cliente di catturarle e gestirle nel modo corretto.

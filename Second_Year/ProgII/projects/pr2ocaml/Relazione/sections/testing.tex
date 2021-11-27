@@ -1,0 +1,14 @@
+\section{Eseguire il progetto}
+
+Per eseguire il progetto nella REPL standard \code{ocaml} o in \code{utop} bisogna invece innanzitutto compilare i file \code{OCaml} tramite il comando \code{ocamlc} nel seguente modo:
+\begin{minted}{shell-session}
+    $ ocamlc interpreter.ml
+    $ ocamlc interpreter.cmo typechecker.ml
+    $ ocamlc interpreter.cmo typechecker.cmo tests.ml
+\end{minted} 
+A questo punto si possono mandare in esecuzione i vari test (o valutare altre espressioni) caricando i moduli nella REPL:
+\begin{minted}{shell-session}
+    #load "interpreter.cmo";;
+    #load "typechecker.cmo";;
+    #use "tests.ml";;
+\end{minted}

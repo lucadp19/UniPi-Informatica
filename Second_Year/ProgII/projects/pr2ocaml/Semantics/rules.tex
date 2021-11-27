@@ -1,0 +1,375 @@
+\section{Costruttori}
+\paragraph{Regola per \code{EmptySet}}
+\[
+    \infer{
+        \rho \envTo \code{EmptySet} (\tau) \evaluatesTo \code{Set} (\tau, \varnothing)
+    }{
+        \tau \in \code{Types}
+    }    
+\]
+\paragraph{Regola per \code{Singleton}}
+\[
+    \infer{
+        \rho \envTo \code{Singleton} (\tau, e) \evaluatesTo \code{Set} (\tau, \set{v})
+    }{
+        \tau \in \code{Types} 
+        & \rho \envTo e \evaluatesTo v 
+        & \code{check\_from\_ty} (\tau, v)
+    }    
+\]
+\paragraph{Regola per \code{Of}}
+\[
+    \infer{
+        \rho \envTo \code{Of} (\tau, e) \evaluatesTo \code{Set} (\tau, S)
+    }{
+        \tau \in \code{Types} & \rho \envTo e \evaluatesTo S 
+        & \parens*{\forall v \in S.\; \code{check\_from\_ty} (\tau, v)}
+    }    
+\]
+\paragraph{Regole per \code{set\_eval}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{EmptyS} \evaluatesTo \varnothing
+    }{}    \\[2pt]
+    \infer{
+        \rho \envTo \code{Cons}(e, \code{es}) \evaluatesTo S
+    }{
+        \rho \envTo \code{es} \evaluatesTo S 
+        & \rho \envTo e \evaluatesTo v 
+        & v \in S
+    }    \\[2pt]
+    \infer{
+        \rho \envTo \code{Cons}(e, \code{es}) \evaluatesTo S
+    }{
+        \rho \envTo \code{es} \evaluatesTo S_0 & \rho \envTo e \evaluatesTo v & v \notin S_0 & S \deq (v :: S_0)
+    } 
+\end{gather*}
+
+\section{Operazioni di base}
+\paragraph{Regole per \code{Union}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Union}(e_1, e_2) \evaluatesTo \code{Set} (\tau, S)
+    }{
+        \rho \envTo e_1 \evaluatesTo \code{Set}(\tau_1, S_1) 
+        & \rho \envTo e_2 \evaluatesTo \code{Set}(\tau_2, S_2) 
+        & \tau_1 = \tau_2
+        & S \deq S_1 \union S_2
+        & \tau \deq \tau_1
+    }    \\[4pt]
+    \infer{
+        \varnothing \union S_2 \leadsto S_2
+    }{}    \\[2pt]
+    \infer{
+        (v :: S_1) \union S_2 \leadsto S
+    }{
+        v \in S_2 & S_1 \union S_2 \leadsto S
+    }    \\[2pt]
+    \infer{
+        (v :: S_1) \union S_2 \leadsto S
+    }{
+        v \in S_2 & S_1 \union S_2 \leadsto S' & S \deq (v :: S')
+    } 
+\end{gather*}
+\paragraph{Regole per \code{Inters}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Inters}(e_1, e_2) \evaluatesTo \code{Set} (\tau, S)
+    }{
+        \rho \envTo e_1 \evaluatesTo \code{Set}(\tau_1, S_1) 
+        & \rho \envTo e_2 \evaluatesTo \code{Set}(\tau_2, S_2) 
+        & \tau_1 = \tau_2
+        & S \deq S_1 \inters S_2
+        & \tau \deq \tau_1
+    }    \\[4pt]
+    \infer{
+        \varnothing \inters S_2 \leadsto \varnothing
+    }{}    \\[2pt]
+    \infer{
+        (v :: S_1) \inters S_2 \leadsto S
+    }{
+        v \in S_2 & S_1 \inters S_2 \leadsto S' & S \deq (v :: S')
+    }    \\[2pt]
+    \infer{
+        (v :: S_1) \inters S_2 \leadsto S
+    }{
+        v \notin S_2 & S_1 \inters S_2 \leadsto S
+    } 
+\end{gather*}
+\paragraph{Regole per \code{SetDiff}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{SetDiff}(e_1, e_2) \evaluatesTo \code{Set} (\tau, S)
+    }{
+        \rho \envTo e_1 \evaluatesTo \code{Set}(\tau_1, S_1) 
+        & \rho \envTo e_2 \evaluatesTo \code{Set}(\tau_2, S_2) 
+        & \tau_1 = \tau_2
+        & S \deq S_1 \setminus S_2
+        & \tau \deq \tau_1
+    }    \\[4pt]
+    \infer{
+        \varnothing \setminus S_2 \leadsto \varnothing
+    }{}    \\[2pt]
+    \infer{
+        (v :: S_1) \setminus S_2 \leadsto S
+    }{
+        v \in S_2 & S_1 \setminus S_2 \leadsto S
+    }    \\[2pt]
+    \infer{
+        (v :: S_1) \setminus S_2 \leadsto S
+    }{
+        v \notin S_2 & S_1 \setminus S_2 \leadsto S' & S \deq (v :: S')
+    } 
+\end{gather*}
+\paragraph{Regole per \code{Insert}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Insert}(e_1, e_2) \evaluatesTo \code{Set} (\tau, S')
+    }{
+        \rho \envTo e_1 \evaluatesTo v 
+        & \rho \envTo e_2 \evaluatesTo \code{Set}(\tau, S) 
+        & \code{check\_from\_ty} (\tau, v)
+        & S' \deq \code{set\_insert}(v, S)
+    }    \\[4pt]
+    \infer{
+        \code{set\_insert}(v, \varnothing) \leadsto \set*{v}
+    }{}    \\[2pt]
+    \infer{
+        \code{set\_insert}(v, v' :: S') \leadsto (v' :: S')
+    }{
+        v = v'
+    }    \\[2pt]
+    \infer{
+        \code{set\_insert}(v, v' :: S') \leadsto S
+    }{
+        v \neq v' & \code{set\_insert}(v, S') \leadsto S_0 & S \deq (v' :: S_0)
+    } 
+\end{gather*}
+\paragraph{Regole per \code{Remove}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Remove}(e_1, e_2) \evaluatesTo \code{Set} (\tau, S')
+    }{
+        \rho \envTo e_1 \evaluatesTo v 
+        & \rho \envTo e_2 \evaluatesTo \code{Set}(\tau, S) 
+        & \code{check\_from\_ty} (\tau, v)
+        & S' \deq \code{set\_remove}(v, S)
+    }    \\[4pt]
+    \infer{
+        \code{set\_remove}(v, \varnothing) \leadsto \varnothing
+    }{}    \\[2pt]
+    \infer{
+        \code{set\_remove}(v, v' :: S') \leadsto S'
+    }{
+        v = v'
+    }    \\[2pt]
+    \infer{
+        \code{set\_remove}(v, v' :: S') \leadsto S
+    }{
+        v \neq v' & \code{set\_remove}(v, S') \leadsto S_0 & S \deq (v :: S_0)
+    } 
+\end{gather*}
+\paragraph{Regole per \code{Contains}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Contains}(e_1, e_2) \evaluatesTo b
+    }{
+        \rho \envTo e_1 \evaluatesTo v 
+        & \rho \envTo e_2 \evaluatesTo \code{Set}(\tau, S) 
+        & \code{check\_from\_ty} (\tau, v)
+        & b \deq v \in S
+    }    \\[4pt]
+    \infer{
+        v \in \varnothing \leadsto \code{Bool False}
+    }{}    \\[2pt]
+    \infer{
+        v \in (v' :: S') \leadsto \code{Bool True}
+    }{
+        v = v'
+    }    \\[2pt]
+    \infer{
+        v \in (v' :: S') \leadsto b
+    }{
+        v \neq v' & v \in S' \leadsto b
+    } 
+\end{gather*}
+\paragraph{Regole per \code{Subset}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Subset}(e_1, e_2) \evaluatesTo b
+    }{
+        \rho \envTo e_1 \evaluatesTo \code{Set}(\tau_1, S_1)  
+        & \rho \envTo e_2 \evaluatesTo \code{Set}(\tau_2, S_2) 
+        & \tau_1 = \tau_2
+        & b \deq S_1 \subseteq S_2
+    }    \\[4pt]
+    \infer{
+        \varnothing \subseteq S_2 \leadsto \code{Bool True}
+    }{}    \\[2pt]
+    \infer{
+        (v :: S_1) \subseteq S_2 \leadsto \code{Bool False}
+    }{
+        v \notin S_2
+    }    \\[2pt]
+    \infer{
+        (v :: S_1) \subseteq S_2 \leadsto b
+    }{
+        v \in S_2 & S_1 \subseteq S_2 \leadsto b
+    } 
+\end{gather*}
+
+\paragraph{Regole per \code{MinOf}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{MinOf}(e) \evaluatesTo v
+    }{
+        \rho \envTo e \evaluatesTo \code{Set}(\tau, S) 
+        & \tau \in \set*{\code{IntTy}, \code{StrTy}, \code{BoolTy}}
+        & v \deq \min S
+    }    \\[4pt]
+    \infer{
+        \min \set*{v} \leadsto v
+    }{}    \\[2pt]
+    \infer{
+        \min (v :: S)  \leadsto v
+    }{
+        \min S \leadsto m & v < m
+    }    \\[2pt]
+    \infer{
+        \min (v :: S)  \leadsto m
+    }{
+        \min S \leadsto m & m \leq v
+    } 
+\end{gather*}
+
+\paragraph{Regole per \code{MaxOf}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{MaxOf}(e) \evaluatesTo v
+    }{
+        \rho \envTo e \evaluatesTo \code{Set}(\tau, S) 
+        & \tau \in \set*{\code{IntTy}, \code{StrTy}, \code{BoolTy}}
+        & v \deq \max S
+    }    \\[4pt]
+    \infer{
+        \max \set*{v} \leadsto v
+    }{}    \\[2pt]
+    \infer{
+        \max (v :: S)  \leadsto v
+    }{
+        \max S \leadsto m & v > m
+    }    \\[2pt]
+    \infer{
+        \max (v :: S)  \leadsto m
+    }{
+        \max S \leadsto m & m \geq v
+    } 
+\end{gather*}
+\section{Operatori funzionali}
+\paragraph{Regole per \code{ForAll}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{ForAll}(f, e) \evaluatesTo b
+    }{
+        \begin{gathered}    
+            \rho \envTo f \evaluatesTo \code{Closure}(\code{id}, \code{body}, \code{funDeclEnv}, \tau, \code{Bool}) \\
+            \rho \envTo e \evaluatesTo \code{Set}(\tau, S) 
+            \quad b \deq \parens*{\forall v \in S.\ f(v)}
+        \end{gathered}
+    }    \\[4pt]
+    \infer{
+        \parens*{\forall v \in \varnothing.\ f(v)} \leadsto \code{Bool True}
+    }{}    \\[2pt]
+    \infer{
+        \parens*{\forall v \in (v' :: S).\ f(v)} \leadsto \code{Bool False}
+    }{
+        \code{funDeclEnv}[\code{id} := v'] \envTo \code{body} \evaluatesTo \code{Bool False}
+    } \\[2pt]
+    \infer{
+        \parens*{\forall v \in (v' :: S).\ f(v)} \leadsto b
+    }{
+        \code{funDeclEnv}[\code{id} := v'] \envTo \code{body} \evaluatesTo \code{Bool True}
+        & \parens*{\forall v \in S.\ f(v)} \leadsto b
+    }
+\end{gather*}
+
+\paragraph{Regole per \code{Exists}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Exists}(f, e) \evaluatesTo b
+    }{
+        \begin{gathered}
+            \rho \envTo f \evaluatesTo \code{Closure}(\code{id}, \code{body}, \code{funDeclEnv}, \tau, \code{Bool}) \\
+            \rho \envTo e \evaluatesTo \code{Set}(\tau, S)
+            \quad b \deq \parens*{\exists v \in S.\ f(v)}
+        \end{gathered} 
+    }    \\[4pt]
+    \infer{
+        \parens*{\exists v \in \varnothing.\ f(v)} \leadsto \code{Bool False}
+    }{}    \\[2pt]
+    \infer{
+        \parens*{\exists v \in (v' :: S).\ f(v)} \leadsto \code{Bool True}
+    }{
+        \code{funDeclEnv}[\code{id} := v'] \envTo \code{body} \evaluatesTo \code{Bool True}
+    } \\[2pt]
+    \infer{
+        \parens*{\exists v \in (v' :: S).\ f(v)} \leadsto b
+    }{
+        \code{funDeclEnv}[\code{id} := v'] \envTo \code{body} \evaluatesTo \code{Bool False}
+        & \parens*{\exists v \in S.\ f(v)} \leadsto b
+    }
+\end{gather*}
+
+\paragraph{Regole per \code{Filter}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Filter}(f, e) \evaluatesTo b
+    }{
+        \begin{gathered}
+            \rho \envTo f \evaluatesTo \code{closure} \quad  
+            \rho \envTo e \evaluatesTo \code{Set}(\tau, S) \\
+            \code{closure} \deq \code{Closure}(\code{id}, \code{body}, \code{funDeclEnv}, \tau, \code{Bool})
+            \quad b \deq \code{set\_filter}(\code{closure}, S)
+        \end{gathered} 
+    }    \\[4pt]
+    \infer{
+        \code{set\_filter}(\code{closure}, \varnothing) \leadsto \varnothing
+    }{}    \\[2pt]
+    \infer{
+        \code{set\_filter}(\code{closure}, (v :: S)) \leadsto S'
+    }{
+        \code{funDeclEnv}[\code{id} := v] \envTo \code{body} \evaluatesTo \code{Bool False}
+        & \code{set\_filter}(\code{closure}, S) \leadsto S'
+    } \\[2pt]
+    \infer{
+        \code{set\_filter}(\code{closure}, (v :: S)) \leadsto S'
+    }{
+        \code{funDeclEnv}[\code{id} := v] \envTo \code{body} \evaluatesTo \code{Bool True}
+        & \code{set\_filter}(\code{closure}, S) \leadsto S_0
+        & S' \deq (v :: S_0)
+    }
+\end{gather*}
+
+\paragraph{Regole per \code{Map}}
+\begin{gather*}
+    \infer{
+        \rho \envTo \code{Map}(f, e) \evaluatesTo Set(\tau_2, S_2)
+    }{
+        \begin{gathered}
+            \rho \envTo f \evaluatesTo \code{closure} \quad  
+            \rho \envTo e \evaluatesTo \code{Set}(\tau_1, S_1) \\
+            \code{closure} \deq \code{Closure}(\code{id}, \code{body}, \code{funDeclEnv}, \tau_1, \tau_2)
+            \quad S_2 \deq \code{set\_map}(\code{closure}, S_1)
+        \end{gathered} 
+    }    \\[4pt]
+    \infer{
+        \code{set\_map}(\code{closure}, \varnothing) \leadsto \varnothing
+    }{}    \\[2pt]
+    \infer{
+        \code{set\_map}(\code{closure}, (v :: S)) \leadsto S''
+    }{
+        \code{funDeclEnv}[\code{id} := v] \envTo \code{body} \evaluatesTo v'
+        & \code{set\_map}(\code{closure}, S) \leadsto S'
+        & S'' \deq (v' :: S')
+    }
+\end{gather*}

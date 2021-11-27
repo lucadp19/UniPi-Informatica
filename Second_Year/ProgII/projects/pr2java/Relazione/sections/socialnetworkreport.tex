@@ -1,0 +1,18 @@
+\section{Implementazione del sistema di segnalazione}
+\label{sec:reports}
+
+Per implementare il sistema di segnalazione dei post richiesto dal terzo punto della specifica è stata definita una classe \InlineJava{SocialNetworkReport} che estende la classe \InlineJava{SocialNetworkImpl}.
+
+Il meccanismo di segnalazione è il seguente: un utente registrato nel social network può segnalare un post pubblicato nel social network attraverso il metodo \InlineJava{reportPost}, specificando l'identificatore del post da segnalare e dando una breve spiegazione per la sua decisione.
+
+Questa implementazione è più flessibile delle segnalazioni automatiche: non è necessario decidere a priori una lista di parole da censurare, ma si permette agli utenti di segnalare ciò che ritengono opportuno. Inoltre, siccome nessun post viene eliminato automaticamente, questa implementazione rispetta il Principio di Sostituzione.
+
+\subsection*{Dettagli implementativi}
+
+La classe \InlineJava{SocialNetworkReport} usa una struttura dati aggiuntiva rispetto alla sua superclasse: una \InlineJava{Map<Post, Set<ReportPost>>} chiamata \InlineJava{reports} che associa ad un post pubblicato $p$ tutte le segnalazioni relative a $p$.
+
+Per fare in modo che ogni post pubblicato sia segnalabile, i metodi \InlineJava{submitPost} e \InlineJava{addLike} vengono modificati in modo tale che il post creato venga incluso nell'insieme delle chiavi di \InlineJava{reports}.
+
+Al contrario, le segnalazioni create con \InlineJava{reportPost} non vengono aggiunte all'insieme dei post pubblicati: questa decisione deriva dal fatto che una segnalazione non può essere considerata come un evento pubblico al pari della creazione di un post o dell'aggiunta di un like ad un post esistente, ma deve essere visibile solo ai \emph{moderatori} del social network (o, in questo caso, a chi lo simula).
+
+Da ciò segue che una segnalazione non può ricevere like da altri utenti e non viene considerata quando si chiamano i metodi della superclasse \InlineJava{SocialNetworkImpl}. Per ottenere le segnalazioni vengono quindi definiti i metodi \InlineJava{getReportList} e \InlineJava{reportedPost}: il primo restituisce una lista di tutte le segnalazioni, il secondo restituisce la mappa \InlineJava{reports} con dominio limitato ai post che hanno ricevuto almeno una segnalazione.

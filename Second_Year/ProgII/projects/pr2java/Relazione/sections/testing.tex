@@ -1,0 +1,16 @@
+\section{Esecuzione dei test}
+
+Siccome il codice è stato scritto e testato usando solamente gli strumenti forniti dal JDK (in particolare \texttt{javac} e \texttt{java}), per eseguire i file di test è sufficiente:
+\begin{itemize}
+    \item estrarre il contenuto del file compresso \texttt{Microblog};
+    \item posizionarsi nella cartella \texttt{src};
+    \item compilare i file \texttt{TestPost.java}, \texttt{TestSN.java} e \texttt{TestReport.java} tramite i comandi 
+    \begin{minted}{shell-session}
+        $ javac microblog/tests/TestPost.java
+        $ javac microblog/tests/TestSN.java
+        $ javac microblog/tests/TestReport.java
+    \end{minted} 
+    \item eseguire il test desiderato usando il comando \texttt{java} oppure \texttt{java -ea} per assicurarsi che gli invarianti di rappresentazione siano sempre verificati.
+\end{itemize}
+
+
