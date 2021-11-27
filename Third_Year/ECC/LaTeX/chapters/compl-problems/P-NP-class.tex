@@ -1,0 +1,258 @@
+\section{Classificazione di \texorpdfstring{$\P$ e $\NP$}{P e NP}}
+
+Vogliamo ora studiare più nel dettaglio le classi di complessità $\P$ e $\NP$:
+esattamente come abbiamo fatto con $\R$ e $\RE$ vogliamo dunque trovare una
+riduzione che \emph{classifichi} le classi $\P \subseteq \NP$ e dei problemi
+completi per queste due classi.
+
+Per capire perché ciò è interessante è sufficiente enunciare la cosiddetta
+\sstrong{Tesi di Cook-Karp}, che rappresenta un analogo nel mondo della
+complessità della Tesi di Church-Turing.
+
+\begin{theorem}
+  [Tesi di Cook-Karp]
+  I problemi in $\P$ sono \emph{trattabili}, 
+  i problemi di $\NP$ sono i problemi \emph{intrattabili}. 
+\end{theorem}
+
+Possiamo spiegarci la Tesi di Cook-Karp nel seguente modo. \begin{itemize}
+  \item I problemi in $\P$ sono chiusi per \emph{cambiamento di
+  modello}, ovvero se un problema $P \in \P$ può essere rappresentato in un'altra
+  forma $P' \in \P$ allora possiamo sempre trovare un algoritmo di conversione 
+  che abbia complessità polinomiale.
+
+  In altre parole, la classe $\P$ è chiusa per \emph{composizione polinomiale
+  sinistra}. 
+  \item La classe $\P$ è chiusa rispetto a somma/prodotto e alle riduzioni 
+  $\leq_{\LL}$ dove $\LL$ è una sottoclasse di problemi. Mostreremo questo fatto
+  usando in particolare la sottoclasse $\LL = \LOGSPACE$.
+
+  Riformulando, $\P$ è anche chiusa per \emph{composizione polinomiale destra}.
+  \item Inoltre gli algoritmi polinomiali, specialmente se con costanti piccole
+  e esponenti bassi, sono davvero (nella pratica) più \emph{trattabili} di
+  quelli esponenziali.
+\end{itemize}
+
+Tuttavia non sempre gli algoritmi di $\P$ sono migliori di quelli esponenziali, 
+soprattutto se le costanti sono molto grandi e i corrispettivi algoritmi 
+esponenziali sono in realtà polinomiali nel caso medio, che spesso è quello più
+interessante.
+
+Per semplicità noi ci limiteremo comunque al caso pessimo e ignoreremo
+tranquillamente i problemi pratici legati alle costanti grandi o agli esponenti
+alti.
+
+Come accennato in precedenza, invece di studiare riduzioni polinomiali ci 
+limiteremo a studiare un gruppo di riduzioni più piccolo, ovvero quelle 
+\emph{logaritmiche}.
+
+\begin{definition}
+  [Riduzione efficiente]
+  Un problema $I$ si \sstrong{riduce efficientemente} ad un problema $J$ se \[
+      I \leq_{\LOGSPACE} J,
+  \] ovvero se esiste una funzione $f \in \LOGSPACE$ tale che \[
+      x \in I \qquad\text{ se e solo se }\qquad f(x) \in J.
+  \] 
+\end{definition}
+
+Per semplicità, pigrizia e motivi estetici\footnote{Soprattutto gli ultimi due.}
+in seguito scriveremo $\leq_{\LL}$ invece di $\leq_{\LOGSPACE}$.
+
+\begin{theorem}
+  Siano $\DD, \EE$ due classi tra $\set*{\LOGSPACE, \P, \NP, \EXP, \PSPACE}$
+  tali che $\DD \subseteq \EE$. 
+  
+  Allora $\leq_{\LL}$ (e quindi a maggior ragione $\leq_{\P}$) 
+  classifica $\DD$ ed $\EE$.     
+\end{theorem}
+\begin{proof}
+  Per mostrare che una riduzione classifica due classi di problemi dobbiamo
+  mostrare gli assiomi dati in \Cref{def:red-classifies}.
+  \begin{enumerate}[(1)]
+    \item Certamente $A \leq_{\LL} A$ in quanto l'identità (che copia l'input 
+    nell'output) è logaritmica nello spazio di lavoro.\footnote{Non lo usa!}
+    \item Vorremmo dimostrare che la composizione di algoritmi logaritmici in
+    spazio è ancora logaritmico in spazio, ma non possiamo semplicemente incollare
+    le due MdT tra di loro, perché a questo punto l'output della prima diventa
+    un nastro di lavoro, e quindi può rendere l'algoritmo polinomiale.
+
+    Possiamo tuttavia operare con uno stile \emph{master-slave}: la seconda
+    macchina (che fa la parte del \emph{master}) legge un carattere alla volta
+    dalla prima (che fa la parte dello \emph{slave}) e quando ha letto tutto
+    l'input esegue i suoi calcoli. In questo modo magari sprechiamo molto tempo,
+    ma il risultato è logaritmico in spazio.
+    \item Sia $f \in \LOGSPACE$ la funzione che riduce $A$ a $B$, che appartiene
+    a $\DD$: per mostrare che $A$ appartiene a $\DD$ basta trasformare $A$ in $\B$
+    tramite $f$ e poi risolvere $B$. Dato che $\LOGSPACE \subseteq \DD$ segue che
+    questa composizione appartiene ancora a $\DD$, come volevamo.
+    \item Analogo al punto precedente, ma usando l'ipotesi $B \in \EE$.           
+  \end{enumerate}
+\end{proof}
+
+\subsection{Logica proposizionale}
+
+Prima di introdurre i principali problemi che studieremo nell'ambito della
+complessità abbiamo bisogno di introdurre alcune semplici nozioni di logica
+proposizionale.
+
+\begin{definition}
+  [Espressione booleana] Un'\sstrong{espressione booleana} nell'insieme di
+  variabili $X$ è una espressione della forma \[
+      B \;\Coloneqq\;  
+        \TT \mid \FF \mid x \mid \neg B \mid
+        B_1 \lor B_2 \mid B_1 \land B_2
+  \] dove $x \in X$. Le espressioni $\TT, \FF, x, \neg x$ sono dette 
+  \sstrong{letterali}.
+\end{definition}
+
+\begin{definition}
+  [Interpretazione e soddisfacibilità] 
+  Dato un insieme di variabili $X$, un'\sstrong{interpretazione} o
+  \sstrong{valutazione} è una funzione \[
+      \VV : X \to \set*{\TT, \FF}.
+  \] Se $B$ è un'espressione booleana su $X$, diremo che l'interpretazione
+  $\VV$ \sstrong{soddisfa} $B$ se e solo se vale il predicato $\VV \models B$
+  definito per induzione strutturale: \begin{align*}
+    &\VV \models \TT\\
+    &\VV \models x              &&\text{se } \VV(x) = \TT\\
+    &\VV \models \neg B         &&\text{se non vale } \VV \models B\\
+    &\VV \models B_1 \lor B_2 
+        &&\text{se } \VV \models B_1 \text{ oppure } \VV \models B_2\\
+    &\VV \models B_1 \land B_2 
+        &&\text{se } \VV \models B_1 \text{ e } \VV \models B_2.
+  \end{align*}  Infine una formula $B$ si dice \sstrong{soddisfacibile}
+  se esiste un'interpretazione $\VV$ che soddisfa $B$.  
+\end{definition}
+
+\begin{definition}
+  [Forma normale congiuntiva]
+  Una formula booleana si dice \sstrong{in forma normale congiuntiva} se \[
+      B = \bigwedge_i C_i
+  \] dove i termini $C_i$ si dicono \sstrong{clausole} o \sstrong{vincoli}
+  e sono della forma \[
+      C_i = \bigvee_j c_{ij}
+  \] e ogni $c_{ij}$ è un letterale.
+\end{definition}
+
+Più semplicemente, una formula è in forma normale congiuntiva se è scritta come
+congiunzione (cioè \emph{and}) di formule disgiuntive (cioè contententi
+solamente \emph{or}): \[
+    (c_{11} \lor \dots \lor c_{1,n_1}) \land \dots \land 
+    (c_{t1} \lor \dots \lor c_{t,n_t}).
+\]
+L'importanza delle formule in FNC viene dal seguente teorema.
+\begin{theorem}
+  Ogni formula può essere espressa equivalentemente in FNC, ovvero data $B$ 
+  formula booleana sull'insieme di variabili $X$ esiste $B'$ su $X$ tale che 
+  \begin{enumerate}
+    \item $B'$ è in FNC
+    \item per ogni interpretazione $\VV$ si ha che $\VV \models B$ 
+    se e solo se $\VV \models B'$.  
+  \end{enumerate}    
+\end{theorem}
+
+\subsection{Il problema \SAT}
+
+Definiamo ora il più importante problema di $\NP$: il resto del corso
+sarà dedicato a dimostrare che esso è in realtà $\NP$-completo.
+
+\begin{definition}
+  [Il problema \SAT]
+  \[
+      \SAT \deq \set*{B \text{ formula booleana} 
+        \given \exists \VV \text{ valutazione tale che } \VV \models B}.
+  \]
+\end{definition}
+
+\SAT{} appartiene ad $\NP$: infatti data una valutazione $\VV$ sono necessari
+un numero polinomiale di passi per certificare che $\VV$ soddisfi $B$.
+
+Confrontiamo \SAT{} con un altro classico problema di $\NP$, che questa volta
+viene dalla teoria dei grafi.
+
+\begin{definition}
+  [Problema del Ciclo Hamiltoniano]
+  Il problema \HAM{} è l'insieme di tutti i grafi $G \deq (V, E)$ che ammettono
+  un \sstrong{ciclo hamiltoniano}, ovvero un ciclo che tocca tutti e soli i nodi
+  del grafo una ed una sola volta. 
+\end{definition}
+
+\begin{theorem}
+  \[
+      \HAM \leq_{\LL} \SAT.
+  \]
+\end{theorem}
+\begin{proof}
+  Dimostrare che $\HAM$ si riduce a $\SAT$ in spazio logaritmico significa
+  mostrare che possiamo codificare tutti e soli i grafi che ammettono un ciclo
+  hamiltoniano in una formula soddisfacibile, e tale codifica deve essere
+  logaritmica in spazio.
+
+  Sia allora $G = (V, E)$ un grafo, $n \deq \card{V}$: costruiamo una
+  formula booleana $B$ sull'insieme di variabili \[
+      X \set*{ x_{ij} \given i, j = 1, \dots, n }.
+  \] Osserviamo che un ciclo hamiltoniano è identificato univocamente da una
+  sequenza di vertici $(v_1, \dots, v_n)$, che indica l'ordine di attraversamento 
+  dei nodi nel grafo: in altre parole, ogni ciclo hamiltoniano
+  è in realtà una funzione bigettiva \[
+      \sigma : V \iso \set*{1, \dots, n}.
+  \]  
+  La variabile $x_{ij}$ sarà $\TT$ se e solo se il nodo $j$ occupa l'$i$-esimo
+  posto nella permutazione $(v_1, \dots, v_n)$, ovvero se $\sigma(j) = i$.  
+
+  Vogliamo costruire una formula che sia soddisfacibile se e solo se esiste una
+  permutazione dei nodi di $V$ per cui ogni coppia di nodi consecutivi sia
+  connessa da un arco: lo facciamo imponendo 5 tipi di vincoli, che verranno
+  portati in forma normale congiuntiva.
+  
+  \begin{enumerate}[(1)]
+    \item Per ogni $i \neq k$ aggiungiamo i vincoli \[
+        \neg (x_{ij} \land x_{kj}) \;\equiv\; \neg x_{ij} \lor \neg x_{kj}
+    \] al variare di $j = 1, \dots, n$. Questi vincoli ci dicono che il nodo $j$ 
+    non può occupare contemporaneamente le posizioni $i$ e $k$ della 
+    permutazione.
+    \item Per ogni $j$ aggiungiamo il vincolo \[
+        x_{1j} \lor x_{2j} \lor \dots x_{nj}.
+    \] Ciò impone che il nodo $j$ debba essere presente nella
+    permutazione in almeno una posizione.
+    \item Per ogni $i$ aggiungiamo il vincolo \[
+        x_{i1} \lor x_{i2} \lor \dots \lor x_{in}.
+    \] In questo modo imponiamo la condizione che in posizione $i$ ci sia
+    almeno un nodo. 
+    \item Per ogni $j \neq k$ aggiungiamo i vincoli \[
+        \neg (x_{ij} \land x_{ik}) \;\equiv\; \neg x_{ij} \lor \neg x_{ik}
+    \] al variare di $i = 1, \dots, n$. Questi vincoli ci dicono che nella
+    posizione $i$ non possono esserci contemporaneamente i nodi $j$ e $k$.
+    \item Per ogni coppia $j, k$ tali che $(j, k) \notin E$ aggiungiamo i 
+    vincoli \[
+        \neg (x_{ij} \land x_{i+1, k}) \;\equiv\; 
+          \neg x_{ij} \lor \neg x_{i+1, k},
+    \] per ogni $i$,\footnote{Se $i = n$, allora interpretiamo $i+1$
+    \emph{in modulo}, e quindi $i+1 = 1$: questo è necessario
+    perché siamo interessati ai \emph{cicli} hamiltoniani.} 
+    ovvero i nodi $j, k$ non possono comparire in posizioni
+    consecutive della permutazione. 
+  \end{enumerate}
+
+  Osserviamo che le prime 4 condizioni in ordine impongono che $\sigma$ sia 
+  univalente, totale, surgettiva e iniettiva, ovvero che $\sigma$ sia una
+  bigezione. Inoltre se $\sigma$ esiste (cioè il grafo ammette un ciclo
+  hamiltoniano) allora per costruzione la valutazione \[
+      \VV(x_{ij}) \deq \begin{cases}
+        \TT, &\text{se } \sigma(j) = i\\
+        \FF, &\text{altrimenti}
+      \end{cases}
+  \] soddisfa la formula costruita sopra. Invece se $\sigma$ non esistesse
+  certamente la formula risulterebbe insoddisfacibile.
+
+  Rimane solo da mostrare che la funzione di riduzione $f$ sia in $\LOGSPACE$:
+  tale $f$ prende sul nastro di lavoro il grafo, rappresentato come insieme dei
+  nodi e insieme degli archi, e restituisce in output la formula booleana
+  che corrisponde ai vincoli necessari per costruire la permutazione.
+  Sui nastri di lavoro dobbiamo solo scorrere le variabili $i, j, k$ che
+  servono alla costruzione dei vincoli e ricordare il valore di $n$.
+  
+  Ma allora rappresentando $n, i, j, k$ in binario ognuno di essi occupa al più 
+  $\log n$ caselle, dunque per i nastri di lavoro abbiamo bisogno di al più
+  $(4\log n)$ caselle, che è logaritmico nella taglia dell'input, come volevamo.
+\end{proof}
