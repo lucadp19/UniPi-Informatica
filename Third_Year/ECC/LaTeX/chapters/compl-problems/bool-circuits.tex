@@ -1,0 +1,171 @@
+\section{Circuiti booleani e il Teorema di Cook-Levin}
+
+Per dimostrare che \SAT{} è $\NP$-completo definiremo e dimostreremo un problema
+simile, che è il problema \CSAT{} della \emph{soddisfacibilità di un 
+circuito booleano}.
+
+\begin{definition}
+  [Funzioni e circuiti booleani]
+  Una \sstrong{funzione booleana} è una funzione $f : \set*{0, 1}^n \to \set*{0, 1}$.
+  
+  Un \sstrong{circuito booleano} su un insieme di variabili $X$ 
+  è un grafo diretto aciclico $G = (V, E)$ insieme ad una funzione \[
+    s : V \to \set*{0, 1, {\neg}, {\lor}, {\land}} \union X
+  \] dove
+  \begin{itemize}
+    \item i nodi si chiamano \sstrong{porte},
+    \item $X$ è un insieme di variabili,
+    \item esiste un nodo speciale $u \in V$, detto \sstrong{uscita} del circuito, 
+    \item la funzione $s$ assegna ad ogni nodo la sua \sstrong{sorta} e soddisfa
+      la seguente condizione: per ogni $n \in V$ \begin{enumerate}[(1)]
+        \item se $s(n) \in \set{0, 1} \union X$ allora $n$ si dice 
+          \sstrong{porta costante} ed ha zero ingressi e un'uscita;
+        \item se $s(n) = {\neg}$ allora $n$ ha un ingresso e un'uscita;
+        \item se $s(n) \in \set*{{\land}, {\lor}}$ allora $n$ ha due ingressi
+          e un'uscita.
+      \end{enumerate} Tuttavia se $n = u$ è l'uscita del circuito, il nodo $n$
+      ha $0$ uscite (anche se la sorta indicherebbe altrimenti).
+  \end{itemize}
+
+  Analogamente alle formule booleane, diremo che $G$ è \sstrong{chiuso} se
+  non contiene variabili, cioè se $X = \varnothing$. 
+\end{definition}
+
+Osserviamo che, seppure le condizioni sul numero di ingressi siano importanti,
+un nodo può avere più\footnote{Ma non meno.} uscite di quelle permesse dalla sua
+sorta: possiamo immaginare di duplicare il filo, o di duplicare tutto il 
+sottocircuito relativo al nodo da cui vogliamo più uscite.
+
+\begin{definition}
+  [Soddisfacibilità di un circuito]
+  Sia $G = (V, E)$ un circuito booleano su $X$ con uscita $u \in V$;
+  sia inoltre $\VV : X \to \set*{0, 1}$ un'interpretazione. 
+  Possiamo estendere $\VV$ ad una funzione \[
+      \VV_G : V \to \set*{0, 1}
+  \] dove \begin{itemize}
+    \item $\VV_G(0) = 0$ e $\VV_G(1) = 1$,
+    \item $\VV_G(x) = \VV(x)$ per ogni $x \in X$,
+    \item se $n = {\neg}$ e la sua unica entrata è $(n', n) \in E$, vale che
+      $\VV_G(n) = 1$ se e solo se $\VV_G(n') = 0$,
+    \item se $n = {\land}$ e le sue entrate sono $(n_1, n), (n_2, n) \in E$, vale che
+      $\VV_G(n) = 1$ se e solo se $\VV_G(n_1) = 1$ e $\VV_G(n_2) = 1$,  
+    \item se $n = {\lor}$ e le sue entrate sono $(n_1, n), (n_2, n) \in E$, vale che
+      $\VV_G(n) = 1$ se e solo se $\VV_G(n_1) = 1$ oppure $\VV_G(n_2) = 1$.  
+  \end{itemize}
+
+  La valutazione del circuito $G$ sarà quindi $\VV_G(u)$. Diremo infine che
+  $\VV$ \sstrong{soddisfa} $G$ ($\VV \models G$) se $\VV_G(u) = 1$.   
+\end{definition}
+
+Come nel caso delle formule booleane, sostituendo le variabili di un circuito con
+le loro interpretazioni si ottiene un circuito chiuso: in particolare possiamo
+parlare della \emph{valutazione di un circuito chiuso} senza dover pensare ad una
+particolare interpretazione. In questi casi scriveremo perciò 
+$\varnothing \models G$ per dire che il circuito chiuso è soddisfatto.
+
+Questo motiva la prossima definizione.
+
+\begin{definition}
+  [\CVAL{} e \CSAT]
+  Definiamo i problemi \CVAL{} e \CSAT{} come \begin{gather*}
+      \CVAL = \set*{C \text{ circuito booleano chiuso} \given \varnothing \models C}\\
+      \CSAT = \set*{C \text{ circuito booleano} \given \exists 
+        \VV \text{ tale che } \VV \models C}.
+  \end{gather*}
+\end{definition}
+
+Il problema \CVAL{} è ovviamente in $\P$: la taglia del problema è il numero di
+porte, e per calcolare il valore della porta di uscita ci basta eseguire un'operazione
+per porta. Analogamente è facile vedere che \CSAT{} è in $\NP$: dato un certificato,
+ovvero una valuazione $\VV$, verificare che $\VV$ soddisfi $C$ è come verificare
+che il circuito chiuso $\bar{C}$ ottenuto per sostituzione è soddisfatto, ovvero     
+è come verificare che $\bar{C}$ appartenga a \CVAL, che si può fare in tempo
+polinomiale perché \CVAL{} appartiene a $\P$.
+
+Inoltre \CVAL{} è banalmente un caso particolare di \CSAT, dunque vale la seguente
+riduzione.
+
+\begin{proposition}
+  $\CVAL \leq_{\LL} \CSAT$ e la funzione di riduzione è $\id \in \LOGSPACE$. 
+\end{proposition}
+
+Delineamo ora il piano per dimostrare l'$\NP$-completezza di \SAT{}.
+\begin{enumerate}[(1)]
+  \item Innanzitutto dimostreremo che $\CSAT \leq_{\LL} \SAT$: in questo modo
+    ci basterà dimostrare che \CSAT{} è $\NP$-completo per ottenere l'analogo
+    risultato per \SAT{} (grazie alla \Cref{prop:A-hard=>B-hard}).
+  \item Mostreremo poi che \CVAL{} è $\P$-completo: nel far ciò costruiremo la
+    \sstrong{tabella di computazione} di un problema, che ci sarà utile per 
+    l'ultimo passo.
+  \item Infine mostreremo che \CSAT{} è $\NP$-completo, per cui dal passo (1)
+    seguirà l'$\NP$-completezza di \SAT. 
+\end{enumerate} 
+
+\subsection{\texorpdfstring{$\CSAT \leq_{\LL} \SAT$}
+  {CIRCUIT-SAT si riduce efficientemente a SAT}}
+
+\begin{theorem}
+  \[
+    \CSAT \leq_{\LL} \SAT.
+  \]
+\end{theorem}
+\begin{proof}
+  Vogliamo una funzione $f \in \LOGSPACE$ che trasformi circuiti in formule booleane
+  e tale che per ogni circuito $C$ \[
+      \exists \VV \text{ tale che } \VV \models C 
+      \qquad \text{ se e solo se } \qquad
+      \exists \VV' \text{ tale che } \VV' \models f(C).
+  \]
+
+  Dato un circuito $C$ con variabili $X$, costruiamo una formula booleana con
+  variabili \[
+      X' \deq X \union \set*{x_g \given g \text{ è una porta di } C}.
+  \] Per costruire la formula $f(C)$, costruiamo delle clausole che rappresentano
+  i vincoli del circuito booleano $C$. 
+  
+  In particolare aggiungiamo un vincolo per ogni porta, più uno per l'uscita.
+  Sia allora $g \in V$ un nodo.
+  \begin{itemize}
+    \item Se $g$ ha sorta $1$ (risp. $0$) aggiungiamo la clausola $(x_g)$
+      (risp. $(\neg x_g)$).
+    \item Se $g$ ha sorta $x \in X$ (ovvero $g$ è una variabile), $x_g$ deve 
+      essere vero se e solo se lo è $x$. Portando il "se e solo se" in forma a
+      clausole otteniamo due clausole: \[
+          (\neg x_g \lor x) \land (x_g \lor \neg x).
+      \]
+    \item Se $g$ ha sorta $\neg$ esiste un unico arco $(h, g) \in E$: vogliamo
+      che $x_g$ sia vero se e solo se $x_h$ è falso. In forma a clausole: \[
+          (x_g \lor x_h) \land (\neg x_g \lor \neg x_h).
+      \]
+    \item Se $g$ ha sorta ${\lor}$ esistono due archi distinti $(h, g), 
+      (k, g) \in E$: vogliamo che $x_g$ sia vero se e solo se lo è almeno uno tra
+      $x_k$ e $x_h$. Portiamolo in forma a clausole: \begin{align*}
+        (x_g \iff x_h \lor x_k) 
+          &\equiv (x_g \implies x_h \lor x_k) \land (x_h \lor x_k \implies x_g)\\
+          &\equiv (\neg x_g \lor x_h \lor x_k) \land (\neg (x_h \lor x_k) \lor x_g)\\
+          &\equiv (\neg x_g \lor x_h \lor x_k) \land 
+                  ((\neg x_h \land \neg x_k) \lor x_g)\\
+          &\equiv (\neg x_g \lor x_h \lor x_k) \land 
+                  (\neg x_h) \land (\neg x_k \lor x_g).
+      \end{align*} 
+    \item Se $g$ ha sorta ${\land}$ esistono due archi distinti $(h, g), 
+      (k, g) \in E$: vogliamo che $x_g$ sia vero se e solo se lo sono $x_k$ e $x_h$. 
+      Portiamolo in forma a clausole: \begin{align*}
+        (x_g \iff x_h \land x_k) 
+          &\equiv (x_g \implies x_h \land x_k) \land (x_h \land x_k \implies x_g)\\
+          &\equiv (\neg x_g \lor (x_h \land x_k)) \land (\neg (x_h \land x_k) \lor x_g)\\
+          &\equiv (\neg x_g \lor x_h) \land (\neg x_g \lor x_k) \land 
+                  (\neg x_h \lor \neg x_k \lor x_g).
+      \end{align*} 
+  \end{itemize}
+  Infine se $g$ è anche l'uscita del circuito aggiungiamo la clausola $(x_g)$,
+  in quanto siamo interessati solo alle interpretazioni che rendano vere il circuito.
+  
+  Tale costruzione è sicuramente ben definita ed è evidente che il circuito $C$
+  è soddisfacibile se e solo se la formula $f(C)$ è soddisfacibile, in quanto 
+  $f(C)$ è la \emph{riscrittura} di $C$ come formula booleana.
+  
+  Infine, la costruzione può essere compiuta in spazio logaritmico poiché abbiamo
+  bisogno di memorizzare solamente i valori di $g, h, k, n$ (dove $n \deq \card{V}$) 
+  che sono tutti logaritmici in $n$.  
+\end{proof}

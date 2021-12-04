@@ -1,0 +1,46 @@
+\subsection{Il Teorema di Cook-Levin}
+
+Usando la tabella di computazione definita precedentemente possiamo finalmente
+dimostrare che $\CSAT$ è $\NP$-completo.
+
+\begin{theorem}
+  [$\NP$-completezza di \CSAT]
+  $\CSAT$ è $\leq_{\LL}$-completo per $\NP$.   
+\end{theorem}
+\begin{proof}
+  Sia $I$ un problema in $\NP$, ovvero tale che esista una macchina non deterministica
+  $N$ che decide $I$ in tempo polinomiale (non deterministico), ovvero tale che
+  per ogni $x$ esista una sequenza di scelte $(s_1, \dots, s_t)$ che porta $N(x)$
+  in $\SI$ se $x \in I$, in $\NO$ altrimenti. Inoltre tale $t$ è al più $n^k$, 
+  dove $n = \abs x$.
+  
+  Supponiamo per semplicità che il \sstrong{grado di non determinismo} di $I$ 
+  sia al più $2$, ovvero che ad ogni passo si possa scegliere al più tra $2$ 
+  quintuple: allora ogni scelta $s_i$ può essere rappresentata con un singolo bit
+  $s_i \in \set*{0, 1}$.
+  
+  Nella realizzazione della tabella di computazione come circuito
+  \footnote{vista per bene nella dimostrazione del \Cref{th:CVAL-P-compl}}
+  aggiungiamo ad ogni circuito $C_{i, j}$ un ulteriore ingresso, 
+  ovvero il bit $s_{i-1}$ che rappresenta la scelta fatta al passo precedente.
+  Otterremo quindi un circuito $\CC$ sulle variabili $s_1, \dots, s_{n^{\!k}}$
+  che rappresenta il problema $I$. Analogamente a quanto fatto per \CVAL,
+  tale trasformazione è una funzione logaritmica in spazio; inoltre è ovvio
+  che il circuito $f(x)$ risultante da tale funzione sia soddisfacibile se e solo se
+  esiste una sequenza di scelte che mostra che $x \in I$, dunque $f$ riduce
+  $I$ a \CSAT.
+
+  Infine se il grado di non determinismo di un nodo è $d > 2$ possiamo 
+  ordinare le possibilità da $1$ a $d$ e indicare la scelta fatta 
+  tramite una sequenza di $0$ terminata da un $1$: il numero $0$ indicherà 
+  il numero di possibilità scartate, l'$1$ indicherà finalmente la scelta compiuta.
+  \footnote{Questo ragionamento è equivalente a dire \emph{non questa, non questa,
+  non questa, \dots, sì questa}.}
+\end{proof}
+
+Da tutto il lavoro fatto finora segue, come preannunciato, il Teorema di Cook-Levin.
+
+\begin{theorem}
+  [Teorema di Cook-Levin]
+  \SAT{} è $\leq_{\LL}$-completo per $\NP$.   
+\end{theorem}

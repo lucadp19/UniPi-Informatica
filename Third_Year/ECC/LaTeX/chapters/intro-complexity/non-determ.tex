@@ -25,10 +25,18 @@ Dato un problema, un possibile modo di risolverlo è sempre quello di generare t
 possibili soluzioni e controllarle una ad una: tale metodo viene detto \emph{bruteforce} o
 metodo del \emph{forza bruta}, in quanto brutalmente tentiamo ogni possibilità.
 Generando lo spazio delle soluzioni esplicitamente, ogni volta che ne tentiamo una stiamo in
-realtà percorrendo un cammino su tale albero: la scelta della prossima soluzione da tentare
-corrisponde alla \emph{scelta non deterministica} da compiere.
+realtà percorrendo un cammino su tale albero.
+Una macchina non deterministica dà un risultato positivo se e solo se esiste
+un cammino sull'albero delle computazioni che termini nello stato di accettazione.
 
-% \newthought{Guess and Try}
+\newthought{Guess and Try}
+Un altro modo di risolvere problemi è \emph{tirare ad indovinare}: si prova 
+una possibilità e si controlla se tale possibilità effettivamente risolve il
+problema o meno.
+Per quanto tale strategia sembri diversa dal bruteforce, in realtà stiamo 
+implicitamente generando tutte le soluzioni.\footnote{specialmente se siamo sfortunati}
+Potremmo allora considerare il non determinismo come un metodo per generare
+automaticamente una soluzione del problema (assumendo che esista) e poi verificarla.
 
 \begin{definition}
     [Decisione non deterministica e tempo richiesto]
@@ -131,3 +139,17 @@ Tuttavia, al contrario del problema $\P \iseq \NP$, il problema $\PSPACE \iseq
         \PSPACE = \NPSPACE.
     \]
 \end{theorem}
+
+Osserviamo infine che la classe $\NP$ può essere descritta in un modo più naturale
+pensandola come un \emph{Guess and Try con i superpoteri}. Infatti, in
+ottica Guess and Try, un problema è in $\NP$ se e solo se, avendo indovinato una
+soluzione del problema, possiamo verificarla in tempo polinomiale.
+Questo ci porta alla definizione dei \sstrong{certificati}: un problema è in $\NP$
+se ammette un certificato polinomiale, ovvero se data una soluzione del problema
+sappiamo verificare che è tale in tempo polinomiale deterministico.
+
+Tale approccio è, per quanto detto precedentemente, equivalente a chiedere che 
+una macchina non deterministica decida il problema in tempo polinomiale, e dunque, 
+dato che è più semplice immaginare i certificati piuttosto che il non determinismo,
+spesso dimostreremo l'appartenenza ad $\NP$ facendo vedere che i certificati
+possono essere verificati in tempo polinomiale.

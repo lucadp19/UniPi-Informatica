@@ -1,0 +1,203 @@
+\subsection{Tabella delle computazioni e 
+  \texorpdfstring{$\P$-completezza di \CVAL}{P-completezza di CIRCUIT-VALUE}}
+
+Il secondo passo nel nostro "programma" è dimostrare la $\P$-completezza di \CVAL:
+anche se questo non ha direttamente peso nella dimostrazione della
+$\NP$-completezza di \CSAT, per farlo useremo uno strumento che ci tornerà molto
+utile.
+
+Data una macchina di Turing $M$ e un input $x$, vogliamo costruire una matrice
+quadrata $T$, detta \sstrong{tabella di computazione}, che riassuma i passi fatti
+nel calcolo di $M(x)$: in particolare definiamo $T$ in modo che la sua $i$-esima
+riga contenga il nastro di $M$ all'$i$-esimo passo di computazione, e quindi
+la posizione $T(i, j)$ contenga la $j$-esima casella del nastro all'$i$-esimo
+passo.
+
+Una tabella così definita non racchiude in sé tutta l'informazione necessaria
+per capire come si è mossa la macchina: mancano almeno delle informazioni sul 
+cursore e sullo stato. 
+Iniziamo quindi ad aggiungere qualche vincolo che può tornarci utile. 
+
+\begin{enumerate}
+  \item Innanzitutto, siccome lavoreremo con problemi che sono in $\P$, sicuramente
+    il numero di passi necessari alla macchina per decidere il problema è minore di
+    $\abs{x}^k$ per qualche $k \in \N$. Allora scegliamo $k$ sufficientemente grande,
+    in modo che $M$ si arresti in meno di $\abs{x}^k - 2$ passi, e imponiamo che
+    $T$ sia di taglia $\abs{x}^k \times \abs*{x}^k$.
+  \item Osserviamo che $T$ ha abbastanza colonne per contenere i nastri di $M$: 
+    infatti in tempo $t$ si possono scrivere al più $t$ caselle, dunque 
+    sicuramente non avremo problemi di spazio. In particolare riempiremo tutte 
+    le caselle a destra dell'ultima casella scritta con caratteri vuoti ($\#$):
+    siccome la macchina termina la sua computazione in meno di $\abs*{x}^k$ passi, 
+    questo ci assicura subito che l'ultima colonna sarà sempre formata da tutti
+    caratteri vuoti e non verrà mai raggiunta.
+  \item Per memorizzare lo stato e la posizione del cursore cambiamo i simboli
+    dell'alfabeto $\Sigma$ in \[
+        \Sigma' \deq \Sigma \times (Q \union \set{\ast})
+    \] dove $\ast$ è un simbolo a caso che non rappresenti uno stato. 
+    Imponiamo allora che tutte le caselle di una riga di $T$ tranne esattamente
+    una contengano un simbolo della forma $(\sigma, \ast)$, dove $\sigma \in \Sigma$.
+    L'interpretazione che diamo a questa nuova scrittura è la seguente:
+    \begin{itemize}
+      \item se in una casella c'è un simbolo della forma $(\sigma, \ast)$,
+        allora il cursore non si trova in questa posizione e la casella del nastro
+        di $M$ contiene il simbolo $\sigma$;
+      \item l'unica casella della forma $(\sigma, q)$ con $q \neq \ast$ è la casella
+        del nastro contenente il cursore; inoltre tale casella ci indica che
+        lo stato della macchina in tale passo è $q \in Q$.   
+    \end{itemize}
+  \item Facciamo in modo che il cursore della tabella di computazione non sia mai
+    sul respingente, ma sia al massimo sulla casella appena a destra. Per far ciò
+    potremmo introdurre un secondo respingente, oppure far partire la computazione
+    dalla seconda casella e, ogni qualvolta il cursore di $M$ vada sul respingente,
+    condensare due passi in uno e rispostarlo sulla casella appena dopo.
+  \item Quando la macchina arriva nello stato di arresto ($\SI$ oppure $\NO$)
+    aggiungiamo dei passi che la riportano nella seconda casella del nastro.
+    Ciò comporta: \begin{itemize}
+      \item dover potenzialmente aumentare $k$, poiché abbiamo bisogno di più passi;
+      \item passare sopra il respingente in caso ve ne siano alcuni sul nastro.
+    \end{itemize} In ogni caso non passeremo mai sul respingente in colonna $1$:
+    questo implica che la prima colonna sia fatta soltanto di respingenti.
+  \item Infine, una volta arrivati allo stato di arresto e aver portato il cursore
+    in seconda colonna, riempiamo tutte le righe successive con il contenuto 
+    di quest'ultima riga (per ottenere una matrice quadrata).
+\end{enumerate}
+
+Osserviamo ora che per come abbiamo definito la tabella \begin{itemize}
+  \item la prima riga è completamente determinata dall'input: contiene infatti
+    il respingente in posizione $T(1, 1)$, l'input dalla posizione $T(1, 2)$ e
+    infine lo spazio rimanente è occupato da caratteri vuoti;  
+  \item la prima colonna contiene solo respingenti;
+  \item l'ultima colonna contiene solo caratteri vuoti.
+\end{itemize}
+
+Come determiniamo le righe successive alla prima? L'osservazione cruciale è che
+per $1 < i, j, < \abs*{x}^k$ la casella $T(i, j)$ dipende solo dalle tre caselle
+\[
+    T(i-1, j-1), \;\; T(i-1, j) \;\; T(i-1, j+1)
+\] e dalla funzione di transizione $\delta$. Infatti \begin{itemize}
+  \item il simbolo $\sigma$ scritto nella posizione $j$ può cambiare solo se
+    al passo precedente il cursore era già in posizione $j$;
+  \item il cursore può arrivare in posizione $j$ solo se al passo precedente
+    si trovava in posizione $j-1$, $j$ oppure $j+1$ (quindi in una posizione
+    adiacente);
+  \item se il cursore al passo $i-1$ si trova in una posizione diversa dalle tre
+    appena nominate, sicuramente $T(i, j) = T(i-1, j)$.      
+\end{itemize} Infine, se il cursore effettivamente è in una delle posizioni
+$T(i-1, j-1)$, $T(i-1, j)$ o $T(i-1, j+1)$, automaticamente conosciamo lo stato
+$q$ della macchina $M$ al passo $i-1$ e quindi sappiamo quale mossa deve compiere.
+
+\begin{theorem}
+  [$\P$-completezza di \CVAL][CVAL-P-compl]
+  Il problema \CVAL{} è $\leq_{\LL}$-completo per $\P$.   
+\end{theorem}
+\begin{proof}
+  Sia $I$ un problema in $\P$, $M$ la macchina che lo risolve in tempo polinomiale
+  e $x$ un dato di ingresso: vogliamo una funzione $f$ che trasformi $x$ in un
+  circuito chiuso $f(x)$ che sia soddisfatto (dall'assegnamento vuoto) se e solo
+  se $x \in I$. Per semplicità chiamiamo anche $n \deq \abs*{x}$. 
+  
+  \medskip
+  \textsf{\color{RoyalBlue} Costruzione della funzione $f$}
+
+  Consideriamo la tabella di computazione di $M(x)$: essa avrà taglia
+  $n^{\!k} \times n^{\!k}$ e avrà come simboli elementi di 
+  $\Sigma' \deq \Sigma \times Q \union \set{\ast}$ come descritto precedentemente.
+  Come primo passo codifichiamo ogni possibile simbolo come una stringa di bit
+  \[
+      (s_1, \dots, s_m) \in \set*{0, 1}^m,
+  \] dove $m \deq \ceil[\big]{\log \abs*{\Sigma'}}$. In questo modo ogni riga
+  della tabella di computazione diventa una stringa di bit lunga $m \cdot n^{\!k}$.
+  Denotiamo dunque con $s_{i, j, k}$ il $k$-esimo bit del blocco alla riga $i$ e
+  colonna $j$. Indicheremo inoltre \[
+      S_{i, j} \deq (s_{i, j, 1}, \dots, s_{i, j, m})
+  \] ovvero tutti i bit del blocco $T(i, j)$.  
+  
+  Grazie ai vincoli imposti sulla tabella di computazione, i bit di $S_{i, 1}$
+  rappresentano il respingente, mentre i bit di $S_{i, n^{\!k}}$ rappresentano
+  il carattere vuoto. Infine la prima riga di bit, ovvero $S_{1, j}$ al variare
+  di $j$, è determinata dall'input.
+  
+  Per i ragionamenti fatti in precedenza sulla forma della tabella di computazione,
+  quando $i, j$ rappresenta una posizione centrale della tabella (cioè escludendo
+  la prima riga e la prima e l'ultima colonna) si ha che $S_{i, j}$ è univocamente
+  determinato da $S_{i-1, j-1}$, $S_{i-1, j}$, $S_{i-1, j+1}$, ovvero esiste una
+  funzione $F$ che prende $3m$ bit in ingresso e ne restituisce $m$ che calcola
+  le varie posizioni della tabella a partire da quelle immediatamente precedenti.
+  
+  Tale funzione è booleana\footnote{Abbiamo definito le funzioni booleane solo
+  quando l'output ha una sola uscita, ma combinando più funzioni booleane insieme
+  otteniamo una versione analoga ma a più uscite.} e dunque può essere rappresentata
+  come un circuito, che chiameremo $\bar C$.  
+  Osserviamo che il circuito $\bar C$ costruito dipende solamente dalla funzione di
+  transizione $\delta$ e \emph{non} dall'input $x$, pertanto ogni copia di $\bar C$
+  ha una taglia fissata, \emph{costante} rispetto alla taglia dell'istanza!
+  
+  Inoltre combinando dei circuiti (rispettando il numero di 
+  ingressi ed uscite) si ottiene un nuovo circuito: possiamo allora collegare
+  le uscite di tre copie di $\bar C$ agli ingressi di un'ulteriore copia di
+  $\bar C$ e ottenere un circuito composto. 
+  
+  Costruiamo allora $f(x)$ componendo circuiti in questo modo: \begin{itemize}
+    \item la prima riga è formata da circuiti costanti che rappresentano la prima
+      riga di $T$ (ovvero l'input seguito da $\#$);
+    \item la prima colonna è formata da circuiti costanti che rappresentano il
+      respingente;
+    \item l'ultima colonna è formata da circuiti costanti che rappresentano il
+      carattere vuoto $\#$;
+    \item le altre posizioni contengono copie del circuito $\bar C$: in particolare
+      la copia di $\bar C$ che si trova in posizione $(i, j)$ prende in input
+      il risultato dei circuiti che si trovano in posizione $(i-1, j-1)$, $(i-1, j)$
+      e $(i-1, j+1)$. In totale avremo quindi bisogno di
+      $(n^{\!k} - 1) \times (n^{\!k} - 2)$ copie di $\bar C$.         
+  \end{itemize} 
+  Inoltre per semplicità chiameremo $C_{i, j}$ la copia di $\bar C$ che si trova
+  in posizione $i, j$.   
+
+  \medskip
+  \textsf{\color{RoyalBlue} La funzione $f$ è una riduzione}
+
+  Dobbiamo ora convincerci che $x \in I$ se e solo se $f(x) \in \CVAL$, ovvero
+  se e solo se il circuito $C_{n^{\!k}, 2}$\footnote{La tabella di computazione dà
+  il suo output in posizione $(n^{\!k}, 2)$.} dà come risultato la codifica 
+  di $\SI$: dimostriamo allora che $C_{i, j}$ ha come uscita la codifica di $T(i, j)$
+  per induzione.
+  \begin{description}
+    \item[Caso base] Per $i = 1$ è banale, in quanto per definizione abbiamo
+      scelto come $C_{1, j}$ il circuito che rappresenta l'input,
+      ovvero il simbolo $T(1, j)$. 
+    \item[Passo induttivo] Vogliamo dimostrare che l'uscita del circuito
+      $C_{i+1, j}$ è una sequenza di bit $r_1, \dots, r_m$ che codifica esattamente
+      il simbolo $T_{i + 1, j}$, sapendo che $C_{i, j-1}$, $C_{i, j}$ e $C_{i, j+1}$
+      codificano i simboli $T_{i, j-1}$, $T_{i, j}$ e $T_{i, j+1}$ rispettivamente.
+      
+      Ma le uscite $r_1, \dots, r_m$ di $C_{i+1, j}$ sono calcolate a partire
+      dalle uscite di $C_{i, j-1}$, $C_{i, j}$ e $C_{i, j+1}$ tramite la funzione
+      booleana $F$, che codifica il comportamento della $\delta$ della macchina
+      $M$. Per ipotesi induttiva i tre circuiti al livello $i$ danno codifiche
+      corrette dei simboli della tabella di computazione, dunque per correttezza
+      di $F$ anche $C_{i+1, j}$ deve essere corretto.       
+  \end{description}
+
+  Segue in particolare che per $i = n^{\!k}$ il risultato di $C_{n^{\!k}, 2}$ è la codifica
+  di $T_{n^{\!k}, 2}$, che è $\SI$ se e solo se $x \in I$. Dunque $f$ è una riduzione
+  da $I$ a \CVAL.
+
+  \medskip
+  \textsf{\color{RoyalBlue} La funzione $f$ è logaritmica in spazio}
+  
+  Infine vogliamo mostrare che $f$ è logaritmica in spazio. Sui nastri di lavoro
+  dobbiamo scrivere \begin{itemize}
+    \item le porte di ingresso, ovvero l'input: ci basta contare in binario fino
+      ad $n^{\!k}$ (che si può fare in spazio logaritmico) e scrivere $x$ seguito da
+      caratteri vuoti;
+    \item gli elementi della prima e ultima colonna, che sono $2n^{\!k}$ e quindi 
+      ancora esprimibili in spazio logaritmico;
+    \item le copie del circuito $\bar C$: ognuna di esse occupa spazio costante
+      e quindi trascurabile, dunque il costo viene solamente da associare ad ognuna
+      i propri indici $i, j$, che in binario possono essere espressi in spazio
+      logaritmico in $n$.  
+  \end{itemize}
+  Segue che $f$ è calcolabile in spazio logaritmico.
+\end{proof}
+
